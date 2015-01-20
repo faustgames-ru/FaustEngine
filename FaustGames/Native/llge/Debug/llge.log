@@ -1,0 +1,4 @@
+﻿  stdafx.cpp
+  dllmain.cpp
+  llge.cpp
+  llge.vcxproj -> C:\_faust\FaustEngine\FaustGames\Debug\llge.dll

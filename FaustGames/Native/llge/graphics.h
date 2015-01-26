@@ -46,7 +46,7 @@ namespace graphics
 		};
 	};
 
-	class RenderState 
+	class RenderState
 	{
 	public:
 		BlendState::e Blend;
@@ -59,10 +59,20 @@ namespace graphics
 	class GraphicsDevice
 	{
 	public:
+		void setClearState(unsigned int color, float depth);
 		void setViewPort(float x, float y, float width, float height);
 		void setRenderTarget(RenderTarget *renderPath);
-		void clear(unsigned int color, float depth);
+		void clear();
 		void drawPrimitives(RenderState *renderState, void *vertexBuffer, unsigned short *indexBuffer, int primitivesCount);
+	};
+
+	class Color
+	{
+	public:
+		static unsigned char getR(unsigned int value);
+		static unsigned char getG(unsigned int value);
+		static unsigned char getB(unsigned int value);
+		static unsigned char getA(unsigned int value);
 	};
 }
 

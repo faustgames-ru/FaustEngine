@@ -1,4 +1,1296 @@
-﻿  stdafx.cpp
-  dllmain.cpp
-  llge.cpp
-  llge.vcxproj -> C:\_faust\FaustEngine\FaustGames\Debug\llge.dll
+﻿Build started 26.01.2015 21:45:50.
+Environment at start of build:
+ADSK_3DSMAX_x64_2015 = C:\Program Files\Autodesk\3ds Max 2015\
+ALLUSERSPROFILE = C:\ProgramData
+ANDROID_HOME = C:\NVPACK\android-sdk-windows
+ANDROID_NDK_ROOT = C:\NVPACK\android-ndk-r10
+ANT_HOME = C:\NVPACK\apache-ant-1.8.2
+APPDATA = C:\Users\Администратор\AppData\Roaming
+asl.log = Destination=file
+CLASSPATH = .;C:\Javalib\antlr-4.5-complete.jar;.;C:\Javalib\antlr-4.5-complete.jar;.;C:\Javalib\antlr-4.5-complete.jar;%CLASSPATH%
+CM2015DIR = C:\Program Files (x86)\Common Files\Autodesk Shared\Materials\
+CommonProgramFiles = C:\Program Files (x86)\Common Files
+CommonProgramFiles(x86) = C:\Program Files (x86)\Common Files
+CommonProgramW6432 = C:\Program Files\Common Files
+COMPUTERNAME = _FAUST
+ComSpec = C:\Windows\system32\cmd.exe
+CYGWIN_HOME = C:\NVPACK\cygwin
+ESET_OPTIONS =                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+FBX_SDK_PATH = C:\Autodesk\FBX\FBX SDK\2015.1
+FP_NO_HOST_CHECK = NO
+HOMEDRIVE = C:
+HOMEPATH = \Users\Администратор
+ILMDIR = C:\Program Files (x86)\Common Files\Autodesk Shared\Materials\
+JAVA_HOME = C:\NVPACK\jdk1.6.0_45
+LOCALAPPDATA = C:\Users\Администратор\AppData\Local
+LOGONSERVER = \\_FAUST
+MSBuildLoadMicrosoftTargetsReadOnly = true
+MSBuildTreatAllToolsVersionsAsCurrent = true
+NDKROOT = C:\NVPACK\android-ndk-r10
+NDK_ROOT = C:\NVPACK\android-ndk-r10
+NDK_STANDALONE_46_ANDROID9 = C:/NVPACK/android-ndk-r10/toolchains/arm-linux-androideabi-4.6/gen_standalone/windows
+NSIGHT_TEGRA_GDBSERVER_DIR = %MSBUILD_HOME%\Microsoft.Cpp\v4.0\Platforms\Android
+NUMBER_OF_PROCESSORS = 8
+NVTOOLSEXT_PATH = C:\Program Files\NVIDIA Corporation\NvToolsExt\
+OS = Windows_NT
+Path = C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE\CommonExtensions\Microsoft\TeamFoundation\Team Explorer\NativeBinaries/x86;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Windows Kits\8.1\Windows Performance Toolkit\;C:\Program Files\Microsoft SQL Server\110\Tools\Binn\;C:\NVPACK\android-ndk-r10;C:\Program Files\Common Files\Autodesk Shared\;C:\Program Files (x86)\Autodesk\Backburner\;C:\NVPACK\android-sdk-windows\platform-tools;C:\NVPACK\android-sdk-windows\build-tools;C:\NVPACK\android-sdk-windows\tools;C:\NVPACK\jdk1.6.0_45\bin;C:\NVPACK\cygwin\bin;C:\NVPACK\apache-ant-1.8.2\bin
+PATHEXT = .COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC
+PkgDefApplicationConfigFile = C:\Users\Администратор\AppData\Local\Microsoft\VisualStudio\12.0\devenv.exe.config
+PROCESSOR_ARCHITECTURE = x86
+PROCESSOR_ARCHITEW6432 = AMD64
+PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 58 Stepping 9, GenuineIntel
+PROCESSOR_LEVEL = 6
+PROCESSOR_REVISION = 3a09
+ProgramData = C:\ProgramData
+ProgramFiles = C:\Program Files (x86)
+ProgramFiles(x86) = C:\Program Files (x86)
+ProgramW6432 = C:\Program Files
+PSModulePath = C:\Windows\system32\WindowsPowerShell\v1.0\Modules\
+PUBLIC = C:\Users\Public
+SESSIONNAME = Console
+SystemDrive = C:
+SystemRoot = C:\Windows
+TEMP = C:\Users\836D~1\AppData\Local\Temp
+TMP = C:\Users\836D~1\AppData\Local\Temp
+USERDOMAIN = _Faust
+USERDOMAIN_ROAMINGPROFILE = _Faust
+USERNAME = Администратор
+USERPROFILE = C:\Users\Администратор
+VisualStudioDir = C:\Users\Администратор\Documents\Visual Studio 2013
+VisualStudioEdition = Microsoft Visual Studio Ultimate 2013
+VisualStudioVersion = 12.0
+VS110COMNTOOLS = C:\Program Files (x86)\Microsoft Visual Studio 11.0\Common7\Tools\
+VS120COMNTOOLS = C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\Tools\
+VSLANG = 1033
+windir = C:\Windows
+
+21:45:50.016     1>Project "C:\sources\github\FaustEngine\FaustGames\Native\llge\llge.vcxproj" on node 2 (Clean target(s)).
+21:45:50.016     1>Initial Properties:
+                   _AfterCompileWinFXInternalDependsOn = 
+                           PrepareResourcesForSatelliteAssemblies;
+                           MergeLocalizationDirectives;
+                           AfterCompileWinFX
+                       
+                   _ApplicableDebuggers = Desktop
+                   _BuildActionType = Build
+                   _BuildSuffix = 
+                   :VCEnd
+                   _CheckDev11ToolsInstalled = true
+                   _CompileTargetNameForLocalType = _CompileTemporaryAssembly
+                   _DebugSymbolsProduced = true
+                   _DeploymentApplicationManifestIdentity = Native.llge
+                   _DeploymentBuiltUpdateInterval = 0
+                   _DeploymentBuiltUpdateIntervalUnits = Days
+                   _DeploymentDeployManifestIdentity = llge.application
+                   _DeploymentFileMappingExtension = 
+                   _DeploymentTargetApplicationManifestFileName = Native.llge.manifest
+                   _DeploymentUrl = 
+                   _Dev11Installed = 
+                   _Dev11StoreToolInstalled = true
+                   _Dev11WDExpressInstalled = 
+                   _Dev11Win8ExpressInstalled = 1
+                   _DocumentationFileProduced = false
+                   _FullFrameworkReferenceAssemblyPaths = C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0
+                   _GetChildProjectCopyToOutputDirectoryItems = true
+                   _IgnoreInstalledPlatformToolset_v110 = true
+                   _IgnoreInstalledPlatformToolset_v110_xp = true
+                   _InvalidConfigurationMessageText = The OutputPath property is not set for project 'llge.vcxproj'.  Please check to make sure that you have specified a valid combination of Configuration and Platform for this project.  Configuration='Debug'  Platform='Win32'.  This error may also appear if some other project is trying to follow a project-to-project reference to this project, this project has been unloaded or is not included in the solution, and the referencing project does not build using the same or an equivalent Configuration or Platform.
+                   _ManifestDependsOn = 
+                         ;
+                         
+                         ;
+                         ComputeManifestInputsTargets;
+                       ;
+                         Manifest;
+                         ComputeManifestGeneratedLinkerInputs;
+                         LinkEmbedManifest;
+                       
+                   _OriginalConfiguration = Debug
+                   _OriginalPlatform = Win32
+                   _PlatformDefaultPropsPath = C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V120\\Platforms\Win32\\Platform.default.props
+                   _PlatformFolder = C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V120\Platforms\Win32\
+                   _PlatformToolsetFriendlyNameFor_v100 = Visual Studio 2010 (v100)
+                   _PlatformToolsetFriendlyNameFor_v110 = Visual Studio 2012 (v110)
+                   _PlatformToolsetFriendlyNameFor_v110_xp = Visual Studio 2012 - Windows XP (v110_xp)
+                   _PlatformToolsetFriendlyNameFor_v120 = Visual Studio 2013 (v120)
+                   _PlatformToolsetFriendlyNameFor_v120_xp = Visual Studio 2013 - Windows XP (v120_xp)
+                   _PlatformToolsetFriendlyNameFor_v90 = Visual Studio 2008 (v90)
+                   _PlatformToolsetShortNameFor_v100 = Visual Studio 2010
+                   _PlatformToolsetShortNameFor_v110 = Visual Studio 2012
+                   _PlatformToolsetShortNameFor_v110_xp = Visual Studio 2012 - Windows XP
+                   _PlatformToolsetShortNameFor_v90 = Visual Studio 2008
+                   _ProjectDefaultTargets = Build
+                   _PropertySheetDisplayName = Windows Dynamic Link Library
+                   _RequireMCPass2ForMainAssembly = false
+                   _RequireMCPass2ForSatelliteAssemblyOnly = false
+                   _ResolveReferenceDependencies = false
+                   _ResourceCompileDependsOn = 
+                         
+                         ;
+                         BeforeResourceCompile;
+                       ;
+                         ;
+                         MakeDirsForResourceCompile;
+                         ResourceCompile;
+                         
+                         ;
+                         AfterResourceCompile;
+                       
+                       
+                   _ResourceNameInMainAssembly = llge.g.resources
+                   _SGenDllCreated = false
+                   _SGenDllName = llge.XmlSerializers.dll
+                   _SGenGenerateSerializationAssembliesConfig = Off
+                   _TargetFrameworkDirectories = C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0
+                   _ToolsetPropsPath = C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V120\Platforms\Win32\PlatformToolsets\v120\Toolset.props
+                   _ToolsetTargetsPath = C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V120\Platforms\Win32\PlatformToolsets\v120\Toolset.targets
+                   _UpgradePlatformToolsetFor_v100 = v120
+                   _UpgradePlatformToolsetFor_v110 = v120
+                   _UpgradePlatformToolsetFor_v110_xp = v120_xp
+                   _UpgradePlatformToolsetFor_v120 = v120
+                   _UpgradePlatformToolsetFor_v90 = v120
+                   _VC_x64_ToolsInstalled = true
+                   AddAdditionalExplicitAssemblyReferences = true
+                   AddBuildInfoToAssembly = false
+                   AdditionalExplicitAssemblyReferences = System.Core;
+                   ADSK_3DSMAX_x64_2015 = C:\Program Files\Autodesk\3ds Max 2015\
+                   AfterBuildCompileTargets = 
+                         ;
+                         AfterBuildCompileEvent;
+                       
+                   AfterBuildGenerateSourcesTargets = 
+                         
+                         ;
+                         AfterBuildGenerateSources;
+                       ;
+                         AfterBuildGenerateSourcesEvent;
+                       
+                   AfterBuildLinkTargets = 
+                         ;RunMergeNativeCodeAnalysis;RunNativeCodeAnalysis;
+                         CreateSatelliteAssemblies;
+                         _Appverifier;
+                         _Deploy;
+                         PrepareForRun;
+                         PostBuildEvent;
+                       
+                   AfterClCompileTargets = 
+                         ;
+                         AfterClCompile;
+                       
+                   AfterImpLibTargets = 
+                         ;
+                         AfterImpLib;
+                       
+                   AfterLibTargets = 
+                         ;
+                         AfterLib;
+                       
+                   AfterLinkTargets = 
+                         ;
+                         AfterLink;
+                       
+                   AfterManifestTargets = 
+                         ;
+                         AfterManifest;
+                       
+                   AfterMidlTargets = 
+                         ;
+                         AfterMidl;
+                       
+                   AfterResourceCompileTargets = 
+                         ;
+                         AfterResourceCompile;
+                       
+                   AllowedReferenceAssemblyFileExtensions = 
+                         .winmd;
+                         .dll;
+                         .exe
+                       
+                   AllowedReferenceRelatedFileExtensions = 
+                         .pdb;
+                         .xml;
+                         .pri
+                       
+                   AllowLocalNetworkLoopback = true
+                   AllProjectOutputGroupsDependsOn = 
+                         ;
+                         BuiltProjectOutputGroup;
+                         DebugSymbolsProjectOutputGroup;
+                         DocumentationProjectOutputGroup;
+                         SatelliteDllsProjectOutputGroup;
+                         SourceFilesProjectOutputGroup;
+                         ContentFilesProjectOutputGroup;
+                         SGenFilesOutputGroup
+                       
+                   ALLUSERSPROFILE = C:\ProgramData
+                   AlwaysCompileMarkupFilesInSeparateDomain = true
+                   ANDROID_HOME = C:\NVPACK\android-sdk-windows
+                   ANDROID_NDK_ROOT = C:\NVPACK\android-ndk-r10
+                   ANT_HOME = C:\NVPACK\apache-ant-1.8.2
+                   APPDATA = C:\Users\Администратор\AppData\Roaming
+                   AssemblyFoldersSuffix = AssemblyFoldersEx
+                   AssemblyName = llge
+                   AssemblySearchPaths = 
+                         {CandidateAssemblyFiles};
+                         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\atlmfc\lib;C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\lib;;
+                         {HintPathFromItem};
+                         {TargetFrameworkDirectory};
+                         {Registry:Software\Microsoft\.NETFramework,v4.0,AssemblyFoldersEx};
+                         {AssemblyFolders};
+                         {GAC};
+                         {RawFileName};
+                         C:\sources\github\FaustEngine\FaustGames\Debug\
+                       
+                   AssignTargetPathsDependsOn = 
+                   Attach = false
+                   AutoUnifyAssemblyReferences = true
+                   AvailablePlatforms = Any CPU,x86,x64
+                   BaseIntermediateOutputPath = obj\
+                   BeforeBuildCompileTargets = 
+                         ;
+                       
+                   BeforeBuildGenerateSourcesTargets = 
+                         
+                         ;
+                         BeforeBuildGenerateSources;
+                       ;
+                       
+                   BeforeClCompileTargets = 
+                         ;
+                         BeforeClCompile;
+                       
+                   BeforeImpLibTargets = 
+                         ;
+                         BeforeImpLib;
+                       
+                   BeforeLibTargets = 
+                         ;
+                         BeforeLib;
+                       
+                   BeforeLinkTargets = 
+                         ;
+                         BeforeLink;
+                       
+                   BeforeManifestTargets = 
+                         ;
+                         BeforeManifest;
+                       
+                   BeforeMidlTargets = 
+                         ;
+                         BeforeMidl;
+                       
+                   BeforeResourceCompileTargets = 
+                         ;
+                         BeforeResourceCompile;
+                       
+                   BuildCompileAction = _BuildCompileAction
+                   BuildCompileTargets = 
+                         ;
+                         _ClCompile;
+                         _ResGen;
+                         _ResourceCompile;
+                         
+                         ;
+                         _ImpLib;
+                         _Lib;
+                       ;
+                       
+                   BuildDependsOn = 
+                         _PrepareForBuild;
+                         
+                         ResolveReferences;
+                         PrepareForBuild;
+                         InitializeBuildStatus;
+                         BuildGenerateSources;
+                         BuildCompile;
+                         BuildLink;
+                       ;
+                         AfterBuild;
+                         FinalizeBuildStatus;
+                       
+                   BuildGenerateSourcesAction = _BuildGenerateSourcesAction
+                   BuildGenerateSourcesTargets = 
+                         ;
+                         PreBuildEvent;
+                         _Xsd;
+                         _Midl;
+                       
+                   BuildInfoBinPath = C:\Program Files (x86)\MSBuild\Microsoft\VisualStudio\v12.0\BuildInfo
+                   BuildInfoTargets = C:\Program Files (x86)\MSBuild\Microsoft\VisualStudio\v12.0\BuildInfo\Microsoft.VisualStudio.ReleaseManagement.BuildInfo.targets
+                   BuildingInsideVisualStudio = true
+                   BuildingProject = true
+                   BuildInParallel = true
+                   BuildLibTargets = 
+                         ;
+                         _ImpLib;
+                         _Lib;
+                       
+                   BuildLinkAction = _BuildLinkAction
+                   BuildLinkTargets = 
+                         ;
+                         ComputeLegacyManifestEmbedding;
+                         _Link;
+                         _ALink;
+                         _Manifest;
+                         RegisterOutput;
+                         _XdcMake;
+                         _BscMake;
+                       
+                   BuildProjectReferences = true
+                   BuildSteps = 
+                         ResolveReferences;
+                         PrepareForBuild;
+                         InitializeBuildStatus;
+                         BuildGenerateSources;
+                         BuildCompile;
+                         BuildLink;
+                       
+                   BuildSystem = MSBuild
+                   BuildTaskAssembly = PresentationBuildTasks, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35
+                   BuiltProjectOutputGroupDependsOn = PrepareForBuild
+                   CAExcludePath = C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\atlmfc\include;C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include;C:\Program Files (x86)\Windows Kits\8.1\Include\um;C:\Program Files (x86)\Windows Kits\8.1\Include\shared;C:\Program Files (x86)\Windows Kits\8.1\Include\winrt;;
+                   CharacterSet = Unicode
+                   CLASSPATH = .;C:\Javalib\antlr-4.5-complete.jar;.;C:\Javalib\antlr-4.5-complete.jar;.;C:\Javalib\antlr-4.5-complete.jar;%CLASSPATH%
+                   CleanDependsOn = 
+                         
+                         _PrepareForClean;
+                         
+                         
+                         BeforeClean;
+                         UnmanagedUnregistration;
+                         CoreClean;
+                         CleanReferencedProjects;
+                         CleanPublishFolder;
+                         AfterClean
+                       ;
+                         EntityClean;
+                       ;
+                       ;
+                         CppClean
+                       
+                   CleanFile = llge.vcxproj.FileListAbsolute.txt
+                   CLRSupport = false
+                   ClYieldDuringToolExecution = true
+                   CM2015DIR = C:\Program Files (x86)\Common Files\Autodesk Shared\Materials\
+                   CodeAnalysisApplyLogFileXsl = false
+                   CodeAnalysisFailOnMissingRules = false
+                   CodeAnalysisForceOutput = true
+                   CodeAnalysisGenerateSuccessFile = true
+                   CodeAnalysisIgnoreGeneratedCode = true
+                   CodeAnalysisIgnoreInvalidTargets = true
+                   CodeAnalysisIgnoreMissingIndirectReferences = false
+                   CodeAnalysisInputAssembly = C:\sources\github\FaustEngine\FaustGames\Debug\llge.dll
+                   CodeAnalysisLogFile = C:\sources\github\FaustEngine\FaustGames\Debug\llge.dll.CodeAnalysisLog.xml
+                   CodeAnalysisModuleSuppressionsFile = GlobalSuppressions.cpp
+                   CodeAnalysisOutputToConsole = false
+                   CodeAnalysisOverrideRuleVisibilities = false
+                   CodeAnalysisPath = C:\Program Files (x86)\Microsoft Visual Studio 12.0\Team Tools\Static Analysis Tools\FxCop\
+                   CodeAnalysisQuiet = false
+                   CodeAnalysisRuleDirectories = ;C:\Program Files (x86)\Microsoft Visual Studio 12.0\Team Tools\Static Analysis Tools\FxCop\\Rules
+                   CodeAnalysisRuleSet = NativeRecommendedRules.ruleset
+                   CodeAnalysisRuleSetDirectories = ;C:\Program Files (x86)\Microsoft Visual Studio 12.0\Team Tools\Static Analysis Tools\\Rule Sets
+                   CodeAnalysisSaveMessagesToReport = Active
+                   CodeAnalysisSearchGlobalAssemblyCache = true
+                   CodeAnalysisStaticAnalysisDirectory = C:\Program Files (x86)\Microsoft Visual Studio 12.0\Team Tools\Static Analysis Tools\
+                   CodeAnalysisSucceededFile = C:\sources\github\FaustEngine\FaustGames\Debug\llge.dll.lastcodeanalysissucceeded
+                   CodeAnalysisSummary = false
+                   CodeAnalysisTargets = C:\Program Files (x86)\MSBuild\Microsoft\VisualStudio\v12.0\CodeAnalysis\Microsoft.CodeAnalysis.targets
+                   CodeAnalysisTimeout = 120
+                   CodeAnalysisTLogFile = Debug\CodeAnalysis.read.1.tlog
+                   CodeAnalysisTreatWarningsAsErrors = false
+                   CodeAnalysisUpdateProject = false
+                   CodeAnalysisUseTypeNameInSuppression = true
+                   CodeAnalysisVerbose = false
+                   CommonBuildOnlyTargets = 
+                         PrepareForBuild;
+                         ResolveReferences;
+                       
+                   CommonProgramFiles = C:\Program Files (x86)\Common Files
+                   CommonProgramW6432 = C:\Program Files\Common Files
+                   CommonTargetsPath = C:\Program Files (x86)\MSBuild\12.0\bin\Microsoft.Common.CurrentVersion.targets
+                   CompileDependsOn = 
+                           
+                         ResolveReferences;
+                         ResolveKeySource;
+                         SetWin32ManifestProperties;
+                         _GenerateCompileInputs;
+                         BeforeCompile;
+                         _TimeStampBeforeCompile;
+                         CoreCompile;
+                         _TimeStampAfterCompile;
+                         AfterCompile;
+                       ;
+                           _AfterCompileWinFXInternal
+                       
+                   CompileLicxFilesDependsOn = 
+                   CompileRdlFilesDependsOn = PrepareRdlFiles;RunRdlCompiler
+                   CompileTargetNameForTemporaryAssembly = CompileTemporaryAssembly
+                   ComputeCompileInputsTargets = 
+                         
+                         ;
+                         ComputeMIDLGeneratedCompileInputs;
+                       ;
+                         ComputeCLInputPDBName;
+                         ComputeReferenceCLInput;
+                         WarnCompileDuplicatedFilename
+                       
+                   ComputeImpLibInputsTargets = 
+                           
+                         
+                         
+                         
+                         ;
+                         ComputeRCGeneratedLibInputs;
+                       ;
+                         ComputeRCGeneratedImpLibInputs;
+                       ;
+                         ComputeCustomBuildOutput;
+                       ;
+                         ComputeCLGeneratedImpLibInputs;
+                       ;
+                           ComputeImpLibInputsFromProject;
+                         
+                   ComputeIntermediateSatelliteAssembliesDependsOn = 
+                         CreateManifestResourceNames
+                       
+                   ComputeLibInputsTargets = 
+                         ComputeLibAdditionalOptions;
+                         
+                         
+                           
+                         
+                         
+                         ;
+                         ComputeRCGeneratedLibInputs;
+                       ;
+                         ComputeCustomBuildOutput;
+                       ;
+                         ComputeCLGeneratedLibInputs;
+                       ;
+                           ComputeLibInputsFromProject;
+                         ;
+                         ComputeReferenceLibInputs;
+                       
+                       
+                   ComputeLinkInputsTargets = 
+                         
+                           
+                         
+                         
+                         
+                         ;
+                         ComputeRCGeneratedLinkInputs;
+                       ;
+                         ComputeManifestGeneratedLinkerInputs;
+                       ;
+                         ComputeCustomBuildOutput;
+                       ;
+                         ComputeCLGeneratedLinkInputs;
+                       ;
+                           ComputeLinkInputsFromProject;
+                         ;
+                         ComputeReferenceLinkInputs;
+                       
+                   ComputeManifestInputsTargets = 
+                         ;
+                         ComputeManifestInputsTargets;
+                       
+                   COMPUTERNAME = _FAUST
+                   ComReferenceExecuteAsTool = false
+                   ComReferenceNoClassMembers = false
+                   ComSpec = C:\Windows\system32\cmd.exe
+                   Configuration = Debug
+                   ConfigurationName = Debug
+                   ConfigurationType = DynamicLibrary
+                   ConsiderPlatformAsProcessorArchitecture = true
+                   ContentFilesProjectOutputGroupDependsOn = PrepareForBuild;AssignTargetPaths;PrepareForBuild;AssignTargetPaths;MakeDirsForFxc
+                   ContinueOnError = false
+                   CoreBuildDependsOn = 
+                         BuildOnlySettings;
+                         PrepareForBuild;
+                         PreBuildEvent;
+                         ResolveReferences;
+                         PrepareResources;
+                         ResolveKeySource;
+                         Compile;
+                         ExportWindowsMDFile;
+                         UnmanagedUnregistration;
+                         GenerateSerializationAssemblies;
+                         CreateSatelliteAssemblies;
+                         GenerateManifests;
+                         GetTargetPath;
+                         PrepareForRun;
+                         UnmanagedRegistration;
+                         IncrementalClean;
+                         PostBuildEvent
+                       
+                   CoreCleanDependsOn = 
+                   CoreCompileDependsOn = 
+                           DesignTimeXamlMarkupCompilation;
+                           
+                             DesignTimeMarkupCompilation;
+                             
+                         
+                       
+                   CoreCppCleanDependsOn = 
+                   CoreResGenDependsOn = 
+                   CppCleanDependsOn = 
+                         BeforeCppClean;
+                         ;
+                         CoreCppClean;
+                         AfterCppClean;
+                       ;PGInstrumentedClean
+                   CppCleanLogFile = llge.Build.CppClean.log
+                   CreateCustomManifestResourceNamesDependsOn = 
+                   CreateHardLinksForCopyAdditionalFilesIfPossible = false
+                   CreateManifestResourceNamesDependsOn = 
+                   CreateSatelliteAssembliesDependsOn = 
+                         _GenerateSatelliteAssemblyInputs;
+                         ComputeIntermediateSatelliteAssemblies;
+                         GenerateSatelliteAssemblies
+                       
+                   CRTDefinitionalFile = C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\VCProjectDefault\Microsoft.AppX.VCFrameworkReferences.xml
+                   CrtSDKReferenceInclude = Microsoft.VCLibs, Version=12.0
+                   CrtSDKReferenceVersion = 12.0
+                   CurrentSolutionConfigurationContents = <SolutionConfiguration>
+                   <ProjectConfiguration Project="{8387d106-d3a2-4561-a3b8-99bafb5e5b9e}" AbsolutePath="C:\sources\github\FaustEngine\FaustGames\Games\GameSample\GameSample.csproj">Debug|AnyCPU</ProjectConfiguration>
+                   <ProjectConfiguration Project="{b57da881-75fb-4599-bb8c-7d6e62cf542a}" AbsolutePath="C:\sources\github\FaustEngine\FaustGames\Native\llge\llge.vcxproj">Debug|Win32</ProjectConfiguration>
+                   <ProjectConfiguration Project="{b4e5d8da-d58b-4ca9-8a8f-3bf2a702c8a2}" AbsolutePath="C:\sources\github\FaustEngine\FaustGames\OpenGLWindow\OpenGLWindow.vcxproj">Debug|Win32</ProjectConfiguration>
+                   <ProjectConfiguration Project="{5e8bc772-f46c-4676-8b9a-809646c3c659}" AbsolutePath="C:\sources\github\FaustEngine\FaustGames\Games\GameSampleWindowForms\GameSampleWindowForms.csproj">Debug|AnyCPU</ProjectConfiguration>
+                   </SolutionConfiguration>
+                   CustomAfterMicrosoftCommonProps = C:\Program Files (x86)\MSBuild\v12.0\Custom.After.Microsoft.Common.props
+                   CustomAfterMicrosoftCommonTargets = C:\Program Files (x86)\MSBuild\v12.0\Custom.After.Microsoft.Common.targets
+                   CustomBeforeMicrosoftCommonProps = C:\Program Files (x86)\MSBuild\v12.0\Custom.Before.Microsoft.Common.props
+                   CustomBeforeMicrosoftCommonTargets = C:\Program Files (x86)\MSBuild\v12.0\Custom.Before.Microsoft.Common.targets
+                   CustomBuildAfterTargets = BscMake
+                   CustomBuildBeforeTargets = PostBuildEvent
+                   CustomBuildToolAfterTargets = PreBuildEvent
+                   CustomBuildToolBeforeTargets = Midl
+                   CYGWIN_HOME = C:\NVPACK\cygwin
+                   DebugCppRuntimeFilesPath = C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\redist\Debug_NonRedist\x86
+                   DebuggerFlavor = WindowsLocalDebugger
+                   DebuggerLaunchApplication = true
+                   DebuggerRequireAuthentication = true
+                   DebuggerType = NativeOnly
+                   DebugSymbols = true
+                   DebugSymbolsProjectOutputGroupDependsOn = 
+                   DefaultLanguageSourceExtension = .cpp
+                   DefaultPlatformToolset = v120
+                   DefaultToolArchitecture = Native32Bit
+                   DelayImplib = Delayimp.lib
+                   DelaySign = 
+                   DeploymentType = Installed
+                   DesignTimeIntermediateOutputPath = Debug\InProcessTempFiles\
+                   DesignTimeResolveAssemblyReferencesDependsOn = 
+                         GetFrameworkPaths;
+                         GetReferenceAssemblyPaths;
+                         ResolveReferences
+                       
+                   DevEnvDir = C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE\
+                   DocumentationProjectOutputGroupDependsOn = ResolvedXDCMake;ComputeCLCompileGeneratedXDCFiles
+                   DocumentLibraryDependencies = true
+                   EmbeddedWin32Manifest = 
+                   EmbedManifest = true
+                   EmbedManifestBy = LINK
+                   EnableManagedIncrementalBuild = false
+                   EntityDeployDependsOn = 
+                   EntityDeployIntermediateResourcePath = Debug\edmxResourcesToEmbed\
+                   ESET_OPTIONS =                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+                   ExcludePath = C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include;C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\atlmfc\include;C:\Program Files (x86)\Windows Kits\8.1\Include\um;C:\Program Files (x86)\Windows Kits\8.1\Include\shared;C:\Program Files (x86)\Windows Kits\8.1\Include\winrt;;C:\Program Files (x86)\MSBuild\12.0\bin\;C:\Windows\Microsoft.NET\Framework\v4.0.30319\;C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\lib;C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\atlmfc\lib;
+                   ExecutablePath = C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin;C:\Program Files (x86)\Windows Kits\8.1\bin\x86;;C:\Program Files (x86)\Microsoft SDKs\Windows\v8.1A\bin\NETFX 4.5.1 Tools;C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\Tools\bin;C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\tools;C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\ide;C:\Program Files (x86)\HTML Help Workshop;;C:\Program Files (x86)\MSBuild\12.0\bin\;C:\Windows\Microsoft.NET\Framework\v4.0.30319\;C:\Windows\SysWow64;;C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE\CommonExtensions\Microsoft\TeamFoundation\Team Explorer\NativeBinaries/x86;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Windows Kits\8.1\Windows Performance Toolkit\;C:\Program Files\Microsoft SQL Server\110\Tools\Binn\;C:\NVPACK\android-ndk-r10;C:\Program Files\Common Files\Autodesk Shared\;C:\Program Files (x86)\Autodesk\Backburner\;C:\NVPACK\android-sdk-windows\platform-tools;C:\NVPACK\android-sdk-windows\build-tools;C:\NVPACK\android-sdk-windows\tools;C:\NVPACK\jdk1.6.0_45\bin;C:\NVPACK\cygwin\bin;C:\NVPACK\apache-ant-1.8.2\bin;
+                   ExpandSDKAllowedReferenceExtensions = 
+                         .winmd;
+                         .dll
+                       
+                   ExpandSDKReferencesDependsOn = 
+                         ResolveSDKReferences
+                       
+                   ExtensionSDKDirectoryRoot = C:\Program Files (x86)\Microsoft SDKs
+                   ExtensionSDKRegistryFormat = 
+                   ExtensionSDKUserDirectoryRoot = C:\Users\Администратор\AppData\Local\Microsoft SDKs
+                   ExtensionsToDeleteOnClean = *.cdf;*.cache;*.obj;*.ilk;*.resources;*.tlb;*.tli;*.tlh;*.tmp;*.rsp;*.pgc;*.pgd;*.meta;*.tlog;*.manifest;*.res;*.pch;*.exp;*.idb;*.rep;*.xdc;*.pdb;*_manifest.rc;*.bsc;*.sbr;*.xml;*.metagen;*.bi;C:\sources\github\FaustEngine\FaustGames\Debug\llge.dll.manifest;C:\sources\github\FaustEngine\FaustGames\Debug\llge.tlb;C:\sources\github\FaustEngine\FaustGames\Debug\llge.pdb;C:\sources\github\FaustEngine\FaustGames\Debug\llge.dll;C:\sources\github\FaustEngine\FaustGames\Debug\llge.bsc;C:\sources\github\FaustEngine\FaustGames\Debug\llge.ilk;C:\sources\github\FaustEngine\FaustGames\Debug\llge.dll.intermediate.manifest;C:\sources\github\FaustEngine\FaustGames\Debug\llge.dll.CodeAnalysisLog.xml;C:\sources\github\FaustEngine\FaustGames\Debug\llge.dll.lastcodeanalysissucceeded
+                   FakesBinPath = C:\Program Files (x86)\MSBuild\Microsoft\VisualStudio\v12.0\Fakes
+                   FakesCommandLineArguments =  /Properties:";PlatformTarget=x86" /msbuildpath:"C:\Program Files (x86)\MSBuild\12.0\bin\msbuild.exe"
+                   FakesCompilationProperties = ;PlatformTarget=x86
+                   FakesContinueOnError = false
+                   FakesGenerateBeforeBuildDependsOn = 
+                         ;
+                         ResolveFakesReferences;
+                         BuildFakesAssemblies;
+                       
+                   FakesImported = true
+                   FakesIntermediatePath = C:\sources\github\FaustEngine\FaustGames\Native\llge\Debug\Fakes
+                   FakesMSBuildPath = C:\Program Files (x86)\MSBuild\12.0\bin\msbuild.exe
+                   FakesOutputPath = C:\sources\github\FaustEngine\FaustGames\Native\llge\FakesAssemblies
+                   FakesTargets = C:\Program Files (x86)\MSBuild\Microsoft\VisualStudio\v12.0\Fakes\Microsoft.QualityTools.Testing.Fakes.targets
+                   FakesTasks = C:\Program Files (x86)\MSBuild\Microsoft\VisualStudio\v12.0\Fakes\Microsoft.QualityTools.Testing.Fakes.Tasks.dll
+                   FakesToolsPath = C:\Program Files (x86)\MSBuild\Microsoft\VisualStudio\v12.0\Fakes
+                   FakesVerbosity = Critical
+                   FBX_SDK_PATH = C:\Autodesk\FBX\FBX SDK\2015.1
+                   FindInvalidProjectReferencesDependsOn = 
+                         GetReferenceTargetPlatformMonikers
+                       
+                   FP_NO_HOST_CHECK = NO
+                   Framework20Dir = @(_TargetFramework20DirectoryItem)
+                   Framework30Dir = @(_TargetFramework30DirectoryItem)
+                   Framework35Dir = @(_TargetFramework35DirectoryItem)
+                   Framework40Dir = @(_TargetFramework40DirectoryItem)
+                   FrameworkDir = C:\Windows\Microsoft.NET\Framework\
+                   FrameworkDir_110 = C:\Windows\Microsoft.NET\Framework\
+                   FrameworkPathOverride = C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0
+                   FrameworkRegistryBase = Software\Microsoft\.NETFramework
+                   FrameworkSdkDir = C:\Program Files (x86)\Windows Kits\8.1\
+                   FrameworkSDKRoot = C:\Program Files (x86)\Microsoft SDKs\Windows\v8.1A\
+                   FrameworkVersion = v4.5
+                   FullReferenceAssemblyNames = Full
+                   FxCompileAfterTargets = CustomBuild
+                   FxCompileBeforeTargets = Midl
+                   GenerateBuildInfoConfigFile = false
+                   GeneratedFileExtension = .g.cpp
+                   GenerateManifest = true
+                   GenerateManifestsDependsOn = 
+                         SetWin32ManifestProperties;
+                         GenerateApplicationManifest;
+                         GenerateDeploymentManifest
+                       
+                   GenerateTargetFrameworkAttribute = false
+                   GetCopyToOutputDirectoryItemsDependsOn = 
+                         AssignTargetPaths;
+                         _SplitProjectReferencesByFileExistence
+                       
+                   GetFrameworkPathsDependsOn = 
+                   GetReferenceAssemblyPathsDependsOn = 
+                           ;
+                           GetWinFXPath
+                       
+                   GetTargetPathDependsOn = 
+                   GetTargetPathWithTargetPlatformMonikerDependsOn = ; GetTargetPath
+                   GPURefDebuggerBreakOnAllThreads = GPURefBreakOncePerWarp
+                   HighEntropyVA = false
+                   HOMEDRIVE = C:
+                   HOMEPATH = \Users\Администратор
+                   HostInBrowser = false
+                   IgnoreImportLibrary = false
+                   ILMDIR = C:\Program Files (x86)\Common Files\Autodesk Shared\Materials\
+                   ImplicitlyExpandDesignTimeFacadesDependsOn = 
+                         ;
+                         GetReferenceAssemblyPaths
+                       
+                   ImportByWildcardAfterMicrosoftCommonTargets = true
+                   ImportByWildcardAfterMicrosoftNetFrameworkProps = true
+                   ImportByWildcardAfterMicrosoftNetFrameworkTargets = true
+                   ImportByWildcardBeforeMicrosoftCommonTargets = true
+                   ImportByWildcardBeforeMicrosoftNetFrameworkProps = true
+                   ImportByWildcardBeforeMicrosoftNetFrameworkTargets = true
+                   ImportUserLocationsByWildcardAfterMicrosoftCommonTargets = true
+                   ImportUserLocationsByWildcardAfterMicrosoftNetFrameworkProps = true
+                   ImportUserLocationsByWildcardAfterMicrosoftNetFrameworkTargets = true
+                   ImportUserLocationsByWildcardBeforeMicrosoftCommonTargets = true
+                   ImportUserLocationsByWildcardBeforeMicrosoftNetFrameworkProps = true
+                   ImportUserLocationsByWildcardBeforeMicrosoftNetFrameworkTargets = true
+                   IncludePath = C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include;C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\atlmfc\include;C:\Program Files (x86)\Windows Kits\8.1\Include\um;C:\Program Files (x86)\Windows Kits\8.1\Include\shared;C:\Program Files (x86)\Windows Kits\8.1\Include\winrt;;
+                   IncludeServerNameInBuildInfo = false
+                   IncludeVersionInInteropName = true
+                   IntDir = Debug\
+                   IntermediateOutputPath = Debug\
+                   InteropOutputPath = Interop\
+                   IsLibrary = true
+                   JAVA_HOME = C:\NVPACK\jdk1.6.0_45
+                   Keyword = Win32Proj
+                   LangID = 1033
+                   LangName = en-US
+                   Language = C++
+                   LastBuildState = Debug\llge.tlog\llge.lastbuildstate
+                   LastBuildUnsuccessful = Debug\llge.tlog\unsuccessfulbuild
+                   LibraryPath = C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\lib;C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\atlmfc\lib;C:\Program Files (x86)\Windows Kits\8.1\lib\winv6.3\um\x86;;
+                   LibraryWPath = C:\Program Files (x86)\Windows Kits\8.1\References\CommonConfiguration\Neutral;
+                   LinkCompiled = true
+                   LinkIncremental = true
+                   LoadTimeSensitiveProperties = 
+                         ;
+                       
+                   LoadTimeSensitiveTargets = 
+                         ;
+                         XamlMarkupCompilePass1;
+                       
+                   LOCALAPPDATA = C:\Users\Администратор\AppData\Local
+                   LocalDebuggerAttach = False
+                   LocalDebuggerCommand = C:\sources\github\FaustEngine\FaustGames\Debug\llge.dll
+                   LocalDebuggerDebuggerType = Auto
+                   LocalDebuggerMergeEnvironment = true
+                   LocalDebuggerSQLDebugging = False
+                   LocalDebuggerWorkingDirectory = C:\sources\github\FaustEngine\FaustGames\Native\llge\
+                   LocalGPUDebuggerTargetType = {F4453496-1DB8-47F8-A7D5-31EBDDC2EC96}
+                   LocalizationDirectivesToLocFile = None
+                   LOGONSERVER = \\_FAUST
+                   ManagedAssembly = false
+                   ManagedIncrementalBuildProcessDependencyGraphAfterTarget = 
+                         ClCompile
+                       
+                   ManagedIncrementalBuildProcessDependencyGraphBeforeTarget = 
+                         ClCompile
+                       
+                   MarkupCompilePass2ForMainAssemblyDependsOn = 
+                                        GenerateTemporaryTargetAssembly;
+                                        MarkupCompilePass2;
+                                        AfterMarkupCompilePass2;
+                                        CleanupTemporaryTargetAssembly
+                          
+                   MaxTargetPath = 100
+                   MergedOutputCodeAnalysisFile = Debug\vc.nativecodeanalysis.all.xml
+                   MetagenInputTarget = Link
+                   MetaGenTargets = C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V120\\Microsoft.MetaGen.targets
+                   MicrosoftCommonPropsHasBeenImported = true
+                   MidlYieldDuringToolExecution = true
+                   MpiDebuggerCleanupDeployment = True
+                   MpiDebuggerDebuggerType = Auto
+                   MpiDebuggerDeployCommonRuntime = True
+                   MpiDebuggerNetworkSecurityMode = AnyAddress
+                   MpiDebuggerSchedulerNode = localhost/1
+                   MpiDebuggerSchedulerTimeout = 5000
+                   MsAppxPackageTargets = C:\Program Files (x86)\MSBuild\Microsoft\VisualStudio\v12.0\AppxPackage\Microsoft.AppXPackage.Targets
+                   MSBuild_ExecutablePath = C:\Program Files (x86)\MSBuild\12.0\bin\;C:\Windows\Microsoft.NET\Framework\v4.0.30319\
+                   MSBuildAllProjects = ;C:\sources\github\FaustEngine\FaustGames\Native\llge\llge.vcxproj;C:\Program Files (x86)\MSBuild\12.0\bin\Microsoft.Common.targets;C:\sources\github\FaustEngine\FaustGames\Native\llge\llge.vcxproj.user;C:\Program Files (x86)\MSBuild\12.0\bin\Microsoft.NetFramework.CurrentVersion.props;C:\sources\github\FaustEngine\FaustGames\Native\llge\llge.vcxproj;C:\Program Files (x86)\MSBuild\12.0\bin\Microsoft.Common.CurrentVersion.targets;C:\sources\github\FaustEngine\FaustGames\Native\llge\llge.vcxproj.user;C:\Program Files (x86)\MSBuild\12.0\bin\Microsoft.NetFramework.CurrentVersion.targets;C:\Program Files (x86)\MSBuild\12.0\bin\Microsoft.Xaml.targets
+                   MSBuildAssemblyVersion = 12.0
+                   MSBuildBinPath = C:\Program Files (x86)\MSBuild\12.0\bin
+                   MSBuildExtensionsPath = C:\Program Files (x86)\MSBuild
+                   MSBuildExtensionsPath32 = C:\Program Files (x86)\MSBuild
+                   MSBuildExtensionsPath64 = C:\Program Files\MSBuild
+                   MSBuildFrameworkToolsPath = C:\Windows\Microsoft.NET\Framework\v4.0.30319\
+                   MSBuildFrameworkToolsPath32 = C:\Windows\Microsoft.NET\Framework\v4.0.30319\
+                   MSBuildFrameworkToolsRoot = C:\Windows\Microsoft.NET\Framework\
+                   MSBuildLastTaskResult = true
+                   MSBuildLoadMicrosoftTargetsReadOnly = true
+                   MSBuildNodeCount = 8
+                   MSBuildProgramFiles32 = C:\Program Files (x86)
+                   MSBuildProjectDefaultTargets = Build
+                   MSBuildProjectDirectory = C:\sources\github\FaustEngine\FaustGames\Native\llge
+                   MSBuildProjectDirectoryNoRoot = sources\github\FaustEngine\FaustGames\Native\llge
+                   MSBuildProjectExtension = .vcxproj
+                   MSBuildProjectFile = llge.vcxproj
+                   MSBuildProjectFullPath = C:\sources\github\FaustEngine\FaustGames\Native\llge\llge.vcxproj
+                   MSBuildProjectName = llge
+                   MSBuildRuntimeVersion = 4.0.30319
+                   MSBuildStartupDirectory = C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE
+                   MSBuildToolsPath = C:\Program Files (x86)\MSBuild\12.0\bin
+                   MSBuildToolsPath32 = C:\Program Files (x86)\MSBuild\12.0\bin\
+                   MSBuildToolsRoot = C:\Program Files (x86)\MSBuild\
+                   MSBuildToolsVersion = 12.0
+                   MSBuildTreatAllToolsVersionsAsCurrent = true
+                   MSBuildUserExtensionsPath = C:\Users\Администратор\AppData\Local\Microsoft\MSBuild
+                   MsTestToolsTargets = C:\Program Files (x86)\MSBuild\Microsoft\VisualStudio\v12.0\TeamTest\Microsoft.TeamTest.targets
+                   NativeCodeAnalysisTLogFile = Debug\NativeCodeAnalysis.read.1.tlog
+                   NDK_ROOT = C:\NVPACK\android-ndk-r10
+                   NDK_STANDALONE_46_ANDROID9 = C:/NVPACK/android-ndk-r10/toolchains/arm-linux-androideabi-4.6/gen_standalone/windows
+                   NDKROOT = C:\NVPACK\android-ndk-r10
+                   NetFrameworkPropsPath = C:\Program Files (x86)\MSBuild\12.0\bin\Microsoft.NetFramework.CurrentVersion.props
+                   NetFrameworkTargetsPath = C:\Program Files (x86)\MSBuild\12.0\bin\Microsoft.NetFramework.CurrentVersion.targets
+                   NSIGHT_TEGRA_GDBSERVER_DIR = %MSBUILD_HOME%\Microsoft.Cpp\v4.0\Platforms\Android
+                   NUMBER_OF_PROCESSORS = 8
+                   NVTOOLSEXT_PATH = C:\Program Files\NVIDIA Corporation\NvToolsExt\
+                   OnlyReferenceAndBuildProjectsEnabledInSolutionConfiguration = true
+                   OS = Windows_NT
+                   OSVersion = 5.1.2600.0
+                   OutDir = C:\sources\github\FaustEngine\FaustGames\Debug\
+                   OutDirWasSpecified = false
+                   OutputPath = C:\sources\github\FaustEngine\FaustGames\Debug\
+                   OutputType = library
+                   OverwriteReadOnlyFiles = false
+                   Path = C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE\CommonExtensions\Microsoft\TeamFoundation\Team Explorer\NativeBinaries/x86;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Windows Kits\8.1\Windows Performance Toolkit\;C:\Program Files\Microsoft SQL Server\110\Tools\Binn\;C:\NVPACK\android-ndk-r10;C:\Program Files\Common Files\Autodesk Shared\;C:\Program Files (x86)\Autodesk\Backburner\;C:\NVPACK\android-sdk-windows\platform-tools;C:\NVPACK\android-sdk-windows\build-tools;C:\NVPACK\android-sdk-windows\tools;C:\NVPACK\jdk1.6.0_45\bin;C:\NVPACK\cygwin\bin;C:\NVPACK\apache-ant-1.8.2\bin
+                   PATHEXT = .COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC
+                   PkgDefApplicationConfigFile = C:\Users\Администратор\AppData\Local\Microsoft\VisualStudio\12.0\devenv.exe.config
+                   Platform = Win32
+                   Platform_Actual = Win32
+                   PlatformArchitecture = 32
+                   PlatformName = Win32
+                   PlatformPropsFound = true
+                   PlatformShortName = x86
+                   PlatformTarget = x86
+                   PlatformTargetAsMSBuildArchitecture = x86
+                   PlatformTargetAsMSBuildArchitectureExplicitlySet = false
+                   PlatformTargetsFound = true
+                   PlatformToolset = v120
+                   PlatformToolsetVersion = 120
+                   PostBuildEventDependsOn = 
+                   PostBuildEventUseInBuild = true
+                   PreBuildEventDependsOn = 
+                   PreBuildEventUseInBuild = true
+                   Prefer32Bit = false
+                   PreferredToolArchitecture = x86
+                   PreLinkEventUseInBuild = true
+                   PrepareForBuildDependsOn = PlatformPrepareForBuild;GetFrameworkPaths;GetReferenceAssemblyPaths;SetCABuildNativeEnvironmentVariables
+                   PrepareForRunDependsOn = 
+                         CopyFilesToOutputDirectory
+                       
+                   PrepareResourceNamesDependsOn = 
+                                       AssignWinFXEmbeddedResource;
+                                       
+                         AssignTargetPaths;
+                         SplitResourcesByCulture;
+                         CreateManifestResourceNames;
+                         CreateCustomManifestResourceNames
+                       
+                         
+                   PrepareResourcesDependsOn = 
+                         XamlMarkupCompilePass1;
+                         XamlMarkupCompilePass2;
+                         
+                                   MarkupCompilePass1;
+                                   AfterMarkupCompilePass1;
+                                   MarkupCompilePass2ForMainAssembly;
+                                   FileClassification;
+                                   MainResourcesGeneration;
+                                   
+                         PrepareResourceNames;
+                         ResGen;
+                         CompileLicxFiles
+                       ;CompileRdlFiles
+                          
+                       
+                   PROCESSOR_ARCHITECTURE = x86
+                   PROCESSOR_ARCHITEW6432 = AMD64
+                   PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 58 Stepping 9, GenuineIntel
+                   PROCESSOR_LEVEL = 6
+                   PROCESSOR_REVISION = 3a09
+                   ProcessorArchitecture = x86
+                   ProgramData = C:\ProgramData
+                   ProgramFiles = C:\Program Files (x86)
+                   ProgramW6432 = C:\Program Files
+                   ProjectDesignTimeAssemblyResolutionSearchPaths = 
+                         {CandidateAssemblyFiles};
+                         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\atlmfc\lib;C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\lib;;
+                         {HintPathFromItem};
+                         {TargetFrameworkDirectory};
+                         {Registry:Software\Microsoft\.NETFramework,v4.0,AssemblyFoldersEx};
+                         {RawFileName};
+                         C:\sources\github\FaustEngine\FaustGames\Debug\
+                       
+                   ProjectDir = C:\sources\github\FaustEngine\FaustGames\Native\llge\
+                   ProjectEvaluationFingerprint = Debug|Win32|C:\sources\github\FaustEngine\FaustGames\|
+                   ProjectExt = .vcxproj
+                   ProjectFileName = llge.vcxproj
+                   ProjectFlavor = Client
+                   ProjectGuid = {B57DA881-75FB-4599-BB8C-7D6E62CF542A}
+                   ProjectName = llge
+                   ProjectPath = C:\sources\github\FaustEngine\FaustGames\Native\llge\llge.vcxproj
+                   PSModulePath = C:\Windows\system32\WindowsPowerShell\v1.0\Modules\
+                   PUBLIC = C:\Users\Public
+                   PublishableProject = 
+                   PublishBuildDependsOn = 
+                               BuildOnlySettings;
+                               PrepareForBuild;
+                               ResolveReferences;
+                               PrepareResources;
+                               ResolveKeySource;
+                               PrepareResourcesForSatelliteAssemblies;
+                               GenerateSerializationAssemblies;
+                               CreateSatelliteAssemblies;
+                           
+                   PublishDependsOn = 
+                         _DeploymentUnpublishable
+                       
+                   PublishDir = C:\sources\github\FaustEngine\FaustGames\Debug\app.publish\
+                   PublishOnlyDependsOn = 
+                         SetGenerateManifests;
+                         PublishBuild;
+                         BeforePublish;
+                         GenerateManifests;
+                         CopyFilesToOutputDirectory;
+                         CleanPublishFolder;
+                         _CopyFilesToPublishFolder;
+                         _DeploymentGenerateBootstrapper;
+                         ResolveKeySource;
+                         _DeploymentSignClickOnceDeployment;
+                         AfterPublish
+                       
+                   RebuildDependsOn = 
+                         _PrepareForRebuild;
+                         
+                         BeforeRebuild;
+                         Clean;
+                         Build;
+                         AfterRebuild;
+                       ;
+                       
+                   ReferencePath = C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\atlmfc\lib;C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\lib;
+                   RemoteDebuggerAttach = False
+                   RemoteDebuggerConnection = RemoteWithAuthentication
+                   RemoteDebuggerDebuggerType = Auto
+                   RemoteDebuggerDeployDebugCppRuntime = true
+                   RemoteDebuggerServerName = _FAUST
+                   RemoteDebuggerSQLDebugging = False
+                   RemoteDebuggerWorkingDirectory = C:\sources\github\FaustEngine\FaustGames\Native\llge\
+                   RemoteGPUDebuggerTargetType = {F4453496-1DB8-47F8-A7D5-31EBDDC2EC96}
+                   ReportingServicesTargets = C:\Program Files (x86)\MSBuild\Microsoft\VisualStudio\v12.0\ReportingServices\Microsoft.ReportingServices.targets
+                   ResGenDependsOn = ResolveAssemblyReferences;SplitResourcesByCulture;BeforeResGen;CoreResGen;AfterResGen
+                   ResGenExecuteAsTool = false
+                   ResolveAssemblyReferencesDependsOn = _PrepareForReferenceResolution;
+                         
+                         GetFrameworkPaths;
+                         GetReferenceAssemblyPaths;
+                         PrepareForBuild;
+                         ResolveSDKReferences;
+                         ExpandSDKReferences;
+                       ;
+                         FakesGenerateBeforeBuild;
+                       
+                   ResolveReferencesDependsOn = _PrepareForReferenceResolution;ComputeCrtSDKReference;
+                         
+                         
+                         BeforeResolveReferences;
+                         AssignProjectConfiguration;
+                         ResolveProjectReferences;
+                         FindInvalidProjectReferences;
+                         ResolveNativeReferences;
+                         ResolveAssemblyReferences;
+                         GenerateBindingRedirects;
+                         ResolveComReferences;
+                         AfterResolveReferences
+                       ;
+                         ImplicitlyExpandDesignTimeFacades
+                       ;
+                         ResolveTestReferences
+                       
+                   ResolveSDKReferencesDependsOn = _PrepareForReferenceResolution;ComputeCrtSDKReference;
+                         GetInstalledSDKLocations
+                       
+                   RootNamespace = llge
+                   RunAfterInstall = true
+                   RunCodeAnalysisDependsOn = ;ClCompile;RunMergeNativeCodeAnalysis
+                   RunCodeAnalysisInputs = C:\sources\github\FaustEngine\FaustGames\Debug\llge.dll
+                   RunDependsOn = 
+                   RunMergeNativeCodeAnalysisDependsOn = ClCompile
+                   RunNativeCodeAnalysisInputs = 
+                   SatelliteDllsProjectOutputGroupDependsOn = PrepareForBuild;PrepareResourceNames
+                   SDK35ToolsPath = C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\
+                   SDK40ToolsPath = C:\Program Files (x86)\Microsoft SDKs\Windows\v8.1A\bin\NETFX 4.5.1 Tools\
+                   SDKRedistOutputGroupDependsOn = ResolveSDKReferences;ExpandSDKReferences
+                   SDKReferenceDirectoryRoot = C:\Users\Администратор\AppData\Local\Microsoft SDKs;C:\Program Files (x86)\Microsoft SDKs
+                   SDKReferenceDisallowCertainDependencies = true
+                   SDKReferenceRegistryRoot = Software\Microsoft\Microsoft SDKs
+                   SESSIONNAME = Console
+                   SGenFilesOutputGroupDependsOn = 
+                   SGenShouldGenerateSerializer = true
+                   SGenUseKeep = false
+                   SGenUseProxyTypes = true
+                   ShowAllFiles = false
+                   SkipCopyBuildProduct = true
+                   SkipCopyUnchangedFiles = true
+                   SolutionDir = C:\sources\github\FaustEngine\FaustGames\
+                   SolutionExt = .sln
+                   SolutionFileName = FaustGames.sln
+                   SolutionName = FaustGames
+                   SolutionPath = C:\sources\github\FaustEngine\FaustGames\FaustGames.sln
+                   SourceFilesProjectOutputGroupDependsOn = PrepareForBuild;AssignTargetPaths
+                   SourcePath = C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\atlmfc\src\mfc;C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\atlmfc\src\mfcm;C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\atlmfc\src\atl;C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\crt\src;
+                   SQLDebugging = false
+                   SystemDrive = C:
+                   SystemRoot = C:\Windows
+                   TargetCulture = *
+                   TargetDeployManifestFileName = llge.application
+                   TargetDir = C:\sources\github\FaustEngine\FaustGames\Debug\
+                   TargetedFrameworkDir = @(_TargetedFrameworkDirectoryItem)
+                   TargetedRuntimeVersion = v4.0.30319
+                   TargetedSDKArchitecture = x86
+                   TargetedSDKConfiguration = Debug
+                   TargetExt = .dll
+                   TargetFileName = llge.dll
+                   TargetFrameworkAsMSBuildRuntime = CLR4
+                   TargetFrameworkIdentifier = .NETFramework
+                   TargetFrameworkMoniker = .NETFramework,Version=v4.0
+                   TargetFrameworkMonikerAssemblyAttributesPath = C:\Users\Администратор\AppData\Local\Temp\.NETFramework,Version=v4.0.AssemblyAttributes.cpp
+                   TargetFrameworkMonikerDisplayName = .NET Framework 4
+                   TargetFrameworkSDKToolsDirectory = C:\Program Files (x86)\Microsoft SDKs\Windows\v8.1A\bin\NETFX 4.5.1 Tools\
+                   TargetFrameworkVersion = v4.0
+                   TargetName = llge
+                   TargetPath = C:\sources\github\FaustEngine\FaustGames\Debug\llge.dll
+                   TargetPlatformIdentifier = Windows
+                   TargetPlatformMoniker = Windows,Version=7.0
+                   TargetPlatformRegistryBase = Software\Microsoft\Microsoft SDKs\Windows
+                   TargetPlatformSdkPath = 
+                   TargetPlatformVersion = 7.0
+                   TargetPlatformVersionOptions = 7.0;8.0
+                   TargetPlatformWinMDLocation = C:\Program Files (x86)\Windows Kits\8.1\References\CommonConfiguration\Neutral
+                   TargetRuntime = Managed
+                   TaskKeyToken = 31bf3856ad364e35
+                   TaskVersion = 4.0.0.0
+                   TEMP = C:\Users\836D~1\AppData\Local\Temp
+                   TLogLocation = Debug\llge.tlog\
+                   TMP = C:\Users\836D~1\AppData\Local\Temp
+                   ToolsetPropsFound = true
+                   ToolsetTargetsFound = true
+                   TrackFileAccess = true
+                   UnmanagedRegistrationDependsOn = 
+                   UnmanagedUnregistrationDependsOn = 
+                   UpgradeSubsetToProfile = true
+                   UseCommonOutputDirectory = false
+                   UseDebugLibraries = true
+                   UseLegacyManagedDebugger = true
+                   UseOfATL = false
+                   UseOfMFC = false
+                   USERDOMAIN = _Faust
+                   USERDOMAIN_ROAMINGPROFILE = _Faust
+                   USERNAME = Администратор
+                   USERPROFILE = C:\Users\Администратор
+                   UserRootDir = C:\Users\Администратор\AppData\Local\Microsoft\MSBuild\v4.0
+                   UseSourcePath = true
+                   VC_ExecutablePath_ARM = C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_arm;C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin
+                   VC_ExecutablePath_x64 = C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64;C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin
+                   VC_ExecutablePath_x64_ARM = C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\amd64_arm
+                   VC_ExecutablePath_x64_x64 = C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\amd64
+                   VC_ExecutablePath_x64_x86 = C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\amd64_x86
+                   VC_ExecutablePath_x86 = C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin
+                   VC_ExecutablePath_x86_ARM = C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_arm
+                   VC_ExecutablePath_x86_x64 = C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64
+                   VC_ExecutablePath_x86_x86 = C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin
+                   VC_IncludePath = C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include;C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\atlmfc\include
+                   VC_LibraryPath_ARM = C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\lib\ARM;C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\atlmfc\lib\ARM
+                   VC_LibraryPath_x64 = C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\lib\amd64;C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\atlmfc\lib\amd64
+                   VC_LibraryPath_x86 = C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\lib;C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\atlmfc\lib
+                   VC_ReferencesPath_ARM = C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\atlmfc\lib\ARM;C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\lib\ARM
+                   VC_ReferencesPath_x64 = C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\atlmfc\lib\amd64;C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\lib\amd64
+                   VC_ReferencesPath_x86 = C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\atlmfc\lib;C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\lib
+                   VC_SourcePath = C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\atlmfc\src\mfc;C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\atlmfc\src\mfcm;C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\atlmfc\src\atl;C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\crt\src
+                   VCInstallDir = C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\
+                   VCInstallDir_120 = C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\
+                   VCTargetsPath = C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V120\
+                   VCTargetsPath10 = C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\
+                   VCTargetsPath11 = C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V110\
+                   VCTargetsPath12 = C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V120\
+                   VCTargetsPathEffective = C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V120\
+                   VCToolArchitecture = Native32Bit
+                   Version = 1.0.0.0
+                   VisualStudioDir = C:\Users\Администратор\Documents\Visual Studio 2013
+                   VisualStudioEdition = Microsoft Visual Studio Ultimate 2013
+                   VisualStudioVersion = 12.0
+                   VS_ExecutablePath = C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\Tools\bin;C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\tools;C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\ide;C:\Program Files (x86)\HTML Help Workshop;
+                   VS110COMNTOOLS = C:\Program Files (x86)\Microsoft Visual Studio 11.0\Common7\Tools\
+                   VS120COMNTOOLS = C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\Tools\
+                   VSIDEResolvedNonMSBuildProjectOutputs = <VSIDEResolvedNonMSBuildProjectOutputs />
+                   VSInstallDir = C:\Program Files (x86)\Microsoft Visual Studio 12.0\
+                   VSInstallDir_120 = C:\Program Files (x86)\Microsoft Visual Studio 12.0\
+                   VSLANG = 1033
+                   VSVersion = $(VisualStudoVersion)
+                   WebBrowserDebuggerDebuggerType = Auto
+                   WebReference_EnableLegacyEventingModel = false
+                   WebReference_EnableProperties = true
+                   WebReference_EnableSQLTypes = true
+                   WebServiceDebuggerDebuggerType = Auto
+                   WebServiceDebuggerSQLDebugging = False
+                   WholeProgramOptimization = false
+                   WholeProgramOptimizationAvailabilityInstrument = true
+                   WholeProgramOptimizationAvailabilityOptimize = true
+                   WholeProgramOptimizationAvailabilityTrue = true
+                   WholeProgramOptimizationAvailabilityUpdate = true
+                   windir = C:\Windows
+                   WindowsAppContainer = false
+                   WindowsSDK_ExecutablePath = C:\Program Files (x86)\Windows Kits\8.1\bin\x86;;C:\Program Files (x86)\Microsoft SDKs\Windows\v8.1A\bin\NETFX 4.5.1 Tools
+                   WindowsSDK_ExecutablePath_arm = C:\Program Files (x86)\Windows Kits\8.1\bin\arm;
+                   WindowsSDK_ExecutablePath_x64 = C:\Program Files (x86)\Windows Kits\8.1\bin\x64;;C:\Program Files (x86)\Microsoft SDKs\Windows\v8.1A\bin\NETFX 4.5.1 Tools\x64
+                   WindowsSDK_ExecutablePath_x86 = C:\Program Files (x86)\Windows Kits\8.1\bin\x86;;C:\Program Files (x86)\Microsoft SDKs\Windows\v8.1A\bin\NETFX 4.5.1 Tools
+                   WindowsSDK_IncludePath = C:\Program Files (x86)\Windows Kits\8.1\Include\um;C:\Program Files (x86)\Windows Kits\8.1\Include\shared;C:\Program Files (x86)\Windows Kits\8.1\Include\winrt;
+                   WindowsSDK_LibraryPath_arm = C:\Program Files (x86)\Windows Kits\8.1\lib\winv6.3\um\arm;
+                   WindowsSDK_LibraryPath_x64 = C:\Program Files (x86)\Windows Kits\8.1\lib\winv6.3\um\x64;
+                   WindowsSDK_LibraryPath_x86 = C:\Program Files (x86)\Windows Kits\8.1\lib\winv6.3\um\x86;
+                   WindowsSDK_MetadataPath = C:\Program Files (x86)\Windows Kits\8.1\References\CommonConfiguration\Neutral
+                   WindowsSDK80Path = C:\Program Files (x86)\Windows Kits\8.1\
+                   WindowsSdkDir = C:\Program Files (x86)\Windows Kits\8.1\
+                   WindowsSdkDir_80 = C:\Program Files (x86)\Windows Kits\8.0\
+                   WindowsSdkDir_81 = C:\Program Files (x86)\Windows Kits\8.1\
+                   WindowsSdkDir_81A = C:\Program Files (x86)\Microsoft SDKs\Windows\v8.1A\
+                   WindowsSDKToolArchitecture = Native32Bit
+                   WinMDAssembly = false
+                   WMSJSProject = WJProject
+                   WMSJSProjectDirectory = JavaScript
+                   XamlBuildTaskAssemblyName = XamlBuildTask, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35
+                   XamlBuildTaskLocation = C:\Windows\Microsoft.NET\Framework\v4.0.30319\
+                   XamlBuildTaskPath = C:\Windows\Microsoft.NET\Framework\v4.0.30319\
+                   XamlDebuggingInformation = true
+                   XamlGenCodeFileNames = llge.vcxproj.XamlGeneratedCodeFileListAbsolute.txt
+                   XamlGenMarkupFileNames = llge.vcxproj.XamlGeneratedXamlFileListAbsolute.txt
+                   XamlPass2FlagFile = llge.vcxproj.XamlPass2Flag.txt
+                   XamlRequiresCompilationPass2 = false
+                   XamlTemporaryAssemblyName = llge
+                   YieldDuringToolExecution = true
+
+21:45:50.016     1>Building with tools version "12.0".
+21:45:50.016     1>Target "_CheckForInvalidConfigurationAndPlatform: (TargetId:40)" in file "C:\Program Files (x86)\MSBuild\12.0\bin\Microsoft.Common.CurrentVersion.targets" from project "C:\sources\github\FaustEngine\FaustGames\Native\llge\llge.vcxproj" (entry point):
+                   Task "Error" skipped, due to false condition; ( '$(_InvalidConfigurationError)' == 'true' ) was evaluated as ( '' == 'true' ).
+                   Task "Warning" skipped, due to false condition; ( '$(_InvalidConfigurationWarning)' == 'true' ) was evaluated as ( '' == 'true' ).
+                   Task "Message" (TaskId:41)
+                     Task Parameter:Text=Configuration=Debug (TaskId:41)
+                     Task Parameter:Importance=Low (TaskId:41)
+                     Configuration=Debug (TaskId:41)
+                   Done executing task "Message". (TaskId:41)
+                   Task "Message" (TaskId:42)
+                     Task Parameter:Text=Platform=Win32 (TaskId:42)
+                     Task Parameter:Importance=Low (TaskId:42)
+                     Platform=Win32 (TaskId:42)
+                   Done executing task "Message". (TaskId:42)
+                   Task "Error" skipped, due to false condition; ('$(OutDir)' != '' and !HasTrailingSlash('$(OutDir)')) was evaluated as ('C:\sources\github\FaustEngine\FaustGames\Debug\' != '' and !HasTrailingSlash('C:\sources\github\FaustEngine\FaustGames\Debug\')).
+                   Task "Error" skipped, due to false condition; ('$(BaseIntermediateOutputPath)' != '' and !HasTrailingSlash('$(BaseIntermediateOutputPath)')) was evaluated as ('obj\' != '' and !HasTrailingSlash('obj\')).
+                   Task "Error" skipped, due to false condition; ('$(IntermediateOutputPath)' != '' and !HasTrailingSlash('$(IntermediateOutputPath)')) was evaluated as ('Debug\' != '' and !HasTrailingSlash('Debug\')).
+21:45:50.017     1>Done building target "_CheckForInvalidConfigurationAndPlatform" in project "llge.vcxproj".: (TargetId:40)
+21:45:50.017     1>Target "_PrepareForClean: (TargetId:41)" in file "C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V120\Microsoft.BuildSteps.Targets" from project "C:\sources\github\FaustEngine\FaustGames\Native\llge\llge.vcxproj" (target "Clean" depends on it):
+                   Task "Delete" (TaskId:43)
+                     Task Parameter:Files=Debug\llge.tlog\llge.lastbuildstate (TaskId:43)
+                     Deleting file "Debug\llge.tlog\llge.lastbuildstate". (TaskId:43)
+                   Done executing task "Delete". (TaskId:43)
+21:45:50.018     1>Done building target "_PrepareForClean" in project "llge.vcxproj".: (TargetId:41)
+21:45:50.018     1>Target "BeforeClean: (TargetId:42)" in file "C:\Program Files (x86)\MSBuild\12.0\bin\Microsoft.Common.CurrentVersion.targets" from project "C:\sources\github\FaustEngine\FaustGames\Native\llge\llge.vcxproj" (target "Clean" depends on it):
+21:45:50.018     1>Done building target "BeforeClean" in project "llge.vcxproj".: (TargetId:42)
+                   Target "UnmanagedUnregistration" skipped, due to false condition; ((('$(_AssemblyTimestampBeforeCompile)' != '$(_AssemblyTimestampAfterCompile)' or '$(RegisterForComInterop)' != 'true' or '$(OutputType)' != 'library') or
+                                       ('$(_AssemblyTimestampBeforeCompile)' == '')) and
+                                      Exists('@(_UnmanagedRegistrationCache)')) was evaluated as ((('' != '' or '' != 'true' or 'library' != 'library') or
+                                       ('' == '')) and
+                                      Exists('obj\llge.vcxproj.UnmanagedRegistration.cache')).
+21:45:50.018     1>Target "CoreClean: (TargetId:43)" in file "C:\Program Files (x86)\MSBuild\12.0\bin\Microsoft.Common.CurrentVersion.targets" from project "C:\sources\github\FaustEngine\FaustGames\Native\llge\llge.vcxproj" (target "Clean" depends on it):
+                   Task "Delete" (TaskId:44)
+                     Task Parameter:
+                         Files=
+                             Debug\\TempCA\llge.pdb
+                             Debug\\TempCA\llge.dll (TaskId:44)
+                     Task Parameter:TreatErrorsAsWarnings=True (TaskId:44)
+                     File "Debug\\TempCA\llge.pdb" doesn't exist. Skipping. (TaskId:44)
+                     File "Debug\\TempCA\llge.dll" doesn't exist. Skipping. (TaskId:44)
+                   Done executing task "Delete". (TaskId:44)
+                   Task "ReadLinesFromFile" (TaskId:45)
+                     Task Parameter:File=Debug\llge.vcxproj.FileListAbsolute.txt (TaskId:45)
+                   Done executing task "ReadLinesFromFile". (TaskId:45)
+                   Task "FindUnderPath" (TaskId:46)
+                     Task Parameter:Path=C:\sources\github\FaustEngine\FaustGames\Debug\ (TaskId:46)
+                     Comparison path is "C:\sources\github\FaustEngine\FaustGames\Debug\". (TaskId:46)
+                   Done executing task "FindUnderPath". (TaskId:46)
+                   Task "FindUnderPath" (TaskId:47)
+                     Task Parameter:Path=Debug\ (TaskId:47)
+                     Comparison path is "Debug\". (TaskId:47)
+                   Done executing task "FindUnderPath". (TaskId:47)
+                   Task "Delete" (TaskId:48)
+                     Task Parameter:TreatErrorsAsWarnings=True (TaskId:48)
+                   Done executing task "Delete". (TaskId:48)
+                   Task "RemoveDuplicates" (TaskId:49)
+                   Done executing task "RemoveDuplicates". (TaskId:49)
+                   Task "MakeDir" (TaskId:50)
+                     Task Parameter:Directories=Debug\ (TaskId:50)
+                   Done executing task "MakeDir". (TaskId:50)
+                   Task "WriteLinesToFile" (TaskId:51)
+                     Task Parameter:File=Debug\llge.vcxproj.FileListAbsolute.txt (TaskId:51)
+                     Task Parameter:Overwrite=True (TaskId:51)
+                   Done executing task "WriteLinesToFile". (TaskId:51)
+21:45:50.020     1>Done building target "CoreClean" in project "llge.vcxproj".: (TargetId:43)
+21:45:50.020     1>Target "AssignProjectConfiguration: (TargetId:44)" in file "C:\Program Files (x86)\MSBuild\12.0\bin\Microsoft.Common.CurrentVersion.targets" from project "C:\sources\github\FaustEngine\FaustGames\Native\llge\llge.vcxproj" (target "CleanReferencedProjects" depends on it):
+                   Task "AssignProjectConfiguration" (TaskId:52)
+                     Task Parameter:CurrentProject=C:\sources\github\FaustEngine\FaustGames\Native\llge\llge.vcxproj (TaskId:52)
+                     Task Parameter:CurrentProjectConfiguration=Debug (TaskId:52)
+                     Task Parameter:CurrentProjectPlatform=Win32 (TaskId:52)
+                     Task Parameter:OutputType=library (TaskId:52)
+                     Task Parameter:ResolveConfigurationPlatformUsingMappings=False (TaskId:52)
+                     Task Parameter:SolutionConfigurationContents=<SolutionConfiguration>
+                     <ProjectConfiguration Project="{8387d106-d3a2-4561-a3b8-99bafb5e5b9e}" AbsolutePath="C:\sources\github\FaustEngine\FaustGames\Games\GameSample\GameSample.csproj">Debug|AnyCPU</ProjectConfiguration>
+                     <ProjectConfiguration Project="{b57da881-75fb-4599-bb8c-7d6e62cf542a}" AbsolutePath="C:\sources\github\FaustEngine\FaustGames\Native\llge\llge.vcxproj">Debug|Win32</ProjectConfiguration>
+                     <ProjectConfiguration Project="{b4e5d8da-d58b-4ca9-8a8f-3bf2a702c8a2}" AbsolutePath="C:\sources\github\FaustEngine\FaustGames\OpenGLWindow\OpenGLWindow.vcxproj">Debug|Win32</ProjectConfiguration>
+                     <ProjectConfiguration Project="{5e8bc772-f46c-4676-8b9a-809646c3c659}" AbsolutePath="C:\sources\github\FaustEngine\FaustGames\Games\GameSampleWindowForms\GameSampleWindowForms.csproj">Debug|AnyCPU</ProjectConfiguration>
+                     </SolutionConfiguration> (TaskId:52)
+                     Task Parameter:OnlyReferenceAndBuildProjectsEnabledInSolutionConfiguration=True (TaskId:52)
+                     Task Parameter:ShouldUnsetParentConfigurationAndPlatform=True (TaskId:52)
+                   Done executing task "AssignProjectConfiguration". (TaskId:52)
+21:45:50.020     1>Done building target "AssignProjectConfiguration" in project "llge.vcxproj".: (TargetId:44)
+21:45:50.020     1>Target "_SplitProjectReferencesByFileExistence: (TargetId:45)" in file "C:\Program Files (x86)\MSBuild\12.0\bin\Microsoft.Common.CurrentVersion.targets" from project "C:\sources\github\FaustEngine\FaustGames\Native\llge\llge.vcxproj" (target "CleanReferencedProjects" depends on it):
+                   Task "ResolveNonMSBuildProjectOutput" skipped, due to false condition; ('$(BuildingInsideVisualStudio)'=='true' and '@(ProjectReferenceWithConfiguration)'!='') was evaluated as ('true'=='true' and ''!='').
+21:45:50.020     1>Done building target "_SplitProjectReferencesByFileExistence" in project "llge.vcxproj".: (TargetId:45)
+21:45:50.020     1>Target "CleanReferencedProjects: (TargetId:46)" in file "C:\Program Files (x86)\MSBuild\12.0\bin\Microsoft.Common.CurrentVersion.targets" from project "C:\sources\github\FaustEngine\FaustGames\Native\llge\llge.vcxproj" (target "Clean" depends on it):
+                   Task "MSBuild" skipped, due to false condition; ('$(BuildingInsideVisualStudio)' != 'true' and '$(BuildProjectReferences)' == 'true' and '@(_MSBuildProjectReferenceExistent)' != '') was evaluated as ('true' != 'true' and 'true' == 'true' and '' != '').
+21:45:50.020     1>Done building target "CleanReferencedProjects" in project "llge.vcxproj".: (TargetId:46)
+21:45:50.020     1>Target "CleanPublishFolder: (TargetId:47)" in file "C:\Program Files (x86)\MSBuild\12.0\bin\Microsoft.Common.CurrentVersion.targets" from project "C:\sources\github\FaustEngine\FaustGames\Native\llge\llge.vcxproj" (target "Clean" depends on it):
+                   Task "RemoveDir" skipped, due to false condition; ('$(PublishDir)'=='$(OutputPath)app.publish\' and Exists('$(PublishDir)')) was evaluated as ('C:\sources\github\FaustEngine\FaustGames\Debug\app.publish\'=='C:\sources\github\FaustEngine\FaustGames\Debug\app.publish\' and Exists('C:\sources\github\FaustEngine\FaustGames\Debug\app.publish\')).
+21:45:50.020     1>Done building target "CleanPublishFolder" in project "llge.vcxproj".: (TargetId:47)
+21:45:50.020     1>Target "AfterClean: (TargetId:48)" in file "C:\Program Files (x86)\MSBuild\12.0\bin\Microsoft.Common.CurrentVersion.targets" from project "C:\sources\github\FaustEngine\FaustGames\Native\llge\llge.vcxproj" (target "Clean" depends on it):
+21:45:50.020     1>Done building target "AfterClean" in project "llge.vcxproj".: (TargetId:48)
+                   Target "EntityClean" skipped, due to false condition; ('@(EntityDeploy)' != '') was evaluated as ('' != '').
+21:45:50.020     1>Target "BeforeCppClean: (TargetId:49)" in file "C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V120\Microsoft.CppClean.targets" from project "C:\sources\github\FaustEngine\FaustGames\Native\llge\llge.vcxproj" (target "CppClean" depends on it):
+21:45:50.020     1>Done building target "BeforeCppClean" in project "llge.vcxproj".: (TargetId:49)
+21:45:50.020     1>Target "CoreCppClean: (TargetId:50)" in file "C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V120\Microsoft.CppClean.targets" from project "C:\sources\github\FaustEngine\FaustGames\Native\llge\llge.vcxproj" (target "CppClean" depends on it):
+                   Task "MakeDir" (TaskId:53)
+                     Task Parameter:Directories=Debug\ (TaskId:53)
+                   Done executing task "MakeDir". (TaskId:53)
+                   Using "CppClean" task from assembly "C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V120\Microsoft.Build.CppTasks.Common.dll".
+                   Task "CppClean" (TaskId:54)
+                     Task Parameter:FoldersToClean=Debug\;Debug\llge.tlog\ (TaskId:54)
+                     Task Parameter:FilesExcludedFromClean=llge.Build.CppClean.log (TaskId:54)
+                     Task Parameter:DoDelete=True (TaskId:54)
+                     Task Parameter:FilePatternsToDeleteOnClean=*.cdf;*.cache;*.obj;*.ilk;*.resources;*.tlb;*.tli;*.tlh;*.tmp;*.rsp;*.pgc;*.pgd;*.meta;*.tlog;*.manifest;*.res;*.pch;*.exp;*.idb;*.rep;*.xdc;*.pdb;*_manifest.rc;*.bsc;*.sbr;*.xml;*.metagen;*.bi;C:\sources\github\FaustEngine\FaustGames\Debug\llge.dll.manifest;C:\sources\github\FaustEngine\FaustGames\Debug\llge.tlb;C:\sources\github\FaustEngine\FaustGames\Debug\llge.pdb;C:\sources\github\FaustEngine\FaustGames\Debug\llge.dll;C:\sources\github\FaustEngine\FaustGames\Debug\llge.bsc;C:\sources\github\FaustEngine\FaustGames\Debug\llge.ilk;C:\sources\github\FaustEngine\FaustGames\Debug\llge.dll.intermediate.manifest;C:\sources\github\FaustEngine\FaustGames\Debug\llge.dll.CodeAnalysisLog.xml;C:\sources\github\FaustEngine\FaustGames\Debug\llge.dll.lastcodeanalysissucceeded (TaskId:54)
+                   Done executing task "CppClean". (TaskId:54)
+                   Task "WriteLinesToFile" (TaskId:55)
+                     Task Parameter:File=Debug\llge.Build.CppClean.log (TaskId:55)
+                     Task Parameter:
+                         Lines=
+                             c:\sources\github\faustengine\faustgames\native\llge\debug\llge.pch
+                             c:\sources\github\faustengine\faustgames\native\llge\debug\vc120.pdb
+                             c:\sources\github\faustengine\faustgames\native\llge\debug\vc120.idb
+                             c:\sources\github\faustengine\faustgames\native\llge\debug\stdafx.obj
+                             c:\sources\github\faustengine\faustgames\native\llge\debug\llgepinvoke.obj
+                             c:\sources\github\faustengine\faustgames\native\llge\debug\graphics.obj
+                             c:\sources\github\faustengine\faustgames\native\llge\debug\llge.obj
+                             c:\sources\github\faustengine\faustgames\native\llge\debug\dllmain.obj
+                             c:\sources\github\faustengine\faustgames\debug\llge.ilk
+                             c:\sources\github\faustengine\faustgames\debug\llge.dll
+                             c:\sources\github\faustengine\faustgames\debug\llge.pdb
+                             c:\sources\github\faustengine\faustgames\debug\llge.lib
+                             c:\sources\github\faustengine\faustgames\debug\llge.exp
+                             c:\sources\github\faustengine\faustgames\native\llge\debug\llge.tlog\cl.command.1.tlog
+                             c:\sources\github\faustengine\faustgames\native\llge\debug\llge.tlog\cl.read.1.tlog
+                             c:\sources\github\faustengine\faustgames\native\llge\debug\llge.tlog\cl.write.1.tlog
+                             c:\sources\github\faustengine\faustgames\native\llge\debug\llge.tlog\link.command.1.tlog
+                             c:\sources\github\faustengine\faustgames\native\llge\debug\llge.tlog\link.read.1.tlog
+                             c:\sources\github\faustengine\faustgames\native\llge\debug\llge.tlog\link.write.1.tlog
+                             c:\sources\github\faustengine\faustgames\native\llge\debug\llge.tlog\llge.write.1u.tlog (TaskId:55)
+                     Task Parameter:Overwrite=True (TaskId:55)
+                   Done executing task "WriteLinesToFile". (TaskId:55)
+21:45:50.046     1>Done building target "CoreCppClean" in project "llge.vcxproj".: (TargetId:50)
+21:45:50.046     1>Target "AfterCppClean: (TargetId:51)" in file "C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V120\Microsoft.CppClean.targets" from project "C:\sources\github\FaustEngine\FaustGames\Native\llge\llge.vcxproj" (target "CppClean" depends on it):
+21:45:50.046     1>Done building target "AfterCppClean" in project "llge.vcxproj".: (TargetId:51)
+21:45:50.046     1>Target "PGInstrumentedClean: (TargetId:52)" in file "C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V120\Microsoft.CppClean.targets" from project "C:\sources\github\FaustEngine\FaustGames\Native\llge\llge.vcxproj" (target "CppClean" depends on it):
+                   Task "Delete" (TaskId:56)
+                   Done executing task "Delete". (TaskId:56)
+21:45:50.047     1>Done building target "PGInstrumentedClean" in project "llge.vcxproj".: (TargetId:52)
+21:45:50.047     1>Target "CppClean: (TargetId:53)" in file "C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V120\Microsoft.CppClean.targets" from project "C:\sources\github\FaustEngine\FaustGames\Native\llge\llge.vcxproj" (target "Clean" depends on it):
+21:45:50.047     1>Done building target "CppClean" in project "llge.vcxproj".: (TargetId:53)
+21:45:50.047     1>Target "Clean: (TargetId:54)" in file "C:\Program Files (x86)\MSBuild\12.0\bin\Microsoft.Common.CurrentVersion.targets" from project "C:\sources\github\FaustEngine\FaustGames\Native\llge\llge.vcxproj" (entry point):
+21:45:50.047     1>Done building target "Clean" in project "llge.vcxproj".: (TargetId:54)
+21:45:50.047     1>Done Building Project "C:\sources\github\FaustEngine\FaustGames\Native\llge\llge.vcxproj" (Clean target(s)).
+
+Project Performance Summary:
+       31 ms  C:\sources\github\FaustEngine\FaustGames\Native\llge\llge.vcxproj   1 calls
+                 31 ms  Clean                                      1 calls
+
+Target Performance Summary:
+        0 ms  AfterClean                                 1 calls
+        0 ms  BeforeClean                                1 calls
+        0 ms  AfterCppClean                              1 calls
+        0 ms  AssignProjectConfiguration                 1 calls
+        0 ms  Clean                                      1 calls
+        0 ms  BeforeCppClean                             1 calls
+        0 ms  _SplitProjectReferencesByFileExistence     1 calls
+        0 ms  CleanReferencedProjects                    1 calls
+        0 ms  CleanPublishFolder                         1 calls
+        0 ms  CppClean                                   1 calls
+        1 ms  _CheckForInvalidConfigurationAndPlatform   1 calls
+        1 ms  PGInstrumentedClean                        1 calls
+        1 ms  _PrepareForClean                           1 calls
+        2 ms  CoreClean                                  1 calls
+       26 ms  CoreCppClean                               1 calls
+
+Task Performance Summary:
+        0 ms  Message                                    2 calls
+        0 ms  ReadLinesFromFile                          1 calls
+        0 ms  AssignProjectConfiguration                 1 calls
+        0 ms  FindUnderPath                              2 calls
+        0 ms  MakeDir                                    2 calls
+        0 ms  Delete                                     4 calls
+        1 ms  RemoveDuplicates                           1 calls
+        2 ms  WriteLinesToFile                           2 calls
+       24 ms  CppClean                                   1 calls
+
+Build succeeded.
+
+Time Elapsed 00:00:00.02

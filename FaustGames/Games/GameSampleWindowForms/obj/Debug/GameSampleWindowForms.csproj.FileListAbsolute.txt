@@ -1,0 +1,5 @@
+C:\sources\github\FaustEngine\FaustGames\Games\GameSampleWindowForms\bin\Debug\GameSampleWindowForms.exe.config
+C:\sources\github\FaustEngine\FaustGames\Games\GameSampleWindowForms\bin\Debug\GameSampleWindowForms.exe
+C:\sources\github\FaustEngine\FaustGames\Games\GameSampleWindowForms\bin\Debug\GameSampleWindowForms.pdb
+C:\sources\github\FaustEngine\FaustGames\Games\GameSampleWindowForms\bin\Debug\OpenGLWindow.dll
+C:\sources\github\FaustEngine\FaustGames\Games\GameSampleWindowForms\bin\Debug\OpenGLWindow.pdb

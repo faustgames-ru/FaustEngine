@@ -2,6 +2,9 @@
 //
 
 #include "stdafx.h"
+#include "graphics.h"
+#include "GraphicsDevice.h"
+#include "llge.h"
 
 using namespace graphics;
 

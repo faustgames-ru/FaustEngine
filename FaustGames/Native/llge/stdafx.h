@@ -9,12 +9,10 @@
 
 #define WIN32_LEAN_AND_MEAN             // Exclude rarely-used stuff from Windows headers
 // Windows Header Files:
+
 #include <windows.h>
-#include <GL/gl.h>
-
-#include "llge.h"
-#include "graphics.h"
-
-
+#include <string>
+#include <vector>
+#include "glew.h"
 
 // TODO: reference additional headers your program requires here

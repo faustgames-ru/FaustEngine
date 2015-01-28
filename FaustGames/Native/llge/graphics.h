@@ -1,33 +1,10 @@
 #ifndef GRAPHICS_H
 #define GRAPHICS_H
 
+#include "stdafx.h"
+
 namespace graphics
 {
-	class Effect
-	{
-	public:
-	};
-
-	class EffectParameters
-	{
-	public:
-	};
-
-	class VertexDeclaration
-	{
-
-	};
-
-	class Texture
-	{
-	public:
-	};
-
-	class RenderTarget
-	{
-	public:
-	};
-
 	struct BlendState
 	{
 		enum e
@@ -46,34 +23,33 @@ namespace graphics
 		};
 	};
 
-	class RenderState
+	struct UniformType
 	{
-	public:
-		BlendState::e Blend;
-		DepthState::e Depth;
-		Effect * Effect;
-		EffectParameters* EffectParameters;
-		VertexDeclaration * VertexDeclaration;
+		enum e
+		{
+			Float1,
+			Float2,
+			Float3,
+			Float4,
+			Float3x3,
+			Float4x4,
+			Sampler2D,
+		};
 	};
 
-	class GraphicsDevice
-	{
-	public:
-		void setClearState(unsigned int color, float depth);
-		void setViewPort(float x, float y, float width, float height);
-		void setRenderTarget(RenderTarget *renderPath);
-		void clear();
-		void drawPrimitives(RenderState *renderState, void *vertexBuffer, unsigned short *indexBuffer, int primitivesCount);
-	};
+	class Uniforms;
+	class Effects;
 
-	class Color
-	{
-	public:
-		static unsigned char getR(unsigned int value);
-		static unsigned char getG(unsigned int value);
-		static unsigned char getB(unsigned int value);
-		static unsigned char getA(unsigned int value);
-	};
+	class Effect;
+	class UniformInfo;
+	class Uniform;
+	class VertexDeclaration;
+	class Texture;
+	class RenderTarget;
+	class RenderState;
+	class GraphicsDevice;
+	class Color;
+	class Errors;
 }
 
 #endif /*GRAPHICS_H*/

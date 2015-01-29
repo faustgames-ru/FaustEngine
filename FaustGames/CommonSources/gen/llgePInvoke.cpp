@@ -6,9 +6,19 @@
 
 namespace llge
 {
+	extern "C" DLLEXPORT void API_CALL llge_RenderSystem_create (IRenderSystem * classInstance)
+	{
+		classInstance->create();
+	}
+	
 	extern "C" DLLEXPORT void API_CALL llge_RenderSystem_render (IRenderSystem * classInstance)
 	{
 		classInstance->render();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_RenderSystem_cleanup (IRenderSystem * classInstance)
+	{
+		classInstance->cleanup();
 	}
 	
 	extern "C" DLLEXPORT void API_CALL llge_RenderSystem_dispose (IRenderSystem * classInstance)
@@ -19,6 +29,11 @@ namespace llge
 	extern "C" DLLEXPORT IRenderSystem * API_CALL llge_Factory_createRenderSystem (IFactory * classInstance)
 	{
 		return classInstance->createRenderSystem();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_Factory_dispose (IFactory * classInstance)
+	{
+		classInstance->dispose();
 	}
 	
 }

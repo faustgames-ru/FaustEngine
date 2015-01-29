@@ -8,8 +8,9 @@ namespace graphics
 	class GraphicsDevice
 	{
 	public:
+		static int poolSize(){ return 1; }
 		void setClearState(unsigned int color, float depth);
-		void setViewPort(float x, float y, float width, float height);
+		void setViewPort(int x, int y, int width, int height);
 		void setRenderTarget(RenderTarget *renderPath);
 		void clear();
 		void drawPrimitives(RenderState *renderState, void *vertexBuffer, unsigned short *indexBuffer, int primitivesCount);

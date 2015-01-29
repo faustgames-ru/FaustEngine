@@ -15,6 +15,13 @@ namespace llge
 	public class RenderSystem
 	{
 		public IntPtr ClassInstance;
+		public void Create ()
+		{
+			llge_RenderSystem_create(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_RenderSystem_create (IntPtr classInstance);
 		public void Render ()
 		{
 			llge_RenderSystem_render(ClassInstance);
@@ -22,6 +29,13 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private void llge_RenderSystem_render (IntPtr classInstance);
+		public void Cleanup ()
+		{
+			llge_RenderSystem_cleanup(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_RenderSystem_cleanup (IntPtr classInstance);
 		public void Dispose ()
 		{
 			llge_RenderSystem_dispose(ClassInstance);
@@ -41,6 +55,13 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private IntPtr llge_Factory_createRenderSystem (IntPtr classInstance);
+		public void Dispose ()
+		{
+			llge_Factory_dispose(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_Factory_dispose (IntPtr classInstance);
 	}
 	
 	public class llge

@@ -17,19 +17,22 @@ namespace GameSampleWindowForms
     {
         private readonly OGLWindow _oglWindow;
         private readonly RenderSystem _renderSystem;
+        private readonly Factory _factory;
         public Main()
         {
             InitializeComponent();
-
-            var llgeFactory = llge.llge.CreateFactory();
-            _renderSystem = llgeFactory.CreateRenderSystem();
-
-            _oglWindow = new OGLWindow(this, Width, Height);
             if (components == null)
                 components = new Container();
+            _oglWindow = new OGLWindow(this, Width, Height);
             components.Add(new DisposableContainerComponent(_oglWindow));
+
+            _factory = llge.llge.CreateFactory();
+            _renderSystem = _factory.CreateRenderSystem();
             components.Add(new DisposeActionContainerComponent(() => _renderSystem.Dispose()));
+            components.Add(new DisposeActionContainerComponent(() => _factory.Dispose()));
             Application.Idle += ApplicationOnIdle;
+
+            _renderSystem.Create();
         }
 
         private Stopwatch _stopwatch;
@@ -56,6 +59,11 @@ namespace GameSampleWindowForms
         private void _timer_Tick(object sender, EventArgs e)
         {
             DoUpdate();
+        }
+
+        private void Main_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            _renderSystem.Cleanup();
         }
     }
 

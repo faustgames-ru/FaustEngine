@@ -3,8 +3,7 @@
 #pragma once
 
 #include <windows.h>
-#include <GL/gl.h>
-#include <GL/glu.h>
+#include "glew.h"
 
 using namespace System;
 using namespace System::Windows::Forms;
@@ -14,7 +13,7 @@ namespace OpenGLWindow {
 	public ref class OGLWindow : public System::Windows::Forms::NativeWindow
 	{
 	public:
-		OGLWindow(System::Windows::Forms::Form ^ parentForm, GLsizei iWidth, GLsizei iHeight)
+		OGLWindow(System::Windows::Forms::Form ^ parentForm, int iWidth, int iHeight)
 		{
 			CreateParams^ cp = gcnew CreateParams;
 
@@ -195,7 +194,7 @@ namespace OpenGLWindow {
 			return 1;
 		}
 
-		bool InitGL(GLvoid)										// All setup for opengl goes here
+		bool InitGL()										// All setup for opengl goes here
 		{
 			glShadeModel(GL_SMOOTH);							// Enable smooth shading
 			glClearColor(0.0f, 0.0f, 0.0f, 0.5f);				// Black background
@@ -219,7 +218,7 @@ namespace OpenGLWindow {
 			glLoadIdentity();									// Reset The Projection Matrix
 
 			// Calculate The Aspect Ratio Of The Window
-			gluPerspective(45.0f, (GLfloat)width / (GLfloat)height, 0.1f, 100.0f);
+			//gluPerspective(45.0f, (GLfloat)width / (GLfloat)height, 0.1f, 100.0f);
 
 			glMatrixMode(GL_MODELVIEW);							// Select The Modelview Matrix
 			glLoadIdentity();									// Reset The Modelview Matrix

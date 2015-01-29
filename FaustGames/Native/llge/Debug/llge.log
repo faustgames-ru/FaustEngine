@@ -1,18 +1,5 @@
-﻿  stdafx.cpp
-  Uniforms.cpp
-  RenderState.cpp
-  llge.cpp
-  GraphicsDevice.cpp
-c:\_faust\faustengine\faustgames\native\llge\graphicsdevice.cpp(19): warning C4244: 'argument' : conversion from 'float' to 'GLsizei', possible loss of data
-c:\_faust\faustengine\faustgames\native\llge\graphicsdevice.cpp(19): warning C4244: 'argument' : conversion from 'float' to 'GLint', possible loss of data
-  Errors.cpp
-  UniformInfo.cpp
-  Uniform.cpp
-  Effects.cpp
-  Effect.cpp
-  Color.cpp
-  llgePInvoke.cpp
+﻿  Effect.cpp
   Generating Code...
-  dllmain.cpp
-     Creating library C:\_faust\FaustEngine\FaustGames\Debug\llge.lib and object C:\_faust\FaustEngine\FaustGames\Debug\llge.exp
+  Skipping... (no relevant changes detected)
+  Effects.cpp
   llge.vcxproj -> C:\_faust\FaustEngine\FaustGames\Debug\llge.dll

@@ -10,14 +10,16 @@ namespace graphics
 	private:
 		std::string _vertexShaderCode;
 		std::string _pixelShaderCode;
+		std::vector<Uniform *> _uniforms;
 		GLuint _shaderProgram;
 		GLuint _vertexShader;
 		GLuint _pixelShader;
 		GLuint createShader(GLenum type, const char *code);
 	public:
-		Effect(const char *vertexShaderCode, const char *pixelShaderCode, const UniformInfo * uniformInfos[]);
+		Effect::Effect(const char *vertexShaderCode, const char *pixelShaderCode);
+		void addUniform(UniformInfo *uniformInfo);
 		void create();
-		void release();
+		void cleanup();
 	};
 }
 

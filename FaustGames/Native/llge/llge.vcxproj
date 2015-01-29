@@ -58,7 +58,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>openGL32.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -85,8 +85,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\CommonSources\include\llge.h" />
+    <ClInclude Include="core.h" />
     <ClInclude Include="Effect.h" />
     <ClInclude Include="Effects.h" />
+    <ClInclude Include="Lazy.h" />
+    <ClInclude Include="ObjectsPool.h" />
     <ClInclude Include="Uniform.h" />
     <ClInclude Include="UniformInfo.h" />
     <ClInclude Include="Errors.h" />
@@ -110,6 +113,8 @@
     </ClCompile>
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="Effects.cpp" />
+    <ClCompile Include="Lazy.cpp" />
+    <ClCompile Include="ObjectsPool.cpp" />
     <ClCompile Include="Uniform.cpp" />
     <ClCompile Include="UniformInfo.cpp" />
     <ClCompile Include="Errors.cpp" />

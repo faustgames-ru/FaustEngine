@@ -9,7 +9,9 @@ namespace llge
 	class IRenderSystem
 	{
 	public:		
+		virtual void API_CALL create() = 0;
 		virtual void API_CALL render() = 0;
+		virtual void API_CALL cleanup() = 0;
 		virtual void API_CALL dispose() = 0;
 	};
 
@@ -17,6 +19,7 @@ namespace llge
 	{
 	public:
 		virtual IRenderSystem * API_CALL createRenderSystem() = 0;
+		virtual void API_CALL dispose() = 0;
 	};
 
 	extern "C" DLLEXPORT IFactory * API_CALL createFactory();

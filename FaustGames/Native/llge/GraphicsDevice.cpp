@@ -14,7 +14,7 @@ namespace graphics
 	}
 
 
-	void GraphicsDevice::setViewPort(float x, float y, float width, float height)
+	void GraphicsDevice::setViewPort(int x, int y, int width, int height)
 	{
 		glViewport(x, y, width, height);
 	}

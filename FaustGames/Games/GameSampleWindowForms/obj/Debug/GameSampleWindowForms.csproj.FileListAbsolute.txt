@@ -3,6 +3,7 @@ C:\sources\github\FaustEngine\FaustGames\Games\GameSampleWindowForms\bin\Debug\G
 C:\sources\github\FaustEngine\FaustGames\Games\GameSampleWindowForms\bin\Debug\GameSampleWindowForms.pdb
 C:\sources\github\FaustEngine\FaustGames\Games\GameSampleWindowForms\bin\Debug\OpenGLWindow.dll
 C:\sources\github\FaustEngine\FaustGames\Games\GameSampleWindowForms\bin\Debug\OpenGLWindow.pdb
+C:\_faust\FaustEngine\FaustGames\Debug\glew32.dll
 C:\_faust\FaustEngine\FaustGames\Debug\GameSampleWindowForms.exe.config
 C:\_faust\FaustEngine\FaustGames\Debug\GameSampleWindowForms.exe
 C:\_faust\FaustEngine\FaustGames\Debug\GameSampleWindowForms.pdb
@@ -11,4 +12,4 @@ C:\_faust\FaustEngine\FaustGames\Games\GameSampleWindowForms\obj\Debug\GameSampl
 C:\_faust\FaustEngine\FaustGames\Games\GameSampleWindowForms\obj\Debug\GameSampleWindowForms.csproj.GenerateResource.Cache
 C:\_faust\FaustEngine\FaustGames\Games\GameSampleWindowForms\obj\Debug\GameSampleWindowForms.exe
 C:\_faust\FaustEngine\FaustGames\Games\GameSampleWindowForms\obj\Debug\GameSampleWindowForms.pdb
-C:\_faust\FaustEngine\FaustGames\Debug\glew32.dll
+C:\_faust\FaustEngine\FaustGames\Games\GameSampleWindowForms\obj\Debug\GameSampleWindowForms.csprojResolveAssemblyReference.cache

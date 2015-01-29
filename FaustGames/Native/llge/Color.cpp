@@ -21,14 +21,4 @@ namespace graphics
 	{
 		return (unsigned char)(value >> 24);
 	}
-
-	Color::Color(int v)
-	{
-		_v = v;
-	}
-	Color::~Color()
-	{
-	}
-
-	Color Color::Default(0);
 }

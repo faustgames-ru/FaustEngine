@@ -1,5 +1,5 @@
 #include "Uniforms.h"
-#include "UniformInfo.h"
+#include "Lazy.h"
 
 namespace graphics
 {
@@ -7,6 +7,10 @@ namespace graphics
 		_projection("projection", UniformType::Float4x4),
 		_texture("projection", UniformType::Sampler2D),
 		_shadowmap("projection", UniformType::Sampler2D)
+	{
+	}
+
+	Uniforms::~Uniforms()
 	{
 	}
 
@@ -23,12 +27,19 @@ namespace graphics
 		return &_shadowmap;
 	}
 	
-	Uniforms * Uniforms::_instance(0);
-
-	Uniforms * Uniforms::instance()
+	Uniforms * Uniforms::instanciate()
 	{
-		if (!_instance)
-			_instance = new Uniforms();
-		return _instance;
+		return new Uniforms();
+	}
+	void Uniforms::deinstanciate(Uniforms *value)
+	{
+		delete value;
+	}
+
+	core::Lazy<Uniforms> Uniforms::_instance(Uniforms::instanciate, Uniforms::deinstanciate);
+	
+	Uniforms * Uniforms::instance()
+	{		
+		return _instance.value();
 	}
 }

@@ -2,6 +2,7 @@
 #define GRAPHICSDEVICE_H
 
 #include "graphics.h"
+#include "RenderState.h"
 
 namespace graphics
 {
@@ -9,11 +10,14 @@ namespace graphics
 	{
 	public:
 		static int poolSize(){ return 1; }
+		RenderState renderState;
+		GraphicsDevice();
+		~GraphicsDevice();
 		void setClearState(unsigned int color, float depth);
 		void setViewPort(int x, int y, int width, int height);
 		void setRenderTarget(RenderTarget *renderPath);
 		void clear();
-		void drawPrimitives(RenderState *renderState, void *vertexBuffer, unsigned short *indexBuffer, int primitivesCount);
+		void drawPrimitives(void *vertexBuffer, unsigned short *indexBuffer, int primitivesCount);
 	};
 }
 

@@ -89,7 +89,11 @@
     <ClInclude Include="Effect.h" />
     <ClInclude Include="Effects.h" />
     <ClInclude Include="Lazy.h" />
+    <ClInclude Include="Math.h" />
+    <ClInclude Include="Matrix.h" />
     <ClInclude Include="ObjectsPool.h" />
+    <ClInclude Include="RenderState.h" />
+    <ClInclude Include="StaticArray.h" />
     <ClInclude Include="Uniform.h" />
     <ClInclude Include="UniformInfo.h" />
     <ClInclude Include="Errors.h" />
@@ -99,6 +103,7 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="Uniforms.h" />
+    <ClInclude Include="Vector.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\CommonSources\gen\llgePInvoke.cpp" />
@@ -114,6 +119,8 @@
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="Effects.cpp" />
     <ClCompile Include="Lazy.cpp" />
+    <ClCompile Include="Math.cpp" />
+    <ClCompile Include="Matrix.cpp" />
     <ClCompile Include="ObjectsPool.cpp" />
     <ClCompile Include="Uniform.cpp" />
     <ClCompile Include="UniformInfo.cpp" />

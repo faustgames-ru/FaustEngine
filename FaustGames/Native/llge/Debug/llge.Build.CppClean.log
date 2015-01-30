@@ -7,6 +7,8 @@ c:\_faust\faustengine\faustgames\native\llge\debug\color.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\effect.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\effects.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\lazy.obj
+c:\_faust\faustengine\faustgames\native\llge\debug\math.obj
+c:\_faust\faustengine\faustgames\native\llge\debug\matrix.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\objectspool.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\uniform.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\uniforminfo.obj

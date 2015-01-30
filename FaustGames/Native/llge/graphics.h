@@ -18,8 +18,10 @@ namespace graphics
 	{
 		enum e
 		{
+			None = 0x0,
 			Read = 0x01,
 			Write = 0x02,
+			ReadWrite = 0x03
 		};
 	};
 
@@ -31,8 +33,8 @@ namespace graphics
 			Float2,
 			Float3,
 			Float4,
-			Float3x3,
-			Float4x4,
+			Matrix3,
+			Matrix4,
 			Sampler2D,
 		};
 	};
@@ -42,6 +44,7 @@ namespace graphics
 
 	class Effect;
 	class UniformInfo;
+	class UniformValue;
 	class Uniform;
 	class VertexDeclaration;
 	class Texture;

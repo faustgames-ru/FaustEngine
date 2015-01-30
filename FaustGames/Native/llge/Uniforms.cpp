@@ -4,7 +4,7 @@
 namespace graphics
 {
 	Uniforms::Uniforms() :
-		_projection("projection", UniformType::Float4x4),
+		_projection("projection", UniformType::Matrix4),
 		_texture("projection", UniformType::Sampler2D),
 		_shadowmap("projection", UniformType::Sampler2D)
 	{

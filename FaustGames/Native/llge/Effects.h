@@ -2,21 +2,34 @@
 #define EFFECTS_H
 
 #include "graphics.h"
+#include "Effect.h"
 #include "Lazy.h"
 #include "UniformInfo.h"
+#include "Uniform.h"
 
 namespace graphics
 {
+	class EffectSolid
+	{
+		Effect _effect;
+		UniformValueMatrix _projection;
+		static std::string _solidPixelShader;
+		static std::string _solidVertexShader;
+	public:
+		EffectSolid();
+		~EffectSolid();
+		Effect *getEffect();
+		UniformValueMatrix *getProjection();
+	};
+	
 	class Effects
 	{
 	private:
 		static core::Lazy<Effects> _instance;
 		static Effects * instanciate();
 		static void deinstanciate(Effects *value);
-		static std::string _solidPixelShader;
-		static std::string _solidVertexShader;
-		
-		Effect * _solid;
+
+		EffectSolid _solid;
 
 		Effects();
 		~Effects();
@@ -24,8 +37,9 @@ namespace graphics
 		static Effects *instance();
 		void create();
 		void cleanup();
-		Effect * solid();
+		EffectSolid * solid();
 	};
 }
+
 
 #endif /*EFFECTS_H*/

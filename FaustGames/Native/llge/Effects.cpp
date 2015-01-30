@@ -8,31 +8,25 @@ namespace graphics
 {
 	Effects::Effects()
 	{
-		_solid = new Effect(_solidVertexShader.c_str(), _solidPixelShader.c_str());
-		_solid->addUniform(Uniforms::instance()->projection());
 	}
-	
 
 	void Effects::create()
 	{
-		_solid->create();
+		_solid.getEffect()->create();
 	}
 
 	void Effects::cleanup()
 	{
-		_solid->cleanup();
+		_solid.getEffect()->cleanup();
 	}
-
-
-	Effect * Effects::solid()
+	
+	EffectSolid * Effects::solid()
 	{
-		return _solid;
+		return &_solid;
 	}
-
-
+	
 	Effects::~Effects()
 	{
-		delete _solid;
 	}
 
 	Effects * Effects::instanciate()
@@ -53,7 +47,27 @@ namespace graphics
 		return _instance.value();
 	}
 
-	std::string Effects::_solidPixelShader(
+	EffectSolid::EffectSolid()
+	{
+		_effect.setCode(_solidVertexShader.c_str(), _solidPixelShader.c_str());
+		_effect.addUniform(Uniforms::instance()->projection(), &_projection);
+	}
+	
+	EffectSolid::~EffectSolid()
+	{
+	}
+
+	Effect *EffectSolid::getEffect()
+	{
+		return &_effect;
+	}
+	UniformValueMatrix *EffectSolid::getProjection()
+	{
+		return &_projection;
+	}
+
+
+	std::string EffectSolid::_solidPixelShader(
 "\
 void main() \
 {\
@@ -61,7 +75,7 @@ gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);\
 }\
 ");
 
-	std::string Effects::_solidVertexShader(
+	std::string EffectSolid::_solidVertexShader(
 "\
 attribute vec3 position;\
 uniform mat4 projection;\

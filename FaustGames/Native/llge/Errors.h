@@ -21,7 +21,10 @@ namespace graphics
 			DetachShader=8,
 			DeleteProgram=9,
 			DeleteShader=10,
-			EnumSize= 11,
+			GetUniformLocation = 11,
+			Uniform1f = 12,
+			UniformMatrix4fv = 13,
+			EnumSize = 14,
 		};
 
 		static std::string _names[EnumSize];

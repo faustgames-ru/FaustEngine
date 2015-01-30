@@ -5,16 +5,25 @@
 
 namespace graphics
 {
-	Effect::Effect(const char *vertexShaderCode, const char *pixelShaderCode)
+	Effect::Effect()
+	{
+	}
+
+	Effect::~Effect()
+	{
+	}
+
+
+	void Effect::setCode(const char *vertexShaderCode, const char *pixelShaderCode)
 	{
 		_vertexShaderCode = vertexShaderCode;
 		_pixelShaderCode = pixelShaderCode;
 	}
 
-	void Effect::addUniform(UniformInfo *uniformInfo)
+	Effect *Effect::addUniform(UniformInfo *uniformInfo, UniformValue *uniformValue)
 	{
-		Uniform *uniform = new Uniform(uniformInfo);
-		_uniforms.push_back(uniform);
+		_uniforms.addEmpty()->init(uniformInfo, uniformValue);
+		return this;
 	}
 
 
@@ -53,6 +62,12 @@ namespace graphics
 		}
 	}
 
+	GLuint Effect::getHandle()
+	{
+		return _shaderProgram;
+	}
+
+
 	void Effect::create()
 	{
 		_vertexShader = createShader(GL_VERTEX_SHADER, _vertexShaderCode.c_str());
@@ -72,6 +87,25 @@ namespace graphics
 		
 		glUseProgram(_shaderProgram);
 		Errors::check(Errors::UseProgram);
+
+		for (int i = 0; i < _uniforms.count; i++)
+		{
+			_uniforms.data[i].create(_shaderProgram);
+		}
+	}
+
+	void Effect::applyShader()
+	{
+		glUseProgram(_shaderProgram);
+		Errors::check(Errors::UseProgram);
+	}
+
+	void Effect::applyUniforms()
+	{
+		for (int i = 0; i < _uniforms.count; i++)
+		{
+			_uniforms.data[i].valueContainer->apply();
+		}
 	}
 
 	void Effect::cleanup()
@@ -88,7 +122,6 @@ namespace graphics
 		Errors::check(Errors::DeleteShader);
 		_shaderProgram = 0;
 		_pixelShader = 0;
-		_vertexShader = 0;
-		
+		_vertexShader = 0;		
 	}
 }

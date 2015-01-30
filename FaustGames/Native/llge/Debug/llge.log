@@ -1,5 +1,20 @@
-﻿  Effect.cpp
-  Generating Code...
-  Skipping... (no relevant changes detected)
+﻿  stdafx.cpp
+  Uniforms.cpp
+  RenderState.cpp
+  llge.cpp
+  GraphicsDevice.cpp
+  Errors.cpp
+  UniformInfo.cpp
+  Uniform.cpp
+  ObjectsPool.cpp
+  Matrix.cpp
+  Math.cpp
+  Lazy.cpp
   Effects.cpp
+  Effect.cpp
+  Color.cpp
+  llgePInvoke.cpp
+  Generating Code...
+  dllmain.cpp
+     Creating library C:\_faust\FaustEngine\FaustGames\Debug\llge.lib and object C:\_faust\FaustEngine\FaustGames\Debug\llge.exp
   llge.vcxproj -> C:\_faust\FaustEngine\FaustGames\Debug\llge.dll

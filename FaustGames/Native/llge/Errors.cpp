@@ -31,5 +31,8 @@ namespace graphics
 		"DetachShader",
 		"DeleteProgram",
 		"DeleteShader",
+		"GetUniformLocation",
+		"Uniform1f",
+		"UniformMatrix4fv",		
 	};
 }

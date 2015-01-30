@@ -45,9 +45,6 @@
     <ClInclude Include="..\..\CommonSources\include\llge.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="core.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Uniforms.h">
       <Filter>Header Files\Graphics</Filter>
     </ClInclude>
@@ -77,6 +74,24 @@
     </ClInclude>
     <ClInclude Include="Lazy.h">
       <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="StaticArray.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Math.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Matrix.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="core.h">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderState.h">
+      <Filter>Header Files\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -123,6 +138,12 @@
       <Filter>Source Files\Core</Filter>
     </ClCompile>
     <ClCompile Include="ObjectsPool.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Math.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Matrix.cpp">
       <Filter>Source Files\Core</Filter>
     </ClCompile>
   </ItemGroup>

@@ -3,6 +3,15 @@
 
 namespace graphics
 {
+	GraphicsDevice::GraphicsDevice()
+	{
+	}
+	
+	GraphicsDevice::~GraphicsDevice()
+	{
+	}
+
+
 	void GraphicsDevice::setClearState(unsigned int color, float depth)
 	{
 		glClearColor(
@@ -28,7 +37,7 @@ namespace graphics
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
 
-	void GraphicsDevice::drawPrimitives(RenderState *renderState, void *vertexBuffer, unsigned short *indexBuffer, int primitivesCount)
+	void GraphicsDevice::drawPrimitives(void *vertexBuffer, unsigned short *indexBuffer, int primitivesCount)
 	{
 	}
 }

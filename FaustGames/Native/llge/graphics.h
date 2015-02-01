@@ -29,15 +29,30 @@ namespace graphics
 	{
 		enum e
 		{
-			Float1,
-			Float2,
-			Float3,
-			Float4,
+			Float,
+			Vector2,
+			Vector3,
+			Vector4,
 			Matrix3,
 			Matrix4,
 			Sampler2D,
 		};
 	};
+
+	struct AttributeType
+	{
+		enum e
+		{
+			Float,
+			Vector2,
+			Vector3,
+			Vector4,
+			Color,
+			Normal,
+			TextureCoord,
+		};
+	};
+
 
 	class Uniforms;
 	class Effects;

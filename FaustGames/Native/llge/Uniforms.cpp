@@ -3,16 +3,9 @@
 
 namespace graphics
 {
-	Uniforms::Uniforms() :
-		_projection("projection", UniformType::Matrix4),
-		_texture("projection", UniformType::Sampler2D),
-		_shadowmap("projection", UniformType::Sampler2D)
-	{
-	}
-
-	Uniforms::~Uniforms()
-	{
-	}
+	UniformInfo Uniforms::_projection("projection", UniformType::Matrix4);
+	UniformInfo Uniforms::_texture("texture", UniformType::Sampler2D);
+	UniformInfo Uniforms::_shadowmap("shadowmap", UniformType::Sampler2D);
 
 	UniformInfo * Uniforms::projection()
 	{
@@ -25,21 +18,5 @@ namespace graphics
 	UniformInfo * Uniforms::shadowmap()
 	{
 		return &_shadowmap;
-	}
-	
-	Uniforms * Uniforms::instanciate()
-	{
-		return new Uniforms();
-	}
-	void Uniforms::deinstanciate(Uniforms *value)
-	{
-		delete value;
-	}
-
-	core::Lazy<Uniforms> Uniforms::_instance(Uniforms::instanciate, Uniforms::deinstanciate);
-	
-	Uniforms * Uniforms::instance()
-	{		
-		return _instance.value();
-	}
+	}	
 }

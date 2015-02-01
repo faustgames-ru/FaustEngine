@@ -6,7 +6,11 @@
 #include "ObjectsPool.h"
 #include "GraphicsDevice.h"
 #include "Effects.h"
+#include "VertexFormats.h"
 #include "llge.h"
+#include "core.h"
+#include "Texture.h"
+#include "TextureLoader.h"
 
 using namespace graphics;
 
@@ -16,6 +20,8 @@ namespace llge
 	{
 	private:
 		GraphicsDevice * _graphicsDevice;
+		core::MatrixContainer *projectionContatiner;
+		TextureImage2D _textures[16];
 	public:
 		static int poolSize() { return 1; }
 
@@ -38,33 +44,90 @@ namespace llge
 
 	RenderSystem::RenderSystem()
 	{
-		_graphicsDevice = core::Allocator::create<GraphicsDevice>();;
+		_graphicsDevice = new GraphicsDevice();;
+		//_graphicsDevice = core::Allocator::create<GraphicsDevice>();;
+		projectionContatiner = new core::MatrixContainer(core::Matrix::identity);
 	}
 
 	RenderSystem::~RenderSystem()
 	{
-		core::Allocator::release<GraphicsDevice>(_graphicsDevice);
+		//core::Allocator::release<GraphicsDevice>(_graphicsDevice);
+		delete _graphicsDevice;
+		delete projectionContatiner;
 	}
 	
 	void API_CALL RenderSystem::create()
 	{
 		Effects::instance()->create();
+		for (int i = 0; i < 16; i++)
+		{
+			_textures[i].create();
+			_textures[i].setData(TextureLoader::instance()->loadImage2DData(i));
+		}
 	}
+
+	struct PositionColor
+	{
+		PositionColor(float x, float y, float z, unsigned int color) : X(x), Y(y), Z(z), Color(color)
+		{
+		}
+		float X;
+		float Y;
+		float Z;
+		unsigned int Color;
+	};
+
+	struct PositionTextureColor
+	{
+		PositionTextureColor(float x, float y, float z, unsigned short u, unsigned short v, unsigned int color) : X(x), Y(y), Z(z), U(u), V(v), Color(color)
+		{
+		}
+		float X;
+		float Y;
+		float Z;
+		unsigned short U;
+		unsigned short V;
+		unsigned int Color;
+	};
+
+	PositionTextureColor vertexBuffer[4] =
+	{
+		PositionTextureColor(-0.5f, -0.5f, 0.5f, 0, 0, 0xff0000ff),
+		PositionTextureColor(0.5f, -0.5f, 0.5f, 0, 0xffff, 0xffff0000),
+		PositionTextureColor(0.5f, 0.5f, 0.5f, 0xffff, 0xffff, 0xff00ff00),
+		PositionTextureColor(-0.5f, 0.5f, 0.5f, 0xffff, 0, 0xffffffff),
+	};
+
+	unsigned short indexBuffer[6] = 
+	{
+		0, 1, 2,
+		0, 2, 3
+	};
 
 	void API_CALL RenderSystem::render()
 	{
 		_graphicsDevice->setClearState(0x7784aa, 1.0f);
 		_graphicsDevice->clear();
+		Effects::instance()->textureColor()->getProjection()->setValue(*projectionContatiner);
+		Effects::instance()->textureColor()->getTexture()->setValue(_textures[6].getHadler());
+		_graphicsDevice->renderState.setEffect(Effects::instance()->textureColor()->getEffect());
+		
+		_graphicsDevice->drawPrimitives(graphics::VertexFormats::instance()->positionTextureColor(), vertexBuffer, indexBuffer, 2);
 	}
 
 	void API_CALL RenderSystem::cleanup()
 	{
 		Effects::instance()->cleanup();
+		for (int i = 0; i < 16; i++)
+		{
+			_textures[i].cleanup();
+		}
 	}
 
 	void API_CALL RenderSystem::dispose()
 	{
-		core::Allocator::release<RenderSystem>(this);
+		delete this;
+		//core::Allocator::release<RenderSystem>(this);
 	}
 	
 	IRenderSystem * API_CALL Factory::createRenderSystem()
@@ -86,16 +149,19 @@ namespace llge
 			//throw std::exception("fail to init glew");
 		}
 
-		return core::Allocator::create<RenderSystem>();
+		return new RenderSystem();
+		//return core::Allocator::create<RenderSystem>();
 	}
 
 	void API_CALL Factory::dispose()
 	{
-		core::Allocator::release<Factory>(this);
+		delete this;
+		//core::Allocator::release<Factory>(this);
 	}
 
 	extern "C" DLLEXPORT IFactory * API_CALL createFactory()
 	{
-		return core::Allocator::create<Factory>();
+		return new Factory();
+		//return core::Allocator::create<Factory>();
 	}
 }

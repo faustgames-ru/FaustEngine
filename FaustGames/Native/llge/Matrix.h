@@ -53,6 +53,12 @@ namespace core
 		{
 			id = (++_id) << 16;
 		}
+		
+		inline MatrixContainer(const Matrix &value)
+		{
+			id = (++_id) << 16;
+			Value = value;
+		}
 	};
 }
 

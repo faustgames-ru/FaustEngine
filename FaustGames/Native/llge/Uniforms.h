@@ -2,29 +2,20 @@
 #define UNIFORMS_H
 
 #include "graphics.h"
-#include "core.h"
-#include "Lazy.h"
 #include "UniformInfo.h"
 
 namespace graphics
 {
 	class Uniforms
 	{
-	private:
-		static core::Lazy<Uniforms> _instance;
-		static Uniforms *instanciate();
-		static void deinstanciate(Uniforms *value);
-		UniformInfo _projection;
-		UniformInfo _texture;
-		UniformInfo _shadowmap;
-		Uniforms();
-		~Uniforms();
+	private:		
+		static UniformInfo _projection;		
+		static UniformInfo _texture;
+		static UniformInfo _shadowmap;
 	public:
-		static Uniforms *instance();
-
-		UniformInfo *projection();
-		UniformInfo *texture();
-		UniformInfo *shadowmap();
+		static UniformInfo *projection();
+		static UniformInfo *texture();
+		static UniformInfo *shadowmap();
 	};
 }
 

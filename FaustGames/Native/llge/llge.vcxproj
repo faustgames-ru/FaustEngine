@@ -85,6 +85,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\CommonSources\include\llge.h" />
+    <ClInclude Include="AttributeInfo.h" />
+    <ClInclude Include="Attributes.h" />
     <ClInclude Include="core.h" />
     <ClInclude Include="Effect.h" />
     <ClInclude Include="Effects.h" />
@@ -94,6 +96,8 @@
     <ClInclude Include="ObjectsPool.h" />
     <ClInclude Include="RenderState.h" />
     <ClInclude Include="StaticArray.h" />
+    <ClInclude Include="Texture.h" />
+    <ClInclude Include="TextureLoader.h" />
     <ClInclude Include="Uniform.h" />
     <ClInclude Include="UniformInfo.h" />
     <ClInclude Include="Errors.h" />
@@ -104,9 +108,13 @@
     <ClInclude Include="Color.h" />
     <ClInclude Include="Uniforms.h" />
     <ClInclude Include="Vector.h" />
+    <ClInclude Include="VertexFormat.h" />
+    <ClInclude Include="VertexFormats.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\CommonSources\gen\llgePInvoke.cpp" />
+    <ClCompile Include="AttributeInfo.cpp" />
+    <ClCompile Include="Attributes.cpp" />
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="dllmain.cpp">
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>
@@ -122,6 +130,8 @@
     <ClCompile Include="Math.cpp" />
     <ClCompile Include="Matrix.cpp" />
     <ClCompile Include="ObjectsPool.cpp" />
+    <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="TextureLoader.cpp" />
     <ClCompile Include="Uniform.cpp" />
     <ClCompile Include="UniformInfo.cpp" />
     <ClCompile Include="Errors.cpp" />
@@ -133,6 +143,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Uniforms.cpp" />
+    <ClCompile Include="VertexFormat.cpp" />
+    <ClCompile Include="VertexFormats.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

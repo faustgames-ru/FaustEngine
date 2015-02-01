@@ -13,8 +13,8 @@ namespace graphics
 	{
 		Effect _effect;
 		UniformValueMatrix _projection;
-		static std::string _solidPixelShader;
-		static std::string _solidVertexShader;
+		static std::string _pixelShader;
+		static std::string _vertexShader;
 	public:
 		EffectSolid();
 		~EffectSolid();
@@ -22,6 +22,34 @@ namespace graphics
 		UniformValueMatrix *getProjection();
 	};
 	
+	class EffectSolidColor
+	{
+		Effect _effect;
+		UniformValueMatrix _projection;
+		static std::string _pixelShader;
+		static std::string _vertexShader;
+	public:
+		EffectSolidColor();
+		~EffectSolidColor();
+		Effect *getEffect();
+		UniformValueMatrix *getProjection();
+	};
+
+	class EffectTextureColor
+	{
+		Effect _effect;
+		UniformValueMatrix _projection;
+		UniformValueTexture _texture;
+		static std::string _pixelShader;
+		static std::string _vertexShader;
+	public:
+		EffectTextureColor();
+		~EffectTextureColor();
+		Effect *getEffect();
+		UniformValueMatrix *getProjection();
+		UniformValueTexture *getTexture();
+	};
+
 	class Effects
 	{
 	private:
@@ -30,6 +58,8 @@ namespace graphics
 		static void deinstanciate(Effects *value);
 
 		EffectSolid _solid;
+		EffectSolidColor _solidColor;
+		EffectTextureColor _textureColor;
 
 		Effects();
 		~Effects();
@@ -38,6 +68,8 @@ namespace graphics
 		void create();
 		void cleanup();
 		EffectSolid * solid();
+		EffectSolidColor * solidColor();
+		EffectTextureColor * textureColor();
 	};
 }
 

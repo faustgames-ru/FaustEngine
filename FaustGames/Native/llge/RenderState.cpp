@@ -5,11 +5,13 @@
 
 namespace graphics
 {
-	RenderState::RenderState()
+	RenderState::RenderState() 
+		:_effect(0, false),
+		_depthState(DepthState::None, true),
+		_blendState(BlendState::Alpha, true),
+		_attributesState(0, 0, false),
+		_attributesCount(0)
 	{
-		setEffect(Effects::instance()->solid()->getEffect());
-		setBlend(BlendState::Alpha);
-		setDepth(DepthState::None);
 	}
 	
 	RenderState::~RenderState()
@@ -31,7 +33,11 @@ namespace graphics
 		_depthState.setState(depthState);
 	}
 	
-	void RenderState::apply()
+	void RenderState::setAttributesState(VertexFormat *format)
+	{
+	}
+
+	void RenderState::apply(VertexFormat *vertexFormat, void *vertexData)
 	{
 		if (!_depthState.isEqual())
 		{
@@ -44,7 +50,19 @@ namespace graphics
 		}
 
 		if (!_effect.isEqual())
+		{
 			_effect.getValue()->applyShader();
+			_attributesState.setState(_effect.getValue()->getAttributesMask());
+			if (!_attributesState.isEqual())
+			{
+				int max = _effect.getValue()->getAttributesMax();
+				if (_attributesCount < max)
+					_attributesCount = max;
+				Effect::applyState(_attributesState.getPrevValue(), _attributesState.getValue(), _attributesCount);
+			}
+		}
 		_effect.getValue()->applyUniforms();
+		_effect.getValue()->applyVertexData(vertexFormat, vertexData);
+
 	}
 }

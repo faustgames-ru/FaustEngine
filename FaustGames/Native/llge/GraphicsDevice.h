@@ -17,7 +17,7 @@ namespace graphics
 		void setViewPort(int x, int y, int width, int height);
 		void setRenderTarget(RenderTarget *renderPath);
 		void clear();
-		void drawPrimitives(void *vertexBuffer, unsigned short *indexBuffer, int primitivesCount);
+		void drawPrimitives(VertexFormat *vertexFormat, void *vertexBuffer, unsigned short *indexBuffer, int primitivesCount);
 	};
 }
 

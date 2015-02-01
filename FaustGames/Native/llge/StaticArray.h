@@ -25,8 +25,7 @@ namespace core
 
 		T * addEmpty()
 		{
-			return &(data[count]);
-			++count;
+			return &(data[count++]);
 		}
 		
 		void add(T value)

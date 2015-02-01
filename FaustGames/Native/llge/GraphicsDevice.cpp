@@ -1,5 +1,6 @@
 #include "GraphicsDevice.h"
 #include "Color.h"
+#include "Errors.h"
 
 namespace graphics
 {
@@ -37,7 +38,11 @@ namespace graphics
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
 
-	void GraphicsDevice::drawPrimitives(void *vertexBuffer, unsigned short *indexBuffer, int primitivesCount)
+	void GraphicsDevice::drawPrimitives(VertexFormat *vertexFormat, void *vertexBuffer, unsigned short *indexBuffer, int primitivesCount)
 	{
+		renderState.apply(vertexFormat, vertexBuffer);
+		glDrawElements(GL_TRIANGLES, primitivesCount * 3, GL_UNSIGNED_SHORT, indexBuffer);
+		Errors::check(Errors::DrawElements);
 	}
+
 }

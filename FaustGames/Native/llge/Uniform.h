@@ -12,13 +12,15 @@ namespace graphics
 	private:
 		GLuint _parameterHandler;
 		UniformInfo *_info;
+		int _samplerIndex;
 	public:
 		UniformValue *valueContainer;
 		Uniform();
 		~Uniform();
+		inline int getSamplerIndex(){ return _samplerIndex; }
 		UniformInfo *getInfo();
 		void init(UniformInfo *info, UniformValue *value);
-		void create(GLuint shaderProgram);
+		void create(Effect *effect);
 		GLuint getHandle();
 	};
 
@@ -52,7 +54,18 @@ namespace graphics
 		bool _equal;
 	public:
 		UniformValueMatrix();
-		void setValue(const core::MatrixContainer value);
+		void setValue(const core::MatrixContainer &value);
+		virtual void apply();
+	};
+
+	class UniformValueTexture : public UniformValue
+	{
+	private:
+		GLuint _value;
+		bool _equal;
+	public:
+		UniformValueTexture();
+		void setValue(GLuint value);
 		virtual void apply();
 	};
 }

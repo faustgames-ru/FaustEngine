@@ -23,7 +23,7 @@ namespace GameSampleWindowForms
             InitializeComponent();
             if (components == null)
                 components = new Container();
-            _oglWindow = new OGLWindow(this, Width, Height);
+            _oglWindow = new OGLWindow(this, ClientSize.Width, ClientSize.Height);
             components.Add(new DisposableContainerComponent(_oglWindow));
 
             _factory = llge.llge.CreateFactory();

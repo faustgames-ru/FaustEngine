@@ -22,9 +22,20 @@ namespace graphics
 			DeleteProgram=9,
 			DeleteShader=10,
 			GetUniformLocation = 11,
-			Uniform1f = 12,
-			UniformMatrix4fv = 13,
-			EnumSize = 14,
+			GetAttribLocation = 12,
+			BindAttribLocation = 13,
+			Uniform1f = 14, 
+			UniformMatrix4fv = 15,
+			EnableVertexAttribArray=16,
+			DisableVertexAttribArray = 17,
+			DrawElements = 18,
+			CreateTexture = 19,
+			BindTexture = 20,
+			TexImage2D = 21,
+			TexParameteri = 22,
+			DeleteTexture = 23,
+			ActiveTexture = 24,
+			EnumSize = 25,
 		};
 
 		static std::string _names[EnumSize];

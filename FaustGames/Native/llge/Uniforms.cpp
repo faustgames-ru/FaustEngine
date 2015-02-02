@@ -19,4 +19,9 @@ namespace graphics
 	{
 		return &_shadowmap;
 	}	
+
+	UniformValueMatrix UniformValues::_projection;
+	UniformValueTexture UniformValues::_texture;
+	UniformValueTexture UniformValues::_shadowmap;
+
 }

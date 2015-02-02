@@ -63,7 +63,6 @@ namespace graphics
 	class Uniform;
 	class VertexDeclaration;
 	class Texture;
-	class RenderTarget;
 	class RenderState;
 	class GraphicsDevice;
 	class Color;

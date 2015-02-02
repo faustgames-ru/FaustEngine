@@ -4,29 +4,23 @@
 #include "graphics.h"
 #include "VertexFormat.h"
 #include "Lazy.h"
+#include "VertexFormatPosition.h"
+#include "VertexFormatPositionColor.h"
+#include "VertexFormatPositionTextureColor.h"
 
 namespace graphics
 {
 	class VertexFormats
 	{
 	private:
-		static core::Lazy<VertexFormats> _instance;
-		
-		static VertexFormats *instanciate();
-		static void deinstanciate(VertexFormats *value);
-		
-		VertexFormat _position;
-		VertexFormat _positionColor;
-		VertexFormat _positionTextureColor;
-
-		VertexFormats();
-		~VertexFormats();
+		static VertexFormatPosition _position;
+		static VertexFormatPositionColor _positionColor;
+		static VertexFormatPositionTextureColor _positionTextureColor;
 	public:
-		static VertexFormats * instance();
-		
-		VertexFormat *position();
-		VertexFormat *positionColor();
-		VertexFormat *positionTextureColor();
+		static void create();
+		static VertexFormat *position();
+		static VertexFormat *positionColor();
+		static VertexFormat *positionTextureColor();
 	};
 }
 

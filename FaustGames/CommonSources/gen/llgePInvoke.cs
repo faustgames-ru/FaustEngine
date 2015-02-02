@@ -15,6 +15,13 @@ namespace llge
 	public class RenderSystem
 	{
 		public IntPtr ClassInstance;
+		public void Viewport (int width, int height)
+		{
+			llge_RenderSystem_viewport(ClassInstance, width, height);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_RenderSystem_viewport (IntPtr classInstance, int width, int height);
 		public void Create ()
 		{
 			llge_RenderSystem_create(ClassInstance);

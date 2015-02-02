@@ -18,9 +18,9 @@ namespace graphics
 	{
 	}
 
-	void RenderState::setEffect(Effect *effect)
+	void RenderState::setEffect(EffectBase *effect)
 	{
-		_effect.setState(effect);
+		_effect.setState(effect->getEffect());
 	}
 	
 	void RenderState::setBlend(BlendState::e blendState)

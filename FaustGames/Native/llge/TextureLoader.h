@@ -2,33 +2,23 @@
 #define TEXTURE_LOADER_H
 
 #include "graphics.h"
+#include "Image2dData.h"
 
 namespace graphics
-{
-	class Image2DData
-	{
-	public:
-		int Width;
-		int Height;
-		unsigned int *Pixels;
-		Image2DData(int bufferSize);
-		Image2DData(int width, int height);
-		~Image2DData();
-	};
-	
+{	
 	class TextureAbstractLoader
 	{
 	public:
-		virtual Image2DData * loadImage2DData(int id) = 0;
+		virtual Image2dData * loadImage2dData(int id) = 0;
 	};
 
 	class TextureTestLoader : public TextureAbstractLoader
 	{
 	private:
-		Image2DData _data;
+		Image2dData _data;
 	public:
 		TextureTestLoader();
-		virtual Image2DData * loadImage2DData(int id);
+		virtual Image2dData * loadImage2dData(int id);
 	};
 
 	class TextureLoader

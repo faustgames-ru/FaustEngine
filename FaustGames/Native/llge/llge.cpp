@@ -10,7 +10,10 @@
 #include "llge.h"
 #include "core.h"
 #include "Texture.h"
+#include "TextureImage2d.h"
+#include "TextureRenderTarget2d.h"
 #include "TextureLoader.h"
+#include "Uniforms.h"
 
 using namespace graphics;
 
@@ -21,12 +24,14 @@ namespace llge
 	private:
 		GraphicsDevice * _graphicsDevice;
 		core::MatrixContainer *projectionContatiner;
-		TextureImage2D _textures[16];
+		TextureImage2d _textures[16];
+		TextureRenderTarget2d _lightMap;
 	public:
 		static int poolSize() { return 1; }
 
 		RenderSystem();
 		virtual ~RenderSystem();
+		virtual void API_CALL viewport(int width, int height);
 		virtual void API_CALL create();
 		virtual void API_CALL render();
 		virtual void API_CALL cleanup();
@@ -56,13 +61,21 @@ namespace llge
 		delete projectionContatiner;
 	}
 	
+	void API_CALL RenderSystem::viewport(int width, int height)
+	{
+		_graphicsDevice->setViewport(0, 0, width, height);
+	}
+
+
 	void API_CALL RenderSystem::create()
 	{
-		Effects::instance()->create();
+		Effects::create();
+		VertexFormats::create();
+		_lightMap.create(256, 256);
 		for (int i = 0; i < 16; i++)
 		{
 			_textures[i].create();
-			_textures[i].setData(TextureLoader::instance()->loadImage2DData(i));
+			_textures[i].setData(TextureLoader::instance()->loadImage2dData(i));
 		}
 	}
 
@@ -89,16 +102,51 @@ namespace llge
 		unsigned short V;
 		unsigned int Color;
 	};
-
-	PositionTextureColor vertexBuffer[4] =
+	PositionTextureColor vertexBuffers0[][4] =
 	{
-		PositionTextureColor(-0.5f, -0.5f, 0.5f, 0, 0, 0xff0000ff),
-		PositionTextureColor(0.5f, -0.5f, 0.5f, 0, 0xffff, 0xffff0000),
-		PositionTextureColor(0.5f, 0.5f, 0.5f, 0xffff, 0xffff, 0xff00ff00),
-		PositionTextureColor(-0.5f, 0.5f, 0.5f, 0xffff, 0, 0xffffffff),
+		{
+			PositionTextureColor(-1.0f, -0.5f, 0.5f, 0, 0, 0xff0000ff),
+			PositionTextureColor(-0.5f, -0.5f, 0.5f, 0, 0xffff, 0xffff0000),
+			PositionTextureColor(-0.5f, 0.5f, 0.5f, 0xffff, 0xffff, 0xff00ff00),
+			PositionTextureColor(-1.0f, 0.5f, 0.5f, 0xffff, 0, 0xffffffff),
+		},
+		{
+			PositionTextureColor(-0.5f, -0.5f, 0.5f, 0, 0, 0xff0000ff),
+			PositionTextureColor(0.0f, -0.5f, 0.5f, 0, 0xffff, 0xffff0000),
+			PositionTextureColor(0.0f, 0.5f, 0.5f, 0xffff, 0xffff, 0xff00ff00),
+			PositionTextureColor(-0.5f, 0.5f, 0.5f, 0xffff, 0, 0xffffffff),
+		},
+		{
+			PositionTextureColor(0.0f, -0.5f, 0.5f, 0, 0, 0xff0000ff),
+			PositionTextureColor(0.5f, -0.5f, 0.5f, 0, 0xffff, 0xffff0000),
+			PositionTextureColor(0.5f, 0.5f, 0.5f, 0xffff, 0xffff, 0xff00ff00),
+			PositionTextureColor(0.0f, 0.5f, 0.5f, 0xffff, 0, 0xffffffff),
+		},
+		{
+			PositionTextureColor(0.5f, -0.5f, 0.5f, 0, 0, 0xff0000ff),
+			PositionTextureColor(1.0f, -0.5f, 0.5f, 0, 0xffff, 0xffff0000),
+			PositionTextureColor(1.0f, 0.5f, 0.5f, 0xffff, 0xffff, 0xff00ff00),
+			PositionTextureColor(0.5f, 0.5f, 0.5f, 0xffff, 0, 0xffffffff),
+		}
 	};
 
-	unsigned short indexBuffer[6] = 
+	PositionTextureColor vertexBuffers1[][4] =
+	{
+		{
+			PositionTextureColor(-0.5f, -1.0f, 0.5f, 0, 0, 0xffffffff),
+			PositionTextureColor(-0.5f, 0.0f, 0.5f, 0, 0xffff, 0xffffffff),
+			PositionTextureColor(0.5f, 0.0f, 0.5f, 0xffff, 0xffff, 0xffffffff),
+			PositionTextureColor(0.5f, -1.0f, 0.5f, 0xffff, 0, 0xffffffff),
+		},
+		{
+			PositionTextureColor(-0.5f, 0.0f, 0.5f, 0, 0, 0xffffffff),
+			PositionTextureColor(-0.5f, 1.0f, 0.5f, 0, 0xffff, 0xffffffff),
+			PositionTextureColor(0.5f, 1.0f, 0.5f, 0xffff, 0xffff, 0xffffffff),
+			PositionTextureColor(0.5f, 0.0f, 0.5f, 0xffff, 0, 0xffffffff),
+		}
+	};
+
+	unsigned short indexBuffer[6] =
 	{
 		0, 1, 2,
 		0, 2, 3
@@ -106,18 +154,32 @@ namespace llge
 
 	void API_CALL RenderSystem::render()
 	{
+		UniformValues::projection()->setValue(*projectionContatiner);
+		
+		_graphicsDevice->setRenderTarget(&_lightMap);
+		_graphicsDevice->setClearState(0x7784ff, 1.0f);
+		_graphicsDevice->clear();		
+		_graphicsDevice->renderState.setEffect(Effects::textureColor());
+		for (int i = 0; i < 4; i++)
+		{
+			UniformValues::texture()->setValue(_textures[5 + i].getHandle());
+			_graphicsDevice->drawPrimitives(VertexFormats::positionTextureColor(), vertexBuffers0[i], indexBuffer, 2);
+		}
+		_graphicsDevice->setRenderTarget(0);
+		
 		_graphicsDevice->setClearState(0x7784aa, 1.0f);
 		_graphicsDevice->clear();
-		Effects::instance()->textureColor()->getProjection()->setValue(*projectionContatiner);
-		Effects::instance()->textureColor()->getTexture()->setValue(_textures[6].getHadler());
-		_graphicsDevice->renderState.setEffect(Effects::instance()->textureColor()->getEffect());
-		
-		_graphicsDevice->drawPrimitives(graphics::VertexFormats::instance()->positionTextureColor(), vertexBuffer, indexBuffer, 2);
+		_graphicsDevice->renderState.setEffect(Effects::textureColor());
+		UniformValues::texture()->setValue(_lightMap.getHandle());
+		_graphicsDevice->drawPrimitives(VertexFormats::positionTextureColor(), vertexBuffers1[0], indexBuffer, 2);
+		UniformValues::texture()->setValue(_textures[6].getHandle());
+		_graphicsDevice->drawPrimitives(VertexFormats::positionTextureColor(), vertexBuffers1[1], indexBuffer, 2);
 	}
 
 	void API_CALL RenderSystem::cleanup()
 	{
-		Effects::instance()->cleanup();
+		Effects::cleanup();
+		_lightMap.cleanup();
 		for (int i = 0; i < 16; i++)
 		{
 			_textures[i].cleanup();

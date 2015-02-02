@@ -6,6 +6,11 @@
 
 namespace llge
 {
+	extern "C" DLLEXPORT void API_CALL llge_RenderSystem_viewport (IRenderSystem * classInstance, int width, int height)
+	{
+		classInstance->viewport(width, height);
+	}
+	
 	extern "C" DLLEXPORT void API_CALL llge_RenderSystem_create (IRenderSystem * classInstance)
 	{
 		classInstance->create();

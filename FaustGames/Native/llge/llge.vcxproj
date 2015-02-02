@@ -85,19 +85,30 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\CommonSources\include\llge.h" />
+    <ClInclude Include="Aabb2d.h" />
     <ClInclude Include="AttributeInfo.h" />
     <ClInclude Include="Attributes.h" />
     <ClInclude Include="core.h" />
     <ClInclude Include="Effect.h" />
+    <ClInclude Include="EffectBase.h" />
     <ClInclude Include="Effects.h" />
+    <ClInclude Include="EffectSolid.h" />
+    <ClInclude Include="EffectSolidColor.h" />
+    <ClInclude Include="EffectTextureColor.h" />
+    <ClInclude Include="Image2dData.h" />
     <ClInclude Include="Lazy.h" />
     <ClInclude Include="Math.h" />
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="ObjectsPool.h" />
+    <ClInclude Include="Quadtree2d.h" />
     <ClInclude Include="RenderState.h" />
+    <ClInclude Include="State.h" />
+    <ClInclude Include="StateCompare.h" />
     <ClInclude Include="StaticArray.h" />
     <ClInclude Include="Texture.h" />
+    <ClInclude Include="TextureImage2d.h" />
     <ClInclude Include="TextureLoader.h" />
+    <ClInclude Include="TextureRenderTarget2d.h" />
     <ClInclude Include="Uniform.h" />
     <ClInclude Include="UniformInfo.h" />
     <ClInclude Include="Errors.h" />
@@ -107,12 +118,20 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="Uniforms.h" />
+    <ClInclude Include="UniformValue.h" />
+    <ClInclude Include="UniformValueFloat.h" />
+    <ClInclude Include="UniformValueMatrix.h" />
+    <ClInclude Include="UniformValueTexture.h" />
     <ClInclude Include="Vector.h" />
     <ClInclude Include="VertexFormat.h" />
+    <ClInclude Include="VertexFormatPosition.h" />
+    <ClInclude Include="VertexFormatPositionColor.h" />
+    <ClInclude Include="VertexFormatPositionTextureColor.h" />
     <ClInclude Include="VertexFormats.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\CommonSources\gen\llgePInvoke.cpp" />
+    <ClCompile Include="Aabb2d.cpp" />
     <ClCompile Include="AttributeInfo.cpp" />
     <ClCompile Include="Attributes.cpp" />
     <ClCompile Include="Color.cpp" />
@@ -125,13 +144,21 @@
       </PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Effect.cpp" />
+    <ClCompile Include="EffectBase.cpp" />
     <ClCompile Include="Effects.cpp" />
+    <ClCompile Include="EffectSolid.cpp" />
+    <ClCompile Include="EffectSolidColor.cpp" />
+    <ClCompile Include="EffectTextureColor.cpp" />
+    <ClCompile Include="Image2dData.cpp" />
     <ClCompile Include="Lazy.cpp" />
     <ClCompile Include="Math.cpp" />
     <ClCompile Include="Matrix.cpp" />
     <ClCompile Include="ObjectsPool.cpp" />
+    <ClCompile Include="Quadtree2d.cpp" />
     <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="TextureImage2d.cpp" />
     <ClCompile Include="TextureLoader.cpp" />
+    <ClCompile Include="TextureRenderTarget2d.cpp" />
     <ClCompile Include="Uniform.cpp" />
     <ClCompile Include="UniformInfo.cpp" />
     <ClCompile Include="Errors.cpp" />
@@ -143,6 +170,10 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Uniforms.cpp" />
+    <ClCompile Include="UniformValue.cpp" />
+    <ClCompile Include="UniformValueFloat.cpp" />
+    <ClCompile Include="UniformValueMatrix.cpp" />
+    <ClCompile Include="UniformValueTexture.cpp" />
     <ClCompile Include="VertexFormat.cpp" />
     <ClCompile Include="VertexFormats.cpp" />
   </ItemGroup>

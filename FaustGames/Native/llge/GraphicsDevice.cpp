@@ -1,6 +1,7 @@
 #include "GraphicsDevice.h"
 #include "Color.h"
 #include "Errors.h"
+#include "UniformValueTexture.h"
 
 namespace graphics
 {
@@ -24,18 +25,44 @@ namespace graphics
 	}
 
 
-	void GraphicsDevice::setViewPort(int x, int y, int width, int height)
+	void GraphicsDevice::setViewport(int x, int y, int width, int height)
 	{
+		_viewportX = x;
+		_viewportY = y;
+		_viewportWidth = width;
+		_viewportHeight = height;
 		glViewport(x, y, width, height);
+		Errors::check(Errors::Viewport);
 	}
 
-	void GraphicsDevice::setRenderTarget(RenderTarget *renderPath)
+	void GraphicsDevice::setRenderTarget(TextureRenderTarget2d *renderTarget)
 	{
+		if (!renderTarget)
+		{
+			glBindFramebuffer(GL_FRAMEBUFFER, 0);
+			Errors::check(Errors::BindFramebuffer);
+			glViewport(_viewportX, _viewportY, _viewportWidth, _viewportHeight);
+			Errors::check(Errors::Viewport);
+		}
+		else
+		{
+			glBindFramebuffer(GL_FRAMEBUFFER, renderTarget->getFramebuffer());
+			Errors::check(Errors::BindFramebuffer);
+			/*
+			GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+			Errors::check(Errors::CheckFramebufferStatus);
+			if (status != GL_FRAMEBUFFER_COMPLETE)
+				return;
+			*/
+			glViewport(0, 0, renderTarget->getWidth(), renderTarget->getHeight());
+			Errors::check(Errors::Viewport);
+		}
 	}
 
 	void GraphicsDevice::clear()
 	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		Errors::check(Errors::Clear);
 	}
 
 	void GraphicsDevice::drawPrimitives(VertexFormat *vertexFormat, void *vertexBuffer, unsigned short *indexBuffer, int primitivesCount)

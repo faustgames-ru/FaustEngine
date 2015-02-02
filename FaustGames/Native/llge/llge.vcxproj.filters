@@ -28,6 +28,24 @@
     <Filter Include="Header Files\Core">
       <UniqueIdentifier>{7c7c49db-3df7-479c-80ea-2da0a572b5df}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Graphics\Effects">
+      <UniqueIdentifier>{bdf65718-d3e3-4b61-b4c7-d28cb8602894}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Graphics\Effects">
+      <UniqueIdentifier>{25d1e73d-d8ac-427e-afe7-6a5b34e8d9dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Graphics\VertexFormats">
+      <UniqueIdentifier>{f9867279-9406-4a93-a98d-8e035674016a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Graphics\VertexFormats">
+      <UniqueIdentifier>{d5789456-192b-4a51-8e5a-49a72a841c82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Geometry">
+      <UniqueIdentifier>{b3cb2acb-82df-430b-9984-fde21603b912}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Geometry">
+      <UniqueIdentifier>{317de902-fb3e-4dc0-9fa5-290dee02c5f8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -87,9 +105,6 @@
     <ClInclude Include="Vector.h">
       <Filter>Header Files\Core</Filter>
     </ClInclude>
-    <ClInclude Include="RenderState.h">
-      <Filter>Header Files\Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="AttributeInfo.h">
       <Filter>Header Files\Graphics</Filter>
     </ClInclude>
@@ -110,6 +125,63 @@
     </ClInclude>
     <ClInclude Include="TextureLoader.h">
       <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="EffectSolid.h">
+      <Filter>Header Files\Graphics\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="EffectSolidColor.h">
+      <Filter>Header Files\Graphics\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="EffectTextureColor.h">
+      <Filter>Header Files\Graphics\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="State.h">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="StateCompare.h">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderState.h">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureImage2d.h">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Image2dData.h">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="UniformValue.h">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="UniformValueFloat.h">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="UniformValueMatrix.h">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="UniformValueTexture.h">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="EffectBase.h">
+      <Filter>Header Files\Graphics\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexFormatPosition.h">
+      <Filter>Header Files\Graphics\VertexFormats</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexFormatPositionColor.h">
+      <Filter>Header Files\Graphics\VertexFormats</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexFormatPositionTextureColor.h">
+      <Filter>Header Files\Graphics\VertexFormats</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureRenderTarget2d.h">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Aabb2d.h">
+      <Filter>Header Files\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Quadtree2d.h">
+      <Filter>Header Files\Geometry</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -181,6 +253,45 @@
     </ClCompile>
     <ClCompile Include="Texture.cpp">
       <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="EffectSolid.cpp">
+      <Filter>Source Files\Graphics\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="EffectSolidColor.cpp">
+      <Filter>Source Files\Graphics\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="EffectTextureColor.cpp">
+      <Filter>Source Files\Graphics\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureImage2d.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Image2dData.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="UniformValue.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="UniformValueFloat.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="UniformValueMatrix.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="UniformValueTexture.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="EffectBase.cpp">
+      <Filter>Source Files\Graphics\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureRenderTarget2d.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Aabb2d.cpp">
+      <Filter>Source Files\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Quadtree2d.cpp">
+      <Filter>Source Files\Geometry</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

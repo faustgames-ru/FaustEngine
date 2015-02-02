@@ -9,6 +9,7 @@ namespace llge
 	class IRenderSystem
 	{
 	public:		
+		virtual void API_CALL viewport(int width, int height) = 0;
 		virtual void API_CALL create() = 0;
 		virtual void API_CALL render() = 0;
 		virtual void API_CALL cleanup() = 0;

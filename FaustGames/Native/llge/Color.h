@@ -12,6 +12,8 @@ namespace graphics
 		static unsigned char getG(unsigned int value);
 		static unsigned char getB(unsigned int value);
 		static unsigned char getA(unsigned int value);
+	protected:
+	private:
 	};
 }
 

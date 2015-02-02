@@ -8,14 +8,15 @@ namespace graphics
 {
 	class Attributes
 	{
-	private:
-		static AttributeInfo _position;
-		static AttributeInfo _textureCoords;
-		static AttributeInfo _color;
 	public:
 		static AttributeInfo *position();
 		static AttributeInfo *textureCoords();
 		static AttributeInfo *color();
+	protected:
+	private:
+		static AttributeInfo _position;
+		static AttributeInfo _textureCoords;
+		static AttributeInfo _color;
 	};
 }
 

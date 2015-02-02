@@ -12,14 +12,7 @@ namespace graphics
 
 	VertexFormat *VertexFormat::addAttribute(AttributeInfo *info)
 	{
-		// todo: add attribute
-		
-		int i = info->getLocation();
-		_attributes[i].ElementsCount = info->getElementsCount();
-		_attributes[i].ElementType = info->getElementType();
-		_attributes[i].Normalized = info->getNormalized();		
-		_attributes[i].Offset = _stride;
-		_stride += info->getElementsSize();
+		_attributesInfos.add(info);
 		return this;
 	}
 
@@ -27,5 +20,21 @@ namespace graphics
 	{
 		return &(_attributes[location]);
 	}
+
+	void VertexFormat::create()
+	{
+		_stride = 0;
+		for (int j = 0; j < _attributesInfos.count; j++)
+		{
+			AttributeInfo *info = _attributesInfos.data[j];
+			int i = info->getLocation();
+			_attributes[i].ElementsCount = info->getElementsCount();
+			_attributes[i].ElementType = info->getElementType();
+			_attributes[i].Normalized = info->getNormalized();
+			_attributes[i].Offset = _stride;
+			_stride += info->getElementsSize();
+		}
+	}
+
 
 }

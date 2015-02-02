@@ -5,20 +5,6 @@ namespace graphics
 {
 	TextureTestLoader TextureLoader::_testLoader;
 
-	Image2DData::Image2DData(int bufferSize)
-	{
-		Pixels = new unsigned int[bufferSize];
-	}
-
-	Image2DData::Image2DData(int width, int height) : Width(width), Height(height)
-	{
-		Pixels = new unsigned int[Width * Height];
-	}
-	Image2DData::~Image2DData()
-	{
-		delete[] Pixels;
-	}
-
 	TextureAbstractLoader * TextureLoader::instance()
 	{
 		return &_testLoader;
@@ -29,7 +15,7 @@ namespace graphics
 	{
 	}
 
-	Image2DData * TextureTestLoader::loadImage2DData(int id)
+	Image2dData * TextureTestLoader::loadImage2dData(int id)
 	{
 		_data.Width = 2;
 		_data.Height = 2;

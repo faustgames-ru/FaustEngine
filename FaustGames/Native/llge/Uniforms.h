@@ -3,19 +3,34 @@
 
 #include "graphics.h"
 #include "UniformInfo.h"
+#include "UniformValueFloat.h"
+#include "UniformValueMatrix.h"
+#include "UniformValueTexture.h"
 
 namespace graphics
 {
 	class Uniforms
 	{
-	private:		
-		static UniformInfo _projection;		
-		static UniformInfo _texture;
-		static UniformInfo _shadowmap;
 	public:
 		static UniformInfo *projection();
 		static UniformInfo *texture();
 		static UniformInfo *shadowmap();
+	private:
+		static UniformInfo _projection;		
+		static UniformInfo _texture;
+		static UniformInfo _shadowmap;
+	};
+
+	class UniformValues
+	{
+	public:
+		static inline UniformValueMatrix *projection(){ return &_projection; }
+		static inline UniformValueTexture *texture(){ return &_texture; }
+		static inline UniformValueTexture *shadowmap(){ return &_shadowmap; }
+	private:
+		static UniformValueMatrix _projection;
+		static UniformValueTexture _texture;
+		static UniformValueTexture _shadowmap;
 	};
 }
 

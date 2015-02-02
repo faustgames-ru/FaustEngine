@@ -17,15 +17,17 @@ namespace graphics
 
 	class VertexFormat
 	{
-	private:
-		AttributeFormat _attributes[32];
-		int _stride;
 	public:
 		VertexFormat();
 		~VertexFormat();
 		VertexFormat *addAttribute(AttributeInfo *info);
 		AttributeFormat *getFormat(GLuint location);
 		inline int getStride(){ return _stride; }
+		void create();
+	private:
+		AttributeFormat _attributes[32];
+		core::StaticArray<AttributeInfo *, 32> _attributesInfos;
+		int _stride;
 	};
 }
 

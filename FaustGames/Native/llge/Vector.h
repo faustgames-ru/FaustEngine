@@ -11,9 +11,17 @@ namespace core
 	private:
 		float _values[2];
 	public:
-		inline const float *getData(){ return _values; }
-		inline const float getX(){ return _values[0]; }
-		inline const float getY(){ return _values[1]; }
+		Vector2(){}
+		Vector2(float x, float y)
+		{
+			_values[0] = x;
+			_values[1] = y;
+		}
+		inline const float *getData() const { return _values; }
+		inline const float getX() const { return _values[0]; }
+		inline const float getY() const { return _values[1]; }
+		inline void setX(float value){ _values[0] = value; }
+		inline void setY(float value){ _values[1] = value; }
 	};
 
 	class Vector3

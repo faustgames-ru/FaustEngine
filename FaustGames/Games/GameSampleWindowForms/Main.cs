@@ -33,6 +33,7 @@ namespace GameSampleWindowForms
             Application.Idle += ApplicationOnIdle;
 
             _renderSystem.Create();
+            _renderSystem.Viewport(ClientSize.Width, ClientSize.Height);
         }
 
         private Stopwatch _stopwatch;

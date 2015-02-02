@@ -29,19 +29,34 @@ namespace graphics
 			EnableVertexAttribArray=16,
 			DisableVertexAttribArray = 17,
 			DrawElements = 18,
-			CreateTexture = 19,
+			GenTextures = 19,
 			BindTexture = 20,
 			TexImage2D = 21,
 			TexParameteri = 22,
 			DeleteTexture = 23,
 			ActiveTexture = 24,
-			EnumSize = 25,
+			GenFramebuffers = 25,
+			GenRenderbuffers = 26,
+			BindFramebuffer = 27,
+			FramebufferTexture2D = 28,
+			BindRenderbuffer = 29,
+			RenderbufferStorage = 30,
+			FramebufferRenderbuffer = 31,
+			DeleteFramebuffers = 32,
+			DeleteRenderbuffers = 33,
+			CheckFramebufferStatus = 34,
+			Viewport = 35,
+			Clear = 36,
+			Finish = 37,
+			EnumSize = 38,
 		};
 
 		static std::string _names[EnumSize];
 
 		static const char * getActionName(Errors::e actionType);
 		static void check(Errors::e actionType);
+	protected:
+	private:
 	};
 }
 

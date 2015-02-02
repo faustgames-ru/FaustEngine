@@ -14,13 +14,6 @@ namespace graphics
 	{
 	}
 
-
-	void Effect::setCode(const char *vertexShaderCode, const char *pixelShaderCode)
-	{
-		_vertexShaderCode = vertexShaderCode;
-		_pixelShaderCode = pixelShaderCode;
-	}
-
 	Effect *Effect::addUniform(UniformInfo *uniformInfo, UniformValue *uniformValue)
 	{
 		_uniforms.addEmpty()->init(uniformInfo, uniformValue);
@@ -90,10 +83,10 @@ namespace graphics
 	}
 
 
-	void Effect::create()
+	void Effect::create(const char *vertexShaderCode, const char *pixelShaderCode)
 	{
-		_vertexShader = createShader(GL_VERTEX_SHADER, _vertexShaderCode.c_str());
-		_pixelShader = createShader(GL_FRAGMENT_SHADER, _pixelShaderCode.c_str());
+		_vertexShader = createShader(GL_VERTEX_SHADER, vertexShaderCode);
+		_pixelShader = createShader(GL_FRAGMENT_SHADER, pixelShaderCode);
 
 		_shaderProgram = glCreateProgram();
 		Errors::check(Errors::CreateProgram);
@@ -139,7 +132,7 @@ namespace graphics
 	{
 		for (int i = 0; i < _uniforms.count; i++)
 		{
-			_uniforms.data[i].valueContainer->apply();
+			_uniforms.data[i].getValueContainer()->apply(&(_uniforms.data[i]));
 		}
 	}
 

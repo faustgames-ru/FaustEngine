@@ -16,7 +16,7 @@ namespace GameSampleWindowForms
     public partial class Main : Form
     {
         private readonly OGLWindow _oglWindow;
-        private readonly RenderSystem _renderSystem;
+        private readonly TestRenderSystem _renderSystem;
         private readonly Factory _factory;
         public Main()
         {

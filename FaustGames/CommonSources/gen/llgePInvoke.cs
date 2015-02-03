@@ -12,52 +12,98 @@ namespace llge
 		public const string Dll = "llge";
 	}
 	
+	public class StaticRenderLayer
+	{
+		public IntPtr ClassInstance;
+	}
+	
+	public class Entity
+	{
+		public IntPtr ClassInstance;
+		public void UpateAabb2d (float minX, float minY, float maxX, float maxY)
+		{
+			llge_Entity_upateAabb2d(ClassInstance, minX, minY, maxX, maxY);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_Entity_upateAabb2d (IntPtr classInstance, float minX, float minY, float maxX, float maxY);
+		public void UpateRenderLayer (StaticRenderLayer value)
+		{
+			llge_Entity_upateRenderLayer(ClassInstance, value.ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_Entity_upateRenderLayer (IntPtr classInstance, IntPtr value);
+	}
+	
+	public class SpriteEntity
+	{
+		public IntPtr ClassInstance;
+	}
+	
+	public class EntitiesFactory
+	{
+		public IntPtr ClassInstance;
+	}
+	
 	public class RenderSystem
+	{
+		public IntPtr ClassInstance;
+		public StaticRenderLayer CreateStaticLayer (float z)
+		{
+			return new StaticRenderLayer{ ClassInstance = llge_RenderSystem_createStaticLayer(ClassInstance, z) };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_RenderSystem_createStaticLayer (IntPtr classInstance, float z);
+	}
+	
+	public class TestRenderSystem
 	{
 		public IntPtr ClassInstance;
 		public void Viewport (int width, int height)
 		{
-			llge_RenderSystem_viewport(ClassInstance, width, height);
+			llge_TestRenderSystem_viewport(ClassInstance, width, height);
 		}
 		
 		[DllImport(Version.Dll)]
-		static extern private void llge_RenderSystem_viewport (IntPtr classInstance, int width, int height);
+		static extern private void llge_TestRenderSystem_viewport (IntPtr classInstance, int width, int height);
 		public void Create ()
 		{
-			llge_RenderSystem_create(ClassInstance);
+			llge_TestRenderSystem_create(ClassInstance);
 		}
 		
 		[DllImport(Version.Dll)]
-		static extern private void llge_RenderSystem_create (IntPtr classInstance);
+		static extern private void llge_TestRenderSystem_create (IntPtr classInstance);
 		public void Render ()
 		{
-			llge_RenderSystem_render(ClassInstance);
+			llge_TestRenderSystem_render(ClassInstance);
 		}
 		
 		[DllImport(Version.Dll)]
-		static extern private void llge_RenderSystem_render (IntPtr classInstance);
+		static extern private void llge_TestRenderSystem_render (IntPtr classInstance);
 		public void Cleanup ()
 		{
-			llge_RenderSystem_cleanup(ClassInstance);
+			llge_TestRenderSystem_cleanup(ClassInstance);
 		}
 		
 		[DllImport(Version.Dll)]
-		static extern private void llge_RenderSystem_cleanup (IntPtr classInstance);
+		static extern private void llge_TestRenderSystem_cleanup (IntPtr classInstance);
 		public void Dispose ()
 		{
-			llge_RenderSystem_dispose(ClassInstance);
+			llge_TestRenderSystem_dispose(ClassInstance);
 		}
 		
 		[DllImport(Version.Dll)]
-		static extern private void llge_RenderSystem_dispose (IntPtr classInstance);
+		static extern private void llge_TestRenderSystem_dispose (IntPtr classInstance);
 	}
 	
 	public class Factory
 	{
 		public IntPtr ClassInstance;
-		public RenderSystem CreateRenderSystem ()
+		public TestRenderSystem CreateRenderSystem ()
 		{
-			return new RenderSystem{ ClassInstance = llge_Factory_createRenderSystem(ClassInstance) };
+			return new TestRenderSystem{ ClassInstance = llge_Factory_createRenderSystem(ClassInstance) };
 		}
 		
 		[DllImport(Version.Dll)]

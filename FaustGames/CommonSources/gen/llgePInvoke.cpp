@@ -6,32 +6,47 @@
 
 namespace llge
 {
-	extern "C" DLLEXPORT void API_CALL llge_RenderSystem_viewport (IRenderSystem * classInstance, int width, int height)
+	extern "C" DLLEXPORT void API_CALL llge_Entity_upateAabb2d (IEntity * classInstance, float minX, float minY, float maxX, float maxY)
+	{
+		classInstance->upateAabb2d(minX, minY, maxX, maxY);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_Entity_upateRenderLayer (IEntity * classInstance, IStaticRenderLayer * value)
+	{
+		classInstance->upateRenderLayer(value);
+	}
+	
+	extern "C" DLLEXPORT IStaticRenderLayer * API_CALL llge_RenderSystem_createStaticLayer (IRenderSystem * classInstance, float z)
+	{
+		return classInstance->createStaticLayer(z);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_TestRenderSystem_viewport (ITestRenderSystem * classInstance, int width, int height)
 	{
 		classInstance->viewport(width, height);
 	}
 	
-	extern "C" DLLEXPORT void API_CALL llge_RenderSystem_create (IRenderSystem * classInstance)
+	extern "C" DLLEXPORT void API_CALL llge_TestRenderSystem_create (ITestRenderSystem * classInstance)
 	{
 		classInstance->create();
 	}
 	
-	extern "C" DLLEXPORT void API_CALL llge_RenderSystem_render (IRenderSystem * classInstance)
+	extern "C" DLLEXPORT void API_CALL llge_TestRenderSystem_render (ITestRenderSystem * classInstance)
 	{
 		classInstance->render();
 	}
 	
-	extern "C" DLLEXPORT void API_CALL llge_RenderSystem_cleanup (IRenderSystem * classInstance)
+	extern "C" DLLEXPORT void API_CALL llge_TestRenderSystem_cleanup (ITestRenderSystem * classInstance)
 	{
 		classInstance->cleanup();
 	}
 	
-	extern "C" DLLEXPORT void API_CALL llge_RenderSystem_dispose (IRenderSystem * classInstance)
+	extern "C" DLLEXPORT void API_CALL llge_TestRenderSystem_dispose (ITestRenderSystem * classInstance)
 	{
 		classInstance->dispose();
 	}
 	
-	extern "C" DLLEXPORT IRenderSystem * API_CALL llge_Factory_createRenderSystem (IFactory * classInstance)
+	extern "C" DLLEXPORT ITestRenderSystem * API_CALL llge_Factory_createRenderSystem (IFactory * classInstance)
 	{
 		return classInstance->createRenderSystem();
 	}

@@ -1,72 +1,8 @@
-#ifndef GRAPHICS_H
-#define GRAPHICS_H
-
-#include "stdafx.h"
-
-namespace graphics
-{
-	struct BlendState
-	{
-		enum e
-		{
-			Alpha, 
-			Additive,
-		};
-	};
-
-	struct DepthState
-	{
-		enum e
-		{
-			None = 0x0,
-			Read = 0x01,
-			Write = 0x02,
-			ReadWrite = 0x03
-		};
-	};
-
-	struct UniformType
-	{
-		enum e
-		{
-			Float,
-			Vector2,
-			Vector3,
-			Vector4,
-			Matrix3,
-			Matrix4,
-			Sampler2D,
-		};
-	};
-
-	struct AttributeType
-	{
-		enum e
-		{
-			Float,
-			Vector2,
-			Vector3,
-			Vector4,
-			Color,
-			Normal,
-			TextureCoord,
-		};
-	};
-
-
-	class Uniforms;
-	class Effects;
-
-	class Effect;
-	class UniformInfo;
-	class UniformValue;
-	class Uniform;
-	class VertexDeclaration;
-	class Texture;
-	class RenderState;
-	class GraphicsDevice;
-	class Color;
-	class Errors;
-}
-
-#endif /*GRAPHICS_H*/
+#include "graphics\Attributes.h"
+#include "graphics\Color.h"
+#include "graphics\Effects.h"
+#include "graphics\GraphicsDevice.h"
+#include "graphics\RenderState.h"
+#include "graphics\Uniforms.h"
+#include "graphics\TextureImage2d.h"
+#include "graphics\VertexFormats.h"

@@ -21,4 +21,3 @@ C:\sources\github\FaustEngine\FaustGames\Debug\GameSampleWindowForms.exe
 C:\sources\github\FaustEngine\FaustGames\Debug\GameSampleWindowForms.pdb
 C:\sources\github\FaustEngine\FaustGames\Games\GameSampleWindowForms\obj\Debug\GameSampleWindowForms.exe
 C:\sources\github\FaustEngine\FaustGames\Games\GameSampleWindowForms\obj\Debug\GameSampleWindowForms.pdb
-C:\_faust\FaustEngine\FaustGames\Games\GameSampleWindowForms\obj\Debug\GameSampleWindowForms.csprojResolveAssemblyReference.cache

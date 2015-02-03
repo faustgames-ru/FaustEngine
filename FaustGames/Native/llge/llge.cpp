@@ -2,24 +2,19 @@
 //
 
 #include "stdafx.h"
-#include "graphics.h"
-#include "ObjectsPool.h"
-#include "GraphicsDevice.h"
-#include "Effects.h"
-#include "VertexFormats.h"
+
 #include "llge.h"
-#include "core.h"
-#include "Texture.h"
-#include "TextureImage2d.h"
-#include "TextureRenderTarget2d.h"
-#include "TextureLoader.h"
-#include "Uniforms.h"
+#include "core\core_classes.h"
+#include "core\ObjectsPool.h"
+
+#include "graphics.h"
+#include <limits>
 
 using namespace graphics;
 
 namespace llge
 {
-	class RenderSystem : public IRenderSystem
+	class RenderSystem : public ITestRenderSystem
 	{
 	private:
 		GraphicsDevice * _graphicsDevice;
@@ -43,7 +38,7 @@ namespace llge
 	public:
 		static int poolSize() { return 1; }
 
-		virtual IRenderSystem * API_CALL createRenderSystem();
+		virtual ITestRenderSystem * API_CALL createRenderSystem();
 		virtual void API_CALL dispose();
 	};
 
@@ -192,7 +187,7 @@ namespace llge
 		//core::Allocator::release<RenderSystem>(this);
 	}
 	
-	IRenderSystem * API_CALL Factory::createRenderSystem()
+	ITestRenderSystem * API_CALL Factory::createRenderSystem()
 	{
 		GLenum err = glewInit();
 		if (GLEW_OK != err)

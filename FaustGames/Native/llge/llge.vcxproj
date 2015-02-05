@@ -86,6 +86,8 @@
   <ItemGroup>
     <ClInclude Include="..\..\CommonSources\include\llge.h" />
     <ClInclude Include="entities\entity.h" />
+    <ClInclude Include="entities\ComponentTransform2d.h" />
+    <ClInclude Include="entities\SystemTransform2d.h" />
     <ClInclude Include="geometry\Aabb2d.h" />
     <ClInclude Include="entities\entities_classes.h" />
     <ClInclude Include="entities\entities_platform.h" />

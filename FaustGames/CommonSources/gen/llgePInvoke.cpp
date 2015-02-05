@@ -6,19 +6,74 @@
 
 namespace llge
 {
-	extern "C" DLLEXPORT void API_CALL llge_Entity_upateAabb2d (IEntity * classInstance, float minX, float minY, float maxX, float maxY)
+	extern "C" DLLEXPORT void API_CALL llge_Aabb2dComponent_upateAabb2d (IAabb2dComponent * classInstance, float minX, float minY, float maxX, float maxY)
 	{
 		classInstance->upateAabb2d(minX, minY, maxX, maxY);
 	}
 	
-	extern "C" DLLEXPORT void API_CALL llge_Entity_upateRenderLayer (IEntity * classInstance, IStaticRenderLayer * value)
+	extern "C" DLLEXPORT void API_CALL llge_Transform2dComponent_upateTransform (ITransform2dComponent * classInstance, float x, float y, float z, float rotation, float scale)
+	{
+		classInstance->upateTransform(x, y, z, rotation, scale);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_Transform2dComponent_upatePivot (ITransform2dComponent * classInstance, float x, float y)
+	{
+		classInstance->upatePivot(x, y);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_RenderLayerComponent_upateRenderLayer (IRenderLayerComponent * classInstance, IStaticRenderLayer * value)
 	{
 		classInstance->upateRenderLayer(value);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_SpriteComponent_updateVertex (ISpriteComponent * classInstance, int index, float x, float y, float z, short u, short v, int color)
+	{
+		classInstance->updateVertex(index, x, y, z, u, v, color);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_SpriteComponent_updateImage (ISpriteComponent * classInstance, IImage * image)
+	{
+		classInstance->updateImage(image);
+	}
+	
+	extern "C" DLLEXPORT ISpriteComponent * API_CALL llge_StaticSpriteEntity_getSpriteComponent (IStaticSpriteEntity * classInstance)
+	{
+		return classInstance->getSpriteComponent();
+	}
+	
+	extern "C" DLLEXPORT IAabb2dComponent * API_CALL llge_StaticSpriteEntity_getAabbComponent (IStaticSpriteEntity * classInstance)
+	{
+		return classInstance->getAabbComponent();
+	}
+	
+	extern "C" DLLEXPORT IRenderLayerComponent * API_CALL llge_StaticSpriteEntity_getRenderLayerComponent (IStaticSpriteEntity * classInstance)
+	{
+		return classInstance->getRenderLayerComponent();
+	}
+	
+	extern "C" DLLEXPORT ITransform2dComponent * API_CALL llge_DynamicSpriteEntity_getTransform2dComponent (IDynamicSpriteEntity * classInstance)
+	{
+		return classInstance->getTransform2dComponent();
+	}
+	
+	extern "C" DLLEXPORT ISpriteComponent * API_CALL llge_DynamicSpriteEntity_getSpriteComponent (IDynamicSpriteEntity * classInstance)
+	{
+		return classInstance->getSpriteComponent();
+	}
+	
+	extern "C" DLLEXPORT IAabb2dComponent * API_CALL llge_DynamicSpriteEntity_getAabbComponent (IDynamicSpriteEntity * classInstance)
+	{
+		return classInstance->getAabbComponent();
 	}
 	
 	extern "C" DLLEXPORT IStaticRenderLayer * API_CALL llge_RenderSystem_createStaticLayer (IRenderSystem * classInstance, float z)
 	{
 		return classInstance->createStaticLayer(z);
+	}
+	
+	extern "C" DLLEXPORT IImage * API_CALL llge_RenderSystem_createImage (IRenderSystem * classInstance)
+	{
+		return classInstance->createImage();
 	}
 	
 	extern "C" DLLEXPORT void API_CALL llge_TestRenderSystem_viewport (ITestRenderSystem * classInstance, int width, int height)

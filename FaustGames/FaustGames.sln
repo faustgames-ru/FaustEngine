@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NativeEngine", "NativeEngine", "{C2F71855-E08A-4555-BB9D-433929F4293D}"
 EndProject
@@ -16,6 +16,10 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OpenGLWindow", "OpenGLWindow\OpenGLWindow.vcxproj", "{B4E5D8DA-D58B-4CA9-8A8F-3BF2A702C8A2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameSampleWindowForms", "Games\GameSampleWindowForms\GameSampleWindowForms.csproj", "{5E8BC772-F46C-4676-8B9A-809646C3C659}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B9C1CFB9-5F31-41CF-AA2B-9007E18C33E9}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestTree", "Tests\TestTree\TestTree.vcxproj", "{94C61AEF-460C-4700-8A8D-EDAD798E278E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -67,14 +71,25 @@ Global
 		{5E8BC772-F46C-4676-8B9A-809646C3C659}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{5E8BC772-F46C-4676-8B9A-809646C3C659}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{5E8BC772-F46C-4676-8B9A-809646C3C659}.Release|Win32.ActiveCfg = Release|Any CPU
+		{94C61AEF-460C-4700-8A8D-EDAD798E278E}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{94C61AEF-460C-4700-8A8D-EDAD798E278E}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{94C61AEF-460C-4700-8A8D-EDAD798E278E}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{94C61AEF-460C-4700-8A8D-EDAD798E278E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{94C61AEF-460C-4700-8A8D-EDAD798E278E}.Debug|Win32.Build.0 = Debug|Win32
+		{94C61AEF-460C-4700-8A8D-EDAD798E278E}.Release|Any CPU.ActiveCfg = Release|Win32
+		{94C61AEF-460C-4700-8A8D-EDAD798E278E}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{94C61AEF-460C-4700-8A8D-EDAD798E278E}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{94C61AEF-460C-4700-8A8D-EDAD798E278E}.Release|Win32.ActiveCfg = Release|Win32
+		{94C61AEF-460C-4700-8A8D-EDAD798E278E}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{8387D106-D3A2-4561-A3B8-99BAFB5E5B9E} = {8C524CF2-7781-4D5B-8731-C89E70B20BB8}
 		{B57DA881-75FB-4599-BB8C-7D6E62CF542A} = {C2F71855-E08A-4555-BB9D-433929F4293D}
 		{B4E5D8DA-D58B-4CA9-8A8F-3BF2A702C8A2} = {C2F71855-E08A-4555-BB9D-433929F4293D}
-		{8387D106-D3A2-4561-A3B8-99BAFB5E5B9E} = {8C524CF2-7781-4D5B-8731-C89E70B20BB8}
 		{5E8BC772-F46C-4676-8B9A-809646C3C659} = {8C524CF2-7781-4D5B-8731-C89E70B20BB8}
+		{94C61AEF-460C-4700-8A8D-EDAD798E278E} = {B9C1CFB9-5F31-41CF-AA2B-9007E18C33E9}
 	EndGlobalSection
 EndGlobal

@@ -60,7 +60,7 @@ namespace geometry
 	protected:
 	private:
 		Quadtree2dItem * _first;
-		typedef core::FixedPool<Quadtree2dItem, 16384> Pool;
+		typedef core::FixedPool<Quadtree2dItem, GlobalConstants::ObjectsLimit> Pool;
 	};
 }
 

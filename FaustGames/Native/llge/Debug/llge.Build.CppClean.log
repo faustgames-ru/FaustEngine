@@ -24,6 +24,7 @@ c:\_faust\faustengine\faustgames\native\llge\debug\vertexformat.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\vertexformats.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\llgepinvoke.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\aabb2d.obj
+c:\_faust\faustengine\faustgames\native\llge\debug\quadtree2dnode.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\attributeinfo.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\attributes.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\color.obj
@@ -37,7 +38,6 @@ c:\_faust\faustengine\faustgames\native\llge\debug\image2ddata.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\lazy.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\math.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\dllmain.obj
-c:\_faust\faustengine\faustgames\native\llge\debug\quadtree2dnode.obj
 c:\_faust\faustengine\faustgames\debug\llge.ilk
 c:\_faust\faustengine\faustgames\debug\llge.dll
 c:\_faust\faustengine\faustgames\debug\llge.pdb

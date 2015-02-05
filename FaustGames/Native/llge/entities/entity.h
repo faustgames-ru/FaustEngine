@@ -34,7 +34,7 @@ namespace entities
 		int imageId;
 
 		inline static int size() { return 4; }		
-		typedef core::FixedPool<Sprite, 16384> Pool;
+		typedef core::FixedPool<Sprite, GlobalConstants::ObjectsLimit> Pool;
 	};
 
 	class Entity

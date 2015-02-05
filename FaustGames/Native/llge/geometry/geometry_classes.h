@@ -9,7 +9,6 @@ namespace geometry
 	typedef core::StaticArray<int, 16384> FilterResult;
 
 	class Quadtree2dItemList;
-
 }
 
 #endif /*GEOMETRY_CLASSES_H*/

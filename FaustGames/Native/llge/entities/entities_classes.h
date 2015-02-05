@@ -13,8 +13,9 @@ namespace entities
 			Aabb = 0,
 			Sprite = 1,
 			LayerIndex = 2,
+			Transform2d = 3,
 			
-			ComponentsCount = 3,
+			ComponentsCount = 4,
 		};
 	};
 
@@ -25,7 +26,14 @@ namespace entities
 			Aabb = 0x01,
 			Sprite = 0x02,
 			LayerIndex = 0x04,
+			Transform2d = 0x08,
 		};
+	};
+
+	class EntitiesConstants
+	{
+	public:
+		static const int TransformNodesLimit = GlobalConstants::ObjectsLimit;
 	};
 }
 

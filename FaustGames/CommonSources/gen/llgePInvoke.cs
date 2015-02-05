@@ -17,28 +17,123 @@ namespace llge
 		public IntPtr ClassInstance;
 	}
 	
-	public class Entity
+	public class Image
+	{
+		public IntPtr ClassInstance;
+	}
+	
+	public class Aabb2dComponent
 	{
 		public IntPtr ClassInstance;
 		public void UpateAabb2d (float minX, float minY, float maxX, float maxY)
 		{
-			llge_Entity_upateAabb2d(ClassInstance, minX, minY, maxX, maxY);
+			llge_Aabb2dComponent_upateAabb2d(ClassInstance, minX, minY, maxX, maxY);
 		}
 		
 		[DllImport(Version.Dll)]
-		static extern private void llge_Entity_upateAabb2d (IntPtr classInstance, float minX, float minY, float maxX, float maxY);
-		public void UpateRenderLayer (StaticRenderLayer value)
-		{
-			llge_Entity_upateRenderLayer(ClassInstance, value.ClassInstance);
-		}
-		
-		[DllImport(Version.Dll)]
-		static extern private void llge_Entity_upateRenderLayer (IntPtr classInstance, IntPtr value);
+		static extern private void llge_Aabb2dComponent_upateAabb2d (IntPtr classInstance, float minX, float minY, float maxX, float maxY);
 	}
 	
-	public class SpriteEntity
+	public class Transform2dComponent
 	{
 		public IntPtr ClassInstance;
+		public void UpateTransform (float x, float y, float z, float rotation, float scale)
+		{
+			llge_Transform2dComponent_upateTransform(ClassInstance, x, y, z, rotation, scale);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_Transform2dComponent_upateTransform (IntPtr classInstance, float x, float y, float z, float rotation, float scale);
+		public void UpatePivot (float x, float y)
+		{
+			llge_Transform2dComponent_upatePivot(ClassInstance, x, y);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_Transform2dComponent_upatePivot (IntPtr classInstance, float x, float y);
+	}
+	
+	public class RenderLayerComponent
+	{
+		public IntPtr ClassInstance;
+		public void UpateRenderLayer (StaticRenderLayer value)
+		{
+			llge_RenderLayerComponent_upateRenderLayer(ClassInstance, value.ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_RenderLayerComponent_upateRenderLayer (IntPtr classInstance, IntPtr value);
+	}
+	
+	public class SpriteComponent
+	{
+		public IntPtr ClassInstance;
+		public void UpdateVertex (int index, float x, float y, float z, short u, short v, int color)
+		{
+			llge_SpriteComponent_updateVertex(ClassInstance, index, x, y, z, u, v, color);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_SpriteComponent_updateVertex (IntPtr classInstance, int index, float x, float y, float z, short u, short v, int color);
+		public void UpdateImage (Image image)
+		{
+			llge_SpriteComponent_updateImage(ClassInstance, image.ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_SpriteComponent_updateImage (IntPtr classInstance, IntPtr image);
+	}
+	
+	public class StaticSpriteEntity
+	{
+		public IntPtr ClassInstance;
+		public SpriteComponent GetSpriteComponent ()
+		{
+			return new SpriteComponent{ ClassInstance = llge_StaticSpriteEntity_getSpriteComponent(ClassInstance) };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_StaticSpriteEntity_getSpriteComponent (IntPtr classInstance);
+		public Aabb2dComponent GetAabbComponent ()
+		{
+			return new Aabb2dComponent{ ClassInstance = llge_StaticSpriteEntity_getAabbComponent(ClassInstance) };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_StaticSpriteEntity_getAabbComponent (IntPtr classInstance);
+		public RenderLayerComponent GetRenderLayerComponent ()
+		{
+			return new RenderLayerComponent{ ClassInstance = llge_StaticSpriteEntity_getRenderLayerComponent(ClassInstance) };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_StaticSpriteEntity_getRenderLayerComponent (IntPtr classInstance);
+	}
+	
+	public class DynamicSpriteEntity
+	{
+		public IntPtr ClassInstance;
+		public Transform2dComponent GetTransform2dComponent ()
+		{
+			return new Transform2dComponent{ ClassInstance = llge_DynamicSpriteEntity_getTransform2dComponent(ClassInstance) };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_DynamicSpriteEntity_getTransform2dComponent (IntPtr classInstance);
+		public SpriteComponent GetSpriteComponent ()
+		{
+			return new SpriteComponent{ ClassInstance = llge_DynamicSpriteEntity_getSpriteComponent(ClassInstance) };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_DynamicSpriteEntity_getSpriteComponent (IntPtr classInstance);
+		public Aabb2dComponent GetAabbComponent ()
+		{
+			return new Aabb2dComponent{ ClassInstance = llge_DynamicSpriteEntity_getAabbComponent(ClassInstance) };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_DynamicSpriteEntity_getAabbComponent (IntPtr classInstance);
 	}
 	
 	public class EntitiesFactory
@@ -56,6 +151,13 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private IntPtr llge_RenderSystem_createStaticLayer (IntPtr classInstance, float z);
+		public Image CreateImage ()
+		{
+			return new Image{ ClassInstance = llge_RenderSystem_createImage(ClassInstance) };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_RenderSystem_createImage (IntPtr classInstance);
 	}
 	
 	public class TestRenderSystem

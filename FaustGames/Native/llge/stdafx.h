@@ -15,4 +15,10 @@
 #include <vector>
 #include "glew.h"
 
+class GlobalConstants
+{
+public:
+	static const int ObjectsLimit = 16384;
+};
+
 // TODO: reference additional headers your program requires here

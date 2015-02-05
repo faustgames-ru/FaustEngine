@@ -39,7 +39,7 @@ namespace geometry
 		int _id;
 		Quadtree2dNode *_left;
 		Quadtree2dNode *_right;
-		typedef core::FixedPool<Quadtree2dNode, 16384> Pool;
+		typedef core::FixedPool<Quadtree2dNode, GlobalConstants::ObjectsLimit> Pool;
 	};
 }
 

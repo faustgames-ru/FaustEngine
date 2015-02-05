@@ -52,6 +52,12 @@
     <Filter Include="Header Files\entities">
       <UniqueIdentifier>{8ababb2b-bbc4-49bb-8ad1-f46aa7d5b6a1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\entities\components">
+      <UniqueIdentifier>{b3bbfead-fc4f-439b-b3e1-6947af3ee949}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\entities\systems">
+      <UniqueIdentifier>{006ea20a-6084-40f9-959e-658a95dfc8df}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -233,6 +239,12 @@
     </ClInclude>
     <ClInclude Include="entities\entity.h">
       <Filter>Header Files\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="entities\ComponentTransform2d.h">
+      <Filter>Header Files\entities\components</Filter>
+    </ClInclude>
+    <ClInclude Include="entities\SystemTransform2d.h">
+      <Filter>Header Files\entities\systems</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

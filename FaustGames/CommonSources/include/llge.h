@@ -38,7 +38,7 @@ namespace llge
 	class ISpriteComponent
 	{
 	public:
-		virtual void API_CALL updateVertex(int index, float x, float y, float z, unsigned short u, unsigned short v, unsigned int color) = 0;
+		virtual void API_CALL updateVertex(int index, float x, float y, float z, short u, short v, int color) = 0;
 		virtual void API_CALL updateImage(IImage * image) = 0;
 	};
 

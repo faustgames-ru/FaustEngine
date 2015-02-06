@@ -15,3 +15,4 @@ C:\sources\github\FaustEngine\FaustGames\Games\GameSample\bin\Debug\GameSample.p
 C:\sources\github\FaustEngine\FaustGames\Games\GameSample\obj\Debug\GameSample.csprojResolveAssemblyReference.cache
 C:\sources\github\FaustEngine\FaustGames\Games\GameSample\obj\Debug\GameSample.exe
 C:\sources\github\FaustEngine\FaustGames\Games\GameSample\obj\Debug\GameSample.pdb
+C:\_faust\FaustEngine\FaustGames\Games\GameSample\obj\Debug\GameSample.csprojResolveAssemblyReference.cache

@@ -1,9 +1,14 @@
 #ifndef LLGE_H
 #define LLGE_H
 
+#ifdef __ANDROID__
+#include <jni.h>
+#define API_CALL JNICALL
+#define DLLEXPORT JNIEXPORT
+#else
 #define API_CALL __stdcall
 #define DLLEXPORT __declspec( dllexport )
-
+#endif
 namespace llge
 {
 	class IStaticRenderLayer
@@ -87,7 +92,8 @@ namespace llge
 		virtual void API_CALL dispose() = 0;
 	};
 
-	extern "C" DLLEXPORT IFactory * API_CALL createFactory();
 }
+
+extern "C" DLLEXPORT llge::IFactory * API_CALL createFactory();
 
 #endif /*LLGE_H*/

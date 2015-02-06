@@ -1,6 +1,0 @@
-#include "..\core\StaticArray.h"
-#include "..\core\ObjectsPool.h"
-#include "..\core\Vector.h"
-#include "..\core\Matrix.h"
-#include "..\core\Lazy.h"
-#include "..\core\Math.h"

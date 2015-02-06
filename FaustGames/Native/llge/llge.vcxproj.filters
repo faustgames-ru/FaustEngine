@@ -1,363 +1,307 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    <Filter Include="core">
+      <UniqueIdentifier>{fc049044-9e3f-4ecb-b8f8-541a36e33886}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    <Filter Include="graphics">
+      <UniqueIdentifier>{ee58e0fc-0a4b-48bf-bf4d-f409427ea5a6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    <Filter Include="geometry">
+      <UniqueIdentifier>{38afac63-3a37-4eb0-a0ce-5606ce2f1b4c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Common">
+    <Filter Include="entities">
+      <UniqueIdentifier>{78ea6e7c-d9e8-4ac5-9bdb-8c67365e777e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="exports">
+      <UniqueIdentifier>{6c50707c-2f2a-4e4d-bb55-718fee7238d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="common">
       <UniqueIdentifier>{52296692-4906-4308-88b5-5d16497cca62}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\entities">
-      <UniqueIdentifier>{18048fbf-e70e-4c27-ab4f-b4d990d09bc2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\graphics">
-      <UniqueIdentifier>{b9258a73-9c71-482a-9baf-d8f11b05a340}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\graphics\Effects">
-      <UniqueIdentifier>{25d1e73d-d8ac-427e-afe7-6a5b34e8d9dd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\graphics\VertexFormats">
-      <UniqueIdentifier>{f9867279-9406-4a93-a98d-8e035674016a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\geometry">
-      <UniqueIdentifier>{317de902-fb3e-4dc0-9fa5-290dee02c5f8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\core">
-      <UniqueIdentifier>{1cb3e5a3-82e5-4148-bc4c-ae4540fc2e24}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\graphics">
-      <UniqueIdentifier>{e61ff114-1d44-4059-8565-2534de5c65c9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\graphics\Effects">
-      <UniqueIdentifier>{bdf65718-d3e3-4b61-b4c7-d28cb8602894}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\graphics\VertexFormats">
-      <UniqueIdentifier>{d5789456-192b-4a51-8e5a-49a72a841c82}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\geometry">
-      <UniqueIdentifier>{b3cb2acb-82df-430b-9984-fde21603b912}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\core">
-      <UniqueIdentifier>{7c7c49db-3df7-479c-80ea-2da0a572b5df}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\entities">
-      <UniqueIdentifier>{8ababb2b-bbc4-49bb-8ad1-f46aa7d5b6a1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\entities\components">
-      <UniqueIdentifier>{b3bbfead-fc4f-439b-b3e1-6947af3ee949}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\entities\systems">
-      <UniqueIdentifier>{006ea20a-6084-40f9-959e-658a95dfc8df}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="ReadMe.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="stdafx.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="targetver.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\CommonSources\include\llge.h">
-      <Filter>Common</Filter>
+      <Filter>common</Filter>
     </ClInclude>
-    <ClInclude Include="geometry\Aabb2d.h">
-      <Filter>Header Files\geometry</Filter>
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="..\src\core\core_classes.h">
+      <Filter>core</Filter>
     </ClInclude>
-    <ClInclude Include="graphics\AttributeInfo.h">
-      <Filter>Header Files\graphics</Filter>
+    <ClInclude Include="..\src\core\core_platform.h">
+      <Filter>core</Filter>
     </ClInclude>
-    <ClInclude Include="graphics\Attributes.h">
-      <Filter>Header Files\graphics</Filter>
+    <ClInclude Include="..\src\core\Lazy.h">
+      <Filter>core</Filter>
     </ClInclude>
-    <ClInclude Include="graphics\Color.h">
-      <Filter>Header Files\graphics</Filter>
+    <ClInclude Include="..\src\core\Math.h">
+      <Filter>core</Filter>
     </ClInclude>
-    <ClInclude Include="graphics\Effect.h">
-      <Filter>Header Files\graphics</Filter>
+    <ClInclude Include="..\src\core\Matrix.h">
+      <Filter>core</Filter>
     </ClInclude>
-    <ClInclude Include="graphics\EffectBase.h">
-      <Filter>Header Files\graphics\Effects</Filter>
+    <ClInclude Include="..\src\core\StaticArray.h">
+      <Filter>core</Filter>
     </ClInclude>
-    <ClInclude Include="graphics\Effects.h">
-      <Filter>Header Files\graphics</Filter>
+    <ClInclude Include="..\src\core\Vector.h">
+      <Filter>core</Filter>
     </ClInclude>
-    <ClInclude Include="graphics\EffectSolid.h">
-      <Filter>Header Files\graphics\Effects</Filter>
+    <ClInclude Include="..\src\entities\ComponentTransform2d.h">
+      <Filter>entities</Filter>
     </ClInclude>
-    <ClInclude Include="graphics\EffectSolidColor.h">
-      <Filter>Header Files\graphics\Effects</Filter>
+    <ClInclude Include="..\src\entities\entities_classes.h">
+      <Filter>entities</Filter>
     </ClInclude>
-    <ClInclude Include="graphics\EffectTextureColor.h">
-      <Filter>Header Files\graphics\Effects</Filter>
+    <ClInclude Include="..\src\entities\entities_platform.h">
+      <Filter>entities</Filter>
     </ClInclude>
-    <ClInclude Include="graphics\Errors.h">
-      <Filter>Header Files\graphics</Filter>
+    <ClInclude Include="..\src\entities\entities_references.h">
+      <Filter>entities</Filter>
     </ClInclude>
-    <ClInclude Include="graphics\GraphicsDevice.h">
-      <Filter>Header Files\graphics</Filter>
+    <ClInclude Include="..\src\entities\entity.h">
+      <Filter>entities</Filter>
     </ClInclude>
-    <ClInclude Include="graphics\Image2dData.h">
-      <Filter>Header Files\graphics</Filter>
+    <ClInclude Include="..\src\entities\SystemTransform2d.h">
+      <Filter>entities</Filter>
     </ClInclude>
-    <ClInclude Include="graphics\RenderState.h">
-      <Filter>Header Files\graphics</Filter>
+    <ClInclude Include="..\src\geometry\Aabb2d.h">
+      <Filter>geometry</Filter>
     </ClInclude>
-    <ClInclude Include="graphics\State.h">
-      <Filter>Header Files\graphics</Filter>
+    <ClInclude Include="..\src\geometry\geometry_classes.h">
+      <Filter>geometry</Filter>
     </ClInclude>
-    <ClInclude Include="graphics\StateCompare.h">
-      <Filter>Header Files\graphics</Filter>
+    <ClInclude Include="..\src\geometry\geometry_platform.h">
+      <Filter>geometry</Filter>
     </ClInclude>
-    <ClInclude Include="geometry\Quadtree2d.h">
-      <Filter>Header Files\geometry</Filter>
+    <ClInclude Include="..\src\geometry\geometry_references.h">
+      <Filter>geometry</Filter>
     </ClInclude>
-    <ClInclude Include="graphics\Texture.h">
-      <Filter>Header Files\graphics</Filter>
+    <ClInclude Include="..\src\geometry\Quadtree2d.h">
+      <Filter>geometry</Filter>
     </ClInclude>
-    <ClInclude Include="graphics\TextureImage2d.h">
-      <Filter>Header Files\graphics</Filter>
+    <ClInclude Include="..\src\geometry\Quadtree2dItem.h">
+      <Filter>geometry</Filter>
     </ClInclude>
-    <ClInclude Include="graphics\TextureLoader.h">
-      <Filter>Header Files\graphics</Filter>
+    <ClInclude Include="..\src\geometry\Quadtree2dItemList.h">
+      <Filter>geometry</Filter>
     </ClInclude>
-    <ClInclude Include="graphics\TextureRenderTarget2d.h">
-      <Filter>Header Files\graphics</Filter>
+    <ClInclude Include="..\src\geometry\Quadtree2dNode.h">
+      <Filter>geometry</Filter>
     </ClInclude>
-    <ClInclude Include="graphics\Uniform.h">
-      <Filter>Header Files\graphics</Filter>
+    <ClInclude Include="..\src\graphics\AttributeInfo.h">
+      <Filter>graphics</Filter>
     </ClInclude>
-    <ClInclude Include="graphics\UniformInfo.h">
-      <Filter>Header Files\graphics</Filter>
+    <ClInclude Include="..\src\graphics\Attributes.h">
+      <Filter>graphics</Filter>
     </ClInclude>
-    <ClInclude Include="graphics\Uniforms.h">
-      <Filter>Header Files\graphics</Filter>
+    <ClInclude Include="..\src\graphics\Color.h">
+      <Filter>graphics</Filter>
     </ClInclude>
-    <ClInclude Include="graphics\UniformValue.h">
-      <Filter>Header Files\graphics</Filter>
+    <ClInclude Include="..\src\graphics\Effect.h">
+      <Filter>graphics</Filter>
     </ClInclude>
-    <ClInclude Include="graphics\UniformValueFloat.h">
-      <Filter>Header Files\graphics</Filter>
+    <ClInclude Include="..\src\graphics\EffectBase.h">
+      <Filter>graphics</Filter>
     </ClInclude>
-    <ClInclude Include="graphics\UniformValueMatrix.h">
-      <Filter>Header Files\graphics</Filter>
+    <ClInclude Include="..\src\graphics\Effects.h">
+      <Filter>graphics</Filter>
     </ClInclude>
-    <ClInclude Include="graphics\UniformValueTexture.h">
-      <Filter>Header Files\graphics</Filter>
+    <ClInclude Include="..\src\graphics\EffectSolid.h">
+      <Filter>graphics</Filter>
     </ClInclude>
-    <ClInclude Include="graphics\VertexFormat.h">
-      <Filter>Header Files\graphics</Filter>
+    <ClInclude Include="..\src\graphics\EffectSolidColor.h">
+      <Filter>graphics</Filter>
     </ClInclude>
-    <ClInclude Include="graphics\VertexFormatPosition.h">
-      <Filter>Header Files\graphics\VertexFormats</Filter>
+    <ClInclude Include="..\src\graphics\EffectTextureColor.h">
+      <Filter>graphics</Filter>
     </ClInclude>
-    <ClInclude Include="graphics\VertexFormatPositionColor.h">
-      <Filter>Header Files\graphics\VertexFormats</Filter>
+    <ClInclude Include="..\src\graphics\Errors.h">
+      <Filter>graphics</Filter>
     </ClInclude>
-    <ClInclude Include="graphics\VertexFormatPositionTextureColor.h">
-      <Filter>Header Files\graphics\VertexFormats</Filter>
+    <ClInclude Include="..\src\graphics\GraphicsDevice.h">
+      <Filter>graphics</Filter>
     </ClInclude>
-    <ClInclude Include="graphics\VertexFormats.h">
-      <Filter>Header Files\graphics</Filter>
+    <ClInclude Include="..\src\graphics\graphics_classes.h">
+      <Filter>graphics</Filter>
     </ClInclude>
-    <ClInclude Include="core\Vector.h">
-      <Filter>Header Files\core</Filter>
+    <ClInclude Include="..\src\graphics\graphics_platform.h">
+      <Filter>graphics</Filter>
     </ClInclude>
-    <ClInclude Include="core\StaticArray.h">
-      <Filter>Header Files\core</Filter>
+    <ClInclude Include="..\src\graphics\graphics_references.h">
+      <Filter>graphics</Filter>
     </ClInclude>
-    <ClInclude Include="core\ObjectsPool.h">
-      <Filter>Header Files\core</Filter>
+    <ClInclude Include="..\src\graphics\Image2dData.h">
+      <Filter>graphics</Filter>
     </ClInclude>
-    <ClInclude Include="core\Matrix.h">
-      <Filter>Header Files\core</Filter>
+    <ClInclude Include="..\src\graphics\RenderState.h">
+      <Filter>graphics</Filter>
     </ClInclude>
-    <ClInclude Include="core\Math.h">
-      <Filter>Header Files\core</Filter>
+    <ClInclude Include="..\src\graphics\State.h">
+      <Filter>graphics</Filter>
     </ClInclude>
-    <ClInclude Include="core\Lazy.h">
-      <Filter>Header Files\core</Filter>
+    <ClInclude Include="..\src\graphics\StateCompare.h">
+      <Filter>graphics</Filter>
     </ClInclude>
-    <ClInclude Include="graphics\graphics_references.h">
-      <Filter>Header Files\graphics</Filter>
+    <ClInclude Include="..\src\graphics\Texture.h">
+      <Filter>graphics</Filter>
     </ClInclude>
-    <ClInclude Include="graphics\graphics_platform.h">
-      <Filter>Header Files\graphics</Filter>
+    <ClInclude Include="..\src\graphics\TextureImage2d.h">
+      <Filter>graphics</Filter>
     </ClInclude>
-    <ClInclude Include="geometry\geometry_platform.h">
-      <Filter>Header Files\geometry</Filter>
+    <ClInclude Include="..\src\graphics\TextureLoader.h">
+      <Filter>graphics</Filter>
     </ClInclude>
-    <ClInclude Include="geometry\geometry_references.h">
-      <Filter>Header Files\geometry</Filter>
+    <ClInclude Include="..\src\graphics\TextureRenderTarget2d.h">
+      <Filter>graphics</Filter>
     </ClInclude>
-    <ClInclude Include="geometry\geometry_classes.h">
-      <Filter>Header Files\geometry</Filter>
+    <ClInclude Include="..\src\graphics\Uniform.h">
+      <Filter>graphics</Filter>
     </ClInclude>
-    <ClInclude Include="graphics\graphics_classes.h">
-      <Filter>Header Files\graphics</Filter>
+    <ClInclude Include="..\src\graphics\UniformInfo.h">
+      <Filter>graphics</Filter>
     </ClInclude>
-    <ClInclude Include="entities\entities_classes.h">
-      <Filter>Header Files\entities</Filter>
+    <ClInclude Include="..\src\graphics\Uniforms.h">
+      <Filter>graphics</Filter>
     </ClInclude>
-    <ClInclude Include="entities\entities_platform.h">
-      <Filter>Header Files\entities</Filter>
+    <ClInclude Include="..\src\graphics\UniformValue.h">
+      <Filter>graphics</Filter>
     </ClInclude>
-    <ClInclude Include="entities\entities_references.h">
-      <Filter>Header Files\entities</Filter>
+    <ClInclude Include="..\src\graphics\UniformValueFloat.h">
+      <Filter>graphics</Filter>
     </ClInclude>
-    <ClInclude Include="core\core_classes.h">
-      <Filter>Header Files\core</Filter>
+    <ClInclude Include="..\src\graphics\UniformValueMatrix.h">
+      <Filter>graphics</Filter>
     </ClInclude>
-    <ClInclude Include="core\core_platform.h">
-      <Filter>Header Files\core</Filter>
+    <ClInclude Include="..\src\graphics\UniformValueTexture.h">
+      <Filter>graphics</Filter>
     </ClInclude>
-    <ClInclude Include="graphics.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="..\src\graphics\VertexFormat.h">
+      <Filter>graphics</Filter>
     </ClInclude>
-    <ClInclude Include="core.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="..\src\graphics\VertexFormatPosition.h">
+      <Filter>graphics</Filter>
     </ClInclude>
-    <ClInclude Include="geometry\Quadtree2dItemList.h">
-      <Filter>Header Files\geometry</Filter>
+    <ClInclude Include="..\src\graphics\VertexFormatPositionColor.h">
+      <Filter>graphics</Filter>
     </ClInclude>
-    <ClInclude Include="geometry\Quadtree2dItem.h">
-      <Filter>Header Files\geometry</Filter>
+    <ClInclude Include="..\src\graphics\VertexFormatPositionTextureColor.h">
+      <Filter>graphics</Filter>
     </ClInclude>
-    <ClInclude Include="geometry\Quadtree2dNode.h">
-      <Filter>Header Files\geometry</Filter>
+    <ClInclude Include="..\src\graphics\VertexFormats.h">
+      <Filter>graphics</Filter>
     </ClInclude>
-    <ClInclude Include="entities\entity.h">
-      <Filter>Header Files\entities</Filter>
+    <ClInclude Include="..\src\graphics\graphics.h">
+      <Filter>graphics</Filter>
     </ClInclude>
-    <ClInclude Include="entities\ComponentTransform2d.h">
-      <Filter>Header Files\entities\components</Filter>
+    <ClInclude Include="..\src\core\core.h">
+      <Filter>core</Filter>
     </ClInclude>
-    <ClInclude Include="entities\SystemTransform2d.h">
-      <Filter>Header Files\entities\systems</Filter>
+    <ClInclude Include="..\src\core\FixedPool.h">
+      <Filter>core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="stdafx.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="llge.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\CommonSources\gen\llgePInvoke.cpp">
-      <Filter>Common</Filter>
+      <Filter>common</Filter>
     </ClCompile>
-    <ClCompile Include="geometry\Aabb2d.cpp">
-      <Filter>Source Files\geometry</Filter>
+    <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="..\src\core\Math.cpp">
+      <Filter>core</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\AttributeInfo.cpp">
-      <Filter>Source Files\graphics</Filter>
+    <ClCompile Include="..\src\core\Matrix.cpp">
+      <Filter>core</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\Attributes.cpp">
-      <Filter>Source Files\graphics</Filter>
+    <ClCompile Include="..\src\geometry\Aabb2d.cpp">
+      <Filter>geometry</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\Color.cpp">
-      <Filter>Source Files\graphics</Filter>
+    <ClCompile Include="..\src\geometry\Quadtree2d.cpp">
+      <Filter>geometry</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\Effect.cpp">
-      <Filter>Source Files\graphics</Filter>
+    <ClCompile Include="..\src\geometry\Quadtree2dNode.cpp">
+      <Filter>geometry</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\EffectBase.cpp">
-      <Filter>Source Files\graphics\Effects</Filter>
+    <ClCompile Include="..\src\graphics\AttributeInfo.cpp">
+      <Filter>graphics</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\Effects.cpp">
-      <Filter>Source Files\graphics</Filter>
+    <ClCompile Include="..\src\graphics\Attributes.cpp">
+      <Filter>graphics</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\EffectSolid.cpp">
-      <Filter>Source Files\graphics\Effects</Filter>
+    <ClCompile Include="..\src\graphics\Color.cpp">
+      <Filter>graphics</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\EffectSolidColor.cpp">
-      <Filter>Source Files\graphics\Effects</Filter>
+    <ClCompile Include="..\src\graphics\Effect.cpp">
+      <Filter>graphics</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\EffectTextureColor.cpp">
-      <Filter>Source Files\graphics\Effects</Filter>
+    <ClCompile Include="..\src\graphics\EffectBase.cpp">
+      <Filter>graphics</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\Errors.cpp">
-      <Filter>Source Files\graphics</Filter>
+    <ClCompile Include="..\src\graphics\Effects.cpp">
+      <Filter>graphics</Filter>
     </ClCompile>
-    <ClCompile Include="dllmain.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="..\src\graphics\EffectSolid.cpp">
+      <Filter>graphics</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\GraphicsDevice.cpp">
-      <Filter>Source Files\graphics</Filter>
+    <ClCompile Include="..\src\graphics\EffectSolidColor.cpp">
+      <Filter>graphics</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\Image2dData.cpp">
-      <Filter>Source Files\graphics</Filter>
+    <ClCompile Include="..\src\graphics\EffectTextureColor.cpp">
+      <Filter>graphics</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\RenderState.cpp">
-      <Filter>Source Files\graphics</Filter>
+    <ClCompile Include="..\src\graphics\Errors.cpp">
+      <Filter>graphics</Filter>
     </ClCompile>
-    <ClCompile Include="geometry\Quadtree2d.cpp">
-      <Filter>Source Files\geometry</Filter>
+    <ClCompile Include="..\src\graphics\GraphicsDevice.cpp">
+      <Filter>graphics</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\Texture.cpp">
-      <Filter>Source Files\graphics</Filter>
+    <ClCompile Include="..\src\graphics\Image2dData.cpp">
+      <Filter>graphics</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\TextureImage2d.cpp">
-      <Filter>Source Files\graphics</Filter>
+    <ClCompile Include="..\src\graphics\RenderState.cpp">
+      <Filter>graphics</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\TextureLoader.cpp">
-      <Filter>Source Files\graphics</Filter>
+    <ClCompile Include="..\src\graphics\Texture.cpp">
+      <Filter>graphics</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\TextureRenderTarget2d.cpp">
-      <Filter>Source Files\graphics</Filter>
+    <ClCompile Include="..\src\graphics\TextureImage2d.cpp">
+      <Filter>graphics</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\Uniform.cpp">
-      <Filter>Source Files\graphics</Filter>
+    <ClCompile Include="..\src\graphics\TextureLoader.cpp">
+      <Filter>graphics</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\UniformInfo.cpp">
-      <Filter>Source Files\graphics</Filter>
+    <ClCompile Include="..\src\graphics\TextureRenderTarget2d.cpp">
+      <Filter>graphics</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\Uniforms.cpp">
-      <Filter>Source Files\graphics</Filter>
+    <ClCompile Include="..\src\graphics\Uniform.cpp">
+      <Filter>graphics</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\UniformValue.cpp">
-      <Filter>Source Files\graphics</Filter>
+    <ClCompile Include="..\src\graphics\UniformInfo.cpp">
+      <Filter>graphics</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\UniformValueFloat.cpp">
-      <Filter>Source Files\graphics</Filter>
+    <ClCompile Include="..\src\graphics\Uniforms.cpp">
+      <Filter>graphics</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\UniformValueMatrix.cpp">
-      <Filter>Source Files\graphics</Filter>
+    <ClCompile Include="..\src\graphics\UniformValue.cpp">
+      <Filter>graphics</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\UniformValueTexture.cpp">
-      <Filter>Source Files\graphics</Filter>
+    <ClCompile Include="..\src\graphics\UniformValueFloat.cpp">
+      <Filter>graphics</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\VertexFormat.cpp">
-      <Filter>Source Files\graphics</Filter>
+    <ClCompile Include="..\src\graphics\UniformValueMatrix.cpp">
+      <Filter>graphics</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\VertexFormats.cpp">
-      <Filter>Source Files\graphics</Filter>
+    <ClCompile Include="..\src\graphics\UniformValueTexture.cpp">
+      <Filter>graphics</Filter>
     </ClCompile>
-    <ClCompile Include="core\ObjectsPool.cpp">
-      <Filter>Source Files\core</Filter>
+    <ClCompile Include="..\src\graphics\VertexFormat.cpp">
+      <Filter>graphics</Filter>
     </ClCompile>
-    <ClCompile Include="core\Matrix.cpp">
-      <Filter>Source Files\core</Filter>
+    <ClCompile Include="..\src\graphics\VertexFormats.cpp">
+      <Filter>graphics</Filter>
     </ClCompile>
-    <ClCompile Include="core\Math.cpp">
-      <Filter>Source Files\core</Filter>
-    </ClCompile>
-    <ClCompile Include="core\Lazy.cpp">
-      <Filter>Source Files\core</Filter>
-    </ClCompile>
-    <ClCompile Include="geometry\Quadtree2dNode.cpp">
-      <Filter>Source Files\geometry</Filter>
+    <ClCompile Include="..\src\exports\llge.cpp">
+      <Filter>exports</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

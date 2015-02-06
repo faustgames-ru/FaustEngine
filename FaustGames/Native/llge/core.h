@@ -1,4 +1,4 @@
-#include "core\Math.h"
-#include "core\Matrix.h"
-#include "core\ObjectsPool.h"
-#include "core\StaticArray.h"
+#include "Math.h"
+#include "Matrix.h"
+#include "ObjectsPool.h"
+#include "StaticArray.h"

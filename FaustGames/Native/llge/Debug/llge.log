@@ -1,4 +1,5 @@
 ﻿  stdafx.cpp
+  dllmain.cpp
   VertexFormats.cpp
   VertexFormat.cpp
   UniformValueTexture.cpp
@@ -6,25 +7,19 @@
   UniformValueFloat.cpp
   UniformValue.cpp
   Uniforms.cpp
-  RenderState.cpp
-  llge.cpp
-  GraphicsDevice.cpp
-  Errors.cpp
   UniformInfo.cpp
   Uniform.cpp
   TextureRenderTarget2d.cpp
   TextureLoader.cpp
   TextureImage2d.cpp
   Texture.cpp
-  Quadtree2d.cpp
-  ObjectsPool.cpp
-  Matrix.cpp
+  RenderState.cpp
+  Image2dData.cpp
+  GraphicsDevice.cpp
+  Errors.cpp
+  EffectTextureColor.cpp
   Generating Code...
   Compiling...
-  Math.cpp
-  Lazy.cpp
-  Image2dData.cpp
-  EffectTextureColor.cpp
   EffectSolidColor.cpp
   EffectSolid.cpp
   Effects.cpp
@@ -34,9 +29,12 @@
   Attributes.cpp
   AttributeInfo.cpp
   Quadtree2dNode.cpp
+  Quadtree2d.cpp
   Aabb2d.cpp
+  llge.cpp
+  Matrix.cpp
+  Math.cpp
   llgePInvoke.cpp
   Generating Code...
-  dllmain.cpp
      Creating library C:\_faust\FaustEngine\FaustGames\Debug\llge.lib and object C:\_faust\FaustEngine\FaustGames\Debug\llge.exp
   llge.vcxproj -> C:\_faust\FaustEngine\FaustGames\Debug\llge.dll

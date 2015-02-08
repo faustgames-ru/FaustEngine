@@ -92,8 +92,7 @@ namespace llge
 		virtual void API_CALL dispose() = 0;
 	};
 
+	extern "C" DLLEXPORT llge::IFactory * API_CALL createFactory();
 }
-
-extern "C" DLLEXPORT llge::IFactory * API_CALL createFactory();
 
 #endif /*LLGE_H*/

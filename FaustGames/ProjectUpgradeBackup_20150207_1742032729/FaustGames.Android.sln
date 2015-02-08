@@ -1,0 +1,60 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NativeEngine", "NativeEngine", "{C2F71855-E08A-4555-BB9D-433929F4293D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Framework", "Framework", "{0D97AD64-A399-441B-B865-6522C08FA93E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Games", "Games", "{8C524CF2-7781-4D5B-8731-C89E70B20BB8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B9C1CFB9-5F31-41CF-AA2B-9007E18C33E9}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "llge", "Native\llge.android\llge.android.vcxproj", "{1A8346D8-1ECA-45A9-8171-FFFE9D248ADC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game.Android", "Game.Android\Game.Android.csproj", "{4D8A9AE9-4B41-4036-8F98-DAE1935A35E7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|Mixed Platforms = Debug|Mixed Platforms
+		Debug|Tegra-Android = Debug|Tegra-Android
+		Release|Any CPU = Release|Any CPU
+		Release|Mixed Platforms = Release|Mixed Platforms
+		Release|Tegra-Android = Release|Tegra-Android
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1A8346D8-1ECA-45A9-8171-FFFE9D248ADC}.Debug|Any CPU.ActiveCfg = Debug|Tegra-Android
+		{1A8346D8-1ECA-45A9-8171-FFFE9D248ADC}.Debug|Mixed Platforms.ActiveCfg = Debug|Tegra-Android
+		{1A8346D8-1ECA-45A9-8171-FFFE9D248ADC}.Debug|Mixed Platforms.Build.0 = Debug|Tegra-Android
+		{1A8346D8-1ECA-45A9-8171-FFFE9D248ADC}.Debug|Tegra-Android.ActiveCfg = Debug|Tegra-Android
+		{1A8346D8-1ECA-45A9-8171-FFFE9D248ADC}.Debug|Tegra-Android.Build.0 = Debug|Tegra-Android
+		{1A8346D8-1ECA-45A9-8171-FFFE9D248ADC}.Release|Any CPU.ActiveCfg = Release|Tegra-Android
+		{1A8346D8-1ECA-45A9-8171-FFFE9D248ADC}.Release|Mixed Platforms.ActiveCfg = Release|Tegra-Android
+		{1A8346D8-1ECA-45A9-8171-FFFE9D248ADC}.Release|Mixed Platforms.Build.0 = Release|Tegra-Android
+		{1A8346D8-1ECA-45A9-8171-FFFE9D248ADC}.Release|Tegra-Android.ActiveCfg = Release|Tegra-Android
+		{1A8346D8-1ECA-45A9-8171-FFFE9D248ADC}.Release|Tegra-Android.Build.0 = Release|Tegra-Android
+		{4D8A9AE9-4B41-4036-8F98-DAE1935A35E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D8A9AE9-4B41-4036-8F98-DAE1935A35E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D8A9AE9-4B41-4036-8F98-DAE1935A35E7}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{4D8A9AE9-4B41-4036-8F98-DAE1935A35E7}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{4D8A9AE9-4B41-4036-8F98-DAE1935A35E7}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{4D8A9AE9-4B41-4036-8F98-DAE1935A35E7}.Debug|Mixed Platforms.Deploy.0 = Debug|Any CPU
+		{4D8A9AE9-4B41-4036-8F98-DAE1935A35E7}.Debug|Tegra-Android.ActiveCfg = Debug|Any CPU
+		{4D8A9AE9-4B41-4036-8F98-DAE1935A35E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D8A9AE9-4B41-4036-8F98-DAE1935A35E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D8A9AE9-4B41-4036-8F98-DAE1935A35E7}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{4D8A9AE9-4B41-4036-8F98-DAE1935A35E7}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{4D8A9AE9-4B41-4036-8F98-DAE1935A35E7}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{4D8A9AE9-4B41-4036-8F98-DAE1935A35E7}.Release|Mixed Platforms.Deploy.0 = Release|Any CPU
+		{4D8A9AE9-4B41-4036-8F98-DAE1935A35E7}.Release|Tegra-Android.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1A8346D8-1ECA-45A9-8171-FFFE9D248ADC} = {C2F71855-E08A-4555-BB9D-433929F4293D}
+		{4D8A9AE9-4B41-4036-8F98-DAE1935A35E7} = {8C524CF2-7781-4D5B-8731-C89E70B20BB8}
+	EndGlobalSection
+EndGlobal

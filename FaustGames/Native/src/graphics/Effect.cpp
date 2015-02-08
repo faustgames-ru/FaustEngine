@@ -27,7 +27,34 @@ namespace graphics
 	}
 
 
-	GLuint Effect::createShader(GLenum type, const GLchar *code)
+	void CheckShader(GLuint id)
+	{
+		GLint compiled = 0;
+		GLint length = 0;
+		GLint deleteStatus = 0;
+		GLint shaderSourceLength = 0;
+		GLint shaderType = 0;
+		glGetShaderiv(id, GL_SHADER_TYPE, &shaderType);
+		glGetShaderiv(id, GL_DELETE_STATUS, &deleteStatus);
+		glGetShaderiv(id, GL_SHADER_SOURCE_LENGTH, &shaderSourceLength);
+
+
+		glGetShaderiv(id, GL_COMPILE_STATUS, &compiled);
+		Errors::check(Errors::UnknownAction);
+		if (compiled == 0)
+		{
+			glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length);
+			Errors::check(Errors::UnknownAction);
+			if (length > 1) {
+				std::string log(length, '\0');
+				glGetShaderInfoLog(id, length, &length, &log[0]);
+				Errors::check(Errors::UnknownAction);
+				//exit(1);
+			}
+		}
+	}
+
+	GLuint Effect::createShader(GLenum type, const char *code)
 	{
 		GLuint shader = glCreateShader(type);
 		Errors::check(Errors::CreateShader);
@@ -41,13 +68,13 @@ namespace graphics
 		return shader;
 	}
 
-
 	void CheckLink(GLuint id)
 	{
 		//CheckAndLog(id,GL_LINK_STATUS,"conexion");
-		GLint compiled = 0;
-		GLint length = 0;
+		GLint compiled = 0;		
+		GLint length = 0;		
 		glGetProgramiv(id, GL_LINK_STATUS, &compiled);
+
 		if (compiled == 0)
 		{
 			glGetProgramiv(id, GL_INFO_LOG_LENGTH, &length);
@@ -85,8 +112,8 @@ namespace graphics
 
 	void Effect::create(const char *vertexShaderCode, const char *pixelShaderCode)
 	{
-		_vertexShader = createShader(GL_VERTEX_SHADER, vertexShaderCode);
 		_pixelShader = createShader(GL_FRAGMENT_SHADER, pixelShaderCode);
+		_vertexShader = createShader(GL_VERTEX_SHADER, vertexShaderCode);
 
 		_shaderProgram = glCreateProgram();
 		Errors::check(Errors::CreateProgram);
@@ -111,8 +138,6 @@ namespace graphics
 		glLinkProgram(_shaderProgram);
 		Errors::check(Errors::LinkProgram);
 		
-		//CheckLink(_shaderProgram);
-
 		glUseProgram(_shaderProgram);
 		Errors::check(Errors::UseProgram);
 

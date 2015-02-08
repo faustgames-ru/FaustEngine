@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="jni">
+      <UniqueIdentifier>0b66d49d-1eba-4c35-b0ac-8895e5983936</UniqueIdentifier>
+    </Filter>
+    <Filter Include="res">
+      <UniqueIdentifier>5ab13228-d14f-4813-bf05-c2d2f1cfa96e</UniqueIdentifier>
+    </Filter>
+    <Filter Include="res\values">
+      <UniqueIdentifier>b374e4eb-cd78-41b8-b856-a178b9ed4bc5</UniqueIdentifier>
+    </Filter>
+    <Filter Include="embeded">
+      <UniqueIdentifier>{95073126-12ae-4e2e-86ef-eefc976ee072}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidBuild Include="AndroidManifest.xml" />
+    <AndroidBuild Include="build.xml" />
+    <AndroidBuild Include="local.properties" />
+    <AndroidBuild Include="proguard.cfg" />
+    <AndroidBuild Include="project.properties" />
+    <AndroidBuild Include="res\values\strings.xml">
+      <Filter>res\values</Filter>
+    </AndroidBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\Native\src\core\Math.cpp" />
+    <ClCompile Include="..\..\Native\src\core\Matrix.cpp" />
+    <ClCompile Include="..\..\Native\src\exports\llge.cpp" />
+    <ClCompile Include="..\..\Native\src\graphics\AttributeInfo.cpp" />
+    <ClCompile Include="..\..\Native\src\graphics\Attributes.cpp" />
+    <ClCompile Include="..\..\Native\src\graphics\Color.cpp" />
+    <ClCompile Include="..\..\Native\src\graphics\Effect.cpp" />
+    <ClCompile Include="..\..\Native\src\graphics\EffectBase.cpp" />
+    <ClCompile Include="..\..\Native\src\graphics\Effects.cpp" />
+    <ClCompile Include="..\..\Native\src\graphics\EffectSolid.cpp" />
+    <ClCompile Include="..\..\Native\src\graphics\EffectSolidColor.cpp" />
+    <ClCompile Include="..\..\Native\src\graphics\EffectTextureColor.cpp" />
+    <ClCompile Include="..\..\Native\src\graphics\Errors.cpp" />
+    <ClCompile Include="..\..\Native\src\graphics\GraphicsDevice.cpp" />
+    <ClCompile Include="..\..\Native\src\graphics\Image2dData.cpp" />
+    <ClCompile Include="..\..\Native\src\graphics\RenderState.cpp" />
+    <ClCompile Include="..\..\Native\src\graphics\Texture.cpp" />
+    <ClCompile Include="..\..\Native\src\graphics\TextureImage2d.cpp" />
+    <ClCompile Include="..\..\Native\src\graphics\TextureLoader.cpp" />
+    <ClCompile Include="..\..\Native\src\graphics\TextureRenderTarget2d.cpp" />
+    <ClCompile Include="..\..\Native\src\graphics\Uniform.cpp" />
+    <ClCompile Include="..\..\Native\src\graphics\UniformInfo.cpp" />
+    <ClCompile Include="..\..\Native\src\graphics\Uniforms.cpp" />
+    <ClCompile Include="..\..\Native\src\graphics\UniformValue.cpp" />
+    <ClCompile Include="..\..\Native\src\graphics\UniformValueFloat.cpp" />
+    <ClCompile Include="..\..\Native\src\graphics\UniformValueMatrix.cpp" />
+    <ClCompile Include="..\..\Native\src\graphics\UniformValueTexture.cpp" />
+    <ClCompile Include="..\..\Native\src\graphics\VertexFormat.cpp" />
+    <ClCompile Include="..\..\Native\src\graphics\VertexFormats.cpp" />
+    <ClCompile Include="jni\main.cpp" />
+    <ClCompile Include="native_app_glue\android_native_app_glue.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\CommonSources\include\llge.h" />
+    <ClInclude Include="..\..\Native\src\core\core.h" />
+    <ClInclude Include="..\..\Native\src\core\core_classes.h" />
+    <ClInclude Include="..\..\Native\src\core\core_platform.h" />
+    <ClInclude Include="..\..\Native\src\core\FixedPool.h" />
+    <ClInclude Include="..\..\Native\src\core\Lazy.h" />
+    <ClInclude Include="..\..\Native\src\core\Math.h" />
+    <ClInclude Include="..\..\Native\src\core\Matrix.h" />
+    <ClInclude Include="..\..\Native\src\core\StaticArray.h" />
+    <ClInclude Include="..\..\Native\src\core\Vector.h" />
+    <ClInclude Include="..\..\Native\src\graphics\AttributeInfo.h" />
+    <ClInclude Include="..\..\Native\src\graphics\Attributes.h" />
+    <ClInclude Include="..\..\Native\src\graphics\Color.h" />
+    <ClInclude Include="..\..\Native\src\graphics\Effect.h" />
+    <ClInclude Include="..\..\Native\src\graphics\EffectBase.h" />
+    <ClInclude Include="..\..\Native\src\graphics\Effects.h" />
+    <ClInclude Include="..\..\Native\src\graphics\EffectSolid.h" />
+    <ClInclude Include="..\..\Native\src\graphics\EffectSolidColor.h" />
+    <ClInclude Include="..\..\Native\src\graphics\EffectTextureColor.h" />
+    <ClInclude Include="..\..\Native\src\graphics\Errors.h" />
+    <ClInclude Include="..\..\Native\src\graphics\graphics.h" />
+    <ClInclude Include="..\..\Native\src\graphics\GraphicsDevice.h" />
+    <ClInclude Include="..\..\Native\src\graphics\graphics_classes.h" />
+    <ClInclude Include="..\..\Native\src\graphics\graphics_platform.h" />
+    <ClInclude Include="..\..\Native\src\graphics\graphics_references.h" />
+    <ClInclude Include="..\..\Native\src\graphics\Image2dData.h" />
+    <ClInclude Include="..\..\Native\src\graphics\RenderState.h" />
+    <ClInclude Include="..\..\Native\src\graphics\State.h" />
+    <ClInclude Include="..\..\Native\src\graphics\StateCompare.h" />
+    <ClInclude Include="..\..\Native\src\graphics\Texture.h" />
+    <ClInclude Include="..\..\Native\src\graphics\TextureImage2d.h" />
+    <ClInclude Include="..\..\Native\src\graphics\TextureLoader.h" />
+    <ClInclude Include="..\..\Native\src\graphics\TextureRenderTarget2d.h" />
+    <ClInclude Include="..\..\Native\src\graphics\Uniform.h" />
+    <ClInclude Include="..\..\Native\src\graphics\UniformInfo.h" />
+    <ClInclude Include="..\..\Native\src\graphics\Uniforms.h" />
+    <ClInclude Include="..\..\Native\src\graphics\UniformValue.h" />
+    <ClInclude Include="..\..\Native\src\graphics\UniformValueFloat.h" />
+    <ClInclude Include="..\..\Native\src\graphics\UniformValueMatrix.h" />
+    <ClInclude Include="..\..\Native\src\graphics\UniformValueTexture.h" />
+    <ClInclude Include="..\..\Native\src\graphics\VertexFormat.h" />
+    <ClInclude Include="..\..\Native\src\graphics\VertexFormatPosition.h" />
+    <ClInclude Include="..\..\Native\src\graphics\VertexFormatPositionColor.h" />
+    <ClInclude Include="..\..\Native\src\graphics\VertexFormatPositionTextureColor.h" />
+    <ClInclude Include="..\..\Native\src\graphics\VertexFormats.h" />
+    <ClInclude Include="native_app_glue\android_native_app_glue.h" />
+    <ClInclude Include="..\..\Native\shaders\solid_frag.h">
+      <Filter>embeded</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Native\shaders\solid_vert.h">
+      <Filter>embeded</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Native\shaders\solid_color_frag.h">
+      <Filter>embeded</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Native\shaders\solid_color_vert.h">
+      <Filter>embeded</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Native\shaders\texture_color_frag.h">
+      <Filter>embeded</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Native\shaders\texture_color_vert.h">
+      <Filter>embeded</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

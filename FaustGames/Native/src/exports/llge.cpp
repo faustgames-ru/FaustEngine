@@ -63,7 +63,7 @@ namespace llge
 	{
 		Effects::create();
 		VertexFormats::create();
-		_lightMap.create(256, 256);
+		_lightMap.create(32, 32);
 		for (int i = 0; i < 16; i++)
 		{
 			_textures[i].create();
@@ -138,17 +138,16 @@ namespace llge
 		}
 	};
 
-	unsigned short indexBuffer[6] =
+	unsigned short indexBuffer[12] =
 	{
 		0, 1, 2,
-		0, 2, 3
+		0, 2, 3,
+		0, 2, 1,
+		0, 3, 2
 	};
 
 	void API_CALL RenderSystem::render()
 	{
-#ifdef __ANDROID__
-		__android_log_print(ANDROID_LOG_ERROR, "TRACKERS", "%s", "render_call");
-#endif
 		UniformValues::projection()->setValue(*projectionContatiner);
 		
 		_graphicsDevice->setRenderTarget(&_lightMap);
@@ -162,13 +161,13 @@ namespace llge
 		}
 		_graphicsDevice->setRenderTarget(0);
 		
-		_graphicsDevice->setClearState(0x7784aa, 1.0f);
+		_graphicsDevice->setClearState(0x7784ff, 1.0f);
 		_graphicsDevice->clear();
 		_graphicsDevice->renderState.setEffect(Effects::textureColor());
 		UniformValues::texture()->setValue(_lightMap.getHandle());
-		_graphicsDevice->drawPrimitives(VertexFormats::positionTextureColor(), vertexBuffers1[0], indexBuffer, 2);
+		_graphicsDevice->drawPrimitives(VertexFormats::positionTextureColor(), vertexBuffers1[0], indexBuffer, 4);
 		UniformValues::texture()->setValue(_textures[6].getHandle());
-		_graphicsDevice->drawPrimitives(VertexFormats::positionTextureColor(), vertexBuffers1[1], indexBuffer, 2);
+		_graphicsDevice->drawPrimitives(VertexFormats::positionTextureColor(), vertexBuffers1[1], indexBuffer, 4);
 	}
 
 	void API_CALL RenderSystem::cleanup()
@@ -219,10 +218,10 @@ namespace llge
 		//core::Allocator::release<Factory>(this);
 	}
 
-}
+	extern "C" DLLEXPORT  llge::IFactory * API_CALL createFactory()
+	{
+		return new  llge::Factory();
+		//return core::Allocator::create<Factory>();
+	}
 
-extern "C" DLLEXPORT  llge::IFactory * API_CALL createFactory()
-{
-	return new  llge::Factory();
-	//return core::Allocator::create<Factory>();
 }

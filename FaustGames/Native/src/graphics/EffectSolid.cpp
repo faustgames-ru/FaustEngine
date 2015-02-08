@@ -1,6 +1,9 @@
 #include "EffectSolid.h"
 #include "Uniforms.h"
 #include "Attributes.h"
+#include "..\..\shaders\solid_frag.h"
+#include "..\..\shaders\solid_vert.h"
+
 
 namespace graphics
 {
@@ -16,27 +19,6 @@ namespace graphics
 
 	void EffectSolid::create()
 	{
-		_effect.create(_vertexShader.c_str(), _pixelShader.c_str());
+		_effect.create((char *)shader_solid_vert, (char *)shader_solid_frag);
 	}
-
-
-	std::string EffectSolid::_pixelShader(
-"\
-void main() \
-{\
-gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);\
-}\
-");
-
-	std::string EffectSolid::_vertexShader(
-"\
-attribute vec3 position;\
-uniform mat4 projection;\
-\
-void main()\
-{\
-gl_Position = projection *  vec4(position, 1.0);\
-}\
-");
-
 }

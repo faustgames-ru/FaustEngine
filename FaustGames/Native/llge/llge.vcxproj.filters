@@ -19,6 +19,9 @@
     <Filter Include="common">
       <UniqueIdentifier>{52296692-4906-4308-88b5-5d16497cca62}</UniqueIdentifier>
     </Filter>
+    <Filter Include="shaders">
+      <UniqueIdentifier>{f56f7ea8-0aaf-4aed-ab59-4898beff468c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\CommonSources\include\llge.h">
@@ -199,6 +202,12 @@
     </ClInclude>
     <ClInclude Include="..\src\core\FixedPool.h">
       <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shaders\solid_frag.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shaders\solid_vert.h">
+      <Filter>shaders</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

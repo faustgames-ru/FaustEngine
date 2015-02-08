@@ -1,6 +1,8 @@
 #include "EffectTextureColor.h"
 #include "Uniforms.h"
 #include "Attributes.h"
+#include "..\..\shaders\texture_color_frag.h"
+#include "..\..\shaders\texture_color_vert.h"
 
 namespace graphics
 {
@@ -18,39 +20,6 @@ namespace graphics
 
 	void EffectTextureColor::create()
 	{
-		_effect.create(_vertexShader.c_str(), _pixelShader.c_str());
+		_effect.create((char *)shader_texture_color_vert, (char *)shader_texture_color_frag);
 	}
-
-	std::string EffectTextureColor::_pixelShader(
-"\
-uniform sampler2D texture;\
-\
-varying vec4 _color;\
-varying vec2 _textureCoords;\
-\
-void main()\
-{\
-vec4 textureColor = texture2D(texture, _textureCoords);\
-gl_FragColor = textureColor*_color;\
-}\
-");
-
-	std::string EffectTextureColor::_vertexShader(
-"\
-uniform mat4 projection;\
-attribute vec3 position;\
-attribute vec2 textureCoords;\
-attribute vec4 color;\
-\
-varying vec4 _color;\
-varying vec2 _textureCoords;\
-\
-void main()\
-{\
-gl_Position = projection *  vec4(position, 1.0);\
-_color = color;\
-_textureCoords = textureCoords;\
-}\
-");
-
 }

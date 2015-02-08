@@ -82,6 +82,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\CommonSources\include\llge.h" />
+    <ClInclude Include="..\shaders\solid_frag.h" />
+    <ClInclude Include="..\shaders\solid_vert.h" />
     <ClInclude Include="..\src\core\core.h" />
     <ClInclude Include="..\src\core\core_classes.h" />
     <ClInclude Include="..\src\core\core_platform.h" />

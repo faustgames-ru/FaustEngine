@@ -5,12 +5,28 @@
 #include "Lazy.h"
 
 namespace core
-{	
+{
+		
+	template<class T, int size>
+	class FixedDataBlock
+	{
+	public:
+		T *Data;
+		FixedDataBlock()
+		{
+			Data = (T *)malloc(size * sizeof(T));
+		}
+		~FixedDataBlock()
+		{
+			free(Data);
+		}
+	};
+	
 	template<class T, int size>
 	class FixedPool
 	{
 	private:
-		static T _root[size];
+		static FixedDataBlock<T, size> _root;
 		static T *_hollows[size];
 		static int _count;
 		static int _limit;
@@ -18,8 +34,32 @@ namespace core
 	public:
 		static inline int getIndex(T *value)
 		{
-			return value - _root;
+			return value - _root.Data;
 		}
+		
+		static inline T * alloc()
+		{
+			if (_hollowsCount > 0)
+			{
+				T *place = _hollows[_hollowsCount];
+				--_hollowsCount;
+				_count++;
+				return place;
+			}
+			else
+			{
+#if _DEBUG
+				if (_count >= _limit)
+				{
+					//throwException("pool overflow");
+				}
+#endif		
+				T *place = _root.Data + _count;
+				_count++;
+				return place;
+			}
+		}
+		
 		static inline T * create()
 		{
 			if (_hollowsCount > 0)
@@ -38,7 +78,7 @@ namespace core
 					//throwException("pool overflow");
 				}
 #endif		
-				T *place = _root + _count;
+				T *place = _root.Data + _count;
 				T *instance = new (place)T();
 				_count++;
 				return instance;
@@ -46,7 +86,7 @@ namespace core
 		}
 		static inline T * getByIndex(int id)
 		{
-			return _root + id;
+			return _root.Data + id;
 		}
 		static inline void release(T * value)
 		{
@@ -57,7 +97,7 @@ namespace core
 	};
 
 	template <class T, int size>
-	T FixedPool<T, size>::_root[size];
+	FixedDataBlock<T, size> FixedPool<T, size>::_root;
 	
 	template <class T, int size>
 	T * FixedPool<T, size>::_hollows[size];
@@ -70,6 +110,93 @@ namespace core
 
 	template <class T, int size>
 	int FixedPool<T, size>::_hollowsCount(0);
+
+	template<class T>
+	class DataBlock
+	{
+	public:
+		int count;
+		T *Data;
+	};
+
+	template<typename T, int size>
+	class ArraysPool
+	{
+	private:
+		static FixedDataBlock<T, size> _position;
+		static int _count;
+		static int _limmit;
+	public:
+		inline static T *alloc(int size)
+		{
+			if (_limmit < (_count + size))
+			{
+				return 0;
+				//throwException("pool overflow");
+			}
+			T *place = _position.Data + _count;
+			_count += size;
+
+			return place;
+		}
+		inline static void clear()
+		{
+			_count = 0;
+		}
+	};
+
+	template <class T, int size>
+	FixedDataBlock<T, size> ArraysPool<T, size>::_position;
+
+	template <class T, int size>
+	int ArraysPool<T, size>::_limmit(size);
+
+	template <class T, int size>
+	int ArraysPool<T, size>::_count(0);
+
+	template<int size>
+	class HeapPool
+	{
+	private:
+		static FixedDataBlock<char, size> _position;
+		static int _count;
+		static int _limmit;
+	public:
+		inline static void * getDataByOffset(int offset)
+		{
+			return _position.Data + offset;
+		}
+		inline static int getOffset(void *data)
+		{
+			return (char *)data - _position.Data;
+		}
+		
+		inline static void *alloc(int size)
+		{
+			if (_limmit < (_count + size))
+			{
+				return 0;
+				//throwException("pool overflow");
+			}
+			void *place = _position.Data + _count;
+			_count += size;
+
+			return place;
+		}
+		inline static void clear()
+		{
+			_count = 0;
+		}
+	};
+
+	template <int size>
+	FixedDataBlock<char, size> HeapPool<size>::_position;
+
+	template <int size>
+	int HeapPool<size>::_limmit(size);
+
+	template <int size>
+	int HeapPool<size>::_count(0);
 }
 
 #endif /*FIXED_POOL_H*/

@@ -22,6 +22,9 @@
     <Filter Include="shaders">
       <UniqueIdentifier>{f56f7ea8-0aaf-4aed-ab59-4898beff468c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="entities\components">
+      <UniqueIdentifier>{0c6a6b6c-613e-4516-bd9a-96ac6120947b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\CommonSources\include\llge.h">
@@ -49,9 +52,6 @@
     </ClInclude>
     <ClInclude Include="..\src\core\Vector.h">
       <Filter>core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\entities\ComponentTransform2d.h">
-      <Filter>entities</Filter>
     </ClInclude>
     <ClInclude Include="..\src\entities\entities_classes.h">
       <Filter>entities</Filter>
@@ -209,6 +209,39 @@
     <ClInclude Include="..\shaders\solid_vert.h">
       <Filter>shaders</Filter>
     </ClInclude>
+    <ClInclude Include="..\shaders\solid_color_frag.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shaders\solid_color_vert.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shaders\texture_color_frag.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shaders\texture_color_vert.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\entities\ComponentTransform2d.h">
+      <Filter>entities\components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\entities\ComponentMesh2d.h">
+      <Filter>entities\components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\exports\Aabb2dComponent.h">
+      <Filter>exports</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\exports\Transform2dComponent.h">
+      <Filter>exports</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\exports\Mesh2dComponent.h">
+      <Filter>exports</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\exports\Mesh2dEntity.h">
+      <Filter>exports</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\exports\EntitiesFactory.h">
+      <Filter>exports</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\CommonSources\gen\llgePInvoke.cpp">
@@ -310,6 +343,27 @@
       <Filter>graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\exports\llge.cpp">
+      <Filter>exports</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\entities\ComponentMesh2d.cpp">
+      <Filter>entities\components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\exports\Aabb2dComponent.cpp">
+      <Filter>exports</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\exports\Transform2dComponent.cpp">
+      <Filter>exports</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\exports\Mesh2dComponent.cpp">
+      <Filter>exports</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\exports\Mesh2dEntity.cpp">
+      <Filter>exports</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\exports\EntitiesFactory.cpp">
+      <Filter>exports</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\exports\llgeGraphics.cpp">
       <Filter>exports</Filter>
     </ClCompile>
   </ItemGroup>

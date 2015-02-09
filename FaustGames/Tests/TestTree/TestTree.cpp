@@ -8,6 +8,9 @@
 #include <ctime>
 #include <vector>
 
+#define SIZE 2
+#define DEPTH 20
+
 
 class GlobalConstants
 {
@@ -89,6 +92,71 @@ namespace core
 	template <class T, int size>
 	int FixedPool<T, size>::_hollowsCount(0);
 
+	template<class T>
+	class DynamicPool
+	{
+	private:
+		T **_hollows;
+		int _count;
+		int _limit;
+		int _hollowsCount;
+		T * _root;
+
+	public:
+		DynamicPool(int size)
+		{
+			_root = (T*)malloc(size*sizeof(T));
+			_hollows = (T**)malloc(size*sizeof(T*));
+			_count = 0;
+			_limit = size;
+			_hollowsCount = 0;
+		}
+		
+		void initialize()
+		{
+			_root = (T*)malloc(size*sizeof(T));
+		}
+
+		inline int getCount(){ return _count; }
+		inline int getIndex(T *value)
+		{
+			return value - _root;
+		}
+		inline T * create()
+		{
+			if (_hollowsCount > 0)
+			{
+				T *place = _hollows[_hollowsCount];
+				T *instance = new (place)T();
+				--_hollowsCount;
+				_count++;
+				return instance;
+			}
+			else
+			{
+#if _DEBUG
+				if (_count >= _limit)
+				{
+					throw std::exception("pool overflow");
+				}
+#endif		
+				T *place = _root + _count;
+				T *instance = new (place)T();
+				_count++;
+				return instance;
+			}
+		}
+		inline T * getByIndex(int id)
+		{
+			return _root + id;
+		}
+		inline void release(T * value)
+		{
+			_hollows[_hollowsCount] = value;
+			++_hollowsCount;
+			value->~T();
+		}
+	};
 }
 
 struct ComponentTransform2d
@@ -112,39 +180,56 @@ struct ComponentTransform2d
 	ComponentTransform2d * Parent;
 	ComponentTransform2d * NextNodeId;
 	ComponentTransform2d * FirtsChildId;
+
+	typedef core::FixedPool<ComponentTransform2d, GlobalConstants::ObjectsLimit> Pool;
+
 };
 
-class SystemTransform2dNode
+class TransformNode
 {
 public:
-	SystemTransform2dNode * Parent;
-	ComponentTransform2d *Item;
-	std::vector<SystemTransform2dNode *> Childs;
+	float LocalX;
+	float LocalY;
+	float LocalZ;
+	float LocalPivotX;
+	float LocalPivotY;
+	float LocalRotation;
+	float LocalScale;
 
-	SystemTransform2dNode()
+	float GlobalX;
+	float GlobalY;
+	float GlobalZ;
+	float GlobalPivotX;
+	float GlobalPivotY;
+	float GlobalRotation;
+	float GlobalScale;
+
+	int FirstChildIndex;
+	int ChildsCount;
+	
+	TransformNode()
 	{
-		Parent = 0;
-		Item = new ComponentTransform2d();// Pool::create();
-
+		FirstChildIndex = 0;
+		ChildsCount = 0;
 	}
-	//typedef core::FixedPool<ComponentTransform2d, GlobalConstants::ObjectsLimit> Pool;
-	//typedef core::FixedPool<SystemTransform2dNode, GlobalConstants::ObjectsLimit> ExPool;
+
+	typedef core::FixedPool<TransformNode, GlobalConstants::ObjectsLimit> Pool;
 };
 
-class SystemTransform2dLink
+class Ramdomizer
 {
 public:
-	SystemTransform2dNode *Root;
 	inline float createRand()
 	{
 		return (float)(rand() % 200 - 100) / 100.0f;
 	}
 
-	SystemTransform2dNode * createRoot()
+
+	Ramdomizer()
 	{
-		Root = new SystemTransform2dNode();// SystemTransform2dNode::ExPool::create();
-		Root->Parent = 0;
-		return Root;
+		randomIndex = 0;
+		for (int i = 0; i < 128; i++)
+			randomSwap[i] = createRand();
 	}
 
 	float randomSwap[128];
@@ -156,29 +241,76 @@ public:
 		return randomSwap[randomIndex % 128];
 	}
 
-	inline void randomize(ComponentTransform2d *node)
+	inline void randomize(TransformNode *node)
 	{
 		node->LocalX = node->GlobalX = getRand();
-		node->LocalX = node->GlobalY = getRand();
-		node->LocalX = node->GlobalZ = getRand();
+		node->LocalY = node->GlobalY = getRand();
+		node->LocalZ = node->GlobalZ = getRand();
 
 		node->LocalRotation = node->GlobalRotation = getRand();
 		node->LocalScale = node->GlobalScale = getRand();
 	}
 
-	void create(SystemTransform2dNode *root, int depth)
+};
+
+struct Level
+{
+	int size;
+	TransformNode * Data;
+	core::DynamicPool<TransformNode> *Pool;
+};
+
+class SystemTransform2dLink
+{
+public:
+	Ramdomizer randomizer;
+	TransformNode *_root;
+	std::vector<Level> _levels;
+
+	void create(TransformNode *root, int count, int level)
 	{
-		randomize(root->Item);
-		if (depth == 0) return;
-		for (int i = 0; i < 16; i++)
+		if (level == DEPTH) return;
+		for (int i = 0; i < count; i++)
 		{
-			SystemTransform2dNode * child = new  SystemTransform2dNode();// SystemTransform2dNode::ExPool::create();
-			root->Childs.push_back(child);
-			create(child, depth-1);
+			TransformNode * node = _levels[level + 1].Pool->create();// TransformNode::Pool::create();
+			root->FirstChildIndex = _levels[level + 1].Pool->getIndex(node);// TransformNode::Pool::getIndex(node);
+			root->ChildsCount = SIZE;
+			randomizer.randomize(node);
+			for (int j = 1; j < SIZE; j++)
+			{
+				node = _levels[level + 1].Pool->create();// TransformNode::Pool::create();
+				randomizer.randomize(node);
+			}
+			root++;
 		}
 	}
 
-	inline void transform(ComponentTransform2d *node, ComponentTransform2d *parent)
+	void create()
+	{
+		_levels.resize(DEPTH+1);
+		int size = 4;
+		for (int i = 0; i <= DEPTH; i++)
+		{
+			_levels[i].Pool = new core::DynamicPool<TransformNode>(size);
+			size *= SIZE;
+		}
+		
+		_root = _levels[0].Pool->create(); //TransformNode::Pool::create();
+		TransformNode * node = _root;
+		randomizer.randomize(_root);
+		size = 1;
+
+		for (int i = 0; i < DEPTH; i++)
+		{
+			_levels[i].Data = _root;
+			_levels[i].size = size;
+			create(_root, size, i);
+			size *= SIZE;
+			_root = TransformNode::Pool::getByIndex(node->FirstChildIndex);
+		}
+	}
+	
+	inline void transform(TransformNode *node, TransformNode *parent)
 	{
 		node->GlobalX = node->LocalX + parent->GlobalX;
 		node->GlobalY = node->LocalY + parent->GlobalY;
@@ -187,16 +319,35 @@ public:
 		node->GlobalRotation = node->LocalRotation + parent->GlobalRotation;
 		node->GlobalScale = node->LocalScale * parent->GlobalScale;
 	}
-
-	void parse(SystemTransform2dNode *root)
-	{
-		int size = root->Childs.size();
-		for (int i = 0; i < size; i++)
+	static int iterations;
+	void parse()
+	{	
+		int levelsSize = _levels.size();
+		for (int i = 0; i < levelsSize; i++)
 		{
-			transform(root->Childs[i]->Item, root->Item);
-			parse(root->Childs[i]);
+			int size = _levels[i].size;
+			TransformNode *parent = _levels[i].Data;
+			for (int j = 0; j < size; j++)
+			{
+				//_mm_prefetch((char *)(parent + 10), _MM_HINT_T1);
+				int innerSize = parent->ChildsCount;
+				TransformNode *child = TransformNode::Pool::getByIndex(parent->FirstChildIndex);
+				for (int k = 0; k < innerSize; k++, child++)
+				{
+					_mm_prefetch((char *)(child + 20), _MM_HINT_NTA);
+
+					child->GlobalX = child->LocalX + parent->GlobalX;
+					child->GlobalY = child->LocalY + parent->GlobalY;
+					child->GlobalZ = child->LocalZ + parent->GlobalZ;
+
+					child->GlobalRotation = child->LocalRotation + parent->GlobalRotation;
+					child->GlobalScale = child->LocalScale * parent->GlobalScale;
+					//transform(child, parent);
+					//iterations++;
+				}
+				parent++;
+			}
 		}
-	
 	}
 };
 
@@ -240,8 +391,8 @@ public:
 	inline void randomize(ComponentTransform2d *node)
 	{
 		node->LocalX = node->GlobalX = getRand();
-		node->LocalX = node->GlobalY = getRand();
-		node->LocalX = node->GlobalZ = getRand();
+		node->LocalY = node->GlobalY = getRand();
+		node->LocalZ = node->GlobalZ = getRand();
 
 		node->LocalRotation = node->GlobalRotation = getRand();
 		node->LocalScale = node->GlobalScale = getRand();
@@ -278,7 +429,7 @@ public:
 		root->FirtsChildId = child;
 		create(child, depth - 1);
 
-		for (int i = 0; i < 16; i++)
+		for (int i = 1; i < SIZE; i++)
 		{
 			ComponentTransform2d *nextChild = Pool::create();
 
@@ -331,17 +482,18 @@ public:
 	void parseLinear()
 	{
 		int count = SystemTransform2d::Pool::getCount();
-		ComponentTransform2d * node;
-		for (int i = 1; i < count; i++)
+		ComponentTransform2d * node = SystemTransform2d::Pool::getByIndex(1);
+		int stride = sizeof(ComponentTransform2d) / 4;
+		for (int i = 1; i < count; i++, node++)
 		{
-			node = SystemTransform2d::Pool::getByIndex(i);
-			//node->GlobalX = node->LocalX + node->Parent->GlobalX;
-			//node->GlobalY = node->LocalY + node->Parent->GlobalY;
-			//node->GlobalZ = node->LocalZ + node->Parent->GlobalZ;
+			_mm_prefetch((char *)(node + 20), _MM_HINT_NTA);
+			node->GlobalX = node->LocalX + node->Parent->GlobalX;
+			node->GlobalY = node->LocalY + node->Parent->GlobalY;
+			node->GlobalZ = node->LocalZ + node->Parent->GlobalZ;
 
-			//node->GlobalRotation = node->LocalRotation + node->Parent->GlobalRotation;
-			//node->GlobalScale = node->LocalScale * node->Parent->GlobalScale;
-			transform(node, node->Parent);
+			node->GlobalRotation = node->LocalRotation + node->Parent->GlobalRotation;
+			node->GlobalScale = node->LocalScale * node->Parent->GlobalScale;
+			//transform(node, node->Parent);
 		}
 	}
 	
@@ -349,20 +501,20 @@ public:
 
 	void parse(ComponentTransform2d *root)
 	{
-		iterations++;
+		//iterations++;
 		// do recalc transform;
 		ComponentTransform2d * node = root->FirtsChildId;
 		while (node)
 		{
-			transform(node, root);
-			/*
-			node->GlobalX = node->LocalX + node->Parent->GlobalX;
-			node->GlobalY = node->LocalY + node->Parent->GlobalY;
-			node->GlobalZ = node->LocalZ + node->Parent->GlobalZ;
+			//transform(node, root);
+			
+			node->GlobalX = node->LocalX + root->GlobalX;
+			node->GlobalY = node->LocalY + root->GlobalY;
+			node->GlobalZ = node->LocalZ + root->GlobalZ;
 
-			node->GlobalRotation = node->LocalRotation + node->Parent->GlobalRotation;
-			node->GlobalScale = node->LocalScale * node->Parent->GlobalScale;
-			*/
+			node->GlobalRotation = node->LocalRotation + root->GlobalRotation;
+			node->GlobalScale = node->LocalScale * root->GlobalScale;
+			
 			if (node->FirtsChildId >= 0)
 				parse(node);
 			// do transform;
@@ -383,25 +535,26 @@ private:
 };
 
 int SystemTransform2d::iterations(0);
+int SystemTransform2dLink::iterations(0);
 
 int _tmain(int argc, _TCHAR* argv[])
 {
-	//SystemTransform2dNode::Pool::initialize();
-	//SystemTransform2dNode::ExPool::initialize();
+	ComponentTransform2d::Pool::initialize();
+	TransformNode::Pool::initialize();
 
 	long start = clock();
 	long finish = clock();
 	long dt = finish - start;
-	/*
+	
 	SystemTransform2d sys;
 	SystemTransform2d::iterations = 0;
 	ComponentTransform2d *root = sys.createRoot();
-	sys.create(root, 5);
+	sys.create(root, DEPTH);
 	int count = SystemTransform2d::Pool::getCount();
 
 	
 	start = clock();
-	for (int i = 0; i < 10;i++)
+	for (int i = 0; i < 100;i++)
 	{
 		sys.parseLinear();
 	}
@@ -410,10 +563,13 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	std::cout << dt;
 	std::cout << "\n";
-	
+	std::cout << count;
+	std::cout << "\n";
+	std::cout << "\n";
+
 
 	start = clock();
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 100; i++)
 	{
 		sys.parse(root);
 	}
@@ -424,16 +580,19 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	std::cout << dt;
 	std::cout << "\n";
-	*/
+	std::cout << SystemTransform2d::iterations;
+	std::cout << "\n";
+	std::cout << "\n";
+
+	SystemTransform2dLink::iterations = 0;
 	SystemTransform2dLink sysLink;
-	SystemTransform2dNode *rootLink = sysLink.createRoot();
-	sysLink.create(rootLink, 4);
+	sysLink.create();
 
 
 	start = clock();
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 100; i++)
 	{
-		sysLink.parse(rootLink);
+		sysLink.parse();
 	}
 
 	finish = clock();
@@ -441,7 +600,9 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	std::cout << dt;
 	std::cout << "\n";
-	
+	std::cout << SystemTransform2dLink::iterations;
+	std::cout << "\n";
+
 
 	int i;
 	std::cin >> i;

@@ -13,7 +13,7 @@ varying vec2 _textureCoords;
 
 void main()
 {
-	gl_Position = projection *  vec4(position, 1.0);
+	gl_Position = projection * vec4(position, 1.0);
 	_color = color;
 	_textureCoords = textureCoords;
 }

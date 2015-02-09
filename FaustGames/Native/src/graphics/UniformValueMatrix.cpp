@@ -18,7 +18,8 @@ namespace graphics
 	void UniformValueMatrix::apply(Uniform *uniform)
 	{
 		if (_equal) return;
-		glUniformMatrix4fv(uniform->getHandle(), 1, false, _value.Value.getData());
+		const float * data = _value.Value.getData();
+		glUniformMatrix4fv(uniform->getHandle(), 1, false, data);
 		Errors::check(Errors::UniformMatrix4fv);
 	}
 

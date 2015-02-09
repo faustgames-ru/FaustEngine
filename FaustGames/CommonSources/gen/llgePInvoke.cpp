@@ -26,44 +26,39 @@ namespace llge
 		classInstance->upateRenderLayer(value);
 	}
 	
-	extern "C" DLLEXPORT void API_CALL llge_SpriteComponent_updateVertex (ISpriteComponent * classInstance, int index, float x, float y, float z, short u, short v, int color)
+	extern "C" DLLEXPORT void API_CALL llge_Mesh2dComponent_updateData (IMesh2dComponent * classInstance, void * mesh2dVertices, void * ushortIndices)
 	{
-		classInstance->updateVertex(index, x, y, z, u, v, color);
+		classInstance->updateData(mesh2dVertices, ushortIndices);
 	}
 	
-	extern "C" DLLEXPORT void API_CALL llge_SpriteComponent_updateImage (ISpriteComponent * classInstance, IImage * image)
+	extern "C" DLLEXPORT ITransform2dComponent * API_CALL llge_Mesh2dEntity_getTransform (IMesh2dEntity * classInstance)
 	{
-		classInstance->updateImage(image);
+		return classInstance->getTransform();
 	}
 	
-	extern "C" DLLEXPORT ISpriteComponent * API_CALL llge_StaticSpriteEntity_getSpriteComponent (IStaticSpriteEntity * classInstance)
-	{
-		return classInstance->getSpriteComponent();
-	}
-	
-	extern "C" DLLEXPORT IAabb2dComponent * API_CALL llge_StaticSpriteEntity_getAabbComponent (IStaticSpriteEntity * classInstance)
+	extern "C" DLLEXPORT IAabb2dComponent * API_CALL llge_Mesh2dEntity_getAabbComponent (IMesh2dEntity * classInstance)
 	{
 		return classInstance->getAabbComponent();
 	}
 	
-	extern "C" DLLEXPORT IRenderLayerComponent * API_CALL llge_StaticSpriteEntity_getRenderLayerComponent (IStaticSpriteEntity * classInstance)
+	extern "C" DLLEXPORT IMesh2dComponent * API_CALL llge_Mesh2dEntity_getMesh (IMesh2dEntity * classInstance)
 	{
-		return classInstance->getRenderLayerComponent();
+		return classInstance->getMesh();
 	}
 	
-	extern "C" DLLEXPORT ITransform2dComponent * API_CALL llge_DynamicSpriteEntity_getTransform2dComponent (IDynamicSpriteEntity * classInstance)
+	extern "C" DLLEXPORT IMesh2dEntity * API_CALL llge_EntitiesFactory_createMeshEntity (IEntitiesFactory * classInstance, int verticesCount, int indicesCount)
 	{
-		return classInstance->getTransform2dComponent();
+		return classInstance->createMeshEntity(verticesCount, indicesCount);
 	}
 	
-	extern "C" DLLEXPORT ISpriteComponent * API_CALL llge_DynamicSpriteEntity_getSpriteComponent (IDynamicSpriteEntity * classInstance)
+	extern "C" DLLEXPORT void API_CALL llge_EntitiesFactory_disposeMeshEntities (IEntitiesFactory * classInstance)
 	{
-		return classInstance->getSpriteComponent();
+		classInstance->disposeMeshEntities();
 	}
 	
-	extern "C" DLLEXPORT IAabb2dComponent * API_CALL llge_DynamicSpriteEntity_getAabbComponent (IDynamicSpriteEntity * classInstance)
+	extern "C" DLLEXPORT void API_CALL llge_EntitiesFactory_dispose (IEntitiesFactory * classInstance)
 	{
-		return classInstance->getAabbComponent();
+		classInstance->dispose();
 	}
 	
 	extern "C" DLLEXPORT IStaticRenderLayer * API_CALL llge_RenderSystem_createStaticLayer (IRenderSystem * classInstance, float z)
@@ -106,7 +101,132 @@ namespace llge
 		return classInstance->createRenderSystem();
 	}
 	
+	extern "C" DLLEXPORT IEntitiesFactory * API_CALL llge_Factory_createEntitiesFactory (IFactory * classInstance)
+	{
+		return classInstance->createEntitiesFactory();
+	}
+	
 	extern "C" DLLEXPORT void API_CALL llge_Factory_dispose (IFactory * classInstance)
+	{
+		classInstance->dispose();
+	}
+	
+	extern "C" DLLEXPORT int API_CALL llge_Texture_getId (ITexture * classInstance)
+	{
+		return classInstance->getId();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_Texture_LoadPixels (ITexture * classInstance, int width, int height, void * pixels)
+	{
+		classInstance->LoadPixels(width, height, pixels);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_Texture_create (ITexture * classInstance)
+	{
+		classInstance->create();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_Texture_cleanup (ITexture * classInstance)
+	{
+		classInstance->cleanup();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_Texture_dispose (ITexture * classInstance)
+	{
+		classInstance->dispose();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_TextureUniform_setTexture (ITextureUniform * classInstance, ITexture * texture)
+	{
+		classInstance->setTexture(texture);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_ProjectionUniform_setProjection (IProjectionUniform * classInstance, void * floatMatrix)
+	{
+		classInstance->setProjection(floatMatrix);
+	}
+	
+	extern "C" DLLEXPORT int API_CALL llge_VertexFormatsFacade_getPositionTextureColorFormat (IVertexFormatsFacade * classInstance)
+	{
+		return classInstance->getPositionTextureColorFormat();
+	}
+	
+	extern "C" DLLEXPORT int API_CALL llge_EffectsFacade_getTextureColorEffect (IEffectsFacade * classInstance)
+	{
+		return classInstance->getTextureColorEffect();
+	}
+	
+	extern "C" DLLEXPORT ITextureUniform * API_CALL llge_UniformsFacade_getTextureUniform (IUniformsFacade * classInstance)
+	{
+		return classInstance->getTextureUniform();
+	}
+	
+	extern "C" DLLEXPORT IProjectionUniform * API_CALL llge_UniformsFacade_getProjectionUniformm (IUniformsFacade * classInstance)
+	{
+		return classInstance->getProjectionUniformm();
+	}
+	
+	extern "C" DLLEXPORT IUniformsFacade * API_CALL llge_GraphicsFacade_getUniforms (IGraphicsFacade * classInstance)
+	{
+		return classInstance->getUniforms();
+	}
+	
+	extern "C" DLLEXPORT IVertexFormatsFacade * API_CALL llge_GraphicsFacade_getVertexFormatsFacade (IGraphicsFacade * classInstance)
+	{
+		return classInstance->getVertexFormatsFacade();
+	}
+	
+	extern "C" DLLEXPORT IEffectsFacade * API_CALL llge_GraphicsFacade_getEffectsFacade (IGraphicsFacade * classInstance)
+	{
+		return classInstance->getEffectsFacade();
+	}
+	
+	extern "C" DLLEXPORT ITexture * API_CALL llge_GraphicsFacade_createTexture (IGraphicsFacade * classInstance)
+	{
+		return classInstance->createTexture();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_GraphicsFacade_viewport (IGraphicsFacade * classInstance, int width, int height)
+	{
+		classInstance->viewport(width, height);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_GraphicsFacade_setClearState (IGraphicsFacade * classInstance, uint color, float depth)
+	{
+		classInstance->setClearState(color, depth);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_GraphicsFacade_clear (IGraphicsFacade * classInstance)
+	{
+		classInstance->clear();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_GraphicsFacade_draw (IGraphicsFacade * classInstance, int effect, int vertexFormat, void * vertices, void * indices, int primitivesCount)
+	{
+		classInstance->draw(effect, vertexFormat, vertices, indices, primitivesCount);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_GraphicsFacade_create (IGraphicsFacade * classInstance)
+	{
+		classInstance->create();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_GraphicsFacade_cleanup (IGraphicsFacade * classInstance)
+	{
+		classInstance->cleanup();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_GraphicsFacade_dispose (IGraphicsFacade * classInstance)
+	{
+		classInstance->dispose();
+	}
+	
+	extern "C" DLLEXPORT IGraphicsFacade * API_CALL llge_GraphicsFactory_createGraphicsFacade (IGraphicsFactory * classInstance)
+	{
+		return classInstance->createGraphicsFacade();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_GraphicsFactory_dispose (IGraphicsFactory * classInstance)
 	{
 		classInstance->dispose();
 	}

@@ -8,7 +8,7 @@ namespace entities
 	struct LayerIndex
 	{
 		float Z;
-		int LayerIndex;
+		int Index;
 	};
 
 	struct BoundingBox
@@ -34,13 +34,15 @@ namespace entities
 		int imageId;
 
 		inline static int size() { return 4; }		
-		typedef core::FixedPool<Sprite, GlobalConstants::ObjectsLimit> Pool;
+		typedef core::FixedPool<Sprite, EntitiesConstants::EntitiesLimit> Pool;
 	};
 
 	class Entity
 	{
 	public:
-		Entity(StaticComponentsMasks::e componentsSet);
+		typedef core::FixedPool<Entity, EntitiesConstants::EntitiesLimit> Pool;
+		Entity(){}
+		void setStaticComponent(StaticComponentsTypes::e type, int id);
 	protected:
 	private:
 		core::StaticArray<int, StaticComponentsTypes::ComponentsCount> _cpmponentsIds;

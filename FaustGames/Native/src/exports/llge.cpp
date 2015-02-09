@@ -10,7 +10,7 @@
 using namespace graphics;
 
 namespace llge
-{
+{	
 	class RenderSystem : public ITestRenderSystem
 	{
 	private:
@@ -36,6 +36,7 @@ namespace llge
 		static int poolSize() { return 1; }
 
 		virtual ITestRenderSystem * API_CALL createRenderSystem();
+		virtual IEntitiesFactory * API_CALL createEntitiesFactory();
 		virtual void API_CALL dispose();
 	};
 
@@ -69,6 +70,9 @@ namespace llge
 			_textures[i].create();
 			_textures[i].setData(TextureLoader::instance()->loadImage2dData(i));
 		}
+#ifdef __ANDROID__
+		__android_log_print(ANDROID_LOG_ERROR, "TRACKERS", "%s", "created");
+#endif
 	}
 
 	struct PositionColor
@@ -212,15 +216,20 @@ namespace llge
 		//return core::Allocator::create<RenderSystem>();
 	}
 
+	IEntitiesFactory * API_CALL Factory::createEntitiesFactory()
+	{
+		return 0;
+	}
+
 	void API_CALL Factory::dispose()
 	{
 		delete this;
 		//core::Allocator::release<Factory>(this);
 	}
 
-	extern "C" DLLEXPORT  llge::IFactory * API_CALL createFactory()
+	extern "C" DLLEXPORT  IFactory * API_CALL createFactory()
 	{
-		return new  llge::Factory();
+		return new  Factory();
 		//return core::Allocator::create<Factory>();
 	}
 

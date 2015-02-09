@@ -13,7 +13,10 @@ namespace graphics
 	}
 	Image2dData::~Image2dData()
 	{
-		delete[] Pixels;
+		if (Pixels)
+		{
+			delete[] Pixels;
+		}
 	}
 
 }

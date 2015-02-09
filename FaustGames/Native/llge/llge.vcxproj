@@ -65,7 +65,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -82,8 +82,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\CommonSources\include\llge.h" />
+    <ClInclude Include="..\shaders\solid_color_frag.h" />
+    <ClInclude Include="..\shaders\solid_color_vert.h" />
     <ClInclude Include="..\shaders\solid_frag.h" />
     <ClInclude Include="..\shaders\solid_vert.h" />
+    <ClInclude Include="..\shaders\texture_color_frag.h" />
+    <ClInclude Include="..\shaders\texture_color_vert.h" />
     <ClInclude Include="..\src\core\core.h" />
     <ClInclude Include="..\src\core\core_classes.h" />
     <ClInclude Include="..\src\core\core_platform.h" />
@@ -93,12 +97,18 @@
     <ClInclude Include="..\src\core\FixedPool.h" />
     <ClInclude Include="..\src\core\StaticArray.h" />
     <ClInclude Include="..\src\core\Vector.h" />
+    <ClInclude Include="..\src\entities\ComponentMesh2d.h" />
     <ClInclude Include="..\src\entities\ComponentTransform2d.h" />
     <ClInclude Include="..\src\entities\entities_classes.h" />
     <ClInclude Include="..\src\entities\entities_platform.h" />
     <ClInclude Include="..\src\entities\entities_references.h" />
     <ClInclude Include="..\src\entities\entity.h" />
     <ClInclude Include="..\src\entities\SystemTransform2d.h" />
+    <ClInclude Include="..\src\exports\Aabb2dComponent.h" />
+    <ClInclude Include="..\src\exports\EntitiesFactory.h" />
+    <ClInclude Include="..\src\exports\Mesh2dComponent.h" />
+    <ClInclude Include="..\src\exports\Mesh2dEntity.h" />
+    <ClInclude Include="..\src\exports\Transform2dComponent.h" />
     <ClInclude Include="..\src\geometry\Aabb2d.h" />
     <ClInclude Include="..\src\geometry\geometry_classes.h" />
     <ClInclude Include="..\src\geometry\geometry_platform.h" />
@@ -149,6 +159,13 @@
     <ClCompile Include="..\..\CommonSources\gen\llgePInvoke.cpp" />
     <ClCompile Include="..\src\core\Math.cpp" />
     <ClCompile Include="..\src\core\Matrix.cpp" />
+    <ClCompile Include="..\src\entities\ComponentMesh2d.cpp" />
+    <ClCompile Include="..\src\exports\Aabb2dComponent.cpp" />
+    <ClCompile Include="..\src\exports\EntitiesFactory.cpp" />
+    <ClCompile Include="..\src\exports\llgeGraphics.cpp" />
+    <ClCompile Include="..\src\exports\Mesh2dComponent.cpp" />
+    <ClCompile Include="..\src\exports\Mesh2dEntity.cpp" />
+    <ClCompile Include="..\src\exports\Transform2dComponent.cpp" />
     <ClCompile Include="..\src\exports\llge.cpp" />
     <ClCompile Include="..\src\geometry\Aabb2d.cpp" />
     <ClCompile Include="..\src\geometry\Quadtree2d.cpp" />

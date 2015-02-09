@@ -58,6 +58,12 @@ namespace core
 			id = (++_id) << 16;
 			Value = value;
 		}
+
+		inline void setValue(float *value)
+		{
+			++id;
+			Value = *((Matrix *)value);
+		}
 	};
 }
 

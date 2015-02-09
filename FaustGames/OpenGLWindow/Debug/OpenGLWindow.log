@@ -1,4 +1,5 @@
-﻿  Stdafx.cpp
+﻿C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V120\Microsoft.CppClean.targets(76,5): warning : Access to the path 'c:\_faust\faustengine\faustgames\debug\openglwindow.dll' is denied.
+  Stdafx.cpp
   AssemblyInfo.cpp
   OpenGLWindow.cpp
   Generating Code...

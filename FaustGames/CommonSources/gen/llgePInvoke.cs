@@ -12,6 +12,17 @@ namespace llge
 		public const string Dll = "llge";
 	}
 	
+	[StructLayout(LayoutKind.Sequential)]
+	public struct Mesh2dVertex
+	{
+		public float x;
+		public float y;
+		public float z;
+		public ushort u;
+		public ushort v;
+		public uint color;
+	}
+	
 	public class StaticRenderLayer
 	{
 		public IntPtr ClassInstance;
@@ -65,80 +76,68 @@ namespace llge
 		static extern private void llge_RenderLayerComponent_upateRenderLayer (IntPtr classInstance, IntPtr value);
 	}
 	
-	public class SpriteComponent
+	public class Mesh2dComponent
 	{
 		public IntPtr ClassInstance;
-		public void UpdateVertex (int index, float x, float y, float z, short u, short v, int color)
+		public void UpdateData (IntPtr mesh2dVertices, IntPtr ushortIndices)
 		{
-			llge_SpriteComponent_updateVertex(ClassInstance, index, x, y, z, u, v, color);
+			llge_Mesh2dComponent_updateData(ClassInstance, mesh2dVertices, ushortIndices);
 		}
 		
 		[DllImport(Version.Dll)]
-		static extern private void llge_SpriteComponent_updateVertex (IntPtr classInstance, int index, float x, float y, float z, short u, short v, int color);
-		public void UpdateImage (Image image)
-		{
-			llge_SpriteComponent_updateImage(ClassInstance, image.ClassInstance);
-		}
-		
-		[DllImport(Version.Dll)]
-		static extern private void llge_SpriteComponent_updateImage (IntPtr classInstance, IntPtr image);
+		static extern private void llge_Mesh2dComponent_updateData (IntPtr classInstance, IntPtr mesh2dVertices, IntPtr ushortIndices);
 	}
 	
-	public class StaticSpriteEntity
+	public class Mesh2dEntity
 	{
 		public IntPtr ClassInstance;
-		public SpriteComponent GetSpriteComponent ()
+		public Transform2dComponent GetTransform ()
 		{
-			return new SpriteComponent{ ClassInstance = llge_StaticSpriteEntity_getSpriteComponent(ClassInstance) };
+			return new Transform2dComponent{ ClassInstance = llge_Mesh2dEntity_getTransform(ClassInstance) };
 		}
 		
 		[DllImport(Version.Dll)]
-		static extern private IntPtr llge_StaticSpriteEntity_getSpriteComponent (IntPtr classInstance);
+		static extern private IntPtr llge_Mesh2dEntity_getTransform (IntPtr classInstance);
 		public Aabb2dComponent GetAabbComponent ()
 		{
-			return new Aabb2dComponent{ ClassInstance = llge_StaticSpriteEntity_getAabbComponent(ClassInstance) };
+			return new Aabb2dComponent{ ClassInstance = llge_Mesh2dEntity_getAabbComponent(ClassInstance) };
 		}
 		
 		[DllImport(Version.Dll)]
-		static extern private IntPtr llge_StaticSpriteEntity_getAabbComponent (IntPtr classInstance);
-		public RenderLayerComponent GetRenderLayerComponent ()
+		static extern private IntPtr llge_Mesh2dEntity_getAabbComponent (IntPtr classInstance);
+		public Mesh2dComponent GetMesh ()
 		{
-			return new RenderLayerComponent{ ClassInstance = llge_StaticSpriteEntity_getRenderLayerComponent(ClassInstance) };
+			return new Mesh2dComponent{ ClassInstance = llge_Mesh2dEntity_getMesh(ClassInstance) };
 		}
 		
 		[DllImport(Version.Dll)]
-		static extern private IntPtr llge_StaticSpriteEntity_getRenderLayerComponent (IntPtr classInstance);
-	}
-	
-	public class DynamicSpriteEntity
-	{
-		public IntPtr ClassInstance;
-		public Transform2dComponent GetTransform2dComponent ()
-		{
-			return new Transform2dComponent{ ClassInstance = llge_DynamicSpriteEntity_getTransform2dComponent(ClassInstance) };
-		}
-		
-		[DllImport(Version.Dll)]
-		static extern private IntPtr llge_DynamicSpriteEntity_getTransform2dComponent (IntPtr classInstance);
-		public SpriteComponent GetSpriteComponent ()
-		{
-			return new SpriteComponent{ ClassInstance = llge_DynamicSpriteEntity_getSpriteComponent(ClassInstance) };
-		}
-		
-		[DllImport(Version.Dll)]
-		static extern private IntPtr llge_DynamicSpriteEntity_getSpriteComponent (IntPtr classInstance);
-		public Aabb2dComponent GetAabbComponent ()
-		{
-			return new Aabb2dComponent{ ClassInstance = llge_DynamicSpriteEntity_getAabbComponent(ClassInstance) };
-		}
-		
-		[DllImport(Version.Dll)]
-		static extern private IntPtr llge_DynamicSpriteEntity_getAabbComponent (IntPtr classInstance);
+		static extern private IntPtr llge_Mesh2dEntity_getMesh (IntPtr classInstance);
 	}
 	
 	public class EntitiesFactory
 	{
 		public IntPtr ClassInstance;
+		public Mesh2dEntity CreateMeshEntity (int verticesCount, int indicesCount)
+		{
+			return new Mesh2dEntity{ ClassInstance = llge_EntitiesFactory_createMeshEntity(ClassInstance, verticesCount, indicesCount) };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_EntitiesFactory_createMeshEntity (IntPtr classInstance, int verticesCount, int indicesCount);
+		public void DisposeMeshEntities ()
+		{
+			llge_EntitiesFactory_disposeMeshEntities(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_EntitiesFactory_disposeMeshEntities (IntPtr classInstance);
+		public void Dispose ()
+		{
+			llge_EntitiesFactory_dispose(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_EntitiesFactory_dispose (IntPtr classInstance);
 	}
 	
 	public class RenderSystem
@@ -210,6 +209,13 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private IntPtr llge_Factory_createRenderSystem (IntPtr classInstance);
+		public EntitiesFactory CreateEntitiesFactory ()
+		{
+			return new EntitiesFactory{ ClassInstance = llge_Factory_createEntitiesFactory(ClassInstance) };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_Factory_createEntitiesFactory (IntPtr classInstance);
 		public void Dispose ()
 		{
 			llge_Factory_dispose(ClassInstance);
@@ -217,6 +223,214 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private void llge_Factory_dispose (IntPtr classInstance);
+	}
+	
+	public class Texture
+	{
+		public IntPtr ClassInstance;
+		public int GetId ()
+		{
+			return llge_Texture_getId(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private int llge_Texture_getId (IntPtr classInstance);
+		public void LoadPixels (int width, int height, IntPtr pixels)
+		{
+			llge_Texture_LoadPixels(ClassInstance, width, height, pixels);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_Texture_LoadPixels (IntPtr classInstance, int width, int height, IntPtr pixels);
+		public void Create ()
+		{
+			llge_Texture_create(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_Texture_create (IntPtr classInstance);
+		public void Cleanup ()
+		{
+			llge_Texture_cleanup(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_Texture_cleanup (IntPtr classInstance);
+		public void Dispose ()
+		{
+			llge_Texture_dispose(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_Texture_dispose (IntPtr classInstance);
+	}
+	
+	public class TextureUniform
+	{
+		public IntPtr ClassInstance;
+		public void SetTexture (Texture texture)
+		{
+			llge_TextureUniform_setTexture(ClassInstance, texture.ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_TextureUniform_setTexture (IntPtr classInstance, IntPtr texture);
+	}
+	
+	public class ProjectionUniform
+	{
+		public IntPtr ClassInstance;
+		public void SetProjection (IntPtr floatMatrix)
+		{
+			llge_ProjectionUniform_setProjection(ClassInstance, floatMatrix);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_ProjectionUniform_setProjection (IntPtr classInstance, IntPtr floatMatrix);
+	}
+	
+	public class VertexFormatsFacade
+	{
+		public IntPtr ClassInstance;
+		public int GetPositionTextureColorFormat ()
+		{
+			return llge_VertexFormatsFacade_getPositionTextureColorFormat(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private int llge_VertexFormatsFacade_getPositionTextureColorFormat (IntPtr classInstance);
+	}
+	
+	public class EffectsFacade
+	{
+		public IntPtr ClassInstance;
+		public int GetTextureColorEffect ()
+		{
+			return llge_EffectsFacade_getTextureColorEffect(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private int llge_EffectsFacade_getTextureColorEffect (IntPtr classInstance);
+	}
+	
+	public class UniformsFacade
+	{
+		public IntPtr ClassInstance;
+		public TextureUniform GetTextureUniform ()
+		{
+			return new TextureUniform{ ClassInstance = llge_UniformsFacade_getTextureUniform(ClassInstance) };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_UniformsFacade_getTextureUniform (IntPtr classInstance);
+		public ProjectionUniform GetProjectionUniformm ()
+		{
+			return new ProjectionUniform{ ClassInstance = llge_UniformsFacade_getProjectionUniformm(ClassInstance) };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_UniformsFacade_getProjectionUniformm (IntPtr classInstance);
+	}
+	
+	public class GraphicsFacade
+	{
+		public IntPtr ClassInstance;
+		public UniformsFacade GetUniforms ()
+		{
+			return new UniformsFacade{ ClassInstance = llge_GraphicsFacade_getUniforms(ClassInstance) };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_GraphicsFacade_getUniforms (IntPtr classInstance);
+		public VertexFormatsFacade GetVertexFormatsFacade ()
+		{
+			return new VertexFormatsFacade{ ClassInstance = llge_GraphicsFacade_getVertexFormatsFacade(ClassInstance) };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_GraphicsFacade_getVertexFormatsFacade (IntPtr classInstance);
+		public EffectsFacade GetEffectsFacade ()
+		{
+			return new EffectsFacade{ ClassInstance = llge_GraphicsFacade_getEffectsFacade(ClassInstance) };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_GraphicsFacade_getEffectsFacade (IntPtr classInstance);
+		public Texture CreateTexture ()
+		{
+			return new Texture{ ClassInstance = llge_GraphicsFacade_createTexture(ClassInstance) };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_GraphicsFacade_createTexture (IntPtr classInstance);
+		public void Viewport (int width, int height)
+		{
+			llge_GraphicsFacade_viewport(ClassInstance, width, height);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_GraphicsFacade_viewport (IntPtr classInstance, int width, int height);
+		public void SetClearState (uint color, float depth)
+		{
+			llge_GraphicsFacade_setClearState(ClassInstance, color, depth);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_GraphicsFacade_setClearState (IntPtr classInstance, uint color, float depth);
+		public void Clear ()
+		{
+			llge_GraphicsFacade_clear(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_GraphicsFacade_clear (IntPtr classInstance);
+		public void Draw (int effect, int vertexFormat, IntPtr vertices, IntPtr indices, int primitivesCount)
+		{
+			llge_GraphicsFacade_draw(ClassInstance, effect, vertexFormat, vertices, indices, primitivesCount);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_GraphicsFacade_draw (IntPtr classInstance, int effect, int vertexFormat, IntPtr vertices, IntPtr indices, int primitivesCount);
+		public void Create ()
+		{
+			llge_GraphicsFacade_create(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_GraphicsFacade_create (IntPtr classInstance);
+		public void Cleanup ()
+		{
+			llge_GraphicsFacade_cleanup(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_GraphicsFacade_cleanup (IntPtr classInstance);
+		public void Dispose ()
+		{
+			llge_GraphicsFacade_dispose(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_GraphicsFacade_dispose (IntPtr classInstance);
+	}
+	
+	public class GraphicsFactory
+	{
+		public IntPtr ClassInstance;
+		public GraphicsFacade CreateGraphicsFacade ()
+		{
+			return new GraphicsFacade{ ClassInstance = llge_GraphicsFactory_createGraphicsFacade(ClassInstance) };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_GraphicsFactory_createGraphicsFacade (IntPtr classInstance);
+		public void Dispose ()
+		{
+			llge_GraphicsFactory_dispose(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_GraphicsFactory_dispose (IntPtr classInstance);
 	}
 	
 	public class llge
@@ -228,6 +442,13 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private IntPtr createFactory ();
+		static public GraphicsFactory CreateGraphicsFactory ()
+		{
+			return new GraphicsFactory{ ClassInstance = createGraphicsFactory() };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr createGraphicsFactory ();
 	}
 	
 }

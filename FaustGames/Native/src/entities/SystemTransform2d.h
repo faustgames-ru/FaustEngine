@@ -56,4 +56,4 @@ namespace entities
 	};
 }
 
-#endif SYSTEM_TRANSFORM_2D_H
+#endif /*SYSTEM_TRANSFORM_2D_H*/

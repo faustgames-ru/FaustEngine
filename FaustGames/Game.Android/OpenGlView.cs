@@ -21,10 +21,10 @@ namespace Game.Android
 
 		public OpenGlView (Context context) : base (context)
 		{
+            ContextRenderingApi = GLVersion.ES2;
             _factory = llge.llge.CreateFactory();
             _renderSystem = _factory.CreateRenderSystem();
-            ContextRenderingApi = GLVersion.ES2;
-		}
+        }
 
 		// This gets called when the drawing surface is ready
 		protected override void OnLoad (EventArgs e)

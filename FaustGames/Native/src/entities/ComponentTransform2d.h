@@ -29,4 +29,4 @@ namespace entities
 	};
 }
 
-#endif COMPONENT_TRANSFORM_2D_H
+#endif /*COMPONENT_TRANSFORM_2D_H*/

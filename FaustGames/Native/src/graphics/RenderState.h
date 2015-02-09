@@ -19,6 +19,7 @@ namespace graphics
 		void setDepth(DepthState::e depthState);
 		void setAttributesState(VertexFormat *format);
 		void apply(VertexFormat *vertexFormat, void *vertexData);
+		void init();
 	protected:
 	private:
 		State<Effect *> _effect;

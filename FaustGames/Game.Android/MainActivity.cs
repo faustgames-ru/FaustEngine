@@ -14,20 +14,20 @@ namespace Game.Android
 	// the ConfigurationChanges flags set here keep the EGL context
 	// from being destroyed whenever the device is rotated or the
 	// keyboard is shown (highly recommended for all GL apps)
-	[Activity (Label = "Game.Android",
-				#if __ANDROID_11__
+    [Activity(Label = "Game.Android",
+#if __ANDROID_11__
 				HardwareAccelerated=false,
 				#endif
-		ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.KeyboardHidden,
-		MainLauncher = true,
-		Icon = "@drawable/icon")]
-	public class MainActivity : Activity
-	{
-		OpenGlView view;
+        ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.KeyboardHidden,
+        MainLauncher = true,
+        Icon = "@drawable/icon")]
+    public class MainActivity : Activity
+    {
+        private OpenGlView view;
 
-		protected override void OnCreate (Bundle bundle)
-		{
-			base.OnCreate (bundle);
+        protected override void OnCreate(Bundle bundle)
+        {
+            base.OnCreate(bundle);
             /*
             try
             {
@@ -38,10 +38,19 @@ namespace Game.Android
                 Log.Verbose("GLCube", "fail to load libllge.so");
             }
             */
-			// Create our OpenGL view, and display it
-			view = new OpenGlView (this);
-			SetContentView (view);
-		}
+            // Create our OpenGL view, and display it
+            view = new OpenGlView(this);
+            SetContentView(view);
+            h.PostDelayed(Update, 100);
+        }
+
+        private void Update()
+        {
+            Title = string.Format("{0:0.00}", 1000.0f / Renderer.DTime);
+            h.PostDelayed(Update, 100);
+        }
+
+        Handler h = new Handler();
 
 		protected override void OnPause ()
 		{

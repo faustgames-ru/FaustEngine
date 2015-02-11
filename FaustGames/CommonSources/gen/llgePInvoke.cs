@@ -265,30 +265,6 @@ namespace llge
 		static extern private void llge_Texture_dispose (IntPtr classInstance);
 	}
 	
-	public class TextureUniform
-	{
-		public IntPtr ClassInstance;
-		public void SetTexture (Texture texture)
-		{
-			llge_TextureUniform_setTexture(ClassInstance, texture.ClassInstance);
-		}
-		
-		[DllImport(Version.Dll)]
-		static extern private void llge_TextureUniform_setTexture (IntPtr classInstance, IntPtr texture);
-	}
-	
-	public class ProjectionUniform
-	{
-		public IntPtr ClassInstance;
-		public void SetProjection (IntPtr floatMatrix)
-		{
-			llge_ProjectionUniform_setProjection(ClassInstance, floatMatrix);
-		}
-		
-		[DllImport(Version.Dll)]
-		static extern private void llge_ProjectionUniform_setProjection (IntPtr classInstance, IntPtr floatMatrix);
-	}
-	
 	public class VertexFormatsFacade
 	{
 		public IntPtr ClassInstance;
@@ -311,25 +287,39 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private int llge_EffectsFacade_getTextureColorEffect (IntPtr classInstance);
+		public int GetTextureLightmapColorEffect ()
+		{
+			return llge_EffectsFacade_getTextureLightmapColorEffect(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private int llge_EffectsFacade_getTextureLightmapColorEffect (IntPtr classInstance);
 	}
 	
 	public class UniformsFacade
 	{
 		public IntPtr ClassInstance;
-		public TextureUniform GetTextureUniform ()
+		public void SetTexture (Texture texture)
 		{
-			return new TextureUniform{ ClassInstance = llge_UniformsFacade_getTextureUniform(ClassInstance) };
+			llge_UniformsFacade_setTexture(ClassInstance, texture.ClassInstance);
 		}
 		
 		[DllImport(Version.Dll)]
-		static extern private IntPtr llge_UniformsFacade_getTextureUniform (IntPtr classInstance);
-		public ProjectionUniform GetProjectionUniformm ()
+		static extern private void llge_UniformsFacade_setTexture (IntPtr classInstance, IntPtr texture);
+		public void SetLightMap (Texture texture)
 		{
-			return new ProjectionUniform{ ClassInstance = llge_UniformsFacade_getProjectionUniformm(ClassInstance) };
+			llge_UniformsFacade_setLightMap(ClassInstance, texture.ClassInstance);
 		}
 		
 		[DllImport(Version.Dll)]
-		static extern private IntPtr llge_UniformsFacade_getProjectionUniformm (IntPtr classInstance);
+		static extern private void llge_UniformsFacade_setLightMap (IntPtr classInstance, IntPtr texture);
+		public void SetProjection (IntPtr floatMatrix)
+		{
+			llge_UniformsFacade_setProjection(ClassInstance, floatMatrix);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_UniformsFacade_setProjection (IntPtr classInstance, IntPtr floatMatrix);
 	}
 	
 	public class GraphicsFacade
@@ -433,6 +423,79 @@ namespace llge
 		static extern private void llge_GraphicsFactory_dispose (IntPtr classInstance);
 	}
 	
+	public class QuadTree
+	{
+		public IntPtr ClassInstance;
+		public int Insert (float minX, float minY, float maxX, float maxY, int userData)
+		{
+			return llge_QuadTree_insert(ClassInstance, minX, minY, maxX, maxY, userData);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private int llge_QuadTree_insert (IntPtr classInstance, float minX, float minY, float maxX, float maxY, int userData);
+		public void Remove (int id)
+		{
+			llge_QuadTree_remove(ClassInstance, id);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_QuadTree_remove (IntPtr classInstance, int id);
+		public void Query (float minX, float minY, float maxX, float maxY)
+		{
+			llge_QuadTree_query(ClassInstance, minX, minY, maxX, maxY);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_QuadTree_query (IntPtr classInstance, float minX, float minY, float maxX, float maxY);
+		public void GetQueryResults (IntPtr intBuffer)
+		{
+			llge_QuadTree_getQueryResults(ClassInstance, intBuffer);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_QuadTree_getQueryResults (IntPtr classInstance, IntPtr intBuffer);
+		public int GetQueryResultsCount ()
+		{
+			return llge_QuadTree_getQueryResultsCount(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private int llge_QuadTree_getQueryResultsCount (IntPtr classInstance);
+		public int GetIterationsCount ()
+		{
+			return llge_QuadTree_getIterationsCount(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private int llge_QuadTree_getIterationsCount (IntPtr classInstance);
+		public void Dispose ()
+		{
+			llge_QuadTree_dispose(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_QuadTree_dispose (IntPtr classInstance);
+	}
+	
+	public class GeometryFactory
+	{
+		public IntPtr ClassInstance;
+		public QuadTree CreateQuadTree ()
+		{
+			return new QuadTree{ ClassInstance = llge_GeometryFactory_createQuadTree(ClassInstance) };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_GeometryFactory_createQuadTree (IntPtr classInstance);
+		public void Dispose ()
+		{
+			llge_GeometryFactory_dispose(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_GeometryFactory_dispose (IntPtr classInstance);
+	}
+	
 	public class llge
 	{
 		static public Factory CreateFactory ()
@@ -449,6 +512,13 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private IntPtr createGraphicsFactory ();
+		static public GeometryFactory CreateGeometryFactory ()
+		{
+			return new GeometryFactory{ ClassInstance = createGeometryFactory() };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr createGeometryFactory ();
 	}
 	
 }

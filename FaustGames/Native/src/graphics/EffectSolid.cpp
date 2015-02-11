@@ -19,6 +19,6 @@ namespace graphics
 
 	void EffectSolid::create()
 	{
-		_effect.create((char *)shader_solid_vert, (char *)shader_solid_frag);
+		_effect.create((char *)shader_solid_vert, shader_solid_vert_size, (char *)shader_solid_frag, shader_solid_frag_size);
 	}
 }

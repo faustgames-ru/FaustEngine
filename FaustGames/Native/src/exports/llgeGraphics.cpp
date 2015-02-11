@@ -54,26 +54,6 @@ namespace llge
 
 	};
 
-	class TextureUniform : public ITextureUniform
-	{
-	public:
-		virtual void API_CALL setTexture(ITexture *texture)
-		{
-			UniformValues::texture()->setValue(texture->getId());
-		}
-	};
-
-	class ProjectionUniform : public IProjectionUniform
-	{
-	public:
-		MatrixContainer Contatiner;
-		virtual void API_CALL setProjection(void *floatMatrix)
-		{
-			Contatiner.setValue((float *)floatMatrix);
-			UniformValues::projection()->setValue(Contatiner);
-		}
-	};
-
 	class VertexFormatsFacade : public IVertexFormatsFacade
 	{
 	public:
@@ -91,30 +71,40 @@ namespace llge
 	class EffectsFacade : public IEffectsFacade
 	{
 	public:
-		EffectBase * Effects[1];
+		EffectBase * Effects[2];
 		EffectsFacade()
 		{
 			Effects[0] = Effects::textureColor();
+			Effects[1] = Effects::textureLightmapColor();
 		}
 		virtual int API_CALL getTextureColorEffect()
 		{
 			return 0;
+		}
+		virtual int API_CALL getTextureLightmapColorEffect()
+		{
+			return 1;
 		}
 	};
 
 	class UniformsFacade : public IUniformsFacade
 	{
 	public:
-		TextureUniform Texture;
-		ProjectionUniform Projection;
-		virtual ITextureUniform * API_CALL getTextureUniform()
+		MatrixContainer Projection;
+		virtual void API_CALL setTexture(ITexture *texture)
 		{
-			return &Texture;
+			UniformValues::texture()->setValue(texture->getId());
 		}
-
-		virtual IProjectionUniform * API_CALL getProjectionUniformm()
+		
+		virtual void API_CALL setLightMap(ITexture *texture)
 		{
-			return &Projection;
+			UniformValues::lightmap()->setValue(texture->getId());
+		}
+		
+		virtual void API_CALL setProjection(void *floatMatrix) 
+		{
+			Projection.setValue((float *)floatMatrix);
+			UniformValues::projection()->setValue(Projection);
 		}
 	};
 

@@ -4,7 +4,7 @@ namespace graphics
 {
 	UniformInfo Uniforms::_projection("projection", UniformType::Matrix4);
 	UniformInfo Uniforms::_texture("texture", UniformType::Sampler2D);
-	UniformInfo Uniforms::_shadowmap("shadowmap", UniformType::Sampler2D);
+	UniformInfo Uniforms::_lightmap("lightmap", UniformType::Sampler2D);
 
 	UniformInfo * Uniforms::projection()
 	{
@@ -14,13 +14,13 @@ namespace graphics
 	{
 		return &_texture;
 	}
-	UniformInfo * Uniforms::shadowmap()
+	UniformInfo * Uniforms::lightmap()
 	{
-		return &_shadowmap;
+		return &_lightmap;
 	}	
 
 	UniformValueMatrix UniformValues::_projection;
 	UniformValueTexture UniformValues::_texture;
-	UniformValueTexture UniformValues::_shadowmap;
+	UniformValueTexture UniformValues::_lightmap;
 
 }

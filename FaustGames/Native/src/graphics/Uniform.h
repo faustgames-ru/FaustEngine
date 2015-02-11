@@ -16,11 +16,13 @@ namespace graphics
 		void create(Effect *effect);
 		GLuint getHandle();
 		inline UniformValue *getValueContainer(){ return _valueContainer; }
+		inline int getShaderId(){ return _shaderId; }
 	protected:
 	private:
 		UniformValue *_valueContainer;
 		GLuint _parameterHandler;
 		UniformInfo *_info;
+		int _shaderId;
 	};
 }
 

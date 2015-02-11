@@ -29,6 +29,7 @@ namespace graphics
 	{
 		_parameterHandler = glGetUniformLocation(effect->getHandle(), _info->getName());
 		_valueContainer->reset();
+		_shaderId = effect->getShaderId();
 		Errors::check(Errors::GetUniformLocation);
 		if (_info->getType() == UniformType::Sampler2D)
 		{

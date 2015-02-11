@@ -15,6 +15,9 @@ namespace geometry
 		Quadtree2dItem *Prev;
 		Quadtree2dItem *Next;
 		Quadtree2dItemList *List;
+
+		typedef core::FixedPool<Quadtree2dItem, GeometryConstants::ObjectsLimit> Pool;
+
 	};
 }
 

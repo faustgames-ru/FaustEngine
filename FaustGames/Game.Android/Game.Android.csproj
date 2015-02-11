@@ -51,6 +51,7 @@
     </Compile>
     <Compile Include="MainActivity.cs" />
     <Compile Include="OpenGlView.cs" />
+    <Compile Include="Renderer.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

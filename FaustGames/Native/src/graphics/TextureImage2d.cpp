@@ -3,7 +3,7 @@
 
 namespace graphics
 {
-	TextureImage2d::TextureImage2d() : _wrap(false)
+	TextureImage2d::TextureImage2d() : _wrap(false), _filter(true)
 	{
 		_handle = 0;
 	}
@@ -16,10 +16,20 @@ namespace graphics
 		Errors::check(Errors::ActiveTexture);
 		glBindTexture(GL_TEXTURE_2D, _handle);
 		Errors::check(Errors::BindTexture);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		Errors::check(Errors::TexParameteri);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		Errors::check(Errors::TexParameteri);
+		if (_filter)
+		{
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+			Errors::check(Errors::TexParameteri);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+			Errors::check(Errors::TexParameteri);
+		}
+		else
+		{
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+			Errors::check(Errors::TexParameteri);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+			Errors::check(Errors::TexParameteri);
+		}
 
 		if (_wrap) {
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);

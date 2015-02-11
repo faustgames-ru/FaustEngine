@@ -18,6 +18,8 @@ namespace graphics
 	void UniformValueMatrix::apply(Uniform *uniform)
 	{
 		if (_equal) return;
+		int shaderId = uniform->getShaderId();
+		// todo: optimize with uniform cache
 		const float * data = _value.Value.getData();
 		glUniformMatrix4fv(uniform->getHandle(), 1, false, data);
 		Errors::check(Errors::UniformMatrix4fv);

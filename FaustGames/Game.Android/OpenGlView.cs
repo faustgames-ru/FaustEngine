@@ -13,17 +13,14 @@ using Android.Util;
 
 namespace Game.Android
 {
-	class OpenGlView : AndroidGameView
+	class OpenGlView : AndroidGameView, View.IOnTouchListener
 	{
-        private readonly TestRenderSystem _renderSystem;
-        private readonly Factory _factory;
-        private Stopwatch _stopwatch;
+        private readonly Renderer _renderer;
 
 		public OpenGlView (Context context) : base (context)
 		{
             ContextRenderingApi = GLVersion.ES2;
-            _factory = llge.llge.CreateFactory();
-            _renderSystem = _factory.CreateRenderSystem();
+            _renderer = new Renderer();
         }
 
 		// This gets called when the drawing surface is ready
@@ -38,7 +35,8 @@ namespace Game.Android
 
 	    private void OnFrameBufferCreated()
 	    {
-            _renderSystem.Create();
+            SetOnTouchListener(this);
+            _renderer.Create();
         }
 
 	    // This method is called everytime the context needs
@@ -91,52 +89,16 @@ namespace Game.Android
 			// you only need to call this if you have delegates
 			// registered that you want to have called
 			base.OnRenderFrame (e);
-            _renderSystem.Viewport(Width, Height);
 
-            /*
-            var delta = 0.01f;
-            if (_stopwatch != null)
-            {
-                _stopwatch.Stop();
-                delta = (float)_stopwatch.Elapsed.TotalSeconds;
-            }
-            _stopwatch = Stopwatch.StartNew();
-            */
-            _renderSystem.Render();
-            /*
-            
-			GL.MatrixMode (All.Projection);
-			GL.LoadIdentity ();
-			GL.Ortho (-1.0f, 1.0f, -1.5f, 1.5f, -1.0f, 1.0f);
-			GL.MatrixMode (All.Modelview);
-			GL.Rotate (3.0f, 0.0f, 0.0f, 1.0f);
+		    _renderer.Render(Width, Height);
 
-			GL.ClearColor (0.5f, 0.5f, 0.5f, 1.0f);
-			GL.Clear (ClearBufferMask.ColorBufferBit);
-
-			GL.VertexPointer (2, All.Float, 0, square_vertices);
-			GL.EnableClientState (All.VertexArray);
-			GL.ColorPointer (4, All.UnsignedByte, 0, square_colors);
-			GL.EnableClientState (All.ColorArray);
-
-			GL.DrawArrays (All.TriangleStrip, 0, 4);
-            */
-			SwapBuffers ();
+		    SwapBuffers();
 		}
 
-		float[] square_vertices = {
-			-0.5f, -0.5f,
-			0.5f, -0.5f,
-			-0.5f, 0.5f, 
-			0.5f, 0.5f,
-		};
-
-		byte[] square_colors = {
-			255, 255,   0, 255,
-			0,   255, 255, 255,
-			0,     0,    0,  0,
-			255,   0,  255, 255,
-		};
+	    public bool OnTouch(View v, MotionEvent e)
+	    {
+	        return _renderer.OnTouch(v, e);
+	    }
 	}
 }
 

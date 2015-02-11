@@ -10,8 +10,8 @@
 #define DLLEXPORT __declspec( dllexport )
 #endif
 
-#define ushort unsigned short
-#define uint unsigned int
+typedef unsigned short ushort;
+typedef unsigned int uint;
 
 namespace llge
 {
@@ -114,18 +114,6 @@ namespace llge
 		virtual void API_CALL dispose() = 0;
 	};
 
-	class ITextureUniform
-	{
-	public:
-		virtual void API_CALL setTexture(ITexture *texture) = 0;
-	};
-
-	class IProjectionUniform
-	{
-	public:
-		virtual void API_CALL setProjection(void *floatMatrix) = 0;
-	};
-
 	class IVertexFormatsFacade
 	{
 	public:
@@ -136,13 +124,15 @@ namespace llge
 	{
 	public:
 		virtual int API_CALL getTextureColorEffect() = 0;
+		virtual int API_CALL getTextureLightmapColorEffect() = 0;
 	};
 
 	class IUniformsFacade
 	{
 	public:
-		virtual ITextureUniform * API_CALL getTextureUniform() = 0;
-		virtual IProjectionUniform * API_CALL getProjectionUniformm() = 0;
+		virtual void API_CALL setTexture(ITexture *texture) = 0;
+		virtual void API_CALL setLightMap(ITexture *texture) = 0;
+		virtual void API_CALL setProjection(void *floatMatrix) = 0;
 	};
 
 	class IGraphicsFacade
@@ -170,8 +160,30 @@ namespace llge
 		virtual void API_CALL dispose() = 0;
 	};
 
+	/// geometry
+
+	class IQuadTree
+	{
+	public:
+		virtual int API_CALL insert(float minX, float minY, float maxX, float maxY, int userData) = 0;
+		virtual void API_CALL remove(int id) = 0;
+		virtual void API_CALL query(float minX, float minY, float maxX, float maxY) = 0;
+		virtual void API_CALL getQueryResults(void *intBuffer) = 0;
+		virtual int API_CALL getQueryResultsCount() = 0;
+		virtual int API_CALL getIterationsCount() = 0;
+		virtual void API_CALL dispose() = 0;
+	};
+
+	class IGeometryFactory
+	{
+	public:
+		virtual IQuadTree * API_CALL createQuadTree() = 0;
+		virtual void API_CALL dispose() = 0;
+	};
+
 	extern "C" DLLEXPORT IFactory * API_CALL createFactory();
 	extern "C" DLLEXPORT IGraphicsFactory * API_CALL createGraphicsFactory();
+	extern "C" DLLEXPORT IGeometryFactory * API_CALL createGeometryFactory();
 }
 
 #endif /*LLGE_H*/

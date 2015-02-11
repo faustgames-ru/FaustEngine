@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NativeEngine", "NativeEngine", "{C2F71855-E08A-4555-BB9D-433929F4293D}"
 EndProject
@@ -30,7 +30,7 @@ Global
 		Release|Tegra-Android = Release|Tegra-Android
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{1A8346D8-1ECA-45A9-8171-FFFE9D248ADC}.Debug|Any CPU.ActiveCfg = Debug|Tegra-Android
+		{1A8346D8-1ECA-45A9-8171-FFFE9D248ADC}.Debug|Any CPU.ActiveCfg = Release|Tegra-Android
 		{1A8346D8-1ECA-45A9-8171-FFFE9D248ADC}.Debug|Mixed Platforms.ActiveCfg = Debug|Tegra-Android
 		{1A8346D8-1ECA-45A9-8171-FFFE9D248ADC}.Debug|Mixed Platforms.Build.0 = Debug|Tegra-Android
 		{1A8346D8-1ECA-45A9-8171-FFFE9D248ADC}.Debug|Tegra-Android.ActiveCfg = Debug|Tegra-Android

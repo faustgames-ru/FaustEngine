@@ -19,8 +19,6 @@ namespace graphics
 		void create();
 	protected:
 	private:
-		static std::string _pixelShader;
-		static std::string _vertexShader;
 	};
 }
 

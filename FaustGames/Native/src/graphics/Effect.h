@@ -19,12 +19,13 @@ namespace graphics
 		unsigned int getAttributesMask();
 		unsigned int getAttributesMax();
 		int generateSamplerIndex();
-		void create(const char *vertexShaderCode, const char *pixelShaderCode);
+		void create(const char *vertexShaderCode, int vertexShaderSize, const char *pixelShaderCode, int pixelShaderSize);
 		void applyShader();
 		void applyUniforms();
 		void cleanup();
 		void applyVertexData(VertexFormat * vertexFormat, void* vertexData);
 		static void applyState(unsigned int prevMask, unsigned int newMask, int count);
+		inline int getShaderId(){ return _shaderId; }
 	protected:
 	private:
 		core::StaticArray<Uniform, 32> _uniforms;
@@ -35,7 +36,9 @@ namespace graphics
 		GLuint _shaderProgram;
 		GLuint _vertexShader;
 		GLuint _pixelShader;
-		GLuint createShader(GLenum type, const char *code);
+		GLuint createShader(GLenum type, const char *code, int size);
+		int _shaderId;
+		static int _shadersCounter;
 	};
 }
 

@@ -25,8 +25,8 @@ namespace geometry
 
 		inline void divide(Aabb2d &left, Aabb2d &right) const
 		{
-			float sizeX = Min.getX() - Max.getX();
-			float sizeY = Min.getY() - Max.getY();
+			float sizeX = Max.getX() - Min.getX();
+			float sizeY = Max.getY() - Min.getY();
 			if (sizeX > sizeY)
 			{
 				left.Min.setX(Min.getX());
@@ -76,9 +76,10 @@ namespace geometry
 
 		inline static bool cross(const Aabb2d &aabb1, const Aabb2d &aabb2)
 		{
-			return
-				aabb1.contains(aabb2.Min) || aabb1.contains(aabb2.Max) ||
-				aabb2.contains(aabb1.Min) || aabb2.contains(aabb1.Max);
+			if ((aabb1.Max.getX() < aabb2.Min.getX()) || (aabb1.Min.getX() > aabb2.Max.getX())) return false;
+			if ((aabb1.Max.getY() < aabb2.Min.getY()) || (aabb1.Min.getY() > aabb2.Max.getY())) return false;
+
+			return true;
 		}
 	};
 }

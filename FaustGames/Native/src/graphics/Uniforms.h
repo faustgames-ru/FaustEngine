@@ -14,11 +14,11 @@ namespace graphics
 	public:
 		static UniformInfo *projection();
 		static UniformInfo *texture();
-		static UniformInfo *shadowmap();
+		static UniformInfo *lightmap();
 	private:
 		static UniformInfo _projection;		
 		static UniformInfo _texture;
-		static UniformInfo _shadowmap;
+		static UniformInfo _lightmap;
 	};
 
 	class UniformValues
@@ -26,11 +26,11 @@ namespace graphics
 	public:
 		static inline UniformValueMatrix *projection(){ return &_projection; }
 		static inline UniformValueTexture *texture(){ return &_texture; }
-		static inline UniformValueTexture *shadowmap(){ return &_shadowmap; }
+		static inline UniformValueTexture *lightmap(){ return &_lightmap; }
 	private:
 		static UniformValueMatrix _projection;
 		static UniformValueTexture _texture;
-		static UniformValueTexture _shadowmap;
+		static UniformValueTexture _lightmap;
 	};
 }
 

@@ -6,7 +6,9 @@
 
 namespace graphics
 {
-	Effect::Effect() : _attributesMax(0), _attributesMask(0), _samperIndex(-1)
+	int Effect::_shadersCounter(0);
+
+	Effect::Effect() : _attributesMax(0), _attributesMask(0), _samperIndex(-1), _shaderId(_shadersCounter++)
 	{
 	}
 
@@ -54,12 +56,12 @@ namespace graphics
 		}
 	}
 
-	GLuint Effect::createShader(GLenum type, const char *code)
+	GLuint Effect::createShader(GLenum type, const char *code, int size)
 	{
 		GLuint shader = glCreateShader(type);
 		Errors::check(Errors::CreateShader);
 		
-		glShaderSource(shader, 1, &code, 0);
+		glShaderSource(shader, 1, &code, &size);
 		Errors::check(Errors::ShaderSource);
 		
 		glCompileShader(shader);
@@ -110,10 +112,10 @@ namespace graphics
 	}
 
 
-	void Effect::create(const char *vertexShaderCode, const char *pixelShaderCode)
+	void Effect::create(const char *vertexShaderCode, int vertexShaderSize, const char *pixelShaderCode, int pixelShaderSize)
 	{
-		_pixelShader = createShader(GL_FRAGMENT_SHADER, pixelShaderCode);
-		_vertexShader = createShader(GL_VERTEX_SHADER, vertexShaderCode);
+		_pixelShader = createShader(GL_FRAGMENT_SHADER, pixelShaderCode, pixelShaderSize);
+		_vertexShader = createShader(GL_VERTEX_SHADER, vertexShaderCode, vertexShaderSize);
 
 		_shaderProgram = glCreateProgram();
 		Errors::check(Errors::CreateProgram);

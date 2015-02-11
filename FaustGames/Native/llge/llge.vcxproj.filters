@@ -242,6 +242,18 @@
     <ClInclude Include="..\src\exports\EntitiesFactory.h">
       <Filter>exports</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\geometry\geometry.h">
+      <Filter>geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shaders\texture_lightmap_color_frag.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shaders\texture_lightmap_color_vert.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\EffectTextureLightMapColor.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\CommonSources\gen\llgePInvoke.cpp">
@@ -365,6 +377,12 @@
     </ClCompile>
     <ClCompile Include="..\src\exports\llgeGraphics.cpp">
       <Filter>exports</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\exports\llgeGeometry.cpp">
+      <Filter>exports</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\EffectTextureLightMapColor.cpp">
+      <Filter>graphics</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

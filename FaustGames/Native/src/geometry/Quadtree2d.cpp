@@ -10,6 +10,9 @@ namespace geometry
 	
 	int Quadtree2d::insert(const Aabb2d &aabb, const int userData)
 	{
+		#ifdef __ANDROID__
+				__android_log_print(ANDROID_LOG_ERROR, "TRACKERS", "%s", "insert");
+		#endif
 		Quadtree2dNode *node = getOrCreateNode(aabb);
 		return node->directInsert(aabb, userData);
 	}
@@ -22,6 +25,9 @@ namespace geometry
 	void Quadtree2d::filt(const Aabb2d &filter, FilterResult &userDatas) const
 	{
 		if (!_root) return;
+//#ifdef __ANDROID__
+//		__android_log_print(ANDROID_LOG_ERROR, "TRACKERS", "%s", "start query");
+//#endif
 		_root->filt(filter, userDatas);
 	}
 	
@@ -39,7 +45,7 @@ namespace geometry
 		{
 			_root = Quadtree2dNode::create(DefaultRootSize);
 		}
-		Quadtree2dNode *result = _root->insert(aabb);
+		Quadtree2dNode *result = _root->insert(aabb, DepthLimit);
 		if (!result)
 		{
 			return _root;
@@ -47,7 +53,11 @@ namespace geometry
 		return result;
 	}
 	
-	Aabb2d Quadtree2d::DefaultRootSize(-32768.0f, -32768.0f, 32768.0f, 32768);
+	Aabb2d Quadtree2d::DefaultRootSize(
+		-(float)GeometryConstants::QuadTreeDefaultSize,
+		-(float)GeometryConstants::QuadTreeDefaultSize,
+		(float)GeometryConstants::QuadTreeDefaultSize, 
+		(float)GeometryConstants::QuadTreeDefaultSize);
 
-	const int Quadtree2d::DepthLimit(10);
+	const int Quadtree2d::DepthLimit(GeometryConstants::QuadTreeNodesDepth);
 }

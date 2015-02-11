@@ -28,7 +28,7 @@ namespace geometry
 			return result;
 		}
 
-		Quadtree2dNode * insert(const Aabb2d &aabb);
+		Quadtree2dNode * insert(const Aabb2d &aabb, int maxDepth);
 		void filt(const Aabb2d &filter, FilterResult &result) const;
 		int directInsert(const Aabb2d &aabb, const int userData);
 
@@ -39,7 +39,7 @@ namespace geometry
 		int _id;
 		Quadtree2dNode *_left;
 		Quadtree2dNode *_right;
-		typedef core::FixedPool<Quadtree2dNode, GeometryConstants::ObjectsLimit> Pool;
+		typedef core::FixedPool<Quadtree2dNode, GeometryConstants::QuadTreeNodesLimit> Pool;
 	};
 }
 

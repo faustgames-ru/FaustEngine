@@ -17,6 +17,7 @@ namespace graphics
 	protected:
 	private:
 		bool _wrap;
+		bool _filter;
 	};
 }
 

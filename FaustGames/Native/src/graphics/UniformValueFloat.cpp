@@ -16,6 +16,7 @@ namespace graphics
 	void UniformValueFloat::apply(Uniform *uniform)
 	{
 		if (_equal) return;
+		// todo: optimize with uniform cache
 		glUniform1f(uniform->getHandle(), _value);
 		Errors::check(Errors::Uniform1f);
 	}

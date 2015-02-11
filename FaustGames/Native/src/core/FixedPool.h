@@ -6,7 +6,7 @@
 
 namespace core
 {
-		
+
 	template<class T, int size>
 	class FixedDataBlock
 	{
@@ -127,15 +127,15 @@ namespace core
 		static int _count;
 		static int _limmit;
 	public:
-		inline static T *alloc(int size)
+		inline static T *alloc(int allocSize)
 		{
-			if (_limmit < (_count + size))
+			if (_limmit < (_count + allocSize))
 			{
 				return 0;
 				//throwException("pool overflow");
 			}
 			T *place = _position.Data + _count;
-			_count += size;
+			_count += allocSize;
 
 			return place;
 		}
@@ -171,15 +171,15 @@ namespace core
 			return (char *)data - _position.Data;
 		}
 		
-		inline static void *alloc(int size)
+		inline static void *alloc(int allocSize)
 		{
-			if (_limmit < (_count + size))
+			if (_limmit < (_count + allocSize))
 			{
 				return 0;
 				//throwException("pool overflow");
 			}
 			void *place = _position.Data + _count;
-			_count += size;
+			_count += allocSize;
 
 			return place;
 		}

@@ -136,16 +136,6 @@ namespace llge
 		classInstance->dispose();
 	}
 	
-	extern "C" DLLEXPORT void API_CALL llge_TextureUniform_setTexture (ITextureUniform * classInstance, ITexture * texture)
-	{
-		classInstance->setTexture(texture);
-	}
-	
-	extern "C" DLLEXPORT void API_CALL llge_ProjectionUniform_setProjection (IProjectionUniform * classInstance, void * floatMatrix)
-	{
-		classInstance->setProjection(floatMatrix);
-	}
-	
 	extern "C" DLLEXPORT int API_CALL llge_VertexFormatsFacade_getPositionTextureColorFormat (IVertexFormatsFacade * classInstance)
 	{
 		return classInstance->getPositionTextureColorFormat();
@@ -156,14 +146,24 @@ namespace llge
 		return classInstance->getTextureColorEffect();
 	}
 	
-	extern "C" DLLEXPORT ITextureUniform * API_CALL llge_UniformsFacade_getTextureUniform (IUniformsFacade * classInstance)
+	extern "C" DLLEXPORT int API_CALL llge_EffectsFacade_getTextureLightmapColorEffect (IEffectsFacade * classInstance)
 	{
-		return classInstance->getTextureUniform();
+		return classInstance->getTextureLightmapColorEffect();
 	}
 	
-	extern "C" DLLEXPORT IProjectionUniform * API_CALL llge_UniformsFacade_getProjectionUniformm (IUniformsFacade * classInstance)
+	extern "C" DLLEXPORT void API_CALL llge_UniformsFacade_setTexture (IUniformsFacade * classInstance, ITexture * texture)
 	{
-		return classInstance->getProjectionUniformm();
+		classInstance->setTexture(texture);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_UniformsFacade_setLightMap (IUniformsFacade * classInstance, ITexture * texture)
+	{
+		classInstance->setLightMap(texture);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_UniformsFacade_setProjection (IUniformsFacade * classInstance, void * floatMatrix)
+	{
+		classInstance->setProjection(floatMatrix);
 	}
 	
 	extern "C" DLLEXPORT IUniformsFacade * API_CALL llge_GraphicsFacade_getUniforms (IGraphicsFacade * classInstance)
@@ -227,6 +227,51 @@ namespace llge
 	}
 	
 	extern "C" DLLEXPORT void API_CALL llge_GraphicsFactory_dispose (IGraphicsFactory * classInstance)
+	{
+		classInstance->dispose();
+	}
+	
+	extern "C" DLLEXPORT int API_CALL llge_QuadTree_insert (IQuadTree * classInstance, float minX, float minY, float maxX, float maxY, int userData)
+	{
+		return classInstance->insert(minX, minY, maxX, maxY, userData);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_QuadTree_remove (IQuadTree * classInstance, int id)
+	{
+		classInstance->remove(id);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_QuadTree_query (IQuadTree * classInstance, float minX, float minY, float maxX, float maxY)
+	{
+		classInstance->query(minX, minY, maxX, maxY);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_QuadTree_getQueryResults (IQuadTree * classInstance, void * intBuffer)
+	{
+		classInstance->getQueryResults(intBuffer);
+	}
+	
+	extern "C" DLLEXPORT int API_CALL llge_QuadTree_getQueryResultsCount (IQuadTree * classInstance)
+	{
+		return classInstance->getQueryResultsCount();
+	}
+	
+	extern "C" DLLEXPORT int API_CALL llge_QuadTree_getIterationsCount (IQuadTree * classInstance)
+	{
+		return classInstance->getIterationsCount();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_QuadTree_dispose (IQuadTree * classInstance)
+	{
+		classInstance->dispose();
+	}
+	
+	extern "C" DLLEXPORT IQuadTree * API_CALL llge_GeometryFactory_createQuadTree (IGeometryFactory * classInstance)
+	{
+		return classInstance->createQuadTree();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_GeometryFactory_dispose (IGeometryFactory * classInstance)
 	{
 		classInstance->dispose();
 	}

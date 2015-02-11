@@ -9,7 +9,7 @@ namespace graphics
 	
 	void Errors::check(Errors::e actionType)
 	{
-#ifdef _DEBUG
+//#ifdef _DEBUG
 		GLenum error(GL_NO_ERROR);
 		while ((error = glGetError()) != GL_NO_ERROR) 
 		{
@@ -20,7 +20,7 @@ namespace graphics
 			
 			//throw std::exception();
 		}
-#endif
+//#endif
 	}
 
 	std::string Errors::_names[Errors::EnumSize] = 

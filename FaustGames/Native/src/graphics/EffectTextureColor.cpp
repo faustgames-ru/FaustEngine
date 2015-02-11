@@ -20,6 +20,6 @@ namespace graphics
 
 	void EffectTextureColor::create()
 	{
-		_effect.create((char *)shader_texture_color_vert, (char *)shader_texture_color_frag);
+		_effect.create((char *)shader_texture_color_vert, shader_texture_color_vert_size, (char *)shader_texture_color_frag, shader_texture_color_frag_size);
 	}
 }

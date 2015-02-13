@@ -43,10 +43,27 @@ namespace Game.Android
             SetContentView(view);
             h.PostDelayed(Update, 100);
         }
+        private double _sum;
+        private int _count;
 
+        private double _prepareSum;
+        private int _prepareCount;
         private void Update()
         {
-            Title = string.Format("{0:0.00}", 1000.0f / Renderer.DTime);
+            if (Renderer.DTime > 0.001)
+            {
+                _sum += 1000.0f/Renderer.DTime;
+                _count++;
+            }
+
+            if (Renderer.PrepareTime > 0.001)
+            {
+                _prepareSum += Renderer.PrepareTime;
+                _prepareCount++;
+            }
+
+            Title = string.Format("{1:0.00}({0:0.00})", 1000.0f / Renderer.DTime, _sum / _count);
+            Title = string.Format("{1:0.00}({0:0.00})", 1000.0f / Renderer.PrepareTime, _prepareSum / _prepareCount);
             h.PostDelayed(Update, 100);
         }
 

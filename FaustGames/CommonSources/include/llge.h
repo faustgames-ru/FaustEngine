@@ -15,6 +15,20 @@ typedef unsigned int uint;
 
 namespace llge
 {
+	/// graphics enums
+
+	enum GraphicsEffects
+	{
+		EffectTextureColor = 0x0,
+		EffectTextureLightmapColor = 0x1,
+	};
+
+	enum GraphicsVertexFormats
+	{
+		FormatPositionTextureColor = 0x0,
+	};
+
+	/// enums
 	struct Mesh2dVertex
 	{
 		float x;
@@ -114,19 +128,6 @@ namespace llge
 		virtual void API_CALL dispose() = 0;
 	};
 
-	class IVertexFormatsFacade
-	{
-	public:
-		virtual int API_CALL getPositionTextureColorFormat() = 0;
-	};
-
-	class IEffectsFacade
-	{
-	public:
-		virtual int API_CALL getTextureColorEffect() = 0;
-		virtual int API_CALL getTextureLightmapColorEffect() = 0;
-	};
-
 	class IUniformsFacade
 	{
 	public:
@@ -139,14 +140,12 @@ namespace llge
 	{
 	public:
 		virtual IUniformsFacade * API_CALL getUniforms() = 0;
-		virtual IVertexFormatsFacade * API_CALL getVertexFormatsFacade() = 0;
-		virtual IEffectsFacade * API_CALL getEffectsFacade() = 0;
 		virtual ITexture * API_CALL createTexture() = 0;
 
 		virtual void API_CALL viewport(int width, int height) = 0;
 		virtual void API_CALL setClearState(uint color, float depth) = 0;
 		virtual void API_CALL clear() = 0;
-		virtual void API_CALL draw(int effect, int vertexFormat, void *vertices, void *indices, int primitivesCount) = 0;
+		virtual void API_CALL draw(GraphicsEffects effect, GraphicsVertexFormats vertexFormat, void *vertices, void *indices, int primitivesCount) = 0;
 
 		virtual void API_CALL create() = 0;
 		virtual void API_CALL cleanup() = 0;

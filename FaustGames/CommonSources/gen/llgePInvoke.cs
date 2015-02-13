@@ -12,6 +12,17 @@ namespace llge
 		public const string Dll = "llge";
 	}
 	
+	public enum GraphicsEffects
+	{
+		EffectTextureColor = 0x0,
+		EffectTextureLightmapColor = 0x1,
+	}
+	
+	public enum GraphicsVertexFormats
+	{
+		FormatPositionTextureColor = 0x0,
+	}
+	
 	[StructLayout(LayoutKind.Sequential)]
 	public struct Mesh2dVertex
 	{
@@ -265,37 +276,6 @@ namespace llge
 		static extern private void llge_Texture_dispose (IntPtr classInstance);
 	}
 	
-	public class VertexFormatsFacade
-	{
-		public IntPtr ClassInstance;
-		public int GetPositionTextureColorFormat ()
-		{
-			return llge_VertexFormatsFacade_getPositionTextureColorFormat(ClassInstance);
-		}
-		
-		[DllImport(Version.Dll)]
-		static extern private int llge_VertexFormatsFacade_getPositionTextureColorFormat (IntPtr classInstance);
-	}
-	
-	public class EffectsFacade
-	{
-		public IntPtr ClassInstance;
-		public int GetTextureColorEffect ()
-		{
-			return llge_EffectsFacade_getTextureColorEffect(ClassInstance);
-		}
-		
-		[DllImport(Version.Dll)]
-		static extern private int llge_EffectsFacade_getTextureColorEffect (IntPtr classInstance);
-		public int GetTextureLightmapColorEffect ()
-		{
-			return llge_EffectsFacade_getTextureLightmapColorEffect(ClassInstance);
-		}
-		
-		[DllImport(Version.Dll)]
-		static extern private int llge_EffectsFacade_getTextureLightmapColorEffect (IntPtr classInstance);
-	}
-	
 	public class UniformsFacade
 	{
 		public IntPtr ClassInstance;
@@ -332,20 +312,6 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private IntPtr llge_GraphicsFacade_getUniforms (IntPtr classInstance);
-		public VertexFormatsFacade GetVertexFormatsFacade ()
-		{
-			return new VertexFormatsFacade{ ClassInstance = llge_GraphicsFacade_getVertexFormatsFacade(ClassInstance) };
-		}
-		
-		[DllImport(Version.Dll)]
-		static extern private IntPtr llge_GraphicsFacade_getVertexFormatsFacade (IntPtr classInstance);
-		public EffectsFacade GetEffectsFacade ()
-		{
-			return new EffectsFacade{ ClassInstance = llge_GraphicsFacade_getEffectsFacade(ClassInstance) };
-		}
-		
-		[DllImport(Version.Dll)]
-		static extern private IntPtr llge_GraphicsFacade_getEffectsFacade (IntPtr classInstance);
 		public Texture CreateTexture ()
 		{
 			return new Texture{ ClassInstance = llge_GraphicsFacade_createTexture(ClassInstance) };
@@ -374,13 +340,13 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private void llge_GraphicsFacade_clear (IntPtr classInstance);
-		public void Draw (int effect, int vertexFormat, IntPtr vertices, IntPtr indices, int primitivesCount)
+		public void Draw (GraphicsEffects effect, GraphicsVertexFormats vertexFormat, IntPtr vertices, IntPtr indices, int primitivesCount)
 		{
 			llge_GraphicsFacade_draw(ClassInstance, effect, vertexFormat, vertices, indices, primitivesCount);
 		}
 		
 		[DllImport(Version.Dll)]
-		static extern private void llge_GraphicsFacade_draw (IntPtr classInstance, int effect, int vertexFormat, IntPtr vertices, IntPtr indices, int primitivesCount);
+		static extern private void llge_GraphicsFacade_draw (IntPtr classInstance, GraphicsEffects effect, GraphicsVertexFormats vertexFormat, IntPtr vertices, IntPtr indices, int primitivesCount);
 		public void Create ()
 		{
 			llge_GraphicsFacade_create(ClassInstance);

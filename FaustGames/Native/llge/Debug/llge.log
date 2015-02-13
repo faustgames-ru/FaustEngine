@@ -1,17 +1,2 @@
-﻿  UniformValueMatrix.cpp
-  UniformValueFloat.cpp
-  Uniform.cpp
-  Generating Code...
-  Compiling...
-  Uniforms.cpp
-  Effects.cpp
-  EffectTextureLightMapColor.cpp
-  EffectTextureColor.cpp
-  EffectSolidColor.cpp
-  EffectSolid.cpp
-  llgeGraphics.cpp
-  llge.cpp
-  Generating Code...
-  Skipping... (no relevant changes detected)
-  RenderState.cpp
+﻿  llgePInvoke.cpp
   llge.vcxproj -> C:\_faust\FaustEngine\FaustGames\Debug\llge.dll

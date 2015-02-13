@@ -136,21 +136,6 @@ namespace llge
 		classInstance->dispose();
 	}
 	
-	extern "C" DLLEXPORT int API_CALL llge_VertexFormatsFacade_getPositionTextureColorFormat (IVertexFormatsFacade * classInstance)
-	{
-		return classInstance->getPositionTextureColorFormat();
-	}
-	
-	extern "C" DLLEXPORT int API_CALL llge_EffectsFacade_getTextureColorEffect (IEffectsFacade * classInstance)
-	{
-		return classInstance->getTextureColorEffect();
-	}
-	
-	extern "C" DLLEXPORT int API_CALL llge_EffectsFacade_getTextureLightmapColorEffect (IEffectsFacade * classInstance)
-	{
-		return classInstance->getTextureLightmapColorEffect();
-	}
-	
 	extern "C" DLLEXPORT void API_CALL llge_UniformsFacade_setTexture (IUniformsFacade * classInstance, ITexture * texture)
 	{
 		classInstance->setTexture(texture);
@@ -169,16 +154,6 @@ namespace llge
 	extern "C" DLLEXPORT IUniformsFacade * API_CALL llge_GraphicsFacade_getUniforms (IGraphicsFacade * classInstance)
 	{
 		return classInstance->getUniforms();
-	}
-	
-	extern "C" DLLEXPORT IVertexFormatsFacade * API_CALL llge_GraphicsFacade_getVertexFormatsFacade (IGraphicsFacade * classInstance)
-	{
-		return classInstance->getVertexFormatsFacade();
-	}
-	
-	extern "C" DLLEXPORT IEffectsFacade * API_CALL llge_GraphicsFacade_getEffectsFacade (IGraphicsFacade * classInstance)
-	{
-		return classInstance->getEffectsFacade();
 	}
 	
 	extern "C" DLLEXPORT ITexture * API_CALL llge_GraphicsFacade_createTexture (IGraphicsFacade * classInstance)
@@ -201,7 +176,7 @@ namespace llge
 		classInstance->clear();
 	}
 	
-	extern "C" DLLEXPORT void API_CALL llge_GraphicsFacade_draw (IGraphicsFacade * classInstance, int effect, int vertexFormat, void * vertices, void * indices, int primitivesCount)
+	extern "C" DLLEXPORT void API_CALL llge_GraphicsFacade_draw (IGraphicsFacade * classInstance, GraphicsEffects effect, GraphicsVertexFormats vertexFormat, void * vertices, void * indices, int primitivesCount)
 	{
 		classInstance->draw(effect, vertexFormat, vertices, indices, primitivesCount);
 	}

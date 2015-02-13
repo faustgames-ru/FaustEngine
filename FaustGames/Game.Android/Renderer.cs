@@ -94,7 +94,7 @@ namespace Game.Android
                             mesh.Z = v.Z;
 
                         //v.Color = 0xffffffff;
-                        //v.Z = 0.5f;
+                        v.Z = 0.5f;
                         mesh.Vertices[i] = v;
                     }
                     for (var i = 0; i < mesh.Indices.Length; i++)
@@ -126,6 +126,8 @@ namespace Game.Android
         private int _w;
         private int _h;
         private int[] _queryResult = new int[16384];
+        public static double PrepareTime;
+
         public void Create()
         {
             _graphics.Create();
@@ -305,7 +307,7 @@ namespace Game.Android
             }
              */
             //Log.Debug("FrameTime", (System.Environment.TickCount - time).ToString());
-
+            PrepareTime = System.Environment.TickCount - time;
         }
 
         private float? _downMX;
@@ -390,8 +392,8 @@ namespace Game.Android
             var pinnedArrayIndices = GCHandle.Alloc(indices, GCHandleType.Pinned);
             var pointerIndiceas = pinnedArrayIndices.AddrOfPinnedObject();
             facade.Draw(
-                facade.GetEffectsFacade().GetTextureLightmapColorEffect(),
-                facade.GetVertexFormatsFacade().GetPositionTextureColorFormat(),
+                GraphicsEffects.EffectTextureLightmapColor, 
+                GraphicsVertexFormats.FormatPositionTextureColor, 
                 pointerVertices,
                 pointerIndiceas,
                 primitivesCount

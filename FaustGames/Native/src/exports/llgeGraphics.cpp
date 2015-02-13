@@ -53,40 +53,7 @@ namespace llge
 		}
 
 	};
-
-	class VertexFormatsFacade : public IVertexFormatsFacade
-	{
-	public:
-		VertexFormat * Formats[1];
-		VertexFormatsFacade()
-		{
-			Formats[0] = VertexFormats::positionTextureColor();
-		}
-		virtual int API_CALL getPositionTextureColorFormat()
-		{
-			return 0;
-		}
-	};
-
-	class EffectsFacade : public IEffectsFacade
-	{
-	public:
-		EffectBase * Effects[2];
-		EffectsFacade()
-		{
-			Effects[0] = Effects::textureColor();
-			Effects[1] = Effects::textureLightmapColor();
-		}
-		virtual int API_CALL getTextureColorEffect()
-		{
-			return 0;
-		}
-		virtual int API_CALL getTextureLightmapColorEffect()
-		{
-			return 1;
-		}
-	};
-
+	
 	class UniformsFacade : public IUniformsFacade
 	{
 	public:
@@ -111,41 +78,34 @@ namespace llge
 	class GraphicsFacade : public IGraphicsFacade
 	{
 	public:
+		EffectBase * effects[32];
+		VertexFormat * formats[32];
+
 		GraphicsDevice *graphicsDevice;
 		UniformsFacade *uniformsFacade;
-		VertexFormatsFacade *vertexFormatsFacade;
-		EffectsFacade *effectsFacade;
 
 		GraphicsFacade()
 		{
 			graphicsDevice = new GraphicsDevice();
 			uniformsFacade = new UniformsFacade();
-			vertexFormatsFacade = new VertexFormatsFacade();
-			effectsFacade = new EffectsFacade();
+
+			effects[EffectTextureColor] = Effects::textureColor();
+			effects[EffectTextureLightmapColor] = Effects::textureLightmapColor();
+
+			formats[FormatPositionTextureColor] = VertexFormats::positionTextureColor();
 		}
 		
 		~GraphicsFacade()
 		{
 			delete graphicsDevice;
 			delete uniformsFacade;
-			delete vertexFormatsFacade;
-			delete effectsFacade;
 		}	
 		
 		virtual IUniformsFacade * API_CALL getUniforms()
 		{
 			return uniformsFacade;
 		}
-
-		virtual IVertexFormatsFacade * API_CALL getVertexFormatsFacade()
-		{
-			return vertexFormatsFacade;
-		}
-
-		virtual IEffectsFacade * API_CALL getEffectsFacade()
-		{
-			return effectsFacade;
-		}
+		
 
 		virtual ITexture * API_CALL createTexture()
 		{
@@ -168,10 +128,10 @@ namespace llge
 			graphicsDevice->clear();
 		}
 
-		virtual void API_CALL draw(int effect, int vertexFormat, void *vertices, void *indices, int primitivesCount)
+		virtual void API_CALL draw(GraphicsEffects effect, GraphicsVertexFormats vertexFormat, void *vertices, void *indices, int primitivesCount)
 		{
-			graphicsDevice->renderState.setEffect(effectsFacade->Effects[effect]);
-			graphicsDevice->drawPrimitives(vertexFormatsFacade->Formats[vertexFormat], vertices, (unsigned short *)indices, primitivesCount);
+			graphicsDevice->renderState.setEffect(effects[effect]);
+			graphicsDevice->drawPrimitives(formats[vertexFormat], vertices, (unsigned short *)indices, primitivesCount);
 		}
 
 

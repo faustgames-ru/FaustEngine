@@ -114,7 +114,7 @@ namespace GameSampleWindowForms
                             maxY = v.Y;
 
                         //v.Color = 0xffffffff;
-                        //v.Z = 0.5f;
+                        v.Z = 0.5f;
                         mesh.Vertices[i] = v;
                     }
                     for (var i = 0; i < mesh.Indices.Length; i++)
@@ -373,8 +373,8 @@ namespace GameSampleWindowForms
             var pinnedArrayIndices = GCHandle.Alloc(indices, GCHandleType.Pinned);
             var pointerIndiceas = pinnedArrayIndices.AddrOfPinnedObject();
             facade.Draw(
-                facade.GetEffectsFacade().GetTextureLightmapColorEffect(),
-                facade.GetVertexFormatsFacade().GetPositionTextureColorFormat(),
+                GraphicsEffects.EffectTextureLightmapColor,
+                GraphicsVertexFormats.FormatPositionTextureColor,
                 pointerVertices,
                 pointerIndiceas,
                 primitivesCount

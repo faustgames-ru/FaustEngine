@@ -151,6 +151,7 @@
     <ClInclude Include="..\src\graphics\UniformValueFloat.h" />
     <ClInclude Include="..\src\graphics\UniformValueMatrix.h" />
     <ClInclude Include="..\src\graphics\UniformValueTexture.h" />
+    <ClInclude Include="..\src\graphics\VertexBuffer.h" />
     <ClInclude Include="..\src\graphics\VertexFormat.h" />
     <ClInclude Include="..\src\graphics\VertexFormatPosition.h" />
     <ClInclude Include="..\src\graphics\VertexFormatPositionColor.h" />
@@ -200,6 +201,7 @@
     <ClCompile Include="..\src\graphics\UniformValueFloat.cpp" />
     <ClCompile Include="..\src\graphics\UniformValueMatrix.cpp" />
     <ClCompile Include="..\src\graphics\UniformValueTexture.cpp" />
+    <ClCompile Include="..\src\graphics\VertexBuffer.cpp" />
     <ClCompile Include="..\src\graphics\VertexFormat.cpp" />
     <ClCompile Include="..\src\graphics\VertexFormats.cpp" />
     <ClCompile Include="dllmain.cpp" />

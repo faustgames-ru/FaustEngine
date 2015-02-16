@@ -6,6 +6,7 @@
 #include "EffectBase.h"
 #include "State.h"
 #include "StateCompare.h"
+#include "VertexBuffer.h"
 
 namespace graphics
 {		
@@ -17,11 +18,13 @@ namespace graphics
 		void setEffect(EffectBase *effect);
 		void setBlend(BlendState::e blendState);
 		void setDepth(DepthState::e depthState);
-		void setAttributesState(VertexFormat *format);
+		void setVertexBuffer(GLuint vertexBufferHandle);
 		void apply(VertexFormat *vertexFormat, void *vertexData);
 		void init();
 	protected:
 	private:
+		State<GLuint> _vertexBufferState;
+		State<VertexFormat *> _vertexFormatState;
 		State<Effect *> _effect;
 		State<BlendState::e> _blendState;
 		State<DepthState::e> _depthState;

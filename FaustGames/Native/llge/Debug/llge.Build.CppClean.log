@@ -1,6 +1,5 @@
 c:\_faust\faustengine\faustgames\native\llge\debug\vc120.pdb
 c:\_faust\faustengine\faustgames\native\llge\debug\vc120.idb
-c:\_faust\faustengine\faustgames\native\llge\debug\effecttexturelightmapcolor.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\errors.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\graphicsdevice.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\image2ddata.obj
@@ -16,11 +15,11 @@ c:\_faust\faustengine\faustgames\native\llge\debug\uniformvalue.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\uniformvaluefloat.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\uniformvaluematrix.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\uniformvaluetexture.obj
+c:\_faust\faustengine\faustgames\native\llge\debug\vertexbuffer.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\vertexformat.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\vertexformats.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\dllmain.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\stdafx.obj
-c:\_faust\faustengine\faustgames\native\llge\debug\aabb2dcomponent.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\entitiesfactory.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\llgegeometry.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\llgegraphics.obj
@@ -40,10 +39,12 @@ c:\_faust\faustengine\faustgames\native\llge\debug\effects.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\effectsolid.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\effectsolidcolor.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\effecttexturecolor.obj
+c:\_faust\faustengine\faustgames\native\llge\debug\effecttexturelightmapcolor.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\llgepinvoke.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\math.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\matrix.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\componentmesh2d.obj
+c:\_faust\faustengine\faustgames\native\llge\debug\aabb2dcomponent.obj
 c:\_faust\faustengine\faustgames\debug\llge.ilk
 c:\_faust\faustengine\faustgames\debug\llge.dll
 c:\_faust\faustengine\faustgames\debug\llge.pdb

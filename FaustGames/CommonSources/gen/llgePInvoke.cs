@@ -302,6 +302,46 @@ namespace llge
 		static extern private void llge_UniformsFacade_setProjection (IntPtr classInstance, IntPtr floatMatrix);
 	}
 	
+	public class VertexBuffer
+	{
+		public IntPtr ClassInstance;
+		public int GetId ()
+		{
+			return llge_VertexBuffer_getId(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private int llge_VertexBuffer_getId (IntPtr classInstance);
+		public void Create ()
+		{
+			llge_VertexBuffer_create(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_VertexBuffer_create (IntPtr classInstance);
+		public void SetData (IntPtr data, int count)
+		{
+			llge_VertexBuffer_setData(ClassInstance, data, count);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_VertexBuffer_setData (IntPtr classInstance, IntPtr data, int count);
+		public void Cleanup ()
+		{
+			llge_VertexBuffer_cleanup(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_VertexBuffer_cleanup (IntPtr classInstance);
+		public void Dispose ()
+		{
+			llge_VertexBuffer_dispose(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_VertexBuffer_dispose (IntPtr classInstance);
+	}
+	
 	public class GraphicsFacade
 	{
 		public IntPtr ClassInstance;
@@ -319,6 +359,13 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private IntPtr llge_GraphicsFacade_createTexture (IntPtr classInstance);
+		public VertexBuffer CreateVertexBuffer ()
+		{
+			return new VertexBuffer{ ClassInstance = llge_GraphicsFacade_createVertexBuffer(ClassInstance) };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_GraphicsFacade_createVertexBuffer (IntPtr classInstance);
 		public void Viewport (int width, int height)
 		{
 			llge_GraphicsFacade_viewport(ClassInstance, width, height);
@@ -347,6 +394,13 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private void llge_GraphicsFacade_draw (IntPtr classInstance, GraphicsEffects effect, GraphicsVertexFormats vertexFormat, IntPtr vertices, IntPtr indices, int primitivesCount);
+		public void DrawVertexBuffer (GraphicsEffects effect, GraphicsVertexFormats vertexFormat, VertexBuffer vertexBuffer, IntPtr indices, int primitivesCount)
+		{
+			llge_GraphicsFacade_drawVertexBuffer(ClassInstance, effect, vertexFormat, vertexBuffer.ClassInstance, indices, primitivesCount);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_GraphicsFacade_drawVertexBuffer (IntPtr classInstance, GraphicsEffects effect, GraphicsVertexFormats vertexFormat, IntPtr vertexBuffer, IntPtr indices, int primitivesCount);
 		public void Create ()
 		{
 			llge_GraphicsFacade_create(ClassInstance);

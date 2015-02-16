@@ -3,7 +3,7 @@
 
 namespace graphics
 {
-	UniformValueFloat::UniformValueFloat() : _value(core::Math::MaxValue)
+	UniformValueFloat::UniformValueFloat() : _value(core::Math::MaxValue), _applyMask(0)
 	{
 	}
 
@@ -11,12 +11,15 @@ namespace graphics
 	{
 		_equal = core::Math::equals(value, _value);
 		_value = value;
+		_applyMask = 0;
 	}
 
 	void UniformValueFloat::apply(Uniform *uniform)
 	{
 		if (_equal) return;
-		// todo: optimize with uniform cache
+		unsigned int shaderMask = uniform->getShaderMask();
+		if ((_applyMask & shaderMask) != 0) return;
+		_applyMask |= shaderMask;
 		glUniform1f(uniform->getHandle(), _value);
 		Errors::check(Errors::Uniform1f);
 	}

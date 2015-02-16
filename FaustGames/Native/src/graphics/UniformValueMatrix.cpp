@@ -4,7 +4,7 @@
 
 namespace graphics
 {
-	UniformValueMatrix::UniformValueMatrix()
+	UniformValueMatrix::UniformValueMatrix() : _applyMask(0)
 	{
 		_value.id = -1;
 	}
@@ -14,12 +14,14 @@ namespace graphics
 		if (_equal) return;
 		_value.Value = value.Value;
 		_value.id = value.id;
+		_applyMask = 0;
 	}
 	void UniformValueMatrix::apply(Uniform *uniform)
 	{
 		if (_equal) return;
-		int shaderId = uniform->getShaderId();
-		// todo: optimize with uniform cache
+		unsigned int shaderMask = uniform->getShaderMask();
+		if ((_applyMask & shaderMask) != 0) return;
+		_applyMask |= shaderMask;
 		const float * data = _value.Value.getData();
 		glUniformMatrix4fv(uniform->getHandle(), 1, false, data);
 		Errors::check(Errors::UniformMatrix4fv);

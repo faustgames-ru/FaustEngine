@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using llge;
@@ -22,9 +23,13 @@ namespace GameSampleWindowForms
         private readonly QuadTree _quadTree;
         private readonly GraphicsFacade _facade;
         private readonly Texture _texture;
+        private readonly VertexBuffer _vertexBuffer;
         private List<MeshExportData> _data = new List<MeshExportData>();
         private readonly List<string> _images = new List<string>();
         private readonly Dictionary<int, Texture> _textures = new Dictionary<int, Texture>();
+
+        private readonly Dictionary<int, MeshLayer> _layers = new Dictionary<int, MeshLayer>();
+        private List<MeshLayer> _layersList = new List<MeshLayer>();
 
         private float _x;
         private float _y;
@@ -51,24 +56,31 @@ namespace GameSampleWindowForms
             Application.Idle += ApplicationOnIdle;
 
             _texture = _facade.CreateTexture();
+            _vertexBuffer = _facade.CreateVertexBuffer();
             components.Add(new DisposeActionContainerComponent(() => _texture.Dispose()));
+            components.Add(new DisposeActionContainerComponent(() => _vertexBuffer.Dispose()));
 
             _facade.Create();
             _texture.Create();
-            
+            _vertexBuffer.Create();
+
             _texture.LoadPixels(2, 2, new uint[]
             {
                 0xffffffff,
-                0xff0000ff,
-                0xff0000ff,
+                0xff00c0ff,
+                0xff00c0ff,
                 0xffffffff,
             });
+
+
+            var _buffer = new List<MeshExportVertex>();
 
             using (var reader = new BinaryReader(File.OpenRead(@"d:\mesh_export.data")))
             {
                 var count = reader.ReadInt32();
                 for (var j = 0; j < count; j++)
                 {
+                    var baseIndex = _buffer.Count;
                     var mesh = new MeshExportData();
                     _data.Add(mesh);
                     var imageFile = reader.ReadString();
@@ -116,14 +128,19 @@ namespace GameSampleWindowForms
                         //v.Color = 0xffffffff;
                         v.Z = 0.5f;
                         mesh.Vertices[i] = v;
+                        _buffer.Add(mesh.Vertices[i]);
                     }
                     for (var i = 0; i < mesh.Indices.Length; i++)
                     {
                         mesh.Indices[i] = reader.ReadUInt16();
+                        mesh.Indices[i] = (ushort) (mesh.Indices[i] + baseIndex);
                     }
                     _quadTree.Insert(minX, minY, maxX, maxY, j);
                 }
             }
+
+            _vertexBuffer.SetData(_buffer.ToArray());
+
 
             for (var i = 0; i < _images.Count; i++)
             {
@@ -153,6 +170,8 @@ namespace GameSampleWindowForms
         private float? _downY;
         private MouseButtons _prevButtons = MouseButtons.None;
         private int[] _queryResult = new int[16384];
+
+        MeshBatch _batch = new MeshBatch();
 
         private void DoUpdate()
         {
@@ -207,7 +226,7 @@ namespace GameSampleWindowForms
             */
             _quadTree.Query(_x - 1000, _y - 1000, _x + 1000, _y + 1000);
 
-            Text = _quadTree.GetIterationsCount().ToString();
+            //Text = _quadTree.GetIterationsCount().ToString();
 
             var count = _quadTree.GetQueryResultsCount();
             _quadTree.GetQueryResults(_queryResult);
@@ -219,29 +238,57 @@ namespace GameSampleWindowForms
                 drawList.Add(_data[id]);
             }
 
-            drawList = drawList.OrderByDescending(d => d.Z).ToList();
+            //drawList = drawList.OrderByDescending(d => d.Z).ToList();
+            
+            _layers.Clear();
+            for (int i = 0; i < count; i++)
+            {
+                var id = _queryResult[i];
+                var data = _data[id];
+                var z = (int)(data.Z * 100);
+                if (!_layers.ContainsKey(z))
+                    _layers.Add(z, new MeshLayer(z));
+                _layers[z].Data.Add(data);
+                //drawList.Add(data);
+            }
+            _layersList = _layers.Values.OrderByDescending(l => l.LayerIndex).ToList();
+            
+            foreach (var layer in _layersList)
+            {
+                layer.BuildInidices();
+            }
 
+            var calls = 0;
+            
             _facade.GetUniforms().SetLightMap(_texture);
+            
+            foreach (var l in _layersList)
+            {
+                foreach (var b in l.Blocks)
+                {
+                    _facade.GetUniforms().SetTexture(_textures[b.Value.TextureId]);
+                    _facade.DrawVertexBuffer(
+                        _vertexBuffer,
+                        b.Value.Indices,
+                        b.Value.Indices.Length / 3);
+                    calls++;
+                }
+            }
+            Text = calls.ToString();
+            /*
+            _batch.Calls = 0;
             foreach (var data in drawList)
             {
-                _facade.GetUniforms().SetTexture(_textures[data.TextureId]);
+                _batch.Render(_facade, data, _textures[data.TextureId]);
+                //_facade.GetUniforms().SetTexture(_textures[data.TextureId]);
 
-                _facade.Draw(
-                    data.Vertices,
-                    data.Indices,
-                    data.Indices.Length / 3);
+                //_facade.Draw(
+                //    data.Vertices,
+                //    data.Indices,
+                //    data.Indices.Length / 3);
             }
-            /*
-            foreach (var data in _data)
-            {
-                _facade.GetUniforms().GetTextureUniform().SetTexture(_textures[data.TextureId]);
-
-                _facade.Draw(
-                    data.Vertices,
-                    data.Indices,
-                    data.Indices.Length / 3);
-            }
-             */
+            _batch.Finish(_facade);
+            */
             _oglWindow.SwapOpenGLBuffers();
         }
 
@@ -329,6 +376,18 @@ namespace GameSampleWindowForms
         public event EventHandler Disposed;
     }
 
+    public static class VertexBufferExtension
+    {
+        public unsafe static void SetData(this VertexBuffer buffer, MeshExportVertex[] vertices)
+        {
+            var pinnedArray = GCHandle.Alloc(vertices, GCHandleType.Pinned);
+            var pointer = pinnedArray.AddrOfPinnedObject();
+            buffer.SetData(pointer, vertices.Length * sizeof(MeshExportVertex));
+            pinnedArray.Free();
+        }
+    }
+
+
     public static class TextureExtension
     {
         public static void LoadPixels(this Texture texture, int width, int height, uint[] pixels)
@@ -366,6 +425,22 @@ namespace GameSampleWindowForms
             facade.GetUniforms().SetProjection(pointer);
             pinnedArray.Free();
         }
+
+        public static void DrawVertexBuffer(this GraphicsFacade facade, VertexBuffer vertexBuffer, ushort[] indices,
+            int primitivesCount)
+        {
+            var pinnedArrayIndices = GCHandle.Alloc(indices, GCHandleType.Pinned);
+            var pointerIndiceas = pinnedArrayIndices.AddrOfPinnedObject();
+            facade.DrawVertexBuffer(
+                GraphicsEffects.EffectTextureLightmapColor,
+                GraphicsVertexFormats.FormatPositionTextureColor,
+                vertexBuffer,
+                pointerIndiceas,
+                primitivesCount
+                );
+            pinnedArrayIndices.Free();
+        }
+
         public static void Draw(this GraphicsFacade facade, MeshExportVertex[] vertices, ushort[] indices, int primitivesCount)
         {
             var pinnedArrayVertices = GCHandle.Alloc(vertices, GCHandleType.Pinned);
@@ -411,6 +486,115 @@ namespace GameSampleWindowForms
         }
     }
 
+    public class MeshBatch
+    {
+        public List<MeshExportVertex> Vertices = new List<MeshExportVertex>();
+        public List<ushort> Indices = new List<ushort>();
+        public Texture Texture;
+        public int Calls;
+
+        public void Render(GraphicsFacade facade, MeshExportData data, Texture texture)
+        {
+            if (Texture != texture)
+                Finish(facade);
+            Texture = texture;
+            var index = Vertices.Count;
+            Vertices.AddRange(data.Vertices);
+            for (var i = 0; i < data.Indices.Length; i++)
+            {
+                Indices.Add((ushort)(index + data.Indices[i]));
+            }
+        }
+
+        public void Finish(GraphicsFacade facade)
+        {
+            if (Texture != null)
+            {
+                facade.GetUniforms().SetTexture(Texture);
+                facade.Draw(Vertices.ToArray(), Indices.ToArray(), Indices.Count/3);
+            }
+            Vertices.Clear();
+            Indices.Clear();
+            Calls++;
+        }
+    }
+
+    public class MeshBlock
+    {
+        public int TextureId;
+        public MeshExportVertex[] Vertices;
+        public ushort[] Indices;
+
+        public List<MeshExportData> Data = new List<MeshExportData>();
+
+        public MeshBlock(int textureId)
+        {
+            TextureId = textureId;
+        }
+
+        public void Build()
+        {
+            var vertices = new List<MeshExportVertex>();
+            var indices = new List<ushort>();
+            foreach (var data in Data)
+            {
+                var baseIndex = vertices.Count;
+                vertices.AddRange(data.Vertices);
+                foreach (var i in data.Indices)
+                {
+                    indices.Add((ushort)(i + baseIndex));
+                }
+            }
+            Vertices = vertices.ToArray();
+            Indices = indices.ToArray();
+        }
+
+        public void BuildInidices()
+        {
+            var indices = new List<ushort>();
+            foreach (var data in Data)
+            {
+                indices.AddRange(data.Indices);
+            }
+            Indices = indices.ToArray();
+        }
+    }
+
+    public class MeshLayer
+    {
+        public int LayerIndex;
+        public List<MeshExportData> Data = new List<MeshExportData>();
+        public Dictionary<int, MeshBlock> Blocks = new Dictionary<int, MeshBlock>();
+
+        public MeshLayer(int layerIndex)
+        {
+            LayerIndex = layerIndex;
+        }
+
+        public void Build()
+        {
+            foreach (var data in Data.OrderByDescending(d => d.Z))
+            {
+                if (!Blocks.ContainsKey(data.TextureId))
+                    Blocks.Add(data.TextureId, new MeshBlock(data.TextureId));
+                Blocks[data.TextureId].Data.Add(data);
+            }
+            foreach (var block in Blocks)
+                block.Value.Build();
+        }
+
+        public void BuildInidices()
+        {
+            foreach (var data in Data.OrderByDescending(d => d.Z))
+            {
+                if (!Blocks.ContainsKey(data.TextureId))
+                    Blocks.Add(data.TextureId, new MeshBlock(data.TextureId));
+                Blocks[data.TextureId].Data.Add(data);
+            }
+            foreach (var block in Blocks)
+                block.Value.BuildInidices();
+        }
+    }
     public class MeshExportData
     {
         public float Z;

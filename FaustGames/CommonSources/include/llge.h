@@ -136,16 +136,28 @@ namespace llge
 		virtual void API_CALL setProjection(void *floatMatrix) = 0;
 	};
 
+	class IVertexBuffer
+	{
+	public:
+		virtual int API_CALL getId() = 0;
+		virtual void API_CALL create() = 0;
+		virtual void API_CALL setData(void *data, int count) = 0;
+		virtual void API_CALL cleanup() = 0;
+		virtual void API_CALL dispose() = 0;
+	};
+
 	class IGraphicsFacade
 	{
 	public:
 		virtual IUniformsFacade * API_CALL getUniforms() = 0;
 		virtual ITexture * API_CALL createTexture() = 0;
+		virtual IVertexBuffer * API_CALL createVertexBuffer() = 0;
 
 		virtual void API_CALL viewport(int width, int height) = 0;
 		virtual void API_CALL setClearState(uint color, float depth) = 0;
 		virtual void API_CALL clear() = 0;
 		virtual void API_CALL draw(GraphicsEffects effect, GraphicsVertexFormats vertexFormat, void *vertices, void *indices, int primitivesCount) = 0;
+		virtual void API_CALL drawVertexBuffer(GraphicsEffects effect, GraphicsVertexFormats vertexFormat, IVertexBuffer *vertexBuffer, void *indices, int primitivesCount) = 0;
 
 		virtual void API_CALL create() = 0;
 		virtual void API_CALL cleanup() = 0;

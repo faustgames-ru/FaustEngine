@@ -48,7 +48,12 @@ namespace graphics
 			Viewport = 35,
 			Clear = 36,
 			Finish = 37,
-			EnumSize = 38,
+			VertexAttribPointer = 38,
+			GenBuffers = 39,
+			DeleteBuffers = 40,
+			BindBuffer = 41,
+			BufferData = 42,
+			EnumSize = 43,
 		};
 
 		static std::string _names[EnumSize];

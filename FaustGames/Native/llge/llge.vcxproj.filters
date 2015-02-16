@@ -254,6 +254,9 @@
     <ClInclude Include="..\src\graphics\EffectTextureLightMapColor.h">
       <Filter>graphics</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\graphics\VertexBuffer.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\CommonSources\gen\llgePInvoke.cpp">
@@ -382,6 +385,9 @@
       <Filter>exports</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\EffectTextureLightMapColor.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\VertexBuffer.cpp">
       <Filter>graphics</Filter>
     </ClCompile>
   </ItemGroup>

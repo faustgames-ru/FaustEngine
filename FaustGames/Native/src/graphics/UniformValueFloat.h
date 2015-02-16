@@ -17,6 +17,7 @@ namespace graphics
 	private:
 		float _value;
 		bool _equal;
+		unsigned int _applyMask;
 	};
 }
 

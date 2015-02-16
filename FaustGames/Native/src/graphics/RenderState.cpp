@@ -8,6 +8,8 @@ namespace graphics
 		:_effect(0, false),
 		_depthState(DepthState::None, true),
 		_blendState(BlendState::Alpha, true),
+		_vertexBufferState(0, false),
+		_vertexFormatState(0, false),
 		_attributesState(0, 0, false),
 		_attributesCount(0)
 	{
@@ -31,11 +33,12 @@ namespace graphics
 	{
 		_depthState.setState(depthState);
 	}
-	
-	void RenderState::setAttributesState(VertexFormat *format)
-	{
-	}
 
+	void RenderState::setVertexBuffer(GLuint vertexBufferHandle)
+	{
+		_vertexBufferState.setState(vertexBufferHandle);
+	}
+		
 	void RenderState::apply(VertexFormat *vertexFormat, void *vertexData)
 	{
 		if (!_depthState.isEqual())
@@ -61,8 +64,20 @@ namespace graphics
 			}
 		}
 		_effect.getValue()->applyUniforms();
-		_effect.getValue()->applyVertexData(vertexFormat, vertexData);
-
+		if (!_vertexBufferState.isEqual())
+			glBindBuffer(GL_ARRAY_BUFFER, _vertexBufferState.getValue());
+		_vertexFormatState.setState(vertexFormat);
+		if (_vertexBufferState.getValue() == 0)
+		{
+			_effect.getValue()->applyVertexData(vertexFormat, vertexData);
+		}
+		else
+		{
+			if (!_vertexFormatState.isEqual())
+			{
+				_effect.getValue()->applyVertexData(vertexFormat, 0);
+			}
+		}
 	}
 
 	void RenderState::init()

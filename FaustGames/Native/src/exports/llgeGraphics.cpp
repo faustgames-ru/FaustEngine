@@ -75,6 +75,36 @@ namespace llge
 		}
 	};
 
+	class VBuffer : public IVertexBuffer
+	{
+	public:
+		graphics::VertexBuffer vertexBuffer;
+		virtual int API_CALL getId()
+		{
+			return vertexBuffer.getHandle(); 
+		}
+		
+		virtual void API_CALL create()
+		{
+			vertexBuffer.create();
+		}
+		
+		virtual void API_CALL setData(void *data, int count)
+		{
+			vertexBuffer.setData(data, count);
+		}
+		
+		virtual void API_CALL cleanup()
+		{
+			vertexBuffer.cleanup();
+		}
+		
+		virtual void API_CALL dispose()
+		{
+			delete this;
+		}
+	};
+
 	class GraphicsFacade : public IGraphicsFacade
 	{
 	public:
@@ -94,25 +124,28 @@ namespace llge
 
 			formats[FormatPositionTextureColor] = VertexFormats::positionTextureColor();
 		}
-		
+
 		~GraphicsFacade()
 		{
 			delete graphicsDevice;
 			delete uniformsFacade;
-		}	
-		
+		}
+
 		virtual IUniformsFacade * API_CALL getUniforms()
 		{
 			return uniformsFacade;
 		}
-		
 
 		virtual ITexture * API_CALL createTexture()
 		{
 			return new Texture();
 		}
 
-
+		virtual IVertexBuffer * API_CALL createVertexBuffer()
+		{
+			return new VBuffer();
+		}
+		
 		virtual void API_CALL viewport(int width, int height)
 		{
 			graphicsDevice->setViewport(0, 0, width, height);
@@ -134,6 +167,11 @@ namespace llge
 			graphicsDevice->drawPrimitives(formats[vertexFormat], vertices, (unsigned short *)indices, primitivesCount);
 		}
 
+		virtual void API_CALL drawVertexBuffer(GraphicsEffects effect, GraphicsVertexFormats vertexFormat, IVertexBuffer *vertexBuffer, void *indices, int primitivesCount)
+		{
+			graphicsDevice->renderState.setEffect(effects[effect]);
+			graphicsDevice->drawVertexBuffer(formats[vertexFormat], vertexBuffer->getId(), (unsigned short *)indices, primitivesCount);
+		}
 
 		virtual void API_CALL create()
 		{

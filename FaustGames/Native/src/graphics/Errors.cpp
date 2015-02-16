@@ -9,9 +9,10 @@ namespace graphics
 	
 	void Errors::check(Errors::e actionType)
 	{
+
 //#ifdef _DEBUG
-		GLenum error(GL_NO_ERROR);
-		while ((error = glGetError()) != GL_NO_ERROR) 
+		//GLenum error(GL_NO_ERROR);
+		//while ((error = glGetError()) != GL_NO_ERROR) 
 		{
 #ifdef __ANDROID__
 			__android_log_print(ANDROID_LOG_ERROR, "TRACKERS", "%s", getActionName(actionType));
@@ -63,5 +64,10 @@ namespace graphics
 		"Viewport",
 		"Clear",
 		"Finish",
+		"VertexAttribPointer",
+		"GenBuffers",
+		"DeleteBuffers",
+		"BindBuffer",
+		"BufferData",
 	};
 }

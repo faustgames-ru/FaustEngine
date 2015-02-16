@@ -26,6 +26,7 @@ namespace graphics
 		void applyVertexData(VertexFormat * vertexFormat, void* vertexData);
 		static void applyState(unsigned int prevMask, unsigned int newMask, int count);
 		inline int getShaderId(){ return _shaderId; }
+		inline unsigned int getShaderMask(){ return _shaderMask; }
 	protected:
 	private:
 		core::StaticArray<Uniform, 32> _uniforms;
@@ -38,6 +39,7 @@ namespace graphics
 		GLuint _pixelShader;
 		GLuint createShader(GLenum type, const char *code, int size);
 		int _shaderId;
+		int _shaderMask;
 		static int _shadersCounter;
 	};
 }

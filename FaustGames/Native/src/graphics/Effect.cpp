@@ -10,6 +10,7 @@ namespace graphics
 
 	Effect::Effect() : _attributesMax(0), _attributesMask(0), _samperIndex(-1), _shaderId(_shadersCounter++)
 	{
+		_shaderMask = 0x1 << _shaderId;
 	}
 
 	Effect::~Effect()
@@ -213,7 +214,7 @@ namespace graphics
 			int location = _attributes.data[i]->getLocation();
 			AttributeFormat *format = vertexFormat->getFormat(location);
 			glVertexAttribPointer(location, format->ElementsCount, format->ElementType, format->Normalized, vertexFormat->getStride(), (char *)vertexData + format->Offset);
-			Errors::check(Errors::EnableVertexAttribArray);
+			Errors::check(Errors::VertexAttribPointer);
 		}
 	}
 }

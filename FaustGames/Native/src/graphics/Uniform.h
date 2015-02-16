@@ -17,12 +17,14 @@ namespace graphics
 		GLuint getHandle();
 		inline UniformValue *getValueContainer(){ return _valueContainer; }
 		inline int getShaderId(){ return _shaderId; }
+		inline unsigned int getShaderMask(){ return _shaderMask; }
 	protected:
 	private:
 		UniformValue *_valueContainer;
 		GLuint _parameterHandler;
 		UniformInfo *_info;
 		int _shaderId;
+		unsigned int _shaderMask;
 	};
 }
 

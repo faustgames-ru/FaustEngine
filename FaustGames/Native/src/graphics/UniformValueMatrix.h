@@ -17,6 +17,7 @@ namespace graphics
 	private:
 		core::MatrixContainer _value;
 		bool _equal;
+		unsigned int _applyMask;
 	};
 }
 

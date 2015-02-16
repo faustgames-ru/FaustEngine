@@ -65,8 +65,23 @@ namespace graphics
 		Errors::check(Errors::Clear);
 	}
 
+	void GraphicsDevice::resetState()
+	{
+		renderState = RenderState();
+	}
+
+
+	void GraphicsDevice::drawVertexBuffer(VertexFormat *vertexFormat, GLuint vertexBuffer, unsigned short *indexBuffer, int primitivesCount)
+	{
+		renderState.setVertexBuffer(vertexBuffer);
+		renderState.apply(vertexFormat, 0);
+		glDrawElements(GL_TRIANGLES, primitivesCount * 3, GL_UNSIGNED_SHORT, indexBuffer);
+		Errors::check(Errors::DrawElements);
+	}
+
 	void GraphicsDevice::drawPrimitives(VertexFormat *vertexFormat, void *vertexBuffer, unsigned short *indexBuffer, int primitivesCount)
 	{
+		renderState.setVertexBuffer(0);
 		renderState.apply(vertexFormat, vertexBuffer);
 		glDrawElements(GL_TRIANGLES, primitivesCount * 3, GL_UNSIGNED_SHORT, indexBuffer);
 		Errors::check(Errors::DrawElements);

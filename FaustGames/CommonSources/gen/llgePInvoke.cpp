@@ -151,6 +151,31 @@ namespace llge
 		classInstance->setProjection(floatMatrix);
 	}
 	
+	extern "C" DLLEXPORT int API_CALL llge_VertexBuffer_getId (IVertexBuffer * classInstance)
+	{
+		return classInstance->getId();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_VertexBuffer_create (IVertexBuffer * classInstance)
+	{
+		classInstance->create();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_VertexBuffer_setData (IVertexBuffer * classInstance, void * data, int count)
+	{
+		classInstance->setData(data, count);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_VertexBuffer_cleanup (IVertexBuffer * classInstance)
+	{
+		classInstance->cleanup();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_VertexBuffer_dispose (IVertexBuffer * classInstance)
+	{
+		classInstance->dispose();
+	}
+	
 	extern "C" DLLEXPORT IUniformsFacade * API_CALL llge_GraphicsFacade_getUniforms (IGraphicsFacade * classInstance)
 	{
 		return classInstance->getUniforms();
@@ -159,6 +184,11 @@ namespace llge
 	extern "C" DLLEXPORT ITexture * API_CALL llge_GraphicsFacade_createTexture (IGraphicsFacade * classInstance)
 	{
 		return classInstance->createTexture();
+	}
+	
+	extern "C" DLLEXPORT IVertexBuffer * API_CALL llge_GraphicsFacade_createVertexBuffer (IGraphicsFacade * classInstance)
+	{
+		return classInstance->createVertexBuffer();
 	}
 	
 	extern "C" DLLEXPORT void API_CALL llge_GraphicsFacade_viewport (IGraphicsFacade * classInstance, int width, int height)
@@ -179,6 +209,11 @@ namespace llge
 	extern "C" DLLEXPORT void API_CALL llge_GraphicsFacade_draw (IGraphicsFacade * classInstance, GraphicsEffects effect, GraphicsVertexFormats vertexFormat, void * vertices, void * indices, int primitivesCount)
 	{
 		classInstance->draw(effect, vertexFormat, vertices, indices, primitivesCount);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_GraphicsFacade_drawVertexBuffer (IGraphicsFacade * classInstance, GraphicsEffects effect, GraphicsVertexFormats vertexFormat, IVertexBuffer * vertexBuffer, void * indices, int primitivesCount)
+	{
+		classInstance->drawVertexBuffer(effect, vertexFormat, vertexBuffer, indices, primitivesCount);
 	}
 	
 	extern "C" DLLEXPORT void API_CALL llge_GraphicsFacade_create (IGraphicsFacade * classInstance)

@@ -4,6 +4,7 @@
 #include "graphics_classes.h"
 #include "RenderState.h"
 #include "TextureRenderTarget2d.h"
+#include "VertexBuffer.h"
 
 namespace graphics
 {
@@ -18,6 +19,8 @@ namespace graphics
 		void setViewport(int x, int y, int width, int height);
 		void setRenderTarget(TextureRenderTarget2d *renderTarget);
 		void clear();
+		void resetState();
+		void drawVertexBuffer(VertexFormat *vertexFormat, GLuint vertexBuffer, unsigned short *indexBuffer, int primitivesCount);
 		void drawPrimitives(VertexFormat *vertexFormat, void *vertexBuffer, unsigned short *indexBuffer, int primitivesCount);
 	protected:
 	private:

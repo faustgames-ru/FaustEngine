@@ -21,6 +21,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B9C1CFB9
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestTree", "Tests\TestTree\TestTree.vcxproj", "{94C61AEF-460C-4700-8A8D-EDAD798E278E}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestAllocators", "Tests\TestAllocators\TestAllocators.vcxproj", "{D23ADC89-576F-4207-AA7B-3E73DEEFB4C2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -81,6 +83,16 @@ Global
 		{94C61AEF-460C-4700-8A8D-EDAD798E278E}.Release|Mixed Platforms.Build.0 = Release|Win32
 		{94C61AEF-460C-4700-8A8D-EDAD798E278E}.Release|Win32.ActiveCfg = Release|Win32
 		{94C61AEF-460C-4700-8A8D-EDAD798E278E}.Release|Win32.Build.0 = Release|Win32
+		{D23ADC89-576F-4207-AA7B-3E73DEEFB4C2}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{D23ADC89-576F-4207-AA7B-3E73DEEFB4C2}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{D23ADC89-576F-4207-AA7B-3E73DEEFB4C2}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{D23ADC89-576F-4207-AA7B-3E73DEEFB4C2}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D23ADC89-576F-4207-AA7B-3E73DEEFB4C2}.Debug|Win32.Build.0 = Debug|Win32
+		{D23ADC89-576F-4207-AA7B-3E73DEEFB4C2}.Release|Any CPU.ActiveCfg = Release|Win32
+		{D23ADC89-576F-4207-AA7B-3E73DEEFB4C2}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{D23ADC89-576F-4207-AA7B-3E73DEEFB4C2}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{D23ADC89-576F-4207-AA7B-3E73DEEFB4C2}.Release|Win32.ActiveCfg = Release|Win32
+		{D23ADC89-576F-4207-AA7B-3E73DEEFB4C2}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -91,5 +103,6 @@ Global
 		{B4E5D8DA-D58B-4CA9-8A8F-3BF2A702C8A2} = {C2F71855-E08A-4555-BB9D-433929F4293D}
 		{5E8BC772-F46C-4676-8B9A-809646C3C659} = {8C524CF2-7781-4D5B-8731-C89E70B20BB8}
 		{94C61AEF-460C-4700-8A8D-EDAD798E278E} = {B9C1CFB9-5F31-41CF-AA2B-9007E18C33E9}
+		{D23ADC89-576F-4207-AA7B-3E73DEEFB4C2} = {B9C1CFB9-5F31-41CF-AA2B-9007E18C33E9}
 	EndGlobalSection
 EndGlobal

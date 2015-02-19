@@ -25,6 +25,12 @@
     <Filter Include="entities\components">
       <UniqueIdentifier>{0c6a6b6c-613e-4516-bd9a-96ac6120947b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="entities\systems">
+      <UniqueIdentifier>{91657898-4810-4062-a8ce-b443fd779f5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tests">
+      <UniqueIdentifier>{9c9f313c-e410-404b-a480-b181a9aebd38}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\CommonSources\include\llge.h">
@@ -62,9 +68,6 @@
     <ClInclude Include="..\src\entities\entities_references.h">
       <Filter>entities</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\entities\entity.h">
-      <Filter>entities</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\entities\SystemTransform2d.h">
       <Filter>entities</Filter>
     </ClInclude>
@@ -84,9 +87,6 @@
       <Filter>geometry</Filter>
     </ClInclude>
     <ClInclude Include="..\src\geometry\Quadtree2dItem.h">
-      <Filter>geometry</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\geometry\Quadtree2dItemList.h">
       <Filter>geometry</Filter>
     </ClInclude>
     <ClInclude Include="..\src\geometry\Quadtree2dNode.h">
@@ -257,6 +257,63 @@
     <ClInclude Include="..\src\graphics\VertexBuffer.h">
       <Filter>graphics</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\entities\ComponentsFactory.h">
+      <Filter>entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\entities\ComponentStaticMesh2d.h">
+      <Filter>entities\components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\entities\Entity.h">
+      <Filter>entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\entities\ComponentAabb2d.h">
+      <Filter>entities\components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\entities\SystemRender2d.h">
+      <Filter>entities\systems</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\StaticBatch.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\entities\EntitiesWorld.h">
+      <Filter>entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\entities\EntitySystem.h">
+      <Filter>entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\PooledList.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Map.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\Batcher.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\BasicTest.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\tests\TestStandartAllocations.h">
+      <Filter>tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\tests\tests_platform.h">
+      <Filter>tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\tests\tests_classes.h">
+      <Filter>tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\tests\tests_references.h">
+      <Filter>tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Allocator.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\SystemAllocationPolicy.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\HollowsAllocationPolicy.h">
+      <Filter>core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\CommonSources\gen\llgePInvoke.cpp">
@@ -389,6 +446,36 @@
     </ClCompile>
     <ClCompile Include="..\src\graphics\VertexBuffer.cpp">
       <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\entities\ComponentStaticMesh2d.cpp">
+      <Filter>entities\components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\entities\Entity.cpp">
+      <Filter>entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\entities\ComponentAabb2d.cpp">
+      <Filter>entities\components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\StaticBatch.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\entities\SystemRender2d.cpp">
+      <Filter>entities\systems</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\entities\EntitiesWorld.cpp">
+      <Filter>entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\BasicTest.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\tests\TestStandartAllocations.cpp">
+      <Filter>tests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\SystemAllocationPolicy.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\HollowsAllocationPolicy.cpp">
+      <Filter>core</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

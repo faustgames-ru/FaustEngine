@@ -2,6 +2,11 @@
 
 namespace geometry
 {	
+	void Quadtree2d::clear()
+	{
+		_root->release();
+		_root = 0;
+	}
 	void Quadtree2d::clear(const Aabb2d &root)
 	{
 		_root->release();
@@ -10,24 +15,22 @@ namespace geometry
 	
 	int Quadtree2d::insert(const Aabb2d &aabb, const int userData)
 	{
-		#ifdef __ANDROID__
-				__android_log_print(ANDROID_LOG_ERROR, "TRACKERS", "%s", "insert");
-		#endif
 		Quadtree2dNode *node = getOrCreateNode(aabb);
-		return node->directInsert(aabb, userData);
+		Quadtree2dItem *item = node->directInsert(aabb, userData);
+		_items[userData] = item;
+		return userData;
 	}
 	
 	void Quadtree2d::remove(int id)
 	{
-		Quadtree2dItemList::remove(id);
+		Quadtree2dItem *item = _items[id];
+		_items.erase(id);
+		item->Node->remove(item);
 	}
 	
 	void Quadtree2d::filt(const Aabb2d &filter, FilterResult &userDatas) const
 	{
 		if (!_root) return;
-//#ifdef __ANDROID__
-//		__android_log_print(ANDROID_LOG_ERROR, "TRACKERS", "%s", "start query");
-//#endif
 		_root->filt(filter, userDatas);
 	}
 	

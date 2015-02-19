@@ -6,18 +6,14 @@
 
 namespace geometry
 {
+	typedef std::list<Quadtree2dItem *, core::DAlloc> Quadtree2dItems;
+
 	struct Quadtree2dItem
 	{
-		int Id;
-		int NodeId;
+		Quadtree2dNode* Node;
+		Quadtree2dItems::const_iterator it;
 		Aabb2d Aabb;
 		int UserData;
-		Quadtree2dItem *Prev;
-		Quadtree2dItem *Next;
-		Quadtree2dItemList *List;
-
-		typedef core::FixedPool<Quadtree2dItem, GeometryConstants::ObjectsLimit> Pool;
-
 	};
 }
 

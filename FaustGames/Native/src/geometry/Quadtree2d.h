@@ -10,6 +10,7 @@ namespace geometry
 	class Quadtree2d
 	{
 	public:
+		void clear();
 		void clear(const Aabb2d &root);
 		int insert(const Aabb2d &aabb, const int userData);
 		void remove(int id);
@@ -22,6 +23,7 @@ namespace geometry
 		Quadtree2dNode * _root;
 		static Aabb2d DefaultRootSize;
 		static const int DepthLimit;
+		std::unordered_map<int, Quadtree2dItem *, std::hash<int>, std::equal_to<int>, core::DAlloc> _items;
 	};
 }
 

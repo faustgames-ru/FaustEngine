@@ -1,2 +1,62 @@
-﻿  Errors.cpp
+﻿  stdafx.cpp
+  dllmain.cpp
+  TestStandartAllocations.cpp
+  VertexFormats.cpp
+  VertexFormat.cpp
+  VertexBuffer.cpp
+  UniformValueTexture.cpp
+  UniformValueMatrix.cpp
+  UniformValueFloat.cpp
+  UniformValue.cpp
+  Uniforms.cpp
+  UniformInfo.cpp
+  Uniform.cpp
+  TextureRenderTarget2d.cpp
+  TextureLoader.cpp
+  TextureImage2d.cpp
+  Texture.cpp
+  StaticBatch.cpp
+  RenderState.cpp
+  Image2dData.cpp
+  Generating Code...
+  Compiling...
+  GraphicsDevice.cpp
+  Errors.cpp
+  EffectTextureLightMapColor.cpp
+  EffectTextureColor.cpp
+  EffectSolidColor.cpp
+  EffectSolid.cpp
+  Effects.cpp
+  EffectBase.cpp
+  Effect.cpp
+  Color.cpp
+  Attributes.cpp
+  AttributeInfo.cpp
+  Quadtree2dNode.cpp
+  Quadtree2d.cpp
+  Aabb2d.cpp
+  llge.cpp
+  Transform2dComponent.cpp
+  Mesh2dEntity.cpp
+  Mesh2dComponent.cpp
+  llgeGraphics.cpp
+  Generating Code...
+  Compiling...
+  llgeGeometry.cpp
+  EntitiesFactory.cpp
+  Aabb2dComponent.cpp
+  SystemRender2d.cpp
+  Entity.cpp
+  EntitiesWorld.cpp
+  ComponentStaticMesh2d.cpp
+  ComponentMesh2d.cpp
+  ComponentAabb2d.cpp
+  SystemAllocationPolicy.cpp
+  Matrix.cpp
+  Math.cpp
+  HollowsAllocationPolicy.cpp
+  BasicTest.cpp
+  llgePInvoke.cpp
+  Generating Code...
+     Creating library C:\_faust\FaustEngine\FaustGames\Debug\llge.lib and object C:\_faust\FaustEngine\FaustGames\Debug\llge.exp
   llge.vcxproj -> C:\_faust\FaustEngine\FaustGames\Debug\llge.dll

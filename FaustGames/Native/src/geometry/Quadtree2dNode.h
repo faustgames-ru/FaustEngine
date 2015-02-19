@@ -3,7 +3,7 @@
 
 #include "geometry_classes.h"
 #include "Aabb2d.h"
-#include "Quadtree2dItemList.h"
+#include "Quadtree2dItem.h"
 
 namespace geometry
 {
@@ -18,28 +18,25 @@ namespace geometry
 				_left->release();
 			if (_right)
 				_right->release();
-			Pool::release(this);
+			core::Mem::dispose(this);
 		}
 		inline static Quadtree2dNode *create(const Aabb2d &aabb)
 		{
-			Quadtree2dNode *result = Pool::create();
-			result->_id = Pool::getIndex(result);
+			Quadtree2dNode *result = core::Mem::construct<Quadtree2dNode>();
 			result->_aabb = aabb;
 			return result;
 		}
 
 		Quadtree2dNode * insert(const Aabb2d &aabb, int maxDepth);
+		void remove(Quadtree2dItem *item);
 		void filt(const Aabb2d &filter, FilterResult &result) const;
-		int directInsert(const Aabb2d &aabb, const int userData);
-
+		Quadtree2dItem * directInsert(const Aabb2d &aabb, const int userData);
 	protected:
 	private:
 		Aabb2d _aabb;
-		Quadtree2dItemList _items;
-		int _id;
+		Quadtree2dItems _items;
 		Quadtree2dNode *_left;
 		Quadtree2dNode *_right;
-		typedef core::FixedPool<Quadtree2dNode, GeometryConstants::QuadTreeNodesLimit> Pool;
 	};
 }
 

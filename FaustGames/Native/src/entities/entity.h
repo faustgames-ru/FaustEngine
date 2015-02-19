@@ -2,93 +2,97 @@
 #define ENTITIY_H
 
 #include "entities_classes.h"
+#include "ComponentsFactory.h"
 
 namespace entities
-{
-	struct LayerIndex
-	{
-		float Z;
-		int Index;
-	};
-
-	struct BoundingBox
-	{
-		geometry::Aabb2d Aabb;
-	};
-
-	struct MeshVertex
-	{
-		float x;
-		float y;
-		float z;
-		short u;
-		short v;
-		unsigned int Color;
-
-		inline static graphics::VertexFormat *getFormat(){ return graphics::VertexFormats::positionTextureColor(); }
-	};
-
-	struct Sprite
-	{
-		MeshVertex Vertices[4];
-		int imageId;
-
-		inline static int size() { return 4; }		
-		typedef core::FixedPool<Sprite, EntitiesConstants::EntitiesLimit> Pool;
-	};
-
+{	
 	class Entity
 	{
-	public:
-		typedef core::FixedPool<Entity, EntitiesConstants::EntitiesLimit> Pool;
-		Entity(){}
-		void setStaticComponent(StaticComponentsTypes::e type, int id);
-	protected:
-	private:
-		core::StaticArray<int, StaticComponentsTypes::ComponentsCount> _cpmponentsIds;
-	};
-
-	class AabbCullingSystem
-	{
-	public:
-		AabbCullingSystem() : _mask(StaticComponentsMasks::Aabb)
+	public:		
+		Entity()
 		{
+			_staticComponentsMask = 0;
+		}
+
+		void setComponent(StaticComponentsTypes::e type, int id)
+		{
+			_componentsIds.data[type] = id;
 		}
 		
-		void update()
+		int getComponent(StaticComponentsTypes::e type)
 		{
-			// resort copmponents with aabbvisibility
+			return _componentsIds.data[type];
 		}
+
+		template<typename T>
+		T * getComponent()
+		{
+			return 0;
+		}
+
+		inline unsigned int getStaticComponentsMask(){ return 0; }
+		
+		template<typename T>
+		void createComponent()
+		{
+			_componentsIds.data[T::Type] = T::Pool.create();
+			_staticComponentsMask |= T::Mask;
+		}
+
+		template<typename T>
+		inline static int create()
+		{
+			int result = Pool.create();
+			Entity * instance = Pool.get(result);
+			instance->_staticComponentsMask = T::Mask;
+			instance->createComponent<T>()
+		}
+
+		template<typename T0, typename T1>
+		inline static int create()
+		{
+			int result = Pool.create();
+			Entity * instance = Pool.get(result);
+			instance->createComponent<T0>();
+			instance->createComponent<T1>();
+		}
+
+		template<typename T0, typename T1, typename T2>
+		inline static int create()
+		{
+			int result = Pool.create();
+			Entity * instance = Pool.get(result);
+			instance->createComponent<T0>();
+			instance->createComponent<T1>();
+			instance->createComponent<T2>();
+		}
+
+		template<typename T0, typename T1, typename T2, typename T3>
+		inline static int create()
+		{
+			int result = Pool.create();
+			Entity * instance = Pool.get(result);
+			instance->createComponent<T0>();
+			instance->createComponent<T1>();
+			instance->createComponent<T2>();
+			instance->createComponent<T3>();
+		}
+
+		template<typename T0, typename T1, typename T2, typename T3, typename T4>
+		inline static int create()
+		{
+			int result = Pool.create();
+			Entity * instance = Pool.get(result);
+			instance->createComponent<T0>();
+			instance->createComponent<T1>();
+			instance->createComponent<T2>();
+			instance->createComponent<T3>();
+			instance->createComponent<T4>();
+		}
+	protected:
 	private:
-		int _mask;
-		geometry::FilterResult _filterResults;
-	};
-	
-	class StaticRenderLayer
-	{
-	};
-
-	class DynamicRenderLayer
-	{
-	};
-
-	class SpritesRenderSystem
-	{
-	public:
-		SpritesRenderSystem() : _mask(StaticComponentsMasks::Aabb | StaticComponentsMasks::Sprite | StaticComponentsMasks::LayerIndex)
-		{
-		}
-		void update()
-		{
-			// query visible entities with sprite copmponents
-			// sort sprites with layers
-			// sort Dynamic layer
-			// batch layers
-			// render layers
-		}
-	private:
-		int _mask;
-
+		int _staticComponentsMask;
+		core::StaticArray<int, StaticComponentsTypes::ComponentsCount> _componentsIds;
 	};
 }
 

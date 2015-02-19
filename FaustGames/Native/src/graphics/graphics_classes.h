@@ -68,6 +68,13 @@ namespace graphics
 	class GraphicsDevice;
 	class Color;
 	class Errors;
+
+	class GraphicsConstants
+	{
+	public:
+		static const int StaticBatchBufferSize = 32768;
+		static const int StaticBatchBlocksLimit = 2;
+	};
 }
 
 #endif /*GRAPHICS_CLASSES_H*/

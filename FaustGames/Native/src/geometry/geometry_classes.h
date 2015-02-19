@@ -24,7 +24,9 @@ namespace geometry
 	};
 
 
-	class Quadtree2dItemList;
+	struct Quadtree2dItem;
+	class Quadtree2dNode;
+	class Quadtree2d;
 }
 
 #endif /*GEOMETRY_CLASSES_H*/

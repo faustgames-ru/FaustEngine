@@ -10,13 +10,9 @@ namespace entities
 	{
 		enum e
 		{
-			Aabb = 0,
-			Sprite = 1,
-			LayerIndex = 2,
-			Transform2d = 3,
-			Mesh = 4,
-
-			ComponentsCount = 5,
+			Aabb2d = 0,
+			StaticMesh2d = 1,
+			ComponentsCount = 2,
 		};
 	};
 
@@ -24,18 +20,21 @@ namespace entities
 	{
 		enum e
 		{
-			Aabb = 0x01,
-			Sprite = 0x02,
-			LayerIndex = 0x04,
-			Transform2d = 0x08,
-			Mesh = 0x10,
+			Aabb2d = 0x01,
+			StaticMesh2d = 0x02,
 		};
 	};
 
 	class EntitiesConstants
 	{
 	public:
-		static const int EntitiesLimit = 16384;
+		static const int StaticMeshesReserve = 2048;
+		static const int StaticMeshesIndicesReserve = 4096;
+		static const int EntitiesReserve = 4096;
+		static const int ZLayersHeapSize = 128*1024;
+		static const int ZLayersLimit = 4096;
+		static const int ZLayersMapSize = 1024;
+
 		static const int TransformNodesLimit = 16384;
 		static const int MeshVerticesLimit = 131072;
 		static const int MeshIndicesLimit = 131072;

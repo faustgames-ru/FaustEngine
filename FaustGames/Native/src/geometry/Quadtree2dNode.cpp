@@ -35,14 +35,11 @@ namespace geometry
 		result.iterations++;
 		if (!Aabb2d::cross(_aabb, filter))
 			return;
-		for (Quadtree2dItem *i = _items.first(); i != 0; i = i->Next)
+		for (Quadtree2dItems::const_iterator i = _items.begin(); i != _items.end(); i++)
 		{
-//#ifdef __ANDROID__
-//			__android_log_print(ANDROID_LOG_ERROR, "TRACKERS", "%s", to_string(i).c_str());
-//#endif
 			result.iterations++;
-			if (Aabb2d::cross(i->Aabb, filter))
-				result.items.add(i->UserData);
+			if (Aabb2d::cross((*i)->Aabb, filter))
+				result.items.add((*i)->UserData);
 		}
 		if (_left)
 			_left->filt(filter, result);
@@ -50,8 +47,19 @@ namespace geometry
 			_right->filt(filter, result);
 	}
 
-	int Quadtree2dNode::directInsert(const Aabb2d &aabb, const int userData)
+	void Quadtree2dNode::remove(Quadtree2dItem *item)
 	{
-		return _items.insert(aabb, _id, userData);
+		_items.remove(item);
+	}
+
+
+	Quadtree2dItem * Quadtree2dNode::directInsert(const Aabb2d &aabb, const int userData)
+	{
+		Quadtree2dItem *item = core::Mem::construct<Quadtree2dItem>();
+		item->Aabb = aabb;
+		item->UserData = userData;
+		item->Node = this;
+		_items.push_back(item);
+		return item;
 	}
 }

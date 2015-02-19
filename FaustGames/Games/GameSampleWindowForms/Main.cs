@@ -47,7 +47,12 @@ namespace GameSampleWindowForms
             _geometryFactory = llge.llge.CreateGeometryFactory();
             _quadTree = _geometryFactory.CreateQuadTree();
             components.Add(new DisposeActionContainerComponent(() => _geometryFactory.Dispose()));
-            components.Add(new DisposeActionContainerComponent(() => _quadTree.Dispose()));
+            components.Add(new DisposeActionContainerComponent(() =>
+            {
+                for (var j = 0; j < _data.Count; j++)
+                    _quadTree.Remove(j);
+                _quadTree.Dispose();
+            }));
 
             _factory = llge.llge.CreateGraphicsFactory();
             _facade = _factory.CreateGraphicsFacade();
@@ -60,11 +65,12 @@ namespace GameSampleWindowForms
             components.Add(new DisposeActionContainerComponent(() => _texture.Dispose()));
             components.Add(new DisposeActionContainerComponent(() => _vertexBuffer.Dispose()));
 
+
             _facade.Create();
             _texture.Create();
             _vertexBuffer.Create();
 
-            _texture.LoadPixels(2, 2, new uint[]
+            _texture.LoadPixels(2, 2, new []
             {
                 0xffffffff,
                 0xff00c0ff,
@@ -426,23 +432,35 @@ namespace GameSampleWindowForms
             pinnedArray.Free();
         }
 
-        public static void DrawVertexBuffer(this GraphicsFacade facade, VertexBuffer vertexBuffer, ushort[] indices,
+        public unsafe static void DrawVertexBuffer(this GraphicsFacade facade, VertexBuffer vertexBuffer, ushort[] indices,
             int primitivesCount)
         {
-            var pinnedArrayIndices = GCHandle.Alloc(indices, GCHandleType.Pinned);
-            var pointerIndiceas = pinnedArrayIndices.AddrOfPinnedObject();
-            facade.DrawVertexBuffer(
-                GraphicsEffects.EffectTextureLightmapColor,
-                GraphicsVertexFormats.FormatPositionTextureColor,
-                vertexBuffer,
-                pointerIndiceas,
-                primitivesCount
-                );
-            pinnedArrayIndices.Free();
+            fixed (ushort* pointerIndiceas = indices)
+            {
+                facade.DrawVertexBuffer(
+                    GraphicsEffects.EffectTextureLightmapColor,
+                    GraphicsVertexFormats.FormatPositionTextureColor,
+                    vertexBuffer,
+                    new IntPtr(pointerIndiceas),
+                    primitivesCount
+                    );
+            }
         }
 
-        public static void Draw(this GraphicsFacade facade, MeshExportVertex[] vertices, ushort[] indices, int primitivesCount)
+        public unsafe static void Draw(this GraphicsFacade facade, MeshExportVertex[] vertices, ushort[] indices, int primitivesCount)
         {
+            fixed (MeshExportVertex* pointerVertices = vertices)
+            fixed (ushort* pointerIndiceas = indices)
+            {
+                facade.Draw(
+                    GraphicsEffects.EffectTextureLightmapColor,
+                    GraphicsVertexFormats.FormatPositionTextureColor,
+                    new IntPtr(pointerVertices),
+                    new IntPtr(pointerIndiceas),
+                    primitivesCount
+                    );
+            }
+            /*
             var pinnedArrayVertices = GCHandle.Alloc(vertices, GCHandleType.Pinned);
             var pointerVertices = pinnedArrayVertices.AddrOfPinnedObject();
             var pinnedArrayIndices = GCHandle.Alloc(indices, GCHandleType.Pinned);
@@ -456,6 +474,7 @@ namespace GameSampleWindowForms
                 );
             pinnedArrayVertices.Free();
             pinnedArrayIndices.Free();
+            */ 
         }
     }
 

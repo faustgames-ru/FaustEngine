@@ -4,7 +4,7 @@ namespace llge
 {
 	Mesh2dEntity::Mesh2dEntity(int verticesCount, int indicesCount)
 	{
-		_instance = entities::Entity::Pool::create();
+		
 	}
 
 	ITransform2dComponent * API_CALL Mesh2dEntity::getTransform()

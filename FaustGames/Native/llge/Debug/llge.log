@@ -36,23 +36,12 @@
   Quadtree2d.cpp
   Aabb2d.cpp
   llge.cpp
-  Transform2dComponent.cpp
-  Mesh2dEntity.cpp
-  Mesh2dComponent.cpp
   llgeGraphics.cpp
-  Generating Code...
-  Compiling...
   llgeGeometry.cpp
-  EntitiesFactory.cpp
-  Aabb2dComponent.cpp
-  SystemRender2d.cpp
-  Entity.cpp
-  EntitiesWorld.cpp
-  ComponentStaticMesh2d.cpp
-  ComponentMesh2d.cpp
-  ComponentAabb2d.cpp
   SystemAllocationPolicy.cpp
   Matrix.cpp
+  Generating Code...
+  Compiling...
   Math.cpp
   HollowsAllocationPolicy.cpp
   BasicTest.cpp

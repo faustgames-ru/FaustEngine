@@ -20,6 +20,11 @@ c:\_faust\faustengine\faustgames\native\llge\debug\vertexformats.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\teststandartallocations.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\dllmain.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\stdafx.obj
+c:\_faust\faustengine\faustgames\native\llge\debug\llgegraphics.obj
+c:\_faust\faustengine\faustgames\native\llge\debug\mesh2dcomponent.obj
+c:\_faust\faustengine\faustgames\native\llge\debug\mesh2dentity.obj
+c:\_faust\faustengine\faustgames\native\llge\debug\transform2dcomponent.obj
+c:\_faust\faustengine\faustgames\native\llge\debug\llge.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\aabb2d.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\quadtree2d.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\quadtree2dnode.obj
@@ -49,12 +54,7 @@ c:\_faust\faustengine\faustgames\native\llge\debug\entity.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\systemrender2d.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\aabb2dcomponent.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\entitiesfactory.obj
-c:\_faust\faustengine\faustgames\native\llge\debug\mesh2dcomponent.obj
-c:\_faust\faustengine\faustgames\native\llge\debug\mesh2dentity.obj
-c:\_faust\faustengine\faustgames\native\llge\debug\transform2dcomponent.obj
-c:\_faust\faustengine\faustgames\native\llge\debug\llge.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\llgegeometry.obj
-c:\_faust\faustengine\faustgames\native\llge\debug\llgegraphics.obj
 c:\_faust\faustengine\faustgames\debug\llge.ilk
 c:\_faust\faustengine\faustgames\debug\llge.dll
 c:\_faust\faustengine\faustgames\debug\llge.pdb

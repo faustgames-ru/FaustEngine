@@ -27,94 +27,7 @@ namespace llge
 	{
 		FormatPositionTextureColor = 0x0,
 	};
-
-	/// enums
-	struct Mesh2dVertex
-	{
-		float x;
-		float y;
-		float z;
-		ushort u;
-		ushort v;
-		uint color;
-	};
-	
-	class IStaticRenderLayer
-	{
-	public:
-	};
-
-	class IImage
-	{
-	public:
-	};
-
-	class IAabb2dComponent
-	{
-	public:
-		virtual void API_CALL upateAabb2d(float minX, float minY, float maxX, float maxY) = 0;
-	};
-
-	class ITransform2dComponent
-	{
-	public:
-		virtual void API_CALL upateTransform(float x, float y, float z, float rotation, float scale) = 0;
-		virtual void API_CALL upatePivot(float x, float y) = 0;
-	};
-
-	class IRenderLayerComponent
-	{
-	public:
-		virtual void API_CALL upateRenderLayer(IStaticRenderLayer *value) = 0;
-	};
-	
-	class IMesh2dComponent
-	{
-	public:
-		virtual void API_CALL updateData(void * mesh2dVertices, void * ushortIndices) = 0;
-	};
 		
-	class IMesh2dEntity
-	{
-	public:
-		virtual ITransform2dComponent * API_CALL getTransform() = 0;
-		virtual IAabb2dComponent * API_CALL getAabbComponent() = 0;
-		virtual IMesh2dComponent * API_CALL getMesh() = 0;
-	};
-
-	class IEntitiesFactory
-	{
-	public:
-		virtual IMesh2dEntity * API_CALL createMeshEntity(int verticesCount, int indicesCount) = 0;
-		virtual void API_CALL disposeMeshEntities() = 0;
-		virtual void API_CALL dispose() = 0;
-	};
-	
-	class IRenderSystem
-	{
-	public:
-		virtual IStaticRenderLayer * API_CALL createStaticLayer(float z) = 0;
-		virtual IImage * API_CALL createImage() = 0;
-	};
-
-	class ITestRenderSystem
-	{
-	public:		
-		virtual void API_CALL viewport(int width, int height) = 0;
-		virtual void API_CALL create() = 0;
-		virtual void API_CALL render() = 0;
-		virtual void API_CALL cleanup() = 0;
-		virtual void API_CALL dispose() = 0;
-	};
-
-	class IFactory
-	{
-	public:
-		virtual ITestRenderSystem * API_CALL createRenderSystem() = 0;
-		virtual IEntitiesFactory * API_CALL createEntitiesFactory() = 0;
-		virtual void API_CALL dispose() = 0;
-	};
-
 	/// graphics
 
 	class ITexture
@@ -192,7 +105,6 @@ namespace llge
 		virtual void API_CALL dispose() = 0;
 	};
 
-	extern "C" DLLEXPORT IFactory * API_CALL createFactory();
 	extern "C" DLLEXPORT IGraphicsFactory * API_CALL createGraphicsFactory();
 	extern "C" DLLEXPORT IGeometryFactory * API_CALL createGeometryFactory();
 }

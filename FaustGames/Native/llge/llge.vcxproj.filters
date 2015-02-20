@@ -68,9 +68,6 @@
     <ClInclude Include="..\src\entities\entities_references.h">
       <Filter>entities</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\entities\SystemTransform2d.h">
-      <Filter>entities</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\geometry\Aabb2d.h">
       <Filter>geometry</Filter>
     </ClInclude>
@@ -218,27 +215,6 @@
     <ClInclude Include="..\shaders\texture_color_vert.h">
       <Filter>shaders</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\entities\ComponentTransform2d.h">
-      <Filter>entities\components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\entities\ComponentMesh2d.h">
-      <Filter>entities\components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\exports\Aabb2dComponent.h">
-      <Filter>exports</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\exports\Transform2dComponent.h">
-      <Filter>exports</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\exports\Mesh2dComponent.h">
-      <Filter>exports</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\exports\Mesh2dEntity.h">
-      <Filter>exports</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\exports\EntitiesFactory.h">
-      <Filter>exports</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\geometry\geometry.h">
       <Filter>geometry</Filter>
     </ClInclude>
@@ -254,29 +230,8 @@
     <ClInclude Include="..\src\graphics\VertexBuffer.h">
       <Filter>graphics</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\entities\ComponentsFactory.h">
-      <Filter>entities</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\entities\ComponentStaticMesh2d.h">
-      <Filter>entities\components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\entities\Entity.h">
-      <Filter>entities</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\entities\ComponentAabb2d.h">
-      <Filter>entities\components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\entities\SystemRender2d.h">
-      <Filter>entities\systems</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\graphics\StaticBatch.h">
       <Filter>graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\entities\EntitiesWorld.h">
-      <Filter>entities</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\entities\EntitySystem.h">
-      <Filter>entities</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\Batcher.h">
       <Filter>graphics</Filter>
@@ -408,24 +363,6 @@
     <ClCompile Include="..\src\exports\llge.cpp">
       <Filter>exports</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\entities\ComponentMesh2d.cpp">
-      <Filter>entities\components</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\exports\Aabb2dComponent.cpp">
-      <Filter>exports</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\exports\Transform2dComponent.cpp">
-      <Filter>exports</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\exports\Mesh2dComponent.cpp">
-      <Filter>exports</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\exports\Mesh2dEntity.cpp">
-      <Filter>exports</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\exports\EntitiesFactory.cpp">
-      <Filter>exports</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\exports\llgeGraphics.cpp">
       <Filter>exports</Filter>
     </ClCompile>
@@ -438,23 +375,8 @@
     <ClCompile Include="..\src\graphics\VertexBuffer.cpp">
       <Filter>graphics</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\entities\ComponentStaticMesh2d.cpp">
-      <Filter>entities\components</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\entities\Entity.cpp">
-      <Filter>entities</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\entities\ComponentAabb2d.cpp">
-      <Filter>entities\components</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\graphics\StaticBatch.cpp">
       <Filter>graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\entities\SystemRender2d.cpp">
-      <Filter>entities\systems</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\entities\EntitiesWorld.cpp">
-      <Filter>entities</Filter>
     </ClCompile>
     <ClCompile Include="..\src\core\BasicTest.cpp">
       <Filter>core</Filter>

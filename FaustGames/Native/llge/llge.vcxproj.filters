@@ -200,9 +200,6 @@
     <ClInclude Include="..\src\core\core.h">
       <Filter>core</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\core\FixedPool.h">
-      <Filter>core</Filter>
-    </ClInclude>
     <ClInclude Include="..\shaders\solid_frag.h">
       <Filter>shaders</Filter>
     </ClInclude>
@@ -280,12 +277,6 @@
     </ClInclude>
     <ClInclude Include="..\src\entities\EntitySystem.h">
       <Filter>entities</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\core\PooledList.h">
-      <Filter>core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\core\Map.h">
-      <Filter>core</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\Batcher.h">
       <Filter>graphics</Filter>

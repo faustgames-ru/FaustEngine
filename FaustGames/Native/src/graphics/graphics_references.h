@@ -1,5 +1,4 @@
 #include "..\core\StaticArray.h"
-#include "..\core\FixedPool.h"
 #include "..\core\Vector.h"
 #include "..\core\Matrix.h"
 #include "..\core\Lazy.h"

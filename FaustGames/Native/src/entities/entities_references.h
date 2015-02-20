@@ -1,8 +1,5 @@
 #include "..\geometry\Aabb2d.h"
 #include "..\geometry\Quadtree2d.h"
-#include "..\core\FixedPool.h"
-#include "..\core\PooledList.h"
-#include "..\core\Map.h"
 #include "..\graphics\VertexFormats.h"
 #include "..\graphics\StaticBatch.h"
 #include "..\graphics\GraphicsDevice.h"

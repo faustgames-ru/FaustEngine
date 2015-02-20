@@ -100,11 +100,8 @@
     <ClInclude Include="..\src\core\core_classes.h" />
     <ClInclude Include="..\src\core\core_platform.h" />
     <ClInclude Include="..\src\core\Lazy.h" />
-    <ClInclude Include="..\src\core\Map.h" />
     <ClInclude Include="..\src\core\Math.h" />
     <ClInclude Include="..\src\core\Matrix.h" />
-    <ClInclude Include="..\src\core\FixedPool.h" />
-    <ClInclude Include="..\src\core\PooledList.h" />
     <ClInclude Include="..\src\core\StaticArray.h" />
     <ClInclude Include="..\src\core\Vector.h" />
     <ClInclude Include="..\src\entities\ComponentAabb2d.h" />

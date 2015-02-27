@@ -53,11 +53,58 @@ namespace llge
 		}
 
 	};
+
+	class Cubemap : public ICubemap
+	{
+	public:
+		TextureCubemap *image;
+
+		Cubemap()
+		{
+			image = new TextureCubemap();
+		}
+
+		~Cubemap()
+		{
+			delete image;
+		}
+
+		virtual int API_CALL getId()
+		{
+			return image->getHandle();
+		}
+		virtual void API_CALL LoadPixels(CubemapPlane plane, int width, int height, void *pixels)
+		{
+			Image2dData data(width, height);
+			data.Pixels = (unsigned int *)pixels;
+			image->setData((TextureCubemapPlanes::e)plane, &data);
+			data.Pixels = 0;
+		}
+
+		virtual void API_CALL create()
+		{
+			image->create();
+		}
+		virtual void API_CALL cleanup()
+		{
+			image->cleanup();
+		}
+		virtual void API_CALL dispose()
+		{
+			delete this;
+		}
+
+	};
 	
 	class UniformsFacade : public IUniformsFacade
 	{
 	public:
 		MatrixContainer Projection;
+		virtual void API_CALL setEnvironment(ICubemap *cubemap)
+		{
+			UniformValues::environment()->setValue(cubemap->getId());
+		}
+		
 		virtual void API_CALL setTexture(ITexture *texture)
 		{
 			UniformValues::texture()->setValue(texture->getId());
@@ -116,18 +163,18 @@ namespace llge
 
 		GraphicsFacade()
 		{
-			graphicsDevice = new GraphicsDevice();
+			graphicsDevice = &GraphicsDevice::Default;
 			uniformsFacade = new UniformsFacade();
 
 			effects[EffectTextureColor] = Effects::textureColor();
 			effects[EffectTextureLightmapColor] = Effects::textureLightmapColor();
 
 			formats[FormatPositionTextureColor] = VertexFormats::positionTextureColor();
+			formats[FormatPositionNormal] = VertexFormats::positionNormal();
 		}
 
 		~GraphicsFacade()
 		{
-			delete graphicsDevice;
 			delete uniformsFacade;
 		}
 
@@ -139,6 +186,11 @@ namespace llge
 		virtual ITexture * API_CALL createTexture()
 		{
 			return new Texture();
+		}
+
+		virtual ICubemap * API_CALL createCubemap()
+		{
+			return new Cubemap();
 		}
 
 		virtual IVertexBuffer * API_CALL createVertexBuffer()

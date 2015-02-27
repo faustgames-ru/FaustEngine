@@ -15,7 +15,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "llge", "Native\llge.android
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game.Android", "Game.Android\Game.Android.csproj", "{4D8A9AE9-4B41-4036-8F98-DAE1935A35E7}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestAndroidGraphics", "Tests\TestAndroidGraphics\TestAndroidGraphics.vcxproj", "{F88010BF-9257-4BDC-A5DB-07F937D1EBB2}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestAllocatorsAndroid", "Tests\TestAllocatorsAndroid\TestAllocatorsAndroid.vcxproj", "{4EC8C222-3FF6-4530-A431-5D9BA2E32F0E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -66,21 +66,21 @@ Global
 		{4D8A9AE9-4B41-4036-8F98-DAE1935A35E7}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{4D8A9AE9-4B41-4036-8F98-DAE1935A35E7}.Release|Mixed Platforms.Deploy.0 = Release|Any CPU
 		{4D8A9AE9-4B41-4036-8F98-DAE1935A35E7}.Release|Tegra-Android.ActiveCfg = Release|Any CPU
-		{F88010BF-9257-4BDC-A5DB-07F937D1EBB2}.Debug|Any CPU.ActiveCfg = Debug|Tegra-Android
-		{F88010BF-9257-4BDC-A5DB-07F937D1EBB2}.Debug|Mixed Platforms.ActiveCfg = Debug|Tegra-Android
-		{F88010BF-9257-4BDC-A5DB-07F937D1EBB2}.Debug|Mixed Platforms.Build.0 = Debug|Tegra-Android
-		{F88010BF-9257-4BDC-A5DB-07F937D1EBB2}.Debug|Tegra-Android.ActiveCfg = Debug|Tegra-Android
-		{F88010BF-9257-4BDC-A5DB-07F937D1EBB2}.Debug|Tegra-Android.Build.0 = Debug|Tegra-Android
-		{F88010BF-9257-4BDC-A5DB-07F937D1EBB2}.Profile|Any CPU.ActiveCfg = Profile|Tegra-Android
-		{F88010BF-9257-4BDC-A5DB-07F937D1EBB2}.Profile|Mixed Platforms.ActiveCfg = Profile|Tegra-Android
-		{F88010BF-9257-4BDC-A5DB-07F937D1EBB2}.Profile|Mixed Platforms.Build.0 = Profile|Tegra-Android
-		{F88010BF-9257-4BDC-A5DB-07F937D1EBB2}.Profile|Tegra-Android.ActiveCfg = Profile|Tegra-Android
-		{F88010BF-9257-4BDC-A5DB-07F937D1EBB2}.Profile|Tegra-Android.Build.0 = Profile|Tegra-Android
-		{F88010BF-9257-4BDC-A5DB-07F937D1EBB2}.Release|Any CPU.ActiveCfg = Release|Tegra-Android
-		{F88010BF-9257-4BDC-A5DB-07F937D1EBB2}.Release|Mixed Platforms.ActiveCfg = Release|Tegra-Android
-		{F88010BF-9257-4BDC-A5DB-07F937D1EBB2}.Release|Mixed Platforms.Build.0 = Release|Tegra-Android
-		{F88010BF-9257-4BDC-A5DB-07F937D1EBB2}.Release|Tegra-Android.ActiveCfg = Release|Tegra-Android
-		{F88010BF-9257-4BDC-A5DB-07F937D1EBB2}.Release|Tegra-Android.Build.0 = Release|Tegra-Android
+		{4EC8C222-3FF6-4530-A431-5D9BA2E32F0E}.Debug|Any CPU.ActiveCfg = Debug|Tegra-Android
+		{4EC8C222-3FF6-4530-A431-5D9BA2E32F0E}.Debug|Mixed Platforms.ActiveCfg = Debug|Tegra-Android
+		{4EC8C222-3FF6-4530-A431-5D9BA2E32F0E}.Debug|Mixed Platforms.Build.0 = Debug|Tegra-Android
+		{4EC8C222-3FF6-4530-A431-5D9BA2E32F0E}.Debug|Tegra-Android.ActiveCfg = Debug|Tegra-Android
+		{4EC8C222-3FF6-4530-A431-5D9BA2E32F0E}.Debug|Tegra-Android.Build.0 = Debug|Tegra-Android
+		{4EC8C222-3FF6-4530-A431-5D9BA2E32F0E}.Profile|Any CPU.ActiveCfg = Debug|Tegra-Android
+		{4EC8C222-3FF6-4530-A431-5D9BA2E32F0E}.Profile|Mixed Platforms.ActiveCfg = Debug|Tegra-Android
+		{4EC8C222-3FF6-4530-A431-5D9BA2E32F0E}.Profile|Mixed Platforms.Build.0 = Debug|Tegra-Android
+		{4EC8C222-3FF6-4530-A431-5D9BA2E32F0E}.Profile|Tegra-Android.ActiveCfg = Debug|Tegra-Android
+		{4EC8C222-3FF6-4530-A431-5D9BA2E32F0E}.Profile|Tegra-Android.Build.0 = Debug|Tegra-Android
+		{4EC8C222-3FF6-4530-A431-5D9BA2E32F0E}.Release|Any CPU.ActiveCfg = Release|Tegra-Android
+		{4EC8C222-3FF6-4530-A431-5D9BA2E32F0E}.Release|Mixed Platforms.ActiveCfg = Release|Tegra-Android
+		{4EC8C222-3FF6-4530-A431-5D9BA2E32F0E}.Release|Mixed Platforms.Build.0 = Release|Tegra-Android
+		{4EC8C222-3FF6-4530-A431-5D9BA2E32F0E}.Release|Tegra-Android.ActiveCfg = Release|Tegra-Android
+		{4EC8C222-3FF6-4530-A431-5D9BA2E32F0E}.Release|Tegra-Android.Build.0 = Release|Tegra-Android
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -88,6 +88,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{1A8346D8-1ECA-45A9-8171-FFFE9D248ADC} = {C2F71855-E08A-4555-BB9D-433929F4293D}
 		{4D8A9AE9-4B41-4036-8F98-DAE1935A35E7} = {8C524CF2-7781-4D5B-8731-C89E70B20BB8}
-		{F88010BF-9257-4BDC-A5DB-07F937D1EBB2} = {B9C1CFB9-5F31-41CF-AA2B-9007E18C33E9}
+		{4EC8C222-3FF6-4530-A431-5D9BA2E32F0E} = {B9C1CFB9-5F31-41CF-AA2B-9007E18C33E9}
 	EndGlobalSection
 EndGlobal

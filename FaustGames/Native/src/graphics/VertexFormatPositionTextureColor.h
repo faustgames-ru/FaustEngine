@@ -17,6 +17,16 @@ namespace graphics
 			addAttribute(Attributes::color());
 		}
 	};
+
+	class VertexFormatPositionNormal : public VertexFormat
+	{
+	public:
+		VertexFormatPositionNormal()
+		{
+			addAttribute(Attributes::position());
+			addAttribute(Attributes::normal());
+		}
+	};
 }
 
 #endif /*VERTEX_FORMAT_POSITION_TEXTURE_COLOR_H*/

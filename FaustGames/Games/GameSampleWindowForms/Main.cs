@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -18,22 +19,26 @@ namespace GameSampleWindowForms
     public partial class Main : Form
     {
         private readonly OGLWindow _oglWindow;
-        private readonly GraphicsFactory _factory;
-        private readonly GeometryFactory _geometryFactory;
-        private readonly QuadTree _quadTree;
-        private readonly GraphicsFacade _facade;
-        private readonly Texture _texture;
-        private readonly VertexBuffer _vertexBuffer;
+
+        private readonly GraphicsFactory _graphicsFactory;
+        private readonly GraphicsFacade _graphicsFacade;
+
+        private readonly EntitiesFactory _entitiesFactory;
+        private readonly EntitiesWorld _entitiesWorld;
+
         private List<MeshExportData> _data = new List<MeshExportData>();
         private readonly List<string> _images = new List<string>();
         private readonly Dictionary<int, Texture> _textures = new Dictionary<int, Texture>();
 
         private readonly Dictionary<int, MeshLayer> _layers = new Dictionary<int, MeshLayer>();
         private List<MeshLayer> _layersList = new List<MeshLayer>();
+        private List<Entity> Entities;
 
         private float _x;
         private float _y;
         private float _z;
+
+        private const float Fov = (float)Math.PI *0.5f;
         
         public Main()
         {
@@ -44,49 +49,24 @@ namespace GameSampleWindowForms
             _oglWindow = new OGLWindow(this, ClientSize.Width, ClientSize.Height);
             components.Add(new DisposableContainerComponent(_oglWindow));
 
-            _geometryFactory = llge.llge.CreateGeometryFactory();
-            _quadTree = _geometryFactory.CreateQuadTree();
-            components.Add(new DisposeActionContainerComponent(() => _geometryFactory.Dispose()));
-            components.Add(new DisposeActionContainerComponent(() =>
-            {
-                for (var j = 0; j < _data.Count; j++)
-                    _quadTree.Remove(j);
-                _quadTree.Dispose();
-            }));
+            _entitiesFactory = llge.llge.CreateEntitiesFactory();
+            _entitiesWorld = _entitiesFactory.CreateEntitiesWorld();
+            components.Add(new DisposeActionContainerComponent(() => _entitiesFactory.Dispose()));
+            components.Add(new DisposeActionContainerComponent(() => _entitiesWorld.Dispose()));
 
-            _factory = llge.llge.CreateGraphicsFactory();
-            _facade = _factory.CreateGraphicsFacade();
-            components.Add(new DisposeActionContainerComponent(() => _facade.Dispose()));
-            components.Add(new DisposeActionContainerComponent(() => _factory.Dispose()));
-            Application.Idle += ApplicationOnIdle;
+            _graphicsFactory = llge.llge.CreateGraphicsFactory();
+            _graphicsFacade = _graphicsFactory.CreateGraphicsFacade();
+            components.Add(new DisposeActionContainerComponent(() => _graphicsFactory.Dispose()));
+            components.Add(new DisposeActionContainerComponent(() => _graphicsFacade.Dispose()));
 
-            _texture = _facade.CreateTexture();
-            _vertexBuffer = _facade.CreateVertexBuffer();
-            components.Add(new DisposeActionContainerComponent(() => _texture.Dispose()));
-            components.Add(new DisposeActionContainerComponent(() => _vertexBuffer.Dispose()));
-
-
-            _facade.Create();
-            _texture.Create();
-            _vertexBuffer.Create();
-
-            _texture.LoadPixels(2, 2, new []
-            {
-                0xffffffff,
-                0xff00c0ff,
-                0xff00c0ff,
-                0xffffffff,
-            });
-
-
-            var _buffer = new List<MeshExportVertex>();
-
+            _entitiesWorld.GetCamera().SetFov(Fov);
+            
+            _graphicsFacade.Create();
             using (var reader = new BinaryReader(File.OpenRead(@"d:\mesh_export.data")))
             {
                 var count = reader.ReadInt32();
                 for (var j = 0; j < count; j++)
                 {
-                    var baseIndex = _buffer.Count;
                     var mesh = new MeshExportData();
                     _data.Add(mesh);
                     var imageFile = reader.ReadString();
@@ -107,7 +87,6 @@ namespace GameSampleWindowForms
                     float maxX = float.MinValue;
                     float minY = float.MaxValue;
                     float maxY = float.MinValue;
-
 
                     for (var i = 0; i < mesh.Vertices.Length; i++)
                     {
@@ -132,21 +111,40 @@ namespace GameSampleWindowForms
                             maxY = v.Y;
 
                         //v.Color = 0xffffffff;
-                        v.Z = 0.5f;
+                        //v.Z = 0.5f;
                         mesh.Vertices[i] = v;
-                        _buffer.Add(mesh.Vertices[i]);
                     }
                     for (var i = 0; i < mesh.Indices.Length; i++)
                     {
                         mesh.Indices[i] = reader.ReadUInt16();
-                        mesh.Indices[i] = (ushort) (mesh.Indices[i] + baseIndex);
                     }
-                    _quadTree.Insert(minX, minY, maxX, maxY, j);
+                    mesh.X = (minX + maxX)*0.5f;
+                    mesh.Y = (minY + maxY)*0.5f;
+                    
+                    for (var i = 0; i < mesh.Vertices.Length; i++)
+                    {
+                        mesh.Vertices[i].X -= mesh.X;
+                        mesh.Vertices[i].Y -= mesh.Y;
+                    }
+                    
+                    mesh.MinX = minX;
+                    mesh.MaxX = maxX;
+                    mesh.MinY = minY;
+                    mesh.MaxY = maxY;
+
+                    var sizeX = maxX - minX;
+                    var sizeY = maxY - minY;
+
+                    var dsizeX = sizeX * (float)Math.Tan(Fov * 0.5f);
+                    var dsizeY = sizeY * (float)Math.Tan(Fov * 0.5f);
+
+                    mesh.MinX = minX - dsizeX;
+                    mesh.MaxX = maxX + dsizeX;
+                    mesh.MinY = minY - dsizeY;
+                    mesh.MaxY = maxY + dsizeY;
+                    // correntBoundsWithZ;
                 }
             }
-
-            _vertexBuffer.SetData(_buffer.ToArray());
-
 
             for (var i = 0; i < _images.Count; i++)
             {
@@ -156,7 +154,7 @@ namespace GameSampleWindowForms
 
                     var data = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height), ImageLockMode.ReadOnly,
                         PixelFormat.Format32bppArgb);
-                    var texture = _facade.CreateTexture();
+                    var texture = _graphicsFacade.CreateTexture();
                     texture.Create();
                     components.Add(new DisposeActionContainerComponent(texture.Dispose));
                     texture.LoadPixels(bmp.Width, bmp.Height, data.Scan0);
@@ -165,8 +163,18 @@ namespace GameSampleWindowForms
                 }
             }
 
-            _facade.Viewport(ClientSize.Width, ClientSize.Height);
-            _facade.SetClearState(0x7784ff, 1.0f);
+            for (var i = 0; i < _data.Count; i++)
+            {
+                var mesh = _data[i];
+                var meshEntity = _entitiesWorld.CreateMesh2d();
+                meshEntity.SetBounds(mesh.MinX, mesh.MinY, mesh.MaxX, mesh.MaxY, -mesh.Z);
+                meshEntity.SetMesh(_textures[mesh.TextureId], mesh.Vertices, mesh.Indices);
+                meshEntity.SetWorldPosition(mesh.X, mesh.Y, 0);
+                meshEntity.AddToWorld();
+            }
+
+            _graphicsFacade.Viewport(ClientSize.Width, ClientSize.Height);
+            _graphicsFacade.SetClearState(0x7784ff, 1.0f);
         }
 
         private Stopwatch _stopwatch;
@@ -190,112 +198,34 @@ namespace GameSampleWindowForms
             Main_MouseMove(this, new MouseEventArgs(buttons, 0, pos.X, pos.Y, 0));
             _prevButtons = buttons;
 
-            _facade.Clear();
             const float zoom = 0.001f;
-            _facade.SetProjection(new float[]
+
+            _entitiesWorld.SetRenderBounds(_x - 1300, _y - 700, _x + 1300, _y + 700);
+            _entitiesWorld.GetCamera().SetPosition(-_x, -_y, 800);
+            _entitiesWorld.GetCamera().SetAspect((float)Height/Width);
+            _entitiesWorld.GetCamera().SetPlanes(0.1f, 50000f);
+
+            Text = _entitiesWorld.Update(0).ToString(CultureInfo.InvariantCulture);
+            /*
+            _graphicsFacade.SetProjection(new float[]
             {
                 zoom, 0, 0, 0,
                 0, zoom*Width/Height, 0, 0,
                 0, 0, 1, 0,
                 -_x * zoom, -_y * zoom*Width/Height, -_z, 1,
             });
-            /*
-            _facade.Draw(
-                new []
-                {
-                    new MeshExportVertex(-1, -1, 0.5f, 0, 0, 0xffffffff),
-                    new MeshExportVertex(-1, 1, 0.5f, 0, 0, 0xffffffff),
-                    new MeshExportVertex(-0.25f, 1, 0.5f, 0, 0, 0xffffffff),
-                    new MeshExportVertex(-0.25f, -1, 0.5f, 0, 0, 0xffffffff),
-                }, 
-                new ushort[]
-                {
-                    0, 2, 1,
-                    0, 3, 2,
-                }, 
-                2);
-
-            _facade.Draw(
-                new[]
-                {
-                    new MeshExportVertex(0.25f, -1, 0.5f, 0, 0, 0xffffffff),
-                    new MeshExportVertex(0.25f, 1, 0.5f, 0, 0, 0xffffffff),
-                    new MeshExportVertex(1, 1, 0.5f, 0, 0, 0xffffffff),
-                    new MeshExportVertex(1, -1, 0.5f, 0, 0, 0xffffffff),
-                },
-                new ushort[]
-                {
-                    0, 1, 2,
-                    0, 2, 3,
-                },
-                2);
-            */
-            _quadTree.Query(_x - 1000, _y - 1000, _x + 1000, _y + 1000);
-
-            //Text = _quadTree.GetIterationsCount().ToString();
-
-            var count = _quadTree.GetQueryResultsCount();
-            _quadTree.GetQueryResults(_queryResult);
-
-            var drawList = new List<MeshExportData>();
-            for (int i = 0; i < count; i++)
+            _graphicsFacade.Clear();
+            foreach (var data in _data)
             {
-                var id = _queryResult[i];
-                drawList.Add(_data[id]);
+                _graphicsFacade.GetUniforms().SetTexture(_textures[data.TextureId]);
+                _graphicsFacade.Draw(
+                    data.Vertices,
+                    data.Indices,
+                    data.Indices.Length / 3);
             }
-
-            //drawList = drawList.OrderByDescending(d => d.Z).ToList();
-            
-            _layers.Clear();
-            for (int i = 0; i < count; i++)
-            {
-                var id = _queryResult[i];
-                var data = _data[id];
-                var z = (int)(data.Z * 100);
-                if (!_layers.ContainsKey(z))
-                    _layers.Add(z, new MeshLayer(z));
-                _layers[z].Data.Add(data);
-                //drawList.Add(data);
-            }
-            _layersList = _layers.Values.OrderByDescending(l => l.LayerIndex).ToList();
-            
-            foreach (var layer in _layersList)
-            {
-                layer.BuildInidices();
-            }
-
-            var calls = 0;
-            
-            _facade.GetUniforms().SetLightMap(_texture);
-            
-            foreach (var l in _layersList)
-            {
-                foreach (var b in l.Blocks)
-                {
-                    _facade.GetUniforms().SetTexture(_textures[b.Value.TextureId]);
-                    _facade.DrawVertexBuffer(
-                        _vertexBuffer,
-                        b.Value.Indices,
-                        b.Value.Indices.Length / 3);
-                    calls++;
-                }
-            }
-            Text = calls.ToString();
-            /*
-            _batch.Calls = 0;
-            foreach (var data in drawList)
-            {
-                _batch.Render(_facade, data, _textures[data.TextureId]);
-                //_facade.GetUniforms().SetTexture(_textures[data.TextureId]);
-
-                //_facade.Draw(
-                //    data.Vertices,
-                //    data.Indices,
-                //    data.Indices.Length / 3);
-            }
-            _batch.Finish(_facade);
-            */
+             */ 
             _oglWindow.SwapOpenGLBuffers();
+            
         }
 
         private void ApplicationOnIdle(object sender, EventArgs eventArgs)
@@ -310,8 +240,7 @@ namespace GameSampleWindowForms
 
         private void Main_FormClosed(object sender, FormClosedEventArgs e)
         {
-            _facade.Cleanup();
-            _texture.Cleanup();
+            _graphicsFacade.Cleanup();
         }
 
         private void Main_MouseDown(object sender, MouseEventArgs e)
@@ -422,6 +351,18 @@ namespace GameSampleWindowForms
 
     }
 
+    public static class EntityExtension
+    {
+        public unsafe static void SetMesh(this Entity entity, Texture texture, MeshExportVertex[] vertices, ushort[] indices)
+        {
+            fixed (MeshExportVertex* pointerVertices = vertices)
+            fixed (ushort* pointerIndices = indices)
+            {
+                entity.SetMesh(texture, new IntPtr(pointerVertices), vertices.Length, new IntPtr(pointerIndices), indices.Length);
+            }
+        }
+    }
+
     public static class GraphicsFacadeExtension
     {
         public static void SetProjection(this GraphicsFacade facade, float[] value)
@@ -453,7 +394,7 @@ namespace GameSampleWindowForms
             fixed (ushort* pointerIndiceas = indices)
             {
                 facade.Draw(
-                    GraphicsEffects.EffectTextureLightmapColor,
+                    GraphicsEffects.EffectTextureColor,
                     GraphicsVertexFormats.FormatPositionTextureColor,
                     new IntPtr(pointerVertices),
                     new IntPtr(pointerIndiceas),
@@ -616,10 +557,17 @@ namespace GameSampleWindowForms
     }
     public class MeshExportData
     {
+        public float X;
+        public float Y;
         public float Z;
         public int TextureId;
         public MeshExportVertex[] Vertices;
         public ushort[] Indices;
+
+        public float MinX;
+        public float MinY;
+        public float MaxX;
+        public float MaxY;
     }
 
 }

@@ -15,17 +15,31 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\CommonSources\gen\llgePInvoke.cpp" />
+    <ClCompile Include="..\src\core\BasicTest.cpp" />
+    <ClCompile Include="..\src\core\HollowsAllocationPolicy.cpp" />
+    <ClCompile Include="..\src\core\Lazy.cpp" />
     <ClCompile Include="..\src\core\Math.cpp" />
     <ClCompile Include="..\src\core\Matrix.cpp" />
-    <ClCompile Include="..\src\entities\ComponentMesh2d.cpp" />
-    <ClCompile Include="..\src\exports\Aabb2dComponent.cpp" />
-    <ClCompile Include="..\src\exports\EntitiesFactory.cpp" />
+    <ClCompile Include="..\src\core\SystemAllocationPolicy.cpp" />
+    <ClCompile Include="..\src\drawing\Renderer2d.cpp" />
+    <ClCompile Include="..\src\drawing\RenderItem2d.cpp" />
+    <ClCompile Include="..\src\drawing\RenderMesh2d.cpp" />
+    <ClCompile Include="..\src\entities\Aabb2dComponent.cpp" />
+    <ClCompile Include="..\src\entities\Component.cpp" />
+    <ClCompile Include="..\src\entities\DummyEntitiesFilter.cpp" />
+    <ClCompile Include="..\src\entities\EntitiesFilter.cpp" />
+    <ClCompile Include="..\src\entities\EntitiesWorld.cpp" />
+    <ClCompile Include="..\src\entities\Entity.cpp" />
+    <ClCompile Include="..\src\entities\QuadtreeEntitiesFilter.cpp" />
+    <ClCompile Include="..\src\entities\Render2dComponent.cpp" />
+    <ClCompile Include="..\src\entities\RenderSystem2d.cpp" />
+    <ClCompile Include="..\src\entities\System.cpp" />
+    <ClCompile Include="..\src\entities\Transform2dComponent.cpp" />
+    <ClCompile Include="..\src\entities\TransformSystem2d.cpp" />
     <ClCompile Include="..\src\exports\llge.cpp" />
+    <ClCompile Include="..\src\exports\llgeEntities.cpp" />
     <ClCompile Include="..\src\exports\llgeGeometry.cpp" />
     <ClCompile Include="..\src\exports\llgeGraphics.cpp" />
-    <ClCompile Include="..\src\exports\Mesh2dComponent.cpp" />
-    <ClCompile Include="..\src\exports\Mesh2dEntity.cpp" />
-    <ClCompile Include="..\src\exports\Transform2dComponent.cpp" />
     <ClCompile Include="..\src\geometry\Aabb2d.cpp" />
     <ClCompile Include="..\src\geometry\Quadtree2d.cpp" />
     <ClCompile Include="..\src\geometry\Quadtree2dNode.cpp" />
@@ -54,32 +68,47 @@
     <ClCompile Include="..\src\graphics\UniformValueFloat.cpp" />
     <ClCompile Include="..\src\graphics\UniformValueMatrix.cpp" />
     <ClCompile Include="..\src\graphics\UniformValueTexture.cpp" />
+    <ClCompile Include="..\src\graphics\VertexBuffer.cpp" />
     <ClCompile Include="..\src\graphics\VertexFormat.cpp" />
     <ClCompile Include="..\src\graphics\VertexFormats.cpp" />
     <ClCompile Include="llge_android.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\CommonSources\include\llge.h" />
+    <ClInclude Include="..\src\core\Allocator.h" />
+    <ClInclude Include="..\src\core\BasicTest.h" />
+    <ClInclude Include="..\src\core\core.h" />
     <ClInclude Include="..\src\core\core_classes.h" />
     <ClInclude Include="..\src\core\core_platform.h" />
-    <ClInclude Include="..\src\core\FixedPool.h" />
+    <ClInclude Include="..\src\core\HollowsAllocationPolicy.h" />
     <ClInclude Include="..\src\core\Lazy.h" />
     <ClInclude Include="..\src\core\Math.h" />
     <ClInclude Include="..\src\core\Matrix.h" />
     <ClInclude Include="..\src\core\StaticArray.h" />
+    <ClInclude Include="..\src\core\SystemAllocationPolicy.h" />
     <ClInclude Include="..\src\core\Vector.h" />
-    <ClInclude Include="..\src\entities\ComponentMesh2d.h" />
-    <ClInclude Include="..\src\entities\ComponentTransform2d.h" />
+    <ClInclude Include="..\src\drawing\drawing_classes.h" />
+    <ClInclude Include="..\src\drawing\drawing_platform.h" />
+    <ClInclude Include="..\src\drawing\drawing_references.h" />
+    <ClInclude Include="..\src\drawing\Renderer2d.h" />
+    <ClInclude Include="..\src\drawing\RenderItem2d.h" />
+    <ClInclude Include="..\src\drawing\RenderMesh2d.h" />
+    <ClInclude Include="..\src\entities\Aabb2dComponent.h" />
+    <ClInclude Include="..\src\entities\Component.h" />
+    <ClInclude Include="..\src\entities\DummyEntitiesFilter.h" />
+    <ClInclude Include="..\src\entities\entities.h" />
+    <ClInclude Include="..\src\entities\EntitiesFilter.h" />
+    <ClInclude Include="..\src\entities\EntitiesWorld.h" />
     <ClInclude Include="..\src\entities\entities_classes.h" />
     <ClInclude Include="..\src\entities\entities_platform.h" />
     <ClInclude Include="..\src\entities\entities_references.h" />
-    <ClInclude Include="..\src\entities\entity.h" />
-    <ClInclude Include="..\src\entities\SystemTransform2d.h" />
-    <ClInclude Include="..\src\exports\Aabb2dComponent.h" />
-    <ClInclude Include="..\src\exports\EntitiesFactory.h" />
-    <ClInclude Include="..\src\exports\Mesh2dComponent.h" />
-    <ClInclude Include="..\src\exports\Mesh2dEntity.h" />
-    <ClInclude Include="..\src\exports\Transform2dComponent.h" />
+    <ClInclude Include="..\src\entities\Entity.h" />
+    <ClInclude Include="..\src\entities\QuadtreeEntitiesFilter.h" />
+    <ClInclude Include="..\src\entities\Render2dComponent.h" />
+    <ClInclude Include="..\src\entities\RenderSystem2d.h" />
+    <ClInclude Include="..\src\entities\System.h" />
+    <ClInclude Include="..\src\entities\Transform2dComponent.h" />
+    <ClInclude Include="..\src\entities\TransformSystem2d.h" />
     <ClInclude Include="..\src\geometry\Aabb2d.h" />
     <ClInclude Include="..\src\geometry\geometry.h" />
     <ClInclude Include="..\src\geometry\geometry_classes.h" />
@@ -87,10 +116,10 @@
     <ClInclude Include="..\src\geometry\geometry_references.h" />
     <ClInclude Include="..\src\geometry\Quadtree2d.h" />
     <ClInclude Include="..\src\geometry\Quadtree2dItem.h" />
-    <ClInclude Include="..\src\geometry\Quadtree2dItemList.h" />
     <ClInclude Include="..\src\geometry\Quadtree2dNode.h" />
     <ClInclude Include="..\src\graphics\AttributeInfo.h" />
     <ClInclude Include="..\src\graphics\Attributes.h" />
+    <ClInclude Include="..\src\graphics\Batcher.h" />
     <ClInclude Include="..\src\graphics\Color.h" />
     <ClInclude Include="..\src\graphics\Effect.h" />
     <ClInclude Include="..\src\graphics\EffectBase.h" />
@@ -100,6 +129,7 @@
     <ClInclude Include="..\src\graphics\EffectTextureColor.h" />
     <ClInclude Include="..\src\graphics\EffectTextureLightMapColor.h" />
     <ClInclude Include="..\src\graphics\Errors.h" />
+    <ClInclude Include="..\src\graphics\graphics.h" />
     <ClInclude Include="..\src\graphics\GraphicsDevice.h" />
     <ClInclude Include="..\src\graphics\graphics_classes.h" />
     <ClInclude Include="..\src\graphics\graphics_platform.h" />
@@ -119,6 +149,7 @@
     <ClInclude Include="..\src\graphics\UniformValueFloat.h" />
     <ClInclude Include="..\src\graphics\UniformValueMatrix.h" />
     <ClInclude Include="..\src\graphics\UniformValueTexture.h" />
+    <ClInclude Include="..\src\graphics\VertexBuffer.h" />
     <ClInclude Include="..\src\graphics\VertexFormat.h" />
     <ClInclude Include="..\src\graphics\VertexFormatPosition.h" />
     <ClInclude Include="..\src\graphics\VertexFormatPositionColor.h" />
@@ -140,6 +171,8 @@
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|Tegra-Android'">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <AndroidTargetAPI>android-15</AndroidTargetAPI>
+    <AndroidStlType>gnustl_static</AndroidStlType>
+    <AndroidBuildSystem>AntBuild</AndroidBuildSystem>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -162,6 +195,9 @@
     <ClCompile>
       <CppLanguageStandard>gnu++11</CppLanguageStandard>
       <AdditionalIncludeDirectories>..\include;..\..\CommonSources\include</AdditionalIncludeDirectories>
+      <AdditionalOptions>-std=gnu++11 %(AdditionalOptions)</AdditionalOptions>
+      <CLanguageStandard>gnu11</CLanguageStandard>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <AdditionalOptions>-lGLESv2 -ldl -llog %(AdditionalOptions)</AdditionalOptions>

@@ -7,6 +7,7 @@
   UniformValueTexture.cpp
   UniformValueMatrix.cpp
   UniformValueFloat.cpp
+  UniformValueCubemap.cpp
   UniformValue.cpp
   Uniforms.cpp
   UniformInfo.cpp
@@ -14,14 +15,16 @@
   TextureRenderTarget2d.cpp
   TextureLoader.cpp
   TextureImage2d.cpp
+  TextureCubemap.cpp
   Texture.cpp
   StaticBatch.cpp
-  RenderState.cpp
-  Image2dData.cpp
   Generating Code...
   Compiling...
+  RenderState.cpp
+  Image2dData.cpp
   GraphicsDevice.cpp
   Errors.cpp
+  EffectWater.cpp
   EffectTextureLightMapColor.cpp
   EffectTextureColor.cpp
   EffectSolidColor.cpp
@@ -37,11 +40,31 @@
   Aabb2d.cpp
   llge.cpp
   llgeGraphics.cpp
-  llgeGeometry.cpp
-  SystemAllocationPolicy.cpp
-  Matrix.cpp
   Generating Code...
   Compiling...
+  llgeGeometry.cpp
+  llgeEntities.cpp
+  TransformSystem2d.cpp
+  Transform2dComponent.cpp
+  System.cpp
+  RenderSystem2d.cpp
+  Render2dComponent.cpp
+  QuadtreeEntitiesFilter.cpp
+  DummyEntitiesFilter.cpp
+  EntitiesWorld.cpp
+  Entity.cpp
+  EntitiesFilter.cpp
+  Component.cpp
+  Aabb2dComponent.cpp
+  WaterRenderer.cpp
+  RenderMesh2d.cpp
+  RenderItem2d.cpp
+  Renderer2d.cpp
+  Camera.cpp
+  SystemAllocationPolicy.cpp
+  Generating Code...
+  Compiling...
+  Matrix.cpp
   Math.cpp
   HollowsAllocationPolicy.cpp
   BasicTest.cpp

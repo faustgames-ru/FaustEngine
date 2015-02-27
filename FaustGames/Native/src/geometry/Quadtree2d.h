@@ -23,7 +23,7 @@ namespace geometry
 		Quadtree2dNode * _root;
 		static Aabb2d DefaultRootSize;
 		static const int DepthLimit;
-		std::unordered_map<int, Quadtree2dItem *, std::hash<int>, std::equal_to<int>, core::DAlloc> _items;
+		std::map<int, Quadtree2dItem *, std::less<int>, core::DAlloc> _items;
 	};
 }
 

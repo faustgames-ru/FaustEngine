@@ -3,6 +3,7 @@
 
 #include "core_classes.h"
 #include "HollowsAllocationPolicy.h"
+#include "SystemAllocationPolicy.h"
 #include <memory>
 #include <limits.h>
 
@@ -47,7 +48,7 @@ namespace core
 		//    size
 		inline size_type max_size() const
 		{
-			return std::numeric_limits<size_type>::max() / sizeof(T);
+			return 2147483648 / sizeof(T);
 		}
 
 		//    construction/destruction
@@ -58,7 +59,8 @@ namespace core
 		inline bool operator!=(Allocator const& a) { return !operator==(a); }
 	};    //    end of class Allocator 
 
-	typedef Allocator<void *, Mem> DAlloc;
+	//typedef Allocator<void *, HollowsAllocationPolicy> DAlloc;
+	typedef Allocator<void *, StandartAllocationPolicy> DAlloc;
 }
 
 #endif /*ALLOCATOR_H*/

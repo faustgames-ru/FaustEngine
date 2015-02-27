@@ -12,7 +12,7 @@ namespace graphics
 	{
 		glGenTextures(1, &_handle);
 		Errors::check(Errors::GenTextures);
-		glActiveTexture(GL_TEXTURE0);
+		glActiveTexture(GL_TEXTURE0 + GraphicsConstants::Samplers2DStart);
 		Errors::check(Errors::ActiveTexture);
 		glBindTexture(GL_TEXTURE_2D, _handle);
 		Errors::check(Errors::BindTexture);

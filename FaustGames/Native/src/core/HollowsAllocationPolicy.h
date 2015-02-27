@@ -15,9 +15,12 @@ namespace core
 			_holes(0),
 			_elementsLimit(elementsLimit),
 			_elementSize(elementSize + sizeof(int)),
-			Next(0)
+			Next(0),
+			_holesCount(0),
+			_count(0)
 		{
 			_size = _elementsLimit * _elementSize;
+
 		}
 
 		~HollowsAllocationBlock()
@@ -38,8 +41,19 @@ namespace core
 		inline char * getData()
 		{
 			if (!_data)
+			{
 				_data = (char *)malloc(_size);
+			}
 			return _data + sizeof(int);
+		}
+
+		inline char * getDataOrigin()
+		{
+			if (!_data)
+			{
+				_data = (char *)malloc(_size);
+			}
+			return _data;
 		}
 
 		inline bool contins(void *p)
@@ -56,13 +70,23 @@ namespace core
 			return true;
 		}
 
+		template <typename T>
+		std::string to_string(T value)
+		{
+			std::ostringstream os;
+			os << value;
+			return os.str();
+		}
+
 		inline void * allocate()
 		{
 			if (_holesCount == 0)
 			{
 				int currentOffset = _count*_elementSize;
 				_count++;
-				*((int *)(getData() + currentOffset - sizeof(int))) = _elementSize - sizeof(int);
+
+				*((int *)(getDataOrigin() + currentOffset)) = _elementSize - sizeof(int);
+
 				return getData() + currentOffset;
 			}
 			else
@@ -124,7 +148,9 @@ namespace core
 			for (HollowsAllocationBlock *i = _first; i != 0; i = i->Next)
 			{
 				if (i->canAllocate())
+				{
 					return i->allocate();
+				}
 			}
 			_elementsLimit *= 2;
 			HollowsAllocationBlock *newBlock = new HollowsAllocationBlock(_elementSize, _elementsLimit);
@@ -180,7 +206,7 @@ namespace core
 	class LargeBlocksContainer
 	{
 	public:
-		typedef std::unordered_map<std::size_t, HollowsAllocationBlocks *> SizeMap;
+		typedef std::map<std::size_t, HollowsAllocationBlocks *> SizeMap;
 		LargeBlocksContainer()
 		{
 		}
@@ -203,7 +229,6 @@ namespace core
 	public:
 		static inline void* allocate(std::size_t cnt)
 		{
-
 			if (cnt < SmallBlocksContainer::SmallBlocksCount)
 			{
 				return _smallBlocks.Blocks[cnt]->allocate();

@@ -37,6 +37,7 @@ namespace graphics
 			Matrix3,
 			Matrix4,
 			Sampler2D,
+			SamplerCube,
 		};
 	};
 
@@ -72,6 +73,10 @@ namespace graphics
 	class GraphicsConstants
 	{
 	public:
+		static const int Samplers2DStart = 0;
+		static const int Samplers2DLimit = 5;
+		static const int SamplersCubeStart = 5;
+		static const int SamplersCubeLimit = 3;
 		static const int StaticBatchBufferSize = 32768;
 		static const int StaticBatchBlocksLimit = 2;
 	};

@@ -66,9 +66,6 @@ struct engine {
  * Initialize an EGL context for the current display.
  */
 
-llge::ITestRenderSystem *_renderSystem;
-llge::IFactory *_factory;
-
 #define SIZE 2
 #define SIZE1 18
 
@@ -630,10 +627,6 @@ static int engine_init_display(struct engine* engine) {
 	glDisable(GL_DEPTH_TEST);
 	error = glGetError();
 	
-	_factory = llge::createFactory();
-	_renderSystem = _factory->createRenderSystem();
-	_renderSystem->create();
-
 	doTest();
 
 	return 0;
@@ -656,9 +649,6 @@ static void engine_draw_frame(struct engine* engine) {
             ((float)engine->state.y)/engine->height, 1);
     glClear(GL_COLOR_BUFFER_BIT);
 	*/
-
-	_renderSystem->viewport(engine->width, engine->height);
-	_renderSystem->render();
 
     eglSwapBuffers(engine->display, engine->surface);
 }

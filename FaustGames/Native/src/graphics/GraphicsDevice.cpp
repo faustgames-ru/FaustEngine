@@ -5,6 +5,9 @@
 
 namespace graphics
 {
+	GraphicsDevice GraphicsDevice::Default;
+
+
 	GraphicsDevice::GraphicsDevice()
 	{
 	}

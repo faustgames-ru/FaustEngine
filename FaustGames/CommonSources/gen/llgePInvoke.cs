@@ -21,6 +21,17 @@ namespace llge
 	public enum GraphicsVertexFormats
 	{
 		FormatPositionTextureColor = 0x0,
+		FormatPositionNormal = 0x1,
+	}
+	
+	public enum CubemapPlane
+	{
+		PositiveX = 0x0,
+		NegativeX = 0x1,
+		PositiveY = 0x2,
+		NegativeY = 0x3,
+		PositiveZ = 0x4,
+		NegativeZ = 0x5,
 	}
 	
 	public class Texture
@@ -63,9 +74,56 @@ namespace llge
 		static extern private void llge_Texture_dispose (IntPtr classInstance);
 	}
 	
+	public class Cubemap
+	{
+		public IntPtr ClassInstance;
+		public int GetId ()
+		{
+			return llge_Cubemap_getId(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private int llge_Cubemap_getId (IntPtr classInstance);
+		public void LoadPixels (CubemapPlane plane, int width, int height, IntPtr pixels)
+		{
+			llge_Cubemap_LoadPixels(ClassInstance, plane, width, height, pixels);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_Cubemap_LoadPixels (IntPtr classInstance, CubemapPlane plane, int width, int height, IntPtr pixels);
+		public void Create ()
+		{
+			llge_Cubemap_create(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_Cubemap_create (IntPtr classInstance);
+		public void Cleanup ()
+		{
+			llge_Cubemap_cleanup(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_Cubemap_cleanup (IntPtr classInstance);
+		public void Dispose ()
+		{
+			llge_Cubemap_dispose(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_Cubemap_dispose (IntPtr classInstance);
+	}
+	
 	public class UniformsFacade
 	{
 		public IntPtr ClassInstance;
+		public void SetEnvironment (Cubemap cubemap)
+		{
+			llge_UniformsFacade_setEnvironment(ClassInstance, cubemap.ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_UniformsFacade_setEnvironment (IntPtr classInstance, IntPtr cubemap);
 		public void SetTexture (Texture texture)
 		{
 			llge_UniformsFacade_setTexture(ClassInstance, texture.ClassInstance);
@@ -146,6 +204,13 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private IntPtr llge_GraphicsFacade_createTexture (IntPtr classInstance);
+		public Cubemap CreateCubemap ()
+		{
+			return new Cubemap{ ClassInstance = llge_GraphicsFacade_createCubemap(ClassInstance) };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_GraphicsFacade_createCubemap (IntPtr classInstance);
 		public VertexBuffer CreateVertexBuffer ()
 		{
 			return new VertexBuffer{ ClassInstance = llge_GraphicsFacade_createVertexBuffer(ClassInstance) };
@@ -303,8 +368,210 @@ namespace llge
 		static extern private void llge_GeometryFactory_dispose (IntPtr classInstance);
 	}
 	
+	public class Entity
+	{
+		public IntPtr ClassInstance;
+		public void SetBounds (float minX, float minY, float maxX, float maxY, float zOrder)
+		{
+			llge_Entity_setBounds(ClassInstance, minX, minY, maxX, maxY, zOrder);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_Entity_setBounds (IntPtr classInstance, float minX, float minY, float maxX, float maxY, float zOrder);
+		public void SetMesh (Texture texture, IntPtr vertices, int verticesCount, IntPtr indices, int indicesCount)
+		{
+			llge_Entity_setMesh(ClassInstance, texture.ClassInstance, vertices, verticesCount, indices, indicesCount);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_Entity_setMesh (IntPtr classInstance, IntPtr texture, IntPtr vertices, int verticesCount, IntPtr indices, int indicesCount);
+		public void SetWorldPosition (float x, float y, float z)
+		{
+			llge_Entity_setWorldPosition(ClassInstance, x, y, z);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_Entity_setWorldPosition (IntPtr classInstance, float x, float y, float z);
+		public void SetWorldRotation (float value)
+		{
+			llge_Entity_setWorldRotation(ClassInstance, value);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_Entity_setWorldRotation (IntPtr classInstance, float value);
+		public void SetWorldScale (float value)
+		{
+			llge_Entity_setWorldScale(ClassInstance, value);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_Entity_setWorldScale (IntPtr classInstance, float value);
+		public void SetLocalPivot (float x, float y, float z)
+		{
+			llge_Entity_setLocalPivot(ClassInstance, x, y, z);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_Entity_setLocalPivot (IntPtr classInstance, float x, float y, float z);
+		public void SetLocalPosition (float x, float y, float z)
+		{
+			llge_Entity_setLocalPosition(ClassInstance, x, y, z);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_Entity_setLocalPosition (IntPtr classInstance, float x, float y, float z);
+		public void SetLocalRotation (float value)
+		{
+			llge_Entity_setLocalRotation(ClassInstance, value);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_Entity_setLocalRotation (IntPtr classInstance, float value);
+		public void SetLocalScale (float value)
+		{
+			llge_Entity_setLocalScale(ClassInstance, value);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_Entity_setLocalScale (IntPtr classInstance, float value);
+		public void AddToWorld ()
+		{
+			llge_Entity_addToWorld(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_Entity_addToWorld (IntPtr classInstance);
+		public void RemoveFromWorld ()
+		{
+			llge_Entity_removeFromWorld(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_Entity_removeFromWorld (IntPtr classInstance);
+		public void Dispose ()
+		{
+			llge_Entity_dispose(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_Entity_dispose (IntPtr classInstance);
+	}
+	
+	public class Camera
+	{
+		public IntPtr ClassInstance;
+		public void SetPosition (float x, float y, float z)
+		{
+			llge_Camera_setPosition(ClassInstance, x, y, z);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_Camera_setPosition (IntPtr classInstance, float x, float y, float z);
+		public void SetFov (float fov)
+		{
+			llge_Camera_setFov(ClassInstance, fov);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_Camera_setFov (IntPtr classInstance, float fov);
+		public void SetAspect (float aspect)
+		{
+			llge_Camera_setAspect(ClassInstance, aspect);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_Camera_setAspect (IntPtr classInstance, float aspect);
+		public void SetRotation (float rotationZ)
+		{
+			llge_Camera_setRotation(ClassInstance, rotationZ);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_Camera_setRotation (IntPtr classInstance, float rotationZ);
+		public void SetPlanes (float zn, float zf)
+		{
+			llge_Camera_setPlanes(ClassInstance, zn, zf);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_Camera_setPlanes (IntPtr classInstance, float zn, float zf);
+	}
+	
+	public class EntitiesWorld
+	{
+		public IntPtr ClassInstance;
+		public Camera GetCamera ()
+		{
+			return new Camera{ ClassInstance = llge_EntitiesWorld_getCamera(ClassInstance) };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_EntitiesWorld_getCamera (IntPtr classInstance);
+		public void SetUnpdateBounds (float minX, float minY, float maxX, float maxY)
+		{
+			llge_EntitiesWorld_setUnpdateBounds(ClassInstance, minX, minY, maxX, maxY);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_EntitiesWorld_setUnpdateBounds (IntPtr classInstance, float minX, float minY, float maxX, float maxY);
+		public void SetRenderBounds (float minX, float minY, float maxX, float maxY)
+		{
+			llge_EntitiesWorld_setRenderBounds(ClassInstance, minX, minY, maxX, maxY);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_EntitiesWorld_setRenderBounds (IntPtr classInstance, float minX, float minY, float maxX, float maxY);
+		public Entity CreateMesh2d ()
+		{
+			return new Entity{ ClassInstance = llge_EntitiesWorld_createMesh2d(ClassInstance) };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_EntitiesWorld_createMesh2d (IntPtr classInstance);
+		public int Update (float elapsed)
+		{
+			return llge_EntitiesWorld_update(ClassInstance, elapsed);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private int llge_EntitiesWorld_update (IntPtr classInstance, float elapsed);
+		public void Dispose ()
+		{
+			llge_EntitiesWorld_dispose(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_EntitiesWorld_dispose (IntPtr classInstance);
+	}
+	
+	public class EntitiesFactory
+	{
+		public IntPtr ClassInstance;
+		public EntitiesWorld CreateEntitiesWorld ()
+		{
+			return new EntitiesWorld{ ClassInstance = llge_EntitiesFactory_createEntitiesWorld(ClassInstance) };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_EntitiesFactory_createEntitiesWorld (IntPtr classInstance);
+		public void Dispose ()
+		{
+			llge_EntitiesFactory_dispose(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_EntitiesFactory_dispose (IntPtr classInstance);
+	}
+	
 	public class llge
 	{
+		static public EntitiesFactory CreateEntitiesFactory ()
+		{
+			return new EntitiesFactory{ ClassInstance = createEntitiesFactory() };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr createEntitiesFactory ();
 		static public GraphicsFactory CreateGraphicsFactory ()
 		{
 			return new GraphicsFactory{ ClassInstance = createGraphicsFactory() };

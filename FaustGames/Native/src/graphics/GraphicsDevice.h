@@ -11,7 +11,7 @@ namespace graphics
 	class GraphicsDevice
 	{
 	public:
-		static int poolSize(){ return 1; }
+		static GraphicsDevice Default;
 		RenderState renderState;
 		GraphicsDevice();
 		~GraphicsDevice();

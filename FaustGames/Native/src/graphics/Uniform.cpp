@@ -35,7 +35,13 @@ namespace graphics
 		if (_info->getType() == UniformType::Sampler2D)
 		{
 			int samplerIndex = _valueContainer->getSamplerIndex();
-			glUniform1i(_parameterHandler, samplerIndex);
+			glUniform1i(_parameterHandler, samplerIndex + GraphicsConstants::Samplers2DStart);
+			Errors::check(Errors::Uniform1f);
+		}
+		if (_info->getType() == UniformType::SamplerCube)
+		{
+			int samplerIndex = _valueContainer->getSamplerIndex();
+			glUniform1i(_parameterHandler, samplerIndex + GraphicsConstants::SamplersCubeStart);
 			Errors::check(Errors::Uniform1f);
 		}
 	}

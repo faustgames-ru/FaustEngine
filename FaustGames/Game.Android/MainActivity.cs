@@ -62,8 +62,8 @@ namespace Game.Android
                 _prepareCount++;
             }
 
-            Title = string.Format("{1:0.00}({0:0.00})", 1000.0f / Renderer.DTime, _sum / _count);
-            Title = string.Format("{1:0.00}({0:0.00})", 1000.0f / Renderer.PrepareTime, _prepareSum / _prepareCount);
+            Title = string.Format("fps = {0:0.00}(av = {1:0.00}) drawcalls = {2:0.00} prepare = {3:0.00}ms)", 1000.0f/Renderer.DTime,
+                _sum / _count, Renderer.DrawCalls, Renderer.PrepareTime);
             h.PostDelayed(Update, 100);
         }
 

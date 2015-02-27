@@ -31,6 +31,12 @@
     <Filter Include="tests">
       <UniqueIdentifier>{9c9f313c-e410-404b-a480-b181a9aebd38}</UniqueIdentifier>
     </Filter>
+    <Filter Include="entities\filters">
+      <UniqueIdentifier>{2c452ae7-9581-4b68-9a9d-6936cbc72ef1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="drawing">
+      <UniqueIdentifier>{7d13e806-eaac-4e8e-87f1-7ccd1ae30387}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\CommonSources\include\llge.h">
@@ -260,6 +266,84 @@
     <ClInclude Include="..\src\core\HollowsAllocationPolicy.h">
       <Filter>core</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\entities\Entity.h">
+      <Filter>entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\entities\Component.h">
+      <Filter>entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\entities\EntitiesWorld.h">
+      <Filter>entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\entities\System.h">
+      <Filter>entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\entities\EntitiesFilter.h">
+      <Filter>entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\entities\DummyEntitiesFilter.h">
+      <Filter>entities\filters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\entities\QuadtreeEntitiesFilter.h">
+      <Filter>entities\filters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\entities\Aabb2dComponent.h">
+      <Filter>entities\components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\entities\RenderSystem2d.h">
+      <Filter>entities\systems</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\entities\Transform2dComponent.h">
+      <Filter>entities\components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\entities\TransformSystem2d.h">
+      <Filter>entities\systems</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\drawing\drawing_platform.h">
+      <Filter>drawing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\drawing\drawing_references.h">
+      <Filter>drawing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\drawing\drawing_classes.h">
+      <Filter>drawing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\drawing\Renderer2d.h">
+      <Filter>drawing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\drawing\RenderItem2d.h">
+      <Filter>drawing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\drawing\RenderMesh2d.h">
+      <Filter>drawing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\entities\Render2dComponent.h">
+      <Filter>entities\components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\entities\entities.h">
+      <Filter>entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\drawing\Camera.h">
+      <Filter>drawing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\drawing\WaterRenderer.h">
+      <Filter>drawing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\TextureCubemap.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\UniformValueCubemap.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shaders\water_frag.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shaders\water_vert.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\EffectWater.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\CommonSources\gen\llgePInvoke.cpp">
@@ -389,6 +473,69 @@
     </ClCompile>
     <ClCompile Include="..\src\core\HollowsAllocationPolicy.cpp">
       <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\entities\Entity.cpp">
+      <Filter>entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\entities\Component.cpp">
+      <Filter>entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\entities\EntitiesWorld.cpp">
+      <Filter>entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\entities\System.cpp">
+      <Filter>entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\entities\EntitiesFilter.cpp">
+      <Filter>entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\entities\DummyEntitiesFilter.cpp">
+      <Filter>entities\filters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\entities\QuadtreeEntitiesFilter.cpp">
+      <Filter>entities\filters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\entities\Aabb2dComponent.cpp">
+      <Filter>entities\components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\entities\RenderSystem2d.cpp">
+      <Filter>entities\systems</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\entities\Transform2dComponent.cpp">
+      <Filter>entities\components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\entities\TransformSystem2d.cpp">
+      <Filter>entities\systems</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\drawing\Renderer2d.cpp">
+      <Filter>drawing</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\drawing\RenderItem2d.cpp">
+      <Filter>drawing</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\drawing\RenderMesh2d.cpp">
+      <Filter>drawing</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\entities\Render2dComponent.cpp">
+      <Filter>entities\components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\exports\llgeEntities.cpp">
+      <Filter>exports</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\drawing\Camera.cpp">
+      <Filter>drawing</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\drawing\WaterRenderer.cpp">
+      <Filter>drawing</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\TextureCubemap.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\UniformValueCubemap.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\EffectWater.cpp">
+      <Filter>graphics</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

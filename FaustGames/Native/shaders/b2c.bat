@@ -6,3 +6,5 @@ bin2c -o texture_color_frag.h shader_texture_color.frag
 bin2c -o texture_color_vert.h shader_texture_color.vert
 bin2c -o texture_lightmap_color_frag.h shader_texture_lightmap_color.frag
 bin2c -o texture_lightmap_color_vert.h shader_texture_lightmap_color.vert
+bin2c -o water_frag.h shader_water.frag
+bin2c -o water_vert.h shader_water.vert

@@ -2,7 +2,7 @@
 #define ALLOCATION_POLICY_H
 
 #include <memory>
-#include <unordered_map>
+#include <hash_map>
 
 namespace core
 {
@@ -303,7 +303,7 @@ namespace core
 	class LargeBlocksContainer
 	{
 	public:
-		typedef std::unordered_map<std::size_t, HolowsAllocationBlocks *> SizeMap;
+		typedef std::hash_map<std::size_t, HolowsAllocationBlocks *> SizeMap;
 		LargeBlocksContainer()
 		{
 		}

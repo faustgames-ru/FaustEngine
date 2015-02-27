@@ -5,4 +5,5 @@
 #include "RenderState.h"
 #include "Uniforms.h"
 #include "TextureImage2d.h"
+#include "TextureCubemap.h"
 #include "VertexFormats.h"

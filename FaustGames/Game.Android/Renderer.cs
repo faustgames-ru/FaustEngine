@@ -1,44 +1,32 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-
-using Android.App;
-using Android.Content;
 using Android.Graphics;
-using Android.OS;
-using Android.Runtime;
-using Android.Util;
 using Android.Views;
-using Android.Widget;
 using llge;
-using OpenTK.Input;
 using Environment = Android.OS.Environment;
 
 namespace Game.Android
 {
     public class Renderer
     {
-        private GraphicsFactory _factory;
-        private GraphicsFacade _graphics;
-        private readonly GeometryFactory _geometryFactory;
-        private readonly QuadTree _quadTree;
+        private EntitiesFactory _entitiesFactory;
+        private EntitiesWorld _entitiesWorld;
+
+        private GraphicsFactory _graphicsFactory;
+        private GraphicsFacade _graphicsFacade;
+        
         private List<MeshExportData> _data = new List<MeshExportData>();
         private readonly List<string> _images = new List<string>();
         private readonly Dictionary<int, Texture> _textures = new Dictionary<int, Texture>();
-        private readonly Dictionary<int, MeshLayer> _layers = new Dictionary<int, MeshLayer>();
-        private List<MeshLayer> _layersList = new List<MeshLayer>();
         private string _dataPath;
-        private readonly Texture _texture;
         public Renderer()
         {
-            _factory = llge.llge.CreateGraphicsFactory();
-            _graphics = _factory.CreateGraphicsFacade();
-            _geometryFactory = llge.llge.CreateGeometryFactory();
-            _quadTree = _geometryFactory.CreateQuadTree();
+            _entitiesFactory = llge.llge.CreateEntitiesFactory();
+            _entitiesWorld = _entitiesFactory.CreateEntitiesWorld();
+            _graphicsFactory = llge.llge.CreateGraphicsFactory();
+            _graphicsFacade = _graphicsFactory.CreateGraphicsFacade();
 
             var path = Environment.ExternalStorageDirectory.AbsolutePath;
             var dataPath = _dataPath = System.IO.Path.Combine(path, "test_data");
@@ -101,26 +89,26 @@ namespace Game.Android
                     {
                         mesh.Indices[i] = reader.ReadUInt16();
                     }
-                    var layerIndex = (int) (mesh.Z*1000);
-                    if (!_layers.ContainsKey(layerIndex))
-                        _layers.Add(layerIndex, new MeshLayer(layerIndex));
-                    _layers[layerIndex].Data.Add(mesh);
-                    _quadTree.Insert(minX, minY, maxX, maxY, j);
+
+                    mesh.MinX = minX;
+                    mesh.MaxX = maxX;
+                    mesh.MinY = minY;
+                    mesh.MaxY = maxY;
                 }
             }
-            _layersList = _layers.Values.OrderByDescending(l => l.LayerIndex).ToList();
-            foreach (var layer in _layersList)
-            {
-                layer.Build();
-            }
-
-            _texture = _graphics.CreateTexture();
             for (var i = 0; i < _images.Count; i++)
             {
-                var texture = _graphics.CreateTexture();
+                var texture = _graphicsFacade.CreateTexture();
                 _textures.Add(i, texture);
             }
-
+            for (var i = 0; i < _data.Count; i++)
+            {
+                var mesh = _data[i];
+                var meshEntity = _entitiesWorld.CreateMesh2d();
+                meshEntity.SetBounds(mesh.MinX, mesh.MinY, mesh.MaxX, mesh.MaxY, -mesh.Z);
+                meshEntity.AddToWorld();
+                mesh.Entity = meshEntity;
+            }
         }
 
         private int _w;
@@ -130,17 +118,8 @@ namespace Game.Android
 
         public void Create()
         {
-            _graphics.Create();
-            _graphics.SetClearState(0x7784ff, 1.0f);
-
-            _texture.Create();
-            _texture.LoadPixels(2, 2, new uint[]
-            {
-                0xffffffff,
-                0xff0000ff,
-                0xff0000ff,
-                0xffffffff,
-            });
+            _graphicsFacade.Create();
+            _graphicsFacade.SetClearState(0x7784ff, 1.0f);
 
             if (!Directory.Exists(_dataPath)) return;
 
@@ -153,15 +132,18 @@ namespace Game.Android
                 {
                     var width = bmp.Width;
                     var height = bmp.Height;
-
-                    var pixels = new int[width*height];
+                    while (width > 512)
+                        width /= 2;
+                    while (height > 512)
+                        height /= 2;
+                    var pixels = new int[width * height];
                     if ((width != bmp.Width) || (height != bmp.Height))
                     {
                         using (var imagePadded = Bitmap.CreateBitmap(width, height, Bitmap.Config.Argb8888))
                         {
                             var canvas = new Canvas(imagePadded);
                             canvas.DrawARGB(0, 0, 0, 0);
-                            canvas.DrawBitmap(bmp, 0, 0, null);
+                            canvas.DrawBitmap(bmp, new Rect(0, 0, bmp.Width, bmp.Height), new Rect(0, 0, width, height), null);
                             imagePadded.GetPixels(pixels, 0, width, 0, 0, width, height);
                             imagePadded.Recycle();
                         }
@@ -192,6 +174,14 @@ namespace Game.Android
                     texture.Value.LoadPixels(width, height, pixels);
                 }
             }
+
+            for (var i = 0; i < _data.Count; i++)
+            {
+                var mesh = _data[i];
+                var meshEntity = mesh.Entity;
+                meshEntity.SetMesh(_textures[mesh.TextureId], mesh.Vertices, mesh.Indices);
+            }
+
         }
 
         private float _x = 0;
@@ -200,6 +190,7 @@ namespace Game.Android
 
         private long _time;
         public static long DTime ;
+        public static long DrawCalls;
         public void Render(int w, int h)
         {
             var time = System.Environment.TickCount;
@@ -209,104 +200,19 @@ namespace Game.Android
             _w = w;
             _h = h;
 
-            //var watch = Stopwatch.StartNew();
-            _quadTree.Query(_x - 1000, _y - 1000, _x + 1000, _y + 1000);
-            //watch.Stop();
-            //Log.Debug("FrameTime", "query:" +watch.ElapsedMilliseconds);
-            //watch = Stopwatch.StartNew();
-            var count = _quadTree.GetQueryResultsCount();
-            _quadTree.GetQueryResults(_queryResult);
+            _graphicsFacade.Viewport(w, h);
 
-            //var drawList = new List<MeshExportData>();
-            _layers.Clear();
-            for (int i = 0; i < count; i++)
-            {
-                var id = _queryResult[i];
-                var data = _data[id];
-                var z = (int) (data.Z*1000);
-                if (!_layers.ContainsKey(z))
-                    _layers.Add(z, new MeshLayer(z));
-                _layers[z].Data.Add(data);
-                //drawList.Add(data);
-            }
-            _layersList = _layers.Values.OrderByDescending(l => l.LayerIndex).ToList();
-            foreach (var layer in _layersList)
-            {
-                layer.Build();
-            }
-
-            //drawList = drawList.OrderByDescending(d => d.Z).ToList();
-            //watch.Stop();
-            //Log.Debug("FrameTime", "prepare:" + watch.ElapsedMilliseconds);
-
-            //watch = Stopwatch.StartNew();
-            _graphics.Viewport(w, h);
-
-            _graphics.Clear();
             const float zoom = 0.001f;
-            _graphics.GetUniforms().SetProjection(new float[]
+            _entitiesWorld.SetRenderBounds(_x - 1000, _y - 600, _x + 1000, _y + 600);
+            _entitiesWorld.SetProjection(new float[]
             {
                 zoom, 0, 0, 0,
                 0, zoom*_w/_h, 0, 0,
                 0, 0, 1, 0,
                 -_x * zoom, -_y * zoom*_w/_h, -_z, 1,
             });
-            var calls = 0;
-            _graphics.GetUniforms().SetLightMap(_texture);
-            foreach (var l in _layersList)
-            {
-                foreach (var b in l.Blocks)
-                {
-                    _graphics.GetUniforms().SetTexture(_textures[b.Value.TextureId]);
-                    _graphics.Draw(
-                        b.Value.Vertices,
-                        b.Value.Indices,
-                        b.Value.Indices.Length / 3);
-                    calls++;
-                }
-            }
 
-            /*
-            foreach (var data in drawList)
-            {
-                _graphics.GetUniforms().GetTextureUniform().SetTexture(_textures[data.TextureId]);
-
-                _graphics.Draw(
-                    data.Vertices,
-                    data.Indices,
-                    data.Indices.Length / 3);
-            }
-            */
-            //watch.Stop();
-            //Log.Debug("FrameTime", "render:" + watch.ElapsedMilliseconds);
-
-            /*
-            var calls = 0;
-            foreach (var l in _layersList)
-            {
-                foreach (var b in l.Blocks)
-                {
-                    _graphics.GetUniforms().GetTextureUniform().SetTexture(_textures[b.Value.TextureId]);
-                    _graphics.Draw(
-                        b.Value.Vertices,
-                        b.Value.Indices,
-                        b.Value.Indices.Length / 3);
-                    calls++;
-                }
-            }
-            */
-            /*
-            foreach (var data in _data)
-            {
-                _graphics.GetUniforms().GetTextureUniform().SetTexture(_textures[data.TextureId]);
-
-                _graphics.Draw(
-                    data.Vertices,
-                    data.Indices,
-                    data.Indices.Length / 3);
-            }
-             */
-            //Log.Debug("FrameTime", (System.Environment.TickCount - time).ToString());
+            DrawCalls = _entitiesWorld.Update(0);
             PrepareTime = System.Environment.TickCount - time;
         }
 
@@ -502,6 +408,34 @@ namespace Game.Android
         public int TextureId;
         public MeshExportVertex[] Vertices;
         public ushort[] Indices;
+
+        public Entity Entity;
+        public float MinX;
+        public float MinY;
+        public float MaxX;
+        public float MaxY;
+
+    }
+    public static class EntityExtension
+    {
+        public unsafe static void SetMesh(this Entity entity, Texture texture, MeshExportVertex[] vertices, ushort[] indices)
+        {
+            fixed (MeshExportVertex* pointerVertices = vertices)
+            fixed (ushort* pointerIndices = indices)
+            {
+                entity.SetMesh(texture, new IntPtr(pointerVertices), vertices.Length, new IntPtr(pointerIndices), indices.Length);
+            }
+        }
     }
 
+    public static class EntitiesWorldExtension
+    {
+        public static unsafe void SetProjection(this EntitiesWorld facade, float[] value)
+        {
+            fixed (float* pointer = value)
+            {
+                facade.SetProjection(new IntPtr(pointer));
+            }
+        }
+    }
 }

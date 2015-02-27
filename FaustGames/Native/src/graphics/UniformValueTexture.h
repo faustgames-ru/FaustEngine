@@ -18,7 +18,7 @@ namespace graphics
 	protected:
 	private:
 		static int _samplerCounter;
-		static core::StaticArray<UniformValueTexture*, 32> _samplers;
+		static core::StaticArray<UniformValueTexture*, GraphicsConstants::Samplers2DLimit> _samplers;
 		GLuint _value;
 		bool _equal;
 		int _samplerIndex;

@@ -21,12 +21,15 @@ namespace llge
 	{
 		EffectTextureColor = 0x0,
 		EffectTextureLightmapColor = 0x1,
+		EffectWater = 0x2,
+		EffectSolid = 0x3,
 	};
 
 	enum GraphicsVertexFormats
 	{
 		FormatPositionTextureColor = 0x0,
 		FormatPositionNormal = 0x1,
+		FormatPositionTexture = 0x2,
 	};
 		
 	enum CubemapPlane
@@ -66,7 +69,9 @@ namespace llge
 	class IUniformsFacade
 	{
 	public:
-		virtual void API_CALL setEnvironment(ICubemap *cubemap) = 0;
+		virtual void API_CALL setTime(float value) = 0;
+		virtual void API_CALL setNormalmap(ITexture *texture) = 0;
+		virtual void API_CALL setEnvironment(ITexture *cubemap) = 0;
 		virtual void API_CALL setTexture(ITexture *texture) = 0;
 		virtual void API_CALL setLightMap(ITexture *texture) = 0;
 		virtual void API_CALL setProjection(void *floatMatrix) = 0;
@@ -95,6 +100,7 @@ namespace llge
 		virtual void API_CALL clear() = 0;
 		virtual void API_CALL draw(GraphicsEffects effect, GraphicsVertexFormats vertexFormat, void *vertices, void *indices, int primitivesCount) = 0;
 		virtual void API_CALL drawVertexBuffer(GraphicsEffects effect, GraphicsVertexFormats vertexFormat, IVertexBuffer *vertexBuffer, void *indices, int primitivesCount) = 0;
+		virtual void API_CALL setEffectConstantFloat(GraphicsEffects effect, char *name, float value) = 0;
 
 		virtual void API_CALL create() = 0;
 		virtual void API_CALL cleanup() = 0;

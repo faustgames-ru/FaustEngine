@@ -17,6 +17,7 @@ namespace drawing
 		_graphicsDevice->renderState.setDepth(graphics::DepthState::None);
 		_graphicsDevice->renderState.setEffect(graphics::Effects::textureColor());
 		_projectionContainer.setValue(Camera.getMatrix().getData());
+		graphics::UniformValues::cameraPosition()->setValue(Camera.getPosition());
 		graphics::UniformValues::projection()->setValue(_projectionContainer);
 
 		_verticesCount = 0;

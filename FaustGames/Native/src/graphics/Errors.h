@@ -53,7 +53,8 @@ namespace graphics
 			DeleteBuffers = 40,
 			BindBuffer = 41,
 			BufferData = 42,
-			EnumSize = 43,
+			Uniform3f = 43,
+			EnumSize = 44,
 		};
 
 		static std::string _names[EnumSize];

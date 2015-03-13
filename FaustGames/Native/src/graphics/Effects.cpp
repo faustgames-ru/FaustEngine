@@ -10,7 +10,7 @@ namespace graphics
 	EffectSolidColor Effects::_solidColor;
 	EffectTextureColor Effects::_textureColor;
 	EffectTextureLightMapColor Effects::_textureLightmapColor;
-
+	EffectWater Effects::_water;
 
 	void Effects::create()
 	{
@@ -18,6 +18,7 @@ namespace graphics
 		_solidColor.create();
 		_textureColor.create();
 		_textureLightmapColor.create();
+		_water.create();
 	}
 
 	void Effects::cleanup()
@@ -26,6 +27,7 @@ namespace graphics
 		_solidColor.getEffect()->cleanup();
 		_textureColor.getEffect()->cleanup();
 		_textureLightmapColor.getEffect()->cleanup();
+		_water.getEffect()->cleanup();
 	}
 
 	EffectSolid * Effects::solid()
@@ -47,5 +49,11 @@ namespace graphics
 	{
 		return &_textureLightmapColor;
 	}
+
+	EffectWater * Effects::water()
+	{
+		return &_water;
+	}
+
 
 }

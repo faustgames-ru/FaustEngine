@@ -56,7 +56,17 @@ namespace llge
 		classInstance->dispose();
 	}
 	
-	extern "C" DLLEXPORT void API_CALL llge_UniformsFacade_setEnvironment (IUniformsFacade * classInstance, ICubemap * cubemap)
+	extern "C" DLLEXPORT void API_CALL llge_UniformsFacade_setTime (IUniformsFacade * classInstance, float value)
+	{
+		classInstance->setTime(value);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_UniformsFacade_setNormalmap (IUniformsFacade * classInstance, ITexture * texture)
+	{
+		classInstance->setNormalmap(texture);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_UniformsFacade_setEnvironment (IUniformsFacade * classInstance, ITexture * cubemap)
 	{
 		classInstance->setEnvironment(cubemap);
 	}
@@ -144,6 +154,11 @@ namespace llge
 	extern "C" DLLEXPORT void API_CALL llge_GraphicsFacade_drawVertexBuffer (IGraphicsFacade * classInstance, GraphicsEffects effect, GraphicsVertexFormats vertexFormat, IVertexBuffer * vertexBuffer, void * indices, int primitivesCount)
 	{
 		classInstance->drawVertexBuffer(effect, vertexFormat, vertexBuffer, indices, primitivesCount);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_GraphicsFacade_setEffectConstantFloat (IGraphicsFacade * classInstance, GraphicsEffects effect, char * name, float value)
+	{
+		classInstance->setEffectConstantFloat(effect, name, value);
 	}
 	
 	extern "C" DLLEXPORT void API_CALL llge_GraphicsFacade_create (IGraphicsFacade * classInstance)

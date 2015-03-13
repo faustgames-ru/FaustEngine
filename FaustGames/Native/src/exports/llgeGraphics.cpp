@@ -100,7 +100,18 @@ namespace llge
 	{
 	public:
 		MatrixContainer Projection;
-		virtual void API_CALL setEnvironment(ICubemap *cubemap)
+
+		virtual void API_CALL setTime(float value)
+		{
+			UniformValues::time()->setValue(value);
+		}
+
+		virtual void API_CALL setNormalmap(ITexture *texture)
+		{
+			UniformValues::normalmap()->setValue(texture->getId());
+		}
+
+		virtual void API_CALL setEnvironment(ITexture *cubemap)
 		{
 			UniformValues::environment()->setValue(cubemap->getId());
 		}
@@ -168,15 +179,25 @@ namespace llge
 
 			effects[EffectTextureColor] = Effects::textureColor();
 			effects[EffectTextureLightmapColor] = Effects::textureLightmapColor();
+			effects[EffectWater] = Effects::water();
+			effects[EffectSolid] = Effects::solid();
 
 			formats[FormatPositionTextureColor] = VertexFormats::positionTextureColor();
 			formats[FormatPositionNormal] = VertexFormats::positionNormal();
+			formats[FormatPositionTexture] = VertexFormats::positionTexture();
 		}
 
 		~GraphicsFacade()
 		{
 			delete uniformsFacade;
 		}
+
+		virtual void API_CALL setEffectConstantFloat(GraphicsEffects effect, char *name, float value)
+		{
+			EffectConstant* constant = effects[effect]->getEffect()->findConstant(name);
+			constant->setFloat(value);
+		}
+
 
 		virtual IUniformsFacade * API_CALL getUniforms()
 		{

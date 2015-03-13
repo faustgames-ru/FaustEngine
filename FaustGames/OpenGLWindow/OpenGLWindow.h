@@ -13,7 +13,7 @@ namespace OpenGLWindow {
 	public ref class OGLWindow : public System::Windows::Forms::NativeWindow
 	{
 	public:
-		OGLWindow(System::Windows::Forms::Form ^ parentForm, int iWidth, int iHeight)
+		OGLWindow(System::Windows::Forms::Control ^ parentForm, int iWidth, int iHeight)
 		{
 			CreateParams^ cp = gcnew CreateParams;
 

@@ -50,10 +50,10 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;LLGE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;LLGE_EXPORTS;LIBPNG_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <AdditionalIncludeDirectories>..\include;..\..\CommonSources\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\include;..\..\CommonSources\include;..\src\resources\zlib</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -142,6 +142,7 @@
     <ClInclude Include="..\src\graphics\Color.h" />
     <ClInclude Include="..\src\graphics\Effect.h" />
     <ClInclude Include="..\src\graphics\EffectBase.h" />
+    <ClInclude Include="..\src\graphics\EffectConstant.h" />
     <ClInclude Include="..\src\graphics\Effects.h" />
     <ClInclude Include="..\src\graphics\EffectSolid.h" />
     <ClInclude Include="..\src\graphics\EffectSolidColor.h" />
@@ -172,12 +173,37 @@
     <ClInclude Include="..\src\graphics\UniformValueFloat.h" />
     <ClInclude Include="..\src\graphics\UniformValueMatrix.h" />
     <ClInclude Include="..\src\graphics\UniformValueTexture.h" />
+    <ClInclude Include="..\src\graphics\UniformValueVector3.h" />
     <ClInclude Include="..\src\graphics\VertexBuffer.h" />
     <ClInclude Include="..\src\graphics\VertexFormat.h" />
     <ClInclude Include="..\src\graphics\VertexFormatPosition.h" />
     <ClInclude Include="..\src\graphics\VertexFormatPositionColor.h" />
     <ClInclude Include="..\src\graphics\VertexFormatPositionTextureColor.h" />
     <ClInclude Include="..\src\graphics\VertexFormats.h" />
+    <ClInclude Include="..\src\resources\ContentManager.h" />
+    <ClInclude Include="..\src\resources\ContentProvider.h" />
+    <ClInclude Include="..\src\resources\lpng\png.h" />
+    <ClInclude Include="..\src\resources\lpng\pngconf.h" />
+    <ClInclude Include="..\src\resources\lpng\pngdebug.h" />
+    <ClInclude Include="..\src\resources\lpng\pnginfo.h" />
+    <ClInclude Include="..\src\resources\lpng\pnglibconf.h" />
+    <ClInclude Include="..\src\resources\lpng\pngpriv.h" />
+    <ClInclude Include="..\src\resources\lpng\pngstruct.h" />
+    <ClInclude Include="..\src\resources\resources.h" />
+    <ClInclude Include="..\src\resources\resources_classes.h" />
+    <ClInclude Include="..\src\resources\resources_platform.h" />
+    <ClInclude Include="..\src\resources\resources_references.h" />
+    <ClInclude Include="..\src\resources\zlib\crc32.h" />
+    <ClInclude Include="..\src\resources\zlib\deflate.h" />
+    <ClInclude Include="..\src\resources\zlib\gzguts.h" />
+    <ClInclude Include="..\src\resources\zlib\inffast.h" />
+    <ClInclude Include="..\src\resources\zlib\inffixed.h" />
+    <ClInclude Include="..\src\resources\zlib\inflate.h" />
+    <ClInclude Include="..\src\resources\zlib\inftrees.h" />
+    <ClInclude Include="..\src\resources\zlib\trees.h" />
+    <ClInclude Include="..\src\resources\zlib\zconf.h" />
+    <ClInclude Include="..\src\resources\zlib\zlib.h" />
+    <ClInclude Include="..\src\resources\zlib\zutil.h" />
     <ClInclude Include="..\src\tests\TestStandartAllocations.h" />
     <ClInclude Include="..\src\tests\tests_classes.h" />
     <ClInclude Include="..\src\tests\tests_platform.h" />
@@ -225,6 +251,7 @@
     <ClCompile Include="..\src\graphics\Color.cpp" />
     <ClCompile Include="..\src\graphics\Effect.cpp" />
     <ClCompile Include="..\src\graphics\EffectBase.cpp" />
+    <ClCompile Include="..\src\graphics\EffectConstant.cpp" />
     <ClCompile Include="..\src\graphics\Effects.cpp" />
     <ClCompile Include="..\src\graphics\EffectSolid.cpp" />
     <ClCompile Include="..\src\graphics\EffectSolidColor.cpp" />
@@ -249,9 +276,44 @@
     <ClCompile Include="..\src\graphics\UniformValueFloat.cpp" />
     <ClCompile Include="..\src\graphics\UniformValueMatrix.cpp" />
     <ClCompile Include="..\src\graphics\UniformValueTexture.cpp" />
+    <ClCompile Include="..\src\graphics\UniformValueVector3.cpp" />
     <ClCompile Include="..\src\graphics\VertexBuffer.cpp" />
     <ClCompile Include="..\src\graphics\VertexFormat.cpp" />
     <ClCompile Include="..\src\graphics\VertexFormats.cpp" />
+    <ClCompile Include="..\src\resources\ContentManager.cpp" />
+    <ClCompile Include="..\src\resources\ContentProviderWindows.cpp" />
+    <ClCompile Include="..\src\resources\lpng\example.c" />
+    <ClCompile Include="..\src\resources\lpng\png.c" />
+    <ClCompile Include="..\src\resources\lpng\pngerror.c" />
+    <ClCompile Include="..\src\resources\lpng\pngget.c" />
+    <ClCompile Include="..\src\resources\lpng\pngmem.c" />
+    <ClCompile Include="..\src\resources\lpng\pngpread.c" />
+    <ClCompile Include="..\src\resources\lpng\pngread.c" />
+    <ClCompile Include="..\src\resources\lpng\pngrio.c" />
+    <ClCompile Include="..\src\resources\lpng\pngrtran.c" />
+    <ClCompile Include="..\src\resources\lpng\pngrutil.c" />
+    <ClCompile Include="..\src\resources\lpng\pngset.c" />
+    <ClCompile Include="..\src\resources\lpng\pngtest.c" />
+    <ClCompile Include="..\src\resources\lpng\pngtrans.c" />
+    <ClCompile Include="..\src\resources\lpng\pngwio.c" />
+    <ClCompile Include="..\src\resources\lpng\pngwrite.c" />
+    <ClCompile Include="..\src\resources\lpng\pngwtran.c" />
+    <ClCompile Include="..\src\resources\lpng\pngwutil.c" />
+    <ClCompile Include="..\src\resources\zlib\adler32.c" />
+    <ClCompile Include="..\src\resources\zlib\compress.c" />
+    <ClCompile Include="..\src\resources\zlib\crc32.c" />
+    <ClCompile Include="..\src\resources\zlib\deflate.c" />
+    <ClCompile Include="..\src\resources\zlib\gzclose.c" />
+    <ClCompile Include="..\src\resources\zlib\gzlib.c" />
+    <ClCompile Include="..\src\resources\zlib\gzread.c" />
+    <ClCompile Include="..\src\resources\zlib\gzwrite.c" />
+    <ClCompile Include="..\src\resources\zlib\infback.c" />
+    <ClCompile Include="..\src\resources\zlib\inffast.c" />
+    <ClCompile Include="..\src\resources\zlib\inflate.c" />
+    <ClCompile Include="..\src\resources\zlib\inftrees.c" />
+    <ClCompile Include="..\src\resources\zlib\trees.c" />
+    <ClCompile Include="..\src\resources\zlib\uncompr.c" />
+    <ClCompile Include="..\src\resources\zlib\zutil.c" />
     <ClCompile Include="..\src\tests\TestStandartAllocations.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="stdafx.cpp" />

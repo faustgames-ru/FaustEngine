@@ -1,6 +1,3 @@
-﻿  Stdafx.cpp
-  AssemblyInfo.cpp
-  OpenGLWindow.cpp
-  Generating Code...
+﻿  OpenGLWindow.cpp
   .NETFramework,Version=v4.5.AssemblyAttributes.cpp
   OpenGLWindow.vcxproj -> C:\_faust\FaustEngine\FaustGames\Debug\OpenGLWindow.dll

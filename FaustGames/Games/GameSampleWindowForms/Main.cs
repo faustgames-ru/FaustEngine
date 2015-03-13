@@ -10,6 +10,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using GameSampleWindowForms.Properties;
 using llge;
 using OpenGLWindow;
 
@@ -33,20 +34,30 @@ namespace GameSampleWindowForms
         private readonly Dictionary<int, MeshLayer> _layers = new Dictionary<int, MeshLayer>();
         private List<MeshLayer> _layersList = new List<MeshLayer>();
         private List<Entity> Entities;
+        private Texture _env;
+        private Texture _nrm;
 
-        private float _x;
-        private float _y;
-        private float _z;
+        private WaterVertex[] _waterPlane;
+        private ushort[] _waterIndices;
+
+        private float _x = 0;
+        private float _y = 500;
+        private float _z = 0;
 
         private const float Fov = (float)Math.PI *0.5f;
-        
+        private const float waterMinX = -20000;
+        private const float waterMaxX = 20000;
+        private const float waterMinZ = -1000;
+        private const float waterMaxZ = 20000;
+        private const float waterStepX = 1000;
+        private const float waterStepZ = 1000;
         public Main()
         {
            
             InitializeComponent();
             if (components == null)
                 components = new Container();
-            _oglWindow = new OGLWindow(this, ClientSize.Width, ClientSize.Height);
+            _oglWindow = new OGLWindow(_renderRegion, _renderRegion.ClientSize.Width, _renderRegion.ClientSize.Height);
             components.Add(new DisposableContainerComponent(_oglWindow));
 
             _entitiesFactory = llge.llge.CreateEntitiesFactory();
@@ -68,15 +79,7 @@ namespace GameSampleWindowForms
                 for (var j = 0; j < count; j++)
                 {
                     var mesh = new MeshExportData();
-                    _data.Add(mesh);
                     var imageFile = reader.ReadString();
-                    var index = _images.IndexOf(imageFile);
-                    if (index < 0)
-                    {
-                        index = _images.Count;
-                        _images.Add(imageFile);
-                    }
-                    mesh.TextureId = index;
                     var verticesCount = reader.ReadInt32();
                     var indicesCount = reader.ReadInt32();
                     mesh.Vertices = new MeshExportVertex[verticesCount];
@@ -142,6 +145,19 @@ namespace GameSampleWindowForms
                     mesh.MaxX = maxX + dsizeX;
                     mesh.MinY = minY - dsizeY;
                     mesh.MaxY = maxY + dsizeY;
+
+                    if (mesh.Z > 500)
+                    {
+                        var index = _images.IndexOf(imageFile);
+                        if (index < 0)
+                        {
+                            index = _images.Count;
+                            _images.Add(imageFile);
+                        }
+                        mesh.TextureId = index;
+                        _data.Add(mesh);
+                    }
+
                     // correntBoundsWithZ;
                 }
             }
@@ -149,6 +165,9 @@ namespace GameSampleWindowForms
             for (var i = 0; i < _images.Count; i++)
             {
                 var image = _images[i];
+                var texture = CreateTexture(image);
+                _textures.Add(i, texture);
+                /*
                 using (var bmp = new Bitmap(Path.Combine("D:\\", image + ".png")))
                 {
 
@@ -161,7 +180,34 @@ namespace GameSampleWindowForms
                     _textures.Add(i, texture);
                     bmp.UnlockBits(data);
                 }
+                 */ 
             }
+            _env = CreateTexture("skybox_fragment");
+            _nrm = CreateTexture("water_nrm");
+            var waterGrid = new List<WaterVertex>();
+            var waterIndices = new List<ushort>();
+            for (var x = waterMinX + waterStepX; x <= waterMaxX; x += waterStepX)
+            {
+                var px = x - waterStepX;
+                for (var z = waterMinZ + waterStepX; z <= waterMaxZ; z += waterStepZ)
+                {
+                    var pz = z - waterStepZ;
+                    var i = waterGrid.Count;
+                    waterGrid.Add(new WaterVertex(px, -1000, pz, 0, 0));
+                    waterGrid.Add(new WaterVertex(x, -1000, pz, ushort.MaxValue, 0));
+                    waterGrid.Add(new WaterVertex(x, -1000, z, ushort.MaxValue, ushort.MaxValue));
+                    waterGrid.Add(new WaterVertex(px, -1000, z, 0, ushort.MaxValue));
+                    
+                    waterIndices.AddRange(new[]
+                    {
+                        (ushort)(i+0), (ushort)(i+1), (ushort)(i+2),
+                        (ushort)(i+0), (ushort)(i+2), (ushort)(i+3),
+                    });
+                }
+            }
+
+            _waterPlane = waterGrid.ToArray();
+            _waterIndices = waterIndices.ToArray();
 
             for (var i = 0; i < _data.Count; i++)
             {
@@ -173,9 +219,28 @@ namespace GameSampleWindowForms
                 meshEntity.AddToWorld();
             }
 
-            _graphicsFacade.Viewport(ClientSize.Width, ClientSize.Height);
+            _graphicsFacade.Viewport(_renderRegion.ClientSize.Width, _renderRegion.ClientSize.Height);
             _graphicsFacade.SetClearState(0x7784ff, 1.0f);
+
+
+            _textureVelocity.Value = (int) (Settings.Default.textureVelocity*100);
+            _wavesVelocity.Value = (int) (Settings.Default.wavesVelocity*100);
+            _normalScaleZ.Value = (int) (Settings.Default.normalScaleZ*100);
+            _wavesScale.Value = (int) Settings.Default.wavesScale;
+            _envOffsetY.Value = (int)(Settings.Default.envOffsetY*100);
+            _envScaleY.Value = (int)(Settings.Default.envScaleY*100);
+
+            _x = Settings.Default.cameraPositionX;
+            _y = Settings.Default.cameraPositionY;
+
+            _graphicsFacade.SetEffectConstantFloat(GraphicsEffects.EffectWater, "textureVelocity", Settings.Default.textureVelocity);
+            _graphicsFacade.SetEffectConstantFloat(GraphicsEffects.EffectWater, "wavesVelocity", Settings.Default.wavesVelocity);
+            _graphicsFacade.SetEffectConstantFloat(GraphicsEffects.EffectWater, "wavesScale", Settings.Default.wavesScale);
+            _graphicsFacade.SetEffectConstantFloat(GraphicsEffects.EffectWater, "normalScaleZ", Settings.Default.normalScaleZ);
+            _graphicsFacade.SetEffectConstantFloat(GraphicsEffects.EffectWater, "envOffsetY", Settings.Default.envOffsetY);
+            _graphicsFacade.SetEffectConstantFloat(GraphicsEffects.EffectWater, "envScaleY", Settings.Default.envScaleY);
         }
+
 
         private Stopwatch _stopwatch;
         private float? _downMX;
@@ -187,34 +252,83 @@ namespace GameSampleWindowForms
 
         MeshBatch _batch = new MeshBatch();
 
+        private unsafe Texture  CreateTexture(string fileName)
+        {
+            using (var bmp = new Bitmap(Path.Combine("D:\\", fileName + ".png")))
+            {
+                var data = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height), ImageLockMode.ReadOnly,
+                    PixelFormat.Format32bppArgb);
+                var texture = _graphicsFacade.CreateTexture();
+                texture.Create();
+                components.Add(new DisposeActionContainerComponent(texture.Dispose));
+                var pixels = new uint[bmp.Width*bmp.Height];
+                var pixelsAdr = (uint*)data.Scan0.ToPointer();
+                for (var i = 0; i < pixels.Length; i++)
+                {
+                    var a = ((*pixelsAdr) >> 24) & 0xff;
+                    var r = ((*pixelsAdr) >> 16) & 0xff;
+                    var g = ((*pixelsAdr) >> 8) & 0xff;
+                    var b = ((*pixelsAdr) >> 0) & 0xff;
+                    pixels[i] = (a << 24) + (b << 16) + (g << 8) + r;
+                    pixelsAdr++;
+                }
+                fixed (uint* ptr = pixels)
+                {
+                    texture.LoadPixels(bmp.Width, bmp.Height, new IntPtr(ptr));
+                }
+                bmp.UnlockBits(data);
+                return texture;
+            }
+        }
+
+        private float _time = 0;
+
         private void DoUpdate()
         {
+            if (_stopwatch == null)
+            {
+                _stopwatch = Stopwatch.StartNew();
+            }
+            else
+            {
+                _stopwatch.Stop();
+                _time += (float)_stopwatch.Elapsed.TotalSeconds;
+                _stopwatch = Stopwatch.StartNew();
+            }
+
+
             var pos = MousePosition;
+            var contains = _renderRegion.ClientRectangle.Contains(_renderRegion.PointToClient(pos));
             var buttons = MouseButtons;
             if ((_prevButtons != MouseButtons.Left) && (buttons == MouseButtons.Left))
             {
-                Main_MouseDown(this, new MouseEventArgs(buttons, 0, pos.X, pos.Y, 0));
+                if (contains)
+                    Main_MouseDown(this, new MouseEventArgs(buttons, 0, pos.X, pos.Y, 0));
             }
-            Main_MouseMove(this, new MouseEventArgs(buttons, 0, pos.X, pos.Y, 0));
+
+            if (contains)
+                Main_MouseMove(this, new MouseEventArgs(buttons, 0, pos.X, pos.Y, 0));
             _prevButtons = buttons;
 
             const float zoom = 0.001f;
-
+            
             _entitiesWorld.SetRenderBounds(_x - 1300, _y - 700, _x + 1300, _y + 700);
-            _entitiesWorld.GetCamera().SetPosition(-_x, -_y, 800);
-            _entitiesWorld.GetCamera().SetAspect((float)Height/Width);
+            _entitiesWorld.GetCamera().SetPosition(_x, _y, -800);
+            _entitiesWorld.GetCamera().SetAspect((float)_renderRegion.Height / _renderRegion.Width);
             _entitiesWorld.GetCamera().SetPlanes(0.1f, 50000f);
-
+           
             Text = _entitiesWorld.Update(0).ToString(CultureInfo.InvariantCulture);
+
+            _graphicsFacade.GetUniforms().SetEnvironment(_env);
+            _graphicsFacade.GetUniforms().SetNormalmap(_nrm);
+            _graphicsFacade.GetUniforms().SetTime(_time);
+            
+            //_graphicsFacade.Clear();
+            _graphicsFacade.Draw(
+                _waterPlane,
+                _waterIndices,
+                _waterIndices.Length / 3);
             /*
-            _graphicsFacade.SetProjection(new float[]
-            {
-                zoom, 0, 0, 0,
-                0, zoom*Width/Height, 0, 0,
-                0, 0, 1, 0,
-                -_x * zoom, -_y * zoom*Width/Height, -_z, 1,
-            });
-            _graphicsFacade.Clear();
             foreach (var data in _data)
             {
                 _graphicsFacade.GetUniforms().SetTexture(_textures[data.TextureId]);
@@ -268,9 +382,54 @@ namespace GameSampleWindowForms
                     var offsetY = e.Y - _downMY.Value;
                     _x = _downX.Value + offsetX;
                     _y = _downY.Value - offsetY;
+                    Settings.Default.cameraPositionX = _x;
+                    Settings.Default.cameraPositionY = _y;
+                    Settings.Default.Save();
                 }
             }
 
+        }
+
+        private void _wavesScale_ValueChanged(object sender, EventArgs e)
+        {
+            _graphicsFacade.SetEffectConstantFloat(GraphicsEffects.EffectWater, "wavesScale",
+                Settings.Default.wavesScale = _wavesScale.Value);
+            Settings.Default.Save();
+        }
+
+        private void _textureVelocity_ValueChanged(object sender, EventArgs e)
+        {
+            _graphicsFacade.SetEffectConstantFloat(GraphicsEffects.EffectWater, "textureVelocity", 
+                Settings.Default.textureVelocity = (float)_textureVelocity.Value / 100);
+            Settings.Default.Save();
+        }
+
+        private void _wavesVelocity_ValueChanged(object sender, EventArgs e)
+        {
+            _graphicsFacade.SetEffectConstantFloat(GraphicsEffects.EffectWater, "wavesVelocity",
+                Settings.Default.wavesVelocity = (float)_wavesVelocity.Value / 100);
+            Settings.Default.Save();
+        }
+
+        private void _normalScaleZ_ValueChanged(object sender, EventArgs e)
+        {
+            _graphicsFacade.SetEffectConstantFloat(GraphicsEffects.EffectWater, "normalScaleZ",
+                Settings.Default.normalScaleZ = (float)_normalScaleZ.Value / 100);
+            Settings.Default.Save();
+        }
+
+        private void _envOffsetY_ValueChanged(object sender, EventArgs e)
+        {
+            _graphicsFacade.SetEffectConstantFloat(GraphicsEffects.EffectWater, "envOffsetY",
+                Settings.Default.envOffsetY = (float)_envOffsetY.Value / 100);
+            Settings.Default.Save();
+        }
+
+        private void _envScaleY_ValueChanged(object sender, EventArgs e)
+        {
+            _graphicsFacade.SetEffectConstantFloat(GraphicsEffects.EffectWater, "envScaleY",
+                Settings.Default.envScaleY = (float) _envScaleY.Value/100);
+            Settings.Default.Save();
         }
     }
 
@@ -313,6 +472,14 @@ namespace GameSampleWindowForms
 
     public static class VertexBufferExtension
     {
+        public unsafe static void SetData(this VertexBuffer buffer, WaterVertex[] vertices)
+        {
+            var pinnedArray = GCHandle.Alloc(vertices, GCHandleType.Pinned);
+            var pointer = pinnedArray.AddrOfPinnedObject();
+            buffer.SetData(pointer, vertices.Length * sizeof(MeshExportVertex));
+            pinnedArray.Free();
+        }
+        
         public unsafe static void SetData(this VertexBuffer buffer, MeshExportVertex[] vertices)
         {
             var pinnedArray = GCHandle.Alloc(vertices, GCHandleType.Pinned);
@@ -388,6 +555,22 @@ namespace GameSampleWindowForms
             }
         }
 
+        public static unsafe void Draw(this GraphicsFacade facade, WaterVertex[] vertices, ushort[] indices,
+            int primitivesCount)
+        {
+            fixed (WaterVertex* pointerVertices = vertices)
+            fixed (ushort* pointerIndiceas = indices)
+            {
+                facade.Draw(
+                    GraphicsEffects.EffectWater,
+                    GraphicsVertexFormats.FormatPositionTexture,
+                    new IntPtr(pointerVertices),
+                    new IntPtr(pointerIndiceas),
+                    primitivesCount
+                    );
+            }
+        }
+
         public unsafe static void Draw(this GraphicsFacade facade, MeshExportVertex[] vertices, ushort[] indices, int primitivesCount)
         {
             fixed (MeshExportVertex* pointerVertices = vertices)
@@ -416,6 +599,25 @@ namespace GameSampleWindowForms
             pinnedArrayVertices.Free();
             pinnedArrayIndices.Free();
             */ 
+        }
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct WaterVertex
+    {
+        public float X;
+        public float Y;
+        public float Z;
+        public ushort U;
+        public ushort V;
+
+        public WaterVertex(float x, float y, float z, ushort u, ushort v)
+        {
+            X = x;
+            Y = y;
+            Z = z;
+            U = u;
+            V = v;
         }
     }
 

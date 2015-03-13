@@ -69,5 +69,6 @@ namespace graphics
 		"DeleteBuffers",
 		"BindBuffer",
 		"BufferData",
+		"Uniform3f",
 	};
 }

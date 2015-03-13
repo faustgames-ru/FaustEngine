@@ -17,6 +17,12 @@ namespace graphics
 	{
 	}
 
+	Effect *Effect::addConstant(const char *name, UniformType::e type)
+	{
+		_constants.addEmpty()->init(name, type);
+		return this;
+	}
+
 	Effect *Effect::addUniform(UniformInfo *uniformInfo, UniformValue *uniformValue)
 	{
 		_uniforms.addEmpty()->init(uniformInfo, uniformValue);
@@ -148,6 +154,12 @@ namespace graphics
 		{
 			_uniforms.data[i].create(this);
 		}
+		for (int i = 0; i < _constants.count; i++)
+		{
+			_constants.data[i].create(this);
+		}
+
+		_constantsChanged = true;
 	}
 
 	void Effect::applyShader()
@@ -158,6 +170,14 @@ namespace graphics
 
 	void Effect::applyUniforms()
 	{
+		if (_constantsChanged)
+		{
+			for (int i = 0; i < _constants.count; i++)
+			{
+				_constants.data[i].apply();
+			}
+			_constantsChanged = false;
+		}
 		for (int i = 0; i < _uniforms.count; i++)
 		{
 			_uniforms.data[i].getValueContainer()->apply(&(_uniforms.data[i]));
@@ -216,5 +236,15 @@ namespace graphics
 			glVertexAttribPointer(location, format->ElementsCount, format->ElementType, format->Normalized, vertexFormat->getStride(), (char *)vertexData + format->Offset);
 			Errors::check(Errors::VertexAttribPointer);
 		}
+	}
+
+	EffectConstant * Effect::findConstant(const char *name)
+	{
+		for (int i = 0; i < _constants.count; i++)
+		{
+			if (_constants.data[i].nameEqualsTo(name))
+				return &(_constants.data[i]);
+		}
+		return 0;
 	}
 }

@@ -11,6 +11,16 @@ namespace graphics
 	{
 		Pixels = new unsigned int[Width * Height];
 	}
+
+	void Image2dData::realloc(int bufferSize)
+	{
+		if (Pixels)
+		{
+			delete[] Pixels;
+		}
+		Pixels = new unsigned int[bufferSize];
+	}
+
 	Image2dData::~Image2dData()
 	{
 		if (Pixels)

@@ -2,6 +2,7 @@
 #define VECTOR_H
 
 #include "core_classes.h"
+#include "Math.h"
 
 namespace core
 {
@@ -48,6 +49,13 @@ namespace core
 		inline void setX(float value){ _values[0] = value; }
 		inline void setY(float value){ _values[1] = value; }
 		inline void setZ(float value){ _values[2] = value; }
+		static inline bool equals(const Vector3 &a, const Vector3 &b)
+		{
+			return
+				core::Math::equals(a.getX(), b.getX()) &&
+				core::Math::equals(a.getY(), b.getY()) &&
+				core::Math::equals(a.getZ(), b.getZ());
+		}
 	};
 
 	class Vector4

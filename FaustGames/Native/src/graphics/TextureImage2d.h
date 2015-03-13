@@ -16,6 +16,7 @@ namespace graphics
 		void setData(const Image2dData *data);
 	protected:
 	private:
+		bool _createMipmaps;
 		bool _wrap;
 		bool _filter;
 	};

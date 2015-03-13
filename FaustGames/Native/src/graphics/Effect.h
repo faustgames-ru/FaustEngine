@@ -5,6 +5,7 @@
 #include "Uniform.h"
 #include "AttributeInfo.h"
 #include "VertexFormat.h"
+#include "EffectConstant.h"
 
 namespace graphics
 {
@@ -13,6 +14,7 @@ namespace graphics
 	public:
 		Effect();
 		~Effect();
+		Effect *addConstant(const char *name, UniformType::e type);
 		Effect *addUniform(UniformInfo *uniformInfo, UniformValue *uniformValue);
 		Effect *addAttribute(AttributeInfo *attribute);
 		GLuint getHandle();
@@ -24,11 +26,14 @@ namespace graphics
 		void applyUniforms();
 		void cleanup();
 		void applyVertexData(VertexFormat * vertexFormat, void* vertexData);
+		EffectConstant * findConstant(const char *name);
 		static void applyState(unsigned int prevMask, unsigned int newMask, int count);
 		inline int getShaderId(){ return _shaderId; }
 		inline unsigned int getShaderMask(){ return _shaderMask; }
+		inline void setConstantsChanged() { _constantsChanged = true; }
 	protected:
 	private:
+		core::StaticArray<EffectConstant, 32> _constants;
 		core::StaticArray<Uniform, 32> _uniforms;
 		core::StaticArray<AttributeInfo *, 32> _attributes;
 		unsigned int _attributesMask;
@@ -40,6 +45,7 @@ namespace graphics
 		GLuint createShader(GLenum type, const char *code, int size);
 		int _shaderId;
 		int _shaderMask;
+		bool _constantsChanged;
 		static int _shadersCounter;
 	};
 }

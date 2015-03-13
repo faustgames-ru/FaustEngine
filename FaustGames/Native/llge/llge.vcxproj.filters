@@ -37,6 +37,15 @@
     <Filter Include="drawing">
       <UniqueIdentifier>{7d13e806-eaac-4e8e-87f1-7ccd1ae30387}</UniqueIdentifier>
     </Filter>
+    <Filter Include="resources">
+      <UniqueIdentifier>{bdb4f70e-f3cf-47b8-b7be-fe7a8f39cb1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resources\lpng">
+      <UniqueIdentifier>{2ce19b8f-6064-4c0e-a28f-dc92489470fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resources\zlib">
+      <UniqueIdentifier>{6e8df11f-5e40-4d37-ab8c-3ea1fcc3c1f0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\CommonSources\include\llge.h">
@@ -344,6 +353,84 @@
     <ClInclude Include="..\src\graphics\EffectWater.h">
       <Filter>graphics</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\graphics\UniformValueVector3.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\resources\zlib\crc32.h">
+      <Filter>resources\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\resources\zlib\deflate.h">
+      <Filter>resources\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\resources\zlib\gzguts.h">
+      <Filter>resources\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\resources\zlib\inffast.h">
+      <Filter>resources\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\resources\zlib\inffixed.h">
+      <Filter>resources\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\resources\zlib\inflate.h">
+      <Filter>resources\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\resources\zlib\inftrees.h">
+      <Filter>resources\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\resources\zlib\trees.h">
+      <Filter>resources\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\resources\zlib\zconf.h">
+      <Filter>resources\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\resources\zlib\zlib.h">
+      <Filter>resources\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\resources\zlib\zutil.h">
+      <Filter>resources\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\resources\lpng\png.h">
+      <Filter>resources\lpng</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\resources\lpng\pngconf.h">
+      <Filter>resources\lpng</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\resources\lpng\pngdebug.h">
+      <Filter>resources\lpng</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\resources\lpng\pnginfo.h">
+      <Filter>resources\lpng</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\resources\lpng\pnglibconf.h">
+      <Filter>resources\lpng</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\resources\lpng\pngpriv.h">
+      <Filter>resources\lpng</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\resources\lpng\pngstruct.h">
+      <Filter>resources\lpng</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\resources\ContentManager.h">
+      <Filter>resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\resources\resources.h">
+      <Filter>resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\resources\resources_classes.h">
+      <Filter>resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\resources\resources_references.h">
+      <Filter>resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\resources\resources_platform.h">
+      <Filter>resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\resources\ContentProvider.h">
+      <Filter>resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\EffectConstant.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\CommonSources\gen\llgePInvoke.cpp">
@@ -535,6 +622,114 @@
       <Filter>graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\EffectWater.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\UniformValueVector3.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\zlib\adler32.c">
+      <Filter>resources\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\zlib\compress.c">
+      <Filter>resources\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\zlib\crc32.c">
+      <Filter>resources\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\zlib\deflate.c">
+      <Filter>resources\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\zlib\gzclose.c">
+      <Filter>resources\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\zlib\gzlib.c">
+      <Filter>resources\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\zlib\gzread.c">
+      <Filter>resources\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\zlib\gzwrite.c">
+      <Filter>resources\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\zlib\infback.c">
+      <Filter>resources\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\zlib\inffast.c">
+      <Filter>resources\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\zlib\inflate.c">
+      <Filter>resources\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\zlib\inftrees.c">
+      <Filter>resources\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\zlib\trees.c">
+      <Filter>resources\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\zlib\uncompr.c">
+      <Filter>resources\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\zlib\zutil.c">
+      <Filter>resources\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\lpng\example.c">
+      <Filter>resources\lpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\lpng\png.c">
+      <Filter>resources\lpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\lpng\pngerror.c">
+      <Filter>resources\lpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\lpng\pngget.c">
+      <Filter>resources\lpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\lpng\pngmem.c">
+      <Filter>resources\lpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\lpng\pngpread.c">
+      <Filter>resources\lpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\lpng\pngread.c">
+      <Filter>resources\lpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\lpng\pngrio.c">
+      <Filter>resources\lpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\lpng\pngrtran.c">
+      <Filter>resources\lpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\lpng\pngrutil.c">
+      <Filter>resources\lpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\lpng\pngset.c">
+      <Filter>resources\lpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\lpng\pngtest.c">
+      <Filter>resources\lpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\lpng\pngtrans.c">
+      <Filter>resources\lpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\lpng\pngwio.c">
+      <Filter>resources\lpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\lpng\pngwrite.c">
+      <Filter>resources\lpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\lpng\pngwtran.c">
+      <Filter>resources\lpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\lpng\pngwutil.c">
+      <Filter>resources\lpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\ContentManager.cpp">
+      <Filter>resources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\ContentProviderWindows.cpp">
+      <Filter>resources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\EffectConstant.cpp">
       <Filter>graphics</Filter>
     </ClCompile>
   </ItemGroup>

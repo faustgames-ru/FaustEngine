@@ -1,74 +1,15 @@
-﻿  stdafx.cpp
-  dllmain.cpp
-  TestStandartAllocations.cpp
-  VertexFormats.cpp
-  VertexFormat.cpp
-  VertexBuffer.cpp
-  UniformValueTexture.cpp
-  UniformValueMatrix.cpp
-  UniformValueFloat.cpp
-  UniformValueCubemap.cpp
-  UniformValue.cpp
-  Uniforms.cpp
-  UniformInfo.cpp
-  Uniform.cpp
-  TextureRenderTarget2d.cpp
-  TextureLoader.cpp
-  TextureImage2d.cpp
-  TextureCubemap.cpp
-  Texture.cpp
-  StaticBatch.cpp
+﻿  EffectSolid.cpp
   Generating Code...
   Compiling...
-  RenderState.cpp
-  Image2dData.cpp
-  GraphicsDevice.cpp
-  Errors.cpp
-  EffectWater.cpp
-  EffectTextureLightMapColor.cpp
-  EffectTextureColor.cpp
   EffectSolidColor.cpp
-  EffectSolid.cpp
-  Effects.cpp
-  EffectBase.cpp
-  Effect.cpp
-  Color.cpp
-  Attributes.cpp
-  AttributeInfo.cpp
-  Quadtree2dNode.cpp
-  Quadtree2d.cpp
-  Aabb2d.cpp
-  llge.cpp
-  llgeGraphics.cpp
   Generating Code...
   Compiling...
-  llgeGeometry.cpp
-  llgeEntities.cpp
-  TransformSystem2d.cpp
-  Transform2dComponent.cpp
-  System.cpp
-  RenderSystem2d.cpp
-  Render2dComponent.cpp
-  QuadtreeEntitiesFilter.cpp
-  DummyEntitiesFilter.cpp
-  EntitiesWorld.cpp
-  Entity.cpp
-  EntitiesFilter.cpp
-  Component.cpp
-  Aabb2dComponent.cpp
-  WaterRenderer.cpp
-  RenderMesh2d.cpp
-  RenderItem2d.cpp
-  Renderer2d.cpp
-  Camera.cpp
-  SystemAllocationPolicy.cpp
+  EffectTextureColor.cpp
   Generating Code...
   Compiling...
-  Matrix.cpp
-  Math.cpp
-  HollowsAllocationPolicy.cpp
-  BasicTest.cpp
-  llgePInvoke.cpp
+  EffectTextureLightMapColor.cpp
   Generating Code...
-     Creating library C:\_faust\FaustEngine\FaustGames\Debug\llge.lib and object C:\_faust\FaustEngine\FaustGames\Debug\llge.exp
+  Compiling...
+  EffectWater.cpp
+  Generating Code...
   llge.vcxproj -> C:\_faust\FaustEngine\FaustGames\Debug\llge.dll

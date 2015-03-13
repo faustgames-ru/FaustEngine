@@ -7,6 +7,7 @@ namespace graphics
 	VertexFormatPositionColor VertexFormats::_positionColor;
 	VertexFormatPositionTextureColor VertexFormats::_positionTextureColor;
 	VertexFormatPositionNormal VertexFormats::_positionNormal;
+	VertexFormatPositionTexture VertexFormats::_positionTexture;
 
 
 	void VertexFormats::create()
@@ -15,6 +16,7 @@ namespace graphics
 		_positionColor.create();
 		_positionTextureColor.create();
 		_positionNormal.create();
+		_positionTexture.create();
 	}
 
 
@@ -37,5 +39,11 @@ namespace graphics
 	{
 		return &_positionNormal;
 	}
+
+	VertexFormat *VertexFormats::positionTexture()
+	{
+		return &_positionTexture;
+	}
+
 
 }

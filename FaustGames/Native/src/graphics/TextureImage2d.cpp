@@ -3,7 +3,26 @@
 
 namespace graphics
 {
-	TextureImage2d::TextureImage2d() : _wrap(false), _filter(true)
+
+	struct ImageColor
+	{
+		unsigned int value;
+		ImageColor(unsigned int v)
+		{
+			value = v;
+		}
+		unsigned int getComponent(int i)
+		{
+			return (value >> (i * 8)) & 0xff;
+		}
+		void  setComponent(int i, int v)
+		{
+			value &= 0xff << (i * 8);
+			value |= v << (i * 8);
+		}
+	};
+
+	TextureImage2d::TextureImage2d() : _wrap(true), _filter(true), _createMipmaps(true)
 	{
 		_handle = 0;
 	}
@@ -18,10 +37,20 @@ namespace graphics
 		Errors::check(Errors::BindTexture);
 		if (_filter)
 		{
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-			Errors::check(Errors::TexParameteri);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-			Errors::check(Errors::TexParameteri);
+			if (_createMipmaps)
+			{
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+				Errors::check(Errors::TexParameteri);
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+				Errors::check(Errors::TexParameteri);
+			}
+			else
+			{
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+				Errors::check(Errors::TexParameteri);
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+				Errors::check(Errors::TexParameteri);
+			}
 		}
 		else
 		{
@@ -57,9 +86,54 @@ namespace graphics
 	{
 		glBindTexture(GL_TEXTURE_2D, _handle);
 		Errors::check(Errors::BindTexture);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, data->Width, data->Height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data->Pixels);
-		Errors::check(Errors::TexImage2D);
+		if (_createMipmaps)
+		{
+			int w = data->Width;
+			int h = data->Height;
+
+			int mip = 0;
+			while ((w > 0) || (h > 0))
+			{
+				glTexImage2D(GL_TEXTURE_2D, mip, GL_RGBA, w == 0?1:w, h==0?1:h, 0, GL_RGBA, GL_UNSIGNED_BYTE, data->Pixels);
+				Errors::check(Errors::TexImage2D);
+				w /= 2;
+				h /= 2;
+				int i = 0;
+				for (int y = 0; y < h; y++)
+				{
+					for (int x = 0; x < w; x++)
+					{
+						int i0 = (y * 2 + 0) * w*2 + x * 2 + 0;
+						int i1 = (y * 2 + 1) * w*2 + x * 2 + 0;
+						int i2 = (y * 2 + 0) * w*2 + x * 2 + 1;
+						int i3 = (y * 2 + 1) * w*2 + x * 2 + 1;
+						ImageColor c0 = ImageColor(data->Pixels[i0]);
+						ImageColor c1 = ImageColor(data->Pixels[i1]);
+						ImageColor c2 = ImageColor(data->Pixels[i2]);
+						ImageColor c3 = ImageColor(data->Pixels[i3]);
+						ImageColor c(0);
+						unsigned int r = (c0.getComponent(0) + c1.getComponent(0) + c2.getComponent(0) + c3.getComponent(0)) / 4;
+						unsigned int g = (c0.getComponent(1) + c1.getComponent(1) + c2.getComponent(1) + c3.getComponent(1)) / 4;
+						unsigned int b = (c0.getComponent(2) + c1.getComponent(2) + c2.getComponent(2) + c3.getComponent(2)) / 4;
+						unsigned int a = (c0.getComponent(3) + c1.getComponent(3) + c2.getComponent(3) + c3.getComponent(3)) / 4;
+						c.setComponent(0, r);
+						c.setComponent(1, g);
+						c.setComponent(2, b);
+						c.setComponent(3, a);
+						data->Pixels[y * w + x] = c0.value;
+						i++;
+					}
+				}
+				mip++;
+			}
+		}
+		else
+		{
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, data->Width, data->Height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data->Pixels);
+			Errors::check(Errors::TexImage2D);
+		}
 		glBindTexture(GL_TEXTURE_2D, 0);
 		Errors::check(Errors::BindTexture);
 	}
+
 }

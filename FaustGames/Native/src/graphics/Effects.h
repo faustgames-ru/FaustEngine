@@ -9,6 +9,7 @@
 #include "EffectSolidColor.h"
 #include "EffectTextureColor.h"
 #include "EffectTextureLightMapColor.h"
+#include "EffectWater.h"
 
 namespace graphics
 {
@@ -21,12 +22,14 @@ namespace graphics
 		static EffectSolidColor * solidColor();
 		static EffectTextureColor * textureColor();
 		static EffectTextureLightMapColor * textureLightmapColor();
+		static EffectWater * water();
 	protected:
 	private:
 		static EffectSolid _solid;
 		static EffectSolidColor _solidColor;
 		static EffectTextureColor _textureColor;
 		static EffectTextureLightMapColor _textureLightmapColor;
+		static EffectWater _water;
 
 	};
 }

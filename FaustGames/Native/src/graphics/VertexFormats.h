@@ -11,17 +11,19 @@ namespace graphics
 {
 	class VertexFormats
 	{
-	private:
-		static VertexFormatPosition _position;
-		static VertexFormatPositionColor _positionColor;
-		static VertexFormatPositionTextureColor _positionTextureColor;
-		static VertexFormatPositionNormal _positionNormal;
 	public:
 		static void create();
 		static VertexFormat *position();
 		static VertexFormat *positionColor();
 		static VertexFormat *positionTextureColor();
 		static VertexFormat *positionNormal();
+		static VertexFormat *positionTexture();
+	private:
+		static VertexFormatPosition _position;
+		static VertexFormatPositionColor _positionColor;
+		static VertexFormatPositionTextureColor _positionTextureColor;
+		static VertexFormatPositionNormal _positionNormal;
+		static VertexFormatPositionTexture _positionTexture;
 	};
 }
 

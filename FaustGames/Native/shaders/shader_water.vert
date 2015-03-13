@@ -4,14 +4,28 @@ precision mediump int;
 #endif
 
 uniform mat4 projection;
+uniform vec3 cameraPosition;
+uniform float time;
+
+uniform float textureVelocity;
+uniform float wavesVelocity;
+uniform float wavesScale;
+
+const float Pi = 3.14;
 
 attribute vec3 position;
-attribute vec3 normal;
+attribute vec2 textureCoords;
 
-varying vec3 _normal;
+varying vec2 _textureCoords0;
+varying vec2 _textureCoords1;
+varying vec3 _eye;
 
 void main()
 {
-	gl_Position = projection * vec4(position, 1.0);
-	_normal = normal;
+  vec3 pos = position;
+	pos.y = pos.y + sin((pos.x + pos.z - time*wavesVelocity) * Pi)*wavesScale;
+	gl_Position = projection * vec4(pos, 1.0);
+	_eye = normalize(position - cameraPosition);
+	_textureCoords0 = textureCoords + time*textureVelocity;
+	_textureCoords1 = textureCoords - time*textureVelocity;
 }

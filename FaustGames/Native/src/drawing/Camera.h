@@ -16,6 +16,7 @@ namespace drawing
 		void setRotation(float rotationZ);
 		void setPlanes(float zn, float zf);
 		core::Matrix getMatrix();
+		core::Vector3 getPosition();
 	private:
 		core::Matrix getProjectionMatrix();
 		core::Matrix getTranslationMatrix();

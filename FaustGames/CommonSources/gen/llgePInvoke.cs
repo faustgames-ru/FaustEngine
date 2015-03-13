@@ -16,12 +16,15 @@ namespace llge
 	{
 		EffectTextureColor = 0x0,
 		EffectTextureLightmapColor = 0x1,
+		EffectWater = 0x2,
+		EffectSolid = 0x3,
 	}
 	
 	public enum GraphicsVertexFormats
 	{
 		FormatPositionTextureColor = 0x0,
 		FormatPositionNormal = 0x1,
+		FormatPositionTexture = 0x2,
 	}
 	
 	public enum CubemapPlane
@@ -117,7 +120,21 @@ namespace llge
 	public class UniformsFacade
 	{
 		public IntPtr ClassInstance;
-		public void SetEnvironment (Cubemap cubemap)
+		public void SetTime (float value)
+		{
+			llge_UniformsFacade_setTime(ClassInstance, value);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_UniformsFacade_setTime (IntPtr classInstance, float value);
+		public void SetNormalmap (Texture texture)
+		{
+			llge_UniformsFacade_setNormalmap(ClassInstance, texture.ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_UniformsFacade_setNormalmap (IntPtr classInstance, IntPtr texture);
+		public void SetEnvironment (Texture cubemap)
 		{
 			llge_UniformsFacade_setEnvironment(ClassInstance, cubemap.ClassInstance);
 		}
@@ -253,6 +270,13 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private void llge_GraphicsFacade_drawVertexBuffer (IntPtr classInstance, GraphicsEffects effect, GraphicsVertexFormats vertexFormat, IntPtr vertexBuffer, IntPtr indices, int primitivesCount);
+		public void SetEffectConstantFloat (GraphicsEffects effect, string name, float value)
+		{
+			llge_GraphicsFacade_setEffectConstantFloat(ClassInstance, effect, name, value);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_GraphicsFacade_setEffectConstantFloat (IntPtr classInstance, GraphicsEffects effect, string name, float value);
 		public void Create ()
 		{
 			llge_GraphicsFacade_create(ClassInstance);

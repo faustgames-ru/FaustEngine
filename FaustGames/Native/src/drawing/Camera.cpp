@@ -46,6 +46,12 @@ namespace drawing
 		return core::Matrix::mul(t, proj);
 	}
 
+	core::Vector3 Camera::getPosition()
+	{
+		return _position;
+	}
+
+
 	core::Matrix Camera::getProjectionMatrix()
 	{
 		return core::Matrix::createProjection(_fov, _aspect, _zn, _zf);
@@ -53,7 +59,7 @@ namespace drawing
 
 	core::Matrix Camera::getTranslationMatrix()
 	{
-		return core::Matrix::createTranslate(_position.getX(), _position.getY(), _position.getZ());
+		return core::Matrix::createTranslate(-_position.getX(), -_position.getY(), -_position.getZ());
 	}
 
 

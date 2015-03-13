@@ -13,6 +13,7 @@ namespace graphics
 		unsigned int *Pixels;
 		Image2dData(int bufferSize);
 		Image2dData(int width, int height);
+		void realloc(int bufferSize);
 		~Image2dData();
 	};
 }

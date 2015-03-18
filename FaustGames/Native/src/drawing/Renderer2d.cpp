@@ -12,9 +12,9 @@ namespace drawing
 	void Renderer2d::start()
 	{
 		_drawCalls = 0;
-		_graphicsDevice->clear();
+		//_graphicsDevice->clear();
 		_graphicsDevice->renderState.setBlend(graphics::BlendState::Alpha);
-		_graphicsDevice->renderState.setDepth(graphics::DepthState::None);
+		_graphicsDevice->renderState.setDepth(graphics::DepthState::Read);
 		_graphicsDevice->renderState.setEffect(graphics::Effects::textureColor());
 		_projectionContainer.setValue(Camera.getMatrix().getData());
 		graphics::UniformValues::cameraPosition()->setValue(Camera.getPosition());

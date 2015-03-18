@@ -16,7 +16,7 @@ namespace entities
 		component->Parent = 0;
 	}
 	
-	void TransformSystem2d::updateComponent(Entity *entity, ComponentType::e type)
+	void TransformSystem2d::updateComponent(Entity *entity, ComponentMask::e type)
 	{
 		if (type != ComponentType::Transform2d) return;
 		Transform2dComponent *component = entity->getComponent<Transform2dComponent>();

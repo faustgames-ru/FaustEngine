@@ -11,91 +11,7 @@ using namespace graphics;
 using namespace core;
 
 namespace llge
-{	
-	class Texture : public ITexture
-	{
-	public:
-		TextureImage2d *image;
-		
-		Texture()
-		{
-			image = new TextureImage2d();
-		}
-
-		~Texture()
-		{
-			delete image;
-		}
-		
-		virtual int API_CALL getId()
-		{
-			return image->getHandle();
-		}
-		virtual void API_CALL LoadPixels(int width, int height, void *pixels)
-		{
-			Image2dData data(width, height);
-			data.Pixels = (unsigned int *)pixels;
-			image->setData(&data);
-			data.Pixels = 0;
-		}
-
-		virtual void API_CALL create()
-		{
-			image->create();
-		}
-		virtual void API_CALL cleanup()
-		{
-			image->cleanup();
-		}
-		virtual void API_CALL dispose()
-		{
-			delete this;
-		}
-
-	};
-
-	class Cubemap : public ICubemap
-	{
-	public:
-		TextureCubemap *image;
-
-		Cubemap()
-		{
-			image = new TextureCubemap();
-		}
-
-		~Cubemap()
-		{
-			delete image;
-		}
-
-		virtual int API_CALL getId()
-		{
-			return image->getHandle();
-		}
-		virtual void API_CALL LoadPixels(CubemapPlane plane, int width, int height, void *pixels)
-		{
-			Image2dData data(width, height);
-			data.Pixels = (unsigned int *)pixels;
-			image->setData((TextureCubemapPlanes::e)plane, &data);
-			data.Pixels = 0;
-		}
-
-		virtual void API_CALL create()
-		{
-			image->create();
-		}
-		virtual void API_CALL cleanup()
-		{
-			image->cleanup();
-		}
-		virtual void API_CALL dispose()
-		{
-			delete this;
-		}
-
-	};
-	
+{				
 	class UniformsFacade : public IUniformsFacade
 	{
 	public:
@@ -198,21 +114,27 @@ namespace llge
 			constant->setFloat(value);
 		}
 
+		virtual void API_CALL setEffectConstantColor(GraphicsEffects effect, char *name, uint value)
+		{
+			EffectConstant* constant = effects[effect]->getEffect()->findConstant(name);
+			constant->setUint(value);
+		}
 
 		virtual IUniformsFacade * API_CALL getUniforms()
 		{
 			return uniformsFacade;
 		}
 
-		virtual ITexture * API_CALL createTexture()
+		virtual ITextureImage2d * API_CALL createTextureImage2d()
 		{
-			return new Texture();
+			return new TextureImage2d();
+		}
+		
+		virtual IRenderTarget2d * API_CALL createRenderTarget2d()
+		{
+			return new TextureRenderTarget2d();
 		}
 
-		virtual ICubemap * API_CALL createCubemap()
-		{
-			return new Cubemap();
-		}
 
 		virtual IVertexBuffer * API_CALL createVertexBuffer()
 		{

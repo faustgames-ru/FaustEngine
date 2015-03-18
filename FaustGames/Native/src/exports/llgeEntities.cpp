@@ -8,6 +8,7 @@
 
 namespace llge
 {
+	/*
 	class CEntity : public IEntity
 	{
 	public:
@@ -109,7 +110,7 @@ namespace llge
 			delete this;
 		}
 	};
-
+	*/
 	class CCamera : public ICamera
 	{
 	public:
@@ -161,20 +162,20 @@ namespace llge
 			return &Camera;
 		}
 
-		
+
 		virtual void API_CALL setUnpdateBounds(float minX, float minY, float maxX, float maxY)
 		{
 			Filter.setUpdateAabb(geometry::Aabb2d(minX, minY, maxX, maxY));
 		}
-		
+
 		virtual void API_CALL setRenderBounds(float minX, float minY, float maxX, float maxY)
 		{
 			Filter.setRenderAabb(geometry::Aabb2d(minX, minY, maxX, maxY));
 		}
 
-		virtual IEntity * API_CALL createMesh2d()
+		virtual IEntity * API_CALL createEntity()
 		{
-			return new CEntity(&EntitiesWorld);
+			return EntitiesWorld.createEntity();
 		}
 
 		virtual int API_CALL update(float elapsed)
@@ -183,6 +184,22 @@ namespace llge
 			EntitiesWorld.renderWorld(elapsed);
 			return RenderSystem.getDrawCalls();
 		}
+
+		virtual void API_CALL updateEntity(IEntity *entity, ComponentsTypes types)
+		{
+			EntitiesWorld.updateComponent((entities::Entity *)entity->getSelfInstance(), (entities::ComponentMask::e)types);
+		}
+
+		virtual void API_CALL addEntity(IEntity *entity)
+		{
+			EntitiesWorld.addEntity((entities::Entity *)entity->getSelfInstance());
+		}
+		
+		virtual void API_CALL removeEntity(IEntity *entity)
+		{
+			EntitiesWorld.removeEntity((entities::Entity *)entity->getSelfInstance());
+		}
+
 
 		virtual void API_CALL dispose()
 		{

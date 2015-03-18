@@ -1,6 +1,7 @@
 #ifndef GRAPHICS_CLASSES_H
 #define GRAPHICS_CLASSES_H
 
+#include "llge.h"
 #include "graphics_platform.h"
 #include "graphics_references.h"
 
@@ -36,6 +37,7 @@ namespace graphics
 			Vector4,
 			Matrix3,
 			Matrix4,
+			Color,
 			Sampler2D,
 			SamplerCube,
 		};

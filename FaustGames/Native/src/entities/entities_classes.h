@@ -1,6 +1,7 @@
 #ifndef ENTITIES_CLASSES_H
 #define ENTITIES_CLASSES_H
 
+#include "llge.h"
 #include "entities_platform.h"
 #include "entities_references.h"
 
@@ -14,6 +15,16 @@ namespace entities
 			Transform2d = 1,
 			Render2d = 2,
 			ComponentsCount = 3,
+		};
+	};
+
+	struct ComponentMask
+	{
+		enum e
+		{
+			Aadd2d = 1,
+			Transform2d = 2,
+			Render2d = 4,
 		};
 	};
 

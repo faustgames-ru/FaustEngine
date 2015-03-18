@@ -6,10 +6,12 @@
 
 namespace graphics
 {
-	class Texture
+	class Texture : public llge::ITexture
 	{
 	public:
 		inline const GLuint getHandle(){ return _handle; }
+		virtual uint API_CALL getId() { return getHandle(); }
+
 	protected:
 		GLuint _handle;
 	};

@@ -95,12 +95,16 @@ namespace resources
 		m_ColorType = png_get_color_type(m_PngPtr, m_InfoPtr);
 
 		const unsigned int stride = png_get_rowbytes(m_PngPtr, m_InfoPtr);
-
-		png_read_image(m_PngPtr, m_RowPtrs);
-
+		for (size_t i = 0; i < (size_t)m_Height; i++)
+			m_RowPtrs[i] = (png_byte*)(_image->Pixels + m_Width);
+		
+		png_read_image(m_PngPtr, m_RowPtrs);		
 		png_destroy_read_struct(&m_PngPtr, &m_InfoPtr, 0);
 
 		ContentProvider::closeContent();
+		_image->Width = m_Width;
+		_image->Height = m_Height;
+		
 		return _image;
 	}
 
@@ -110,8 +114,6 @@ namespace resources
 			return;
 		m_RowPtrs = new png_bytep[ImageMaxHeight];
 		_image = new graphics::Image2dData(ImageBufferSize);
-		for (size_t i = 0; i < (size_t)ImageMaxHeight; i++)
-			m_RowPtrs[i] = (png_byte*)(_image->Pixels + ImageMaxWidth);
 	}
 	void ContentManager::close()
 	{
@@ -123,4 +125,28 @@ namespace resources
 		_image = 0;
 	}
 
+	int API_CALL ContentManager::registerImage(char * name) 
+	{
+		return registerTexture(name);
+	}
+	
+	void API_CALL ContentManager::startLoad()
+	{
+		open();
+	}
+	
+	void API_CALL ContentManager::loadImage(int id, llge::ITextureImage2d *textureImage)
+	{
+		graphics::Image2dData * image = loadTexture(id);
+		textureImage->LoadPixels(image->Width, image->Height, image->Pixels);
+	}
+	
+	void API_CALL ContentManager::finishLoad()
+	{
+		close();
+	}
+	void API_CALL ContentManager::dispose()
+	{
+		delete this;
+	}
 }

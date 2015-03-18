@@ -7,7 +7,7 @@ namespace graphics
 	{
 	}
 	
-	void TextureRenderTarget2d::create(int width, int height)
+	void API_CALL TextureRenderTarget2d::create(int width, int height)
 	{
 		_width = width;
 		_height = height;
@@ -55,7 +55,7 @@ namespace graphics
 		Errors::check(Errors::BindTexture);
 	}
 	
-	void TextureRenderTarget2d::cleanup()
+	void API_CALL TextureRenderTarget2d::cleanup()
 	{
 		glDeleteTextures(1, &_handle);
 		Errors::check(Errors::DeleteTexture);

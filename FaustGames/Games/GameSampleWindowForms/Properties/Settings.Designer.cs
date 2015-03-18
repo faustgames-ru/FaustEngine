@@ -118,5 +118,75 @@ namespace GameSampleWindowForms.Properties {
                 this["envScaleY"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public float reflectionBrightness {
+            get {
+                return ((float)(this["reflectionBrightness"]));
+            }
+            set {
+                this["reflectionBrightness"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public float reflectionContrast {
+            get {
+                return ((float)(this["reflectionContrast"]));
+            }
+            set {
+                this["reflectionContrast"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public float reflectionSaturation {
+            get {
+                return ((float)(this["reflectionSaturation"]));
+            }
+            set {
+                this["reflectionSaturation"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Drawing.Color reflectionTint0 {
+            get {
+                return ((global::System.Drawing.Color)(this["reflectionTint0"]));
+            }
+            set {
+                this["reflectionTint0"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Drawing.Color reflectionTint1 {
+            get {
+                return ((global::System.Drawing.Color)(this["reflectionTint1"]));
+            }
+            set {
+                this["reflectionTint1"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool useEnv {
+            get {
+                return ((bool)(this["useEnv"]));
+            }
+            set {
+                this["useEnv"] = value;
+            }
+        }
     }
 }

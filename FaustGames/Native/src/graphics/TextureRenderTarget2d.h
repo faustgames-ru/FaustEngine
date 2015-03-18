@@ -6,16 +6,19 @@
 
 namespace graphics
 {
-	class TextureRenderTarget2d : public Texture
+	class TextureRenderTarget2d : public Texture, public llge::IRenderTarget2d
 	{
 	public:
 		TextureRenderTarget2d();
-		void create(int width, int height);
-		void cleanup();
 		inline int getWidth(){ return _width; }
 		inline int getHeight(){ return _height; }
 		inline GLuint getFramebuffer(){ return _frameBuffer; }
 		inline GLuint getDepthbuffer(){ return _depthBuffer; }
+
+		virtual ITexture* API_CALL getTexture(){ return this; }
+		virtual void API_CALL create(int width, int height);
+		virtual void API_CALL cleanup();
+		virtual void API_CALL dispose() { delete this; }
 	protected:
 	private:
 		bool _filter;

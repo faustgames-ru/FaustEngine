@@ -77,7 +77,7 @@ namespace entities
 		}
 	};
 
-	class Transform2dComponent : public Component
+	class Transform2dComponent : public Component, public llge::ITransform2d
 	{
 	public:
 		typedef std::list<Transform2dComponent *, core::DAlloc> ChildsList;
@@ -115,6 +115,49 @@ namespace entities
 			}
 		}
 		
+		virtual void API_CALL setWorldPosition(float x, float y, float z)
+		{
+			WorldTransform.Position.setData(x, y, z);
+			WorldTransformState = entities::Transform2dState::Updated;
+		}
+
+		virtual void API_CALL setWorldRotation(float value)
+		{
+			WorldTransform.Rotation = value;
+			WorldTransformState = entities::Transform2dState::Updated;
+		}
+
+		virtual void API_CALL setWorldScale(float value)
+		{
+			WorldTransform.Scale = value;
+			WorldTransformState = entities::Transform2dState::Updated;
+		}
+
+		virtual void API_CALL setLocalPivot(float x, float y, float z)
+		{
+			LocalTransform.Pivot.setData(x, y, z);
+			LocalTransformState = entities::Transform2dState::Updated;
+		}
+
+		virtual void API_CALL setLocalPosition(float x, float y, float z)
+		{
+			LocalTransform.Position.setData(x, y, z);
+			LocalTransformState = entities::Transform2dState::Updated;
+		}
+
+
+		virtual void API_CALL setLocalRotation(float value)
+		{
+			LocalTransform.Rotation = value;
+			LocalTransformState = entities::Transform2dState::Updated;
+		}
+
+		virtual void API_CALL setLocalScale(float value)
+		{
+			LocalTransform.Scale = value;
+			LocalTransformState = entities::Transform2dState::Updated;
+		}
+
 		static ComponentType::e Type;
 	private:
 		ChildsList::iterator _iterator;

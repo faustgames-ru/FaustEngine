@@ -11,7 +11,7 @@ namespace entities
 	public:
 		virtual void addEntity(Entity *entity) {};
 		virtual void removeEntity(Entity *entity) {};
-		virtual void updateComponent(Entity *entity, ComponentType::e type) {};
+		virtual void updateComponent(Entity *entity, ComponentMask::e type) {};
 		virtual void updateSystem(float elapsed, const std::vector<Entity *> entities) = 0;
 	private:
 	};

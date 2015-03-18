@@ -6,7 +6,7 @@ namespace drawing
 	{
 	}
 
-	void RenderMesh2d::setData(unsigned int texture, Mesh2dVertex* vertices, int verticesCount, unsigned short* indices, int indicesCount)
+	void RenderMesh2d::setData(llge::ITexture * texture, Mesh2dVertex* vertices, int verticesCount, unsigned short* indices, int indicesCount)
 	{
 		_texture = texture;
 		reallocVertices(verticesCount);
@@ -17,7 +17,7 @@ namespace drawing
 	
 	void RenderMesh2d::render(Renderer2d *renderer)
 	{
-		renderer->drawMesh(_texture, _vertices, _verticesCount, _indices, _indicesCount);
+		renderer->drawMesh(_texture->getId(), _vertices, _verticesCount, _indices, _indicesCount);
 	}
 
 	void RenderMesh2d::reallocVertices(int verticesCount)

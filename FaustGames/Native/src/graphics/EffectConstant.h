@@ -11,11 +11,14 @@ namespace graphics
 		EffectConstant(){}
 		void init(const char *name, UniformType::e type);
 		void setFloat(float value);
+		void setUint(unsigned int value);
 		void create(Effect *effect);
 		void apply();
 		bool nameEqualsTo(const char *name);
 	private:
 		inline float getFloatValue(){ return *((float *)_value); }
+		inline unsigned int getUintValue(){ return *((unsigned int  *)_value); }
+		void applyColor();
 		void setChanged();
 		std::string _name;
 		UniformType::e _type;

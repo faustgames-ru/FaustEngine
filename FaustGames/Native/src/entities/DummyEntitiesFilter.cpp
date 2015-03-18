@@ -12,7 +12,7 @@ namespace entities
 		_entities.erase(entity->getId());
 	}
 
-	void DummyEntitiesFilter::updateComponent(Entity* entity, ComponentType::e type)
+	void DummyEntitiesFilter::updateComponent(Entity* entity, ComponentMask::e type)
 	{
 	}
 		

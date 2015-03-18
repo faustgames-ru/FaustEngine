@@ -10,7 +10,7 @@ namespace drawing
 	{
 	public:
 		RenderMesh2d();
-		void setData(unsigned int texture, Mesh2dVertex* vertices, int verticesCount, unsigned short* indices, int indicesCount);
+		void setData(llge::ITexture * texture, Mesh2dVertex* vertices, int verticesCount, unsigned short* indices, int indicesCount);
 		virtual void render(Renderer2d *renderer);
 	private:
 		void reallocVertices(int verticesCount);
@@ -20,7 +20,7 @@ namespace drawing
 		unsigned short* _indices;
 		int _verticesCount;
 		int _indicesCount;
-		unsigned int _texture;
+		llge::ITexture *_texture;
 	};
 }
 

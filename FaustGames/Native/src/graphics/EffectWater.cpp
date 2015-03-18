@@ -15,6 +15,11 @@ namespace graphics
 		_effect.addConstant("normalScaleZ", UniformType::Float);
 		_effect.addConstant("envOffsetY", UniformType::Float);
 		_effect.addConstant("envScaleY", UniformType::Float);
+		_effect.addConstant("reflectionBrightness", UniformType::Float);
+		_effect.addConstant("reflectionContrast", UniformType::Float);
+		_effect.addConstant("reflectionSaturation", UniformType::Float);
+		_effect.addConstant("reflectionTint0", UniformType::Color);
+		_effect.addConstant("reflectionTint1", UniformType::Color);
 
 		_effect.addUniform(Uniforms::cameraPosition(), UniformValues::cameraPosition());
 		_effect.addUniform(Uniforms::projection(), UniformValues::projection());

@@ -19,14 +19,14 @@ namespace entities
 		void addRenderSystem(System* system);
 		void addEntity(Entity* entity);
 		void removeEntity(Entity* entity);
-		void updateComponent(Entity* entity, ComponentType::e type);
+		void updateComponent(Entity* entity, ComponentMask::e type);
 		void updateWorld(float elapsed);
 		void renderWorld(float elapsed);
 		void setFilter(EntitiesFilter *filter);
 	private:
 		void addEntity(System* system, Entity* entity);
 		void removeEntity(System* system, Entity* entity);
-		void updateComponent(System* system, Entity* entity, ComponentType::e type);
+		void updateComponent(System* system, Entity* entity, ComponentMask::e type);
 		
 		void updateSystem(float elapsed, System* system, const std::vector<Entity *> &filterResults);
 		DummyEntitiesFilter _defaultFilter;

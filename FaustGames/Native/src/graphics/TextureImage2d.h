@@ -7,13 +7,18 @@
 
 namespace graphics
 {
-	class TextureImage2d : public Texture
+	class TextureImage2d : public Texture, public llge::ITextureImage2d
 	{
 	public:
 		TextureImage2d();
-		void create();
-		void cleanup();
 		void setData(const Image2dData *data);
+		void setData(int width, int height, unsigned int *pixels);
+
+		virtual ITexture* API_CALL getTexture(){ return this; }
+		virtual void API_CALL LoadPixels(int width, int height, void *pixels);
+		virtual void API_CALL create();
+		virtual void API_CALL cleanup();
+		virtual void API_CALL dispose(){ delete this; }
 	protected:
 	private:
 		bool _createMipmaps;

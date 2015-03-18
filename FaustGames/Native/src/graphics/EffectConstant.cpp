@@ -1,6 +1,7 @@
 #include "EffectConstant.h"
 #include "Effect.h"
 #include "Errors.h"
+#include "Color.h"
 
 namespace graphics
 {
@@ -19,6 +20,13 @@ namespace graphics
 		setChanged();
 	}
 
+	void EffectConstant::setUint(unsigned int value)
+	{
+		(*((unsigned int *)_value)) = value;
+		setChanged();
+	}
+
+
 	void EffectConstant::create(Effect *effect)
 	{
 		_owner = effect;
@@ -32,6 +40,17 @@ namespace graphics
 		_owner->setConstantsChanged();
 	}
 
+	void EffectConstant::applyColor()
+	{
+		unsigned int c = getUintValue();
+		float red = Color::getRf(c);
+		float green = Color::getGf(c);
+		float blue = Color::getBf(c);
+		float alpha = Color::getAf(c);
+		glUniform4f(_parameterHandler, red, green, blue, alpha);
+		Errors::check(Errors::Uniform1f);
+	}
+
 
 	void EffectConstant::apply()
 	{
@@ -41,6 +60,9 @@ namespace graphics
 		case UniformType::Float:
 			glUniform1f(_parameterHandler, getFloatValue());
 			Errors::check(Errors::Uniform1f);
+			break;
+		case UniformType::Color:
+			applyColor();
 			break;
 		default:
 			/// not supported constant type

@@ -51,7 +51,7 @@ namespace entities
 		}
 	}
 
-	void EntitiesWorld::updateComponent(Entity* entity, ComponentType::e type)
+	void EntitiesWorld::updateComponent(Entity* entity, ComponentMask::e type)
 	{
 		_filter->updateComponent(entity, type);
 		int count = _allSystems.size();
@@ -100,7 +100,7 @@ namespace entities
 		system->removeEntity(entity);
 	}
 	
-	void EntitiesWorld::updateComponent(System* system, Entity* entity, ComponentType::e type)
+	void EntitiesWorld::updateComponent(System* system, Entity* entity, ComponentMask::e type)
 	{
 		system->updateComponent(entity, type);
 	}

@@ -37,9 +37,9 @@ namespace entities
 		_entities.erase(entity->getId());
 	}
 	
-	void QuadtreeEntitiesFilter::updateComponent(Entity* entity, ComponentType::e type)
+	void QuadtreeEntitiesFilter::updateComponent(Entity* entity, ComponentMask::e type)
 	{
-		if (type != ComponentType::Aadd2d) return;
+		if (!(type & ComponentMask::Aadd2d)) return;
 		Aadd2dComponent *aabb = entity->getComponent<Aadd2dComponent>();
 		if (aabb)
 		{

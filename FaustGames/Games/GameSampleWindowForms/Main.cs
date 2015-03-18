@@ -29,13 +29,15 @@ namespace GameSampleWindowForms
 
         private List<MeshExportData> _data = new List<MeshExportData>();
         private readonly List<string> _images = new List<string>();
-        private readonly Dictionary<int, Texture> _textures = new Dictionary<int, Texture>();
+        private readonly Dictionary<int, TextureImage2d> _textures = new Dictionary<int, TextureImage2d>();
 
         private readonly Dictionary<int, MeshLayer> _layers = new Dictionary<int, MeshLayer>();
         private List<MeshLayer> _layersList = new List<MeshLayer>();
         private List<Entity> Entities;
-        private Texture _env;
-        private Texture _nrm;
+        private TextureImage2d _envMap;
+        private TextureImage2d _whiteTexture;
+        private TextureImage2d _env;
+        private TextureImage2d _nrm;
 
         private WaterVertex[] _waterPlane;
         private ushort[] _waterIndices;
@@ -45,12 +47,12 @@ namespace GameSampleWindowForms
         private float _z = 0;
 
         private const float Fov = (float)Math.PI *0.5f;
-        private const float waterMinX = -20000;
-        private const float waterMaxX = 20000;
+        private const float waterMinX = -10000;
+        private const float waterMaxX = 10000;
         private const float waterMinZ = -1000;
-        private const float waterMaxZ = 20000;
-        private const float waterStepX = 1000;
-        private const float waterStepZ = 1000;
+        private const float waterMaxZ = 10000;
+        private const float waterStepX = 500;
+        private const float waterStepZ = 500;
         public Main()
         {
            
@@ -73,7 +75,7 @@ namespace GameSampleWindowForms
             _entitiesWorld.GetCamera().SetFov(Fov);
             
             _graphicsFacade.Create();
-            using (var reader = new BinaryReader(File.OpenRead(@"d:\mesh_export.data")))
+            using (var reader = new BinaryReader(File.OpenRead(ContetnFolder + @"\mesh_export.data")))
             {
                 var count = reader.ReadInt32();
                 for (var j = 0; j < count; j++)
@@ -146,7 +148,7 @@ namespace GameSampleWindowForms
                     mesh.MinY = minY - dsizeY;
                     mesh.MaxY = maxY + dsizeY;
 
-                    if (mesh.Z > 500)
+                    //if (mesh.Z > 500)
                     {
                         var index = _images.IndexOf(imageFile);
                         if (index < 0)
@@ -182,7 +184,17 @@ namespace GameSampleWindowForms
                 }
                  */ 
             }
-            _env = CreateTexture("skybox_fragment");
+            _envMap = CreateTexture("skybox_fragment");
+            _whiteTexture = CreateTexture("white_texture");
+            if (Settings.Default.useEnv)
+            {
+                _env = _envMap;
+            }
+            else
+            {
+                _env = _whiteTexture;
+            }
+
             _nrm = CreateTexture("water_nrm");
             var waterGrid = new List<WaterVertex>();
             var waterIndices = new List<ushort>();
@@ -212,23 +224,31 @@ namespace GameSampleWindowForms
             for (var i = 0; i < _data.Count; i++)
             {
                 var mesh = _data[i];
-                var meshEntity = _entitiesWorld.CreateMesh2d();
-                meshEntity.SetBounds(mesh.MinX, mesh.MinY, mesh.MaxX, mesh.MaxY, -mesh.Z);
-                meshEntity.SetMesh(_textures[mesh.TextureId], mesh.Vertices, mesh.Indices);
-                meshEntity.SetWorldPosition(mesh.X, mesh.Y, 0);
-                meshEntity.AddToWorld();
+                var meshEntity = _entitiesWorld.CreateEntity();
+                meshEntity.SetComponents(ComponentsTypes.Aadd2d | ComponentsTypes.Render2d | ComponentsTypes.Transform2d);
+                meshEntity.GetAabb2d().Update(mesh.MinX, mesh.MinY, mesh.MaxX, mesh.MaxY, -mesh.Z);
+                meshEntity.SetMesh(_textures[mesh.TextureId].GetTexture(), mesh.Vertices, mesh.Indices);
+                meshEntity.GetTransform2d().SetWorldPosition(mesh.X, mesh.Y, 0);
+                
+                _entitiesWorld.AddEntity(meshEntity);
+                _entitiesWorld.UpdateEntity(meshEntity, ComponentsTypes.Transform2d);
             }
 
             _graphicsFacade.Viewport(_renderRegion.ClientSize.Width, _renderRegion.ClientSize.Height);
             _graphicsFacade.SetClearState(0x7784ff, 1.0f);
-
-
+            
             _textureVelocity.Value = (int) (Settings.Default.textureVelocity*100);
             _wavesVelocity.Value = (int) (Settings.Default.wavesVelocity*100);
             _normalScaleZ.Value = (int) (Settings.Default.normalScaleZ*100);
             _wavesScale.Value = (int) Settings.Default.wavesScale;
             _envOffsetY.Value = (int)(Settings.Default.envOffsetY*100);
             _envScaleY.Value = (int)(Settings.Default.envScaleY*100);
+            _reflectionBrightness.Value = (int)(Settings.Default.reflectionBrightness * 100);
+            _reflectionContrast.Value = (int)(Settings.Default.reflectionContrast * 100);
+            _reflectionSaturation.Value = (int)(Settings.Default.reflectionSaturation * 100);
+            _reflectionTint0.BackColor = Settings.Default.reflectionTint0;
+            _reflectionTint1.BackColor = Settings.Default.reflectionTint1;
+            _useEnv.Checked = Settings.Default.useEnv;
 
             _x = Settings.Default.cameraPositionX;
             _y = Settings.Default.cameraPositionY;
@@ -239,6 +259,11 @@ namespace GameSampleWindowForms
             _graphicsFacade.SetEffectConstantFloat(GraphicsEffects.EffectWater, "normalScaleZ", Settings.Default.normalScaleZ);
             _graphicsFacade.SetEffectConstantFloat(GraphicsEffects.EffectWater, "envOffsetY", Settings.Default.envOffsetY);
             _graphicsFacade.SetEffectConstantFloat(GraphicsEffects.EffectWater, "envScaleY", Settings.Default.envScaleY);
+            _graphicsFacade.SetEffectConstantFloat(GraphicsEffects.EffectWater, "reflectionBrightness", Settings.Default.reflectionBrightness);
+            _graphicsFacade.SetEffectConstantFloat(GraphicsEffects.EffectWater, "reflectionContrast", Settings.Default.reflectionContrast);
+            _graphicsFacade.SetEffectConstantFloat(GraphicsEffects.EffectWater, "reflectionSaturation", Settings.Default.reflectionSaturation);
+            _graphicsFacade.SetEffectConstantColor(GraphicsEffects.EffectWater, "reflectionTint0", (uint)(Settings.Default.reflectionTint0.ToArgb()));
+            _graphicsFacade.SetEffectConstantColor(GraphicsEffects.EffectWater, "reflectionTint1", (uint)(Settings.Default.reflectionTint1.ToArgb()));
         }
 
 
@@ -251,14 +276,14 @@ namespace GameSampleWindowForms
         private int[] _queryResult = new int[16384];
 
         MeshBatch _batch = new MeshBatch();
-
-        private unsafe Texture  CreateTexture(string fileName)
+        private const string ContetnFolder = "Content";
+        private unsafe TextureImage2d CreateTexture(string fileName)
         {
-            using (var bmp = new Bitmap(Path.Combine("D:\\", fileName + ".png")))
+            using (var bmp = new Bitmap(Path.Combine(ContetnFolder, fileName + ".png")))
             {
                 var data = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height), ImageLockMode.ReadOnly,
                     PixelFormat.Format32bppArgb);
-                var texture = _graphicsFacade.CreateTexture();
+                var texture = _graphicsFacade.CreateTextureImage2d();
                 texture.Create();
                 components.Add(new DisposeActionContainerComponent(texture.Dispose));
                 var pixels = new uint[bmp.Width*bmp.Height];
@@ -312,22 +337,22 @@ namespace GameSampleWindowForms
 
             const float zoom = 0.001f;
             
-            _entitiesWorld.SetRenderBounds(_x - 1300, _y - 700, _x + 1300, _y + 700);
-            _entitiesWorld.GetCamera().SetPosition(_x, _y, -800);
+            _entitiesWorld.SetRenderBounds(_x - 2300, _y - 1700, _x + 2300, _y + 1700);
+            _entitiesWorld.GetCamera().SetPosition(_x, _y, -1800);
             _entitiesWorld.GetCamera().SetAspect((float)_renderRegion.Height / _renderRegion.Width);
             _entitiesWorld.GetCamera().SetPlanes(0.1f, 50000f);
            
-            Text = _entitiesWorld.Update(0).ToString(CultureInfo.InvariantCulture);
-
-            _graphicsFacade.GetUniforms().SetEnvironment(_env);
-            _graphicsFacade.GetUniforms().SetNormalmap(_nrm);
+            _graphicsFacade.GetUniforms().SetEnvironment(_env.GetTexture());
+            _graphicsFacade.GetUniforms().SetNormalmap(_nrm.GetTexture());
             _graphicsFacade.GetUniforms().SetTime(_time);
             
-            //_graphicsFacade.Clear();
+            _graphicsFacade.Clear();
+
             _graphicsFacade.Draw(
                 _waterPlane,
                 _waterIndices,
                 _waterIndices.Length / 3);
+            Text = _entitiesWorld.Update(0).ToString(CultureInfo.InvariantCulture);
             /*
             foreach (var data in _data)
             {
@@ -431,6 +456,63 @@ namespace GameSampleWindowForms
                 Settings.Default.envScaleY = (float) _envScaleY.Value/100);
             Settings.Default.Save();
         }
+
+        private void _reflectionSaturation_ValueChanged(object sender, EventArgs e)
+        {
+            _graphicsFacade.SetEffectConstantFloat(GraphicsEffects.EffectWater, "reflectionSaturation",
+                Settings.Default.reflectionSaturation = (float)_reflectionSaturation.Value / 100);
+            Settings.Default.Save();
+        }
+
+        private void _reflectionBrightness_ValueChanged(object sender, EventArgs e)
+        {
+            _graphicsFacade.SetEffectConstantFloat(GraphicsEffects.EffectWater, "reflectionBrightness",
+                Settings.Default.reflectionBrightness = (float)_reflectionBrightness.Value / 100);
+            Settings.Default.Save();
+
+        }
+
+        private void _reflectionContrast_ValueChanged(object sender, EventArgs e)
+        {
+            _graphicsFacade.SetEffectConstantFloat(GraphicsEffects.EffectWater, "reflectionContrast",
+                Settings.Default.reflectionContrast = (float)_reflectionContrast.Value / 100);
+            Settings.Default.Save();
+        }
+
+        private void _reflectionTint0_Click(object sender, EventArgs e)
+        {
+            _colorDialog.Color = _reflectionTint0.BackColor;
+            if (_colorDialog.ShowDialog(this) != DialogResult.OK) return;
+            _graphicsFacade.SetEffectConstantColor(GraphicsEffects.EffectWater, "reflectionTint0",
+                (uint)_colorDialog.Color.ToArgb());
+            _reflectionTint0.BackColor = Settings.Default.reflectionTint0 = _colorDialog.Color;
+            Settings.Default.Save();
+        }
+
+        private void _reflectionTint1_Click(object sender, EventArgs e)
+        {
+            _colorDialog.Color = _reflectionTint0.BackColor;
+            if (_colorDialog.ShowDialog(this) != DialogResult.OK) return;
+            _graphicsFacade.SetEffectConstantColor(GraphicsEffects.EffectWater, "reflectionTint1",
+                (uint)_colorDialog.Color.ToArgb());
+            _reflectionTint1.BackColor = Settings.Default.reflectionTint1 = _colorDialog.Color;
+            Settings.Default.Save();
+        }
+
+        private void _useEnv_CheckedChanged(object sender, EventArgs e)
+        {
+            Settings.Default.useEnv = _useEnv.Checked;
+
+            if (Settings.Default.useEnv)
+            {
+                _env = _envMap;
+            }
+            else
+            {
+                _env = _whiteTexture;
+            }
+            Settings.Default.Save();
+        }
     }
 
     internal class DisposeActionContainerComponent : IComponent
@@ -492,7 +574,7 @@ namespace GameSampleWindowForms
 
     public static class TextureExtension
     {
-        public static void LoadPixels(this Texture texture, int width, int height, uint[] pixels)
+        public static void LoadPixels(this TextureImage2d texture, int width, int height, uint[] pixels)
         {
             var pinnedArray = GCHandle.Alloc(pixels, GCHandleType.Pinned);
             var pointer = pinnedArray.AddrOfPinnedObject();
@@ -525,7 +607,7 @@ namespace GameSampleWindowForms
             fixed (MeshExportVertex* pointerVertices = vertices)
             fixed (ushort* pointerIndices = indices)
             {
-                entity.SetMesh(texture, new IntPtr(pointerVertices), vertices.Length, new IntPtr(pointerIndices), indices.Length);
+                entity.GetRender2d().SetMesh(texture, new IntPtr(pointerVertices), vertices.Length, new IntPtr(pointerIndices), indices.Length);
             }
         }
     }

@@ -7,6 +7,15 @@
 
 namespace graphics
 {
+	struct Image2dFormat
+	{
+		enum e
+		{
+			Rgba = 0x0,
+			Rgb = 0x1,
+		};
+	};
+
 	struct BlendState
 	{
 		enum e

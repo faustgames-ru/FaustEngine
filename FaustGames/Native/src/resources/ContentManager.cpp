@@ -96,7 +96,7 @@ namespace resources
 
 		const unsigned int stride = png_get_rowbytes(m_PngPtr, m_InfoPtr);
 		for (size_t i = 0; i < (size_t)m_Height; i++)
-			m_RowPtrs[i] = (png_byte*)(_image->Pixels + m_Width);
+			m_RowPtrs[i] = (png_byte*)_image->Pixels + i*m_Width*m_Channels;
 		
 		png_read_image(m_PngPtr, m_RowPtrs);		
 		png_destroy_read_struct(&m_PngPtr, &m_InfoPtr, 0);
@@ -104,7 +104,18 @@ namespace resources
 		ContentProvider::closeContent();
 		_image->Width = m_Width;
 		_image->Height = m_Height;
-		
+		switch (m_Channels)
+		{
+		case 3:
+			_image->Format = graphics::Image2dFormat::Rgb;
+			break;
+		case 4:
+			_image->Format = graphics::Image2dFormat::Rgba;
+			break;
+		default:
+			_image->Format = graphics::Image2dFormat::Rgba;
+			break;
+		}
 		return _image;
 	}
 
@@ -138,8 +149,35 @@ namespace resources
 	void API_CALL ContentManager::loadImage(int id, llge::ITextureImage2d *textureImage)
 	{
 		graphics::Image2dData * image = loadTexture(id);
-		textureImage->LoadPixels(image->Width, image->Height, image->Pixels);
+		textureImage->LoadPixels(image->Width, image->Height, (llge::TextureImage2dFormat)image->Format, image->Pixels);
 	}
+
+	llge::ITextureBuffer2d * API_CALL ContentManager::loadBuffer(int id)
+	{
+		loadTexture(id);
+		return this;
+	}
+
+	llge::TextureImage2dFormat API_CALL ContentManager::getFormat()
+	{
+		return (llge::TextureImage2dFormat)_image->Format;
+	}
+	
+	int API_CALL ContentManager::getWidth()
+	{
+		return _image->Width;
+	}
+	
+	int API_CALL ContentManager::getHeight()
+	{
+		return _image->Height;
+	}
+	
+	IntPtr API_CALL ContentManager::getPixels()
+	{
+		return _image->Pixels;
+	}
+
 	
 	void API_CALL ContentManager::finishLoad()
 	{

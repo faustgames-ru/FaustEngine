@@ -37,6 +37,12 @@ namespace llge
 		NegativeZ = 0x5,
 	}
 	
+	public enum TextureImage2dFormat
+	{
+		Rgba = 0x0,
+		Rgb = 0x1,
+	}
+	
 	public enum ComponentsTypes
 	{
 		Aadd2d = 0x1,
@@ -66,13 +72,13 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private IntPtr llge_TextureImage2d_getTexture (IntPtr classInstance);
-		public void LoadPixels (int width, int height, IntPtr pixels)
+		public void LoadPixels (int width, int height, TextureImage2dFormat format, IntPtr pixels)
 		{
-			llge_TextureImage2d_LoadPixels(ClassInstance, width, height, pixels);
+			llge_TextureImage2d_LoadPixels(ClassInstance, width, height, format, pixels);
 		}
 		
 		[DllImport(Version.Dll)]
-		static extern private void llge_TextureImage2d_LoadPixels (IntPtr classInstance, int width, int height, IntPtr pixels);
+		static extern private void llge_TextureImage2d_LoadPixels (IntPtr classInstance, int width, int height, TextureImage2dFormat format, IntPtr pixels);
 		public void Create ()
 		{
 			llge_TextureImage2d_create(ClassInstance);
@@ -663,6 +669,39 @@ namespace llge
 		static extern private void llge_EntitiesFactory_dispose (IntPtr classInstance);
 	}
 	
+	public class TextureBuffer2d
+	{
+		public IntPtr ClassInstance;
+		public TextureImage2dFormat GetFormat ()
+		{
+			return llge_TextureBuffer2d_getFormat(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private TextureImage2dFormat llge_TextureBuffer2d_getFormat (IntPtr classInstance);
+		public int GetWidth ()
+		{
+			return llge_TextureBuffer2d_getWidth(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private int llge_TextureBuffer2d_getWidth (IntPtr classInstance);
+		public int GetHeight ()
+		{
+			return llge_TextureBuffer2d_getHeight(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private int llge_TextureBuffer2d_getHeight (IntPtr classInstance);
+		public IntPtr GetPixels ()
+		{
+			return llge_TextureBuffer2d_getPixels(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_TextureBuffer2d_getPixels (IntPtr classInstance);
+	}
+	
 	public class ContentManager
 	{
 		public IntPtr ClassInstance;
@@ -687,6 +726,13 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private void llge_ContentManager_loadImage (IntPtr classInstance, int id, IntPtr textureImage);
+		public TextureBuffer2d LoadBuffer (int id)
+		{
+			return new TextureBuffer2d{ ClassInstance = llge_ContentManager_loadBuffer(ClassInstance, id) };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_ContentManager_loadBuffer (IntPtr classInstance, int id);
 		public void FinishLoad ()
 		{
 			llge_ContentManager_finishLoad(ClassInstance);
@@ -703,27 +749,15 @@ namespace llge
 		static extern private void llge_ContentManager_dispose (IntPtr classInstance);
 	}
 	
-	public class ContentFactory
-	{
-		public IntPtr ClassInstance;
-		public ContentManager CreateContentManager ()
-		{
-			return new ContentManager{ ClassInstance = llge_ContentFactory_createContentManager(ClassInstance) };
-		}
-		
-		[DllImport(Version.Dll)]
-		static extern private IntPtr llge_ContentFactory_createContentManager (IntPtr classInstance);
-		public void Dispose ()
-		{
-			llge_ContentFactory_dispose(ClassInstance);
-		}
-		
-		[DllImport(Version.Dll)]
-		static extern private void llge_ContentFactory_dispose (IntPtr classInstance);
-	}
-	
 	public class llge
 	{
+		static public ContentManager CreateContentManager ()
+		{
+			return new ContentManager{ ClassInstance = createContentManager() };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr createContentManager ();
 		static public EntitiesFactory CreateEntitiesFactory ()
 		{
 			return new EntitiesFactory{ ClassInstance = createEntitiesFactory() };

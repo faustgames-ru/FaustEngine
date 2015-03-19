@@ -732,5 +732,8 @@
     <ClCompile Include="..\src\graphics\EffectConstant.cpp">
       <Filter>graphics</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\exports\llgeResources.cpp">
+      <Filter>exports</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

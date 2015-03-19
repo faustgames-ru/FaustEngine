@@ -16,9 +16,9 @@ namespace llge
 		return classInstance->getTexture();
 	}
 	
-	extern "C" DLLEXPORT void API_CALL llge_TextureImage2d_LoadPixels (ITextureImage2d * classInstance, int width, int height, void * pixels)
+	extern "C" DLLEXPORT void API_CALL llge_TextureImage2d_LoadPixels (ITextureImage2d * classInstance, int width, int height, TextureImage2dFormat format, void * pixels)
 	{
-		classInstance->LoadPixels(width, height, pixels);
+		classInstance->LoadPixels(width, height, format, pixels);
 	}
 	
 	extern "C" DLLEXPORT void API_CALL llge_TextureImage2d_create (ITextureImage2d * classInstance)
@@ -391,6 +391,26 @@ namespace llge
 		classInstance->dispose();
 	}
 	
+	extern "C" DLLEXPORT TextureImage2dFormat API_CALL llge_TextureBuffer2d_getFormat (ITextureBuffer2d * classInstance)
+	{
+		return classInstance->getFormat();
+	}
+	
+	extern "C" DLLEXPORT int API_CALL llge_TextureBuffer2d_getWidth (ITextureBuffer2d * classInstance)
+	{
+		return classInstance->getWidth();
+	}
+	
+	extern "C" DLLEXPORT int API_CALL llge_TextureBuffer2d_getHeight (ITextureBuffer2d * classInstance)
+	{
+		return classInstance->getHeight();
+	}
+	
+	extern "C" DLLEXPORT IntPtr API_CALL llge_TextureBuffer2d_getPixels (ITextureBuffer2d * classInstance)
+	{
+		return classInstance->getPixels();
+	}
+	
 	extern "C" DLLEXPORT int API_CALL llge_ContentManager_registerImage (IContentManager * classInstance, char * name)
 	{
 		return classInstance->registerImage(name);
@@ -406,22 +426,17 @@ namespace llge
 		classInstance->loadImage(id, textureImage);
 	}
 	
+	extern "C" DLLEXPORT ITextureBuffer2d * API_CALL llge_ContentManager_loadBuffer (IContentManager * classInstance, int id)
+	{
+		return classInstance->loadBuffer(id);
+	}
+	
 	extern "C" DLLEXPORT void API_CALL llge_ContentManager_finishLoad (IContentManager * classInstance)
 	{
 		classInstance->finishLoad();
 	}
 	
 	extern "C" DLLEXPORT void API_CALL llge_ContentManager_dispose (IContentManager * classInstance)
-	{
-		classInstance->dispose();
-	}
-	
-	extern "C" DLLEXPORT IContentManager * API_CALL llge_ContentFactory_createContentManager (IContentFactory * classInstance)
-	{
-		return classInstance->createContentManager();
-	}
-	
-	extern "C" DLLEXPORT void API_CALL llge_ContentFactory_dispose (IContentFactory * classInstance)
 	{
 		classInstance->dispose();
 	}

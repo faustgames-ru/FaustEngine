@@ -43,6 +43,13 @@ namespace llge
 		NegativeZ = 0x5,
 	};
 
+	enum TextureImage2dFormat
+	{
+		Rgba = 0x0,
+		Rgb = 0x1,
+	};
+
+
 	/// entities enums
 	enum ComponentsTypes
 	{
@@ -62,7 +69,7 @@ namespace llge
 	{
 	public:
 		virtual ITexture* API_CALL getTexture() = 0;
-		virtual void API_CALL LoadPixels(int width, int height, void *pixels) = 0;
+		virtual void API_CALL LoadPixels(int width, int height, TextureImage2dFormat format, void *pixels) = 0;
 
 		virtual void API_CALL create() = 0;
 		virtual void API_CALL cleanup() = 0;
@@ -222,23 +229,28 @@ namespace llge
 	};
 
 	/// content
+	class ITextureBuffer2d
+	{
+	public:
+		virtual TextureImage2dFormat API_CALL getFormat() = 0;
+		virtual int API_CALL getWidth() = 0;
+		virtual int API_CALL getHeight() = 0;
+		virtual IntPtr API_CALL getPixels() = 0;
+	};
+
+
 	class IContentManager
 	{
 	public:
 		virtual int API_CALL registerImage(char * name) = 0;
 		virtual void API_CALL startLoad() = 0;
 		virtual void API_CALL loadImage(int id, ITextureImage2d *textureImage) = 0;
+		virtual ITextureBuffer2d * API_CALL loadBuffer(int id) = 0;
 		virtual void API_CALL finishLoad() = 0;
 		virtual void API_CALL dispose() = 0;
 	};
 
-	class IContentFactory
-	{
-	public:
-		virtual IContentManager * API_CALL createContentManager() = 0;
-		virtual void API_CALL dispose() = 0;
-	};
-
+	extern "C" DLLEXPORT IContentManager * API_CALL createContentManager();
 	extern "C" DLLEXPORT IEntitiesFactory * API_CALL createEntitiesFactory();
 	extern "C" DLLEXPORT IGraphicsFactory * API_CALL createGraphicsFactory();
 	extern "C" DLLEXPORT IGeometryFactory * API_CALL createGeometryFactory();

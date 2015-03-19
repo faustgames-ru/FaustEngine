@@ -16,12 +16,14 @@ namespace graphics
 		static VertexFormat *position();
 		static VertexFormat *positionColor();
 		static VertexFormat *positionTextureColor();
+		static VertexFormat *positionColorTexture();
 		static VertexFormat *positionNormal();
 		static VertexFormat *positionTexture();
 	private:
 		static VertexFormatPosition _position;
 		static VertexFormatPositionColor _positionColor;
 		static VertexFormatPositionTextureColor _positionTextureColor;
+		static VertexFormatPositionColorTexture _positionColorTexture;
 		static VertexFormatPositionNormal _positionNormal;
 		static VertexFormatPositionTexture _positionTexture;
 	};

@@ -10,6 +10,7 @@ namespace graphics
 	public:
 		int Width;
 		int Height;
+		Image2dFormat::e Format;
 		unsigned int *Pixels;
 		Image2dData(int bufferSize);
 		Image2dData(int width, int height);

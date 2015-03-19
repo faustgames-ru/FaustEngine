@@ -21,6 +21,7 @@ namespace GameSampleWindowForms
     {
         private readonly OGLWindow _oglWindow;
 
+        private readonly ContentManager _contentManager;
         private readonly GraphicsFactory _graphicsFactory;
         private readonly GraphicsFacade _graphicsFacade;
 
@@ -64,6 +65,7 @@ namespace GameSampleWindowForms
 
             _entitiesFactory = llge.llge.CreateEntitiesFactory();
             _entitiesWorld = _entitiesFactory.CreateEntitiesWorld();
+            _contentManager = llge.llge.CreateContentManager();
             components.Add(new DisposeActionContainerComponent(() => _entitiesFactory.Dispose()));
             components.Add(new DisposeActionContainerComponent(() => _entitiesWorld.Dispose()));
 
@@ -148,7 +150,7 @@ namespace GameSampleWindowForms
                     mesh.MinY = minY - dsizeY;
                     mesh.MaxY = maxY + dsizeY;
 
-                    //if (mesh.Z > 500)
+                    if (mesh.Z > 500)
                     {
                         var index = _images.IndexOf(imageFile);
                         if (index < 0)
@@ -163,11 +165,11 @@ namespace GameSampleWindowForms
                     // correntBoundsWithZ;
                 }
             }
-
+            _contentManager.StartLoad();
             for (var i = 0; i < _images.Count; i++)
             {
                 var image = _images[i];
-                var texture = CreateTexture(image);
+                var texture = CreateTexture(_contentManager, image);
                 _textures.Add(i, texture);
                 /*
                 using (var bmp = new Bitmap(Path.Combine("D:\\", image + ".png")))
@@ -184,8 +186,8 @@ namespace GameSampleWindowForms
                 }
                  */ 
             }
-            _envMap = CreateTexture("skybox_fragment");
-            _whiteTexture = CreateTexture("white_texture");
+            _envMap = CreateTexture(_contentManager, "skybox_fragment");
+            _whiteTexture = CreateTexture(_contentManager, "white_texture");
             if (Settings.Default.useEnv)
             {
                 _env = _envMap;
@@ -195,7 +197,10 @@ namespace GameSampleWindowForms
                 _env = _whiteTexture;
             }
 
-            _nrm = CreateTexture("water_nrm");
+            _nrm = CreateTexture(_contentManager, "water_nrm");
+
+            _contentManager.FinishLoad();
+
             var waterGrid = new List<WaterVertex>();
             var waterIndices = new List<ushort>();
             for (var x = waterMinX + waterStepX; x <= waterMaxX; x += waterStepX)
@@ -277,8 +282,21 @@ namespace GameSampleWindowForms
 
         MeshBatch _batch = new MeshBatch();
         private const string ContetnFolder = "Content";
-        private unsafe TextureImage2d CreateTexture(string fileName)
+        private unsafe TextureImage2d CreateTexture(ContentManager contentManager, string fileName)
         {
+            fileName = Path.Combine(Application.StartupPath, ContetnFolder, fileName + ".png");
+            var id = contentManager.RegisterImage(fileName);
+            var texture = _graphicsFacade.CreateTextureImage2d();
+            texture.Create();
+            var buffer = contentManager.LoadBuffer(id);
+            var pixels = buffer.GetPixels();
+            var w = buffer.GetWidth();
+            var h = buffer.GetHeight();
+            var f = buffer.GetFormat();
+            contentManager.LoadImage(id, texture);
+            return texture;
+
+            /*
             using (var bmp = new Bitmap(Path.Combine(ContetnFolder, fileName + ".png")))
             {
                 var data = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height), ImageLockMode.ReadOnly,
@@ -304,6 +322,7 @@ namespace GameSampleWindowForms
                 bmp.UnlockBits(data);
                 return texture;
             }
+             */ 
         }
 
         private float _time = 0;
@@ -338,7 +357,7 @@ namespace GameSampleWindowForms
             const float zoom = 0.001f;
             
             _entitiesWorld.SetRenderBounds(_x - 2300, _y - 1700, _x + 2300, _y + 1700);
-            _entitiesWorld.GetCamera().SetPosition(_x, _y, -1800);
+            _entitiesWorld.GetCamera().SetPosition(_x, _y, -800);
             _entitiesWorld.GetCamera().SetAspect((float)_renderRegion.Height / _renderRegion.Width);
             _entitiesWorld.GetCamera().SetPlanes(0.1f, 50000f);
            
@@ -578,7 +597,7 @@ namespace GameSampleWindowForms
         {
             var pinnedArray = GCHandle.Alloc(pixels, GCHandleType.Pinned);
             var pointer = pinnedArray.AddrOfPinnedObject();
-            texture.LoadPixels(width, height, pointer);
+            texture.LoadPixels(width, height, TextureImage2dFormat.Rgba, pointer);
             pinnedArray.Free();
         }
     }

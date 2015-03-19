@@ -27,9 +27,9 @@ namespace graphics
 		_handle = 0;
 	}
 
-	void API_CALL TextureImage2d::LoadPixels(int width, int height, void *pixels)
+	void API_CALL TextureImage2d::LoadPixels(int width, int height, llge::TextureImage2dFormat format, void *pixels)
 	{
-		setData(width, height, (unsigned int *)pixels);
+		setData(width, height, (Image2dFormat::e)format, (unsigned int *)pixels);
 	}
 	
 	void API_CALL TextureImage2d::create()
@@ -88,11 +88,11 @@ namespace graphics
 		Errors::check(Errors::DeleteTexture);
 	}
 
-	void TextureImage2d::setData(int width, int height, unsigned int *pixels)
+	void TextureImage2d::setData(int width, int height, Image2dFormat::e format, unsigned int *pixels)
 	{
 		glBindTexture(GL_TEXTURE_2D, _handle);
 		Errors::check(Errors::BindTexture);
-		if (_createMipmaps)
+		if (_createMipmaps && (format == Image2dFormat::Rgba))
 		{
 			int w = width;
 			int h = height;
@@ -100,7 +100,7 @@ namespace graphics
 			int mip = 0;
 			while ((w > 0) || (h > 0))
 			{
-				glTexImage2D(GL_TEXTURE_2D, mip, GL_RGBA, w == 0 ? 1 : w, h == 0 ? 1 : h, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
+				glTexImage2D(GL_TEXTURE_2D, mip, getFormat(format), w == 0 ? 1 : w, h == 0 ? 1 : h, 0, getFormat(format), GL_UNSIGNED_BYTE, pixels);
 				Errors::check(Errors::TexImage2D);
 				w /= 2;
 				h /= 2;
@@ -113,6 +113,7 @@ namespace graphics
 						int i1 = (y * 2 + 1) * w * 2 + x * 2 + 0;
 						int i2 = (y * 2 + 0) * w * 2 + x * 2 + 1;
 						int i3 = (y * 2 + 1) * w * 2 + x * 2 + 1;
+						
 						ImageColor c0 = ImageColor(pixels[i0]);
 						ImageColor c1 = ImageColor(pixels[i1]);
 						ImageColor c2 = ImageColor(pixels[i2]);
@@ -135,7 +136,7 @@ namespace graphics
 		}
 		else
 		{
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
+			glTexImage2D(GL_TEXTURE_2D, 0, getFormat(format), width, height, 0, getFormat(format), GL_UNSIGNED_BYTE, pixels);
 			Errors::check(Errors::TexImage2D);
 		}
 		glBindTexture(GL_TEXTURE_2D, 0);
@@ -145,7 +146,21 @@ namespace graphics
 
 	void TextureImage2d::setData(const Image2dData *data)
 	{
-		setData(data->Width, data->Height, data->Pixels);
+		setData(data->Width, data->Height, data->Format, data->Pixels);
 	}
+
+	GLenum TextureImage2d::getFormat(Image2dFormat::e format)
+	{
+		switch (format)
+		{
+		case Image2dFormat::Rgb:
+			return GL_RGB;
+		case Image2dFormat::Rgba:
+			return GL_RGBA;
+		default:
+			return GL_RGBA;
+		}
+	}
+
 
 }

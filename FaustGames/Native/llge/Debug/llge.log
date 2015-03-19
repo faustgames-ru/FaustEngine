@@ -1,15 +1,68 @@
-﻿  EffectSolid.cpp
+﻿  ContentManager.cpp
+  llgePInvoke.cpp
   Generating Code...
   Compiling...
-  EffectSolidColor.cpp
+  ContentProviderWindows.cpp
+  VertexFormats.cpp
+  VertexFormat.cpp
+  VertexBuffer.cpp
+  Uniforms.cpp
+  UniformValueVector3.cpp
+  UniformValueTexture.cpp
+  UniformValueMatrix.cpp
+  UniformValueFloat.cpp
+  UniformValueCubemap.cpp
+  UniformValue.cpp
+  UniformInfo.cpp
+  Uniform.cpp
+  TextureRenderTarget2d.cpp
+  TextureLoader.cpp
+  TextureImage2d.cpp
+  TextureCubemap.cpp
+  Texture.cpp
+  StaticBatch.cpp
+  RenderState.cpp
   Generating Code...
   Compiling...
-  EffectTextureColor.cpp
-  Generating Code...
-  Compiling...
-  EffectTextureLightMapColor.cpp
-  Generating Code...
-  Compiling...
+  Image2dData.cpp
+  GraphicsDevice.cpp
+  Errors.cpp
+  Effects.cpp
   EffectWater.cpp
+  EffectTextureLightMapColor.cpp
+  EffectTextureColor.cpp
+  EffectSolidColor.cpp
+  EffectSolid.cpp
+  EffectConstant.cpp
+  EffectBase.cpp
+  Effect.cpp
+  Color.cpp
+  Attributes.cpp
+  AttributeInfo.cpp
+  llgeResources.cpp
+  llgeGraphics.cpp
+  llgeGeometry.cpp
+  llgeEntities.cpp
+  llge.cpp
   Generating Code...
+  Compiling...
+  TransformSystem2d.cpp
+  Transform2dComponent.cpp
+  System.cpp
+  RenderSystem2d.cpp
+  Render2dComponent.cpp
+  QuadtreeEntitiesFilter.cpp
+  Entity.cpp
+  EntitiesWorld.cpp
+  EntitiesFilter.cpp
+  DummyEntitiesFilter.cpp
+  Component.cpp
+  Aabb2dComponent.cpp
+  WaterRenderer.cpp
+  Renderer2d.cpp
+  RenderMesh2d.cpp
+  RenderItem2d.cpp
+  Camera.cpp
+  Generating Code...
+     Creating library C:\_faust\FaustEngine\FaustGames\Debug\llge.lib and object C:\_faust\FaustEngine\FaustGames\Debug\llge.exp
   llge.vcxproj -> C:\_faust\FaustEngine\FaustGames\Debug\llge.dll

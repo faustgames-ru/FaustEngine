@@ -7,6 +7,17 @@
 
 namespace graphics
 {
+	class VertexFormatPositionColorTexture : public VertexFormat
+	{
+	public:
+		VertexFormatPositionColorTexture()
+		{
+			addAttribute(Attributes::position());
+			addAttribute(Attributes::color());
+			addAttribute(Attributes::textureCoords());
+		}
+	};
+
 	class VertexFormatPositionTextureColor : public VertexFormat
 	{
 	public:

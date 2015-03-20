@@ -10,6 +10,7 @@
 #include "EffectTextureColor.h"
 #include "EffectTextureLightMapColor.h"
 #include "EffectWater.h"
+#include "EffectRenderDepth.h"
 
 namespace graphics
 {
@@ -23,6 +24,7 @@ namespace graphics
 		static EffectTextureColor * textureColor();
 		static EffectTextureLightMapColor * textureLightmapColor();
 		static EffectWater * water();
+		static EffectRenderDepth * renderDepth();
 	protected:
 	private:
 		static EffectSolid _solid;
@@ -30,6 +32,7 @@ namespace graphics
 		static EffectTextureColor _textureColor;
 		static EffectTextureLightMapColor _textureLightmapColor;
 		static EffectWater _water;
+		static EffectRenderDepth _renderDepth;
 
 	};
 }

@@ -36,6 +36,11 @@ namespace llge
 		classInstance->dispose();
 	}
 	
+	extern "C" DLLEXPORT IntPtr API_CALL llge_RenderTarget2d_getRenderTargetInstance (IRenderTarget2d * classInstance)
+	{
+		return classInstance->getRenderTargetInstance();
+	}
+	
 	extern "C" DLLEXPORT ITexture * API_CALL llge_RenderTarget2d_getTexture (IRenderTarget2d * classInstance)
 	{
 		return classInstance->getTexture();
@@ -56,6 +61,36 @@ namespace llge
 		classInstance->dispose();
 	}
 	
+	extern "C" DLLEXPORT IntPtr API_CALL llge_RenderTargetDepth2d_getRenderTargetInstance (IRenderTargetDepth2d * classInstance)
+	{
+		return classInstance->getRenderTargetInstance();
+	}
+	
+	extern "C" DLLEXPORT ITexture * API_CALL llge_RenderTargetDepth2d_getTexture (IRenderTargetDepth2d * classInstance)
+	{
+		return classInstance->getTexture();
+	}
+	
+	extern "C" DLLEXPORT ITexture * API_CALL llge_RenderTargetDepth2d_getDepthTexture (IRenderTargetDepth2d * classInstance)
+	{
+		return classInstance->getDepthTexture();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_RenderTargetDepth2d_create (IRenderTargetDepth2d * classInstance, int width, int height)
+	{
+		classInstance->create(width, height);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_RenderTargetDepth2d_cleanup (IRenderTargetDepth2d * classInstance)
+	{
+		classInstance->cleanup();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_RenderTargetDepth2d_dispose (IRenderTargetDepth2d * classInstance)
+	{
+		classInstance->dispose();
+	}
+	
 	extern "C" DLLEXPORT void API_CALL llge_UniformsFacade_setTime (IUniformsFacade * classInstance, float value)
 	{
 		classInstance->setTime(value);
@@ -69,6 +104,11 @@ namespace llge
 	extern "C" DLLEXPORT void API_CALL llge_UniformsFacade_setEnvironment (IUniformsFacade * classInstance, ITexture * texture)
 	{
 		classInstance->setEnvironment(texture);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_UniformsFacade_setDepthmap (IUniformsFacade * classInstance, ITexture * texture)
+	{
+		classInstance->setDepthmap(texture);
 	}
 	
 	extern "C" DLLEXPORT void API_CALL llge_UniformsFacade_setTexture (IUniformsFacade * classInstance, ITexture * texture)
@@ -116,14 +156,19 @@ namespace llge
 		return classInstance->getUniforms();
 	}
 	
-	extern "C" DLLEXPORT ITextureImage2d * API_CALL llge_GraphicsFacade_createTextureImage2d (IGraphicsFacade * classInstance)
+	extern "C" DLLEXPORT ITextureImage2d * API_CALL llge_GraphicsFacade_createTextureImage2d (IGraphicsFacade * classInstance, bool generateMipmaps)
 	{
-		return classInstance->createTextureImage2d();
+		return classInstance->createTextureImage2d(generateMipmaps);
 	}
 	
 	extern "C" DLLEXPORT IRenderTarget2d * API_CALL llge_GraphicsFacade_createRenderTarget2d (IGraphicsFacade * classInstance)
 	{
 		return classInstance->createRenderTarget2d();
+	}
+	
+	extern "C" DLLEXPORT IRenderTargetDepth2d * API_CALL llge_GraphicsFacade_createRenderTargetDepth2d (IGraphicsFacade * classInstance)
+	{
+		return classInstance->createRenderTargetDepth2d();
 	}
 	
 	extern "C" DLLEXPORT IVertexBuffer * API_CALL llge_GraphicsFacade_createVertexBuffer (IGraphicsFacade * classInstance)
@@ -136,9 +181,19 @@ namespace llge
 		classInstance->viewport(width, height);
 	}
 	
+	extern "C" DLLEXPORT void API_CALL llge_GraphicsFacade_setRenderTarget (IGraphicsFacade * classInstance, void * renderTargetInstance)
+	{
+		classInstance->setRenderTarget(renderTargetInstance);
+	}
+	
 	extern "C" DLLEXPORT void API_CALL llge_GraphicsFacade_setClearState (IGraphicsFacade * classInstance, uint color, float depth)
 	{
 		classInstance->setClearState(color, depth);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_GraphicsFacade_setBlendMode (IGraphicsFacade * classInstance, BlendMode blendMode)
+	{
+		classInstance->setBlendMode(blendMode);
 	}
 	
 	extern "C" DLLEXPORT void API_CALL llge_GraphicsFacade_clear (IGraphicsFacade * classInstance)

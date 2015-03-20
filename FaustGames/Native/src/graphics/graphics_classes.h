@@ -20,7 +20,8 @@ namespace graphics
 	{
 		enum e
 		{
-			Alpha, 
+			None,
+			Alpha,
 			Additive,
 		};
 	};

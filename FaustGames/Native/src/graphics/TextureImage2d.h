@@ -10,7 +10,7 @@ namespace graphics
 	class TextureImage2d : public Texture, public llge::ITextureImage2d
 	{
 	public:
-		TextureImage2d();
+		TextureImage2d(bool generateMipmaps);
 		void setData(const Image2dData *data);
 		void setData(int width, int height, Image2dFormat::e format, unsigned int *pixels);
 

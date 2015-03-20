@@ -6,4 +6,5 @@
 #include "Uniforms.h"
 #include "TextureImage2d.h"
 #include "TextureCubemap.h"
+#include "TextureRenderTargetDepth2d.h"
 #include "VertexFormats.h"

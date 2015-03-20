@@ -31,6 +31,12 @@ namespace llge
 		{
 			UniformValues::environment()->setValue(cubemap->getId());
 		}
+
+		virtual void API_CALL setDepthmap(ITexture *texture)
+		{
+			UniformValues::depthmap()->setValue(texture->getId());
+		}
+
 		
 		virtual void API_CALL setTexture(ITexture *texture)
 		{
@@ -97,6 +103,7 @@ namespace llge
 			effects[EffectTextureLightmapColor] = Effects::textureLightmapColor();
 			effects[EffectWater] = Effects::water();
 			effects[EffectSolid] = Effects::solid();
+			effects[EffectRenderDepth] = Effects::renderDepth();
 
 			formats[FormatPositionTextureColor] = VertexFormats::positionTextureColor();
 			formats[FormatPositionNormal] = VertexFormats::positionNormal();
@@ -125,9 +132,9 @@ namespace llge
 			return uniformsFacade;
 		}
 
-		virtual ITextureImage2d * API_CALL createTextureImage2d()
+		virtual ITextureImage2d * API_CALL createTextureImage2d(bool generateMipmaps)
 		{
-			return new TextureImage2d();
+			return new TextureImage2d(generateMipmaps);
 		}
 		
 		virtual IRenderTarget2d * API_CALL createRenderTarget2d()
@@ -135,15 +142,40 @@ namespace llge
 			return new TextureRenderTarget2d();
 		}
 
-
+		virtual IRenderTargetDepth2d * API_CALL createRenderTargetDepth2d()
+		{
+			return new TextureRenderTargetDepth2d();
+		}
+		
 		virtual IVertexBuffer * API_CALL createVertexBuffer()
 		{
 			return new VBuffer();
 		}
-		
+
+		virtual void API_CALL setRenderTarget(void *renderTargetInstance)
+		{
+			graphicsDevice->setRenderTarget((IRenderTarget *)renderTargetInstance);
+		}
+	
 		virtual void API_CALL viewport(int width, int height)
 		{
 			graphicsDevice->setViewport(0, 0, width, height);
+		}
+
+		virtual void API_CALL setBlendMode(BlendMode blendMode)
+		{
+			switch (blendMode)
+			{
+			case Alpha:
+				graphicsDevice->renderState.setBlend(graphics::BlendState::Alpha);
+				break;
+			case Additive:
+				graphicsDevice->renderState.setBlend(graphics::BlendState::Additive);
+				break;
+			default:
+				graphicsDevice->renderState.setBlend(graphics::BlendState::None);
+				break;
+			}
 		}
 
 		virtual void API_CALL setClearState(uint color, float depth)

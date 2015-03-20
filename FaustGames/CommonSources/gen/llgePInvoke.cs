@@ -12,12 +12,20 @@ namespace llge
 		public const string Dll = "llge";
 	}
 	
+	public enum BlendMode
+	{
+		None = 0x0,
+		Alpha = 0x1,
+		Additive = 0x2,
+	}
+	
 	public enum GraphicsEffects
 	{
 		EffectTextureColor = 0x0,
 		EffectTextureLightmapColor = 0x1,
 		EffectWater = 0x2,
 		EffectSolid = 0x3,
+		EffectRenderDepth = 0x3,
 	}
 	
 	public enum GraphicsVertexFormats
@@ -105,6 +113,13 @@ namespace llge
 	public class RenderTarget2d
 	{
 		public IntPtr ClassInstance;
+		public IntPtr GetRenderTargetInstance ()
+		{
+			return llge_RenderTarget2d_getRenderTargetInstance(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_RenderTarget2d_getRenderTargetInstance (IntPtr classInstance);
 		public Texture GetTexture ()
 		{
 			return new Texture{ ClassInstance = llge_RenderTarget2d_getTexture(ClassInstance) };
@@ -135,6 +150,53 @@ namespace llge
 		static extern private void llge_RenderTarget2d_dispose (IntPtr classInstance);
 	}
 	
+	public class RenderTargetDepth2d
+	{
+		public IntPtr ClassInstance;
+		public IntPtr GetRenderTargetInstance ()
+		{
+			return llge_RenderTargetDepth2d_getRenderTargetInstance(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_RenderTargetDepth2d_getRenderTargetInstance (IntPtr classInstance);
+		public Texture GetTexture ()
+		{
+			return new Texture{ ClassInstance = llge_RenderTargetDepth2d_getTexture(ClassInstance) };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_RenderTargetDepth2d_getTexture (IntPtr classInstance);
+		public Texture GetDepthTexture ()
+		{
+			return new Texture{ ClassInstance = llge_RenderTargetDepth2d_getDepthTexture(ClassInstance) };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_RenderTargetDepth2d_getDepthTexture (IntPtr classInstance);
+		public void Create (int width, int height)
+		{
+			llge_RenderTargetDepth2d_create(ClassInstance, width, height);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_RenderTargetDepth2d_create (IntPtr classInstance, int width, int height);
+		public void Cleanup ()
+		{
+			llge_RenderTargetDepth2d_cleanup(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_RenderTargetDepth2d_cleanup (IntPtr classInstance);
+		public void Dispose ()
+		{
+			llge_RenderTargetDepth2d_dispose(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_RenderTargetDepth2d_dispose (IntPtr classInstance);
+	}
+	
 	public class UniformsFacade
 	{
 		public IntPtr ClassInstance;
@@ -159,6 +221,13 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private void llge_UniformsFacade_setEnvironment (IntPtr classInstance, IntPtr texture);
+		public void SetDepthmap (Texture texture)
+		{
+			llge_UniformsFacade_setDepthmap(ClassInstance, texture.ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_UniformsFacade_setDepthmap (IntPtr classInstance, IntPtr texture);
 		public void SetTexture (Texture texture)
 		{
 			llge_UniformsFacade_setTexture(ClassInstance, texture.ClassInstance);
@@ -232,13 +301,13 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private IntPtr llge_GraphicsFacade_getUniforms (IntPtr classInstance);
-		public TextureImage2d CreateTextureImage2d ()
+		public TextureImage2d CreateTextureImage2d (bool generateMipmaps)
 		{
-			return new TextureImage2d{ ClassInstance = llge_GraphicsFacade_createTextureImage2d(ClassInstance) };
+			return new TextureImage2d{ ClassInstance = llge_GraphicsFacade_createTextureImage2d(ClassInstance, generateMipmaps) };
 		}
 		
 		[DllImport(Version.Dll)]
-		static extern private IntPtr llge_GraphicsFacade_createTextureImage2d (IntPtr classInstance);
+		static extern private IntPtr llge_GraphicsFacade_createTextureImage2d (IntPtr classInstance, bool generateMipmaps);
 		public RenderTarget2d CreateRenderTarget2d ()
 		{
 			return new RenderTarget2d{ ClassInstance = llge_GraphicsFacade_createRenderTarget2d(ClassInstance) };
@@ -246,6 +315,13 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private IntPtr llge_GraphicsFacade_createRenderTarget2d (IntPtr classInstance);
+		public RenderTargetDepth2d CreateRenderTargetDepth2d ()
+		{
+			return new RenderTargetDepth2d{ ClassInstance = llge_GraphicsFacade_createRenderTargetDepth2d(ClassInstance) };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_GraphicsFacade_createRenderTargetDepth2d (IntPtr classInstance);
 		public VertexBuffer CreateVertexBuffer ()
 		{
 			return new VertexBuffer{ ClassInstance = llge_GraphicsFacade_createVertexBuffer(ClassInstance) };
@@ -260,6 +336,13 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private void llge_GraphicsFacade_viewport (IntPtr classInstance, int width, int height);
+		public void SetRenderTarget (IntPtr renderTargetInstance)
+		{
+			llge_GraphicsFacade_setRenderTarget(ClassInstance, renderTargetInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_GraphicsFacade_setRenderTarget (IntPtr classInstance, IntPtr renderTargetInstance);
 		public void SetClearState (uint color, float depth)
 		{
 			llge_GraphicsFacade_setClearState(ClassInstance, color, depth);
@@ -267,6 +350,13 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private void llge_GraphicsFacade_setClearState (IntPtr classInstance, uint color, float depth);
+		public void SetBlendMode (BlendMode blendMode)
+		{
+			llge_GraphicsFacade_setBlendMode(ClassInstance, blendMode);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_GraphicsFacade_setBlendMode (IntPtr classInstance, BlendMode blendMode);
 		public void Clear ()
 		{
 			llge_GraphicsFacade_clear(ClassInstance);

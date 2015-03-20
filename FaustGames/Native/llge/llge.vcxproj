@@ -84,6 +84,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\CommonSources\include\llge.h" />
+    <ClInclude Include="..\shaders\shader_render_depth_frag.h" />
+    <ClInclude Include="..\shaders\shader_render_depth_vert.h" />
     <ClInclude Include="..\shaders\solid_color_frag.h" />
     <ClInclude Include="..\shaders\solid_color_vert.h" />
     <ClInclude Include="..\shaders\solid_frag.h" />
@@ -143,6 +145,7 @@
     <ClInclude Include="..\src\graphics\Effect.h" />
     <ClInclude Include="..\src\graphics\EffectBase.h" />
     <ClInclude Include="..\src\graphics\EffectConstant.h" />
+    <ClInclude Include="..\src\graphics\EffectRenderDepth.h" />
     <ClInclude Include="..\src\graphics\Effects.h" />
     <ClInclude Include="..\src\graphics\EffectSolid.h" />
     <ClInclude Include="..\src\graphics\EffectSolidColor.h" />
@@ -165,6 +168,7 @@
     <ClInclude Include="..\src\graphics\TextureImage2d.h" />
     <ClInclude Include="..\src\graphics\TextureLoader.h" />
     <ClInclude Include="..\src\graphics\TextureRenderTarget2d.h" />
+    <ClInclude Include="..\src\graphics\TextureRenderTargetDepth2d.h" />
     <ClInclude Include="..\src\graphics\Uniform.h" />
     <ClInclude Include="..\src\graphics\UniformInfo.h" />
     <ClInclude Include="..\src\graphics\Uniforms.h" />
@@ -253,6 +257,7 @@
     <ClCompile Include="..\src\graphics\Effect.cpp" />
     <ClCompile Include="..\src\graphics\EffectBase.cpp" />
     <ClCompile Include="..\src\graphics\EffectConstant.cpp" />
+    <ClCompile Include="..\src\graphics\EffectRenderDepth.cpp" />
     <ClCompile Include="..\src\graphics\Effects.cpp" />
     <ClCompile Include="..\src\graphics\EffectSolid.cpp" />
     <ClCompile Include="..\src\graphics\EffectSolidColor.cpp" />
@@ -269,6 +274,7 @@
     <ClCompile Include="..\src\graphics\TextureImage2d.cpp" />
     <ClCompile Include="..\src\graphics\TextureLoader.cpp" />
     <ClCompile Include="..\src\graphics\TextureRenderTarget2d.cpp" />
+    <ClCompile Include="..\src\graphics\TextureRenderTargetDepth2d.cpp" />
     <ClCompile Include="..\src\graphics\Uniform.cpp" />
     <ClCompile Include="..\src\graphics\UniformInfo.cpp" />
     <ClCompile Include="..\src\graphics\Uniforms.cpp" />

@@ -7,6 +7,7 @@ namespace graphics
 	UniformInfo Uniforms::_texture("texture", UniformType::Sampler2D);
 	UniformInfo Uniforms::_lightmap("lightmap", UniformType::Sampler2D);
 	UniformInfo Uniforms::_environment("environment", UniformType::Sampler2D);
+	UniformInfo Uniforms::_depthmap("depthmap", UniformType::Sampler2D);
 	UniformInfo Uniforms::_normalmap("normalmap", UniformType::Sampler2D);
 	UniformInfo Uniforms::_time("time", UniformType::Float);	
 	
@@ -33,6 +34,11 @@ namespace graphics
 		return &_environment;
 	}
 
+	UniformInfo *Uniforms::depthmap()
+	{
+		return &_depthmap;
+	}
+	
 	UniformInfo *Uniforms::normalmap()
 	{
 		return &_normalmap;
@@ -49,6 +55,7 @@ namespace graphics
 	UniformValueTexture UniformValues::_texture;
 	UniformValueTexture UniformValues::_lightmap;
 	UniformValueTexture UniformValues::_environment;
+	UniformValueTexture UniformValues::_depthmap;
 	UniformValueTexture UniformValues::_normalmap;
 	UniformValueFloat UniformValues::_time;
 

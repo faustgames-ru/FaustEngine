@@ -22,7 +22,7 @@ namespace graphics
 		}
 	};
 
-	TextureImage2d::TextureImage2d() : _wrap(true), _filter(true), _createMipmaps(false)
+	TextureImage2d::TextureImage2d(bool generateMipmaps) : _wrap(true), _filter(true), _createMipmaps(generateMipmaps)
 	{
 		_handle = 0;
 	}
@@ -92,7 +92,7 @@ namespace graphics
 	{
 		glBindTexture(GL_TEXTURE_2D, _handle);
 		Errors::check(Errors::BindTexture);
-		if (_createMipmaps && (format == Image2dFormat::Rgba))
+		if (_createMipmaps)
 		{
 			int w = width;
 			int h = height;

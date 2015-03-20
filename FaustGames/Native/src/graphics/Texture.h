@@ -11,7 +11,7 @@ namespace graphics
 	public:
 		inline const GLuint getHandle(){ return _handle; }
 		virtual uint API_CALL getId() { return getHandle(); }
-
+		inline void setHandle(GLuint value) { _handle = value; }
 	protected:
 		GLuint _handle;
 	};

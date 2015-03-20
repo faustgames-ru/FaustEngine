@@ -24,6 +24,7 @@ namespace graphics
 		_effect.addUniform(Uniforms::cameraPosition(), UniformValues::cameraPosition());
 		_effect.addUniform(Uniforms::projection(), UniformValues::projection());
 		_effect.addUniform(Uniforms::environment(), UniformValues::environment());
+		_effect.addUniform(Uniforms::depthmap(), UniformValues::depthmap());
 		_effect.addUniform(Uniforms::normalmap(), UniformValues::normalmap());
 		_effect.addUniform(Uniforms::time(), UniformValues::time());
 		_effect.addAttribute(Attributes::position());

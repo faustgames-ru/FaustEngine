@@ -4,6 +4,7 @@ precision mediump int;
 #endif
 
 uniform sampler2D environment;
+uniform sampler2D depthmap;
 uniform sampler2D normalmap;
 uniform float normalScaleZ;
 uniform float envOffsetY;
@@ -17,6 +18,8 @@ uniform vec4 reflectionTint1;
 varying vec2 _textureCoords0;
 varying vec2 _textureCoords1;
 varying vec3 _eye;
+varying vec2 _screen;
+varying float _z;
 
 vec3 rgb2hsv(vec3 c)
 {
@@ -39,16 +42,27 @@ vec3 hsv2rgb(vec3 c)
 vec3 correctSaturation(vec3 c, float s)
 {
   vec3 hsv = rgb2hsv(c);
-	hsv.y *= s;
+  hsv.y *= s;
 	return hsv2rgb(hsv);
 }
 
+float LinearizeDepth(float z)
+{
+  float n = 100.0;
+  float f = 50000.0;
+  return (2.0 * n) / (f + n - z * (f - n));	
+}
 
 void main()
 {
 	vec3 normal0 = texture2D(normalmap, _textureCoords0).xyz - 0.5;
 	vec3 normal1 = texture2D(normalmap, _textureCoords1).xyz - 0.5;
 	vec3 normal = normalize(normal0 + normal1);
+	float depth = LinearizeDepth(texture2D(depthmap, _screen*0.5+0.5).r);
+	float actualDepth = LinearizeDepth(_z);
+	float alpha = clamp(abs(actualDepth - depth)*(50000.0-100)/500.0, 0.0, 1.0);
+	
+		
 	normal.z *= normalScaleZ;
 	normal = normalize(normal);
 	vec3 env = normalize(reflect (_eye, normal));
@@ -60,7 +74,9 @@ void main()
 	textureColor.rgb = (textureColor.rgb - 0.5) * reflectionContrast + 0.5;
 	textureColor.rgb += reflectionBrightness;
 	textureColor.rgb = clamp(textureColor.rgb, 0.0, 1.0);
-	
+	textureOriginColor.a = alpha;
+	textureColor.a = alpha;
 	//gl_FragColor = mix(textureOriginColor, textureColor * vec4(0.4, 0.6, 0.7, 1.0), mixLevel);
 	gl_FragColor = mix(textureOriginColor * reflectionTint0, textureColor * reflectionTint1, mixLevel);
+	
 }

@@ -48,6 +48,20 @@ namespace graphics
 
 		if (!_blendState.isEqual())
 		{
+			switch (_blendState.getValue())
+			{
+			case BlendState::Alpha:
+				glEnable(GL_BLEND);
+				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+				break;
+			case BlendState::Additive:
+				glEnable(GL_BLEND);
+				//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+				break;
+			default:
+				glDisable(GL_BLEND);
+				break;
+			}
 			/// apply blend
 		}
 

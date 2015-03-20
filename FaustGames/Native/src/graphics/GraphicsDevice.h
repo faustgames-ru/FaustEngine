@@ -17,7 +17,7 @@ namespace graphics
 		~GraphicsDevice();
 		void setClearState(unsigned int color, float depth);
 		void setViewport(int x, int y, int width, int height);
-		void setRenderTarget(TextureRenderTarget2d *renderTarget);
+		void setRenderTarget(IRenderTarget *renderTarget);
 		void clear();
 		void resetState();
 		void drawVertexBuffer(VertexFormat *vertexFormat, GLuint vertexBuffer, unsigned short *indexBuffer, int primitivesCount);

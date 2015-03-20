@@ -18,12 +18,20 @@ namespace llge
 {
 	/// graphics enums
 
+	enum BlendMode
+	{
+		None = 0x0,
+		Alpha = 0x1,
+		Additive = 0x2,
+	};
+
 	enum GraphicsEffects
 	{
 		EffectTextureColor = 0x0,
 		EffectTextureLightmapColor = 0x1,
 		EffectWater = 0x2,
 		EffectSolid = 0x3,
+		EffectRenderDepth = 0x3,
 	};
 
 	enum GraphicsVertexFormats
@@ -79,7 +87,19 @@ namespace llge
 	class IRenderTarget2d
 	{
 	public:
+		virtual IntPtr API_CALL getRenderTargetInstance() = 0;
 		virtual ITexture* API_CALL getTexture() = 0;
+		virtual void API_CALL create(int width, int height) = 0;
+		virtual void API_CALL cleanup() = 0;
+		virtual void API_CALL dispose() = 0;
+	};
+
+	class IRenderTargetDepth2d
+	{
+	public:
+		virtual IntPtr API_CALL getRenderTargetInstance() = 0;
+		virtual ITexture* API_CALL getTexture() = 0;
+		virtual ITexture* API_CALL getDepthTexture() = 0;
 		virtual void API_CALL create(int width, int height) = 0;
 		virtual void API_CALL cleanup() = 0;
 		virtual void API_CALL dispose() = 0;
@@ -91,6 +111,7 @@ namespace llge
 		virtual void API_CALL setTime(float value) = 0;
 		virtual void API_CALL setNormalmap(ITexture *texture) = 0;
 		virtual void API_CALL setEnvironment(ITexture *texture) = 0;
+		virtual void API_CALL setDepthmap(ITexture *texture) = 0;
 		virtual void API_CALL setTexture(ITexture *texture) = 0;
 		virtual void API_CALL setLightMap(ITexture *texture) = 0;
 		virtual void API_CALL setProjection(void *floatMatrix) = 0;
@@ -110,12 +131,15 @@ namespace llge
 	{
 	public:
 		virtual IUniformsFacade * API_CALL getUniforms() = 0;
-		virtual ITextureImage2d * API_CALL createTextureImage2d() = 0;
+		virtual ITextureImage2d * API_CALL createTextureImage2d(bool generateMipmaps) = 0;
 		virtual IRenderTarget2d * API_CALL createRenderTarget2d() = 0;
+		virtual IRenderTargetDepth2d * API_CALL createRenderTargetDepth2d() = 0;
 		virtual IVertexBuffer * API_CALL createVertexBuffer() = 0;
 
 		virtual void API_CALL viewport(int width, int height) = 0;
+		virtual void API_CALL setRenderTarget(void *renderTargetInstance) = 0;
 		virtual void API_CALL setClearState(uint color, float depth) = 0;
+		virtual void API_CALL setBlendMode(BlendMode blendMode) = 0;
 		virtual void API_CALL clear() = 0;
 		virtual void API_CALL draw(GraphicsEffects effect, GraphicsVertexFormats vertexFormat, void *vertices, void *indices, int primitivesCount) = 0;
 		virtual void API_CALL drawVertexBuffer(GraphicsEffects effect, GraphicsVertexFormats vertexFormat, IVertexBuffer *vertexBuffer, void *indices, int primitivesCount) = 0;

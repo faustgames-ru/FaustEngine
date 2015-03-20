@@ -11,6 +11,8 @@ namespace graphics
 	EffectTextureColor Effects::_textureColor;
 	EffectTextureLightMapColor Effects::_textureLightmapColor;
 	EffectWater Effects::_water;
+	EffectRenderDepth Effects::_renderDepth;
+
 
 	void Effects::create()
 	{
@@ -19,6 +21,7 @@ namespace graphics
 		_textureColor.create();
 		_textureLightmapColor.create();
 		_water.create();
+		_renderDepth.create();
 	}
 
 	void Effects::cleanup()
@@ -28,6 +31,7 @@ namespace graphics
 		_textureColor.getEffect()->cleanup();
 		_textureLightmapColor.getEffect()->cleanup();
 		_water.getEffect()->cleanup();
+		_renderDepth.getEffect()->cleanup();
 	}
 
 	EffectSolid * Effects::solid()
@@ -55,5 +59,8 @@ namespace graphics
 		return &_water;
 	}
 
-
+	EffectRenderDepth * Effects::renderDepth()
+	{
+		return &_renderDepth;
+	}
 }

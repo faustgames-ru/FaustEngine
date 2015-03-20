@@ -6,15 +6,25 @@
 
 namespace graphics
 {
-	class TextureRenderTarget2d : public Texture, public llge::IRenderTarget2d
+	class IRenderTarget
+	{
+	public:
+		virtual GLuint getFramebuffer() = 0;
+		virtual int getWidth() = 0;
+		virtual int getHeight() = 0;
+	};
+
+	class TextureRenderTarget2d : public Texture, public llge::IRenderTarget2d, IRenderTarget
 	{
 	public:
 		TextureRenderTarget2d();
-		inline int getWidth(){ return _width; }
-		inline int getHeight(){ return _height; }
-		inline GLuint getFramebuffer(){ return _frameBuffer; }
+
+		virtual int getWidth(){ return _width; }
+		virtual int getHeight(){ return _height; }
+		virtual GLuint getFramebuffer(){ return _frameBuffer; }
 		inline GLuint getDepthbuffer(){ return _depthBuffer; }
 
+		virtual void* API_CALL getRenderTargetInstance(){ return (IRenderTarget *)this; }
 		virtual ITexture* API_CALL getTexture(){ return this; }
 		virtual void API_CALL create(int width, int height);
 		virtual void API_CALL cleanup();
@@ -29,4 +39,4 @@ namespace graphics
 	};
 }
 
-#endif /*TEXTURE_RENDER_TARGET2D_H*/
+#endif /*TEXTURE_RENDER_TARGET_2D_H*/

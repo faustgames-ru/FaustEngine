@@ -38,7 +38,7 @@ namespace graphics
 		Errors::check(Errors::Viewport);
 	}
 
-	void GraphicsDevice::setRenderTarget(TextureRenderTarget2d *renderTarget)
+	void GraphicsDevice::setRenderTarget(IRenderTarget *renderTarget)
 	{
 		if (!renderTarget)
 		{
@@ -51,12 +51,32 @@ namespace graphics
 		{
 			glBindFramebuffer(GL_FRAMEBUFFER, renderTarget->getFramebuffer());
 			Errors::check(Errors::BindFramebuffer);
-			/*
+
 			GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
 			Errors::check(Errors::CheckFramebufferStatus);
 			if (status != GL_FRAMEBUFFER_COMPLETE)
+			{
+				switch (status)
+				{
+				case GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT:
+					Errors::check(Errors::CheckFramebufferStatus);
+					break;
+				case GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT:
+					Errors::check(Errors::CheckFramebufferStatus);
+					break;
+				case GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER:
+					Errors::check(Errors::CheckFramebufferStatus);
+					break;
+				case GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER:
+					Errors::check(Errors::CheckFramebufferStatus);
+					break;
+				case GL_FRAMEBUFFER_UNSUPPORTED:
+					Errors::check(Errors::CheckFramebufferStatus);
+					break;
+				}
 				return;
-			*/
+			}
+			
 			glViewport(0, 0, renderTarget->getWidth(), renderTarget->getHeight());
 			Errors::check(Errors::Viewport);
 		}

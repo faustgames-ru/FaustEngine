@@ -21,6 +21,8 @@ namespace GameSampleWindowForms
     {
         private readonly OGLWindow _oglWindow;
 
+        private readonly RenderTargetDepth2d _renderTarget;
+
         private readonly ContentManager _contentManager;
         private readonly GraphicsFactory _graphicsFactory;
         private readonly GraphicsFacade _graphicsFacade;
@@ -150,7 +152,8 @@ namespace GameSampleWindowForms
                     mesh.MinY = minY - dsizeY;
                     mesh.MaxY = maxY + dsizeY;
 
-                    if (mesh.Z > 500)
+                    //if (mesh.Z > 500)
+                    //if (false)
                     {
                         var index = _images.IndexOf(imageFile);
                         if (index < 0)
@@ -169,7 +172,7 @@ namespace GameSampleWindowForms
             for (var i = 0; i < _images.Count; i++)
             {
                 var image = _images[i];
-                var texture = CreateTexture(_contentManager, image);
+                var texture = CreateTexture(_contentManager, image, false);
                 _textures.Add(i, texture);
                 /*
                 using (var bmp = new Bitmap(Path.Combine("D:\\", image + ".png")))
@@ -186,8 +189,8 @@ namespace GameSampleWindowForms
                 }
                  */ 
             }
-            _envMap = CreateTexture(_contentManager, "skybox_fragment");
-            _whiteTexture = CreateTexture(_contentManager, "white_texture");
+            _envMap = CreateTexture(_contentManager, "skybox_fragment", true);
+            _whiteTexture = CreateTexture(_contentManager, "white_texture", false);
             if (Settings.Default.useEnv)
             {
                 _env = _envMap;
@@ -197,7 +200,7 @@ namespace GameSampleWindowForms
                 _env = _whiteTexture;
             }
 
-            _nrm = CreateTexture(_contentManager, "water_nrm");
+            _nrm = CreateTexture(_contentManager, "water_nrm", true);
 
             _contentManager.FinishLoad();
 
@@ -269,6 +272,9 @@ namespace GameSampleWindowForms
             _graphicsFacade.SetEffectConstantFloat(GraphicsEffects.EffectWater, "reflectionSaturation", Settings.Default.reflectionSaturation);
             _graphicsFacade.SetEffectConstantColor(GraphicsEffects.EffectWater, "reflectionTint0", (uint)(Settings.Default.reflectionTint0.ToArgb()));
             _graphicsFacade.SetEffectConstantColor(GraphicsEffects.EffectWater, "reflectionTint1", (uint)(Settings.Default.reflectionTint1.ToArgb()));
+
+            _renderTarget = _graphicsFacade.CreateRenderTargetDepth2d();
+            _renderTarget.Create(_renderRegion.ClientSize.Width, _renderRegion.ClientSize.Height);
         }
 
 
@@ -282,11 +288,11 @@ namespace GameSampleWindowForms
 
         MeshBatch _batch = new MeshBatch();
         private const string ContetnFolder = "Content";
-        private unsafe TextureImage2d CreateTexture(ContentManager contentManager, string fileName)
+        private unsafe TextureImage2d CreateTexture(ContentManager contentManager, string fileName, bool createMipmaps)
         {
             fileName = Path.Combine(Application.StartupPath, ContetnFolder, fileName + ".png");
             var id = contentManager.RegisterImage(fileName);
-            var texture = _graphicsFacade.CreateTextureImage2d();
+            var texture = _graphicsFacade.CreateTextureImage2d(createMipmaps);
             texture.Create();
             var buffer = contentManager.LoadBuffer(id);
             var pixels = buffer.GetPixels();
@@ -325,9 +331,31 @@ namespace GameSampleWindowForms
              */ 
         }
 
+        public static readonly float[] IdentityMatrix =
+        {
+            1.0f, 0.0f, 0.0f, 0.0f,
+            0.0f, 1.0f, 0.0f, 0.0f,
+            0.0f, 0.0f, 1.0f, 0.0f,
+            0.0f, 0.0f, 0.0f, 1.0f,
+        };
+
+        public static readonly MeshExportVertex[] ScreenQuad =
+        {
+            new MeshExportVertex(-1, -1, 0.5f, 0, 0, 0xffffffff), 
+            new MeshExportVertex(-0.5f, -1, 0.5f, ushort.MaxValue, 0, 0xffffffff), 
+            new MeshExportVertex(-0.5f,  -0.5f, 0.5f, ushort.MaxValue, ushort.MaxValue, 0xffffffff), 
+            new MeshExportVertex(-1,  -0.5f, 0.5f, 0, ushort.MaxValue, 0xffffffff), 
+        };
+
+
+        public static readonly ushort[] ScreenQuadsIndices =
+        {
+            0, 1, 2,
+            0, 2, 3
+        };
         private float _time = 0;
 
-        private void DoUpdate()
+        private unsafe void DoUpdate()
         {
             if (_stopwatch == null)
             {
@@ -356,32 +384,52 @@ namespace GameSampleWindowForms
 
             const float zoom = 0.001f;
             
+            //_graphicsFacade.SetRenderTarget(_renderTarget.GetRenderTargetInstance());
+
             _entitiesWorld.SetRenderBounds(_x - 2300, _y - 1700, _x + 2300, _y + 1700);
-            _entitiesWorld.GetCamera().SetPosition(_x, _y, -800);
+            _entitiesWorld.GetCamera().SetPosition(_x, _y, -1000);
             _entitiesWorld.GetCamera().SetAspect((float)_renderRegion.Height / _renderRegion.Width);
-            _entitiesWorld.GetCamera().SetPlanes(0.1f, 50000f);
-           
+            _entitiesWorld.GetCamera().SetPlanes(100f, 50000f);
+                       
+            _graphicsFacade.Clear();
+
+            Text = _entitiesWorld.Update(0).ToString(CultureInfo.InvariantCulture);
+                        
+            //_graphicsFacade.SetRenderTarget(new IntPtr(0));
+            //_graphicsFacade.Clear();
+
+
             _graphicsFacade.GetUniforms().SetEnvironment(_env.GetTexture());
+            _graphicsFacade.GetUniforms().SetDepthmap(_renderTarget.GetDepthTexture());
             _graphicsFacade.GetUniforms().SetNormalmap(_nrm.GetTexture());
             _graphicsFacade.GetUniforms().SetTime(_time);
-            
-            _graphicsFacade.Clear();
 
             _graphicsFacade.Draw(
                 _waterPlane,
                 _waterIndices,
                 _waterIndices.Length / 3);
-            Text = _entitiesWorld.Update(0).ToString(CultureInfo.InvariantCulture);
             /*
-            foreach (var data in _data)
+
+            _graphicsFacade.SetBlendMode(BlendMode.None);
+
+            fixed (float* proj = IdentityMatrix)
             {
-                _graphicsFacade.GetUniforms().SetTexture(_textures[data.TextureId]);
-                _graphicsFacade.Draw(
-                    data.Vertices,
-                    data.Indices,
-                    data.Indices.Length / 3);
+                _graphicsFacade.GetUniforms().SetProjection(new IntPtr(proj));
             }
-             */ 
+            _graphicsFacade.GetUniforms().SetTexture(_renderTarget.GetDepthTexture());
+
+            fixed (MeshExportVertex* verts = ScreenQuad)
+            fixed (ushort* inds = ScreenQuadsIndices)
+            {
+                _graphicsFacade.Draw(
+                    GraphicsEffects.EffectRenderDepth,
+                    GraphicsVertexFormats.FormatPositionTextureColor,
+                    new IntPtr(verts),
+                    new IntPtr(inds),
+                    2);
+            }
+            */
+            
             _oglWindow.SwapOpenGLBuffers();
             
         }

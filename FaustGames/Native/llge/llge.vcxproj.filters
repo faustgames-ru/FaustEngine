@@ -431,6 +431,18 @@
     <ClInclude Include="..\src\graphics\EffectConstant.h">
       <Filter>graphics</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\graphics\TextureRenderTargetDepth2d.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shaders\shader_render_depth_frag.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shaders\shader_render_depth_vert.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\EffectRenderDepth.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\CommonSources\gen\llgePInvoke.cpp">
@@ -734,6 +746,12 @@
     </ClCompile>
     <ClCompile Include="..\src\exports\llgeResources.cpp">
       <Filter>exports</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\TextureRenderTargetDepth2d.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\EffectRenderDepth.cpp">
+      <Filter>graphics</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

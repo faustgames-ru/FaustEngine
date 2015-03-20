@@ -19,6 +19,7 @@ namespace graphics
 		static UniformInfo *texture();
 		static UniformInfo *lightmap();
 		static UniformInfo *environment();
+		static UniformInfo *depthmap();
 		static UniformInfo *normalmap();
 		static UniformInfo *time();
 	private:
@@ -27,6 +28,7 @@ namespace graphics
 		static UniformInfo _texture;
 		static UniformInfo _lightmap;
 		static UniformInfo _environment;
+		static UniformInfo _depthmap;
 		static UniformInfo _normalmap;
 		static UniformInfo _time;
 	};
@@ -39,6 +41,7 @@ namespace graphics
 		static inline UniformValueTexture *texture(){ return &_texture; }
 		static inline UniformValueTexture *lightmap(){ return &_lightmap; }
 		static inline UniformValueTexture *environment(){ return &_environment; }
+		static inline UniformValueTexture *depthmap(){ return &_depthmap; }
 		static inline UniformValueTexture *normalmap(){ return &_normalmap; }
 		static inline UniformValueFloat *time(){ return &_time; }
 	private:
@@ -47,6 +50,7 @@ namespace graphics
 		static UniformValueTexture _texture;
 		static UniformValueTexture _lightmap;
 		static UniformValueTexture _environment;
+		static UniformValueTexture _depthmap;
 		static UniformValueTexture _normalmap;
 		static UniformValueFloat _time;
 	};

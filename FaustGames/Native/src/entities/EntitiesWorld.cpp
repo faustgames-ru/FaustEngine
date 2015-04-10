@@ -89,6 +89,12 @@ namespace entities
 		_filter = filter;
 	}
 
+	void EntitiesWorld::clear()
+	{
+		_filter->clear();
+		// todo: clear systems;
+	}
+
 
 	void EntitiesWorld::addEntity(System* system, Entity* entity)
 	{

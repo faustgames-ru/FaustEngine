@@ -14,7 +14,8 @@ namespace entities
 			Aadd2d = 0,
 			Transform2d = 1,
 			Render2d = 2,
-			ComponentsCount = 3,
+			MatrixTransform = 3,
+			ComponentsCount = 4,
 		};
 	};
 

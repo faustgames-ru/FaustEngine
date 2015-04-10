@@ -1,6 +1,3 @@
-// llge.cpp : Defines the exported functions for the DLL application.
-//
-
 #include "llge.h"
 #include "..\core\core.h"
 #include "..\geometry\geometry.h"

@@ -39,7 +39,11 @@ namespace geometry
 		{
 			result.iterations++;
 			if (Aabb2d::cross((*i)->Aabb, filter))
+			{
+				//float proportions = Aabb2d::squareProportion((*i)->Aabb, filter);
+				//if (proportions > 0.0001f)
 				result.items.add((*i)->UserData);
+			}
 		}
 		if (_left)
 			_left->filt(filter, result);

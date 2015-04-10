@@ -15,6 +15,7 @@ namespace entities
 		virtual void updateComponent(Entity* entity, ComponentMask::e type);
 		virtual void filtUpdate(std::vector<Entity*> &result);
 		virtual void filtRender(std::vector<Entity*> &result);
+		virtual void clear();
 	private:
 		void filt(std::vector<Entity*> &result);
 		EntitiesMap _entities;

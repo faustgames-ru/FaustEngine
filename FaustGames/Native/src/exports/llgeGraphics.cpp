@@ -104,10 +104,12 @@ namespace llge
 			effects[EffectWater] = Effects::water();
 			effects[EffectSolid] = Effects::solid();
 			effects[EffectRenderDepth] = Effects::renderDepth();
+			effects[EffectSolidColor] = Effects::solidColor();
 
 			formats[FormatPositionTextureColor] = VertexFormats::positionTextureColor();
 			formats[FormatPositionNormal] = VertexFormats::positionNormal();
 			formats[FormatPositionTexture] = VertexFormats::positionTexture();
+			formats[FormatPositionColor] = VertexFormats::positionColor();
 		}
 
 		~GraphicsFacade()
@@ -132,31 +134,11 @@ namespace llge
 			return uniformsFacade;
 		}
 
-		virtual ITextureImage2d * API_CALL createTextureImage2d(bool generateMipmaps)
-		{
-			return new TextureImage2d(generateMipmaps);
-		}
-		
-		virtual IRenderTarget2d * API_CALL createRenderTarget2d()
-		{
-			return new TextureRenderTarget2d();
-		}
-
-		virtual IRenderTargetDepth2d * API_CALL createRenderTargetDepth2d()
-		{
-			return new TextureRenderTargetDepth2d();
-		}
-		
-		virtual IVertexBuffer * API_CALL createVertexBuffer()
-		{
-			return new VBuffer();
-		}
-
 		virtual void API_CALL setRenderTarget(void *renderTargetInstance)
 		{
 			graphicsDevice->setRenderTarget((IRenderTarget *)renderTargetInstance);
 		}
-	
+
 		virtual void API_CALL viewport(int width, int height)
 		{
 			graphicsDevice->setViewport(0, 0, width, height);
@@ -188,7 +170,25 @@ namespace llge
 			graphicsDevice->clear();
 		}
 
-		virtual void API_CALL draw(GraphicsEffects effect, GraphicsVertexFormats vertexFormat, void *vertices, void *indices, int primitivesCount)
+		virtual void API_CALL clearDepth()
+		{
+			graphicsDevice->clearDepth();
+		}
+
+
+		virtual void API_CALL drawEdges(GraphicsEffects effect, GraphicsVertexFormats vertexFormat, void *vertices, int primitivesCount)
+		{
+			graphicsDevice->renderState.setEffect(effects[effect]);
+			graphicsDevice->drawEdges(formats[vertexFormat], vertices, primitivesCount);
+		}
+		
+		virtual void API_CALL draw(GraphicsEffects effect, GraphicsVertexFormats vertexFormat, void *vertices, int primitivesCount)
+		{
+			graphicsDevice->renderState.setEffect(effects[effect]);
+			graphicsDevice->drawTriangles(formats[vertexFormat], vertices, primitivesCount);
+		}
+		
+		virtual void API_CALL drawElements(GraphicsEffects effect, GraphicsVertexFormats vertexFormat, void *vertices, void *indices, int primitivesCount)
 		{
 			graphicsDevice->renderState.setEffect(effects[effect]);
 			graphicsDevice->drawPrimitives(formats[vertexFormat], vertices, (unsigned short *)indices, primitivesCount);
@@ -225,26 +225,27 @@ namespace llge
 	public:
 		virtual IGraphicsFacade * API_CALL createGraphicsFacade()
 		{
-#ifdef __ANDROID__
-#else
-			GLenum err = glewInit();
-			if (GLEW_OK != err)
-			{
-				switch (err)
-				{
-				case GLEW_ERROR_NO_GL_VERSION:
-					break;  /* missing GL version */
-				case GLEW_ERROR_GL_VERSION_10_ONLY:
-					break;  /* Need at least OpenGL 1.1 */
-				case GLEW_ERROR_GLX_VERSION_11_ONLY:
-					break;  /* Need at least GLX 1.2 */
-				default:
-					break;
-				}
-				//throw std::exception("fail to init glew");
-			}
-#endif
 			return new GraphicsFacade();
+		}
+
+		virtual ITextureImage2d * API_CALL createTextureImage2d(bool generateMipmaps)
+		{
+			return new TextureImage2d(generateMipmaps);
+		}
+
+		virtual IRenderTarget2d * API_CALL createRenderTarget2d()
+		{
+			return new TextureRenderTarget2d();
+		}
+
+		virtual IRenderTargetDepth2d * API_CALL createRenderTargetDepth2d()
+		{
+			return new TextureRenderTargetDepth2d();
+		}
+
+		virtual IVertexBuffer * API_CALL createVertexBuffer()
+		{
+			return new VBuffer();
 		}
 
 		virtual void API_CALL dispose() 
@@ -257,4 +258,28 @@ namespace llge
 	{
 		return new GraphicsFactory();
 	}
+
+	extern "C" DLLEXPORT void API_CALL initRenderContext()
+	{
+#ifdef __ANDROID__
+#else
+		GLenum err = glewInit();
+		if (GLEW_OK != err)
+		{
+			switch (err)
+			{
+			case GLEW_ERROR_NO_GL_VERSION:
+				break;  /* missing GL version */
+			case GLEW_ERROR_GL_VERSION_10_ONLY:
+				break;  /* Need at least OpenGL 1.1 */
+			case GLEW_ERROR_GLX_VERSION_11_ONLY:
+				break;  /* Need at least GLX 1.2 */
+			default:
+				break;
+			}
+			//throw std::exception("fail to init glew");
+		}
+#endif
+	}
+
 }

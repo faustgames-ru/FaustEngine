@@ -2,9 +2,16 @@
 
 namespace drawing
 {
-	Camera::Camera() : _position(0, 0, 0), _aspect(1.0f), _rotationZ(0), _zn(0.1f), _zf(1.0f)
+	Camera::Camera() : _position(0, 0, 0), _aspect(1.0f), _rotationZ(0), _zn(0.1f), _zf(1.0f), _overrideMatrix(0)
 	{
 	}
+
+	Camera::~Camera()
+	{
+		if (_overrideMatrix)
+			delete _overrideMatrix;
+	}
+
 
 	void Camera::setPosition(float x, float y, float z)
 	{
@@ -38,9 +45,19 @@ namespace drawing
 		_zf = zf;
 	}
 
+	void Camera::setMatrix(float *matrix)
+	{
+		if (!_overrideMatrix)
+			_overrideMatrix = new core::Matrix();
+		_overrideMatrix->setData(matrix);
+	}
 	
 	core::Matrix Camera::getMatrix()
 	{
+		if (_overrideMatrix)
+		{
+			return *_overrideMatrix;
+		}
 		core::Matrix proj = getProjectionMatrix();
 		core::Matrix t = getTranslationMatrix();
 		return core::Matrix::mul(t, proj);

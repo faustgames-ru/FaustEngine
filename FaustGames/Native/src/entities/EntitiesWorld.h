@@ -23,6 +23,7 @@ namespace entities
 		void updateWorld(float elapsed);
 		void renderWorld(float elapsed);
 		void setFilter(EntitiesFilter *filter);
+		void clear();
 	private:
 		void addEntity(System* system, Entity* entity);
 		void removeEntity(System* system, Entity* entity);

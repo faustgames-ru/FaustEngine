@@ -64,7 +64,7 @@ namespace GameSampleWindowForms
                 components = new Container();
             _oglWindow = new OGLWindow(_renderRegion, _renderRegion.ClientSize.Width, _renderRegion.ClientSize.Height);
             components.Add(new DisposableContainerComponent(_oglWindow));
-
+            llge.llge.InitRenderContext();
             _entitiesFactory = llge.llge.CreateEntitiesFactory();
             _entitiesWorld = _entitiesFactory.CreateEntitiesWorld();
             _contentManager = llge.llge.CreateContentManager();
@@ -103,8 +103,8 @@ namespace GameSampleWindowForms
                         v.X = reader.ReadSingle();
                         v.Y = reader.ReadSingle();
                         v.Z = reader.ReadSingle();
-                        v.U = reader.ReadUInt16();
-                        v.V = reader.ReadUInt16();
+                        v.U = (float)reader.ReadUInt16() / ushort.MaxValue;
+                        v.V = (float)reader.ReadUInt16() / ushort.MaxValue;
                         v.Color = reader.ReadUInt32();
 
                         if (mesh.Z < v.Z)
@@ -273,7 +273,7 @@ namespace GameSampleWindowForms
             _graphicsFacade.SetEffectConstantColor(GraphicsEffects.EffectWater, "reflectionTint0", (uint)(Settings.Default.reflectionTint0.ToArgb()));
             _graphicsFacade.SetEffectConstantColor(GraphicsEffects.EffectWater, "reflectionTint1", (uint)(Settings.Default.reflectionTint1.ToArgb()));
 
-            _renderTarget = _graphicsFacade.CreateRenderTargetDepth2d();
+            _renderTarget = _graphicsFactory.CreateRenderTargetDepth2d();
             _renderTarget.Create(_renderRegion.ClientSize.Width, _renderRegion.ClientSize.Height);
         }
 
@@ -292,7 +292,7 @@ namespace GameSampleWindowForms
         {
             fileName = Path.Combine(Application.StartupPath, ContetnFolder, fileName + ".png");
             var id = contentManager.RegisterImage(fileName);
-            var texture = _graphicsFacade.CreateTextureImage2d(createMipmaps);
+            var texture = _graphicsFactory.CreateTextureImage2d(createMipmaps);
             texture.Create();
             var buffer = contentManager.LoadBuffer(id);
             var pixels = buffer.GetPixels();
@@ -710,7 +710,7 @@ namespace GameSampleWindowForms
             fixed (WaterVertex* pointerVertices = vertices)
             fixed (ushort* pointerIndiceas = indices)
             {
-                facade.Draw(
+                facade.DrawElements(
                     GraphicsEffects.EffectWater,
                     GraphicsVertexFormats.FormatPositionTexture,
                     new IntPtr(pointerVertices),
@@ -725,7 +725,7 @@ namespace GameSampleWindowForms
             fixed (MeshExportVertex* pointerVertices = vertices)
             fixed (ushort* pointerIndiceas = indices)
             {
-                facade.Draw(
+                facade.DrawElements(
                     GraphicsEffects.EffectTextureColor,
                     GraphicsVertexFormats.FormatPositionTextureColor,
                     new IntPtr(pointerVertices),
@@ -757,16 +757,16 @@ namespace GameSampleWindowForms
         public float X;
         public float Y;
         public float Z;
-        public ushort U;
-        public ushort V;
+        public float U;
+        public float V;
 
         public WaterVertex(float x, float y, float z, ushort u, ushort v)
         {
             X = x;
             Y = y;
             Z = z;
-            U = u;
-            V = v;
+            U = (float)u / ushort.MaxValue;
+            V = (float)v / ushort.MaxValue;
         }
     }
 
@@ -776,8 +776,8 @@ namespace GameSampleWindowForms
         public float X;
         public float Y;
         public float Z;
-        public ushort U;
-        public ushort V;
+        public float U;
+        public float V;
         public uint Color;
 
         public MeshExportVertex(
@@ -791,8 +791,8 @@ namespace GameSampleWindowForms
             X = x;
             Y = y;
             Z = z;
-            U = u;
-            V = v;
+            U = (float)u / ushort.MaxValue;
+            V = (float)v / ushort.MaxValue;
             Color = color;
         }
     }

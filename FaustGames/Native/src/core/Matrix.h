@@ -37,6 +37,12 @@ namespace core
 			_values[14] = m43; 
 			_values[15] = m44;
 		}
+		inline void setData(const float *value)
+		{
+			for (int i = 0; i < 16; i++)
+				_values[i] = value[i];
+		}
+		
 		inline const float *getData() const { return &(_values[0]); }
 		static float DotProduct(
 			float x1, float y1, float z1, float w1,

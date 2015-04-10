@@ -26,6 +26,11 @@ namespace entities
 		filt(result);
 	}
 
+	void DummyEntitiesFilter::clear()
+	{
+		_entities.clear();
+	}
+
 
 	void DummyEntitiesFilter::filt(std::vector<Entity*> &result)
 	{

@@ -25,7 +25,8 @@ namespace llge
 		EffectTextureLightmapColor = 0x1,
 		EffectWater = 0x2,
 		EffectSolid = 0x3,
-		EffectRenderDepth = 0x3,
+		EffectRenderDepth = 0x4,
+		EffectSolidColor = 0x5,
 	}
 	
 	public enum GraphicsVertexFormats
@@ -33,6 +34,7 @@ namespace llge
 		FormatPositionTextureColor = 0x0,
 		FormatPositionNormal = 0x1,
 		FormatPositionTexture = 0x2,
+		FormatPositionColor = 0x3,
 	}
 	
 	public enum CubemapPlane
@@ -56,6 +58,7 @@ namespace llge
 		Aadd2d = 0x1,
 		Transform2d = 0x2,
 		Render2d = 0x4,
+		MatrixTransform = 0x8,
 	}
 	
 	public class Texture
@@ -68,6 +71,13 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private uint llge_Texture_getId (IntPtr classInstance);
+		public void Dispose ()
+		{
+			llge_Texture_dispose(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_Texture_dispose (IntPtr classInstance);
 	}
 	
 	public class TextureImage2d
@@ -301,34 +311,6 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private IntPtr llge_GraphicsFacade_getUniforms (IntPtr classInstance);
-		public TextureImage2d CreateTextureImage2d (bool generateMipmaps)
-		{
-			return new TextureImage2d{ ClassInstance = llge_GraphicsFacade_createTextureImage2d(ClassInstance, generateMipmaps) };
-		}
-		
-		[DllImport(Version.Dll)]
-		static extern private IntPtr llge_GraphicsFacade_createTextureImage2d (IntPtr classInstance, bool generateMipmaps);
-		public RenderTarget2d CreateRenderTarget2d ()
-		{
-			return new RenderTarget2d{ ClassInstance = llge_GraphicsFacade_createRenderTarget2d(ClassInstance) };
-		}
-		
-		[DllImport(Version.Dll)]
-		static extern private IntPtr llge_GraphicsFacade_createRenderTarget2d (IntPtr classInstance);
-		public RenderTargetDepth2d CreateRenderTargetDepth2d ()
-		{
-			return new RenderTargetDepth2d{ ClassInstance = llge_GraphicsFacade_createRenderTargetDepth2d(ClassInstance) };
-		}
-		
-		[DllImport(Version.Dll)]
-		static extern private IntPtr llge_GraphicsFacade_createRenderTargetDepth2d (IntPtr classInstance);
-		public VertexBuffer CreateVertexBuffer ()
-		{
-			return new VertexBuffer{ ClassInstance = llge_GraphicsFacade_createVertexBuffer(ClassInstance) };
-		}
-		
-		[DllImport(Version.Dll)]
-		static extern private IntPtr llge_GraphicsFacade_createVertexBuffer (IntPtr classInstance);
 		public void Viewport (int width, int height)
 		{
 			llge_GraphicsFacade_viewport(ClassInstance, width, height);
@@ -364,13 +346,34 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private void llge_GraphicsFacade_clear (IntPtr classInstance);
-		public void Draw (GraphicsEffects effect, GraphicsVertexFormats vertexFormat, IntPtr vertices, IntPtr indices, int primitivesCount)
+		public void ClearDepth ()
 		{
-			llge_GraphicsFacade_draw(ClassInstance, effect, vertexFormat, vertices, indices, primitivesCount);
+			llge_GraphicsFacade_clearDepth(ClassInstance);
 		}
 		
 		[DllImport(Version.Dll)]
-		static extern private void llge_GraphicsFacade_draw (IntPtr classInstance, GraphicsEffects effect, GraphicsVertexFormats vertexFormat, IntPtr vertices, IntPtr indices, int primitivesCount);
+		static extern private void llge_GraphicsFacade_clearDepth (IntPtr classInstance);
+		public void DrawEdges (GraphicsEffects effect, GraphicsVertexFormats vertexFormat, IntPtr vertices, int primitivesCount)
+		{
+			llge_GraphicsFacade_drawEdges(ClassInstance, effect, vertexFormat, vertices, primitivesCount);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_GraphicsFacade_drawEdges (IntPtr classInstance, GraphicsEffects effect, GraphicsVertexFormats vertexFormat, IntPtr vertices, int primitivesCount);
+		public void Draw (GraphicsEffects effect, GraphicsVertexFormats vertexFormat, IntPtr vertices, int primitivesCount)
+		{
+			llge_GraphicsFacade_draw(ClassInstance, effect, vertexFormat, vertices, primitivesCount);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_GraphicsFacade_draw (IntPtr classInstance, GraphicsEffects effect, GraphicsVertexFormats vertexFormat, IntPtr vertices, int primitivesCount);
+		public void DrawElements (GraphicsEffects effect, GraphicsVertexFormats vertexFormat, IntPtr vertices, IntPtr indices, int primitivesCount)
+		{
+			llge_GraphicsFacade_drawElements(ClassInstance, effect, vertexFormat, vertices, indices, primitivesCount);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_GraphicsFacade_drawElements (IntPtr classInstance, GraphicsEffects effect, GraphicsVertexFormats vertexFormat, IntPtr vertices, IntPtr indices, int primitivesCount);
 		public void DrawVertexBuffer (GraphicsEffects effect, GraphicsVertexFormats vertexFormat, VertexBuffer vertexBuffer, IntPtr indices, int primitivesCount)
 		{
 			llge_GraphicsFacade_drawVertexBuffer(ClassInstance, effect, vertexFormat, vertexBuffer.ClassInstance, indices, primitivesCount);
@@ -425,6 +428,34 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private IntPtr llge_GraphicsFactory_createGraphicsFacade (IntPtr classInstance);
+		public TextureImage2d CreateTextureImage2d (bool generateMipmaps)
+		{
+			return new TextureImage2d{ ClassInstance = llge_GraphicsFactory_createTextureImage2d(ClassInstance, generateMipmaps) };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_GraphicsFactory_createTextureImage2d (IntPtr classInstance, bool generateMipmaps);
+		public RenderTarget2d CreateRenderTarget2d ()
+		{
+			return new RenderTarget2d{ ClassInstance = llge_GraphicsFactory_createRenderTarget2d(ClassInstance) };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_GraphicsFactory_createRenderTarget2d (IntPtr classInstance);
+		public RenderTargetDepth2d CreateRenderTargetDepth2d ()
+		{
+			return new RenderTargetDepth2d{ ClassInstance = llge_GraphicsFactory_createRenderTargetDepth2d(ClassInstance) };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_GraphicsFactory_createRenderTargetDepth2d (IntPtr classInstance);
+		public VertexBuffer CreateVertexBuffer ()
+		{
+			return new VertexBuffer{ ClassInstance = llge_GraphicsFactory_createVertexBuffer(ClassInstance) };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_GraphicsFactory_createVertexBuffer (IntPtr classInstance);
 		public void Dispose ()
 		{
 			llge_GraphicsFactory_dispose(ClassInstance);
@@ -522,13 +553,32 @@ namespace llge
 	public class Render2d
 	{
 		public IntPtr ClassInstance;
-		public void SetMesh (Texture texture, IntPtr vertices, int verticesCount, IntPtr indices, int indicesCount)
+		public void SetMeshesCount (int meshesCount)
 		{
-			llge_Render2d_setMesh(ClassInstance, texture.ClassInstance, vertices, verticesCount, indices, indicesCount);
+			llge_Render2d_setMeshesCount(ClassInstance, meshesCount);
 		}
 		
 		[DllImport(Version.Dll)]
-		static extern private void llge_Render2d_setMesh (IntPtr classInstance, IntPtr texture, IntPtr vertices, int verticesCount, IntPtr indices, int indicesCount);
+		static extern private void llge_Render2d_setMeshesCount (IntPtr classInstance, int meshesCount);
+		public void SetMesh (int meshIndex, Texture texture, IntPtr vertices, int verticesCount, IntPtr indices, int indicesCount)
+		{
+			llge_Render2d_setMesh(ClassInstance, meshIndex, texture.ClassInstance, vertices, verticesCount, indices, indicesCount);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_Render2d_setMesh (IntPtr classInstance, int meshIndex, IntPtr texture, IntPtr vertices, int verticesCount, IntPtr indices, int indicesCount);
+	}
+	
+	public class MatrixTransform
+	{
+		public IntPtr ClassInstance;
+		public void SetTransform (IntPtr floatMatrix)
+		{
+			llge_MatrixTransform_setTransform(ClassInstance, floatMatrix);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_MatrixTransform_setTransform (IntPtr classInstance, IntPtr floatMatrix);
 	}
 	
 	public class Transform2d
@@ -623,6 +673,13 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private IntPtr llge_Entity_getTransform2d (IntPtr classInstance);
+		public MatrixTransform GetMatrixTransform ()
+		{
+			return new MatrixTransform{ ClassInstance = llge_Entity_getMatrixTransform(ClassInstance) };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_Entity_getMatrixTransform (IntPtr classInstance);
 		public void Dispose ()
 		{
 			llge_Entity_dispose(ClassInstance);
@@ -759,6 +816,46 @@ namespace llge
 		static extern private void llge_EntitiesFactory_dispose (IntPtr classInstance);
 	}
 	
+	public class Batch2d
+	{
+		public IntPtr ClassInstance;
+		public void SetTransform (IntPtr transform)
+		{
+			llge_Batch2d_setTransform(ClassInstance, transform);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_Batch2d_setTransform (IntPtr classInstance, IntPtr transform);
+		public void StartBatch ()
+		{
+			llge_Batch2d_startBatch(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_Batch2d_startBatch (IntPtr classInstance);
+		public void FinishBatch ()
+		{
+			llge_Batch2d_finishBatch(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_Batch2d_finishBatch (IntPtr classInstance);
+		public void SetTexture (Texture texture)
+		{
+			llge_Batch2d_setTexture(ClassInstance, texture.ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_Batch2d_setTexture (IntPtr classInstance, IntPtr texture);
+		public void Draw (IntPtr vertices, int verticesCount, IntPtr indices, int indicesCount)
+		{
+			llge_Batch2d_draw(ClassInstance, vertices, verticesCount, indices, indicesCount);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_Batch2d_draw (IntPtr classInstance, IntPtr vertices, int verticesCount, IntPtr indices, int indicesCount);
+	}
+	
 	public class TextureBuffer2d
 	{
 		public IntPtr ClassInstance;
@@ -841,6 +938,20 @@ namespace llge
 	
 	public class llge
 	{
+		static public Batch2d CreateBatch2d ()
+		{
+			return new Batch2d{ ClassInstance = createBatch2d() };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr createBatch2d ();
+		static public Texture CreateTextureByID (uint id)
+		{
+			return new Texture{ ClassInstance = createTextureByID(id) };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr createTextureByID (uint id);
 		static public ContentManager CreateContentManager ()
 		{
 			return new ContentManager{ ClassInstance = createContentManager() };
@@ -869,6 +980,13 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private IntPtr createGeometryFactory ();
+		static public void InitRenderContext ()
+		{
+			initRenderContext();
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void initRenderContext ();
 	}
 	
 }

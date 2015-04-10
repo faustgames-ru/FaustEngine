@@ -200,6 +200,11 @@ namespace llge
 			EntitiesWorld.removeEntity((entities::Entity *)entity->getSelfInstance());
 		}
 
+		virtual void API_CALL clear()
+		{
+			EntitiesWorld.clear();
+		}
+
 
 		virtual void API_CALL dispose()
 		{

@@ -58,6 +58,12 @@ namespace entities
 	{
 		filt(_renderAabb, _renderResults, result);
 	}
+
+	void QuadtreeEntitiesFilter::clear()
+	{
+		_quadTree.clear();
+	}
+
 	
 	void QuadtreeEntitiesFilter::filt(const geometry::Aabb2d &aabb, geometry::FilterResult filterResults, std::vector<Entity*> &result)
 	{

@@ -124,6 +124,7 @@
     <ClInclude Include="..\src\entities\entities_platform.h" />
     <ClInclude Include="..\src\entities\entities_references.h" />
     <ClInclude Include="..\src\entities\Entity.h" />
+    <ClInclude Include="..\src\entities\MatrixTransformComponent.h" />
     <ClInclude Include="..\src\entities\QuadtreeEntitiesFilter.h" />
     <ClInclude Include="..\src\entities\Render2dComponent.h" />
     <ClInclude Include="..\src\entities\RenderSystem2d.h" />
@@ -237,12 +238,14 @@
     <ClCompile Include="..\src\entities\Entity.cpp" />
     <ClCompile Include="..\src\entities\EntitiesWorld.cpp" />
     <ClCompile Include="..\src\entities\DummyEntitiesFilter.cpp" />
+    <ClCompile Include="..\src\entities\MatrixTransformComponent.cpp" />
     <ClCompile Include="..\src\entities\QuadtreeEntitiesFilter.cpp" />
     <ClCompile Include="..\src\entities\Render2dComponent.cpp" />
     <ClCompile Include="..\src\entities\RenderSystem2d.cpp" />
     <ClCompile Include="..\src\entities\System.cpp" />
     <ClCompile Include="..\src\entities\Transform2dComponent.cpp" />
     <ClCompile Include="..\src\entities\TransformSystem2d.cpp" />
+    <ClCompile Include="..\src\exports\llgeDrawing.cpp" />
     <ClCompile Include="..\src\exports\llgeEntities.cpp" />
     <ClCompile Include="..\src\exports\llgeGeometry.cpp" />
     <ClCompile Include="..\src\exports\llgeGraphics.cpp" />

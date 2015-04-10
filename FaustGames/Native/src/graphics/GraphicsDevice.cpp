@@ -88,6 +88,12 @@ namespace graphics
 		Errors::check(Errors::Clear);
 	}
 
+	void GraphicsDevice::clearDepth()
+	{
+		glClear(GL_DEPTH_BUFFER_BIT);
+		Errors::check(Errors::Clear);
+	}
+
 	void GraphicsDevice::resetState()
 	{
 		renderState = RenderState();
@@ -99,6 +105,22 @@ namespace graphics
 		renderState.setVertexBuffer(vertexBuffer);
 		renderState.apply(vertexFormat, 0);
 		glDrawElements(GL_TRIANGLES, primitivesCount * 3, GL_UNSIGNED_SHORT, indexBuffer);
+		Errors::check(Errors::DrawElements);
+	}
+
+	void GraphicsDevice::drawEdges(VertexFormat *vertexFormat, void *vertexBuffer, int primitivesCount)
+	{
+		renderState.setVertexBuffer(0);
+		renderState.apply(vertexFormat, vertexBuffer);
+		glDrawArrays(GL_LINES, 0, primitivesCount * 2);
+		Errors::check(Errors::DrawElements);
+	}
+	
+	void GraphicsDevice::drawTriangles(VertexFormat *vertexFormat, void *vertexBuffer, int primitivesCount)
+	{
+		renderState.setVertexBuffer(0);
+		renderState.apply(vertexFormat, vertexBuffer);
+		glDrawArrays(GL_TRIANGLES, 0, primitivesCount * 3);
 		Errors::check(Errors::DrawElements);
 	}
 

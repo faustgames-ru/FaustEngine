@@ -20,12 +20,12 @@ c:\_faust\faustengine\faustgames\native\llge\debug\contentproviderwindows.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\teststandartallocations.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\dllmain.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\stdafx.obj
-c:\_faust\faustengine\faustgames\native\llge\debug\attributeinfo.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\attributes.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\color.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\effect.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\effectbase.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\effectconstant.obj
+c:\_faust\faustengine\faustgames\native\llge\debug\effectrenderdepth.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\effects.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\effectsolid.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\effectsolidcolor.obj
@@ -40,8 +40,6 @@ c:\_faust\faustengine\faustgames\native\llge\debug\staticbatch.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\texture.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\texturecubemap.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\textureimage2d.obj
-c:\_faust\faustengine\faustgames\native\llge\debug\aabb2dcomponent.obj
-c:\_faust\faustengine\faustgames\native\llge\debug\component.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\entitiesfilter.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\entity.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\entitiesworld.obj
@@ -52,6 +50,7 @@ c:\_faust\faustengine\faustgames\native\llge\debug\rendersystem2d.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\system.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\transform2dcomponent.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\transformsystem2d.obj
+c:\_faust\faustengine\faustgames\native\llge\debug\llgedrawing.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\llgeentities.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\llgegeometry.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\llgegraphics.obj
@@ -60,6 +59,7 @@ c:\_faust\faustengine\faustgames\native\llge\debug\llgeresources.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\aabb2d.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\quadtree2d.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\quadtree2dnode.obj
+c:\_faust\faustengine\faustgames\native\llge\debug\attributeinfo.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\llgepinvoke.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\basictest.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\hollowsallocationpolicy.obj
@@ -71,6 +71,8 @@ c:\_faust\faustengine\faustgames\native\llge\debug\renderer2d.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\renderitem2d.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\rendermesh2d.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\waterrenderer.obj
+c:\_faust\faustengine\faustgames\native\llge\debug\aabb2dcomponent.obj
+c:\_faust\faustengine\faustgames\native\llge\debug\component.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\pngtrans.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\pngwio.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\pngwrite.obj
@@ -103,12 +105,11 @@ c:\_faust\faustengine\faustgames\native\llge\debug\pngrtran.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\pngrutil.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\pngset.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\pngtest.obj
-c:\_faust\faustengine\faustgames\native\llge\debug\effectrenderdepth.obj
-c:\_faust\faustengine\faustgames\debug\llge.ilk
-c:\_faust\faustengine\faustgames\debug\llge.dll
-c:\_faust\faustengine\faustgames\debug\llge.pdb
-c:\_faust\faustengine\faustgames\debug\llge.lib
-c:\_faust\faustengine\faustgames\debug\llge.exp
+c:\work\sources\github\moon\solutions\debug\llge.ilk
+c:\work\sources\github\moon\solutions\debug\llge.dll
+c:\work\sources\github\moon\solutions\debug\llge.pdb
+c:\work\sources\github\moon\solutions\debug\llge.lib
+c:\work\sources\github\moon\solutions\debug\llge.exp
 c:\_faust\faustengine\faustgames\native\llge\debug\llge.tlog\cl.command.1.tlog
 c:\_faust\faustengine\faustgames\native\llge\debug\llge.tlog\cl.read.1.tlog
 c:\_faust\faustengine\faustgames\native\llge\debug\llge.tlog\cl.write.1.tlog

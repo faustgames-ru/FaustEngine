@@ -31,7 +31,8 @@ namespace llge
 		EffectTextureLightmapColor = 0x1,
 		EffectWater = 0x2,
 		EffectSolid = 0x3,
-		EffectRenderDepth = 0x3,
+		EffectRenderDepth = 0x4,
+		EffectSolidColor = 0x5,
 	};
 
 	enum GraphicsVertexFormats
@@ -39,6 +40,7 @@ namespace llge
 		FormatPositionTextureColor = 0x0,
 		FormatPositionNormal = 0x1,
 		FormatPositionTexture = 0x2,
+		FormatPositionColor = 0x3,
 	};
 		
 	enum CubemapPlane
@@ -64,6 +66,7 @@ namespace llge
 		Aadd2d = 0x1,
 		Transform2d = 0x2,
 		Render2d = 0x4,
+		MatrixTransform = 0x8,
 	};
 
 	/// graphics
@@ -71,6 +74,7 @@ namespace llge
 	{
 	public:
 		virtual uint API_CALL getId() = 0;
+		virtual void API_CALL dispose() = 0;
 	};
 
 	class ITextureImage2d
@@ -131,17 +135,17 @@ namespace llge
 	{
 	public:
 		virtual IUniformsFacade * API_CALL getUniforms() = 0;
-		virtual ITextureImage2d * API_CALL createTextureImage2d(bool generateMipmaps) = 0;
-		virtual IRenderTarget2d * API_CALL createRenderTarget2d() = 0;
-		virtual IRenderTargetDepth2d * API_CALL createRenderTargetDepth2d() = 0;
-		virtual IVertexBuffer * API_CALL createVertexBuffer() = 0;
 
 		virtual void API_CALL viewport(int width, int height) = 0;
 		virtual void API_CALL setRenderTarget(void *renderTargetInstance) = 0;
 		virtual void API_CALL setClearState(uint color, float depth) = 0;
 		virtual void API_CALL setBlendMode(BlendMode blendMode) = 0;
 		virtual void API_CALL clear() = 0;
-		virtual void API_CALL draw(GraphicsEffects effect, GraphicsVertexFormats vertexFormat, void *vertices, void *indices, int primitivesCount) = 0;
+		virtual void API_CALL clearDepth() = 0;
+
+		virtual void API_CALL drawEdges(GraphicsEffects effect, GraphicsVertexFormats vertexFormat, void *vertices, int primitivesCount) = 0;
+		virtual void API_CALL draw(GraphicsEffects effect, GraphicsVertexFormats vertexFormat, void *vertices, int primitivesCount) = 0;
+		virtual void API_CALL drawElements(GraphicsEffects effect, GraphicsVertexFormats vertexFormat, void *vertices, void *indices, int primitivesCount) = 0;
 		virtual void API_CALL drawVertexBuffer(GraphicsEffects effect, GraphicsVertexFormats vertexFormat, IVertexBuffer *vertexBuffer, void *indices, int primitivesCount) = 0;
 		virtual void API_CALL setEffectConstantFloat(GraphicsEffects effect, char *name, float value) = 0;
 		virtual void API_CALL setEffectConstantColor(GraphicsEffects effect, char *name, uint value) = 0;
@@ -155,6 +159,11 @@ namespace llge
 	{
 	public:
 		virtual IGraphicsFacade * API_CALL createGraphicsFacade() = 0;
+		virtual ITextureImage2d * API_CALL createTextureImage2d(bool generateMipmaps) = 0;
+		virtual IRenderTarget2d * API_CALL createRenderTarget2d() = 0;
+		virtual IRenderTargetDepth2d * API_CALL createRenderTargetDepth2d() = 0;
+		virtual IVertexBuffer * API_CALL createVertexBuffer() = 0;
+		
 		virtual void API_CALL dispose() = 0;
 	};
 
@@ -190,9 +199,15 @@ namespace llge
 	class IRender2d
 	{
 	public:
-		virtual void API_CALL setMesh(ITexture *texture, void* vertices, int verticesCount, void* indices, int indicesCount) = 0;
+		virtual void API_CALL setMeshesCount(int meshesCount) = 0;
+		virtual void API_CALL setMesh(int meshIndex, ITexture *texture, void* vertices, int verticesCount, void* indices, int indicesCount) = 0;
 	};
 
+	class IMatrixTransform
+	{
+	public:
+		virtual void API_CALL setTransform(void *floatMatrix) = 0;
+	};
 
 	class ITransform2d
 	{
@@ -214,6 +229,7 @@ namespace llge
 		virtual IAabb2d* API_CALL getAabb2d() = 0;
 		virtual IRender2d* API_CALL getRender2d() = 0;
 		virtual ITransform2d* API_CALL getTransform2d() = 0;
+		virtual IMatrixTransform* API_CALL getMatrixTransform() = 0;
 		virtual void API_CALL dispose() = 0;
 	};
 
@@ -243,6 +259,7 @@ namespace llge
 		virtual void API_CALL removeEntity(IEntity *entity) = 0;
 
 		virtual void API_CALL dispose() = 0;
+		virtual void API_CALL clear() = 0;
 	};
 
 	class IEntitiesFactory
@@ -251,6 +268,18 @@ namespace llge
 		virtual IEntitiesWorld * API_CALL createEntitiesWorld() = 0;
 		virtual void API_CALL dispose() = 0;
 	};
+
+	/// drawing
+	class IBatch2d
+	{
+	public:
+		virtual void API_CALL setTransform(void *transform) = 0;
+		virtual void API_CALL startBatch() = 0;
+		virtual void API_CALL finishBatch() = 0;
+		virtual void API_CALL setTexture(ITexture *texture) = 0;
+		virtual void API_CALL draw(void *vertices, int verticesCount, void *indices, int indicesCount) = 0;
+	};
+
 
 	/// content
 	class ITextureBuffer2d
@@ -274,10 +303,14 @@ namespace llge
 		virtual void API_CALL dispose() = 0;
 	};
 
+	extern "C" DLLEXPORT IBatch2d * API_CALL createBatch2d();
+	extern "C" DLLEXPORT ITexture * API_CALL createTextureByID(uint id);
 	extern "C" DLLEXPORT IContentManager * API_CALL createContentManager();
 	extern "C" DLLEXPORT IEntitiesFactory * API_CALL createEntitiesFactory();
 	extern "C" DLLEXPORT IGraphicsFactory * API_CALL createGraphicsFactory();
 	extern "C" DLLEXPORT IGeometryFactory * API_CALL createGeometryFactory();
+
+	extern "C" DLLEXPORT void API_CALL initRenderContext();
 }
 
 #endif /*LLGE_H*/

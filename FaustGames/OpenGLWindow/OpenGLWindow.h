@@ -10,11 +10,12 @@ using namespace System::Windows::Forms;
 
 namespace OpenGLWindow {
 
-	public ref class OGLWindow : public System::Windows::Forms::NativeWindow
+	public ref class OGLWindow// : public System::Windows::Forms::NativeWindow
 	{
 	public:
 		OGLWindow(System::Windows::Forms::Control ^ parentForm, int iWidth, int iHeight)
 		{
+			/*
 			CreateParams^ cp = gcnew CreateParams;
 
 			// Set the position on the form
@@ -33,6 +34,18 @@ namespace OpenGLWindow {
 			this->CreateHandle(cp);
 
 			m_hDC = GetDC((HWND)this->Handle.ToPointer());
+
+			if (m_hDC)
+			{
+				MySetPixelFormat(m_hDC);
+				ReSizeGLScene(iWidth, iHeight);
+				InitGL();
+			}
+
+			rtri = 0.0f;
+			rquad = 0.0f;
+			*/
+			m_hDC = GetDC((HWND)parentForm->Handle.ToPointer());
 
 			if (m_hDC)
 			{
@@ -135,7 +148,7 @@ namespace OpenGLWindow {
 	protected:
 		~OGLWindow(System::Void)
 		{
-			this->DestroyHandle();
+			//this->DestroyHandle();
 		}
 
 		GLint MySetPixelFormat(HDC hdc)

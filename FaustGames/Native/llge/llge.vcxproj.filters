@@ -443,6 +443,9 @@
     <ClInclude Include="..\src\graphics\EffectRenderDepth.h">
       <Filter>graphics</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\entities\MatrixTransformComponent.h">
+      <Filter>entities\components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\CommonSources\gen\llgePInvoke.cpp">
@@ -752,6 +755,12 @@
     </ClCompile>
     <ClCompile Include="..\src\graphics\EffectRenderDepth.cpp">
       <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\exports\llgeDrawing.cpp">
+      <Filter>exports</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\entities\MatrixTransformComponent.cpp">
+      <Filter>entities\components</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

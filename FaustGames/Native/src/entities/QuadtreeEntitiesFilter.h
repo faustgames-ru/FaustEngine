@@ -19,6 +19,7 @@ namespace entities
 		virtual void updateComponent(Entity* entity, ComponentMask::e type);
 		virtual void filtUpdate(std::vector<Entity*> &result);
 		virtual void filtRender(std::vector<Entity*> &result);
+		virtual void clear();
 	private:
 		void filt(const geometry::Aabb2d &aabb, geometry::FilterResult filterResults, std::vector<Entity*> &result);
 		geometry::Quadtree2d _quadTree;

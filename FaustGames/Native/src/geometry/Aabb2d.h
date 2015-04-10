@@ -74,6 +74,17 @@ namespace geometry
 				(Min.getY() <= v.getY()) && (v.getY() <= Max.getY());
 		}
 
+		inline static float squareProportion(const Aabb2d &aabb1, const Aabb2d &aabb2)
+		{
+			float s1 = (aabb1.Max.getX() - aabb1.Min.getX()) * (aabb1.Max.getY() - aabb1.Min.getY());
+			float s2 = (aabb2.Max.getX() - aabb2.Min.getX()) * (aabb2.Max.getY() - aabb2.Min.getY());
+			if (s1 < core::Math::Epsilon)
+				s1 = core::Math::Epsilon;
+			if (s2 < core::Math::Epsilon)
+				s2 = core::Math::Epsilon;
+			return s1 / s2;
+		}
+		
 		inline static bool cross(const Aabb2d &aabb1, const Aabb2d &aabb2)
 		{
 			if ((aabb1.Max.getX() < aabb2.Min.getX()) || (aabb1.Min.getX() > aabb2.Max.getX())) return false;

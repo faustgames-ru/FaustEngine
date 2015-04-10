@@ -46,7 +46,7 @@ namespace graphics
 			/// apply depth			
 		}
 
-		if (!_blendState.isEqual())
+		//if (!_blendState.isEqual())
 		{
 			switch (_blendState.getValue())
 			{
@@ -56,7 +56,7 @@ namespace graphics
 				break;
 			case BlendState::Additive:
 				glEnable(GL_BLEND);
-				//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+				glBlendFunc(GL_SRC_ALPHA, GL_ONE);
 				break;
 			default:
 				glDisable(GL_BLEND);

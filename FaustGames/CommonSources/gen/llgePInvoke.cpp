@@ -11,6 +11,11 @@ namespace llge
 		return classInstance->getId();
 	}
 	
+	extern "C" DLLEXPORT void API_CALL llge_Texture_dispose (ITexture * classInstance)
+	{
+		classInstance->dispose();
+	}
+	
 	extern "C" DLLEXPORT ITexture * API_CALL llge_TextureImage2d_getTexture (ITextureImage2d * classInstance)
 	{
 		return classInstance->getTexture();
@@ -156,26 +161,6 @@ namespace llge
 		return classInstance->getUniforms();
 	}
 	
-	extern "C" DLLEXPORT ITextureImage2d * API_CALL llge_GraphicsFacade_createTextureImage2d (IGraphicsFacade * classInstance, bool generateMipmaps)
-	{
-		return classInstance->createTextureImage2d(generateMipmaps);
-	}
-	
-	extern "C" DLLEXPORT IRenderTarget2d * API_CALL llge_GraphicsFacade_createRenderTarget2d (IGraphicsFacade * classInstance)
-	{
-		return classInstance->createRenderTarget2d();
-	}
-	
-	extern "C" DLLEXPORT IRenderTargetDepth2d * API_CALL llge_GraphicsFacade_createRenderTargetDepth2d (IGraphicsFacade * classInstance)
-	{
-		return classInstance->createRenderTargetDepth2d();
-	}
-	
-	extern "C" DLLEXPORT IVertexBuffer * API_CALL llge_GraphicsFacade_createVertexBuffer (IGraphicsFacade * classInstance)
-	{
-		return classInstance->createVertexBuffer();
-	}
-	
 	extern "C" DLLEXPORT void API_CALL llge_GraphicsFacade_viewport (IGraphicsFacade * classInstance, int width, int height)
 	{
 		classInstance->viewport(width, height);
@@ -201,9 +186,24 @@ namespace llge
 		classInstance->clear();
 	}
 	
-	extern "C" DLLEXPORT void API_CALL llge_GraphicsFacade_draw (IGraphicsFacade * classInstance, GraphicsEffects effect, GraphicsVertexFormats vertexFormat, void * vertices, void * indices, int primitivesCount)
+	extern "C" DLLEXPORT void API_CALL llge_GraphicsFacade_clearDepth (IGraphicsFacade * classInstance)
 	{
-		classInstance->draw(effect, vertexFormat, vertices, indices, primitivesCount);
+		classInstance->clearDepth();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_GraphicsFacade_drawEdges (IGraphicsFacade * classInstance, GraphicsEffects effect, GraphicsVertexFormats vertexFormat, void * vertices, int primitivesCount)
+	{
+		classInstance->drawEdges(effect, vertexFormat, vertices, primitivesCount);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_GraphicsFacade_draw (IGraphicsFacade * classInstance, GraphicsEffects effect, GraphicsVertexFormats vertexFormat, void * vertices, int primitivesCount)
+	{
+		classInstance->draw(effect, vertexFormat, vertices, primitivesCount);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_GraphicsFacade_drawElements (IGraphicsFacade * classInstance, GraphicsEffects effect, GraphicsVertexFormats vertexFormat, void * vertices, void * indices, int primitivesCount)
+	{
+		classInstance->drawElements(effect, vertexFormat, vertices, indices, primitivesCount);
 	}
 	
 	extern "C" DLLEXPORT void API_CALL llge_GraphicsFacade_drawVertexBuffer (IGraphicsFacade * classInstance, GraphicsEffects effect, GraphicsVertexFormats vertexFormat, IVertexBuffer * vertexBuffer, void * indices, int primitivesCount)
@@ -239,6 +239,26 @@ namespace llge
 	extern "C" DLLEXPORT IGraphicsFacade * API_CALL llge_GraphicsFactory_createGraphicsFacade (IGraphicsFactory * classInstance)
 	{
 		return classInstance->createGraphicsFacade();
+	}
+	
+	extern "C" DLLEXPORT ITextureImage2d * API_CALL llge_GraphicsFactory_createTextureImage2d (IGraphicsFactory * classInstance, bool generateMipmaps)
+	{
+		return classInstance->createTextureImage2d(generateMipmaps);
+	}
+	
+	extern "C" DLLEXPORT IRenderTarget2d * API_CALL llge_GraphicsFactory_createRenderTarget2d (IGraphicsFactory * classInstance)
+	{
+		return classInstance->createRenderTarget2d();
+	}
+	
+	extern "C" DLLEXPORT IRenderTargetDepth2d * API_CALL llge_GraphicsFactory_createRenderTargetDepth2d (IGraphicsFactory * classInstance)
+	{
+		return classInstance->createRenderTargetDepth2d();
+	}
+	
+	extern "C" DLLEXPORT IVertexBuffer * API_CALL llge_GraphicsFactory_createVertexBuffer (IGraphicsFactory * classInstance)
+	{
+		return classInstance->createVertexBuffer();
 	}
 	
 	extern "C" DLLEXPORT void API_CALL llge_GraphicsFactory_dispose (IGraphicsFactory * classInstance)
@@ -296,9 +316,19 @@ namespace llge
 		classInstance->update(minX, minY, maxX, maxY, zOrder);
 	}
 	
-	extern "C" DLLEXPORT void API_CALL llge_Render2d_setMesh (IRender2d * classInstance, ITexture * texture, void * vertices, int verticesCount, void * indices, int indicesCount)
+	extern "C" DLLEXPORT void API_CALL llge_Render2d_setMeshesCount (IRender2d * classInstance, int meshesCount)
 	{
-		classInstance->setMesh(texture, vertices, verticesCount, indices, indicesCount);
+		classInstance->setMeshesCount(meshesCount);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_Render2d_setMesh (IRender2d * classInstance, int meshIndex, ITexture * texture, void * vertices, int verticesCount, void * indices, int indicesCount)
+	{
+		classInstance->setMesh(meshIndex, texture, vertices, verticesCount, indices, indicesCount);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_MatrixTransform_setTransform (IMatrixTransform * classInstance, void * floatMatrix)
+	{
+		classInstance->setTransform(floatMatrix);
 	}
 	
 	extern "C" DLLEXPORT void API_CALL llge_Transform2d_setWorldPosition (ITransform2d * classInstance, float x, float y, float z)
@@ -359,6 +389,11 @@ namespace llge
 	extern "C" DLLEXPORT ITransform2d * API_CALL llge_Entity_getTransform2d (IEntity * classInstance)
 	{
 		return classInstance->getTransform2d();
+	}
+	
+	extern "C" DLLEXPORT IMatrixTransform * API_CALL llge_Entity_getMatrixTransform (IEntity * classInstance)
+	{
+		return classInstance->getMatrixTransform();
 	}
 	
 	extern "C" DLLEXPORT void API_CALL llge_Entity_dispose (IEntity * classInstance)
@@ -444,6 +479,31 @@ namespace llge
 	extern "C" DLLEXPORT void API_CALL llge_EntitiesFactory_dispose (IEntitiesFactory * classInstance)
 	{
 		classInstance->dispose();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_Batch2d_setTransform (IBatch2d * classInstance, void * transform)
+	{
+		classInstance->setTransform(transform);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_Batch2d_startBatch (IBatch2d * classInstance)
+	{
+		classInstance->startBatch();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_Batch2d_finishBatch (IBatch2d * classInstance)
+	{
+		classInstance->finishBatch();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_Batch2d_setTexture (IBatch2d * classInstance, ITexture * texture)
+	{
+		classInstance->setTexture(texture);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_Batch2d_draw (IBatch2d * classInstance, void * vertices, int verticesCount, void * indices, int indicesCount)
+	{
+		classInstance->draw(vertices, verticesCount, indices, indicesCount);
 	}
 	
 	extern "C" DLLEXPORT TextureImage2dFormat API_CALL llge_TextureBuffer2d_getFormat (ITextureBuffer2d * classInstance)

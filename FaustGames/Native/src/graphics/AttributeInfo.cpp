@@ -14,6 +14,7 @@ namespace graphics
 			_elementsCount = 1;
 			_normalized = false;
 			break;
+		case AttributeType::TextureCoord:
 		case AttributeType::Vector2:
 			_elementType = GL_FLOAT;
 			_elementSize = 4;
@@ -44,12 +45,14 @@ namespace graphics
 			_elementsCount = 4;
 			_normalized = true;
 			break;
+			/*
 		case AttributeType::TextureCoord:
 			_elementType = GL_UNSIGNED_SHORT;
 			_elementSize = 2;
 			_elementsCount = 2;
 			_normalized = true;
 			break;
+			*/
 		default:
 			break;
 		}

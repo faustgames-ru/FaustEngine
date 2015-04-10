@@ -6,6 +6,7 @@
 #include "Aabb2dComponent.h"
 #include "Render2dComponent.h"
 #include "Transform2dComponent.h"
+#include "MatrixTransformComponent.h"
 
 namespace entities
 {
@@ -79,6 +80,10 @@ namespace entities
 			{
 				createComponent<Transform2dComponent>();
 			}
+			if (types & llge::MatrixTransform)
+			{
+				createComponent<MatrixTransformComponent>();
+			}
 		}
 		
 		virtual llge::IAabb2d* API_CALL getAabb2d()
@@ -92,6 +97,10 @@ namespace entities
 		virtual llge::ITransform2d* API_CALL getTransform2d()
 		{
 			return getComponent<Transform2dComponent>();
+		}
+		virtual llge::IMatrixTransform* API_CALL getMatrixTransform()
+		{
+			return getComponent<MatrixTransformComponent>();
 		}
 	private:
 		int _id;

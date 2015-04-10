@@ -11,8 +11,8 @@ namespace drawing
 		float x;
 		float y;
 		float z;
-		unsigned short u;
-		unsigned short v;
+		float u;
+		float v;
 		unsigned int color;
 
 		inline float getX() const { return x; }
@@ -23,6 +23,19 @@ namespace drawing
 		inline void setZ(float value){ z = value; }
 	};
 
+	class RendererTransform
+	{
+	public:
+		core::Matrix *Matrix;
+
+		template <typename T>
+		void transform(T *target, T *source)
+		{
+			target->setX((source->x * Matrix->getXx() + source->y * Matrix->getYx() + source->z * Matrix->getZx() + Matrix->getWx()));
+			target->setY((source->x * Matrix->getXy() + source->y * Matrix->getYy() + source->z * Matrix->getZy() + Matrix->getWy()));
+			target->setZ((source->x * Matrix->getXz() + source->y * Matrix->getYz() + source->z * Matrix->getZz() + Matrix->getWz()));
+		}
+	};
 	class RendererTransform2d
 	{
 	public:
@@ -57,16 +70,26 @@ namespace drawing
 		}
 	};
 
-	class Renderer2d
+	class Renderer2d : public llge::IBatch2d
 	{
 	public:
-		RendererTransform2d Transform;
+		RendererTransform Transform;
 		Camera Camera;
 		Renderer2d();
 		void start();
 		int finish();
-		void drawMesh(unsigned int texture, Mesh2dVertex *vertices, int verticesCount, 
+		void drawMesh(unsigned int texture, Mesh2dVertex *vertices, int verticesCount,
 			unsigned short *indices, int indicesCount);
+
+		virtual void API_CALL setTransform(void *transform){ Camera.setMatrix((float *)transform); }
+		virtual void API_CALL startBatch() { start(); }
+		virtual void API_CALL finishBatch() { finish(); }
+		virtual void API_CALL setTexture(llge::ITexture *texture) { _textureId = texture->getId(); }
+		virtual void API_CALL draw(void *vertices, int verticesCount, void *indices, int indicesCount) 
+		{
+			drawMesh(_textureId, (Mesh2dVertex *)vertices, verticesCount, (unsigned short *)indices, indicesCount);
+		}
+
 	private:
 		void draw();
 
@@ -82,6 +105,7 @@ namespace drawing
 		graphics::VertexFormat * _format;
 		core::MatrixContainer _projectionContainer;
 		int _drawCalls;
+		unsigned int _textureId;
 	};
 }
 

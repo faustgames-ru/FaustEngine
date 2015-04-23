@@ -471,6 +471,11 @@ namespace llge
 		classInstance->dispose();
 	}
 	
+	extern "C" DLLEXPORT void API_CALL llge_EntitiesWorld_clear (IEntitiesWorld * classInstance)
+	{
+		classInstance->clear();
+	}
+	
 	extern "C" DLLEXPORT IEntitiesWorld * API_CALL llge_EntitiesFactory_createEntitiesWorld (IEntitiesFactory * classInstance)
 	{
 		return classInstance->createEntitiesWorld();
@@ -504,6 +509,16 @@ namespace llge
 	extern "C" DLLEXPORT void API_CALL llge_Batch2d_draw (IBatch2d * classInstance, void * vertices, int verticesCount, void * indices, int indicesCount)
 	{
 		classInstance->draw(vertices, verticesCount, indices, indicesCount);
+	}
+	
+	extern "C" DLLEXPORT int API_CALL llge_NativeMemoryProfiler_getAllocationsSize (INativeMemoryProfiler * classInstance)
+	{
+		return classInstance->getAllocationsSize();
+	}
+	
+	extern "C" DLLEXPORT int API_CALL llge_NativeMemoryProfiler_getHeapSize (INativeMemoryProfiler * classInstance)
+	{
+		return classInstance->getHeapSize();
 	}
 	
 	extern "C" DLLEXPORT TextureImage2dFormat API_CALL llge_TextureBuffer2d_getFormat (ITextureBuffer2d * classInstance)

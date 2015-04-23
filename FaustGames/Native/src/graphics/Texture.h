@@ -9,12 +9,18 @@ namespace graphics
 	class Texture : public llge::ITexture
 	{
 	public:
-		inline const GLuint getHandle(){ return _handle; }
+		inline const GLuint getHandle()
+		{ 
+			if (!_handle)
+				return _handleDefault;
+			return _handle; 
+		}
 		virtual uint API_CALL getId() { return getHandle(); }
 		inline void setHandle(GLuint value) { _handle = value; }
 		virtual void API_CALL dispose() { delete this; }
 	protected:
 		GLuint _handle;
+		GLuint _handleDefault;
 	};
 }
 

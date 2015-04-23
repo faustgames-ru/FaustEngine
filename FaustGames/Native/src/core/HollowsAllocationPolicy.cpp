@@ -2,6 +2,9 @@
 
 namespace core
 {
+	int HollowsAllocationPolicy::AllocatedSize(0);
 	SmallBlocksContainer HollowsAllocationPolicy::_smallBlocks;
 	LargeBlocksContainer HollowsAllocationPolicy::_largeBlocks;
+
+	int HollowsAllocationBlock::AllocationBlocksSize(0);
 }

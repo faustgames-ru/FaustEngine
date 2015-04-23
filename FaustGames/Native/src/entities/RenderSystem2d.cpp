@@ -7,7 +7,7 @@ namespace entities
 {
 	drawing::Camera* RenderSystem2d::getCamera()
 	{
-		return &(_renderer.Camera);
+		return &(_renderer.RendererCamera);
 	}
 
 	void RenderSystem2d::updateSystem(float elapsed, const std::vector<Entity *> entities)

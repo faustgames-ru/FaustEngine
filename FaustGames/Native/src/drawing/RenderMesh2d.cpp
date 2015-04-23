@@ -6,6 +6,15 @@ namespace drawing
 	{
 	}
 
+	RenderMesh2d::~RenderMesh2d()
+	{
+		if (_vertices)
+			core::Mem::deallocate(_vertices);
+		if (_indices)
+			core::Mem::deallocate(_indices);
+	}
+
+
 	void RenderMesh2d::setData(llge::ITexture * texture, Mesh2dVertex* vertices, int verticesCount, unsigned short* indices, int indicesCount)
 	{
 		_texture = texture;

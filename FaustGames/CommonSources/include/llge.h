@@ -280,6 +280,15 @@ namespace llge
 		virtual void API_CALL draw(void *vertices, int verticesCount, void *indices, int indicesCount) = 0;
 	};
 
+	/// profile
+
+	class INativeMemoryProfiler
+	{
+	public:
+		virtual int API_CALL getAllocationsSize() = 0;
+		virtual int API_CALL getHeapSize() = 0;
+	};
+
 
 	/// content
 	class ITextureBuffer2d
@@ -311,6 +320,7 @@ namespace llge
 	extern "C" DLLEXPORT IGeometryFactory * API_CALL createGeometryFactory();
 
 	extern "C" DLLEXPORT void API_CALL initRenderContext();
+	extern "C" DLLEXPORT INativeMemoryProfiler * API_CALL createNativeMemoryProfiler();
 }
 
 #endif /*LLGE_H*/

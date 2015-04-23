@@ -2,6 +2,7 @@
 #include "Color.h"
 #include "Errors.h"
 #include "UniformValueTexture.h"
+#include "TextureImage2d.h"
 
 namespace graphics
 {
@@ -64,12 +65,14 @@ namespace graphics
 				case GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT:
 					Errors::check(Errors::CheckFramebufferStatus);
 					break;
+				/*
 				case GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER:
 					Errors::check(Errors::CheckFramebufferStatus);
 					break;
 				case GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER:
 					Errors::check(Errors::CheckFramebufferStatus);
 					break;
+				*/
 				case GL_FRAMEBUFFER_UNSUPPORTED:
 					Errors::check(Errors::CheckFramebufferStatus);
 					break;
@@ -130,6 +133,11 @@ namespace graphics
 		renderState.apply(vertexFormat, vertexBuffer);
 		glDrawElements(GL_TRIANGLES, primitivesCount * 3, GL_UNSIGNED_SHORT, indexBuffer);
 		Errors::check(Errors::DrawElements);
+	}
+
+	void GraphicsDevice::create()
+	{
+		TextureImage2d::createStatic();
 	}
 
 }

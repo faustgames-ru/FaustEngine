@@ -54,6 +54,7 @@ namespace geometry
 	void Quadtree2dNode::remove(Quadtree2dItem *item)
 	{
 		_items.remove(item);
+		core::Mem::dispose(item);
 	}
 
 

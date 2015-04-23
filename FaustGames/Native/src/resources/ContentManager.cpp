@@ -1,6 +1,7 @@
 #include "ContentManager.h"
 #include "ContentProvider.h"
 #include "lpng\png.h"
+#include "..\core\HollowsAllocationPolicy.h"
 
 namespace resources
 {
@@ -9,6 +10,16 @@ namespace resources
 		ContentProvider::read(data, length);
 	}
 
+	void * pngMalloc(png_structp pngPtr, png_alloc_size_t size)
+	{
+		void *result = core::Mem::allocate(size);
+		return result;
+	}
+	
+	void pngFree(png_structp pngPtr, void *mem)
+	{
+		core::Mem::deallocate(mem);
+	}
 
 	ContentManager::ContentManager() : _image(0), _isOpened(false)
 	{
@@ -33,6 +44,8 @@ namespace resources
 
 	graphics::Image2dData * ContentManager::loadTexture(int id)
 	{
+
+
 		const char *name = _files[id].c_str();
 		//todo: load data from content provider
 		ContentProvider::openContent(name);
@@ -58,15 +71,17 @@ namespace resources
 			return 0;
 		}
 
-		m_PngPtr = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
-
+		m_PngPtr = png_create_read_struct_2(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL, 0, pngMalloc, pngFree);
+		
 		if (!m_PngPtr)
 		{
 			//throw ref new Exception(-1, "png_create_read_struct failed");
 			return 0;
 		}
-		m_InfoPtr = png_create_info_struct(m_PngPtr);
+		png_set_read_fn(m_PngPtr, 0, readData);
 
+		m_InfoPtr = png_create_info_struct(m_PngPtr);
+		
 		if (!m_InfoPtr)
 		{
 			png_destroy_read_struct(&m_PngPtr, 0, 0);
@@ -74,8 +89,6 @@ namespace resources
 			//throw ref new Exception(-1, "png_create_info_struct failed");
 			return 0;
 		}
-
-		png_set_read_fn(m_PngPtr, 0, readData);
 
 		if (setjmp(png_jmpbuf(m_PngPtr)))
 		{
@@ -98,8 +111,11 @@ namespace resources
 		for (size_t i = 0; i < (size_t)m_Height; i++)
 			m_RowPtrs[i] = (png_byte*)_image->Pixels + i*m_Width*m_Channels;
 		
-		png_read_image(m_PngPtr, m_RowPtrs);		
-		png_destroy_read_struct(&m_PngPtr, &m_InfoPtr, 0);
+		png_read_image(m_PngPtr, m_RowPtrs);
+
+
+		png_destroy_info_struct(m_PngPtr, &m_InfoPtr);		
+		png_destroy_read_struct(&m_PngPtr, 0, 0);
 
 		ContentProvider::closeContent();
 		_image->Width = m_Width;
@@ -123,17 +139,19 @@ namespace resources
 	{
 		if (_isOpened) 
 			return;
-		m_RowPtrs = new png_bytep[ImageMaxHeight];
+		m_RowPtrs = (png_bytep *)core::Mem::allocate(ImageMaxHeight * sizeof(png_bytep));
 		_image = new graphics::Image2dData(ImageBufferSize);
+		_isOpened = true;
 	}
 	void ContentManager::close()
 	{
 		if (!_isOpened)
 			return;
-		delete[] m_RowPtrs;
+		core::Mem::deallocate(m_RowPtrs);
 		delete _image;
 		m_RowPtrs = 0;
 		_image = 0;
+		_isOpened = false;
 	}
 
 	int API_CALL ContentManager::registerImage(char * name) 

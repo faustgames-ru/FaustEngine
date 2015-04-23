@@ -18,7 +18,7 @@ namespace entities
 	
 	void TransformSystem2d::updateComponent(Entity *entity, ComponentMask::e type)
 	{
-		if (type != ComponentType::Transform2d) return;
+		if (type != ComponentMask::Transform2d) return;
 		Transform2dComponent *component = entity->getComponent<Transform2dComponent>();
 		if (!component) return;
 		component->update();

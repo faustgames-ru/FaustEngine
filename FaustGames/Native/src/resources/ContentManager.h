@@ -31,7 +31,7 @@ namespace resources
 		std::vector<std::string> _files;
 		graphics::Image2dData *_image;
 		bool _isOpened;
-		static const int ImageBufferSize = 16 * 1024 * 1024; //(2048x2048x32bpp)
+		static const int ImageBufferSize = 2048 * 2048; //(2048x2048x32bpp)
 		static const int ImageMaxHeight = 2048;
 		static const int ImageMaxWidth = 2048;
 	};

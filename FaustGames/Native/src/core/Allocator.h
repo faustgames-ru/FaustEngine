@@ -48,7 +48,7 @@ namespace core
 		//    size
 		inline size_type max_size() const
 		{
-			return 2147483648 / sizeof(T);
+			return (size_type)(1073741824 / sizeof(T));
 		}
 
 		//    construction/destruction
@@ -59,8 +59,8 @@ namespace core
 		inline bool operator!=(Allocator const& a) { return !operator==(a); }
 	};    //    end of class Allocator 
 
-	//typedef Allocator<void *, HollowsAllocationPolicy> DAlloc;
-	typedef Allocator<void *, StandartAllocationPolicy> DAlloc;
+	typedef Allocator<void *, HollowsAllocationPolicy> DAlloc;
+	//typedef Allocator<void *, StandartAllocationPolicy> DAlloc;
 }
 
 #endif /*ALLOCATOR_H*/

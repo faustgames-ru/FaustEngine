@@ -2,12 +2,14 @@
 #define HOLLOWS_ALLOCATION_POLICY_H
 
 #include "core_classes.h"
+#include "SystemAllocationPolicy.h"
 
 namespace core
 {
 	class HollowsAllocationBlock
 	{
 	public:
+		static int AllocationBlocksSize;
 		HollowsAllocationBlock *Next;
 
 		HollowsAllocationBlock(int elementSize, int elementsLimit) :
@@ -26,15 +28,24 @@ namespace core
 		~HollowsAllocationBlock()
 		{
 			if (_data)
+			{
 				free(_data);
+				AllocationBlocksSize -= _size;
+			}
 			if (_holes)
+			{
 				free(_holes);
+				AllocationBlocksSize -= _elementsLimit * sizeof(char *);
+			}
 		}
 
 		inline char ** getHoles()
 		{
 			if (!_holes)
+			{
 				_holes = (char **)malloc(_elementsLimit * sizeof(char *));
+				AllocationBlocksSize += _elementsLimit * sizeof(char *);
+			}
 			return _holes;
 		}
 
@@ -43,6 +54,7 @@ namespace core
 			if (!_data)
 			{
 				_data = (char *)malloc(_size);
+				AllocationBlocksSize += _size;
 			}
 			return _data + sizeof(int);
 		}
@@ -52,6 +64,7 @@ namespace core
 			if (!_data)
 			{
 				_data = (char *)malloc(_size);
+				AllocationBlocksSize += _size;
 			}
 			return _data;
 		}
@@ -98,7 +111,7 @@ namespace core
 
 		inline void deallocate(void *p)
 		{
-			if ((getData() + (_count * _elementSize)) == p)
+			if ((getData() + ((_count - 1) * _elementSize)) == p)
 			{
 				--_count;
 			}
@@ -227,8 +240,10 @@ namespace core
 	class HollowsAllocationPolicy
 	{
 	public:
+		static int AllocatedSize;
 		static inline void* allocate(std::size_t cnt)
 		{
+			AllocatedSize += cnt;
 			if (cnt < SmallBlocksContainer::SmallBlocksCount)
 			{
 				return _smallBlocks.Blocks[cnt]->allocate();
@@ -258,6 +273,7 @@ namespace core
 		static inline void deallocate(void* p)
 		{
 			int size = *((int *)p - 1);
+			AllocatedSize -= size;
 
 			if (size < SmallBlocksContainer::SmallBlocksCount)
 			{
@@ -288,6 +304,7 @@ namespace core
 	};
 
 	typedef HollowsAllocationPolicy Mem;
+	//typedef StandartAllocationPolicy Mem;
 }
 
 #endif /*HOLLOWS_ALLOCATION_POLICY_H*/

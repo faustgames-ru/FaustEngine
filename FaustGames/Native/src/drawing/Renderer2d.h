@@ -74,14 +74,14 @@ namespace drawing
 	{
 	public:
 		RendererTransform Transform;
-		Camera Camera;
+		Camera RendererCamera;
 		Renderer2d();
 		void start();
 		int finish();
 		void drawMesh(unsigned int texture, Mesh2dVertex *vertices, int verticesCount,
 			unsigned short *indices, int indicesCount);
 
-		virtual void API_CALL setTransform(void *transform){ Camera.setMatrix((float *)transform); }
+		virtual void API_CALL setTransform(void *transform){ RendererCamera.setMatrix((float *)transform); }
 		virtual void API_CALL startBatch() { start(); }
 		virtual void API_CALL finishBatch() { finish(); }
 		virtual void API_CALL setTexture(llge::ITexture *texture) { _textureId = texture->getId(); }

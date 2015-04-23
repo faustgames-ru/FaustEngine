@@ -795,6 +795,13 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private void llge_EntitiesWorld_dispose (IntPtr classInstance);
+		public void Clear ()
+		{
+			llge_EntitiesWorld_clear(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_EntitiesWorld_clear (IntPtr classInstance);
 	}
 	
 	public class EntitiesFactory
@@ -854,6 +861,25 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private void llge_Batch2d_draw (IntPtr classInstance, IntPtr vertices, int verticesCount, IntPtr indices, int indicesCount);
+	}
+	
+	public class NativeMemoryProfiler
+	{
+		public IntPtr ClassInstance;
+		public int GetAllocationsSize ()
+		{
+			return llge_NativeMemoryProfiler_getAllocationsSize(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private int llge_NativeMemoryProfiler_getAllocationsSize (IntPtr classInstance);
+		public int GetHeapSize ()
+		{
+			return llge_NativeMemoryProfiler_getHeapSize(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private int llge_NativeMemoryProfiler_getHeapSize (IntPtr classInstance);
 	}
 	
 	public class TextureBuffer2d
@@ -987,6 +1013,13 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private void initRenderContext ();
+		static public NativeMemoryProfiler CreateNativeMemoryProfiler ()
+		{
+			return new NativeMemoryProfiler{ ClassInstance = createNativeMemoryProfiler() };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr createNativeMemoryProfiler ();
 	}
 	
 }

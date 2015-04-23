@@ -10,6 +10,7 @@ namespace drawing
 	{
 	public:
 		RenderMesh2d();
+		~RenderMesh2d();
 		void setData(llge::ITexture * texture, Mesh2dVertex* vertices, int verticesCount, unsigned short* indices, int indicesCount);
 		virtual void render(Renderer2d *renderer);
 	private:

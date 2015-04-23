@@ -52,11 +52,14 @@ namespace graphics
 		Errors::check(Errors::TexParameteri);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 		Errors::check(Errors::TexParameteri);
+
+		// todo: work around gles2 depth texture support
+		/*
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_NONE);
 		Errors::check(Errors::TexParameteri);
 		glTexParameteri(GL_TEXTURE_2D, GL_DEPTH_TEXTURE_MODE, GL_INTENSITY);
 		Errors::check(Errors::TexParameteri);
-
+		*/
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, width, height, 0, GL_DEPTH_COMPONENT, GL_UNSIGNED_BYTE, 0);
 		Errors::check(Errors::TexImage2D);
 

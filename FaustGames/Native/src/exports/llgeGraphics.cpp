@@ -94,6 +94,8 @@ namespace llge
 		GraphicsDevice *graphicsDevice;
 		UniformsFacade *uniformsFacade;
 
+		graphics::BlendState::e _blendMode;
+
 		GraphicsFacade()
 		{
 			graphicsDevice = &GraphicsDevice::Default;
@@ -146,18 +148,7 @@ namespace llge
 
 		virtual void API_CALL setBlendMode(BlendMode blendMode)
 		{
-			switch (blendMode)
-			{
-			case Alpha:
-				graphicsDevice->renderState.setBlend(graphics::BlendState::Alpha);
-				break;
-			case Additive:
-				graphicsDevice->renderState.setBlend(graphics::BlendState::Additive);
-				break;
-			default:
-				graphicsDevice->renderState.setBlend(graphics::BlendState::None);
-				break;
-			}
+			_blendMode = (graphics::BlendState::e)blendMode;
 		}
 
 		virtual void API_CALL setClearState(uint color, float depth)
@@ -178,24 +169,28 @@ namespace llge
 
 		virtual void API_CALL drawEdges(GraphicsEffects effect, GraphicsVertexFormats vertexFormat, void *vertices, int primitivesCount)
 		{
+			graphicsDevice->renderState.setBlend(_blendMode);
 			graphicsDevice->renderState.setEffect(effects[effect]);
 			graphicsDevice->drawEdges(formats[vertexFormat], vertices, primitivesCount);
 		}
 		
 		virtual void API_CALL draw(GraphicsEffects effect, GraphicsVertexFormats vertexFormat, void *vertices, int primitivesCount)
 		{
+			graphicsDevice->renderState.setBlend(_blendMode);
 			graphicsDevice->renderState.setEffect(effects[effect]);
 			graphicsDevice->drawTriangles(formats[vertexFormat], vertices, primitivesCount);
 		}
 		
 		virtual void API_CALL drawElements(GraphicsEffects effect, GraphicsVertexFormats vertexFormat, void *vertices, void *indices, int primitivesCount)
 		{
+			graphicsDevice->renderState.setBlend(_blendMode);
 			graphicsDevice->renderState.setEffect(effects[effect]);
 			graphicsDevice->drawPrimitives(formats[vertexFormat], vertices, (unsigned short *)indices, primitivesCount);
 		}
 
 		virtual void API_CALL drawVertexBuffer(GraphicsEffects effect, GraphicsVertexFormats vertexFormat, IVertexBuffer *vertexBuffer, void *indices, int primitivesCount)
 		{
+			graphicsDevice->renderState.setBlend(_blendMode);
 			graphicsDevice->renderState.setEffect(effects[effect]);
 			graphicsDevice->drawVertexBuffer(formats[vertexFormat], vertexBuffer->getId(), (unsigned short *)indices, primitivesCount);
 		}
@@ -204,6 +199,7 @@ namespace llge
 		{
 			graphicsDevice->renderState = RenderState(); /// ???
 			graphicsDevice->renderState.init();
+			GraphicsDevice::create();
 			Effects::create();
 			VertexFormats::create();
 		}
@@ -254,6 +250,20 @@ namespace llge
 		}
 	};
 
+	class NativeMemoryProfiler : public INativeMemoryProfiler
+	{
+	public:
+		virtual int API_CALL getAllocationsSize()
+		{
+			return HollowsAllocationPolicy::AllocatedSize;
+		}
+
+		virtual int API_CALL getHeapSize()
+		{
+			return HollowsAllocationBlock::AllocationBlocksSize;
+		}
+	};
+
 	extern "C" DLLEXPORT  IGraphicsFactory * API_CALL createGraphicsFactory()
 	{
 		return new GraphicsFactory();
@@ -280,6 +290,11 @@ namespace llge
 			//throw std::exception("fail to init glew");
 		}
 #endif
+	}
+
+	extern "C" DLLEXPORT INativeMemoryProfiler * API_CALL createNativeMemoryProfiler() 
+	{
+		return new NativeMemoryProfiler();
 	}
 
 }

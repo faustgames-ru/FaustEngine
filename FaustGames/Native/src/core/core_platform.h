@@ -6,7 +6,7 @@
 #include <string>
 #include <sstream>
 #include <stdio.h>
-
+#include <cmath>
 #else
 #include "..\..\llge\stdafx.h"
 

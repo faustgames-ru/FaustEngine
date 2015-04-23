@@ -40,10 +40,10 @@ c:\_faust\faustengine\faustgames\native\llge\debug\staticbatch.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\texture.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\texturecubemap.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\textureimage2d.obj
-c:\_faust\faustengine\faustgames\native\llge\debug\entitiesfilter.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\entity.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\entitiesworld.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\dummyentitiesfilter.obj
+c:\_faust\faustengine\faustgames\native\llge\debug\matrixtransformcomponent.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\quadtreeentitiesfilter.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\render2dcomponent.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\rendersystem2d.obj
@@ -73,6 +73,7 @@ c:\_faust\faustengine\faustgames\native\llge\debug\rendermesh2d.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\waterrenderer.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\aabb2dcomponent.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\component.obj
+c:\_faust\faustengine\faustgames\native\llge\debug\entitiesfilter.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\pngtrans.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\pngwio.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\pngwrite.obj

@@ -25,6 +25,8 @@ namespace graphics
 		void drawEdges(VertexFormat *vertexFormat, void *vertexBuffer, int primitivesCount);
 		void drawTriangles(VertexFormat *vertexFormat, void *vertexBuffer, int primitivesCount);
 		void drawPrimitives(VertexFormat *vertexFormat, void *vertexBuffer, unsigned short *indexBuffer, int primitivesCount);
+
+		static void create();
 	protected:
 	private:
 		int _viewportX;

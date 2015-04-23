@@ -10,9 +10,13 @@ namespace graphics
 	class TextureImage2d : public Texture, public llge::ITextureImage2d
 	{
 	public:
+		static TextureImage2d * empty(){ return &_empty; }
+
 		TextureImage2d(bool generateMipmaps);
 		void setData(const Image2dData *data);
 		void setData(int width, int height, Image2dFormat::e format, unsigned int *pixels);
+		static void createStatic();
+		static void cleanupStatic();
 
 		virtual ITexture* API_CALL getTexture(){ return this; }
 		virtual void API_CALL LoadPixels(int width, int height, llge::TextureImage2dFormat format, void *pixels);
@@ -21,10 +25,12 @@ namespace graphics
 		virtual void API_CALL dispose(){ delete this; }
 	protected:
 	private:
+		TextureImage2d();
 		static GLenum getFormat(Image2dFormat::e format);
 		bool _createMipmaps;
 		bool _wrap;
 		bool _filter;
+		static TextureImage2d _empty;
 	};
 }
 

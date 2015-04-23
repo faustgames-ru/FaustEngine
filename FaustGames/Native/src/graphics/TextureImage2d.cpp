@@ -22,9 +22,16 @@ namespace graphics
 		}
 	};
 
-	TextureImage2d::TextureImage2d(bool generateMipmaps) : _wrap(true), _filter(true), _createMipmaps(generateMipmaps)
+	TextureImage2d::TextureImage2d() : _wrap(false), _filter(true), _createMipmaps(false)
 	{
 		_handle = 0;
+		_handleDefault = _empty.getHandle();
+	}
+
+	TextureImage2d::TextureImage2d(bool generateMipmaps) : _wrap(false), _filter(true), _createMipmaps(generateMipmaps)
+	{
+		_handle = 0;
+		_handleDefault = _empty.getHandle();
 	}
 
 	void API_CALL TextureImage2d::LoadPixels(int width, int height, llge::TextureImage2dFormat format, void *pixels)
@@ -65,13 +72,15 @@ namespace graphics
 			Errors::check(Errors::TexParameteri);
 		}
 
-		if (_wrap) {
+		if (_wrap) 
+		{
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 			Errors::check(Errors::TexParameteri);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 			Errors::check(Errors::TexParameteri);
 		}
-		else {
+		else 
+		{
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 			Errors::check(Errors::TexParameteri);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
@@ -141,6 +150,8 @@ namespace graphics
 		}
 		glBindTexture(GL_TEXTURE_2D, 0);
 		Errors::check(Errors::BindTexture);
+		glFinish();
+		Errors::check(Errors::Finish);
 	}
 
 
@@ -162,5 +173,17 @@ namespace graphics
 		}
 	}
 
+	void TextureImage2d::createStatic()
+	{
+		_empty.create();
+		unsigned int blackPixel = 0x00000000;
+		_empty.setData(1, 1, Image2dFormat::Rgba, &blackPixel);
+	}
 
+	void TextureImage2d::cleanupStatic()
+	{
+		_empty.cleanup();
+	}
+
+	TextureImage2d TextureImage2d::_empty;
 }

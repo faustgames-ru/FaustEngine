@@ -762,5 +762,8 @@
     <ClCompile Include="..\src\entities\MatrixTransformComponent.cpp">
       <Filter>entities\components</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\resources\ContentProviderObb.cpp">
+      <Filter>resources</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

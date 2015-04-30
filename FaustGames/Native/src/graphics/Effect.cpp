@@ -148,7 +148,8 @@ namespace graphics
 		Errors::check(Errors::LinkProgram);
 		
 		glUseProgram(_shaderProgram);
-		Errors::check(Errors::UseProgram);
+		//Errors::check(Errors::UseProgram);
+		Errors::check(vertexShaderCode);
 
 		for (int i = 0; i < _uniforms.count; i++)
 		{

@@ -303,8 +303,8 @@ namespace core
 		static LargeBlocksContainer _largeBlocks;
 	};
 
-	typedef HollowsAllocationPolicy Mem;
-	//typedef StandartAllocationPolicy Mem;
+	//typedef HollowsAllocationPolicy Mem;
+	typedef StandartAllocationPolicy Mem;
 }
 
 #endif /*HOLLOWS_ALLOCATION_POLICY_H*/

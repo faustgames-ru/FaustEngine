@@ -365,6 +365,7 @@
     <ClCompile Include="..\src\graphics\VertexFormat.cpp" />
     <ClCompile Include="..\src\graphics\VertexFormats.cpp" />
     <ClCompile Include="..\src\resources\ContentManager.cpp" />
+    <ClCompile Include="..\src\resources\ContentProviderObb.cpp" />
     <ClCompile Include="..\src\resources\ContentProviderWindows.cpp" />
     <ClCompile Include="..\src\resources\lpng\example.c" />
     <ClCompile Include="..\src\resources\lpng\png.c" />

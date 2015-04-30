@@ -59,8 +59,8 @@ namespace core
 		inline bool operator!=(Allocator const& a) { return !operator==(a); }
 	};    //    end of class Allocator 
 
-	typedef Allocator<void *, HollowsAllocationPolicy> DAlloc;
-	//typedef Allocator<void *, StandartAllocationPolicy> DAlloc;
+	//typedef Allocator<void *, HollowsAllocationPolicy> DAlloc;
+	typedef Allocator<void *, StandartAllocationPolicy> DAlloc;
 }
 
 #endif /*ALLOCATOR_H*/

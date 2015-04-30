@@ -60,6 +60,7 @@ namespace graphics
 		static std::string _names[EnumSize];
 
 		static const char * getActionName(Errors::e actionType);
+		static void check(const char* errorText);
 		static void check(Errors::e actionType);
 	protected:
 	private:

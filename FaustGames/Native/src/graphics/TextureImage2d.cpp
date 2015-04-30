@@ -24,12 +24,14 @@ namespace graphics
 
 	TextureImage2d::TextureImage2d() : _wrap(false), _filter(true), _createMipmaps(false)
 	{
+		_size = 0;
 		_handle = 0;
 		_handleDefault = _empty.getHandle();
 	}
 
 	TextureImage2d::TextureImage2d(bool generateMipmaps) : _wrap(false), _filter(true), _createMipmaps(generateMipmaps)
 	{
+		_size = 0;
 		_handle = 0;
 		_handleDefault = _empty.getHandle();
 	}
@@ -93,12 +95,28 @@ namespace graphics
 
 	void API_CALL TextureImage2d::cleanup()
 	{
+		Size -= _size;
+		_size = 0;
 		glDeleteTextures(1, &_handle);
 		Errors::check(Errors::DeleteTexture);
 	}
 
 	void TextureImage2d::setData(int width, int height, Image2dFormat::e format, unsigned int *pixels)
 	{
+		Size -= _size;
+		_size = width * height;
+		switch (format)
+		{
+		case Image2dFormat::Rgb:
+			_size *= 3;
+			break;
+		case Image2dFormat::Rgba:
+			_size *= 4;
+			break;
+		default:
+			break;
+		}
+		Size += _size;
 		glBindTexture(GL_TEXTURE_2D, _handle);
 		Errors::check(Errors::BindTexture);
 		if (_createMipmaps)
@@ -184,6 +202,8 @@ namespace graphics
 	{
 		_empty.cleanup();
 	}
+
+	int TextureImage2d::Size(0);
 
 	TextureImage2d TextureImage2d::_empty;
 }

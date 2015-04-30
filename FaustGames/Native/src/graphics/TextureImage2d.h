@@ -10,6 +10,7 @@ namespace graphics
 	class TextureImage2d : public Texture, public llge::ITextureImage2d
 	{
 	public:
+		static int Size;
 		static TextureImage2d * empty(){ return &_empty; }
 
 		TextureImage2d(bool generateMipmaps);
@@ -30,6 +31,7 @@ namespace graphics
 		bool _createMipmaps;
 		bool _wrap;
 		bool _filter;
+		int _size;
 		static TextureImage2d _empty;
 	};
 }

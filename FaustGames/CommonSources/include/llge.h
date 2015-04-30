@@ -285,6 +285,7 @@ namespace llge
 	class INativeMemoryProfiler
 	{
 	public:
+		virtual int API_CALL getTexturesSize() = 0;
 		virtual int API_CALL getAllocationsSize() = 0;
 		virtual int API_CALL getHeapSize() = 0;
 	};
@@ -311,10 +312,23 @@ namespace llge
 		virtual void API_CALL finishLoad() = 0;
 		virtual void API_CALL dispose() = 0;
 	};
-
+		
+	class IObbContentProvider
+	{
+	public:
+		virtual void API_CALL openObbFile(const char *obbFile) = 0;
+		virtual void API_CALL closeObbFile() = 0;
+		virtual bool API_CALL existsContent(const char *name) = 0;
+		virtual void API_CALL openContent(const char *name) = 0;
+		virtual int API_CALL read(void *buffer, int bytesLimit) = 0;
+		virtual int API_CALL getContentSize() = 0;
+		virtual void API_CALL closeContent() = 0;
+	};
+	
 	extern "C" DLLEXPORT IBatch2d * API_CALL createBatch2d();
 	extern "C" DLLEXPORT ITexture * API_CALL createTextureByID(uint id);
 	extern "C" DLLEXPORT IContentManager * API_CALL createContentManager();
+	extern "C" DLLEXPORT IObbContentProvider * API_CALL createContentProvider();
 	extern "C" DLLEXPORT IEntitiesFactory * API_CALL createEntitiesFactory();
 	extern "C" DLLEXPORT IGraphicsFactory * API_CALL createGraphicsFactory();
 	extern "C" DLLEXPORT IGeometryFactory * API_CALL createGeometryFactory();

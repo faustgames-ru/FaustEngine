@@ -15,6 +15,7 @@ namespace resources
 		void open();
 		void close();
 
+		virtual void API_CALL setObbFile(char * obbFile);
 		virtual int API_CALL registerImage(char * name);
 		virtual void API_CALL startLoad();
 		virtual void API_CALL loadImage(int id, llge::ITextureImage2d *textureImage);

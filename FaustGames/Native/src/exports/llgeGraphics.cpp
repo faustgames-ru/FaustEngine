@@ -103,7 +103,7 @@ namespace llge
 
 			effects[EffectTextureColor] = Effects::textureColor();
 			effects[EffectTextureLightmapColor] = Effects::textureLightmapColor();
-			effects[EffectWater] = Effects::water();
+			effects[EffectWater] = 0;// Effects::water();
 			effects[EffectSolid] = Effects::solid();
 			effects[EffectRenderDepth] = Effects::renderDepth();
 			effects[EffectSolidColor] = Effects::solidColor();
@@ -253,9 +253,14 @@ namespace llge
 	class NativeMemoryProfiler : public INativeMemoryProfiler
 	{
 	public:
+		virtual int API_CALL getTexturesSize()
+		{
+			return graphics::TextureImage2d::Size;
+		}
+
 		virtual int API_CALL getAllocationsSize()
 		{
-			return HollowsAllocationPolicy::AllocatedSize;
+			return Mem::AllocatedSize;
 		}
 
 		virtual int API_CALL getHeapSize()

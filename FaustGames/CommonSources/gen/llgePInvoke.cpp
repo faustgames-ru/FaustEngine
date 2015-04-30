@@ -511,6 +511,11 @@ namespace llge
 		classInstance->draw(vertices, verticesCount, indices, indicesCount);
 	}
 	
+	extern "C" DLLEXPORT int API_CALL llge_NativeMemoryProfiler_getTexturesSize (INativeMemoryProfiler * classInstance)
+	{
+		return classInstance->getTexturesSize();
+	}
+	
 	extern "C" DLLEXPORT int API_CALL llge_NativeMemoryProfiler_getAllocationsSize (INativeMemoryProfiler * classInstance)
 	{
 		return classInstance->getAllocationsSize();
@@ -569,6 +574,41 @@ namespace llge
 	extern "C" DLLEXPORT void API_CALL llge_ContentManager_dispose (IContentManager * classInstance)
 	{
 		classInstance->dispose();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_ObbContentProvider_openObbFile (IObbContentProvider * classInstance, const char * obbFile)
+	{
+		classInstance->openObbFile(obbFile);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_ObbContentProvider_closeObbFile (IObbContentProvider * classInstance)
+	{
+		classInstance->closeObbFile();
+	}
+	
+	extern "C" DLLEXPORT bool API_CALL llge_ObbContentProvider_existsContent (IObbContentProvider * classInstance, const char * name)
+	{
+		return classInstance->existsContent(name);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_ObbContentProvider_openContent (IObbContentProvider * classInstance, const char * name)
+	{
+		classInstance->openContent(name);
+	}
+	
+	extern "C" DLLEXPORT int API_CALL llge_ObbContentProvider_read (IObbContentProvider * classInstance, void * buffer, int bytesLimit)
+	{
+		return classInstance->read(buffer, bytesLimit);
+	}
+	
+	extern "C" DLLEXPORT int API_CALL llge_ObbContentProvider_getContentSize (IObbContentProvider * classInstance)
+	{
+		return classInstance->getContentSize();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_ObbContentProvider_closeContent (IObbContentProvider * classInstance)
+	{
+		classInstance->closeContent();
 	}
 	
 }

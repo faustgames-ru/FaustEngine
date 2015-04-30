@@ -23,7 +23,7 @@ namespace graphics
 		static EffectSolidColor * solidColor();
 		static EffectTextureColor * textureColor();
 		static EffectTextureLightMapColor * textureLightmapColor();
-		static EffectWater * water();
+		//static EffectWater * water();
 		static EffectRenderDepth * renderDepth();
 	protected:
 	private:
@@ -31,7 +31,7 @@ namespace graphics
 		static EffectSolidColor _solidColor;
 		static EffectTextureColor _textureColor;
 		static EffectTextureLightMapColor _textureLightmapColor;
-		static EffectWater _water;
+		//static EffectWater _water;
 		static EffectRenderDepth _renderDepth;
 
 	};

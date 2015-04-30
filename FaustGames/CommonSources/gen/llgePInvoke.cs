@@ -866,6 +866,13 @@ namespace llge
 	public class NativeMemoryProfiler
 	{
 		public IntPtr ClassInstance;
+		public int GetTexturesSize ()
+		{
+			return llge_NativeMemoryProfiler_getTexturesSize(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private int llge_NativeMemoryProfiler_getTexturesSize (IntPtr classInstance);
 		public int GetAllocationsSize ()
 		{
 			return llge_NativeMemoryProfiler_getAllocationsSize(ClassInstance);
@@ -962,6 +969,60 @@ namespace llge
 		static extern private void llge_ContentManager_dispose (IntPtr classInstance);
 	}
 	
+	public class ObbContentProvider
+	{
+		public IntPtr ClassInstance;
+		public void OpenObbFile (string obbFile)
+		{
+			llge_ObbContentProvider_openObbFile(ClassInstance, obbFile);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_ObbContentProvider_openObbFile (IntPtr classInstance, string obbFile);
+		public void CloseObbFile ()
+		{
+			llge_ObbContentProvider_closeObbFile(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_ObbContentProvider_closeObbFile (IntPtr classInstance);
+		public bool ExistsContent (string name)
+		{
+			return llge_ObbContentProvider_existsContent(ClassInstance, name);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private bool llge_ObbContentProvider_existsContent (IntPtr classInstance, string name);
+		public void OpenContent (string name)
+		{
+			llge_ObbContentProvider_openContent(ClassInstance, name);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_ObbContentProvider_openContent (IntPtr classInstance, string name);
+		public int Read (IntPtr buffer, int bytesLimit)
+		{
+			return llge_ObbContentProvider_read(ClassInstance, buffer, bytesLimit);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private int llge_ObbContentProvider_read (IntPtr classInstance, IntPtr buffer, int bytesLimit);
+		public int GetContentSize ()
+		{
+			return llge_ObbContentProvider_getContentSize(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private int llge_ObbContentProvider_getContentSize (IntPtr classInstance);
+		public void CloseContent ()
+		{
+			llge_ObbContentProvider_closeContent(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_ObbContentProvider_closeContent (IntPtr classInstance);
+	}
+	
 	public class llge
 	{
 		static public Batch2d CreateBatch2d ()
@@ -985,6 +1046,13 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private IntPtr createContentManager ();
+		static public ObbContentProvider CreateContentProvider ()
+		{
+			return new ObbContentProvider{ ClassInstance = createContentProvider() };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr createContentProvider ();
 		static public EntitiesFactory CreateEntitiesFactory ()
 		{
 			return new EntitiesFactory{ ClassInstance = createEntitiesFactory() };

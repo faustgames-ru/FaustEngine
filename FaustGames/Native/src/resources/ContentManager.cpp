@@ -154,6 +154,11 @@ namespace resources
 		_isOpened = false;
 	}
 
+	void API_CALL ContentManager::setObbFile(char * obbFile)
+	{
+		ObbContentProvider::openObbFile(obbFile);
+	}
+
 	int API_CALL ContentManager::registerImage(char * name) 
 	{
 		return registerTexture(name);

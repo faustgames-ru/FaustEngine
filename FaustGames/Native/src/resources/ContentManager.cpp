@@ -12,7 +12,7 @@ namespace resources
 
 	void * pngMalloc(png_structp pngPtr, png_alloc_size_t size)
 	{
-		void *result = core::Mem::allocate(size);
+		void* result = core::Mem::allocate(size);
 		return result;
 	}
 	

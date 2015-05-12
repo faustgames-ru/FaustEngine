@@ -88,8 +88,7 @@ namespace llge
 	class GraphicsFacade : public IGraphicsFacade
 	{
 	public:
-		EffectBase * effects[32];
-		VertexFormat * formats[32];
+		RenderConverter _converter;
 
 		GraphicsDevice *graphicsDevice;
 		UniformsFacade *uniformsFacade;
@@ -100,18 +99,6 @@ namespace llge
 		{
 			graphicsDevice = &GraphicsDevice::Default;
 			uniformsFacade = new UniformsFacade();
-
-			effects[EffectTextureColor] = Effects::textureColor();
-			effects[EffectTextureLightmapColor] = Effects::textureLightmapColor();
-			effects[EffectWater] = 0;// Effects::water();
-			effects[EffectSolid] = Effects::solid();
-			effects[EffectRenderDepth] = Effects::renderDepth();
-			effects[EffectSolidColor] = Effects::solidColor();
-
-			formats[FormatPositionTextureColor] = VertexFormats::positionTextureColor();
-			formats[FormatPositionNormal] = VertexFormats::positionNormal();
-			formats[FormatPositionTexture] = VertexFormats::positionTexture();
-			formats[FormatPositionColor] = VertexFormats::positionColor();
 		}
 
 		~GraphicsFacade()
@@ -121,13 +108,13 @@ namespace llge
 
 		virtual void API_CALL setEffectConstantFloat(GraphicsEffects effect, char *name, float value)
 		{
-			EffectConstant* constant = effects[effect]->getEffect()->findConstant(name);
+			EffectConstant* constant = _converter.getEffect(effect)->getEffect()->findConstant(name);
 			constant->setFloat(value);
 		}
 
 		virtual void API_CALL setEffectConstantColor(GraphicsEffects effect, char *name, uint value)
 		{
-			EffectConstant* constant = effects[effect]->getEffect()->findConstant(name);
+			EffectConstant* constant = _converter.getEffect(effect)->getEffect()->findConstant(name);
 			constant->setUint(value);
 		}
 
@@ -170,29 +157,29 @@ namespace llge
 		virtual void API_CALL drawEdges(GraphicsEffects effect, GraphicsVertexFormats vertexFormat, void *vertices, int primitivesCount)
 		{
 			graphicsDevice->renderState.setBlend(_blendMode);
-			graphicsDevice->renderState.setEffect(effects[effect]);
-			graphicsDevice->drawEdges(formats[vertexFormat], vertices, primitivesCount);
+			graphicsDevice->renderState.setEffect(_converter.getEffect(effect));
+			graphicsDevice->drawEdges(_converter.getFormat(vertexFormat), vertices, primitivesCount);
 		}
 		
 		virtual void API_CALL draw(GraphicsEffects effect, GraphicsVertexFormats vertexFormat, void *vertices, int primitivesCount)
 		{
 			graphicsDevice->renderState.setBlend(_blendMode);
-			graphicsDevice->renderState.setEffect(effects[effect]);
-			graphicsDevice->drawTriangles(formats[vertexFormat], vertices, primitivesCount);
+			graphicsDevice->renderState.setEffect(_converter.getEffect(effect));
+			graphicsDevice->drawTriangles(_converter.getFormat(vertexFormat), vertices, primitivesCount);
 		}
 		
 		virtual void API_CALL drawElements(GraphicsEffects effect, GraphicsVertexFormats vertexFormat, void *vertices, void *indices, int primitivesCount)
 		{
 			graphicsDevice->renderState.setBlend(_blendMode);
-			graphicsDevice->renderState.setEffect(effects[effect]);
-			graphicsDevice->drawPrimitives(formats[vertexFormat], vertices, (unsigned short *)indices, primitivesCount);
+			graphicsDevice->renderState.setEffect(_converter.getEffect(effect));
+			graphicsDevice->drawPrimitives(_converter.getFormat(vertexFormat), vertices, (unsigned short *)indices, primitivesCount);
 		}
 
 		virtual void API_CALL drawVertexBuffer(GraphicsEffects effect, GraphicsVertexFormats vertexFormat, IVertexBuffer *vertexBuffer, void *indices, int primitivesCount)
 		{
 			graphicsDevice->renderState.setBlend(_blendMode);
-			graphicsDevice->renderState.setEffect(effects[effect]);
-			graphicsDevice->drawVertexBuffer(formats[vertexFormat], vertexBuffer->getId(), (unsigned short *)indices, primitivesCount);
+			graphicsDevice->renderState.setEffect(_converter.getEffect(effect));
+			graphicsDevice->drawVertexBuffer(_converter.getFormat(vertexFormat), vertexBuffer->getId(), (unsigned short *)indices, primitivesCount);
 		}
 
 		virtual void API_CALL create()

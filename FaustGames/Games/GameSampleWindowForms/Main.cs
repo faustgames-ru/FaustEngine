@@ -62,7 +62,7 @@ namespace GameSampleWindowForms
             InitializeComponent();
             if (components == null)
                 components = new Container();
-            _oglWindow = new OGLWindow(_renderRegion, _renderRegion.ClientSize.Width, _renderRegion.ClientSize.Height);
+            _oglWindow = new OGLWindow(_renderRegion);
             components.Add(new DisposableContainerComponent(_oglWindow));
             llge.llge.InitRenderContext();
             _entitiesFactory = llge.llge.CreateEntitiesFactory();
@@ -674,7 +674,7 @@ namespace GameSampleWindowForms
             fixed (MeshExportVertex* pointerVertices = vertices)
             fixed (ushort* pointerIndices = indices)
             {
-                entity.GetRender2d().SetMesh(texture, new IntPtr(pointerVertices), vertices.Length, new IntPtr(pointerIndices), indices.Length);
+                entity.GetRender2d().SetMesh(0, texture, new IntPtr(pointerVertices), vertices.Length, new IntPtr(pointerIndices), indices.Length);
             }
         }
     }

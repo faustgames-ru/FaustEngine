@@ -62,6 +62,7 @@ namespace graphics
 		static const char * getActionName(Errors::e actionType);
 		static void check(const char* errorText);
 		static void check(Errors::e actionType);
+		static void rise(Errors::e actionType);
 	protected:
 	private:
 	};

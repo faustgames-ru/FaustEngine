@@ -8,3 +8,4 @@
 #include "TextureCubemap.h"
 #include "TextureRenderTargetDepth2d.h"
 #include "VertexFormats.h"
+#include "RenderConverter.h"

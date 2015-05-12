@@ -13,7 +13,7 @@ namespace OpenGLWindow {
 	public ref class OGLWindow// : public System::Windows::Forms::NativeWindow
 	{
 	public:
-		OGLWindow(System::Windows::Forms::Control ^ parentForm, int iWidth, int iHeight)
+		OGLWindow(System::Windows::Forms::IWin32Window ^ parentForm)
 		{
 			/*
 			CreateParams^ cp = gcnew CreateParams;
@@ -47,10 +47,12 @@ namespace OpenGLWindow {
 			*/
 			m_hDC = GetDC((HWND)parentForm->Handle.ToPointer());
 
+			RECT size;
+			GetClientRect((HWND)parentForm->Handle.ToPointer(), &size);
 			if (m_hDC)
 			{
 				MySetPixelFormat(m_hDC);
-				ReSizeGLScene(iWidth, iHeight);
+				ReSizeGLScene(size.right - size.left, size.bottom - size.top);
 				InitGL();
 			}
 

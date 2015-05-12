@@ -168,8 +168,6 @@ namespace graphics
 		}
 		glBindTexture(GL_TEXTURE_2D, 0);
 		Errors::check(Errors::BindTexture);
-		glFinish();
-		Errors::check(Errors::Finish);
 	}
 
 

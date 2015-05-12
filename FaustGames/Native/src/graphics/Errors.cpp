@@ -31,7 +31,7 @@ namespace graphics
 	
 	void Errors::check(Errors::e actionType)
 	{
-
+		/*
 //#ifdef _DEBUG
 		GLenum error(GL_NO_ERROR);
 		while ((error = glGetError()) != GL_NO_ERROR) 
@@ -45,9 +45,23 @@ namespace graphics
 			//throw std::exception();
 		}
 //#endif
+		*/
 	}
 
-	std::string Errors::_names[Errors::EnumSize] = 
+	void Errors::rise(Errors::e actionType)
+	{
+
+		//#ifdef _DEBUG
+#ifdef __ANDROID__
+		__android_log_print(ANDROID_LOG_ERROR, "TRACKERS", "%s", getActionName(actionType));
+#endif
+		//throwException(getActionName(actionType));
+
+		//throw std::exception();
+		//#endif
+	}
+
+	std::string Errors::_names[Errors::EnumSize] =
 	{
 		"UnknownAction",
 		"CreateShader",

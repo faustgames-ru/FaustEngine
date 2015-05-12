@@ -13,6 +13,7 @@ namespace graphics
 		State(T value, bool equal)
 		{
 			_value = value;
+			_newValue = value;
 			_equal = equal;
 		}
 		inline T getValue()
@@ -23,14 +24,19 @@ namespace graphics
 		{
 			return _equal;
 		}
-		void setState(T value)
+		inline void setState(T value)
 		{
-			_equal = _value == value;
-			_value = value;
+			_newValue = value;
+		}
+		inline void applyState()
+		{
+			_equal = _value == _newValue;
+			_value = _newValue;
 		}
 	protected:
 	private:
 		T _value;
+		T _newValue;
 		bool _equal;
 	};
 

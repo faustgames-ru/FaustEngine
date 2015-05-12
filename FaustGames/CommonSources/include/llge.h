@@ -12,6 +12,7 @@
 
 typedef unsigned short ushort;
 typedef unsigned int uint;
+typedef const char * String;
 typedef void * IntPtr;
 
 namespace llge
@@ -273,11 +274,59 @@ namespace llge
 	class IBatch2d
 	{
 	public:
-		virtual void API_CALL setTransform(void *transform) = 0;
+		virtual void API_CALL addProjection(void *floatMatrix) = 0;
 		virtual void API_CALL startBatch() = 0;
 		virtual void API_CALL finishBatch() = 0;
-		virtual void API_CALL setTexture(ITexture *texture) = 0;
-		virtual void API_CALL draw(void *vertices, int verticesCount, void *indices, int indicesCount) = 0;
+		virtual void API_CALL draw(GraphicsEffects effect, BlendMode blendMode, uint textureId, uint lightmapId, void *vertices, int verticesCount, void *indices, int indicesCount) = 0;
+		virtual void API_CALL execute() = 0;
+	};
+
+	/// spine
+	
+	class ISpineSkeleton
+	{
+	public:
+		virtual void API_CALL render(IBatch2d * batch) = 0;
+		virtual IntPtr API_CALL getNativeInstance() = 0;
+		virtual void API_CALL updateWorldTransform() = 0;
+		virtual void API_CALL dispose() = 0;
+	};
+
+
+	class ISpineAnimation
+	{
+	public:
+		virtual IntPtr API_CALL getNativeInstance() = 0;
+		virtual IntPtr API_CALL getName() = 0;
+	};
+
+	class ISpineAnimationState
+	{
+	public:
+		virtual void API_CALL update(float delta) = 0;
+		virtual void API_CALL apply(ISpineSkeleton *skeleton) = 0;
+		virtual void API_CALL setAnimation(ISpineAnimation* animation, bool loop) = 0;
+		virtual void API_CALL dispose() = 0;
+	};
+
+	class ISpineAnimationStateData
+	{
+	public:
+		virtual void API_CALL setMix(ISpineAnimation *from, ISpineAnimation *to, float time) = 0;
+		virtual ISpineAnimationState* API_CALL createState() = 0;
+		virtual void API_CALL dispose() = 0;
+	};
+
+	class ISpineResource
+	{
+	public:
+		virtual void API_CALL load(String atlasText, String jsonText) = 0;
+		virtual void API_CALL unLoad() = 0;
+		virtual ISpineAnimation* API_CALL getSpineAnimation(int i) = 0;
+		virtual int API_CALL getSpineAnimationsCount() = 0;
+		virtual ISpineSkeleton* API_CALL createSkeleton() = 0;
+		virtual ISpineAnimationStateData* API_CALL createStateData() = 0;
+		virtual void API_CALL dispose() = 0;
 	};
 
 	/// profile
@@ -289,7 +338,6 @@ namespace llge
 		virtual int API_CALL getAllocationsSize() = 0;
 		virtual int API_CALL getHeapSize() = 0;
 	};
-
 
 	/// content
 	class ITextureBuffer2d
@@ -335,6 +383,7 @@ namespace llge
 
 	extern "C" DLLEXPORT void API_CALL initRenderContext();
 	extern "C" DLLEXPORT INativeMemoryProfiler * API_CALL createNativeMemoryProfiler();
+	extern "C" DLLEXPORT ISpineResource * API_CALL createSpineResource();
 }
 
 #endif /*LLGE_H*/

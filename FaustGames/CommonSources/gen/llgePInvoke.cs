@@ -826,13 +826,13 @@ namespace llge
 	public class Batch2d
 	{
 		public IntPtr ClassInstance;
-		public void SetTransform (IntPtr transform)
+		public void AddProjection (IntPtr floatMatrix)
 		{
-			llge_Batch2d_setTransform(ClassInstance, transform);
+			llge_Batch2d_addProjection(ClassInstance, floatMatrix);
 		}
 		
 		[DllImport(Version.Dll)]
-		static extern private void llge_Batch2d_setTransform (IntPtr classInstance, IntPtr transform);
+		static extern private void llge_Batch2d_addProjection (IntPtr classInstance, IntPtr floatMatrix);
 		public void StartBatch ()
 		{
 			llge_Batch2d_startBatch(ClassInstance);
@@ -847,20 +847,185 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private void llge_Batch2d_finishBatch (IntPtr classInstance);
-		public void SetTexture (Texture texture)
+		public void Draw (GraphicsEffects effect, BlendMode blendMode, uint textureId, uint lightmapId, IntPtr vertices, int verticesCount, IntPtr indices, int indicesCount)
 		{
-			llge_Batch2d_setTexture(ClassInstance, texture.ClassInstance);
+			llge_Batch2d_draw(ClassInstance, effect, blendMode, textureId, lightmapId, vertices, verticesCount, indices, indicesCount);
 		}
 		
 		[DllImport(Version.Dll)]
-		static extern private void llge_Batch2d_setTexture (IntPtr classInstance, IntPtr texture);
-		public void Draw (IntPtr vertices, int verticesCount, IntPtr indices, int indicesCount)
+		static extern private void llge_Batch2d_draw (IntPtr classInstance, GraphicsEffects effect, BlendMode blendMode, uint textureId, uint lightmapId, IntPtr vertices, int verticesCount, IntPtr indices, int indicesCount);
+		public void Execute ()
 		{
-			llge_Batch2d_draw(ClassInstance, vertices, verticesCount, indices, indicesCount);
+			llge_Batch2d_execute(ClassInstance);
 		}
 		
 		[DllImport(Version.Dll)]
-		static extern private void llge_Batch2d_draw (IntPtr classInstance, IntPtr vertices, int verticesCount, IntPtr indices, int indicesCount);
+		static extern private void llge_Batch2d_execute (IntPtr classInstance);
+	}
+	
+	public class SpineSkeleton
+	{
+		public IntPtr ClassInstance;
+		public void Render (Batch2d batch)
+		{
+			llge_SpineSkeleton_render(ClassInstance, batch.ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_SpineSkeleton_render (IntPtr classInstance, IntPtr batch);
+		public IntPtr GetNativeInstance ()
+		{
+			return llge_SpineSkeleton_getNativeInstance(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_SpineSkeleton_getNativeInstance (IntPtr classInstance);
+		public void UpdateWorldTransform ()
+		{
+			llge_SpineSkeleton_updateWorldTransform(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_SpineSkeleton_updateWorldTransform (IntPtr classInstance);
+		public void Dispose ()
+		{
+			llge_SpineSkeleton_dispose(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_SpineSkeleton_dispose (IntPtr classInstance);
+	}
+	
+	public class SpineAnimation
+	{
+		public IntPtr ClassInstance;
+		public IntPtr GetNativeInstance ()
+		{
+			return llge_SpineAnimation_getNativeInstance(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_SpineAnimation_getNativeInstance (IntPtr classInstance);
+		public IntPtr GetName ()
+		{
+			return llge_SpineAnimation_getName(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_SpineAnimation_getName (IntPtr classInstance);
+	}
+	
+	public class SpineAnimationState
+	{
+		public IntPtr ClassInstance;
+		public void Update (float delta)
+		{
+			llge_SpineAnimationState_update(ClassInstance, delta);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_SpineAnimationState_update (IntPtr classInstance, float delta);
+		public void Apply (SpineSkeleton skeleton)
+		{
+			llge_SpineAnimationState_apply(ClassInstance, skeleton.ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_SpineAnimationState_apply (IntPtr classInstance, IntPtr skeleton);
+		public void SetAnimation (SpineAnimation animation, bool loop)
+		{
+			llge_SpineAnimationState_setAnimation(ClassInstance, animation.ClassInstance, loop);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_SpineAnimationState_setAnimation (IntPtr classInstance, IntPtr animation, bool loop);
+		public void Dispose ()
+		{
+			llge_SpineAnimationState_dispose(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_SpineAnimationState_dispose (IntPtr classInstance);
+	}
+	
+	public class SpineAnimationStateData
+	{
+		public IntPtr ClassInstance;
+		public void SetMix (SpineAnimation from, SpineAnimation to, float time)
+		{
+			llge_SpineAnimationStateData_setMix(ClassInstance, from.ClassInstance, to.ClassInstance, time);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_SpineAnimationStateData_setMix (IntPtr classInstance, IntPtr from, IntPtr to, float time);
+		public SpineAnimationState CreateState ()
+		{
+			return new SpineAnimationState{ ClassInstance = llge_SpineAnimationStateData_createState(ClassInstance) };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_SpineAnimationStateData_createState (IntPtr classInstance);
+		public void Dispose ()
+		{
+			llge_SpineAnimationStateData_dispose(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_SpineAnimationStateData_dispose (IntPtr classInstance);
+	}
+	
+	public class SpineResource
+	{
+		public IntPtr ClassInstance;
+		public void Load (String atlasText, String jsonText)
+		{
+			llge_SpineResource_load(ClassInstance, atlasText, jsonText);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_SpineResource_load (IntPtr classInstance, String atlasText, String jsonText);
+		public void UnLoad ()
+		{
+			llge_SpineResource_unLoad(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_SpineResource_unLoad (IntPtr classInstance);
+		public SpineAnimation GetSpineAnimation (int i)
+		{
+			return new SpineAnimation{ ClassInstance = llge_SpineResource_getSpineAnimation(ClassInstance, i) };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_SpineResource_getSpineAnimation (IntPtr classInstance, int i);
+		public int GetSpineAnimationsCount ()
+		{
+			return llge_SpineResource_getSpineAnimationsCount(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private int llge_SpineResource_getSpineAnimationsCount (IntPtr classInstance);
+		public SpineSkeleton CreateSkeleton ()
+		{
+			return new SpineSkeleton{ ClassInstance = llge_SpineResource_createSkeleton(ClassInstance) };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_SpineResource_createSkeleton (IntPtr classInstance);
+		public SpineAnimationStateData CreateStateData ()
+		{
+			return new SpineAnimationStateData{ ClassInstance = llge_SpineResource_createStateData(ClassInstance) };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_SpineResource_createStateData (IntPtr classInstance);
+		public void Dispose ()
+		{
+			llge_SpineResource_dispose(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_SpineResource_dispose (IntPtr classInstance);
 	}
 	
 	public class NativeMemoryProfiler
@@ -1088,6 +1253,13 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private IntPtr createNativeMemoryProfiler ();
+		static public SpineResource CreateSpineResource ()
+		{
+			return new SpineResource{ ClassInstance = createSpineResource() };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr createSpineResource ();
 	}
 	
 }

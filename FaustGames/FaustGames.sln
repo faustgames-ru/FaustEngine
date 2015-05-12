@@ -23,6 +23,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestTree", "Tests\TestTree\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestAllocators", "Tests\TestAllocators\TestAllocators.vcxproj", "{D23ADC89-576F-4207-AA7B-3E73DEEFB4C2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameSampleSpine", "Games\GameSampleSpine\GameSampleSpine.csproj", "{E943F540-421E-4C3B-8107-C127CA59E833}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FaustGames.Framework", "Framework\FaustGames.Framework\FaustGames.Framework.csproj", "{C0022F67-73B9-4C41-AC0D-784F579385E9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -93,6 +97,26 @@ Global
 		{D23ADC89-576F-4207-AA7B-3E73DEEFB4C2}.Release|Mixed Platforms.Build.0 = Release|Win32
 		{D23ADC89-576F-4207-AA7B-3E73DEEFB4C2}.Release|Win32.ActiveCfg = Release|Win32
 		{D23ADC89-576F-4207-AA7B-3E73DEEFB4C2}.Release|Win32.Build.0 = Release|Win32
+		{E943F540-421E-4C3B-8107-C127CA59E833}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E943F540-421E-4C3B-8107-C127CA59E833}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E943F540-421E-4C3B-8107-C127CA59E833}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{E943F540-421E-4C3B-8107-C127CA59E833}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{E943F540-421E-4C3B-8107-C127CA59E833}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{E943F540-421E-4C3B-8107-C127CA59E833}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E943F540-421E-4C3B-8107-C127CA59E833}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E943F540-421E-4C3B-8107-C127CA59E833}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{E943F540-421E-4C3B-8107-C127CA59E833}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{E943F540-421E-4C3B-8107-C127CA59E833}.Release|Win32.ActiveCfg = Release|Any CPU
+		{C0022F67-73B9-4C41-AC0D-784F579385E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0022F67-73B9-4C41-AC0D-784F579385E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0022F67-73B9-4C41-AC0D-784F579385E9}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{C0022F67-73B9-4C41-AC0D-784F579385E9}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{C0022F67-73B9-4C41-AC0D-784F579385E9}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{C0022F67-73B9-4C41-AC0D-784F579385E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0022F67-73B9-4C41-AC0D-784F579385E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0022F67-73B9-4C41-AC0D-784F579385E9}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{C0022F67-73B9-4C41-AC0D-784F579385E9}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{C0022F67-73B9-4C41-AC0D-784F579385E9}.Release|Win32.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -104,5 +128,7 @@ Global
 		{5E8BC772-F46C-4676-8B9A-809646C3C659} = {8C524CF2-7781-4D5B-8731-C89E70B20BB8}
 		{94C61AEF-460C-4700-8A8D-EDAD798E278E} = {B9C1CFB9-5F31-41CF-AA2B-9007E18C33E9}
 		{D23ADC89-576F-4207-AA7B-3E73DEEFB4C2} = {B9C1CFB9-5F31-41CF-AA2B-9007E18C33E9}
+		{E943F540-421E-4C3B-8107-C127CA59E833} = {8C524CF2-7781-4D5B-8731-C89E70B20BB8}
+		{C0022F67-73B9-4C41-AC0D-784F579385E9} = {0D97AD64-A399-441B-B865-6522C08FA93E}
 	EndGlobalSection
 EndGlobal

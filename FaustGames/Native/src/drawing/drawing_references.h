@@ -5,3 +5,4 @@
 #include "..\graphics\Texture.h"
 #include "..\graphics\TextureCubemap.h"
 #include "..\graphics\Effects.h"
+#include "..\graphics\graphics.h"

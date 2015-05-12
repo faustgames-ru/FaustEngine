@@ -41,12 +41,17 @@ namespace graphics
 		
 	void RenderState::apply(VertexFormat *vertexFormat, void *vertexData)
 	{
+		_depthState.applyState();
+		_blendState.applyState();
+		_effect.applyState();
+		_vertexBufferState.applyState();
+
 		if (!_depthState.isEqual())
 		{
 			/// apply depth			
 		}
 
-		//if (!_blendState.isEqual())
+		if (!_blendState.isEqual())
 		{
 			switch (_blendState.getValue())
 			{
@@ -81,13 +86,20 @@ namespace graphics
 		if (!_vertexBufferState.isEqual())
 			glBindBuffer(GL_ARRAY_BUFFER, _vertexBufferState.getValue());
 		_vertexFormatState.setState(vertexFormat);
+		_vertexFormatState.applyState();
+		_vertexDataState.setState(vertexData);
+		_vertexDataState.applyState();
+
 		if (_vertexBufferState.getValue() == 0)
 		{
-			_effect.getValue()->applyVertexData(vertexFormat, vertexData);
+			if (!_vertexDataState.isEqual() || !_vertexFormatState.isEqual() || !_effect.isEqual())
+			{
+				_effect.getValue()->applyVertexData(vertexFormat, vertexData);
+			}
 		}
 		else
 		{
-			if (!_vertexFormatState.isEqual())
+			if (!_vertexFormatState.isEqual() || !_effect.isEqual())
 			{
 				_effect.getValue()->applyVertexData(vertexFormat, 0);
 			}

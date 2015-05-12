@@ -22,3 +22,4 @@ C:\_faust\FaustEngine\FaustGames\Games\GameSampleWindowForms\obj\Debug\GameSampl
 C:\_faust\FaustEngine\FaustGames\Games\GameSampleWindowForms\obj\Debug\GameSampleWindowForms.csproj.GenerateResource.Cache
 C:\_faust\FaustEngine\FaustGames\Games\GameSampleWindowForms\obj\Debug\GameSampleWindowForms.exe
 C:\_faust\FaustEngine\FaustGames\Games\GameSampleWindowForms\obj\Debug\GameSampleWindowForms.pdb
+C:\_faust\FaustEngine\FaustGames\Games\GameSampleWindowForms\obj\Debug\GameSampleWindowForms.csprojResolveAssemblyReference.cache

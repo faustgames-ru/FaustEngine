@@ -9,7 +9,7 @@
 #include "VertexBuffer.h"
 
 namespace graphics
-{		
+{	
 	class RenderState
 	{
 	public:
@@ -21,11 +21,13 @@ namespace graphics
 		void setVertexBuffer(GLuint vertexBufferHandle);
 		void apply(VertexFormat *vertexFormat, void *vertexData);
 		void init();
+
 	protected:
 	private:
 		State<GLuint> _vertexBufferState;
 		State<VertexFormat *> _vertexFormatState;
 		State<Effect *> _effect;
+		State<void *> _vertexDataState;
 		State<BlendState::e> _blendState;
 		State<DepthState::e> _depthState;
 		StateCompare<unsigned int> _attributesState;

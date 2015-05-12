@@ -125,7 +125,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;LLGE_EXPORTS;LIBPNG_EXPORTS;_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>..\include;..\..\CommonSources\include;..\src\resources\zlib</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\include;..\..\CommonSources\include;..\src\spine\runtime;..\src\resources\zlib</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -182,6 +182,7 @@
     <ClInclude Include="..\src\core\Matrix.h" />
     <ClInclude Include="..\src\core\StaticArray.h" />
     <ClInclude Include="..\src\core\Vector.h" />
+    <ClInclude Include="..\src\drawing\Batcher.h" />
     <ClInclude Include="..\src\drawing\Camera.h" />
     <ClInclude Include="..\src\drawing\Renderer2d.h" />
     <ClInclude Include="..\src\drawing\RenderItem2d.h" />
@@ -234,6 +235,7 @@
     <ClInclude Include="..\src\graphics\graphics_platform.h" />
     <ClInclude Include="..\src\graphics\graphics_references.h" />
     <ClInclude Include="..\src\graphics\Image2dData.h" />
+    <ClInclude Include="..\src\graphics\RenderConverter.h" />
     <ClInclude Include="..\src\graphics\RenderState.h" />
     <ClInclude Include="..\src\graphics\State.h" />
     <ClInclude Include="..\src\graphics\StateCompare.h" />
@@ -283,6 +285,13 @@
     <ClInclude Include="..\src\resources\zlib\zconf.h" />
     <ClInclude Include="..\src\resources\zlib\zlib.h" />
     <ClInclude Include="..\src\resources\zlib\zutil.h" />
+    <ClInclude Include="..\src\spine\SpineAnimationState.h" />
+    <ClInclude Include="..\src\spine\SpineAnimationStateData.h" />
+    <ClInclude Include="..\src\spine\runtime\Json.h" />
+    <ClInclude Include="..\src\spine\SpineSkeleton.h" />
+    <ClInclude Include="..\src\spine\SpineSkeletonAnimation.h" />
+    <ClInclude Include="..\src\spine\SpineSkeletonResource.h" />
+    <ClInclude Include="..\src\spine\spine_classes.h" />
     <ClInclude Include="..\src\tests\TestStandartAllocations.h" />
     <ClInclude Include="..\src\tests\tests_classes.h" />
     <ClInclude Include="..\src\tests\tests_platform.h" />
@@ -301,6 +310,7 @@
     <ClInclude Include="..\src\drawing\drawing_references.h">
       <FileType>CppHeader</FileType>
     </ClInclude>
+    <ClCompile Include="..\src\drawing\Batcher.cpp" />
     <ClCompile Include="..\src\drawing\Camera.cpp" />
     <ClCompile Include="..\src\drawing\Renderer2d.cpp" />
     <ClCompile Include="..\src\drawing\RenderItem2d.cpp" />
@@ -344,6 +354,7 @@
     <ClCompile Include="..\src\graphics\Errors.cpp" />
     <ClCompile Include="..\src\graphics\GraphicsDevice.cpp" />
     <ClCompile Include="..\src\graphics\Image2dData.cpp" />
+    <ClCompile Include="..\src\graphics\RenderConverter.cpp" />
     <ClCompile Include="..\src\graphics\RenderState.cpp" />
     <ClCompile Include="..\src\graphics\StaticBatch.cpp" />
     <ClCompile Include="..\src\graphics\Texture.cpp" />
@@ -399,6 +410,38 @@
     <ClCompile Include="..\src\resources\zlib\trees.c" />
     <ClCompile Include="..\src\resources\zlib\uncompr.c" />
     <ClCompile Include="..\src\resources\zlib\zutil.c" />
+    <ClCompile Include="..\src\spine\SpineAnimationState.cpp" />
+    <ClCompile Include="..\src\spine\SpineAnimationStateData.cpp" />
+    <ClCompile Include="..\src\spine\runtime\Animation.c" />
+    <ClCompile Include="..\src\spine\runtime\AnimationState.c" />
+    <ClCompile Include="..\src\spine\runtime\AnimationStateData.c" />
+    <ClCompile Include="..\src\spine\runtime\Atlas.c" />
+    <ClCompile Include="..\src\spine\runtime\AtlasAttachmentLoader.c" />
+    <ClCompile Include="..\src\spine\runtime\Attachment.c" />
+    <ClCompile Include="..\src\spine\runtime\AttachmentLoader.c" />
+    <ClCompile Include="..\src\spine\runtime\Bone.c" />
+    <ClCompile Include="..\src\spine\runtime\BoneData.c" />
+    <ClCompile Include="..\src\spine\runtime\BoundingBoxAttachment.c" />
+    <ClCompile Include="..\src\spine\runtime\Event.c" />
+    <ClCompile Include="..\src\spine\runtime\EventData.c" />
+    <ClCompile Include="..\src\spine\runtime\extension.c" />
+    <ClCompile Include="..\src\spine\runtime\IkConstraint.c" />
+    <ClCompile Include="..\src\spine\runtime\IkConstraintData.c" />
+    <ClCompile Include="..\src\spine\runtime\Json.c" />
+    <ClCompile Include="..\src\spine\runtime\MeshAttachment.c" />
+    <ClCompile Include="..\src\spine\runtime\RegionAttachment.c" />
+    <ClCompile Include="..\src\spine\runtime\Skeleton.c" />
+    <ClCompile Include="..\src\spine\runtime\SkeletonBounds.c" />
+    <ClCompile Include="..\src\spine\runtime\SkeletonData.c" />
+    <ClCompile Include="..\src\spine\runtime\SkeletonJson.c" />
+    <ClCompile Include="..\src\spine\runtime\Skin.c" />
+    <ClCompile Include="..\src\spine\runtime\SkinnedMeshAttachment.c" />
+    <ClCompile Include="..\src\spine\runtime\Slot.c" />
+    <ClCompile Include="..\src\spine\runtime\SlotData.c" />
+    <ClCompile Include="..\src\spine\SpineSkeleton.cpp" />
+    <ClCompile Include="..\src\spine\SpineSkeletonAnimation.cpp" />
+    <ClCompile Include="..\src\spine\SpineSkeletonResource.cpp" />
+    <ClCompile Include="..\src\spine\spine.cpp" />
     <ClCompile Include="..\src\tests\TestStandartAllocations.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="stdafx.cpp" />

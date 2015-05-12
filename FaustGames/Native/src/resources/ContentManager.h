@@ -32,9 +32,15 @@ namespace resources
 		std::vector<std::string> _files;
 		graphics::Image2dData *_image;
 		bool _isOpened;
+#ifdef __ANDROID__
 		static const int ImageBufferSize = 2048 * 2048; //(2048x2048x32bpp)
 		static const int ImageMaxHeight = 2048;
 		static const int ImageMaxWidth = 2048;
+#else
+		static const int ImageBufferSize = 4*2048 * 2048; //(4096x4096x32bpp)
+		static const int ImageMaxHeight = 2*2048;
+		static const int ImageMaxWidth = 2*2048;
+#endif
 	};
 }
 

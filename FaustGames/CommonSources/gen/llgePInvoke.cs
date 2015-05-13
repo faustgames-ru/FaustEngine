@@ -826,6 +826,13 @@ namespace llge
 	public class Batch2d
 	{
 		public IntPtr ClassInstance;
+		public IntPtr GetNativeInstance ()
+		{
+			return llge_Batch2d_getNativeInstance(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_Batch2d_getNativeInstance (IntPtr classInstance);
 		public void AddProjection (IntPtr floatMatrix)
 		{
 			llge_Batch2d_addProjection(ClassInstance, floatMatrix);
@@ -932,13 +939,20 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private void llge_SpineAnimationState_apply (IntPtr classInstance, IntPtr skeleton);
-		public void SetAnimation (SpineAnimation animation, bool loop)
+		public void SetAnimation (SpineAnimation animation, bool loop, bool normalize)
 		{
-			llge_SpineAnimationState_setAnimation(ClassInstance, animation.ClassInstance, loop);
+			llge_SpineAnimationState_setAnimation(ClassInstance, animation.ClassInstance, loop, normalize);
 		}
 		
 		[DllImport(Version.Dll)]
-		static extern private void llge_SpineAnimationState_setAnimation (IntPtr classInstance, IntPtr animation, bool loop);
+		static extern private void llge_SpineAnimationState_setAnimation (IntPtr classInstance, IntPtr animation, bool loop, bool normalize);
+		public void AddAnimation (SpineAnimation animation, bool loop, float delay)
+		{
+			llge_SpineAnimationState_addAnimation(ClassInstance, animation.ClassInstance, loop, delay);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_SpineAnimationState_addAnimation (IntPtr classInstance, IntPtr animation, bool loop, float delay);
 		public void Dispose ()
 		{
 			llge_SpineAnimationState_dispose(ClassInstance);

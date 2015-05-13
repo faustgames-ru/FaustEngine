@@ -274,6 +274,7 @@ namespace llge
 	class IBatch2d
 	{
 	public:
+		virtual IntPtr API_CALL getNativeInstance() = 0;
 		virtual void API_CALL addProjection(void *floatMatrix) = 0;
 		virtual void API_CALL startBatch() = 0;
 		virtual void API_CALL finishBatch() = 0;
@@ -305,7 +306,9 @@ namespace llge
 	public:
 		virtual void API_CALL update(float delta) = 0;
 		virtual void API_CALL apply(ISpineSkeleton *skeleton) = 0;
-		virtual void API_CALL setAnimation(ISpineAnimation* animation, bool loop) = 0;
+		virtual void API_CALL setAnimation(ISpineAnimation* animation, bool loop, bool normalize) = 0;
+		virtual void API_CALL addAnimation(ISpineAnimation* animation, bool loop, float delay) = 0;
+
 		virtual void API_CALL dispose() = 0;
 	};
 

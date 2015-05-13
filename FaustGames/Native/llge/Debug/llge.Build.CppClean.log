@@ -11,10 +11,11 @@ c:\_faust\faustengine\faustgames\native\llge\debug\vertexformats.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\contentmanager.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\contentproviderobb.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\contentproviderwindows.obj
-c:\_faust\faustengine\faustgames\native\llge\debug\animationstate.obj
-c:\_faust\faustengine\faustgames\native\llge\debug\animationstatedata.obj
-c:\_faust\faustengine\faustgames\native\llge\debug\skeletonanimation.obj
-c:\_faust\faustengine\faustgames\native\llge\debug\skeletonresource.obj
+c:\_faust\faustengine\faustgames\native\llge\debug\spineanimationstate.obj
+c:\_faust\faustengine\faustgames\native\llge\debug\spineanimationstatedata.obj
+c:\_faust\faustengine\faustgames\native\llge\debug\spineskeleton.obj
+c:\_faust\faustengine\faustgames\native\llge\debug\spineskeletonanimation.obj
+c:\_faust\faustengine\faustgames\native\llge\debug\spineskeletonresource.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\spine.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\teststandartallocations.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\dllmain.obj
@@ -117,6 +118,8 @@ c:\_faust\faustengine\faustgames\native\llge\debug\trees.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\uncompr.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\zutil.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\animation.obj
+c:\_faust\faustengine\faustgames\native\llge\debug\animationstate.obj
+c:\_faust\faustengine\faustgames\native\llge\debug\animationstatedata.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\atlas.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\atlasattachmentloader.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\attachment.obj
@@ -138,8 +141,6 @@ c:\_faust\faustengine\faustgames\native\llge\debug\pngwrite.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\pngwtran.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\pngwutil.obj
 c:\_faust\faustengine\faustgames\native\llge\debug\adler32.obj
-c:\_faust\faustengine\faustgames\native\llge\debug\spineskeletonanimation.obj
-c:\_faust\faustengine\faustgames\native\llge\debug\spineskeleton.obj
 c:\_faust\faustengine\faustgames\debug\llge.ilk
 c:\_faust\faustengine\faustgames\debug\llge.dll
 c:\_faust\faustengine\faustgames\debug\llge.pdb

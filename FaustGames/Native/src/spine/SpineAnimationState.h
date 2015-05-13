@@ -10,13 +10,15 @@ namespace spine
 	public:
 		SpineAnimationState(SpineAnimationStateData *data);
 		~SpineAnimationState();
-		void setAnimation(SpineSkeletonAnimation *animation, bool loop);
+		void setAnimation(SpineSkeletonAnimation *animation, bool loop, bool normalize);
+		void addAnimation(SpineSkeletonAnimation *animation, bool loop, float delay);
 		void apply(SpineSkeleton *skeleton);
 		void cleanup();
 		
 		virtual void API_CALL update(float delta);
 		virtual void API_CALL apply(llge::ISpineSkeleton *skeleton);
-		virtual void API_CALL setAnimation(llge::ISpineAnimation* animation, bool loop);
+		virtual void API_CALL setAnimation(llge::ISpineAnimation* animation, bool loop, bool normalize);
+		virtual void API_CALL addAnimation(llge::ISpineAnimation* animation, bool loop, float delay);
 		virtual void API_CALL dispose();
 
 	protected:
@@ -24,6 +26,10 @@ namespace spine
 		//void static animationStateListener(spAnimationState* state, int trackIndex, spEventType type, spEvent* event, int loopCount);
 		//void listenAnimationEvent(int trackIndex, spEventType type, spEvent* event, int loopCount);
 		void *_spAnimationState;
+		float _time;
+		float _prevTime;
+		float _timeNormalized;
+		void* _animation;
 	};
 }
 

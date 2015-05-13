@@ -18,6 +18,7 @@ namespace FaustGames.Framework.WinForms
             _renderRegion = renderRegion;
             _game = game;
             _timer = new Timer(_container);
+            _timer.Interval = 10;
             _timer.Tick += TimerOnTick;
             _timer.Enabled = true;
 

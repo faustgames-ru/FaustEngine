@@ -37,6 +37,9 @@ namespace resources
 		return result;
 	}
 
+	ContentManager * ContentManager::Default(new ContentManager());
+
+
 #define PNGSIGSIZE 8
 
 	png_bytep * m_RowPtrs = 0;
@@ -44,9 +47,14 @@ namespace resources
 
 	graphics::Image2dData * ContentManager::loadTexture(int id)
 	{
-
-
 		const char *name = _files[id].c_str();
+		return loadUnregisteredTexture(name);
+	}
+
+	graphics::Image2dData * ContentManager::loadUnregisteredTexture(const char *name)
+	{
+
+
 		//todo: load data from content provider
 		ContentProvider::openContent(name);
 		
@@ -131,6 +139,19 @@ namespace resources
 		default:
 			_image->Format = graphics::Image2dFormat::Rgba;
 			break;
+		}
+
+		// todo: premul param
+		if (_image->Format == graphics::Image2dFormat::Rgba)
+		{
+			for (size_t i = 0; i < (size_t)m_Height; i++)
+			{
+				uint *row = (uint*)_image->Pixels + i;
+				for (size_t j = 0; j < (size_t)m_Width; j++)
+				{
+					row[j] = graphics::Color::premul(row[j], false);
+				}
+			}
 		}
 		return _image;
 	}

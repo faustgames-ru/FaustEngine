@@ -486,6 +486,11 @@ namespace llge
 		classInstance->dispose();
 	}
 	
+	extern "C" DLLEXPORT IntPtr API_CALL llge_Batch2d_getNativeInstance (IBatch2d * classInstance)
+	{
+		return classInstance->getNativeInstance();
+	}
+	
 	extern "C" DLLEXPORT void API_CALL llge_Batch2d_addProjection (IBatch2d * classInstance, void * floatMatrix)
 	{
 		classInstance->addProjection(floatMatrix);
@@ -551,9 +556,14 @@ namespace llge
 		classInstance->apply(skeleton);
 	}
 	
-	extern "C" DLLEXPORT void API_CALL llge_SpineAnimationState_setAnimation (ISpineAnimationState * classInstance, ISpineAnimation * animation, bool loop)
+	extern "C" DLLEXPORT void API_CALL llge_SpineAnimationState_setAnimation (ISpineAnimationState * classInstance, ISpineAnimation * animation, bool loop, bool normalize)
 	{
-		classInstance->setAnimation(animation, loop);
+		classInstance->setAnimation(animation, loop, normalize);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_SpineAnimationState_addAnimation (ISpineAnimationState * classInstance, ISpineAnimation * animation, bool loop, float delay)
+	{
+		classInstance->addAnimation(animation, loop, delay);
 	}
 	
 	extern "C" DLLEXPORT void API_CALL llge_SpineAnimationState_dispose (ISpineAnimationState * classInstance)

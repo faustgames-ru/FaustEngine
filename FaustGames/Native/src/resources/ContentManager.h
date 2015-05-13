@@ -11,6 +11,7 @@ namespace resources
 		ContentManager();
 		void cleanup();
 		unsigned int registerTexture(const char *name);
+		graphics::Image2dData * loadUnregisteredTexture(const char *name);
 		graphics::Image2dData * loadTexture(int id);
 		void open();
 		void close();
@@ -27,7 +28,7 @@ namespace resources
 		virtual int API_CALL getWidth();
 		virtual int API_CALL getHeight();
 		virtual IntPtr API_CALL getPixels();
-
+		static ContentManager * Default;
 	private:
 		std::vector<std::string> _files;
 		graphics::Image2dData *_image;

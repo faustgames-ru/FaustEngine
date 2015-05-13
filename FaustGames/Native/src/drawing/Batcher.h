@@ -47,7 +47,31 @@ namespace drawing
 		{
 			return ((_indicesCount + indicesCount) < IndicesLimit) && ((_verticesCount + verticesCount) < VerticesLimit);
 		}
-		void addMesh(TVertex *vertices, int verticesCount, ushort *indices, int indicesCount)
+		void addMesh(uint color, float z, float *vertices, float *uvs, int verticesCount, int *indices, int indicesCount, bool additive)
+		{
+			for (int i = 0; i < indicesCount; i++)
+			{
+				_indices[_indicesCount + i] = (unsigned short)(_verticesCount + indices[i]);
+			}
+
+			TVertex* target = _vertices + _verticesCount;
+			float* source = vertices;
+			float* uvsource = uvs;
+			for (int i = 0; i < verticesCount; i++, target++)
+			{
+				target->x = *source; ++source;
+				target->y = *source; ++source;
+				target->z = z;
+				target->color = graphics::Color::premul(color, additive);
+				target->u = *uvsource; ++uvsource;
+				target->v = *uvsource; ++uvsource;
+			}
+
+			_verticesCount += verticesCount;
+			_indicesCount += indicesCount;
+		}
+
+		void addMesh(TVertex *vertices, int verticesCount, ushort *indices, int indicesCount, bool additive)
 		{
 			for (int i = 0; i < indicesCount; i++)
 			{
@@ -101,6 +125,40 @@ namespace drawing
 		}
 	};
 
+	struct BatcherState
+	{
+		graphics::EffectBase *Effect;
+		graphics::BlendState::e Blend;
+		uint TextureId;
+		uint LightmapId;
+	};
+
+	struct BatcherSpineMesh
+	{
+		BatcherState State;
+		uint Color;
+		float *Vertices;
+		float *Uvs;
+		float Z;
+		int VerticesCount;
+		int *Indices;
+		int IndicesCount;
+		BatcherSpineMesh(){}
+		BatcherSpineMesh(int verticesLimit)
+		{
+			Vertices = (float *)core::Mem::allocate(verticesLimit * sizeof(float) * 2);
+		}
+	};
+
+	struct BatcherMesh
+	{
+		BatcherState State;
+		TVertex *Vertices;
+		int VerticesCount;
+		ushort *Indices;
+		int IndicesCount;
+	};
+
 	class Batcher : public llge::IBatch2d
 	{
 	public:
@@ -109,7 +167,26 @@ namespace drawing
 		void start();
 		void finish();
 		void drawMesh(graphics::EffectBase *effect, graphics::BlendState::e blend, uint textureId, uint lightmapId, TVertex *vertices, int verticesCount, ushort *indices, int indicesCount);
+		void drawSpineMesh(const BatcherSpineMesh &mesh);
+		inline void drawMesh(const BatcherMesh &mesh)
+		{
+			drawMesh(
+				mesh.State.Effect,
+				mesh.State.Blend,
+				mesh.State.TextureId,
+				mesh.State.LightmapId,
+				mesh.Vertices,
+				mesh.VerticesCount,
+				mesh.Indices,
+				mesh.IndicesCount);
+		}
 		void executeRenderCommands();
+
+		virtual IntPtr API_CALL getNativeInstance()
+		{
+			return this;
+		}
+
 		inline void applyEntry()
 		{
 			if (_currentEntry.IndicesCount != 0)

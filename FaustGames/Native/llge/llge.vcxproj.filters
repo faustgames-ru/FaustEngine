@@ -479,6 +479,9 @@
     <ClInclude Include="..\src\spine\SpineSkeleton.h">
       <Filter>spine</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\spine\spine_references.h">
+      <Filter>spine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\CommonSources\gen\llgePInvoke.cpp">

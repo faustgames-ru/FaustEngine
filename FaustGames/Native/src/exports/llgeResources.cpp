@@ -47,7 +47,7 @@ namespace llge
 
 	extern "C" DLLEXPORT  IContentManager * API_CALL createContentManager()
 	{
-		return new resources::ContentManager();
+		return resources::ContentManager::Default;
 	}
 
 	extern "C" DLLEXPORT IObbContentProvider * API_CALL createContentProvider()

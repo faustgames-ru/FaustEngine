@@ -10,6 +10,20 @@ namespace core
 		return a > 0 ? a : -a;
 	}
 
+	float Math::saturate(float a)
+	{
+		if (a < 0.0f)
+			return 0.0f;
+		if (a > 1.0f)
+			return 1.0f;
+		return a;
+	}
+
+	float Math::trunc(float a)
+	{
+		return ::trunc(a);
+	}
+
 
 	bool Math::equals(float a, float b, float epsilon)
 	{

@@ -19,5 +19,20 @@ namespace GameSampleSpine
         {
             return components;
         }
+
+        private void _jump_Click(object sender, System.EventArgs e)
+        {
+            GameSpine.Instance.Jump();
+        }
+
+        private void _walk_Click(object sender, System.EventArgs e)
+        {
+            GameSpine.Instance.Walk();
+        }
+
+        private void _run_Click(object sender, System.EventArgs e)
+        {
+            GameSpine.Instance.Run();
+        }
     }
 }

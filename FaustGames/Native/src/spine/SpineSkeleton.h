@@ -20,6 +20,9 @@ namespace spine
 	private:
 		void initFromResource(SpineSkeletonResource *resource);
 		void *_spSkeleton;
+		static drawing::BatcherSpineMesh _mesh;
+		static int _quadIndices[6];
+		static float _uvBuffer[4096];
 	};
 }
 

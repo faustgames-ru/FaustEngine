@@ -2,6 +2,7 @@
 #define SPINE_CLASSES_H
 
 #include "llge.h"
+#include "spine_references.h"
 #include <string>
 #include <vector>
 

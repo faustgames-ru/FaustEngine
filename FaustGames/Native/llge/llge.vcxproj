@@ -292,6 +292,7 @@
     <ClInclude Include="..\src\spine\SpineSkeletonAnimation.h" />
     <ClInclude Include="..\src\spine\SpineSkeletonResource.h" />
     <ClInclude Include="..\src\spine\spine_classes.h" />
+    <ClInclude Include="..\src\spine\spine_references.h" />
     <ClInclude Include="..\src\tests\TestStandartAllocations.h" />
     <ClInclude Include="..\src\tests\tests_classes.h" />
     <ClInclude Include="..\src\tests\tests_platform.h" />

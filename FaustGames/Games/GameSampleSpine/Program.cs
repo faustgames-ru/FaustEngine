@@ -18,7 +18,7 @@ namespace GameSampleSpine
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             var mainWindow = new Main();
-            var plaform = new PlatformWinForms(mainWindow.GetComponents(), mainWindow, new GameSpine());
+            var plaform = new PlatformWinForms(mainWindow.GetComponents(), mainWindow, GameSpine.Instance);
             Application.Run(mainWindow);
         }
     }

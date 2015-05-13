@@ -7,7 +7,7 @@ namespace graphics
 	RenderState::RenderState() 
 		:_effect(0, false),
 		_depthState(DepthState::None, true),
-		_blendState(BlendState::Alpha, true),
+		_blendState(BlendState::None, true),
 		_vertexBufferState(0, false),
 		_vertexFormatState(0, false),
 		_attributesState(0, 0, false),
@@ -56,13 +56,18 @@ namespace graphics
 			switch (_blendState.getValue())
 			{
 			case BlendState::Alpha:
-				glEnable(GL_BLEND);
-				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-				break;
 			case BlendState::Additive:
 				glEnable(GL_BLEND);
-				glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+				glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
 				break;
+			//case BlendState::Alpha:
+			//	glEnable(GL_BLEND);
+			//	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			//	break;
+			//case BlendState::Additive:
+			//	glEnable(GL_BLEND);
+			//	glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+			//	break;
 			default:
 				glDisable(GL_BLEND);
 				break;

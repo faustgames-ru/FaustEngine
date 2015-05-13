@@ -88,7 +88,7 @@ void spAnimationState_dispose (spAnimationState* self) {
 
 void _spAnimationState_setCurrent (spAnimationState* self, int index, spTrackEntry* entry);
 
-void spAnimationState_update (spAnimationState* self, float delta) {
+void spAnimationState_update(spAnimationState* self, float delta) {
 	int i;
 	float previousDelta;
 	delta *= self->timeScale;

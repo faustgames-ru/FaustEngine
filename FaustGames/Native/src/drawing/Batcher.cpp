@@ -52,7 +52,7 @@ namespace drawing
 			needNewEntry = true;
 		}
 
-		if ((textureId != _textureId) || (lightmapId != _lightmapId) || (effect != _effect) || (blend != _blend) || needNewEntry)
+		if ((textureId != _textureId) || (lightmapId != _lightmapId) || (effect != _effect) || /*(blend != _blend) ||*/ needNewEntry)
 		{
 			if (_currentEntry.IndicesCount != 0)
 				_buffer->Entries.push_back(_currentEntry);
@@ -68,8 +68,48 @@ namespace drawing
 
 		_textureId = textureId;
 		_currentEntry.IndicesCount += indicesCount;
-		currentBuffer->addMesh(vertices, verticesCount, indices, indicesCount);
+		currentBuffer->addMesh(vertices, verticesCount, indices, indicesCount, blend == graphics::BlendState::Additive);
 	}
+
+	void Batcher::drawSpineMesh(const BatcherSpineMesh &mesh)
+	{
+		BatchBuffer * currentBuffer = _buffer->Buffers[_batchBufferIndex];
+		bool needNewEntry = false;
+		if (!currentBuffer->canAdd(mesh.VerticesCount, mesh.IndicesCount))
+		{
+			_batchBufferIndex++;
+			if (_buffer->Buffers.size() <= _batchBufferIndex)
+			{
+				_buffer->Buffers.push_back(new BatchBuffer());
+#ifdef __ANDROID__
+				__android_log_print(ANDROID_LOG_ERROR, "TRACKERS", "%s", "new render buffer allocated");
+#endif
+			}
+
+			currentBuffer = _buffer->Buffers[_batchBufferIndex];
+			currentBuffer->reset();
+			needNewEntry = true;
+		}
+
+		if ((mesh.State.TextureId != _textureId) || (mesh.State.LightmapId != _lightmapId) || (mesh.State.Effect != _effect) || /*(mesh.State.Blend != _blend) ||*/ needNewEntry)
+		{
+			if (_currentEntry.IndicesCount != 0)
+				_buffer->Entries.push_back(_currentEntry);
+			_currentEntry.IndicesStart = currentBuffer->getCurrentIndices();
+			_currentEntry.IndicesCount = 0;
+			_currentEntry.BatchBufferIndex = _batchBufferIndex;
+			_currentEntry.TextureId = _textureId = mesh.State.TextureId;
+			_currentEntry.LightmapId = _lightmapId = mesh.State.LightmapId;
+			_currentEntry.Blend = _blend = mesh.State.Blend;
+			_currentEntry.Effect = _effect = mesh.State.Effect;
+			_currentEntry.TransformIndex = _buffer->Transforms.size() - 1;
+		}
+
+		_textureId = mesh.State.TextureId;
+		_currentEntry.IndicesCount += mesh.IndicesCount;
+		currentBuffer->addMesh(mesh.Color, mesh.Z, mesh.Vertices, mesh.Uvs, mesh.VerticesCount, mesh.Indices, mesh.IndicesCount, mesh.State.Blend == graphics::BlendState::Additive);
+	}
+
 
 	void Batcher::executeRenderCommands()
 	{
@@ -83,7 +123,8 @@ namespace drawing
 			graphics::UniformValues::texture()->setValue(i->TextureId);
 			graphics::UniformValues::lightmap()->setValue(i->LightmapId);
 			graphics::UniformValues::projection()->setValue(_backBuffer->Transforms[i->TransformIndex]);
-			_graphicsDevice->renderState.setBlend(i->Blend);
+			//_graphicsDevice->renderState.setBlend(i->Blend);
+			_graphicsDevice->renderState.setBlend(graphics::BlendState::Alpha);
 			_graphicsDevice->renderState.setEffect(i->Effect);
 			_graphicsDevice->drawPrimitives(_format, currentBuffer->getVertices(), i->IndicesStart, i->IndicesCount / 3);
 		}

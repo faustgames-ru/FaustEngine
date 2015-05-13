@@ -13,6 +13,8 @@ namespace core
 
 		static bool equals(float a, float b, float epsilon = Epsilon);
 		static float abs(float a);
+		static float saturate(float a);
+		static float trunc(float a);
 	};
 }
 

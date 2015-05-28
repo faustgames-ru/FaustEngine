@@ -56,18 +56,15 @@ namespace graphics
 			switch (_blendState.getValue())
 			{
 			case BlendState::Alpha:
-			case BlendState::Additive:
+				//glEnable(GL_BLEND);
+				//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 				glEnable(GL_BLEND);
 				glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
 				break;
-			//case BlendState::Alpha:
-			//	glEnable(GL_BLEND);
-			//	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-			//	break;
-			//case BlendState::Additive:
-			//	glEnable(GL_BLEND);
-			//	glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-			//	break;
+			case BlendState::Additive:
+				glEnable(GL_BLEND);
+				glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+				break;
 			default:
 				glDisable(GL_BLEND);
 				break;

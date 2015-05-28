@@ -54,7 +54,8 @@ namespace graphics
 			BindBuffer = 41,
 			BufferData = 42,
 			Uniform3f = 43,
-			EnumSize = 44,
+			Uniform2f = 44,
+			EnumSize = 45,
 		};
 
 		static std::string _names[EnumSize];

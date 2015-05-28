@@ -158,6 +158,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\CommonSources\include\llge.h" />
+    <ClInclude Include="..\shaders\post_process_bloom_add_filter_frag.h" />
+    <ClInclude Include="..\shaders\post_process_bloom_filter_frag.h" />
+    <ClInclude Include="..\shaders\post_process_blur_frag.h" />
+    <ClInclude Include="..\shaders\post_process_hblur_vert.h" />
+    <ClInclude Include="..\shaders\post_process_vblur_vert.h" />
+    <ClInclude Include="..\shaders\post_process_vert.h" />
     <ClInclude Include="..\shaders\shader_render_depth_frag.h" />
     <ClInclude Include="..\shaders\shader_render_depth_vert.h" />
     <ClInclude Include="..\shaders\solid_color_frag.h" />
@@ -184,6 +190,7 @@
     <ClInclude Include="..\src\core\Vector.h" />
     <ClInclude Include="..\src\drawing\Batcher.h" />
     <ClInclude Include="..\src\drawing\Camera.h" />
+    <ClInclude Include="..\src\drawing\PostProcess.h" />
     <ClInclude Include="..\src\drawing\Renderer2d.h" />
     <ClInclude Include="..\src\drawing\RenderItem2d.h" />
     <ClInclude Include="..\src\drawing\drawing_platform.h" />
@@ -235,6 +242,7 @@
     <ClInclude Include="..\src\graphics\graphics_platform.h" />
     <ClInclude Include="..\src\graphics\graphics_references.h" />
     <ClInclude Include="..\src\graphics\Image2dData.h" />
+    <ClInclude Include="..\src\graphics\EffectsPostProcess.h" />
     <ClInclude Include="..\src\graphics\RenderConverter.h" />
     <ClInclude Include="..\src\graphics\RenderState.h" />
     <ClInclude Include="..\src\graphics\State.h" />
@@ -313,6 +321,7 @@
     </ClInclude>
     <ClCompile Include="..\src\drawing\Batcher.cpp" />
     <ClCompile Include="..\src\drawing\Camera.cpp" />
+    <ClCompile Include="..\src\drawing\PostProcess.cpp" />
     <ClCompile Include="..\src\drawing\Renderer2d.cpp" />
     <ClCompile Include="..\src\drawing\RenderItem2d.cpp" />
     <ClCompile Include="..\src\drawing\RenderMesh2d.cpp" />
@@ -349,6 +358,7 @@
     <ClCompile Include="..\src\graphics\Effects.cpp" />
     <ClCompile Include="..\src\graphics\EffectSolid.cpp" />
     <ClCompile Include="..\src\graphics\EffectSolidColor.cpp" />
+    <ClCompile Include="..\src\graphics\EffectsPostProcess.cpp" />
     <ClCompile Include="..\src\graphics\EffectTextureColor.cpp" />
     <ClCompile Include="..\src\graphics\EffectTextureLightMapColor.cpp" />
     <ClCompile Include="..\src\graphics\EffectWater.cpp" />

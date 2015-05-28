@@ -1,4 +1,5 @@
 #include "TextureImage2d.h"
+#include "Uniforms.h"
 #include "Errors.h"
 
 namespace graphics
@@ -43,6 +44,8 @@ namespace graphics
 	
 	void API_CALL TextureImage2d::create()
 	{
+		//UniformValues::resetSamplers();
+		
 		glGenTextures(1, &_handle);
 		Errors::check(Errors::GenTextures);
 		glActiveTexture(GL_TEXTURE0 + GraphicsConstants::Samplers2DStart);

@@ -5,6 +5,20 @@
 
 namespace spine
 {
+	struct SpineEventsBuffer
+	{
+		int* EventsIndices;
+		int EventsIndicesCount;
+		SpineEventsBuffer(int limit)
+		{
+			EventsIndices = new int[limit];
+		}
+		~SpineEventsBuffer()
+		{
+			delete [] EventsIndices;
+		}
+	};
+
 	class SpineAnimationState : public llge::ISpineAnimationState
 	{
 	public:
@@ -20,16 +34,18 @@ namespace spine
 		virtual void API_CALL setAnimation(llge::ISpineAnimation* animation, bool loop, bool normalize);
 		virtual void API_CALL addAnimation(llge::ISpineAnimation* animation, bool loop, float delay);
 		virtual void API_CALL dispose();
+		virtual int API_CALL getSpineEventIndices(IntPtr indices, int limit);
 
+		void listenAnimationEvent(int eventIndex);
 	protected:
 	private:
-		//void static animationStateListener(spAnimationState* state, int trackIndex, spEventType type, spEvent* event, int loopCount);
-		//void listenAnimationEvent(int trackIndex, spEventType type, spEvent* event, int loopCount);
 		void *_spAnimationState;
 		float _time;
 		float _prevTime;
 		float _timeNormalized;
 		void* _animation;
+
+		SpineEventsBuffer *_eventsBuffer;
 	};
 }
 

@@ -5,20 +5,21 @@
 void _spAtlasPage_createTexture(spAtlasPage* self, const char* path)
 {
 	// todo: resolve multy registration
-	graphics::Image2dData* imageData = resources::ContentManager::Default->loadUnregisteredTexture(path);
-	graphics::TextureImage2d* texture = new graphics::TextureImage2d(false);
-	texture->create();
-	texture->setData(imageData);
-	self->width = imageData->Width;
-	self->height = imageData->Height;
+	
+	graphics::TextureImage2d* texture = resources::ContentManager::Default.addLoadTexture(path);
+
+	// todo: detect size;
+
+	//self->width = imageData->Width;
+	//self->height = imageData->Height;
+
 	self->rendererObject = texture;
 }
 
 void _spAtlasPage_disposeTexture(spAtlasPage* self)
 {
 	graphics::TextureImage2d* texture = (graphics::TextureImage2d*)self->rendererObject;
-	texture->cleanup(); 
-	delete(texture);
+	resources::ContentManager::Default.addDisposeTexture(texture);
 }
 
 char* _spUtil_readFile(const char* path, int* length)

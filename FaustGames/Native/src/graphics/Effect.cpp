@@ -146,7 +146,7 @@ namespace graphics
 
 		glLinkProgram(_shaderProgram);
 		Errors::check(Errors::LinkProgram);
-		
+		CheckLink(_shaderProgram);
 		glUseProgram(_shaderProgram);
 		//Errors::check(Errors::UseProgram);
 		Errors::check(vertexShaderCode);

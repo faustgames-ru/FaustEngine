@@ -511,14 +511,49 @@ namespace llge
 		classInstance->draw(effect, blendMode, textureId, lightmapId, vertices, verticesCount, indices, indicesCount);
 	}
 	
-	extern "C" DLLEXPORT void API_CALL llge_Batch2d_execute (IBatch2d * classInstance)
+	extern "C" DLLEXPORT void API_CALL llge_Batch2d_execute (IBatch2d * classInstance, bool usePostProcess)
 	{
-		classInstance->execute();
+		classInstance->execute(usePostProcess);
 	}
 	
-	extern "C" DLLEXPORT void API_CALL llge_SpineSkeleton_render (ISpineSkeleton * classInstance, IBatch2d * batch)
+	extern "C" DLLEXPORT void API_CALL llge_SpineSkeleton_setTransform (ISpineSkeleton * classInstance, void * floatMatrix)
 	{
-		classInstance->render(batch);
+		classInstance->setTransform(floatMatrix);
+	}
+	
+	extern "C" DLLEXPORT float API_CALL llge_SpineSkeleton_getMinX (ISpineSkeleton * classInstance)
+	{
+		return classInstance->getMinX();
+	}
+	
+	extern "C" DLLEXPORT float API_CALL llge_SpineSkeleton_getMinY (ISpineSkeleton * classInstance)
+	{
+		return classInstance->getMinY();
+	}
+	
+	extern "C" DLLEXPORT float API_CALL llge_SpineSkeleton_getMaxX (ISpineSkeleton * classInstance)
+	{
+		return classInstance->getMaxX();
+	}
+	
+	extern "C" DLLEXPORT float API_CALL llge_SpineSkeleton_getMaxY (ISpineSkeleton * classInstance)
+	{
+		return classInstance->getMaxY();
+	}
+	
+	extern "C" DLLEXPORT float API_CALL llge_SpineSkeleton_getZ (ISpineSkeleton * classInstance)
+	{
+		return classInstance->getZ();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_SpineSkeleton_render (ISpineSkeleton * classInstance, IBatch2d * batch, int lightmapId)
+	{
+		classInstance->render(batch, lightmapId);
+	}
+	
+	extern "C" DLLEXPORT int API_CALL llge_SpineSkeleton_getGeometry (ISpineSkeleton * classInstance, void * vertices, int verticeLimit, void * indices, int indicesLimit)
+	{
+		return classInstance->getGeometry(vertices, verticeLimit, indices, indicesLimit);
 	}
 	
 	extern "C" DLLEXPORT IntPtr API_CALL llge_SpineSkeleton_getNativeInstance (ISpineSkeleton * classInstance)
@@ -529,6 +564,16 @@ namespace llge
 	extern "C" DLLEXPORT void API_CALL llge_SpineSkeleton_updateWorldTransform (ISpineSkeleton * classInstance)
 	{
 		classInstance->updateWorldTransform();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_SpineSkeleton_setBonesToSetupPose (ISpineSkeleton * classInstance)
+	{
+		classInstance->setBonesToSetupPose();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_SpineSkeleton_setSlotsToSetupPose (ISpineSkeleton * classInstance)
+	{
+		classInstance->setSlotsToSetupPose();
 	}
 	
 	extern "C" DLLEXPORT void API_CALL llge_SpineSkeleton_dispose (ISpineSkeleton * classInstance)
@@ -544,6 +589,11 @@ namespace llge
 	extern "C" DLLEXPORT IntPtr API_CALL llge_SpineAnimation_getName (ISpineAnimation * classInstance)
 	{
 		return classInstance->getName();
+	}
+	
+	extern "C" DLLEXPORT float API_CALL llge_SpineAnimation_getDuration (ISpineAnimation * classInstance)
+	{
+		return classInstance->getDuration();
 	}
 	
 	extern "C" DLLEXPORT void API_CALL llge_SpineAnimationState_update (ISpineAnimationState * classInstance, float delta)
@@ -566,6 +616,11 @@ namespace llge
 		classInstance->addAnimation(animation, loop, delay);
 	}
 	
+	extern "C" DLLEXPORT int API_CALL llge_SpineAnimationState_getSpineEventIndices (ISpineAnimationState * classInstance, IntPtr indices, int limit)
+	{
+		return classInstance->getSpineEventIndices(indices, limit);
+	}
+	
 	extern "C" DLLEXPORT void API_CALL llge_SpineAnimationState_dispose (ISpineAnimationState * classInstance)
 	{
 		classInstance->dispose();
@@ -586,9 +641,14 @@ namespace llge
 		classInstance->dispose();
 	}
 	
-	extern "C" DLLEXPORT void API_CALL llge_SpineResource_load (ISpineResource * classInstance, String atlasText, String jsonText)
+	extern "C" DLLEXPORT IntPtr API_CALL llge_SpineEvent_getName (ISpineEvent * classInstance)
 	{
-		classInstance->load(atlasText, jsonText);
+		return classInstance->getName();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_SpineResource_load (ISpineResource * classInstance, String atlasText, String jsonText, String dir)
+	{
+		classInstance->load(atlasText, jsonText, dir);
 	}
 	
 	extern "C" DLLEXPORT void API_CALL llge_SpineResource_unLoad (ISpineResource * classInstance)
@@ -606,9 +666,19 @@ namespace llge
 		return classInstance->getSpineAnimationsCount();
 	}
 	
-	extern "C" DLLEXPORT ISpineSkeleton * API_CALL llge_SpineResource_createSkeleton (ISpineResource * classInstance)
+	extern "C" DLLEXPORT ISpineEvent * API_CALL llge_SpineResource_getSpineEvent (ISpineResource * classInstance, int i)
 	{
-		return classInstance->createSkeleton();
+		return classInstance->getSpineEvent(i);
+	}
+	
+	extern "C" DLLEXPORT int API_CALL llge_SpineResource_getSpineEventsCount (ISpineResource * classInstance)
+	{
+		return classInstance->getSpineEventsCount();
+	}
+	
+	extern "C" DLLEXPORT ISpineSkeleton * API_CALL llge_SpineResource_createSkeleton (ISpineResource * classInstance, void * floatMatrix)
+	{
+		return classInstance->createSkeleton(floatMatrix);
 	}
 	
 	extern "C" DLLEXPORT ISpineAnimationStateData * API_CALL llge_SpineResource_createStateData (ISpineResource * classInstance)
@@ -679,6 +749,11 @@ namespace llge
 	extern "C" DLLEXPORT void API_CALL llge_ContentManager_finishLoad (IContentManager * classInstance)
 	{
 		classInstance->finishLoad();
+	}
+	
+	extern "C" DLLEXPORT bool API_CALL llge_ContentManager_update (IContentManager * classInstance)
+	{
+		return classInstance->update();
 	}
 	
 	extern "C" DLLEXPORT void API_CALL llge_ContentManager_dispose (IContentManager * classInstance)

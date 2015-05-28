@@ -22,6 +22,7 @@ namespace graphics
 		static UniformInfo *depthmap();
 		static UniformInfo *normalmap();
 		static UniformInfo *time();
+		static UniformInfo *pixelSize();
 	private:
 		static UniformInfo _cameraPosition;
 		static UniformInfo _projection;
@@ -31,6 +32,7 @@ namespace graphics
 		static UniformInfo _depthmap;
 		static UniformInfo _normalmap;
 		static UniformInfo _time;
+		static UniformInfo _pixelSize;
 	};
 
 	class UniformValues
@@ -44,7 +46,12 @@ namespace graphics
 		static inline UniformValueTexture *depthmap(){ return &_depthmap; }
 		static inline UniformValueTexture *normalmap(){ return &_normalmap; }
 		static inline UniformValueFloat *time(){ return &_time; }
+		static inline UniformValueVector2 *pixelSize(){ return &_pixelSize; }
+
+		static void initSamplers();
+		static void resetSamplers();
 	private:
+		static void initSampler(UniformValueTexture *sampler, int index);
 		static UniformValueVector3 _cameraPosition;
 		static UniformValueMatrix _projection;
 		static UniformValueTexture _texture;
@@ -53,6 +60,8 @@ namespace graphics
 		static UniformValueTexture _depthmap;
 		static UniformValueTexture _normalmap;
 		static UniformValueFloat _time;
+		static UniformValueVector2 _pixelSize;
+		static UniformValueTexture* _samplers[GraphicsConstants::Samplers2DLimit];
 	};
 }
 

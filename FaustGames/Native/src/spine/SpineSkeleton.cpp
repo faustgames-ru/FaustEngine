@@ -26,7 +26,7 @@ namespace spine
 
 
 
-	SpineSkeleton::SpineSkeleton(SpineSkeletonResource *resource) : _spSkeleton(0)
+	SpineSkeleton::SpineSkeleton(SpineSkeletonResource *resource, float* transform) : _spSkeleton(0)
 	{
 		initFromResource(resource);
 		spSkeleton *s = (spSkeleton*)_spSkeleton;
@@ -35,13 +35,85 @@ namespace spine
 		{
 			spSkeleton_setSkin(s, sd->skins[1]);
 		}
-		spSkeleton_setBonesToSetupPose(s);
-		spSkeleton_setSlotsToSetupPose(s);
+		if (transform)
+			_transform.setData(transform);
+		else
+			_transform = core::Matrix::identity;
+		spSkeleton_setToSetupPose(s);
+		updateWorldTransform();
+		updateAabb();
 	}
 	
 	SpineSkeleton::~SpineSkeleton()
 	{
 		cleanup();
+	}
+
+	void SpineSkeleton::transform(float *x, float *y)
+	{
+		float x0 = *x;
+		float y0 = *y;
+		*x = x0 * _transform.getXx() + y0 * _transform.getYx() + _transform.getWx();
+		*y = x0 * _transform.getXy() + y0 * _transform.getYy() + _transform.getWy();
+	}
+
+	void SpineSkeleton::updateAabb()
+	{		
+		spSkeleton *s = (spSkeleton *)_spSkeleton;
+		geometry::Aabb2d aabb;
+		for (int i = 0; i < s->slotsCount; i++)
+		{
+			spSlot* slot = s->drawOrder[i];
+			if (!slot->attachment) continue;
+			switch (slot->attachment->type)
+			{
+				case SP_ATTACHMENT_REGION:
+				{
+					spRegionAttachment * region = SUB_CAST(spRegionAttachment, slot->attachment);
+					spRegionAttachment_computeWorldVertices(region, slot->bone, _mesh.Vertices);
+					for (int j = 0; j < 8; j += 2)
+					{
+						transform(_mesh.Vertices + j, _mesh.Vertices + j + 1);
+						aabb.expand(_mesh.Vertices[j], _mesh.Vertices[j + 1]);
+					}
+					break;
+				}
+				case SP_ATTACHMENT_BOUNDING_BOX:
+				{
+					//spBoundingBoxAttachment * boundingBox = SUB_CAST(spBoundingBoxAttachment, slot->attachment);
+					//spBoundingBoxAttachment_computeWorldVertices(boundingBox, slot->bone, _mesh.Vertices);
+					break;
+				}
+				case SP_ATTACHMENT_MESH:
+				{
+					spMeshAttachment * mesh = SUB_CAST(spMeshAttachment, slot->attachment);
+					spMeshAttachment_computeWorldVertices(mesh, slot, _mesh.Vertices);
+					for (int j = 0; j < mesh->verticesCount; j += 2)
+					{
+						transform(_mesh.Vertices + j, _mesh.Vertices + j + 1);
+						aabb.expand(_mesh.Vertices[j], _mesh.Vertices[j + 1]);
+					}
+					break;
+				}
+				case SP_ATTACHMENT_SKINNED_MESH:
+				{
+
+					spSkinnedMeshAttachment * skinnedMesh = SUB_CAST(spSkinnedMeshAttachment, slot->attachment);
+					spSkinnedMeshAttachment_computeWorldVertices(skinnedMesh, slot, _mesh.Vertices);
+					for (int j = 0; j < skinnedMesh->uvsCount; j += 2)
+					{
+						transform(_mesh.Vertices + j, _mesh.Vertices + j + 1);
+						aabb.expand(_mesh.Vertices[j], _mesh.Vertices[j + 1]);
+					}
+					break;
+				}
+				default:
+				{
+					break;
+				}
+			}
+		}
+		_aabb = aabb;
 	}
 
 	void SpineSkeleton::initFromResource(SpineSkeletonResource *resource)
@@ -98,10 +170,121 @@ namespace spine
 		}
 	}
 
-	void API_CALL SpineSkeleton::render(llge::IBatch2d * batch)
+	class VBuffer
+	{
+	public:
+		drawing::Mesh2dVertex *Vertices;
+		ushort *Indices;
+		int VerticesLimit;
+		int IndicesLimit;
+		VBuffer(drawing::Mesh2dVertex *vertices, int verticeLimit, ushort *indices, int indicesLimit)
+			: Vertices(vertices), Indices(indices), VerticesLimit(verticeLimit), IndicesLimit(indicesLimit), _verticesCount(0), _indicesCount(0)
+		{
+		}
+		void Add(const drawing::BatcherSpineMesh &mesh)
+		{
+			if ((_indicesCount + mesh.IndicesCount) > IndicesLimit) return;
+			if ((_verticesCount + mesh.VerticesCount) > VerticesLimit) return;
+			for (int i = 0; i < mesh.IndicesCount; i++)
+			{
+				Indices[_indicesCount + i] = (ushort)(_verticesCount + mesh.Indices[i]);
+			}
+
+			drawing::Mesh2dVertex * target = Vertices + _verticesCount;
+			float* source = mesh.Vertices;
+			for (int i = 0; i < mesh.VerticesCount; i++, target++)
+			{
+				target->setX(*source); ++source;
+				target->setY(*source); ++source;
+				target->setZ(mesh.Z);
+			}
+
+			_verticesCount += mesh.VerticesCount;
+			_indicesCount += mesh.IndicesCount;
+		}
+		inline int getIndicesCount()
+		{
+			return _indicesCount;
+		}
+	private:
+		int _indicesCount;
+		int _verticesCount;
+
+	};
+
+	int API_CALL SpineSkeleton::getGeometry(void *vertices, int verticeLimit, void *indices, int indicesLimit)
+	{
+		VBuffer buffer((drawing::Mesh2dVertex *)vertices, verticeLimit, (ushort *)indices, indicesLimit);
+		spSkeleton *s = (spSkeleton *)_spSkeleton;
+		_mesh.Z = _transform.getWz();
+		for (int i = 0; i < s->slotsCount; i++)
+		{
+			spSlot* slot = s->drawOrder[i];
+			if (!slot->attachment) continue;
+			switch (slot->attachment->type)
+			{
+				case SP_ATTACHMENT_REGION:
+				{
+					spRegionAttachment * region = SUB_CAST(spRegionAttachment, slot->attachment);
+					spRegionAttachment_computeWorldVertices(region, slot->bone, _mesh.Vertices);
+					for (int j = 0; j < 8; j += 2)
+						transform(_mesh.Vertices + j, _mesh.Vertices + j + 1);
+					_mesh.Indices = _quadIndices;
+					_mesh.IndicesCount = 6;
+					_mesh.VerticesCount = 4;
+					buffer.Add(_mesh);
+					break;
+				}
+				case SP_ATTACHMENT_BOUNDING_BOX:
+				{
+					//spBoundingBoxAttachment * boundingBox = SUB_CAST(spBoundingBoxAttachment, slot->attachment);
+					//spBoundingBoxAttachment_computeWorldVertices(boundingBox, slot->bone, _mesh.Vertices);
+					break;
+				}
+				case SP_ATTACHMENT_MESH:
+				{
+					spMeshAttachment * mesh = SUB_CAST(spMeshAttachment, slot->attachment);
+					spMeshAttachment_updateUVs_fixed(mesh, _uvBuffer);
+					spMeshAttachment_computeWorldVertices(mesh, slot, _mesh.Vertices);
+					for (int j = 0; j < mesh->verticesCount; j += 2)
+						transform(_mesh.Vertices + j, _mesh.Vertices + j + 1);
+					_mesh.Indices = mesh->triangles;
+					_mesh.IndicesCount = mesh->trianglesCount;
+					_mesh.VerticesCount = mesh->verticesCount / 2;
+					buffer.Add(_mesh);
+					break;
+				}
+				case SP_ATTACHMENT_SKINNED_MESH:
+				{
+
+					spSkinnedMeshAttachment * skinnedMesh = SUB_CAST(spSkinnedMeshAttachment, slot->attachment);
+					spSkinnedMeshAttachment_updateUVs_fixed(skinnedMesh, _uvBuffer);
+					spSkinnedMeshAttachment_computeWorldVertices(skinnedMesh, slot, _mesh.Vertices);
+					for (int j = 0; j < skinnedMesh->uvsCount; j += 2)
+						transform(_mesh.Vertices + j, _mesh.Vertices + j + 1);
+					_mesh.Indices = skinnedMesh->triangles;
+					_mesh.IndicesCount = skinnedMesh->trianglesCount;
+					_mesh.VerticesCount = skinnedMesh->uvsCount / 2;
+					buffer.Add(_mesh);
+					break;
+				}
+				default:
+				{
+					break;
+				}
+			}
+		}
+		return buffer.getIndicesCount();
+	}
+
+
+	void API_CALL SpineSkeleton::render(llge::IBatch2d * batch, int lightmapId)
 	{
 		drawing::Batcher* batcher = (drawing::Batcher*)batch->getNativeInstance();
 		spSkeleton *s = (spSkeleton *)_spSkeleton;
+		geometry::Aabb2d aabb;
+		_mesh.Z = _transform.getWz();
+		_mesh.State.LightmapId = lightmapId;
 		for (int i = 0; i < s->slotsCount; i++)
 		{
 			spSlot* slot = s->drawOrder[i];
@@ -110,9 +293,7 @@ namespace spine
 			_mesh.State.Blend = slot->data->additiveBlending == 0 
 				? graphics::BlendState::Alpha 
 				: graphics::BlendState::Additive;
-			_mesh.State.Effect = graphics::Effects::textureColor();
-			_mesh.State.LightmapId = 0;			
-			_mesh.Z = 0.5f;
+			_mesh.State.Effect = graphics::Effects::textureLightmapColor();
 
 			switch (slot->attachment->type)
 			{
@@ -120,12 +301,17 @@ namespace spine
 				{					
 					spRegionAttachment * region = SUB_CAST(spRegionAttachment, slot->attachment);
 					spRegionAttachment_computeWorldVertices(region, slot->bone, _mesh.Vertices);
+					for (int j = 0; j < 8; j += 2)
+					{
+						transform(_mesh.Vertices + j, _mesh.Vertices + j + 1);
+						aabb.expand(_mesh.Vertices[j], _mesh.Vertices[j + 1]);
+					}
 					_mesh.Uvs = region->uvs;
 					_mesh.Indices = _quadIndices;
 					_mesh.IndicesCount = 6;
 					_mesh.VerticesCount = 4;
 					_mesh.State.TextureId = getTextureId(region->rendererObject);
-					batcher->drawSpineMesh(_mesh);					
+					batcher->drawSpineMesh(_mesh);				
 					break;
 				}
 				case SP_ATTACHMENT_BOUNDING_BOX:
@@ -139,12 +325,17 @@ namespace spine
 					spMeshAttachment * mesh = SUB_CAST(spMeshAttachment, slot->attachment);
 					spMeshAttachment_updateUVs_fixed(mesh, _uvBuffer);
 					spMeshAttachment_computeWorldVertices(mesh, slot, _mesh.Vertices);
+					for (int j = 0; j < mesh->verticesCount; j += 2)
+					{
+						transform(_mesh.Vertices + j, _mesh.Vertices + j + 1);
+						aabb.expand(_mesh.Vertices[j], _mesh.Vertices[j + 1]);
+					}
 					_mesh.Uvs = _uvBuffer;
 					_mesh.Indices = mesh->triangles;
 					_mesh.IndicesCount = mesh->trianglesCount;
 					_mesh.VerticesCount = mesh->verticesCount / 2;
 					_mesh.State.TextureId = getTextureId(mesh->rendererObject);
-					batcher->drawSpineMesh(_mesh);					
+					batcher->drawSpineMesh(_mesh);
 					break;
 				}
 				case SP_ATTACHMENT_SKINNED_MESH:
@@ -153,13 +344,17 @@ namespace spine
 					spSkinnedMeshAttachment * skinnedMesh = SUB_CAST(spSkinnedMeshAttachment, slot->attachment);
 					spSkinnedMeshAttachment_updateUVs_fixed(skinnedMesh, _uvBuffer);
 					spSkinnedMeshAttachment_computeWorldVertices(skinnedMesh, slot, _mesh.Vertices);
+					for (int j = 0; j < skinnedMesh->uvsCount; j += 2)
+					{
+						transform(_mesh.Vertices + j, _mesh.Vertices + j + 1);
+						aabb.expand(_mesh.Vertices[j], _mesh.Vertices[j + 1]);
+					}
 					_mesh.Uvs = _uvBuffer;
 					_mesh.Indices = skinnedMesh->triangles;
 					_mesh.IndicesCount = skinnedMesh->trianglesCount;
 					_mesh.VerticesCount = skinnedMesh->uvsCount / 2;
 					_mesh.State.TextureId = getTextureId(skinnedMesh->rendererObject);
 					batcher->drawSpineMesh(_mesh);
-					
 					break;
 				}
 				default:
@@ -168,9 +363,9 @@ namespace spine
 				}
 			}
 		}
+		_aabb = aabb;
 	}
-
-
+	
 	void SpineSkeleton::cleanup()
 	{
 		if (_spSkeleton)
@@ -200,4 +395,48 @@ namespace spine
 	{
 		delete this;
 	}
+
+	void API_CALL SpineSkeleton::setTransform(void *floatMatrix)
+	{
+		_transform.setData((float *)floatMatrix);
+		updateAabb();
+	}
+
+	void API_CALL SpineSkeleton::setBonesToSetupPose()
+	{
+		spSkeleton_setBonesToSetupPose((spSkeleton *)_spSkeleton);
+	}
+	
+	void API_CALL SpineSkeleton::setSlotsToSetupPose()
+	{
+		spSkeleton_setSlotsToSetupPose((spSkeleton *)_spSkeleton);
+	}
+
+
+	float API_CALL SpineSkeleton::getMinX()
+	{
+		return _aabb.Min.getX();
+	}
+
+	float API_CALL SpineSkeleton::getMinY()
+	{
+		return _aabb.Min.getY();
+	}
+
+	float API_CALL SpineSkeleton::getMaxX()
+	{
+		return _aabb.Max.getX();
+	}
+
+	float API_CALL SpineSkeleton::getMaxY()
+	{
+		return _aabb.Max.getY();
+	}
+
+	float API_CALL SpineSkeleton::getZ()
+	{
+		return  _transform.getWz();
+	}
+
+
 }

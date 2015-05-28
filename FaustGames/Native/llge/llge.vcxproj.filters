@@ -482,6 +482,30 @@
     <ClInclude Include="..\src\spine\spine_references.h">
       <Filter>spine</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\drawing\PostProcess.h">
+      <Filter>drawing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\EffectsPostProcess.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shaders\post_process_bloom_filter_frag.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shaders\post_process_vert.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shaders\post_process_blur_frag.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shaders\post_process_vblur_vert.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shaders\post_process_hblur_vert.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shaders\post_process_bloom_add_filter_frag.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\CommonSources\gen\llgePInvoke.cpp">
@@ -902,6 +926,12 @@
     </ClCompile>
     <ClCompile Include="..\src\spine\SpineAnimationState.cpp">
       <Filter>spine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\drawing\PostProcess.cpp">
+      <Filter>drawing</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\EffectsPostProcess.cpp">
+      <Filter>graphics</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

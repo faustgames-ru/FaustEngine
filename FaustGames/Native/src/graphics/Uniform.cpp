@@ -28,10 +28,10 @@ namespace graphics
 	void Uniform::create(Effect * effect)
 	{
 		_parameterHandler = glGetUniformLocation(effect->getHandle(), _info->getName());
+		Errors::check(Errors::GetUniformLocation);
 		_valueContainer->reset();
 		_shaderId = effect->getShaderId();
 		_shaderMask = effect->getShaderMask();
-		Errors::check(Errors::GetUniformLocation);
 		if (_info->getType() == UniformType::Sampler2D)
 		{
 			int samplerIndex = _valueContainer->getSamplerIndex();

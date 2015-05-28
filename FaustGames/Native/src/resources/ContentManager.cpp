@@ -37,17 +37,36 @@ namespace resources
 		return result;
 	}
 
-	ContentManager * ContentManager::Default(new ContentManager());
+	ContentManager ContentManager::Default;
+
+	graphics::TextureImage2d* ContentManager::addLoadTexture(const char *name)
+	{
+		LoadImageEntry entry;
+		graphics::TextureImage2d *image = new graphics::TextureImage2d(false);
+		entry.fileName = name;
+		entry.textureImage = image;
+		_loadEntries.push_back(entry);
+		return image;
+	}
+
+	void ContentManager::addDisposeTexture(graphics::TextureImage2d *image)
+	{
+		_disposeEntries.push_back(image);
+	}
+
 
 
 #define PNGSIGSIZE 8
 
 	png_bytep * m_RowPtrs = 0;
-
-
+	
 	graphics::Image2dData * ContentManager::loadTexture(int id)
 	{
 		const char *name = _files[id].c_str();
+#ifdef __ANDROID__
+		__android_log_print(ANDROID_LOG_ERROR, "TRACKERS", "%s", name);
+#endif
+
 		return loadUnregisteredTexture(name);
 	}
 
@@ -146,10 +165,13 @@ namespace resources
 		{
 			for (size_t i = 0; i < (size_t)m_Height; i++)
 			{
-				uint *row = (uint*)_image->Pixels + i;
+				uint *row = (uint*)_image->Pixels + i*m_Width;
 				for (size_t j = 0; j < (size_t)m_Width; j++)
 				{
-					row[j] = graphics::Color::premul(row[j], false);
+					if (row[j] != 0)
+					{
+						row[j] = graphics::Color::premul(row[j], false);
+					}
 				}
 			}
 		}
@@ -190,6 +212,38 @@ namespace resources
 		open();
 	}
 	
+	bool API_CALL ContentManager::update()
+	{
+		if ((_loadEntries.size() == 0) && (_disposeEntries.size() == 0))
+			return true;
+		bool wasOpened = _isOpened;
+		if (!_isOpened)
+			open();
+
+
+		for (int i = 0; i < _loadEntries.size(); i++)
+		{
+#ifdef __ANDROID__
+			__android_log_print(ANDROID_LOG_ERROR, "TRACKERS", "%s", _loadEntries[i].fileName.c_str());
+#endif
+			graphics::Image2dData * image = loadUnregisteredTexture(_loadEntries[i].fileName.c_str());
+			_loadEntries[i].textureImage->create();
+			_loadEntries[i].textureImage->LoadPixels(image->Width, image->Height, (llge::TextureImage2dFormat)image->Format, image->Pixels);
+		}
+		_loadEntries.clear();
+		for (int i = 0; i < _disposeEntries.size(); i++)
+		{
+			_disposeEntries[i]->cleanup();
+			delete _disposeEntries[i];
+		}
+		_disposeEntries.clear();
+
+		if (!wasOpened)
+			close();
+		return false;
+	}
+
+
 	void API_CALL ContentManager::loadImage(int id, llge::ITextureImage2d *textureImage)
 	{
 		graphics::Image2dData * image = loadTexture(id);

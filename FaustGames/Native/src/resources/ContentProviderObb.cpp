@@ -56,13 +56,33 @@ namespace resources
 
 	bool ObbContentProvider::existsContent(const char *name)
 	{
-		std::map<std::string, ObbEntry>::iterator it = _entries.find(name);
+		std::string replace = name;
+//#ifdef __ANDROID__
+		for (int i = 0; i < replace.size(); i++)
+		{
+			if (replace[i] == '\\')
+				replace[i] = '_';
+			if (replace[i] == '/')
+				replace[i] = '_';
+		}
+//#endif
+		std::map<std::string, ObbEntry>::iterator it = _entries.find(replace);
 		return it != _entries.end();
 	}
 	
 	void ObbContentProvider::openContent(const char *name)
 	{
-		_currentEntry = _entries[name];
+		std::string replace = name;
+		//#ifdef __ANDROID__
+		for (int i = 0; i < replace.size(); i++)
+		{
+			if (replace[i] == '\\')
+				replace[i] = '_';
+			if (replace[i] == '/')
+				replace[i] = '_';
+		}
+		//#endif
+		_currentEntry = _entries[replace.c_str()];
 		fsetpos(_obbFile, (fpos_t *)&_currentEntry.Position);
 	}
 

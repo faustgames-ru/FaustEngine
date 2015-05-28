@@ -32,5 +32,10 @@ namespace spine
 		return (IntPtr)((spAnimation *)_spAnimation)->name;
 	}
 
+	float API_CALL SpineSkeletonAnimation::getDuration()
+	{
+		return ((spAnimation *)_spAnimation)->duration;
+	}
+
 
 }

@@ -77,6 +77,7 @@ namespace GameSampleSpine
         }
         public override void Update(UpdateArgs e)
         {
+            _content.Update();
             _state.Update((float)e.Elapsed.TotalSeconds);
             _stateShoot.Update((float)e.Elapsed.TotalSeconds);
             _state.Apply(_skeleton);

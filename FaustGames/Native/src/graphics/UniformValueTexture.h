@@ -10,15 +10,13 @@ namespace graphics
 	{
 	public:
 		UniformValueTexture();
+		void setSamplerIndex(int samplerIndex);
 		void setValue(GLuint value);
 		virtual void apply(Uniform *uniform);
 		virtual void reset();
 		virtual int getSamplerIndex(){ return _samplerIndex; };
-		static void resetSamplers();
 	protected:
 	private:
-		static int _samplerCounter;
-		static core::StaticArray<UniformValueTexture*, GraphicsConstants::Samplers2DLimit> _samplers;
 		GLuint _value;
 		bool _equal;
 		int _samplerIndex;

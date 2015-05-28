@@ -18,6 +18,7 @@ namespace graphics
 		void setClearState(unsigned int color, float depth);
 		void setViewport(int x, int y, int width, int height);
 		void setRenderTarget(IRenderTarget *renderTarget);
+		void setPostProcessRenderTargetIndex(int index);
 		void clear();
 		void clearDepth();
 		void resetState();
@@ -25,10 +26,12 @@ namespace graphics
 		void drawEdges(VertexFormat *vertexFormat, void *vertexBuffer, int primitivesCount);
 		void drawTriangles(VertexFormat *vertexFormat, void *vertexBuffer, int primitivesCount);
 		void drawPrimitives(VertexFormat *vertexFormat, void *vertexBuffer, unsigned short *indexBuffer, int primitivesCount);
-
+		void resetRenderState();
 		static void create();
+		std::vector<TextureRenderTarget2d *> PostProcessRenderTargets;
 	protected:
 	private:
+		void addProcessRenderTargets();
 		int _viewportX;
 		int _viewportY;
 		int _viewportWidth;

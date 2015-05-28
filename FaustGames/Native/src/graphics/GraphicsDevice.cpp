@@ -2,6 +2,7 @@
 #include "Color.h"
 #include "Errors.h"
 #include "UniformValueTexture.h"
+#include "Uniforms.h"
 #include "TextureImage2d.h"
 
 namespace graphics
@@ -36,7 +37,34 @@ namespace graphics
 		_viewportWidth = width;
 		_viewportHeight = height;
 		glViewport(x, y, width, height);
+		float rtWidth = width / 8;
+		float rtHeight = height / 8;
+		for (int i = 0; i < PostProcessRenderTargets.size(); i++)
+		{
+			TextureRenderTarget2d *rt = PostProcessRenderTargets[i];
+			if (i > 0)
+			{
+				if ((rt->getWidth() != rtWidth) || (rt->getHeight() != rtHeight))
+				{
+					rt->cleanup();
+					rt->create(rtWidth, rtHeight);
+				}
+			}
+			else
+			{
+				if ((rt->getWidth() != width) || (rt->getHeight() != height))
+				{
+					rt->cleanup();
+					rt->create(width, height);
+				}
+			}
+		}
 		Errors::check(Errors::Viewport);
+	}
+
+	void GraphicsDevice::setPostProcessRenderTargetIndex(int index)
+	{
+		setRenderTarget(PostProcessRenderTargets[index]);
 	}
 
 	void GraphicsDevice::setRenderTarget(IRenderTarget *renderTarget)
@@ -52,6 +80,7 @@ namespace graphics
 		{
 			glBindFramebuffer(GL_FRAMEBUFFER, renderTarget->getFramebuffer());
 			Errors::check(Errors::BindFramebuffer);
+
 			/*
 			GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
 			Errors::check(Errors::CheckFramebufferStatus);
@@ -135,9 +164,26 @@ namespace graphics
 		Errors::check(Errors::DrawElements);
 	}
 
+	void GraphicsDevice::resetRenderState()
+	{
+		renderState = RenderState();
+	}
+
+
 	void GraphicsDevice::create()
 	{
 		TextureImage2d::createStatic();
+		Default.addProcessRenderTargets();
+		Default.addProcessRenderTargets();
+		Default.addProcessRenderTargets();
 	}
+
+	void GraphicsDevice::addProcessRenderTargets()
+	{
+		TextureRenderTarget2d * rt = new TextureRenderTarget2d();
+		rt->create(128, 128);
+		PostProcessRenderTargets.push_back(rt);
+	}
+
 
 }

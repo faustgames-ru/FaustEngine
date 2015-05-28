@@ -19,6 +19,20 @@ namespace graphics
 		bool _equal;
 		unsigned int _applyMask;
 	};
+
+	class UniformValueVector2 : public UniformValue
+	{
+	public:
+		UniformValueVector2();
+		void setValue(const core::Vector2 &value);
+		virtual void apply(Uniform *uniform);
+		virtual void reset();
+	protected:
+	private:
+		core::Vector2 _value;
+		bool _equal;
+		unsigned int _applyMask;
+	};
 }
 
 #endif /*UNIFORM_VALUE_FLOAT_H*/

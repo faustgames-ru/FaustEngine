@@ -12,6 +12,7 @@ namespace spine
 		void *getAnimation();
 		virtual IntPtr API_CALL getNativeInstance();
 		virtual IntPtr API_CALL getName();
+		virtual float API_CALL getDuration();
 	protected:
 	private:
 		void *_spAnimation;

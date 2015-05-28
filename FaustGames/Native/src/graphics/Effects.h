@@ -11,6 +11,7 @@
 #include "EffectTextureLightMapColor.h"
 #include "EffectWater.h"
 #include "EffectRenderDepth.h"
+#include "EffectsPostProcess.h"
 
 namespace graphics
 {
@@ -25,6 +26,10 @@ namespace graphics
 		static EffectTextureLightMapColor * textureLightmapColor();
 		//static EffectWater * water();
 		static EffectRenderDepth * renderDepth();
+		static EffectPostProcessBloomFilter * postProcessBloomFilter();
+		static EffectPostProcessVBlurFilter * postProcessVBlurFilter();
+		static EffectPostProcessHBlurFilter * postProcessHBlurFilter();
+		static EffectPostProcessBloomAddFilter * postProcessBloomAddFilter();
 	protected:
 	private:
 		static EffectSolid _solid;
@@ -33,7 +38,10 @@ namespace graphics
 		static EffectTextureLightMapColor _textureLightmapColor;
 		//static EffectWater _water;
 		static EffectRenderDepth _renderDepth;
-
+		static EffectPostProcessBloomFilter _postProcessBloomFilter;
+		static EffectPostProcessVBlurFilter _postProcessVBlurFilter;
+		static EffectPostProcessHBlurFilter _postProcessHBlurFilter;
+		static EffectPostProcessBloomAddFilter _postProcessBloomAddFilter;
 	};
 }
 

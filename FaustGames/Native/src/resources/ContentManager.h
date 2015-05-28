@@ -5,6 +5,12 @@
 
 namespace resources
 {
+	struct LoadImageEntry
+	{
+		std::string fileName;
+		graphics::TextureImage2d *textureImage;
+	};
+
 	class ContentManager : public llge::IContentManager, public llge::ITextureBuffer2d
 	{
 	public:
@@ -12,6 +18,8 @@ namespace resources
 		void cleanup();
 		unsigned int registerTexture(const char *name);
 		graphics::Image2dData * loadUnregisteredTexture(const char *name);
+		graphics::TextureImage2d * addLoadTexture(const char *name);
+		void addDisposeTexture(graphics::TextureImage2d *image);
 		graphics::Image2dData * loadTexture(int id);
 		void open();
 		void close();
@@ -19,6 +27,7 @@ namespace resources
 		virtual void API_CALL setObbFile(char * obbFile);
 		virtual int API_CALL registerImage(char * name);
 		virtual void API_CALL startLoad();
+		virtual bool API_CALL update();
 		virtual void API_CALL loadImage(int id, llge::ITextureImage2d *textureImage);
 		virtual llge::ITextureBuffer2d *API_CALL loadBuffer(int id);
 		virtual void API_CALL finishLoad();
@@ -28,9 +37,11 @@ namespace resources
 		virtual int API_CALL getWidth();
 		virtual int API_CALL getHeight();
 		virtual IntPtr API_CALL getPixels();
-		static ContentManager * Default;
+		static ContentManager Default;
 	private:
 		std::vector<std::string> _files;
+		std::vector<LoadImageEntry> _loadEntries;
+		std::vector<graphics::TextureImage2d *> _disposeEntries;
 		graphics::Image2dData *_image;
 		bool _isOpened;
 #ifdef __ANDROID__

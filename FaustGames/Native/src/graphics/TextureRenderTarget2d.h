@@ -14,7 +14,7 @@ namespace graphics
 		virtual int getHeight() = 0;
 	};
 
-	class TextureRenderTarget2d : public Texture, public llge::IRenderTarget2d, IRenderTarget
+	class TextureRenderTarget2d : public Texture, public llge::IRenderTarget2d, public IRenderTarget
 	{
 	public:
 		TextureRenderTarget2d();

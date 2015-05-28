@@ -52,14 +52,27 @@ namespace geometry
 				right.Max.setY(Max.getY());
 			}
 		}
-		
 
+
+		inline void expand(float scale)
+		{
+			core::Vector2 size = core::Vector2((Max.getX() - Min.getX()) * (scale - 1.0f), (Max.getY() - Min.getY()) * (scale - 1.0f));
+			Min.setX(Min.getX() - size.getX());
+			Min.setY(Min.getY() - size.getY());
+			Max.setX(Min.getX() + size.getX());
+			Max.setY(Min.getY() + size.getY());
+		}
+		
 		inline void expand(float x, float y)
 		{
-			if (Min.getX() < x)
+			if (Min.getX() > x)
 				Min.setX(x);
-			if (Min.getY() < y)
+			if (Min.getY() > y)
 				Min.setY(y);
+			if (Max.getX() < x)
+				Max.setX(x);
+			if (Max.getY() < y)
+				Max.setY(y);
 		}
 
 		inline bool contains(const Aabb2d &aabb) const

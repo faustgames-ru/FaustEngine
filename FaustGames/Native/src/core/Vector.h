@@ -22,6 +22,12 @@ namespace core
 		inline const float getY() const { return _values[1]; }
 		inline void setX(float value){ _values[0] = value; }
 		inline void setY(float value){ _values[1] = value; }
+		static inline bool equals(const Vector2 &a, const Vector2 &b)
+		{
+			return
+				core::Math::equals(a.getX(), b.getX()) &&
+				core::Math::equals(a.getY(), b.getY());
+		}
 	};
 
 	class Vector3

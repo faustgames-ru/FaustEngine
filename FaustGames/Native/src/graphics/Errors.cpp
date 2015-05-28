@@ -31,10 +31,10 @@ namespace graphics
 	
 	void Errors::check(Errors::e actionType)
 	{
-		/*
+		
 //#ifdef _DEBUG
 		GLenum error(GL_NO_ERROR);
-		while ((error = glGetError()) != GL_NO_ERROR) 
+		if ((error = glGetError()) != GL_NO_ERROR) 
 		{
 #ifdef __ANDROID__
 			__android_log_print(ANDROID_LOG_ERROR, "TRACKERS", "%s", getActionName(actionType));
@@ -45,7 +45,7 @@ namespace graphics
 			//throw std::exception();
 		}
 //#endif
-		*/
+		
 	}
 
 	void Errors::rise(Errors::e actionType)
@@ -107,5 +107,6 @@ namespace graphics
 		"BindBuffer",
 		"BufferData",
 		"Uniform3f",
+		"Uniform2f",
 	};
 }

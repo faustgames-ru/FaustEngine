@@ -279,7 +279,7 @@ namespace llge
 		virtual void API_CALL startBatch() = 0;
 		virtual void API_CALL finishBatch() = 0;
 		virtual void API_CALL draw(GraphicsEffects effect, BlendMode blendMode, uint textureId, uint lightmapId, void *vertices, int verticesCount, void *indices, int indicesCount) = 0;
-		virtual void API_CALL execute() = 0;
+		virtual void API_CALL execute(bool usePostProcess) = 0;
 	};
 
 	/// spine
@@ -287,9 +287,19 @@ namespace llge
 	class ISpineSkeleton
 	{
 	public:
-		virtual void API_CALL render(IBatch2d * batch) = 0;
+		virtual void API_CALL setTransform(void *floatMatrix) = 0;
+		virtual float API_CALL getMinX() = 0;
+		virtual float API_CALL getMinY() = 0;
+		virtual float API_CALL getMaxX() = 0;
+		virtual float API_CALL getMaxY() = 0;
+		virtual float API_CALL getZ() = 0;
+
+		virtual void API_CALL render(IBatch2d * batch, int lightmapId) = 0;
+		virtual int API_CALL getGeometry(void *vertices, int verticeLimit, void *indices, int indicesLimit) = 0;
 		virtual IntPtr API_CALL getNativeInstance() = 0;
 		virtual void API_CALL updateWorldTransform() = 0;
+		virtual void API_CALL setBonesToSetupPose() = 0;
+		virtual void API_CALL setSlotsToSetupPose() = 0;
 		virtual void API_CALL dispose() = 0;
 	};
 
@@ -299,6 +309,7 @@ namespace llge
 	public:
 		virtual IntPtr API_CALL getNativeInstance() = 0;
 		virtual IntPtr API_CALL getName() = 0;
+		virtual float API_CALL getDuration() = 0;
 	};
 
 	class ISpineAnimationState
@@ -308,7 +319,7 @@ namespace llge
 		virtual void API_CALL apply(ISpineSkeleton *skeleton) = 0;
 		virtual void API_CALL setAnimation(ISpineAnimation* animation, bool loop, bool normalize) = 0;
 		virtual void API_CALL addAnimation(ISpineAnimation* animation, bool loop, float delay) = 0;
-
+		virtual int API_CALL getSpineEventIndices(IntPtr indices, int limit) = 0;
 		virtual void API_CALL dispose() = 0;
 	};
 
@@ -320,14 +331,22 @@ namespace llge
 		virtual void API_CALL dispose() = 0;
 	};
 
+	class ISpineEvent
+	{
+	public:
+		virtual IntPtr API_CALL getName() = 0;
+	};
+
 	class ISpineResource
 	{
 	public:
-		virtual void API_CALL load(String atlasText, String jsonText) = 0;
+		virtual void API_CALL load(String atlasText, String jsonText, String dir) = 0;
 		virtual void API_CALL unLoad() = 0;
 		virtual ISpineAnimation* API_CALL getSpineAnimation(int i) = 0;
 		virtual int API_CALL getSpineAnimationsCount() = 0;
-		virtual ISpineSkeleton* API_CALL createSkeleton() = 0;
+		virtual ISpineEvent* API_CALL getSpineEvent(int i) = 0;
+		virtual int API_CALL getSpineEventsCount() = 0;
+		virtual ISpineSkeleton* API_CALL createSkeleton(void *floatMatrix) = 0;
 		virtual ISpineAnimationStateData* API_CALL createStateData() = 0;
 		virtual void API_CALL dispose() = 0;
 	};
@@ -361,6 +380,7 @@ namespace llge
 		virtual void API_CALL loadImage(int id, ITextureImage2d *textureImage) = 0;
 		virtual ITextureBuffer2d * API_CALL loadBuffer(int id) = 0;
 		virtual void API_CALL finishLoad() = 0;
+		virtual bool API_CALL update() = 0;
 		virtual void API_CALL dispose() = 0;
 	};
 		

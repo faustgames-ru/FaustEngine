@@ -3,6 +3,7 @@
 
 #include "drawing_classes.h"
 #include "Camera.h"
+#include "PostProcess.h"
 
 namespace drawing
 {
@@ -83,6 +84,7 @@ namespace drawing
 			for (int i = 0; i < verticesCount; i++, target++, source++)
 			{
 				*target = *source;
+				target->color = graphics::Color::premul(source->color, additive);
 			}
 
 			_verticesCount += verticesCount;
@@ -180,7 +182,7 @@ namespace drawing
 				mesh.Indices,
 				mesh.IndicesCount);
 		}
-		void executeRenderCommands();
+		void executeRenderCommands(bool usePostProcess);
 
 		virtual IntPtr API_CALL getNativeInstance()
 		{
@@ -215,9 +217,9 @@ namespace drawing
 			drawMesh(_converter.getEffect(effect), _converter.getBlend(blendMode), textureId, lightmapId, (TVertex *)vertices, verticesCount, (ushort *)indices, indicesCount);
 		}
 
-		virtual void API_CALL execute()
+		virtual void API_CALL execute(bool usePostProcess)
 		{
-			executeRenderCommands();
+			executeRenderCommands(usePostProcess);
 		}
 	private:
 		/*
@@ -239,6 +241,7 @@ namespace drawing
 		graphics::GraphicsDevice * _graphicsDevice;
 		graphics::VertexFormat * _format;
 		graphics::RenderConverter _converter;
+		PostProcessBloom _bloom;
 	};	
 }
 

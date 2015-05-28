@@ -12,7 +12,10 @@ namespace graphics
 	EffectTextureLightMapColor Effects::_textureLightmapColor;
 	//EffectWater Effects::_water;
 	EffectRenderDepth Effects::_renderDepth;
-
+	EffectPostProcessBloomFilter Effects::_postProcessBloomFilter;
+	EffectPostProcessVBlurFilter Effects::_postProcessVBlurFilter;
+	EffectPostProcessHBlurFilter Effects::_postProcessHBlurFilter;
+	EffectPostProcessBloomAddFilter Effects::_postProcessBloomAddFilter;
 
 	void Effects::create()
 	{
@@ -22,6 +25,11 @@ namespace graphics
 		_textureLightmapColor.create();
 		//_water.create();
 		_renderDepth.create();
+		_postProcessBloomFilter.create();
+		_postProcessVBlurFilter.create();
+		_postProcessHBlurFilter.create();
+		_postProcessBloomAddFilter.create();
+		UniformValues::initSamplers();
 	}
 
 	void Effects::cleanup()
@@ -32,6 +40,10 @@ namespace graphics
 		_textureLightmapColor.getEffect()->cleanup();
 		//_water.getEffect()->cleanup();
 		_renderDepth.getEffect()->cleanup();
+		_postProcessBloomFilter.getEffect()->cleanup();
+		_postProcessVBlurFilter.getEffect()->cleanup();
+		_postProcessHBlurFilter.getEffect()->cleanup();
+		_postProcessBloomAddFilter.getEffect()->cleanup();
 	}
 
 	EffectSolid * Effects::solid()
@@ -62,5 +74,25 @@ namespace graphics
 	EffectRenderDepth * Effects::renderDepth()
 	{
 		return &_renderDepth;
+	}
+
+	EffectPostProcessBloomFilter * Effects::postProcessBloomFilter()
+	{
+		return &_postProcessBloomFilter;
+	}
+
+	EffectPostProcessVBlurFilter * Effects::postProcessVBlurFilter()
+	{
+		return &_postProcessVBlurFilter;
+	}
+
+	EffectPostProcessHBlurFilter * Effects::postProcessHBlurFilter()
+	{
+		return &_postProcessHBlurFilter;
+	}
+
+	EffectPostProcessBloomAddFilter * Effects::postProcessBloomAddFilter()
+	{
+		return &_postProcessBloomAddFilter;
 	}
 }

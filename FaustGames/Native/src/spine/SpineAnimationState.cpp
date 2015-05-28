@@ -15,20 +15,25 @@
 
 namespace spine
 {
-	void animationStateListener(spAnimationState* state, int trackIndex, spEventType type, spEvent* event, int loopCount)
+	void animationStateListener(spAnimationState* state, int trackIndex, spEventType type, spEvent* e, int loopCount)
 	{
 		SpineAnimationState* animationState = (SpineAnimationState *)state->rendererObject;
 		if (animationState)
 		{
-			//animationState->listenAnimationEvent(trackIndex, type, event, loopCount);
+			if (type == SP_ANIMATION_EVENT)
+			{
+				animationState->listenAnimationEvent(e->data->intValue);
+			}
 		}
 	}
 	
 	SpineAnimationState::SpineAnimationState(SpineAnimationStateData *data) : _animation(0)
 	{
-		_spAnimationState = spAnimationState_create((spAnimationStateData*)data->getStateData());
+		spAnimationStateData *spData = (spAnimationStateData*)data->getStateData();
+		_spAnimationState = spAnimationState_create(spData);
 		((spAnimationState*)_spAnimationState)->listener = animationStateListener;
 		((spAnimationState*)_spAnimationState)->rendererObject = this;
+		_eventsBuffer = new SpineEventsBuffer(spData->skeletonData->eventsCount);
 	}
 	
 	SpineAnimationState::~SpineAnimationState()
@@ -68,10 +73,13 @@ namespace spine
 	void API_CALL SpineAnimationState::update(float delta)
 	{
 		spAnimationState* state = (spAnimationState*)_spAnimationState;		
-		if ((_animation)&&(state->tracksCount > 0))
+		if ((_animation) && (state->tracksCount > 0) && state->tracks)
 		{
-			_prevTime = state->tracks[0]->lastTime;
-			_time = state->tracks[0]->time;
+			if (state->tracks[0])
+			{
+				_prevTime = state->tracks[0]->lastTime;
+				_time = state->tracks[0]->time;
+			}
 		}
 		spAnimationState_update((spAnimationState*)_spAnimationState, delta);
 	}
@@ -79,6 +87,7 @@ namespace spine
 
 	void API_CALL SpineAnimationState::apply(llge::ISpineSkeleton *skeleton)
 	{
+		_eventsBuffer->EventsIndicesCount = 0;
 		apply((SpineSkeleton *)skeleton->getNativeInstance());
 	}
 
@@ -97,6 +106,23 @@ namespace spine
 		delete this;
 	}
 
+	int API_CALL SpineAnimationState::getSpineEventIndices(IntPtr indices, int limit)
+	{
+		int *inds = (int *)indices;
+		for (int i = 0; i < _eventsBuffer->EventsIndicesCount; i++)
+		{
+			if (i >= limit) return limit;
+			inds[i] = _eventsBuffer->EventsIndices[i];
+		}
+		return _eventsBuffer->EventsIndicesCount;
+	}
+	
+	void SpineAnimationState::listenAnimationEvent(int eventIndex)
+	{
+		_eventsBuffer->EventsIndices[_eventsBuffer->EventsIndicesCount++] = eventIndex;
+	}
+
+
 	void SpineAnimationState::apply(SpineSkeleton* skeleton)
 	{
 		spAnimationState_apply((spAnimationState*)_spAnimationState, (spSkeleton*)skeleton->getSkeleton());
@@ -109,12 +135,7 @@ namespace spine
 		{
 			spAnimationState_dispose((spAnimationState*)_spAnimationState);
 			_spAnimationState = 0;
+			delete _eventsBuffer;
 		}
 	}
-
-	//void AnimationState::listenAnimationEvent(int trackIndex, spEventType type, spEvent* event, int loopCount)
-	//{
-	//}
-
-
 }

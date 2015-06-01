@@ -9,7 +9,7 @@ namespace llge
 {
 	public class Version
 	{
-#if IOS
+#if __IOS__
 		public const string Dll = "__Internal";
 #else
 		public const string Dll = "llge";

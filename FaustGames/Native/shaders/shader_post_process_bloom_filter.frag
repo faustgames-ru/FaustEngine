@@ -4,15 +4,14 @@ precision mediump int;
 #endif
 
 uniform sampler2D texture;
-varying vec2 _textureCoords;
+uniform float threshold;
+uniform float alpha;
 
-const float from = 0.8;
-const float to = 1.0;
-const float size = to - from;
+varying vec2 _textureCoords;
 
 void main()
 {
 	vec4 color = texture2D(texture, _textureCoords);
-	//color.rgb = (color.rgb - from) / size;
+	color.rgb = (color.rgb - threshold) * alpha / (1.0-threshold);
 	gl_FragColor = color;
 }

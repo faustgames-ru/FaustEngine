@@ -42,10 +42,10 @@ namespace drawing
 		virtual void execute(graphics::TextureRenderTarget2d *source, graphics::TextureRenderTarget2d *target) = 0;
 	};
 
-	class BloomFilter : public PostProcessExecutor
+	class BloomFilter
 	{
 	public:
-		virtual void execute(graphics::TextureRenderTarget2d *source, graphics::TextureRenderTarget2d *target);
+		virtual void execute(graphics::TextureRenderTarget2d *source, graphics::TextureRenderTarget2d *target, uint tonemapId);
 	};
 
 	class FilterVBlur : public PostProcessExecutor
@@ -68,10 +68,10 @@ namespace drawing
 		virtual void execute(graphics::TextureRenderTarget2d *value0, graphics::TextureRenderTarget2d *value1, graphics::TextureRenderTarget2d *target);
 	};
 	
-	class PostProcessBloom : public PostProcess
+	class PostProcessBloom
 	{
 	public:
-		virtual void execute(graphics::TextureRenderTarget2d *source);
+		virtual void execute(graphics::TextureRenderTarget2d *source, uint tonemapId);
 	private:
 		BloomFilter _filter;		
 		FilterVBlur _vBlur;		

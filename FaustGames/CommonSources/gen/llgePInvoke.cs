@@ -9,7 +9,11 @@ namespace llge
 {
 	public class Version
 	{
+#if IOS
+		public const string Dll = "__Internal";
+#else
 		public const string Dll = "llge";
+#endif
 	}
 	
 	public enum BlendMode
@@ -27,6 +31,7 @@ namespace llge
 		EffectSolid = 0x3,
 		EffectRenderDepth = 0x4,
 		EffectSolidColor = 0x5,
+		EffectBloomFilter = 0x6,
 	}
 	
 	public enum GraphicsVertexFormats
@@ -854,6 +859,13 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private void llge_Batch2d_finishBatch (IntPtr classInstance);
+		public void SetToneMap (uint tonemapId)
+		{
+			llge_Batch2d_setToneMap(ClassInstance, tonemapId);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_Batch2d_setToneMap (IntPtr classInstance, uint tonemapId);
 		public void Draw (GraphicsEffects effect, BlendMode blendMode, uint textureId, uint lightmapId, IntPtr vertices, int verticesCount, IntPtr indices, int indicesCount)
 		{
 			llge_Batch2d_draw(ClassInstance, effect, blendMode, textureId, lightmapId, vertices, verticesCount, indices, indicesCount);

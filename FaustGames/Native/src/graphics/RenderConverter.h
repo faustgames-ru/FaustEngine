@@ -18,6 +18,8 @@ namespace graphics
 			_effects[llge::EffectSolid] = Effects::solid();
 			_effects[llge::EffectRenderDepth] = Effects::renderDepth();
 			_effects[llge::EffectSolidColor] = Effects::solidColor();
+			_effects[llge::EffectBloomFilter] = Effects::postProcessBloomFilter();
+			
 
 			_formats[llge::FormatPositionTextureColor] = VertexFormats::positionTextureColor();
 			_formats[llge::FormatPositionNormal] = VertexFormats::positionNormal();

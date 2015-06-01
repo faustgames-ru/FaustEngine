@@ -171,7 +171,7 @@ namespace graphics
 
 	void Effect::applyUniforms()
 	{
-		if (_constantsChanged)
+		//if (_constantsChanged)
 		{
 			for (int i = 0; i < _constants.count; i++)
 			{

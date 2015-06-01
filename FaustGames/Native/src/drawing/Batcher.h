@@ -221,6 +221,12 @@ namespace drawing
 		{
 			executeRenderCommands(usePostProcess);
 		}
+
+		virtual void API_CALL setToneMap(uint tonemapId)
+		{
+			_tonemapId = tonemapId;
+		}
+
 	private:
 		/*
 		TBatchBuffers _buffers;
@@ -228,7 +234,7 @@ namespace drawing
 		*/
 		RenderBuffer *_buffer;
 		//RenderBuffer *_backBuffer;
-
+		uint _tonemapId;
 		BatchEntry _currentEntry;
 		int _batchBufferIndex;
 		

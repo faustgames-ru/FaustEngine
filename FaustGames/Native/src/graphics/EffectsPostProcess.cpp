@@ -14,8 +14,11 @@ namespace graphics
 	EffectPostProcessBloomFilter::EffectPostProcessBloomFilter()
 	{
 		_effect.addUniform(Uniforms::texture(), UniformValues::texture());
+		_effect.addUniform(Uniforms::lightmap(), UniformValues::lightmap());
 		_effect.addAttribute(Attributes::position());
 		_effect.addAttribute(Attributes::textureCoords());
+		_effect.addConstant("threshold", graphics::UniformType::Float);
+		_effect.addConstant("alpha", graphics::UniformType::Float);
 	}
 
 	EffectPostProcessBloomFilter::~EffectPostProcessBloomFilter()

@@ -16,7 +16,7 @@ namespace drawing
 		0, 2, 3
 	};
 
-	void BloomFilter::execute(graphics::TextureRenderTarget2d *source, graphics::TextureRenderTarget2d *target)
+	void BloomFilter::execute(graphics::TextureRenderTarget2d *source, graphics::TextureRenderTarget2d *target, uint tonemapId)
 	{
 		graphics::GraphicsDevice::Default.setRenderTarget(target);
 		graphics::UniformValues::texture()->setValue(source->getHandle());
@@ -48,6 +48,7 @@ namespace drawing
 	{
 		graphics::GraphicsDevice::Default.setRenderTarget(target);
 		graphics::UniformValues::texture()->setValue(value0->getHandle());
+		graphics::UniformValues::lightmap()->setValue(0);
 		graphics::UniformValues::lightmap()->setValue(value1->getHandle());
 		graphics::GraphicsDevice::Default.renderState.setBlend(graphics::BlendState::Alpha);
 		graphics::GraphicsDevice::Default.renderState.setEffect(graphics::Effects::postProcessBloomAddFilter());
@@ -55,9 +56,9 @@ namespace drawing
 	}
 
 
-	void PostProcessBloom::execute(graphics::TextureRenderTarget2d *source)
+	void PostProcessBloom::execute(graphics::TextureRenderTarget2d *source, uint tonemapId)
 	{
-		_filter.execute(source, graphics::GraphicsDevice::Default.PostProcessRenderTargets[1]);
+		_filter.execute(source, graphics::GraphicsDevice::Default.PostProcessRenderTargets[1], tonemapId);
 		graphics::UniformValues::pixelSize()->setValue(core::Vector2(
 			1.0f / (float)graphics::GraphicsDevice::Default.PostProcessRenderTargets[1]->getWidth(),
 			1.0f / (float)graphics::GraphicsDevice::Default.PostProcessRenderTargets[1]->getHeight()));

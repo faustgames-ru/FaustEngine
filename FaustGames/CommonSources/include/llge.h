@@ -34,6 +34,7 @@ namespace llge
 		EffectSolid = 0x3,
 		EffectRenderDepth = 0x4,
 		EffectSolidColor = 0x5,
+		EffectBloomFilter = 0x6,
 	};
 
 	enum GraphicsVertexFormats
@@ -278,6 +279,7 @@ namespace llge
 		virtual void API_CALL addProjection(void *floatMatrix) = 0;
 		virtual void API_CALL startBatch() = 0;
 		virtual void API_CALL finishBatch() = 0;
+		virtual void API_CALL setToneMap(uint tonemapId) = 0;
 		virtual void API_CALL draw(GraphicsEffects effect, BlendMode blendMode, uint textureId, uint lightmapId, void *vertices, int verticesCount, void *indices, int indicesCount) = 0;
 		virtual void API_CALL execute(bool usePostProcess) = 0;
 	};

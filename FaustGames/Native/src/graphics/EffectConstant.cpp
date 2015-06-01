@@ -54,7 +54,7 @@ namespace graphics
 
 	void EffectConstant::apply()
 	{
-		if (!_valueChanged) return;
+		//if (!_valueChanged) return;
 		switch (_type)
 		{
 		case UniformType::Float:

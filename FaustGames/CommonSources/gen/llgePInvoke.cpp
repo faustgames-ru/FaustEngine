@@ -506,6 +506,11 @@ namespace llge
 		classInstance->finishBatch();
 	}
 	
+	extern "C" DLLEXPORT void API_CALL llge_Batch2d_setToneMap (IBatch2d * classInstance, uint tonemapId)
+	{
+		classInstance->setToneMap(tonemapId);
+	}
+	
 	extern "C" DLLEXPORT void API_CALL llge_Batch2d_draw (IBatch2d * classInstance, GraphicsEffects effect, BlendMode blendMode, uint textureId, uint lightmapId, void * vertices, int verticesCount, void * indices, int indicesCount)
 	{
 		classInstance->draw(effect, blendMode, textureId, lightmapId, vertices, verticesCount, indices, indicesCount);

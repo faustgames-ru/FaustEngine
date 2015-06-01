@@ -135,7 +135,7 @@ namespace drawing
 		}
 		if (usePostProcess)
 		{
-			_bloom.execute(_graphicsDevice->PostProcessRenderTargets[0]);
+			_bloom.execute(_graphicsDevice->PostProcessRenderTargets[0], _tonemapId);
 		}
 	}
 

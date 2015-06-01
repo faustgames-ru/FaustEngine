@@ -1,8 +1,8 @@
 #include "EffectSolid.h"
 #include "Uniforms.h"
 #include "Attributes.h"
-#include "..\..\shaders\solid_frag.h"
-#include "..\..\shaders\solid_vert.h"
+#include "../../shaders/solid_frag.h"
+#include "../../shaders/solid_vert.h"
 
 
 namespace graphics

@@ -5,9 +5,14 @@
 #include <jni.h>
 #define API_CALL JNICALL
 #define DLLEXPORT JNIEXPORT
+#else 
+#ifdef __APPLE__
+#define API_CALL
+#define DLLEXPORT
 #else
 #define API_CALL __stdcall
 #define DLLEXPORT __declspec( dllexport )
+#endif
 #endif
 
 typedef unsigned short ushort;
@@ -399,6 +404,7 @@ namespace llge
 	};
 	
 	extern "C" DLLEXPORT IBatch2d * API_CALL createBatch2d();
+    
 	extern "C" DLLEXPORT ITexture * API_CALL createTextureByID(uint id);
 	extern "C" DLLEXPORT IContentManager * API_CALL createContentManager();
 	extern "C" DLLEXPORT IObbContentProvider * API_CALL createContentProvider();
@@ -409,6 +415,7 @@ namespace llge
 	extern "C" DLLEXPORT void API_CALL initRenderContext();
 	extern "C" DLLEXPORT INativeMemoryProfiler * API_CALL createNativeMemoryProfiler();
 	extern "C" DLLEXPORT ISpineResource * API_CALL createSpineResource();
+    
 }
 
 #endif /*LLGE_H*/

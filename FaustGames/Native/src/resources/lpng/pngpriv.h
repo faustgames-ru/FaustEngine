@@ -106,25 +106,8 @@
  * this in $(CC), e.g. "CC=gcc -mfpu=neon", but people who build libpng rarely
  * do this.
  */
-#ifndef PNG_ARM_NEON_OPT
-   /* ARM NEON optimizations are being controlled by the compiler settings,
-    * typically the target FPU.  If the FPU has been set to NEON (-mfpu=neon
-    * with GCC) then the compiler will define __ARM_NEON__ and we can rely
-    * unconditionally on NEON instructions not crashing, otherwise we must
-    * disable use of NEON instructions.
-    *
-    * NOTE: at present these optimizations depend on 'ALIGNED_MEMORY', so they
-    * can only be turned on automatically if that is supported too.  If
-    * PNG_ARM_NEON_OPT is set in CPPFLAGS (to >0) then arm/arm_init.c will fail
-    * to compile with an appropriate #error if ALIGNED_MEMORY has been turned
-    * off.
-    */
-#  if defined(__ARM_NEON__) && defined(PNG_ALIGNED_MEMORY_SUPPORTED)
-#     define PNG_ARM_NEON_OPT 2
-#  else
-#     define PNG_ARM_NEON_OPT 0
-#  endif
-#endif
+
+#define PNG_ARM_NEON_OPT 0
 
 #if PNG_ARM_NEON_OPT > 0
    /* NEON optimizations are to be at least considered by libpng, so enable the

@@ -80,7 +80,7 @@ namespace entities
 	class Transform2dComponent : public Component, public llge::ITransform2d
 	{
 	public:
-		typedef std::list<Transform2dComponent *, core::DAlloc> ChildsList;
+		typedef std::list<Transform2dComponent *, core::DAlloc<Transform2dComponent *> > ChildsList;
 
 		LocalTransform2d LocalTransform;
 		WorldTransform2d WorldTransform;

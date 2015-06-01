@@ -1,5 +1,5 @@
 #include "Image2dData.h"
-#include "..\core\HollowsAllocationPolicy.h"
+#include "../core/HollowsAllocationPolicy.h"
 
 namespace graphics
 {

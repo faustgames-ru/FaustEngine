@@ -1,13 +1,13 @@
 #include "llge.h"
-#include "..\drawing\Renderer2d.h"
-#include "..\drawing\Batcher.h"
-#include "..\graphics\Texture.h"
+#include "../drawing/Renderer2d.h"
+#include "../drawing/Batcher.h"
+#include "../graphics/Texture.h"
 
 #include <limits>
 
 namespace llge
 {
-	extern "C" DLLEXPORT  IBatch2d * API_CALL createBatch2d()
+	extern "C" DLLEXPORT IBatch2d * API_CALL createBatch2d()
 	{
 		return new drawing::Batcher();
 	}

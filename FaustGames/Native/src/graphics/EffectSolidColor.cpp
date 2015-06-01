@@ -1,8 +1,8 @@
 #include "EffectSolidColor.h"
 #include "Uniforms.h"
 #include "Attributes.h"
-#include "..\..\shaders\solid_color_frag.h"
-#include "..\..\shaders\solid_color_vert.h"
+#include "../../shaders/solid_color_frag.h"
+#include "../../shaders/solid_color_vert.h"
 
 namespace graphics
 {

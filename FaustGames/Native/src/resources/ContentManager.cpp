@@ -1,10 +1,10 @@
 #include "ContentManager.h"
 #include "ContentProvider.h"
-#include "lpng\png.h"
-#include "..\core\HollowsAllocationPolicy.h"
+//#include "lpng/png.h"
+#include "../core/HollowsAllocationPolicy.h"
 
 namespace resources
-{
+{/*
 	void readData(png_structp pngPtr, png_bytep data, png_size_t length)
 	{
 		ContentProvider::read(data, length);
@@ -20,7 +20,7 @@ namespace resources
 	{
 		core::Mem::deallocate(mem);
 	}
-
+*/
 	ContentManager::ContentManager() : _image(0), _isOpened(false)
 	{
 		
@@ -57,9 +57,9 @@ namespace resources
 
 
 #define PNGSIGSIZE 8
-
+/*
 	png_bytep * m_RowPtrs = 0;
-	
+*/	
 	graphics::Image2dData * ContentManager::loadTexture(int id)
 	{
 		const char *name = _files[id].c_str();
@@ -72,7 +72,7 @@ namespace resources
 
 	graphics::Image2dData * ContentManager::loadUnregisteredTexture(const char *name)
 	{
-
+/*
 
 		//todo: load data from content provider
 		ContentProvider::openContent(name);
@@ -174,27 +174,27 @@ namespace resources
 					}
 				}
 			}
-		}
+		}*/
 		return _image;
 	}
 
 	void ContentManager::open()
-	{
+	{/*
 		if (_isOpened) 
 			return;
 		m_RowPtrs = (png_bytep *)core::Mem::allocate(ImageMaxHeight * sizeof(png_bytep));
 		_image = new graphics::Image2dData(ImageBufferSize);
-		_isOpened = true;
+		_isOpened = true;*/
 	}
 	void ContentManager::close()
-	{
+	{/*
 		if (!_isOpened)
 			return;
 		core::Mem::deallocate(m_RowPtrs);
 		delete _image;
 		m_RowPtrs = 0;
 		_image = 0;
-		_isOpened = false;
+		_isOpened = false;*/
 	}
 
 	void API_CALL ContentManager::setObbFile(char * obbFile)

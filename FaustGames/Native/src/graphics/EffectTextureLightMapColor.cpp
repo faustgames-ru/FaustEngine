@@ -1,8 +1,8 @@
 #include "EffectTextureLightMapColor.h"
 #include "Uniforms.h"
 #include "Attributes.h"
-#include "..\..\shaders\texture_lightmap_color_frag.h"
-#include "..\..\shaders\texture_lightmap_color_vert.h"
+#include "../../shaders/texture_lightmap_color_frag.h"
+#include "../../shaders/texture_lightmap_color_vert.h"
 
 namespace graphics
 {

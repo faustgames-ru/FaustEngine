@@ -60,7 +60,11 @@ namespace core
 	};    //    end of class Allocator 
 
 	//typedef Allocator<void *, HollowsAllocationPolicy> DAlloc;
-	typedef Allocator<void *, StandartAllocationPolicy> DAlloc;
+	//typedef Allocator<void *, StandartAllocationPolicy> DAlloc;
+    template<typename T>
+    class DAlloc : public Allocator<T, StandartAllocationPolicy>
+    {
+    };
 }
 
 #endif /*ALLOCATOR_H*/

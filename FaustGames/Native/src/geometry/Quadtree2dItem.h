@@ -6,7 +6,7 @@
 
 namespace geometry
 {
-	typedef std::list<Quadtree2dItem *, core::DAlloc> Quadtree2dItems;
+	typedef std::list<Quadtree2dItem *, core::DAlloc<Quadtree2dItem *> > Quadtree2dItems;
 
 	struct Quadtree2dItem
 	{

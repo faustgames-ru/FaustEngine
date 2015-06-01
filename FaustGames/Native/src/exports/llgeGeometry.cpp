@@ -1,6 +1,6 @@
 #include "llge.h"
-#include "..\core\core.h"
-#include "..\geometry\geometry.h"
+#include "../core/core.h"
+#include "../geometry/geometry.h"
 
 #include <limits>
 

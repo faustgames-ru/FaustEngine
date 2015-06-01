@@ -2,14 +2,18 @@
 #include <jni.h>
 #include <stdlib.h>
 #include <android/log.h>
-#include <stdlib.h>
-#include <string>
 #include <sstream>
 #include <stdio.h>
 #include <cmath>
 #else
+#ifdef __APPLE__
+#include <cmath>
+#include <stdlib.h>
+#include <stdio.h>
+#include <sstream>
+#else
 #include "..\..\llge\stdafx.h"
-
+#endif
 #endif
 
 #include <new>

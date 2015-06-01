@@ -1,8 +1,8 @@
 #include "EffectTextureColor.h"
 #include "Uniforms.h"
 #include "Attributes.h"
-#include "..\..\shaders\texture_color_frag.h"
-#include "..\..\shaders\texture_color_vert.h"
+#include "../../shaders/texture_color_frag.h"
+#include "../../shaders/texture_color_vert.h"
 
 namespace graphics
 {

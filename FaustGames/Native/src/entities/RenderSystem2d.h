@@ -27,7 +27,7 @@ namespace entities
 			}
 		};
 
-		typedef std::multiset<Entity *, EntityZOrderCompare, core::DAlloc> DrawOrder;
+		typedef std::multiset<Entity *, EntityZOrderCompare, core::DAlloc<Entity *> > DrawOrder;
 		DrawOrder _drawOrder;
 		drawing::Renderer2d _renderer;
 		int _drawCalls;

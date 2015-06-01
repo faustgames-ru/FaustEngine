@@ -1,6 +1,6 @@
 #include "spine_classes.h"
-#include "spine\Atlas.h"
-#include "spine\extension.h"
+#include "spine/Atlas.h"
+#include "spine/extension.h"
 
 void _spAtlasPage_createTexture(spAtlasPage* self, const char* path)
 {

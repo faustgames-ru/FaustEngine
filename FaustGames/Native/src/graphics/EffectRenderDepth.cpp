@@ -1,8 +1,8 @@
 #include "EffectRenderDepth.h"
 #include "Uniforms.h"
 #include "Attributes.h"
-#include "..\..\shaders\shader_render_depth_frag.h"
-#include "..\..\shaders\shader_render_depth_vert.h"
+#include "../../shaders/shader_render_depth_frag.h"
+#include "../../shaders/shader_render_depth_vert.h"
 
 namespace graphics
 {

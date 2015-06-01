@@ -1,12 +1,12 @@
 #include "EffectsPostProcess.h"
 #include "Uniforms.h"
 #include "Attributes.h"
-#include "..\..\shaders\post_process_vert.h"
-#include "..\..\shaders\post_process_bloom_add_filter_frag.h"
-#include "..\..\shaders\post_process_bloom_filter_frag.h"
-#include "..\..\shaders\post_process_vblur_vert.h"
-#include "..\..\shaders\post_process_hblur_vert.h"
-#include "..\..\shaders\post_process_blur_frag.h"
+#include "../../shaders/post_process_vert.h"
+#include "../../shaders/post_process_bloom_add_filter_frag.h"
+#include "../../shaders/post_process_bloom_filter_frag.h"
+#include "../../shaders/post_process_vblur_vert.h"
+#include "../../shaders/post_process_hblur_vert.h"
+#include "../../shaders/post_process_blur_frag.h"
 
 
 namespace graphics

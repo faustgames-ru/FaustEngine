@@ -1,8 +1,8 @@
 #include "EffectWater.h"
 #include "Uniforms.h"
 #include "Attributes.h"
-#include "..\..\shaders\water_frag.h"
-#include "..\..\shaders\water_vert.h"
+#include "../../shaders/water_frag.h"
+#include "../../shaders/water_vert.h"
 
 namespace graphics
 {

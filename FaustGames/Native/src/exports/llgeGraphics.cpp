@@ -2,8 +2,8 @@
 //
 
 #include "llge.h"
-#include "..\core\core.h"
-#include "..\graphics\graphics.h"
+#include "../core/core.h"
+#include "../graphics/graphics.h"
 
 #include <limits>
 
@@ -265,6 +265,8 @@ namespace llge
 	{
 #ifdef __ANDROID__
 #else
+#ifdef __APPLE__
+#else
 		GLenum err = glewInit();
 		if (GLEW_OK != err)
 		{
@@ -281,6 +283,7 @@ namespace llge
 			}
 			//throw std::exception("fail to init glew");
 		}
+#endif
 #endif
 	}
 

@@ -119,7 +119,7 @@ namespace drawing
 		RenderBuffer * _backBuffer = _buffer;
 		if (usePostProcess)
 		{
-			//_graphicsDevice->setPostProcessRenderTargetIndex(0);
+			_graphicsDevice->setPostProcessRenderTargetIndex(0);
 		}
 		for (TBatchEntries::iterator i = _backBuffer->Entries.begin(); i != _backBuffer->Entries.end(); i++)
 		{
@@ -129,13 +129,13 @@ namespace drawing
 			graphics::UniformValues::projection()->setValue(_backBuffer->Transforms[i->TransformIndex]);
 			//_graphicsDevice->renderState.setBlend(i->Blend);
 			_graphicsDevice->renderState.setBlend(graphics::BlendState::Alpha);
-			//_graphicsDevice->renderState.setEffect(i->Effect);
-			_graphicsDevice->renderState.setEffect(graphics::Effects::textureColor());
+			_graphicsDevice->renderState.setEffect(i->Effect);
+			//_graphicsDevice->renderState.setEffect(graphics::Effects::textureColor());
 			_graphicsDevice->drawPrimitives(_format, currentBuffer->getVertices(), i->IndicesStart, i->IndicesCount / 3);
 		}
 		if (usePostProcess)
 		{
-			//_bloom.execute(_graphicsDevice->PostProcessRenderTargets[0], _tonemapId);
+			_bloom.execute(_graphicsDevice->PostProcessRenderTargets[0], _tonemapId);
 		}
 	}
 

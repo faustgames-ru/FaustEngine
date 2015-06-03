@@ -63,10 +63,6 @@ namespace resources
 	graphics::Image2dData * ContentManager::loadTexture(int id)
 	{
 		const char *name = _files[id].c_str();
-#ifdef __ANDROID__
-		__android_log_print(ANDROID_LOG_ERROR, "TRACKERS", "%s", name);
-#endif
-
 		return loadUnregisteredTexture(name);
 	}
 
@@ -88,8 +84,7 @@ namespace resources
 		int is_png = 0;
 
 		//Read the 8 bytes from the stream into the sig buffer.
-        fprintf(stderr, "ContentProvider::read(pngsig, PNGSIGSIZE) \n");
-		ContentProvider::read(pngsig, PNGSIGSIZE);
+        ContentProvider::read(pngsig, PNGSIGSIZE);
 
 		is_png = png_sig_cmp(pngsig, 0, PNGSIGSIZE);
 		if (is_png != 0)
@@ -155,18 +150,12 @@ namespace resources
 		{
 		case 3:
 			_image->Format = graphics::Image2dFormat::Rgb;
-            fprintf(stderr, "Rgb");
-            fprintf(stderr, "\n");
 			break;
 		case 4:
 			_image->Format = graphics::Image2dFormat::Rgba;
-                fprintf(stderr, "Rgba");
-                fprintf(stderr, "\n");
 			break;
 		default:
 			_image->Format = graphics::Image2dFormat::Rgba;
-                fprintf(stderr, "Unsupported");
-                fprintf(stderr, "\n");
 			break;
 		}
 
@@ -238,9 +227,6 @@ namespace resources
 		{
             fprintf(stderr, _loadEntries[i].fileName.c_str());
             fprintf(stderr, "\n");
-#ifdef __ANDROID__
-			__android_log_print(ANDROID_LOG_ERROR, "TRACKERS", "%s", _loadEntries[i].fileName.c_str());
-#endif
 			graphics::Image2dData * image = loadUnregisteredTexture(_loadEntries[i].fileName.c_str());
 			_loadEntries[i].textureImage->create();
             if (image)

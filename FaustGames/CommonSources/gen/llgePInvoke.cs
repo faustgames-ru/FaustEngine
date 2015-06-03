@@ -407,6 +407,13 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private void llge_GraphicsFacade_create (IntPtr classInstance);
+		public void GrabDefaultRenderTarget ()
+		{
+			llge_GraphicsFacade_grabDefaultRenderTarget(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_GraphicsFacade_grabDefaultRenderTarget (IntPtr classInstance);
 		public void Cleanup ()
 		{
 			llge_GraphicsFacade_cleanup(ClassInstance);

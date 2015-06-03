@@ -3,7 +3,6 @@
 /* ============================================================== */
 
 #include "llge.h"
-#include <stdio.h>
 
 namespace llge
 {
@@ -225,6 +224,11 @@ namespace llge
 	extern "C" DLLEXPORT void API_CALL llge_GraphicsFacade_create (IGraphicsFacade * classInstance)
 	{
 		classInstance->create();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_GraphicsFacade_grabDefaultRenderTarget (IGraphicsFacade * classInstance)
+	{
+		classInstance->grabDefaultRenderTarget();
 	}
 	
 	extern "C" DLLEXPORT void API_CALL llge_GraphicsFacade_cleanup (IGraphicsFacade * classInstance)
@@ -654,7 +658,6 @@ namespace llge
 	
 	extern "C" DLLEXPORT void API_CALL llge_SpineResource_load (ISpineResource * classInstance, String atlasText, String jsonText, String dir)
 	{
-        fprintf(stderr, "llge_SpineResource_load !!! \n");
 		classInstance->load(atlasText, jsonText, dir);
 	}
 	

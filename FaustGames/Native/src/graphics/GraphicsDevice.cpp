@@ -8,7 +8,7 @@
 namespace graphics
 {
 	GraphicsDevice GraphicsDevice::Default;
-
+    int GraphicsDevice::_primaryFbo(0);
 
 	GraphicsDevice::GraphicsDevice()
 	{
@@ -71,7 +71,7 @@ namespace graphics
 	{
 		if (!renderTarget)
 		{
-			glBindFramebuffer(GL_FRAMEBUFFER, 0);
+			glBindFramebuffer(GL_FRAMEBUFFER, _primaryFbo);
 			Errors::check(Errors::BindFramebuffer);
 			glViewport(_viewportX, _viewportY, _viewportWidth, _viewportHeight);
 			Errors::check(Errors::Viewport);
@@ -169,9 +169,14 @@ namespace graphics
 		renderState = RenderState();
 	}
 
+    void GraphicsDevice::grabDefaultRenderTarget()
+    {
+        glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_primaryFbo);
+    }
 
 	void GraphicsDevice::create()
 	{
+        
 		TextureImage2d::createStatic();
 		Default.addProcessRenderTargets();
 		Default.addProcessRenderTargets();

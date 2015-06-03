@@ -3,6 +3,9 @@
 #include <stdlib.h>
 #include <map>
 
+#ifdef __APPLE__
+#endif
+
 namespace resources
 {
 
@@ -19,13 +22,24 @@ namespace resources
 		}
 	};
 
+    
+    template <typename T>
+    std::string to_string(T value)
+    {
+        std::ostringstream os;
+        os << value;
+        return os.str();
+    }
+    
 	std::map<std::string, ObbEntry> _entries;
-
+    std::string _obbPath;
 	void ObbContentProvider::openObbFile(const char *obbFile)
 	{
+        _obbPath = obbFile;
 		_obbFile = fopen(obbFile, "rb");
 		int count;
-		fread(&count, 1, 4, _obbFile);
+        
+        fread(&count, 1, 4, _obbFile);
 		if (count > 0)
 		{
 			char *buffer = new char[count * 256];
@@ -38,18 +52,19 @@ namespace resources
 				char * name = (char *)(data);
 				data += 239;
 				long position = *(long *)data;
-				data += 8;
+                data += 8;
 				long size = *(long *)data;
 				data += 8;
 				_entries[name] = ObbEntry(position, size);
 			}
 			delete[] buffer;
 		}
+        fclose(_obbFile);
+        _obbFile = 0;
 	}
 
 	void ObbContentProvider::closeObbFile()
 	{
-		fclose(_obbFile);
 	}
 
 	ObbEntry _currentEntry;
@@ -72,6 +87,11 @@ namespace resources
 	
 	void ObbContentProvider::openContent(const char *name)
 	{
+        if (!existsContent(name))
+        {
+            return;
+        }
+        _obbFile = fopen(_obbPath.c_str(), "rb");
 		std::string replace = name;
 		//#ifdef __ANDROID__
 		for (int i = 0; i < replace.size(); i++)
@@ -82,14 +102,15 @@ namespace resources
 				replace[i] = '_';
 		}
 		//#endif
+
 		_currentEntry = _entries[replace.c_str()];
-		fsetpos(_obbFile, (fpos_t *)&_currentEntry.Position);
+        int status = fseek(_obbFile, _currentEntry.Position, SEEK_CUR);
 	}
 
 	int ObbContentProvider::read(void *buffer, int bytesLimit)
 	{
-		return fread(buffer, 1, bytesLimit, _obbFile);
-	}
+        return fread(buffer, 1, bytesLimit, _obbFile);
+    }
 
 	int ObbContentProvider::getContentSize()
 	{
@@ -98,6 +119,7 @@ namespace resources
 
 	void ObbContentProvider::closeContent()
 	{
+        fclose(_obbFile);
 	}
 
 
@@ -105,37 +127,37 @@ namespace resources
 	void ContentProvider::openContent(const char *name)
 	{
 		ObbContentProvider::openContent(name);
+
 	}
 
 	int ContentProvider::read(void *buffer, int bytesLimit)
 	{
 		ObbContentProvider::read(buffer, bytesLimit);
+        
 	}
 
 	void ContentProvider::closeContent()
 	{
 		ObbContentProvider::closeContent();
+        
 	}
 #endif /*__ANDROID__*/
     
 #ifdef __APPLE__
-    FILE * _file;
-    
     void ContentProvider::openContent(const char *name)
     {
-        _file = fopen(name, "rb");
+        ObbContentProvider::openContent(name);
     }
     
     int ContentProvider::read(void *buffer, int bytesLimit)
     {
-        return fread(buffer, 1, bytesLimit, _file);
+        return ObbContentProvider::read(buffer, bytesLimit);
     }
     
     void ContentProvider::closeContent()
     {
-        fclose(_file);
+        ObbContentProvider::closeContent();
     }
-    
 #endif
 
 }

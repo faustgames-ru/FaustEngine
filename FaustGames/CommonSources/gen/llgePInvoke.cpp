@@ -3,6 +3,7 @@
 /* ============================================================== */
 
 #include "llge.h"
+#include <stdio.h>
 
 namespace llge
 {
@@ -653,6 +654,7 @@ namespace llge
 	
 	extern "C" DLLEXPORT void API_CALL llge_SpineResource_load (ISpineResource * classInstance, String atlasText, String jsonText, String dir)
 	{
+        fprintf(stderr, "llge_SpineResource_load !!! \n");
 		classInstance->load(atlasText, jsonText, dir);
 	}
 	

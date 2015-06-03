@@ -14,6 +14,6 @@ namespace llge
 {	
 	extern "C" DLLEXPORT ISpineResource * API_CALL createSpineResource()
 	{
-        return 0;//new spine::SpineSkeletonResource();
+        return new spine::SpineSkeletonResource();
 	}
 }

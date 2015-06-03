@@ -182,6 +182,11 @@ namespace llge
 			graphicsDevice->drawVertexBuffer(_converter.getFormat(vertexFormat), vertexBuffer->getId(), (unsigned short *)indices, primitivesCount);
 		}
 
+        virtual void API_CALL grabDefaultRenderTarget()
+        {
+            graphicsDevice->grabDefaultRenderTarget();
+        }
+        
 		virtual void API_CALL create()
 		{
 			graphicsDevice->renderState = RenderState(); /// ???

@@ -157,7 +157,8 @@ namespace llge
 		virtual void API_CALL setEffectConstantFloat(GraphicsEffects effect, char *name, float value) = 0;
 		virtual void API_CALL setEffectConstantColor(GraphicsEffects effect, char *name, uint value) = 0;
 
-		virtual void API_CALL create() = 0;
+        virtual void API_CALL create() = 0;
+		virtual void API_CALL grabDefaultRenderTarget() = 0;
 		virtual void API_CALL cleanup() = 0;
 		virtual void API_CALL dispose() = 0;
 	};

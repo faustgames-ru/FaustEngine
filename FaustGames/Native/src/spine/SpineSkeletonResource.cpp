@@ -27,23 +27,31 @@ namespace spine
 
 	void API_CALL SpineSkeletonResource::load(String atlasText, String jsonText, String dir)
 	{
+        fprintf(stderr, "spAtlas_create \n");
 		_spAtlas = spAtlas_create(atlasText, strlen(atlasText), dir, 0);
+        fprintf(stderr, "spSkeletonJson_create \n");
 		_spSkeletonJson = spSkeletonJson_create((spAtlas *)_spAtlas);
+        fprintf(stderr, "spSkeletonJson_readSkeletonData \n");
 		_spSkeletonData = spSkeletonJson_readSkeletonData((spSkeletonJson*)_spSkeletonJson, jsonText);
 
+        fprintf(stderr, "spSkeletonData* sd = (spSkeletonData*)_spSkeletonData \n");
 		spSkeletonData* sd = (spSkeletonData*)_spSkeletonData;
+        fprintf(stderr, "_animations.resize(sd->animationsCount) \n");
 		_animations.resize(sd->animationsCount);
 		
 		for (int i = 0; i < _animations.size(); i++)
 		{
+            fprintf(stderr, "_animations[i] = new SpineSkeletonAnimation(((spSkeletonData*)_spSkeletonData)->animations[i]) \n");
 			_animations[i] = new SpineSkeletonAnimation(((spSkeletonData*)_spSkeletonData)->animations[i]);
 		}
 
+        fprintf(stderr, "_events.resize(sd->eventsCount) \n");
 		_events.resize(sd->eventsCount);
 		for (int i = 0; i < _events.size(); i++)
 		{
 			spEventData* e = sd->events[i];
 			e->intValue = i;
+            fprintf(stderr, "_events[i] = new SpineEvent(e->name) \n");
 			_events[i] = new SpineEvent(e->name);
 		}
 	}

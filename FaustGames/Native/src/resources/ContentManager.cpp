@@ -1,10 +1,10 @@
 #include "ContentManager.h"
 #include "ContentProvider.h"
-//#include "lpng/png.h"
+#include "lpng/png.h"
 #include "../core/HollowsAllocationPolicy.h"
 
 namespace resources
-{/*
+{
 	void readData(png_structp pngPtr, png_bytep data, png_size_t length)
 	{
 		ContentProvider::read(data, length);
@@ -19,8 +19,8 @@ namespace resources
 	void pngFree(png_structp pngPtr, void *mem)
 	{
 		core::Mem::deallocate(mem);
-	}
-*/
+    }
+
 	ContentManager::ContentManager() : _image(0), _isOpened(false)
 	{
 		
@@ -57,9 +57,9 @@ namespace resources
 
 
 #define PNGSIGSIZE 8
-/*
+
 	png_bytep * m_RowPtrs = 0;
-*/	
+	
 	graphics::Image2dData * ContentManager::loadTexture(int id)
 	{
 		const char *name = _files[id].c_str();
@@ -72,7 +72,6 @@ namespace resources
 
 	graphics::Image2dData * ContentManager::loadUnregisteredTexture(const char *name)
 	{
-/*
 
 		//todo: load data from content provider
 		ContentProvider::openContent(name);
@@ -89,11 +88,15 @@ namespace resources
 		int is_png = 0;
 
 		//Read the 8 bytes from the stream into the sig buffer.
+        fprintf(stderr, "ContentProvider::read(pngsig, PNGSIGSIZE) \n");
 		ContentProvider::read(pngsig, PNGSIGSIZE);
 
 		is_png = png_sig_cmp(pngsig, 0, PNGSIGSIZE);
 		if (is_png != 0)
 		{
+            fprintf(stderr, "!png \n");
+            fprintf(stderr, (char *)pngsig);
+            fprintf(stderr, "\n");
 			//throw ref new Exception(-1, "data is not recognized as a PNG");
 			return 0;
 		}
@@ -134,6 +137,7 @@ namespace resources
 		m_Channels = png_get_channels(m_PngPtr, m_InfoPtr);
 		m_ColorType = png_get_color_type(m_PngPtr, m_InfoPtr);
 
+        
 		const unsigned int stride = png_get_rowbytes(m_PngPtr, m_InfoPtr);
 		for (size_t i = 0; i < (size_t)m_Height; i++)
 			m_RowPtrs[i] = (png_byte*)_image->Pixels + i*m_Width*m_Channels;
@@ -151,12 +155,18 @@ namespace resources
 		{
 		case 3:
 			_image->Format = graphics::Image2dFormat::Rgb;
+            fprintf(stderr, "Rgb");
+            fprintf(stderr, "\n");
 			break;
 		case 4:
 			_image->Format = graphics::Image2dFormat::Rgba;
+                fprintf(stderr, "Rgba");
+                fprintf(stderr, "\n");
 			break;
 		default:
 			_image->Format = graphics::Image2dFormat::Rgba;
+                fprintf(stderr, "Unsupported");
+                fprintf(stderr, "\n");
 			break;
 		}
 
@@ -174,27 +184,27 @@ namespace resources
 					}
 				}
 			}
-		}*/
+		}
 		return _image;
 	}
 
 	void ContentManager::open()
-	{/*
+	{
 		if (_isOpened) 
 			return;
 		m_RowPtrs = (png_bytep *)core::Mem::allocate(ImageMaxHeight * sizeof(png_bytep));
 		_image = new graphics::Image2dData(ImageBufferSize);
-		_isOpened = true;*/
+		_isOpened = true;
 	}
 	void ContentManager::close()
-	{/*
+	{
 		if (!_isOpened)
 			return;
 		core::Mem::deallocate(m_RowPtrs);
 		delete _image;
 		m_RowPtrs = 0;
 		_image = 0;
-		_isOpened = false;*/
+		_isOpened = false;
 	}
 
 	void API_CALL ContentManager::setObbFile(char * obbFile)
@@ -214,21 +224,27 @@ namespace resources
 	
 	bool API_CALL ContentManager::update()
 	{
+        
 		if ((_loadEntries.size() == 0) && (_disposeEntries.size() == 0))
 			return true;
+
 		bool wasOpened = _isOpened;
-		if (!_isOpened)
+        
+        if (!_isOpened)
 			open();
 
 
 		for (int i = 0; i < _loadEntries.size(); i++)
 		{
+            fprintf(stderr, _loadEntries[i].fileName.c_str());
+            fprintf(stderr, "\n");
 #ifdef __ANDROID__
 			__android_log_print(ANDROID_LOG_ERROR, "TRACKERS", "%s", _loadEntries[i].fileName.c_str());
 #endif
 			graphics::Image2dData * image = loadUnregisteredTexture(_loadEntries[i].fileName.c_str());
 			_loadEntries[i].textureImage->create();
-			_loadEntries[i].textureImage->LoadPixels(image->Width, image->Height, (llge::TextureImage2dFormat)image->Format, image->Pixels);
+            if (image)
+                _loadEntries[i].textureImage->LoadPixels(image->Width, image->Height, (llge::TextureImage2dFormat)image->Format, image->Pixels);
 		}
 		_loadEntries.clear();
 		for (int i = 0; i < _disposeEntries.size(); i++)
@@ -247,7 +263,8 @@ namespace resources
 	void API_CALL ContentManager::loadImage(int id, llge::ITextureImage2d *textureImage)
 	{
 		graphics::Image2dData * image = loadTexture(id);
-		textureImage->LoadPixels(image->Width, image->Height, (llge::TextureImage2dFormat)image->Format, image->Pixels);
+        if (image)
+            textureImage->LoadPixels(image->Width, image->Height, (llge::TextureImage2dFormat)image->Format, image->Pixels);
 	}
 
 	llge::ITextureBuffer2d * API_CALL ContentManager::loadBuffer(int id)

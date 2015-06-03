@@ -27,7 +27,8 @@ namespace graphics
 		void drawTriangles(VertexFormat *vertexFormat, void *vertexBuffer, int primitivesCount);
 		void drawPrimitives(VertexFormat *vertexFormat, void *vertexBuffer, unsigned short *indexBuffer, int primitivesCount);
 		void resetRenderState();
-		static void create();
+        void grabDefaultRenderTarget();
+        static void create();
 		std::vector<TextureRenderTarget2d *> PostProcessRenderTargets;
 	protected:
 	private:
@@ -36,6 +37,7 @@ namespace graphics
 		int _viewportY;
 		int _viewportWidth;
 		int _viewportHeight;
+        static int _primaryFbo;
 	};
 }
 

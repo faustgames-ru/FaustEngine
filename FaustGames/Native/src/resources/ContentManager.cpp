@@ -42,7 +42,7 @@ namespace resources
 	graphics::TextureImage2d* ContentManager::addLoadTexture(const char *name)
 	{
 		LoadImageEntry entry;
-		graphics::TextureImage2d *image = new graphics::TextureImage2d(false);
+		graphics::TextureImage2d *image = new graphics::TextureImage2d(false, true);
 		entry.fileName = name;
 		entry.textureImage = image;
 		_loadEntries.push_back(entry);
@@ -89,9 +89,11 @@ namespace resources
 		is_png = png_sig_cmp(pngsig, 0, PNGSIGSIZE);
 		if (is_png != 0)
 		{
+			/*
             fprintf(stderr, "!png \n");
             fprintf(stderr, (char *)pngsig);
             fprintf(stderr, "\n");
+			*/
 			//throw ref new Exception(-1, "data is not recognized as a PNG");
 			return 0;
 		}
@@ -225,8 +227,10 @@ namespace resources
 
 		for (int i = 0; i < _loadEntries.size(); i++)
 		{
+			/*
             fprintf(stderr, _loadEntries[i].fileName.c_str());
             fprintf(stderr, "\n");
+			*/
 			graphics::Image2dData * image = loadUnregisteredTexture(_loadEntries[i].fileName.c_str());
 			_loadEntries[i].textureImage->create();
             if (image)

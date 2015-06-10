@@ -16,5 +16,8 @@ void main()
 {
 	vec4 ca = texture2D(texture, _textureCoords);
 	vec4 cb = texture2D(lightmap, _textureCoords);
-	gl_FragColor = 1.0 - (1.0 - ca) * (1.0 - cb);		
+	vec4 res =1.0 - (1.0 - ca) * (1.0 - cb);
+	res.a = 1.0;
+	//res = ca + cb * 0.0;
+	gl_FragColor = res;
 }

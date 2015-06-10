@@ -17,6 +17,11 @@ namespace llge
 	public:
 		MatrixContainer Projection;
 
+		virtual void API_CALL resetSamplers()
+		{
+			UniformValues::resetSamplers();
+		}
+		
 		virtual void API_CALL setTime(float value)
 		{
 			UniformValues::time()->setValue(value);
@@ -216,9 +221,9 @@ namespace llge
 			return new GraphicsFacade();
 		}
 
-		virtual ITextureImage2d * API_CALL createTextureImage2d(bool generateMipmaps)
+		virtual ITextureImage2d * API_CALL createTextureImage2d(bool generateMipmaps, bool useFilter)
 		{
-			return new TextureImage2d(generateMipmaps);
+			return new TextureImage2d(generateMipmaps, useFilter);
 		}
 
 		virtual IRenderTarget2d * API_CALL createRenderTarget2d()

@@ -29,33 +29,26 @@ namespace drawing
 		~PostProcessVertex(){}
 	};
 
-	class PostProcess
-	{
-	public:
-		virtual void execute(graphics::TextureRenderTarget2d *source) = 0;
-	private:
-	};
-
-	class PostProcessExecutor
-	{
-	public:
-		virtual void execute(graphics::TextureRenderTarget2d *source, graphics::TextureRenderTarget2d *target) = 0;
-	};
-
-	class BloomFilter
+	class TonemapFilter
 	{
 	public:
 		virtual void execute(graphics::TextureRenderTarget2d *source, graphics::TextureRenderTarget2d *target, uint tonemapId);
 	};
 
-	class FilterVBlur : public PostProcessExecutor
+	class BloomFilter
+	{
+	public:
+		virtual void execute(graphics::TextureRenderTarget2d *source, graphics::TextureRenderTarget2d *target);
+	};
+
+	class FilterVBlur
 	{
 	public:
 		virtual void execute(graphics::TextureRenderTarget2d *source, graphics::TextureRenderTarget2d *target);
 	};
 
 	
-	class FilterHBlur : public PostProcessExecutor
+	class FilterHBlur 
 	{
 	public:
 		virtual void execute(graphics::TextureRenderTarget2d *source, graphics::TextureRenderTarget2d *target);
@@ -71,15 +64,21 @@ namespace drawing
 	class PostProcessBloom
 	{
 	public:
-		virtual void execute(graphics::TextureRenderTarget2d *source, uint tonemapId);
+		virtual void beginRender(uint tonemapId);
+		virtual void finishRender();
 	private:
 		BloomFilter _filter;		
 		FilterVBlur _vBlur;		
 		FilterHBlur _hBlur;		
 		FilterAdd _add;
-		
+		TonemapFilter _tonemap;
+
+		uint _tonemapId;
+		graphics::TextureRenderTarget2d *_source;
+		/*
 		graphics::TextureRenderTarget2d *_target0;
 		graphics::TextureRenderTarget2d *_target1;
+		*/
 	};
 }
 

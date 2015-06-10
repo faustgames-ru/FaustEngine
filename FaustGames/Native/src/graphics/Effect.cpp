@@ -52,12 +52,13 @@ namespace graphics
 		Errors::check(Errors::UnknownAction);
 		if (compiled == 0)
 		{
+			Errors::check("shader not compiled");
 			glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length);
 			Errors::check(Errors::UnknownAction);
 			if (length > 1) {
 				std::string log(length, '\0');
 				glGetShaderInfoLog(id, length, &length, &log[0]);
-				Errors::check(Errors::UnknownAction);
+				Errors::check(log.c_str());
 				//exit(1);
 			}
 		}
@@ -74,6 +75,8 @@ namespace graphics
 		glCompileShader(shader);
 		Errors::check(Errors::CompileShader);
 		
+		CheckShader(shader);
+
 		return shader;
 	}
 
@@ -86,10 +89,13 @@ namespace graphics
 
 		if (compiled == 0)
 		{
+			Errors::check("shader program not linked");
+
 			glGetProgramiv(id, GL_INFO_LOG_LENGTH, &length);
 			if (length > 1) {
 				std::string log(length, '\0');
 				glGetProgramInfoLog(id, length, &length, &log[0]);
+				Errors::check(log.c_str());
 				//exit(1);
 			}
 		}
@@ -142,6 +148,7 @@ namespace graphics
 			glBindAttribLocation(_shaderProgram, location, _attributes.data[i]->getName());
 			Errors::check(Errors::BindAttribLocation);
 		}
+
 		_attributesMax++;
 
 		glLinkProgram(_shaderProgram);

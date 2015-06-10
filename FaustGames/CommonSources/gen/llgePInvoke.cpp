@@ -96,6 +96,11 @@ namespace llge
 		classInstance->dispose();
 	}
 	
+	extern "C" DLLEXPORT void API_CALL llge_UniformsFacade_resetSamplers (IUniformsFacade * classInstance)
+	{
+		classInstance->resetSamplers();
+	}
+	
 	extern "C" DLLEXPORT void API_CALL llge_UniformsFacade_setTime (IUniformsFacade * classInstance, float value)
 	{
 		classInstance->setTime(value);
@@ -246,9 +251,9 @@ namespace llge
 		return classInstance->createGraphicsFacade();
 	}
 	
-	extern "C" DLLEXPORT ITextureImage2d * API_CALL llge_GraphicsFactory_createTextureImage2d (IGraphicsFactory * classInstance, bool generateMipmaps)
+	extern "C" DLLEXPORT ITextureImage2d * API_CALL llge_GraphicsFactory_createTextureImage2d (IGraphicsFactory * classInstance, bool generateMipmaps, bool useFilter)
 	{
-		return classInstance->createTextureImage2d(generateMipmaps);
+		return classInstance->createTextureImage2d(generateMipmaps, useFilter);
 	}
 	
 	extern "C" DLLEXPORT IRenderTarget2d * API_CALL llge_GraphicsFactory_createRenderTarget2d (IGraphicsFactory * classInstance)
@@ -529,6 +534,11 @@ namespace llge
 	extern "C" DLLEXPORT void API_CALL llge_SpineSkeleton_setTransform (ISpineSkeleton * classInstance, void * floatMatrix)
 	{
 		classInstance->setTransform(floatMatrix);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_SpineSkeleton_setColor (ISpineSkeleton * classInstance, uint color)
+	{
+		classInstance->setColor(color);
 	}
 	
 	extern "C" DLLEXPORT float API_CALL llge_SpineSkeleton_getMinX (ISpineSkeleton * classInstance)

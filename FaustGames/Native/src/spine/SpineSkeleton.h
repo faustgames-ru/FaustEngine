@@ -20,6 +20,7 @@ namespace spine
 		virtual IntPtr API_CALL getNativeInstance();
 		virtual void API_CALL dispose();
 		virtual void API_CALL setTransform(void *floatMatrix);
+		virtual void API_CALL setColor(uint color);
 		virtual void API_CALL setBonesToSetupPose();
 		virtual void API_CALL setSlotsToSetupPose();
 		virtual float API_CALL getMinX();

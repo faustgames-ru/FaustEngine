@@ -506,6 +506,9 @@
     <ClInclude Include="..\shaders\post_process_bloom_add_filter_frag.h">
       <Filter>shaders</Filter>
     </ClInclude>
+    <ClInclude Include="..\shaders\post_process_tonemapping.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\CommonSources\gen\llgePInvoke.cpp">

@@ -10,6 +10,16 @@
 
 namespace graphics
 {	
+	class EffectPostProcessToneMapping : public EffectBase
+	{
+	public:
+		EffectPostProcessToneMapping();
+		~EffectPostProcessToneMapping();
+		void create();
+	protected:
+	private:
+	};
+
 	class EffectPostProcessBloomFilter : public EffectBase
 	{
 	public:

@@ -37,12 +37,17 @@ namespace graphics
 		_viewportWidth = width;
 		_viewportHeight = height;
 		glViewport(x, y, width, height);
-		float rtWidth = width / 8;
-		float rtHeight = height / 8;
+		Errors::check(Errors::Viewport);
+
+		PostProcessTargets.setViewport(width, height);
+		PostProcessScaledTargets.setViewport(width / 2, height / 2);
+		/*
+		float rtWidth = width / 2;
+		float rtHeight = height / 2;
 		for (int i = 0; i < PostProcessRenderTargets.size(); i++)
 		{
 			TextureRenderTarget2d *rt = PostProcessRenderTargets[i];
-			if (i > 0)
+			if (i > 1)
 			{
 				if ((rt->getWidth() != rtWidth) || (rt->getHeight() != rtHeight))
 				{
@@ -59,14 +64,9 @@ namespace graphics
 				}
 			}
 		}
-		Errors::check(Errors::Viewport);
+		*/
 	}
-
-	void GraphicsDevice::setPostProcessRenderTargetIndex(int index)
-	{
-		setRenderTarget(PostProcessRenderTargets[index]);
-	}
-
+	
 	void GraphicsDevice::setRenderTarget(IRenderTarget *renderTarget)
 	{
 		if (!renderTarget)
@@ -75,6 +75,7 @@ namespace graphics
 			Errors::check(Errors::BindFramebuffer);
 			glViewport(_viewportX, _viewportY, _viewportWidth, _viewportHeight);
 			Errors::check(Errors::Viewport);
+			//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		}
 		else
 		{
@@ -175,20 +176,46 @@ namespace graphics
     }
 
 	void GraphicsDevice::create()
-	{
-        
+	{        
 		TextureImage2d::createStatic();
-		Default.addProcessRenderTargets();
-		Default.addProcessRenderTargets();
-		Default.addProcessRenderTargets();
 	}
-
-	void GraphicsDevice::addProcessRenderTargets()
+	
+	void PostProcessTargetManager::addProcessRenderTarget()
 	{
 		TextureRenderTarget2d * rt = new TextureRenderTarget2d();
 		rt->create(128, 128);
-		PostProcessRenderTargets.push_back(rt);
+		_stack.push_back(rt);
+		_all.push_back(rt);
 	}
 
+
+	TextureRenderTarget2d *PostProcessTargetManager::pop()
+	{
+		if (_stack.size() == 0)
+		{
+			addProcessRenderTarget();
+		}
+		TextureRenderTarget2d * res = _stack[_stack.size() - 1];
+		_stack.pop_back();
+		return res;
+	}
+	
+	void PostProcessTargetManager::push(TextureRenderTarget2d *rt)
+	{
+		_stack.push_back(rt);
+	}
+	
+	void PostProcessTargetManager::setViewport(int width, int height)
+	{
+		for (int i = 0; i < _all.size(); i++)
+		{
+			TextureRenderTarget2d *rt = _all[i];
+			if ((rt->getWidth() != width) || (rt->getHeight() != height))
+			{
+				rt->cleanup();
+				rt->create(width, height);
+			}
+		}
+	}
 
 }

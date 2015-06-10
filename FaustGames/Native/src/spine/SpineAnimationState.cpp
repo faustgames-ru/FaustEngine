@@ -89,6 +89,7 @@ namespace spine
 	{
 		_eventsBuffer->EventsIndicesCount = 0;
 		apply((SpineSkeleton *)skeleton->getNativeInstance());
+		((SpineSkeleton *)skeleton->getNativeInstance())->updateAabb();
 	}
 
 	void API_CALL SpineAnimationState::setAnimation(llge::ISpineAnimation* animation, bool loop, bool normalize)

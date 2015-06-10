@@ -13,7 +13,7 @@ namespace graphics
 		static int Size;
 		static TextureImage2d * empty(){ return &_empty; }
 
-		TextureImage2d(bool generateMipmaps);
+		TextureImage2d(bool generateMipmaps, bool useFilter);
 		void setData(const Image2dData *data);
 		void setData(int width, int height, Image2dFormat::e format, unsigned int *pixels);
 		static void createStatic();

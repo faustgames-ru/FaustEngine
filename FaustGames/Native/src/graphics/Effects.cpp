@@ -12,6 +12,7 @@ namespace graphics
 	EffectTextureLightMapColor Effects::_textureLightmapColor;
 	//EffectWater Effects::_water;
 	EffectRenderDepth Effects::_renderDepth;
+	EffectPostProcessToneMapping Effects::_postProcessToneMapping;
 	EffectPostProcessBloomFilter Effects::_postProcessBloomFilter;
 	EffectPostProcessVBlurFilter Effects::_postProcessVBlurFilter;
 	EffectPostProcessHBlurFilter Effects::_postProcessHBlurFilter;
@@ -25,6 +26,7 @@ namespace graphics
 		_textureLightmapColor.create();
 		//_water.create();
 		_renderDepth.create();
+		_postProcessToneMapping.create();
 		_postProcessBloomFilter.create();
 		_postProcessVBlurFilter.create();
 		_postProcessHBlurFilter.create();
@@ -74,6 +76,11 @@ namespace graphics
 	EffectRenderDepth * Effects::renderDepth()
 	{
 		return &_renderDepth;
+	}
+
+	EffectPostProcessToneMapping * Effects::postProcessToneMapping()
+	{
+		return &_postProcessToneMapping;
 	}
 
 	EffectPostProcessBloomFilter * Effects::postProcessBloomFilter()

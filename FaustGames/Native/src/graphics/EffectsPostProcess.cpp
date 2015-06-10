@@ -3,6 +3,7 @@
 #include "Attributes.h"
 #include "../../shaders/post_process_vert.h"
 #include "../../shaders/post_process_bloom_add_filter_frag.h"
+#include "../../shaders/post_process_tonemapping.h"
 #include "../../shaders/post_process_bloom_filter_frag.h"
 #include "../../shaders/post_process_vblur_vert.h"
 #include "../../shaders/post_process_hblur_vert.h"
@@ -11,6 +12,27 @@
 
 namespace graphics
 {
+	EffectPostProcessToneMapping::EffectPostProcessToneMapping()
+	{
+		_effect.addUniform(Uniforms::texture(), UniformValues::texture());
+		_effect.addUniform(Uniforms::lightmap(), UniformValues::lightmap());
+		_effect.addAttribute(Attributes::position());
+		_effect.addAttribute(Attributes::textureCoords());
+	}
+
+	EffectPostProcessToneMapping::~EffectPostProcessToneMapping()
+	{
+	}
+	
+	void EffectPostProcessToneMapping::create()
+	{
+		_effect.create(
+			(char *)shader_post_process_vert,
+			shader_post_process_vert_size,
+			(char *)shader_post_process_tonemapping_frag,
+			shader_post_process_tonemapping_frag_size);
+	}
+
 	EffectPostProcessBloomFilter::EffectPostProcessBloomFilter()
 	{
 		_effect.addUniform(Uniforms::texture(), UniformValues::texture());

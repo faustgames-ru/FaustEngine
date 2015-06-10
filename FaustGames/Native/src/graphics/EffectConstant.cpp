@@ -55,10 +55,12 @@ namespace graphics
 	void EffectConstant::apply()
 	{
 		//if (!_valueChanged) return;
+		float v = 0;
 		switch (_type)
 		{
 		case UniformType::Float:
-			glUniform1f(_parameterHandler, getFloatValue());
+			v = getFloatValue();
+			glUniform1f(_parameterHandler, v);
 			Errors::check(Errors::Uniform1f);
 			break;
 		case UniformType::Color:

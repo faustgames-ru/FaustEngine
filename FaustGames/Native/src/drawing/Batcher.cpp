@@ -117,10 +117,12 @@ namespace drawing
 		//_buffer = _backBuffer;
 		//_backBuffer = swap;
 		RenderBuffer * _backBuffer = _buffer;
+		graphics::TextureRenderTarget2d *target;
 		if (usePostProcess)
 		{
-			_graphicsDevice->setPostProcessRenderTargetIndex(0);
+			_bloom.beginRender(_tonemapId);
 		}
+		_graphicsDevice->clear();
 		for (TBatchEntries::iterator i = _backBuffer->Entries.begin(); i != _backBuffer->Entries.end(); i++)
 		{
 			BatchBuffer * currentBuffer = _backBuffer->Buffers[i->BatchBufferIndex];
@@ -135,7 +137,7 @@ namespace drawing
 		}
 		if (usePostProcess)
 		{
-			_bloom.execute(_graphicsDevice->PostProcessRenderTargets[0], _tonemapId);
+			_bloom.finishRender();
 		}
 	}
 

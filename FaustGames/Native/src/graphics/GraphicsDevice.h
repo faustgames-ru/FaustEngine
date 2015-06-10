@@ -8,6 +8,18 @@
 
 namespace graphics
 {
+	class PostProcessTargetManager
+	{
+	public:
+		TextureRenderTarget2d *pop();
+		void push(TextureRenderTarget2d *);
+		void setViewport(int width, int height);
+	private:
+		void addProcessRenderTarget();
+		std::vector<TextureRenderTarget2d *> _stack;
+		std::vector<TextureRenderTarget2d *> _all;
+	};
+	
 	class GraphicsDevice
 	{
 	public:
@@ -18,7 +30,6 @@ namespace graphics
 		void setClearState(unsigned int color, float depth);
 		void setViewport(int x, int y, int width, int height);
 		void setRenderTarget(IRenderTarget *renderTarget);
-		void setPostProcessRenderTargetIndex(int index);
 		void clear();
 		void clearDepth();
 		void resetState();
@@ -29,10 +40,10 @@ namespace graphics
 		void resetRenderState();
         void grabDefaultRenderTarget();
         static void create();
-		std::vector<TextureRenderTarget2d *> PostProcessRenderTargets;
+		PostProcessTargetManager PostProcessTargets;
+		PostProcessTargetManager PostProcessScaledTargets;
 	protected:
 	private:
-		void addProcessRenderTargets();
 		int _viewportX;
 		int _viewportY;
 		int _viewportWidth;

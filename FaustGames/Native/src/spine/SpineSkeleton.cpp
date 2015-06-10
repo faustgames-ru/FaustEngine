@@ -402,6 +402,15 @@ namespace spine
 		updateAabb();
 	}
 
+	void API_CALL SpineSkeleton::setColor(uint color)
+	{
+		spSkeleton *s = (spSkeleton *)_spSkeleton;
+		s->r = graphics::Color::getRf(color);
+		s->g = graphics::Color::getGf(color);
+		s->b = graphics::Color::getBf(color);
+		s->a = graphics::Color::getAf(color);
+	}
+
 	void API_CALL SpineSkeleton::setBonesToSetupPose()
 	{
 		spSkeleton_setBonesToSetupPose((spSkeleton *)_spSkeleton);

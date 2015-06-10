@@ -215,6 +215,13 @@ namespace llge
 	public class UniformsFacade
 	{
 		public IntPtr ClassInstance;
+		public void ResetSamplers ()
+		{
+			llge_UniformsFacade_resetSamplers(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_UniformsFacade_resetSamplers (IntPtr classInstance);
 		public void SetTime (float value)
 		{
 			llge_UniformsFacade_setTime(ClassInstance, value);
@@ -440,13 +447,13 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private IntPtr llge_GraphicsFactory_createGraphicsFacade (IntPtr classInstance);
-		public TextureImage2d CreateTextureImage2d (bool generateMipmaps)
+		public TextureImage2d CreateTextureImage2d (bool generateMipmaps, bool useFilter)
 		{
-			return new TextureImage2d{ ClassInstance = llge_GraphicsFactory_createTextureImage2d(ClassInstance, generateMipmaps) };
+			return new TextureImage2d{ ClassInstance = llge_GraphicsFactory_createTextureImage2d(ClassInstance, generateMipmaps, useFilter) };
 		}
 		
 		[DllImport(Version.Dll)]
-		static extern private IntPtr llge_GraphicsFactory_createTextureImage2d (IntPtr classInstance, bool generateMipmaps);
+		static extern private IntPtr llge_GraphicsFactory_createTextureImage2d (IntPtr classInstance, bool generateMipmaps, bool useFilter);
 		public RenderTarget2d CreateRenderTarget2d ()
 		{
 			return new RenderTarget2d{ ClassInstance = llge_GraphicsFactory_createRenderTarget2d(ClassInstance) };
@@ -899,6 +906,13 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private void llge_SpineSkeleton_setTransform (IntPtr classInstance, IntPtr floatMatrix);
+		public void SetColor (uint color)
+		{
+			llge_SpineSkeleton_setColor(ClassInstance, color);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_SpineSkeleton_setColor (IntPtr classInstance, uint color);
 		public float GetMinX ()
 		{
 			return llge_SpineSkeleton_getMinX(ClassInstance);

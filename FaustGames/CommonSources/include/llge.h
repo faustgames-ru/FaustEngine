@@ -89,7 +89,6 @@ namespace llge
 	public:
 		virtual ITexture* API_CALL getTexture() = 0;
 		virtual void API_CALL LoadPixels(int width, int height, TextureImage2dFormat format, void *pixels) = 0;
-
 		virtual void API_CALL create() = 0;
 		virtual void API_CALL cleanup() = 0;
 		virtual void API_CALL dispose() = 0;
@@ -119,6 +118,7 @@ namespace llge
 	class IUniformsFacade
 	{
 	public:
+		virtual void API_CALL resetSamplers() = 0;
 		virtual void API_CALL setTime(float value) = 0;
 		virtual void API_CALL setNormalmap(ITexture *texture) = 0;
 		virtual void API_CALL setEnvironment(ITexture *texture) = 0;
@@ -167,7 +167,7 @@ namespace llge
 	{
 	public:
 		virtual IGraphicsFacade * API_CALL createGraphicsFacade() = 0;
-		virtual ITextureImage2d * API_CALL createTextureImage2d(bool generateMipmaps) = 0;
+		virtual ITextureImage2d * API_CALL createTextureImage2d(bool generateMipmaps, bool useFilter) = 0;
 		virtual IRenderTarget2d * API_CALL createRenderTarget2d() = 0;
 		virtual IRenderTargetDepth2d * API_CALL createRenderTargetDepth2d() = 0;
 		virtual IVertexBuffer * API_CALL createVertexBuffer() = 0;
@@ -296,6 +296,7 @@ namespace llge
 	{
 	public:
 		virtual void API_CALL setTransform(void *floatMatrix) = 0;
+		virtual void API_CALL setColor(uint color) = 0;
 		virtual float API_CALL getMinX() = 0;
 		virtual float API_CALL getMinY() = 0;
 		virtual float API_CALL getMaxX() = 0;

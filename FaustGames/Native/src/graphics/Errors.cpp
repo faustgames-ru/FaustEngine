@@ -37,6 +37,7 @@ namespace graphics
 	{
 		
 //#ifdef _DEBUG
+        return;
 		GLenum error(GL_NO_ERROR);
 		if ((error = glGetError()) != GL_NO_ERROR) 
 		{

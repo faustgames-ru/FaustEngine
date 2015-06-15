@@ -10,7 +10,7 @@ namespace graphics
 	GraphicsDevice GraphicsDevice::Default;
     int GraphicsDevice::_primaryFbo(0);
 
-	GraphicsDevice::GraphicsDevice()
+    GraphicsDevice::GraphicsDevice() : _colorState(0), _depthState(-1.0f), _activeTextureState(-1)
 	{
 	}
 	
@@ -21,26 +21,30 @@ namespace graphics
 
 	void GraphicsDevice::setClearState(unsigned int color, float depth)
 	{
-		glClearColor(
-			(float)Color::getR(color) / 255.0f,
-			(float)Color::getG(color) / 255.0f,
-			(float)Color::getB(color) / 255.0f,
-			(float)Color::getA(color) / 255.0f);
-		glClearDepthf(depth);
-	}
+        if (color != _colorState)
+        {
+            glClearColor((float)Color::getR(color) / 255.0f, (float)Color::getG(color) / 255.0f, (float)Color::getB(color) / 255.0f, (float)Color::getA(color) / 255.0f);
+        }
+        if (core::Math::abs(depth - _depthState) < 0.0001f)
+        {
+            glClearDepthf(depth);
+        }
+    }
 
 
 	void GraphicsDevice::setViewport(int x, int y, int width, int height)
 	{
-		_viewportX = x;
-		_viewportY = y;
-		_viewportWidth = width;
-		_viewportHeight = height;
-		glViewport(x, y, width, height);
-		Errors::check(Errors::Viewport);
-
+        if ((_viewportX != x) || (_viewportY != y) || (_viewportWidth != width) || (_viewportHeight != height))
+        {
+            _viewportX = x;
+            _viewportY = y;
+            _viewportWidth = width;
+            _viewportHeight = height;
+            glViewport(x, y, width, height);
+            Errors::check(Errors::Viewport);
+        }
 		PostProcessTargets.setViewport(width, height);
-		PostProcessScaledTargets.setViewport(width / 2, height / 2);
+		PostProcessScaledTargets.setViewport(width / 8, height / 8);
 		/*
 		float rtWidth = width / 2;
 		float rtHeight = height / 2;
@@ -173,6 +177,16 @@ namespace graphics
     void GraphicsDevice::grabDefaultRenderTarget()
     {
         glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_primaryFbo);
+    }
+    
+    void GraphicsDevice::setActiveTexture(uint value)
+    {
+        if (value != _activeTextureState)
+        {
+            glActiveTexture(GL_TEXTURE0 + GraphicsConstants::Samplers2DStart + value);
+            Errors::check(Errors::ActiveTexture);
+            _activeTextureState = value;
+        }
     }
 
 	void GraphicsDevice::create()

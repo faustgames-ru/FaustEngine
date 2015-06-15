@@ -1,10 +1,13 @@
 #include "TextureRenderTarget2d.h"
+#include "TextureImage2d.h"
 #include "Errors.h"
 
 namespace graphics
 {
-	TextureRenderTarget2d::TextureRenderTarget2d() : _filter(true)
-	{
+    TextureRenderTarget2d::TextureRenderTarget2d() : _filter(true)
+    {
+        _handle = 0;
+        _handleDefault = TextureImage2d::_empty.getHandle();
 	}
 	
 	void API_CALL TextureRenderTarget2d::create(int width, int height)

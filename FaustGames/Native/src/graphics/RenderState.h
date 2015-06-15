@@ -24,7 +24,7 @@ namespace graphics
 
 	protected:
 	private:
-		State<GLuint> _vertexBufferState;
+        State<GLuint> _vertexBufferState;
 		State<VertexFormat *> _vertexFormatState;
 		State<Effect *> _effect;
 		State<void *> _vertexDataState;

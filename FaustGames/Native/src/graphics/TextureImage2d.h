@@ -24,7 +24,9 @@ namespace graphics
 		virtual void API_CALL create();
 		virtual void API_CALL cleanup();
 		virtual void API_CALL dispose(){ delete this; }
-	protected:
+        static TextureImage2d _empty;
+
+    protected:
 	private:
 		TextureImage2d();
 		static GLenum getFormat(Image2dFormat::e format);
@@ -32,8 +34,7 @@ namespace graphics
 		bool _wrap;
 		bool _filter;
 		int _size;
-		static TextureImage2d _empty;
-	};
+    };
 }
 
 #endif /*TEXTURE_IMAGE_2D_H*/

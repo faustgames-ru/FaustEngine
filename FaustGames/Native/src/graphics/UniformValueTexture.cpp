@@ -1,3 +1,4 @@
+#include "GraphicsDevice.h"
 #include "UniformValueTexture.h"
 #include "Errors.h"
 #include "Math.h"
@@ -22,10 +23,11 @@ namespace graphics
 	void UniformValueTexture::apply(Uniform *uniform)
 	{
 		if (_equal) return;
-		glUniform1i(uniform->getHandle(), GraphicsConstants::Samplers2DStart + _samplerIndex);
-		Errors::check(Errors::Uniform1f);
-		glActiveTexture(GL_TEXTURE0 + GraphicsConstants::Samplers2DStart + _samplerIndex);
-		Errors::check(Errors::ActiveTexture);
+		//glUniform1i(uniform->getHandle(), GraphicsConstants::Samplers2DStart + _samplerIndex);
+		//Errors::check(Errors::Uniform1f);
+        GraphicsDevice::Default.setActiveTexture(_samplerIndex);
+        //glActiveTexture(GL_TEXTURE0 + GraphicsConstants::Samplers2DStart + _samplerIndex);
+		//Errors::check(Errors::ActiveTexture);
 		glBindTexture(GL_TEXTURE_2D, _value);
 		Errors::check(Errors::BindTexture);
 	}

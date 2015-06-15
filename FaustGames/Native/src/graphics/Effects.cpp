@@ -20,6 +20,8 @@ namespace graphics
 
 	void Effects::create()
 	{
+        UniformValues::initSamplers();
+        
 		_solid.create();
 		_solidColor.create();
 		_textureColor.create();
@@ -31,7 +33,6 @@ namespace graphics
 		_postProcessVBlurFilter.create();
 		_postProcessHBlurFilter.create();
 		_postProcessBloomAddFilter.create();
-		UniformValues::initSamplers();
 	}
 
 	void Effects::cleanup()

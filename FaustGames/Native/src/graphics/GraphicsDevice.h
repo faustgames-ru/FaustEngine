@@ -39,6 +39,7 @@ namespace graphics
 		void drawPrimitives(VertexFormat *vertexFormat, void *vertexBuffer, unsigned short *indexBuffer, int primitivesCount);
 		void resetRenderState();
         void grabDefaultRenderTarget();
+        void setActiveTexture(uint value);
         static void create();
 		PostProcessTargetManager PostProcessTargets;
 		PostProcessTargetManager PostProcessScaledTargets;
@@ -49,6 +50,9 @@ namespace graphics
 		int _viewportWidth;
 		int _viewportHeight;
         static int _primaryFbo;
+        float _depthState;
+        uint _colorState;
+        int _activeTextureState;
 	};
 }
 

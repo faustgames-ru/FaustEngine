@@ -20,7 +20,7 @@ namespace graphics
 		GLuint _value;
 		bool _equal;
 		int _samplerIndex;
-	};
+    };
 }
 
 #endif /*UNIFORM_VALUE_TEXTURE_H*/

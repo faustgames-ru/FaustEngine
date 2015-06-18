@@ -7,6 +7,11 @@ namespace drawing
 		_buffer = new RenderBuffer();
 		//_backBuffer = new RenderBuffer();
 		_graphicsDevice = &graphics::GraphicsDevice::Default;
+		_x = 0;
+		_y = 0;
+		_w = 1;
+		_h = 1;
+
 	}
 	
 	Batcher::~Batcher()
@@ -30,6 +35,20 @@ namespace drawing
 	void Batcher::finish()
 	{
 		applyEntry();
+	}
+	
+	void Batcher::drawMesh(graphics::EffectBase *effect, graphics::BlendState::e blend, llge::ITexture * texture, uint lightmapId, TVertex *vertices, int verticesCount, ushort *indices, int indicesCount)
+	{
+		graphics::Texture * textureInstance = (graphics::Texture *)texture->getTextureInstance();
+		_x = textureInstance->X;
+		_y = textureInstance->Y;
+		_w = textureInstance->W;
+		_h = textureInstance->H;
+		drawMesh(effect, blend, textureInstance->getHandle(), lightmapId, vertices, verticesCount, indices, indicesCount);
+		_x = 0;
+		_y = 0;
+		_w = 1;
+		_h = 1;
 	}
 	
 	void Batcher::drawMesh(graphics::EffectBase *effect, graphics::BlendState::e blend, uint textureId, uint lightmapId, TVertex *vertices, int verticesCount, ushort *indices, int indicesCount)
@@ -68,6 +87,10 @@ namespace drawing
 
 		_textureId = textureId;
 		_currentEntry.IndicesCount += indicesCount;
+		currentBuffer->_x = _x;
+		currentBuffer->_y = _y;
+		currentBuffer->_w = _w;
+		currentBuffer->_h = _h;
 		currentBuffer->addMesh(vertices, verticesCount, indices, indicesCount, blend == graphics::BlendState::Additive);
 	}
 
@@ -107,6 +130,10 @@ namespace drawing
 
 		_textureId = mesh.State.TextureId;
 		_currentEntry.IndicesCount += mesh.IndicesCount;
+		currentBuffer->_x = _x;
+		currentBuffer->_y = _y;
+		currentBuffer->_w = _w;
+		currentBuffer->_h = _h;
 		currentBuffer->addMesh(mesh.Color, mesh.Z, mesh.Vertices, mesh.Uvs, mesh.VerticesCount, mesh.Indices, mesh.IndicesCount, mesh.State.Blend == graphics::BlendState::Additive);
 	}
 

@@ -8,6 +8,10 @@ namespace graphics
     {
         _handle = 0;
         _handleDefault = TextureImage2d::_empty.getHandle();
+		X = 0;
+		Y = 0;
+		W = 1;
+		H = 1;
 	}
 	
 	void API_CALL TextureRenderTarget2d::create(int width, int height)

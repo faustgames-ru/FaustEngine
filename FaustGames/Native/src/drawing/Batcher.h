@@ -28,7 +28,10 @@ namespace drawing
 	public:
 		const int VerticesLimit = 32768;
 		const int IndicesLimit = 32768;
-
+		float _x;
+		float _y;
+		float _w;
+		float _h;
 		BatchBuffer()
 		{
 			_vertices = (TVertex *)malloc(VerticesLimit * sizeof(TVertex));
@@ -64,8 +67,8 @@ namespace drawing
 				target->y = *source; ++source;
 				target->z = z;
 				target->color = graphics::Color::premul(color, additive);
-				target->u = *uvsource; ++uvsource;
-				target->v = *uvsource; ++uvsource;
+				target->u = _x + *uvsource *_w; ++uvsource;
+				target->v = _y + *uvsource *_h; ++uvsource;
 			}
 
 			_verticesCount += verticesCount;
@@ -84,6 +87,8 @@ namespace drawing
 			for (int i = 0; i < verticesCount; i++, target++, source++)
 			{
 				*target = *source;
+				target->u = _x + target->u *_w;
+				target->v = _y + target->v *_h;
 				target->color = graphics::Color::premul(source->color, additive);
 			}
 
@@ -168,6 +173,7 @@ namespace drawing
 		~Batcher();
 		void start();
 		void finish();
+		void drawMesh(graphics::EffectBase *effect, graphics::BlendState::e blend, llge::ITexture * texture, uint lightmapId, TVertex *vertices, int verticesCount, ushort *indices, int indicesCount);
 		void drawMesh(graphics::EffectBase *effect, graphics::BlendState::e blend, uint textureId, uint lightmapId, TVertex *vertices, int verticesCount, ushort *indices, int indicesCount);
 		void drawSpineMesh(const BatcherSpineMesh &mesh);
 		inline void drawMesh(const BatcherMesh &mesh)
@@ -212,9 +218,9 @@ namespace drawing
 		{
 			finish();
 		}
-		virtual void API_CALL draw(llge::GraphicsEffects effect, llge::BlendMode blendMode, uint textureId, uint lightmapId, void *vertices, int verticesCount, void *indices, int indicesCount)
+		virtual void API_CALL draw(llge::GraphicsEffects effect, llge::BlendMode blendMode, llge::ITexture* texture, uint lightmapId, void *vertices, int verticesCount, void *indices, int indicesCount)
 		{
-			drawMesh(_converter.getEffect(effect), _converter.getBlend(blendMode), textureId, lightmapId, (TVertex *)vertices, verticesCount, (ushort *)indices, indicesCount);
+			drawMesh(_converter.getEffect(effect), _converter.getBlend(blendMode), texture, lightmapId, (TVertex *)vertices, verticesCount, (ushort *)indices, indicesCount);
 		}
 
 		virtual void API_CALL execute(bool usePostProcess)
@@ -248,7 +254,11 @@ namespace drawing
 		graphics::VertexFormat * _format;
 		graphics::RenderConverter _converter;
 		PostProcessBloom _bloom;
-	};	
+		float _x;
+		float _y;
+		float _w;
+		float _h;
+	};
 }
 
 #endif /*BATCHER*/

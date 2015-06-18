@@ -27,16 +27,24 @@ namespace graphics
 	{
 		_size = 0;
 		_handle = 0;
+		X = 0;
+		Y = 0;
+		W = 1;
+		H = 1;
 		_handleDefault = _empty.getHandle();
 	}
-
+	
 	TextureImage2d::TextureImage2d(bool generateMipmaps, bool useFilter) : _wrap(false), _filter(useFilter), _createMipmaps(generateMipmaps)
 	{
 		_size = 0;
 		_handle = 0;
 		_handleDefault = _empty.getHandle();
+		X = 0;
+		Y = 0;
+		W = 1;
+		H = 1;
 	}
-
+	
 	void API_CALL TextureImage2d::LoadPixels(int width, int height, llge::TextureImage2dFormat format, void *pixels)
 	{
 		setData(width, height, (Image2dFormat::e)format, (unsigned int *)pixels);
@@ -45,7 +53,6 @@ namespace graphics
 	void API_CALL TextureImage2d::create()
 	{
 		//UniformValues::resetSamplers();
-		
 		glGenTextures(1, &_handle);
 		Errors::check(Errors::GenTextures);
 		glActiveTexture(GL_TEXTURE0 + GraphicsConstants::Samplers2DStart);
@@ -207,4 +214,62 @@ namespace graphics
 	int TextureImage2d::Size(0);
 
 	TextureImage2d TextureImage2d::_empty;
+
+	TextureImage2dProxy::TextureImage2dProxy()
+	{
+		_handle = 0;
+		_instance = 0;
+		_handleDefault = TextureImage2d::_empty.getHandle();
+		_isRealyProxy = false;
+		X = 0;
+		Y = 0;
+		W = 1;
+		H = 1;
+	}
+	TextureImage2dProxy::~TextureImage2dProxy()
+	{
+		if (_isRealyProxy) return;
+		if (_instance)
+		{
+			_instance->dispose();
+		}
+	}
+
+	void TextureImage2dProxy::setProxyInstance(TextureImage2d * instance)
+	{
+		_isRealyProxy = true;
+		_instance = instance;
+		_handle = _instance->getId();
+	}
+
+	llge::ITexture* API_CALL TextureImage2dProxy::getTexture()
+	{
+		return this;
+	}
+
+	void API_CALL TextureImage2dProxy::LoadPixels(int width, int height, llge::TextureImage2dFormat format, void *pixels)
+	{
+		if (_isRealyProxy) return;
+		if (!_instance)
+			_instance = new TextureImage2d(false, true);
+		_instance->create();
+		_handle = _instance->getId();
+		_instance->LoadPixels(width, height, format, pixels);
+	}
+
+	void API_CALL TextureImage2dProxy::create()	{ }
+
+	void API_CALL TextureImage2dProxy::cleanup()
+	{
+		if (_isRealyProxy) return;
+		if (_instance)
+		{
+			_instance->cleanup();
+		}
+	}
+
+	void API_CALL TextureImage2dProxy::dispose()
+	{
+		delete this;
+	}
 }

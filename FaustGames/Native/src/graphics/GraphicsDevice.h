@@ -43,6 +43,9 @@ namespace graphics
         static void create();
 		PostProcessTargetManager PostProcessTargets;
 		PostProcessTargetManager PostProcessScaledTargets;
+
+		void resetDrawCallsCounter();
+		int getDrawCallsCounterValue();
 	protected:
 	private:
 		int _viewportX;
@@ -53,6 +56,7 @@ namespace graphics
         float _depthState;
         uint _colorState;
         int _activeTextureState;
+		int _drawCalls;
 	};
 }
 

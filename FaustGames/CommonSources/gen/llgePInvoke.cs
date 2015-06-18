@@ -76,18 +76,25 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private uint llge_Texture_getId (IntPtr classInstance);
-		public void Dispose ()
+		public IntPtr GetTextureInstance ()
 		{
-			llge_Texture_dispose(ClassInstance);
+			return llge_Texture_getTextureInstance(ClassInstance);
 		}
 		
 		[DllImport(Version.Dll)]
-		static extern private void llge_Texture_dispose (IntPtr classInstance);
+		static extern private IntPtr llge_Texture_getTextureInstance (IntPtr classInstance);
 	}
 	
 	public class TextureImage2d
 	{
 		public IntPtr ClassInstance;
+		public IntPtr GetTextureImageInstance ()
+		{
+			return llge_TextureImage2d_getTextureImageInstance(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_TextureImage2d_getTextureImageInstance (IntPtr classInstance);
 		public Texture GetTexture ()
 		{
 			return new Texture{ ClassInstance = llge_TextureImage2d_getTexture(ClassInstance) };
@@ -365,6 +372,20 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private void llge_GraphicsFacade_clearDepth (IntPtr classInstance);
+		public void ResetDrawCallsCounter ()
+		{
+			llge_GraphicsFacade_resetDrawCallsCounter(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_GraphicsFacade_resetDrawCallsCounter (IntPtr classInstance);
+		public int GetDrawCallsCounterValue ()
+		{
+			return llge_GraphicsFacade_getDrawCallsCounterValue(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private int llge_GraphicsFacade_getDrawCallsCounterValue (IntPtr classInstance);
 		public void DrawEdges (GraphicsEffects effect, GraphicsVertexFormats vertexFormat, IntPtr vertices, int primitivesCount)
 		{
 			llge_GraphicsFacade_drawEdges(ClassInstance, effect, vertexFormat, vertices, primitivesCount);
@@ -880,13 +901,13 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private void llge_Batch2d_setToneMap (IntPtr classInstance, uint tonemapId);
-		public void Draw (GraphicsEffects effect, BlendMode blendMode, uint textureId, uint lightmapId, IntPtr vertices, int verticesCount, IntPtr indices, int indicesCount)
+		public void Draw (GraphicsEffects effect, BlendMode blendMode, Texture textureId, uint lightmapId, IntPtr vertices, int verticesCount, IntPtr indices, int indicesCount)
 		{
-			llge_Batch2d_draw(ClassInstance, effect, blendMode, textureId, lightmapId, vertices, verticesCount, indices, indicesCount);
+			llge_Batch2d_draw(ClassInstance, effect, blendMode, textureId.ClassInstance, lightmapId, vertices, verticesCount, indices, indicesCount);
 		}
 		
 		[DllImport(Version.Dll)]
-		static extern private void llge_Batch2d_draw (IntPtr classInstance, GraphicsEffects effect, BlendMode blendMode, uint textureId, uint lightmapId, IntPtr vertices, int verticesCount, IntPtr indices, int indicesCount);
+		static extern private void llge_Batch2d_draw (IntPtr classInstance, GraphicsEffects effect, BlendMode blendMode, IntPtr textureId, uint lightmapId, IntPtr vertices, int verticesCount, IntPtr indices, int indicesCount);
 		public void Execute (bool usePostProcess)
 		{
 			llge_Batch2d_execute(ClassInstance, usePostProcess);
@@ -1237,9 +1258,49 @@ namespace llge
 		static extern private IntPtr llge_TextureBuffer2d_getPixels (IntPtr classInstance);
 	}
 	
+	public class ContentAtlasMap
+	{
+		public IntPtr ClassInstance;
+		public void ResetMap ()
+		{
+			llge_ContentAtlasMap_resetMap(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_ContentAtlasMap_resetMap (IntPtr classInstance);
+		public void AddRect (string name, int pageIndex, int x, int y, int width, int height)
+		{
+			llge_ContentAtlasMap_addRect(ClassInstance, name, pageIndex, x, y, width, height);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_ContentAtlasMap_addRect (IntPtr classInstance, string name, int pageIndex, int x, int y, int width, int height);
+		public void LoadTextures ()
+		{
+			llge_ContentAtlasMap_loadTextures(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_ContentAtlasMap_loadTextures (IntPtr classInstance);
+	}
+	
 	public class ContentManager
 	{
 		public IntPtr ClassInstance;
+		public ContentAtlasMap GetContentAtlasMap ()
+		{
+			return new ContentAtlasMap{ ClassInstance = llge_ContentManager_getContentAtlasMap(ClassInstance) };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_ContentManager_getContentAtlasMap (IntPtr classInstance);
+		public void ReplaceSeparator (bool value)
+		{
+			llge_ContentManager_replaceSeparator(ClassInstance, value);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_ContentManager_replaceSeparator (IntPtr classInstance, bool value);
 		public int RegisterImage (string name)
 		{
 			return llge_ContentManager_registerImage(ClassInstance, name);

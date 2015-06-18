@@ -11,9 +11,14 @@ namespace llge
 		return classInstance->getId();
 	}
 	
-	extern "C" DLLEXPORT void API_CALL llge_Texture_dispose (ITexture * classInstance)
+	extern "C" DLLEXPORT IntPtr API_CALL llge_Texture_getTextureInstance (ITexture * classInstance)
 	{
-		classInstance->dispose();
+		return classInstance->getTextureInstance();
+	}
+	
+	extern "C" DLLEXPORT IntPtr API_CALL llge_TextureImage2d_getTextureImageInstance (ITextureImage2d * classInstance)
+	{
+		return classInstance->getTextureImageInstance();
 	}
 	
 	extern "C" DLLEXPORT ITexture * API_CALL llge_TextureImage2d_getTexture (ITextureImage2d * classInstance)
@@ -194,6 +199,16 @@ namespace llge
 	extern "C" DLLEXPORT void API_CALL llge_GraphicsFacade_clearDepth (IGraphicsFacade * classInstance)
 	{
 		classInstance->clearDepth();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_GraphicsFacade_resetDrawCallsCounter (IGraphicsFacade * classInstance)
+	{
+		classInstance->resetDrawCallsCounter();
+	}
+	
+	extern "C" DLLEXPORT int API_CALL llge_GraphicsFacade_getDrawCallsCounterValue (IGraphicsFacade * classInstance)
+	{
+		return classInstance->getDrawCallsCounterValue();
 	}
 	
 	extern "C" DLLEXPORT void API_CALL llge_GraphicsFacade_drawEdges (IGraphicsFacade * classInstance, GraphicsEffects effect, GraphicsVertexFormats vertexFormat, void * vertices, int primitivesCount)
@@ -521,7 +536,7 @@ namespace llge
 		classInstance->setToneMap(tonemapId);
 	}
 	
-	extern "C" DLLEXPORT void API_CALL llge_Batch2d_draw (IBatch2d * classInstance, GraphicsEffects effect, BlendMode blendMode, uint textureId, uint lightmapId, void * vertices, int verticesCount, void * indices, int indicesCount)
+	extern "C" DLLEXPORT void API_CALL llge_Batch2d_draw (IBatch2d * classInstance, GraphicsEffects effect, BlendMode blendMode, ITexture * textureId, uint lightmapId, void * vertices, int verticesCount, void * indices, int indicesCount)
 	{
 		classInstance->draw(effect, blendMode, textureId, lightmapId, vertices, verticesCount, indices, indicesCount);
 	}
@@ -744,6 +759,31 @@ namespace llge
 	extern "C" DLLEXPORT IntPtr API_CALL llge_TextureBuffer2d_getPixels (ITextureBuffer2d * classInstance)
 	{
 		return classInstance->getPixels();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_ContentAtlasMap_resetMap (IContentAtlasMap * classInstance)
+	{
+		classInstance->resetMap();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_ContentAtlasMap_addRect (IContentAtlasMap * classInstance, char * name, int pageIndex, int x, int y, int width, int height)
+	{
+		classInstance->addRect(name, pageIndex, x, y, width, height);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_ContentAtlasMap_loadTextures (IContentAtlasMap * classInstance)
+	{
+		classInstance->loadTextures();
+	}
+	
+	extern "C" DLLEXPORT IContentAtlasMap * API_CALL llge_ContentManager_getContentAtlasMap (IContentManager * classInstance)
+	{
+		return classInstance->getContentAtlasMap();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_ContentManager_replaceSeparator (IContentManager * classInstance, bool value)
+	{
+		classInstance->replaceSeparator(value);
 	}
 	
 	extern "C" DLLEXPORT int API_CALL llge_ContentManager_registerImage (IContentManager * classInstance, char * name)

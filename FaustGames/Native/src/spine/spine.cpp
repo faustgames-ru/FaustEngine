@@ -4,21 +4,27 @@
 
 void _spAtlasPage_createTexture(spAtlasPage* self, const char* path)
 {
-	// todo: resolve multy registration
-	
-	graphics::TextureImage2d* texture = resources::ContentManager::Default.addLoadTexture(path);
-
-	// todo: detect size;
-
-	//self->width = imageData->Width;
-	//self->height = imageData->Height;
-
+	graphics::TextureImage2dProxy* texture;
+	if (resources::ContentManager::_replaceSeparator)
+	{
+		std::string replace = path;
+		for (int i = 0; i < replace.size(); i++)
+		{
+			if (replace[i] == '/')
+				replace[i] = '_';
+		}
+		texture = resources::ContentManager::Default.addLoadTexture(replace.c_str());
+	}
+	else
+	{
+		texture = resources::ContentManager::Default.addLoadTexture(path);
+	}
 	self->rendererObject = texture;
 }
 
 void _spAtlasPage_disposeTexture(spAtlasPage* self)
 {
-	graphics::TextureImage2d* texture = (graphics::TextureImage2d*)self->rendererObject;
+	graphics::TextureImage2dProxy* texture = (graphics::TextureImage2dProxy*)self->rendererObject;
 	resources::ContentManager::Default.addDisposeTexture(texture);
 }
 

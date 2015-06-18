@@ -16,8 +16,13 @@ namespace graphics
 			return _handle; 
 		}
 		virtual uint API_CALL getId() { return getHandle(); }
+		virtual IntPtr API_CALL getTextureInstance() { return this; }
+
 		inline void setHandle(GLuint value) { _handle = value; }
-		virtual void API_CALL dispose() { delete this; }
+		float X;
+		float Y;
+		float W;
+		float H;
 	protected:
 		GLuint _handle;
 		GLuint _handleDefault;

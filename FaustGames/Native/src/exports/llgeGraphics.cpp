@@ -111,6 +111,17 @@ namespace llge
 			delete uniformsFacade;
 		}
 
+		virtual void API_CALL resetDrawCallsCounter()
+		{
+			graphicsDevice->resetDrawCallsCounter();
+		}
+		
+		virtual int API_CALL getDrawCallsCounterValue()
+		{
+			return graphicsDevice->getDrawCallsCounterValue();
+		}
+
+
 		virtual void API_CALL setEffectConstantFloat(GraphicsEffects effect, char *name, float value)
 		{
 			EffectConstant* constant = _converter.getEffect(effect)->getEffect()->findConstant(name);
@@ -223,7 +234,7 @@ namespace llge
 
 		virtual ITextureImage2d * API_CALL createTextureImage2d(bool generateMipmaps, bool useFilter)
 		{
-			return new TextureImage2d(generateMipmaps, useFilter);
+			return new TextureImage2dProxy();
 		}
 
 		virtual IRenderTarget2d * API_CALL createRenderTarget2d()

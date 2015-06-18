@@ -81,12 +81,13 @@ namespace llge
 	{
 	public:
 		virtual uint API_CALL getId() = 0;
-		virtual void API_CALL dispose() = 0;
+		virtual IntPtr API_CALL getTextureInstance() = 0;
 	};
 
 	class ITextureImage2d
 	{
 	public:
+		virtual IntPtr API_CALL getTextureImageInstance() = 0;
 		virtual ITexture* API_CALL getTexture() = 0;
 		virtual void API_CALL LoadPixels(int width, int height, TextureImage2dFormat format, void *pixels) = 0;
 		virtual void API_CALL create() = 0;
@@ -149,6 +150,9 @@ namespace llge
 		virtual void API_CALL setBlendMode(BlendMode blendMode) = 0;
 		virtual void API_CALL clear() = 0;
 		virtual void API_CALL clearDepth() = 0;
+
+		virtual void API_CALL resetDrawCallsCounter() = 0;
+		virtual int API_CALL getDrawCallsCounterValue() = 0;
 
 		virtual void API_CALL drawEdges(GraphicsEffects effect, GraphicsVertexFormats vertexFormat, void *vertices, int primitivesCount) = 0;
 		virtual void API_CALL draw(GraphicsEffects effect, GraphicsVertexFormats vertexFormat, void *vertices, int primitivesCount) = 0;
@@ -286,7 +290,7 @@ namespace llge
 		virtual void API_CALL startBatch() = 0;
 		virtual void API_CALL finishBatch() = 0;
 		virtual void API_CALL setToneMap(uint tonemapId) = 0;
-		virtual void API_CALL draw(GraphicsEffects effect, BlendMode blendMode, uint textureId, uint lightmapId, void *vertices, int verticesCount, void *indices, int indicesCount) = 0;
+		virtual void API_CALL draw(GraphicsEffects effect, BlendMode blendMode, ITexture* textureId, uint lightmapId, void *vertices, int verticesCount, void *indices, int indicesCount) = 0;
 		virtual void API_CALL execute(bool usePostProcess) = 0;
 	};
 
@@ -380,10 +384,19 @@ namespace llge
 		virtual IntPtr API_CALL getPixels() = 0;
 	};
 
+	class IContentAtlasMap
+	{
+	public:
+		virtual void API_CALL resetMap() = 0;
+		virtual void API_CALL addRect(char *name, int pageIndex, int x, int y, int width, int height) = 0;
+		virtual void API_CALL loadTextures() = 0;
+	};
 
 	class IContentManager
 	{
 	public:
+		virtual IContentAtlasMap * API_CALL getContentAtlasMap() = 0;
+		virtual void API_CALL replaceSeparator(bool value) = 0;
 		virtual int API_CALL registerImage(char * name) = 0;
 		virtual void API_CALL startLoad() = 0;
 		virtual void API_CALL loadImage(int id, ITextureImage2d *textureImage) = 0;

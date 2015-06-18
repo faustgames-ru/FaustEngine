@@ -10,7 +10,7 @@ namespace graphics
 	GraphicsDevice GraphicsDevice::Default;
     int GraphicsDevice::_primaryFbo(0);
 
-    GraphicsDevice::GraphicsDevice() : _colorState(0), _depthState(-1.0f), _activeTextureState(-1)
+	GraphicsDevice::GraphicsDevice() : _colorState(0), _depthState(-1.0f), _activeTextureState(-1), _drawCalls(0)
 	{
 	}
 	
@@ -143,6 +143,7 @@ namespace graphics
 		renderState.apply(vertexFormat, 0);
 		glDrawElements(GL_TRIANGLES, primitivesCount * 3, GL_UNSIGNED_SHORT, indexBuffer);
 		Errors::check(Errors::DrawElements);
+		++_drawCalls;
 	}
 
 	void GraphicsDevice::drawEdges(VertexFormat *vertexFormat, void *vertexBuffer, int primitivesCount)
@@ -151,6 +152,7 @@ namespace graphics
 		renderState.apply(vertexFormat, vertexBuffer);
 		glDrawArrays(GL_LINES, 0, primitivesCount * 2);
 		Errors::check(Errors::DrawElements);
+		++_drawCalls;
 	}
 	
 	void GraphicsDevice::drawTriangles(VertexFormat *vertexFormat, void *vertexBuffer, int primitivesCount)
@@ -159,6 +161,7 @@ namespace graphics
 		renderState.apply(vertexFormat, vertexBuffer);
 		glDrawArrays(GL_TRIANGLES, 0, primitivesCount * 3);
 		Errors::check(Errors::DrawElements);
+		++_drawCalls;
 	}
 
 	void GraphicsDevice::drawPrimitives(VertexFormat *vertexFormat, void *vertexBuffer, unsigned short *indexBuffer, int primitivesCount)
@@ -167,6 +170,7 @@ namespace graphics
 		renderState.apply(vertexFormat, vertexBuffer);
 		glDrawElements(GL_TRIANGLES, primitivesCount * 3, GL_UNSIGNED_SHORT, indexBuffer);
 		Errors::check(Errors::DrawElements);
+		++_drawCalls;
 	}
 
 	void GraphicsDevice::resetRenderState()
@@ -192,6 +196,16 @@ namespace graphics
 	void GraphicsDevice::create()
 	{        
 		TextureImage2d::createStatic();
+	}
+	
+	void GraphicsDevice::resetDrawCallsCounter()
+	{
+		_drawCalls = 0;
+	}
+	
+	int GraphicsDevice::getDrawCallsCounterValue()
+	{
+		return _drawCalls;
 	}
 	
 	void PostProcessTargetManager::addProcessRenderTarget()

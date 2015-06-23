@@ -86,9 +86,11 @@ namespace drawing
 			TVertex* source = vertices;
 			for (int i = 0; i < verticesCount; i++, target++, source++)
 			{
-				*target = *source;
-				target->u = _x + target->u *_w;
-				target->v = _y + target->v *_h;
+                target->x = source->x;
+                target->y = source->y;
+                target->z = source->z;
+                target->u = _x + source->u *_w;
+				target->v = _y + source->v *_h;
 				target->color = graphics::Color::premul(source->color, additive);
 			}
 

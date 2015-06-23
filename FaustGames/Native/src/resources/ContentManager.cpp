@@ -39,17 +39,17 @@ namespace resources
 
 	ContentManager ContentManager::Default;
 
-	graphics::TextureImage2dProxy* ContentManager::addLoadTexture(const char *name)
+	graphics::TextureImage2d* ContentManager::addLoadTexture(const char *name)
 	{
 		LoadImageEntry entry;
-		graphics::TextureImage2dProxy *image = new graphics::TextureImage2dProxy();
+		graphics::TextureImage2d *image = new graphics::TextureImage2d(false, true);
 		entry.fileName = name;
 		entry.textureImage = image;
 		_loadEntries.push_back(entry);
 		return image;
 	}
 
-	void ContentManager::addDisposeTexture(graphics::TextureImage2dProxy *image)
+	void ContentManager::addDisposeTexture(graphics::TextureImage2d *image)
 	{
 		_disposeEntries.push_back(image);
 	}
@@ -274,8 +274,8 @@ namespace resources
 	void API_CALL ContentManager::loadImage(int id, llge::ITextureImage2d *textureImage)
 	{
 		const char *name = _files[id].c_str();
-		if (AtlasMap.loadImage(name, textureImage))
-			return;
+		//if (AtlasMap.loadImage(name, textureImage))
+		//	return;
 		graphics::Image2dData * image = loadUnregisteredTexture(name);
 		if (image)
 			textureImage->LoadPixels(image->Width, image->Height, (llge::TextureImage2dFormat)image->Format, image->Pixels);
@@ -337,12 +337,15 @@ namespace resources
 
 	void API_CALL ContentAtlasMap::resetMap()
 	{
+        /*
 		_pages.clear();
 		_rects.clear();
+         */
 	}
 
 	void API_CALL ContentAtlasMap::addRect(char* name, int pageIndex, int x, int y, int width, int height)
 	{
+        /*
 		ContentAtlasRect rect;
 		rect.PageIndex = pageIndex;
 		rect.Region.X = x;
@@ -360,6 +363,7 @@ namespace resources
 		if (_pages[rect.PageIndex].Height < h)
 			_pages[rect.PageIndex].Height = h;
 		_rects[name] = rect;
+         */
 	}
 	
 	struct PageRegion
@@ -381,6 +385,7 @@ namespace resources
 
 	void API_CALL ContentAtlasMap::loadTextures()
 	{
+        /*
 		std::vector<PageContainer *> pages;
 		pages.resize(_pages.size());
 		for (size_t i = 0; i < _pages.size(); i++)
@@ -434,19 +439,23 @@ namespace resources
 				delete pages[i]->RectFiles[j];
 			}
 		}
+         */
 	}
 	
 	bool ContentAtlasMap::loadImage(const char *name, llge::ITextureImage2d *textureImage)
 	{
+        return false;
+        /*
 		ContentAtlasRects::iterator it = _rects.find(name);
 		if (it == _rects.end())
 			return false;
-		graphics::TextureImage2dProxy* proxy = (graphics::TextureImage2dProxy*)textureImage->getTextureImageInstance();		
+		graphics::TextureImage2d* proxy = (graphics::TextureImage2dProxy*)textureImage->getTextureImageInstance();
 		proxy->setProxyInstance(_textures[it->second.PageIndex]);
 		proxy->X = ((float)it->second.Region.X + 0.5f) / (float)_pages[it->second.PageIndex].Width;
 		proxy->Y = ((float)it->second.Region.Y + 0.5f) / (float)_pages[it->second.PageIndex].Height;
 		proxy->W = ((float)it->second.Region.Width - 1.0f) / (float)_pages[it->second.PageIndex].Width;
 		proxy->H = ((float)it->second.Region.Height - 1.0f) / (float)_pages[it->second.PageIndex].Height;
 		return true;
+         */
 	}
 }

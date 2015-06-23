@@ -4,7 +4,7 @@
 
 void _spAtlasPage_createTexture(spAtlasPage* self, const char* path)
 {
-	graphics::TextureImage2dProxy* texture;
+	graphics::TextureImage2d* texture;
 	if (resources::ContentManager::_replaceSeparator)
 	{
 		std::string replace = path;
@@ -24,7 +24,7 @@ void _spAtlasPage_createTexture(spAtlasPage* self, const char* path)
 
 void _spAtlasPage_disposeTexture(spAtlasPage* self)
 {
-	graphics::TextureImage2dProxy* texture = (graphics::TextureImage2dProxy*)self->rendererObject;
+	graphics::TextureImage2d* texture = (graphics::TextureImage2d*)self->rendererObject;
 	resources::ContentManager::Default.addDisposeTexture(texture);
 }
 

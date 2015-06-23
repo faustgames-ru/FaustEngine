@@ -214,7 +214,7 @@ namespace graphics
 	int TextureImage2d::Size(0);
 
 	TextureImage2d TextureImage2d::_empty;
-
+/*
 	TextureImage2dProxy::TextureImage2dProxy()
 	{
 		_handle = 0;
@@ -251,9 +251,11 @@ namespace graphics
 	{
 		if (_isRealyProxy) return;
 		if (!_instance)
+        {
 			_instance = new TextureImage2d(false, true);
-		_instance->create();
-		_handle = _instance->getId();
+            _instance->create();
+        }
+        _handle = _instance->getId();
 		_instance->LoadPixels(width, height, format, pixels);
 	}
 
@@ -272,4 +274,5 @@ namespace graphics
 	{
 		delete this;
 	}
+ */
 }

@@ -8,7 +8,7 @@
 namespace graphics
 {
 
-	class TextureImage2d : public Texture//, public llge::ITextureImage2d
+	class TextureImage2d : public Texture, public llge::ITextureImage2d
 	{
 	public:
 		static int Size;
@@ -20,7 +20,7 @@ namespace graphics
 		void setData(int width, int height, Image2dFormat::e format, unsigned int *pixels);
 		static void createStatic();
 		static void cleanupStatic();
-
+        virtual IntPtr API_CALL getTextureImageInstance(){ return this; }
 		virtual ITexture* API_CALL getTexture(){ return this; }
 		virtual void API_CALL LoadPixels(int width, int height, llge::TextureImage2dFormat format, void *pixels);
 		virtual void API_CALL create();
@@ -36,7 +36,7 @@ namespace graphics
 		bool _filter;
 		int _size;
     };
-	
+	/*
 	class TextureImage2dProxy : public Texture, public llge::ITextureImage2d
 	{
 	public:
@@ -53,6 +53,7 @@ namespace graphics
 		TextureImage2d * _instance;
 		bool _isRealyProxy;
 	};
+     */
 }
 
 #endif /*TEXTURE_IMAGE_2D_H*/

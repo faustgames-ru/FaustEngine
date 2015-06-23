@@ -8,7 +8,7 @@ namespace resources
 	struct LoadImageEntry
 	{
 		std::string fileName;
-		graphics::TextureImage2dProxy *textureImage;
+		graphics::TextureImage2d *textureImage;
 	};
 
 	struct RectRegion
@@ -54,8 +54,8 @@ namespace resources
 		void cleanup();
 		unsigned int registerTexture(const char *name);
 		graphics::Image2dData * loadUnregisteredTexture(const char *name);
-		graphics::TextureImage2dProxy * addLoadTexture(const char *name);
-		void addDisposeTexture(graphics::TextureImage2dProxy *image);
+		graphics::TextureImage2d * addLoadTexture(const char *name);
+		void addDisposeTexture(graphics::TextureImage2d *image);
 		graphics::Image2dData * loadTexture(int id);
 		void open();
 		void close();
@@ -83,7 +83,7 @@ namespace resources
 	private:
 		std::vector<std::string> _files;
 		std::vector<LoadImageEntry> _loadEntries;
-		std::vector<graphics::TextureImage2dProxy *> _disposeEntries;
+		std::vector<graphics::TextureImage2d *> _disposeEntries;
 		graphics::Image2dData *_image;
 		bool _isOpened;
 		RectRegion _loadRegion;

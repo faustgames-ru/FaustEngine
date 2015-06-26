@@ -400,6 +400,7 @@ namespace llge
 		virtual int API_CALL registerImage(char * name) = 0;
 		virtual void API_CALL startLoad() = 0;
 		virtual void API_CALL loadImage(int id, ITextureImage2d *textureImage) = 0;
+		virtual void API_CALL reloadImages() = 0;
 		virtual ITextureBuffer2d * API_CALL loadBuffer(int id) = 0;
 		virtual void API_CALL finishLoad() = 0;
 		virtual bool API_CALL update() = 0;

@@ -19,6 +19,7 @@ namespace llge
 
 		virtual void API_CALL resetSamplers()
 		{
+			GraphicsDevice::Default.resetRenderState();
 			UniformValues::resetSamplers();
 		}
 		

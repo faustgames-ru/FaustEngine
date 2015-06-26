@@ -1,4 +1,4 @@
-﻿Build started 18.06.2015 14:36:54.
+﻿Build started 25.06.2015 16:13:19.
 Environment at start of build:
 ALLUSERSPROFILE = C:\ProgramData
 ANDROID_HOME = C:\NVPACK\android-sdk-windows
@@ -24,7 +24,7 @@ HOMEPATH = \Users\Kovalishin_A
 INTELMEDIASDK_WINSDK_PATH = C:\Program Files (x86)\Windows Kits\8.0
 JAVA_HOME = C:\NVPACK\jdk1.7.0_45
 LOCALAPPDATA = C:\Users\Kovalishin_A\AppData\Local
-LOGONSERVER = \\FOBOS
+LOGONSERVER = \\HYPERION
 MSBuildLoadMicrosoftTargetsReadOnly = true
 NDKROOT = C:\NVPACK\android-ndk-r10c
 NDK_ROOT = C:\NVPACK\android-ndk-r10c
@@ -773,7 +773,7 @@ LocalDebuggerSQLDebugging = False
 LocalDebuggerWorkingDirectory = C:\_faust\FaustEngine\FaustGames\Native\llge\
 LocalGPUDebuggerTargetType = {F4453496-1DB8-47F8-A7D5-31EBDDC2EC96}
 LocalizationDirectivesToLocFile = None
-LOGONSERVER = \\FOBOS
+LOGONSERVER = \\HYPERION
 ManagedAssembly = false
 ManagedIncrementalBuildProcessDependencyGraphAfterTarget = 
       ClCompile
@@ -821,7 +821,7 @@ MSBuildProjectFile = llge.vcxproj
 MSBuildProjectFullPath = C:\_faust\FaustEngine\FaustGames\Native\llge\llge.vcxproj
 MSBuildProjectName = llge
 MSBuildRuntimeVersion = 4.0.30319
-MSBuildStartupDirectory = C:\Windows\System32
+MSBuildStartupDirectory = C:\_faust\FaustEngine\FaustGames\Native\llge.android
 MSBuildToolsPath = C:\Program Files (x86)\MSBuild\12.0\bin
 MSBuildToolsPath32 = C:\Program Files (x86)\MSBuild\12.0\bin\
 MSBuildToolsRoot = C:\Program Files (x86)\MSBuild\
@@ -6899,8 +6899,8 @@ Task "CL" (TaskId:17)
   Task Parameter:ToolArchitecture=Native32Bit (TaskId:17)
   Task Parameter:DeleteOutputOnExecute=True (TaskId:17)
   Task Parameter:YieldDuringToolExecution=True (TaskId:17)
-  Using cached input dependency table built from: (TaskId:17)
-  	C:\_faust\FaustEngine\FaustGames\Native\llge\Debug\llge.tlog\cl.read.1.tlog (TaskId:17)
+  Read Tracking Logs: (TaskId:17)
+  	Debug\llge.tlog\cl.read.1.tlog (TaskId:17)
   Outputs for C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\GEN\LLGEPINVOKE.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DLLMAIN.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\STDAFX.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\CORE\BASICTEST.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\CORE\HOLLOWSALLOCATIONPOLICY.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\CORE\MATH.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\CORE\MATRIX.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\CORE\SYSTEMALLOCATIONPOLICY.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\DRAWING\BATCHER.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\DRAWING\CAMERA.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\DRAWING\POSTPROCESS.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\DRAWING\RENDERER2D.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\DRAWING\RENDERITEM2D.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\DRAWING\RENDERMESH2D.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\DRAWING\WATERRENDERER.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\ENTITIES\AABB2DCOMPONENT.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\ENTITIES\COMPONENT.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\ENTITIES\DUMMYENTITIESFILTER.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\ENTITIES\ENTITIESFILTER.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\ENTITIES\ENTITIESWORLD.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\ENTITIES\ENTITY.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\ENTITIES\MATRIXTRANSFORMCOMPONENT.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\ENTITIES\QUADTREEENTITIESFILTER.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\ENTITIES\RENDER2DCOMPONENT.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\ENTITIES\RENDERSYSTEM2D.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\ENTITIES\SYSTEM.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\ENTITIES\TRANSFORM2DCOMPONENT.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\ENTITIES\TRANSFORMSYSTEM2D.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\EXPORTS\LLGE.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\EXPORTS\LLGEDRAWING.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\EXPORTS\LLGEENTITIES.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\EXPORTS\LLGEGEOMETRY.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\EXPORTS\LLGEGRAPHICS.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\EXPORTS\LLGERESOURCES.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GEOMETRY\AABB2D.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GEOMETRY\QUADTREE2D.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GEOMETRY\QUADTREE2DNODE.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\ATTRIBUTEINFO.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\ATTRIBUTES.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\COLOR.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\EFFECT.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\EFFECTBASE.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\EFFECTCONSTANT.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\EFFECTRENDERDEPTH.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\EFFECTS.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\EFFECTSOLID.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\EFFECTSOLIDCOLOR.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\EFFECTSPOSTPROCESS.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\EFFECTTEXTURECOLOR.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\EFFECTTEXTURELIGHTMAPCOLOR.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\EFFECTWATER.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\ERRORS.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\GRAPHICSDEVICE.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\IMAGE2DDATA.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\RENDERCONVERTER.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\RENDERSTATE.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\STATICBATCH.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\TEXTURE.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\TEXTURECUBEMAP.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\TEXTUREIMAGE2D.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\TEXTURELOADER.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\TEXTURERENDERTARGET2D.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\TEXTURERENDERTARGETDEPTH2D.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\UNIFORM.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\UNIFORMINFO.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\UNIFORMS.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\UNIFORMVALUE.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\UNIFORMVALUECUBEMAP.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\UNIFORMVALUEFLOAT.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\UNIFORMVALUEMATRIX.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\UNIFORMVALUETEXTURE.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\UNIFORMVALUEVECTOR3.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\VERTEXBUFFER.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\VERTEXFORMAT.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\VERTEXFORMATS.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\RESOURCES\CONTENTMANAGER.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\RESOURCES\CONTENTPROVIDEROBB.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\RESOURCES\CONTENTPROVIDERWINDOWS.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\SPINE\SPINE.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\SPINE\SPINEANIMATIONSTATE.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\SPINE\SPINEANIMATIONSTATEDATA.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\SPINE\SPINESKELETON.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\SPINE\SPINESKELETONANIMATION.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\SPINE\SPINESKELETONRESOURCE.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\TESTS\TESTSTANDARTALLOCATIONS.CPP: (TaskId:17)
   	C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\LLGEPINVOKE.OBJ (TaskId:17)
   	C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\BASICTEST.OBJ (TaskId:17)
@@ -6987,16 +6987,185 @@ Task "CL" (TaskId:17)
   	C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\TESTSTANDARTALLOCATIONS.OBJ (TaskId:17)
   	C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\DLLMAIN.OBJ (TaskId:17)
   	C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\STDAFX.OBJ (TaskId:17)
-  ..\src\resources\ContentManager.cpp will be compiled as C:\_faust\FaustEngine\FaustGames\Native\src\resources\ContentManager.cpp was modified at 18.06.2015 14:36:28. (TaskId:17)
+  ..\..\CommonSources\gen\llgePInvoke.cpp will be compiled as C:\_faust\FaustEngine\FaustGames\CommonSources\gen\llgePInvoke.cpp was modified at 25.06.2015 14:51:44. (TaskId:17)
+  ..\src\drawing\Batcher.cpp will be compiled as C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\INCLUDE\LLGE.H was modified at 25.06.2015 14:51:33. (TaskId:17)
+  ..\src\drawing\Camera.cpp will be compiled as C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\INCLUDE\LLGE.H was modified at 25.06.2015 14:51:33. (TaskId:17)
+  ..\src\drawing\PostProcess.cpp will be compiled as C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\INCLUDE\LLGE.H was modified at 25.06.2015 14:51:33. (TaskId:17)
+  ..\src\drawing\RenderItem2d.cpp will be compiled as C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\INCLUDE\LLGE.H was modified at 25.06.2015 14:51:33. (TaskId:17)
+  ..\src\drawing\RenderMesh2d.cpp will be compiled as C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\INCLUDE\LLGE.H was modified at 25.06.2015 14:51:33. (TaskId:17)
+  ..\src\drawing\Renderer2d.cpp will be compiled as C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\INCLUDE\LLGE.H was modified at 25.06.2015 14:51:33. (TaskId:17)
+  ..\src\drawing\WaterRenderer.cpp will be compiled as C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\INCLUDE\LLGE.H was modified at 25.06.2015 14:51:33. (TaskId:17)
+  ..\src\entities\Aabb2dComponent.cpp will be compiled as C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\INCLUDE\LLGE.H was modified at 25.06.2015 14:51:33. (TaskId:17)
+  ..\src\entities\Component.cpp will be compiled as C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\INCLUDE\LLGE.H was modified at 25.06.2015 14:51:33. (TaskId:17)
+  ..\src\entities\DummyEntitiesFilter.cpp will be compiled as C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\INCLUDE\LLGE.H was modified at 25.06.2015 14:51:33. (TaskId:17)
+  ..\src\entities\EntitiesFilter.cpp will be compiled as C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\INCLUDE\LLGE.H was modified at 25.06.2015 14:51:33. (TaskId:17)
+  ..\src\entities\EntitiesWorld.cpp will be compiled as C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\INCLUDE\LLGE.H was modified at 25.06.2015 14:51:33. (TaskId:17)
+  ..\src\entities\Entity.cpp will be compiled as C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\INCLUDE\LLGE.H was modified at 25.06.2015 14:51:33. (TaskId:17)
+  ..\src\entities\MatrixTransformComponent.cpp will be compiled as C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\INCLUDE\LLGE.H was modified at 25.06.2015 14:51:33. (TaskId:17)
+  ..\src\entities\QuadtreeEntitiesFilter.cpp will be compiled as C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\INCLUDE\LLGE.H was modified at 25.06.2015 14:51:33. (TaskId:17)
+  ..\src\entities\Render2dComponent.cpp will be compiled as C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\INCLUDE\LLGE.H was modified at 25.06.2015 14:51:33. (TaskId:17)
+  ..\src\entities\RenderSystem2d.cpp will be compiled as C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\INCLUDE\LLGE.H was modified at 25.06.2015 14:51:33. (TaskId:17)
+  ..\src\entities\System.cpp will be compiled as C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\INCLUDE\LLGE.H was modified at 25.06.2015 14:51:33. (TaskId:17)
+  ..\src\entities\Transform2dComponent.cpp will be compiled as C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\INCLUDE\LLGE.H was modified at 25.06.2015 14:51:33. (TaskId:17)
+  ..\src\entities\TransformSystem2d.cpp will be compiled as C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\INCLUDE\LLGE.H was modified at 25.06.2015 14:51:33. (TaskId:17)
+  ..\src\exports\llge.cpp will be compiled as C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\INCLUDE\LLGE.H was modified at 25.06.2015 14:51:33. (TaskId:17)
+  ..\src\exports\llgeDrawing.cpp will be compiled as C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\INCLUDE\LLGE.H was modified at 25.06.2015 14:51:33. (TaskId:17)
+  ..\src\exports\llgeEntities.cpp will be compiled as C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\INCLUDE\LLGE.H was modified at 25.06.2015 14:51:33. (TaskId:17)
+  ..\src\exports\llgeGeometry.cpp will be compiled as C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\INCLUDE\LLGE.H was modified at 25.06.2015 14:51:33. (TaskId:17)
+  ..\src\exports\llgeGraphics.cpp will be compiled as C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\INCLUDE\LLGE.H was modified at 25.06.2015 14:51:33. (TaskId:17)
+  ..\src\exports\llgeResources.cpp will be compiled as C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\INCLUDE\LLGE.H was modified at 25.06.2015 14:51:33. (TaskId:17)
+  ..\src\graphics\AttributeInfo.cpp will be compiled as C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\INCLUDE\LLGE.H was modified at 25.06.2015 14:51:33. (TaskId:17)
+  ..\src\graphics\Attributes.cpp will be compiled as C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\INCLUDE\LLGE.H was modified at 25.06.2015 14:51:33. (TaskId:17)
+  ..\src\graphics\Color.cpp will be compiled as C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\INCLUDE\LLGE.H was modified at 25.06.2015 14:51:33. (TaskId:17)
+  ..\src\graphics\Effect.cpp will be compiled as C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\INCLUDE\LLGE.H was modified at 25.06.2015 14:51:33. (TaskId:17)
+  ..\src\graphics\EffectBase.cpp will be compiled as C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\INCLUDE\LLGE.H was modified at 25.06.2015 14:51:33. (TaskId:17)
+  ..\src\graphics\EffectConstant.cpp will be compiled as C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\INCLUDE\LLGE.H was modified at 25.06.2015 14:51:33. (TaskId:17)
+  ..\src\graphics\EffectRenderDepth.cpp will be compiled as C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\INCLUDE\LLGE.H was modified at 25.06.2015 14:51:33. (TaskId:17)
+  ..\src\graphics\EffectSolid.cpp will be compiled as C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\INCLUDE\LLGE.H was modified at 25.06.2015 14:51:33. (TaskId:17)
+  ..\src\graphics\EffectSolidColor.cpp will be compiled as C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\INCLUDE\LLGE.H was modified at 25.06.2015 14:51:33. (TaskId:17)
+  ..\src\graphics\EffectTextureColor.cpp will be compiled as C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\INCLUDE\LLGE.H was modified at 25.06.2015 14:51:33. (TaskId:17)
+  ..\src\graphics\EffectTextureLightMapColor.cpp will be compiled as C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\INCLUDE\LLGE.H was modified at 25.06.2015 14:51:33. (TaskId:17)
+  ..\src\graphics\EffectWater.cpp will be compiled as C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\INCLUDE\LLGE.H was modified at 25.06.2015 14:51:33. (TaskId:17)
+  ..\src\graphics\Effects.cpp will be compiled as C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\INCLUDE\LLGE.H was modified at 25.06.2015 14:51:33. (TaskId:17)
+  ..\src\graphics\EffectsPostProcess.cpp will be compiled as C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\INCLUDE\LLGE.H was modified at 25.06.2015 14:51:33. (TaskId:17)
+  ..\src\graphics\Errors.cpp will be compiled as C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\INCLUDE\LLGE.H was modified at 25.06.2015 14:51:33. (TaskId:17)
+  ..\src\graphics\GraphicsDevice.cpp will be compiled as C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\INCLUDE\LLGE.H was modified at 25.06.2015 14:51:33. (TaskId:17)
+  ..\src\graphics\Image2dData.cpp will be compiled as C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\INCLUDE\LLGE.H was modified at 25.06.2015 14:51:33. (TaskId:17)
+  ..\src\graphics\RenderConverter.cpp will be compiled as C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\INCLUDE\LLGE.H was modified at 25.06.2015 14:51:33. (TaskId:17)
+  ..\src\graphics\RenderState.cpp will be compiled as C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\INCLUDE\LLGE.H was modified at 25.06.2015 14:51:33. (TaskId:17)
+  ..\src\graphics\StaticBatch.cpp will be compiled as C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\INCLUDE\LLGE.H was modified at 25.06.2015 14:51:33. (TaskId:17)
+  ..\src\graphics\Texture.cpp will be compiled as C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\INCLUDE\LLGE.H was modified at 25.06.2015 14:51:33. (TaskId:17)
+  ..\src\graphics\TextureCubemap.cpp will be compiled as C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\INCLUDE\LLGE.H was modified at 25.06.2015 14:51:33. (TaskId:17)
+  ..\src\graphics\TextureImage2d.cpp will be compiled as C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\INCLUDE\LLGE.H was modified at 25.06.2015 14:51:33. (TaskId:17)
+  ..\src\graphics\TextureLoader.cpp will be compiled as C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\INCLUDE\LLGE.H was modified at 25.06.2015 14:51:33. (TaskId:17)
+  ..\src\graphics\TextureRenderTarget2d.cpp will be compiled as C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\INCLUDE\LLGE.H was modified at 25.06.2015 14:51:33. (TaskId:17)
+  ..\src\graphics\TextureRenderTargetDepth2d.cpp will be compiled as C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\INCLUDE\LLGE.H was modified at 25.06.2015 14:51:33. (TaskId:17)
+  ..\src\graphics\Uniform.cpp will be compiled as C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\INCLUDE\LLGE.H was modified at 25.06.2015 14:51:33. (TaskId:17)
+  ..\src\graphics\UniformInfo.cpp will be compiled as C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\INCLUDE\LLGE.H was modified at 25.06.2015 14:51:33. (TaskId:17)
+  ..\src\graphics\UniformValue.cpp will be compiled as C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\INCLUDE\LLGE.H was modified at 25.06.2015 14:51:33. (TaskId:17)
+  ..\src\graphics\UniformValueCubemap.cpp will be compiled as C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\INCLUDE\LLGE.H was modified at 25.06.2015 14:51:33. (TaskId:17)
+  ..\src\graphics\UniformValueFloat.cpp will be compiled as C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\INCLUDE\LLGE.H was modified at 25.06.2015 14:51:33. (TaskId:17)
+  ..\src\graphics\UniformValueMatrix.cpp will be compiled as C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\INCLUDE\LLGE.H was modified at 25.06.2015 14:51:33. (TaskId:17)
+  ..\src\graphics\UniformValueTexture.cpp will be compiled as C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\INCLUDE\LLGE.H was modified at 25.06.2015 14:51:33. (TaskId:17)
+  ..\src\graphics\UniformValueVector3.cpp will be compiled as C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\INCLUDE\LLGE.H was modified at 25.06.2015 14:51:33. (TaskId:17)
+  ..\src\graphics\Uniforms.cpp will be compiled as C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\INCLUDE\LLGE.H was modified at 25.06.2015 14:51:33. (TaskId:17)
+  ..\src\graphics\VertexBuffer.cpp will be compiled as C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\INCLUDE\LLGE.H was modified at 25.06.2015 14:51:33. (TaskId:17)
+  ..\src\graphics\VertexFormat.cpp will be compiled as C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\INCLUDE\LLGE.H was modified at 25.06.2015 14:51:33. (TaskId:17)
+  ..\src\graphics\VertexFormats.cpp will be compiled as C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\INCLUDE\LLGE.H was modified at 25.06.2015 14:51:33. (TaskId:17)
+  ..\src\resources\ContentManager.cpp will be compiled as C:\_faust\FaustEngine\FaustGames\Native\src\resources\ContentManager.cpp was modified at 25.06.2015 14:51:19. (TaskId:17)
+  ..\src\resources\ContentProviderObb.cpp will be compiled as C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\INCLUDE\LLGE.H was modified at 25.06.2015 14:51:33. (TaskId:17)
+  ..\src\resources\ContentProviderWindows.cpp will be compiled as C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\INCLUDE\LLGE.H was modified at 25.06.2015 14:51:33. (TaskId:17)
+  ..\src\spine\SpineAnimationState.cpp will be compiled as C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\INCLUDE\LLGE.H was modified at 25.06.2015 14:51:33. (TaskId:17)
+  ..\src\spine\SpineAnimationStateData.cpp will be compiled as C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\INCLUDE\LLGE.H was modified at 25.06.2015 14:51:33. (TaskId:17)
+  ..\src\spine\SpineSkeleton.cpp will be compiled as C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\INCLUDE\LLGE.H was modified at 25.06.2015 14:51:33. (TaskId:17)
+  ..\src\spine\SpineSkeletonAnimation.cpp will be compiled as C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\INCLUDE\LLGE.H was modified at 25.06.2015 14:51:33. (TaskId:17)
+  ..\src\spine\SpineSkeletonResource.cpp will be compiled as C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\INCLUDE\LLGE.H was modified at 25.06.2015 14:51:33. (TaskId:17)
+  ..\src\spine\spine.cpp will be compiled as C:\_faust\FaustEngine\FaustGames\Native\src\spine\spine.cpp was modified at 25.06.2015 14:49:14. (TaskId:17)
   Environment Variables passed to tool: (TaskId:17)
-    VS_UNICODE_OUTPUT=1192 (TaskId:17)
-  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I..\include /I..\..\CommonSources\include /I..\src\resources\zlib /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _USRDLL /D LLGE_EXPORTS /D LIBPNG_EXPORTS /D _CRT_SECURE_NO_WARNINGS /D _WINDLL /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt ..\src\resources\ContentManager.cpp (TaskId:17)
+    VS_UNICODE_OUTPUT=1252 (TaskId:17)
+  C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I..\include /I..\..\CommonSources\include /I..\src\resources\zlib /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _USRDLL /D LLGE_EXPORTS /D LIBPNG_EXPORTS /D _CRT_SECURE_NO_WARNINGS /D _WINDLL /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt ..\..\CommonSources\gen\llgePInvoke.cpp ..\src\drawing\Batcher.cpp ..\src\drawing\Camera.cpp ..\src\drawing\PostProcess.cpp ..\src\drawing\RenderItem2d.cpp ..\src\drawing\RenderMesh2d.cpp ..\src\drawing\Renderer2d.cpp ..\src\drawing\WaterRenderer.cpp ..\src\entities\Aabb2dComponent.cpp ..\src\entities\Component.cpp ..\src\entities\DummyEntitiesFilter.cpp ..\src\entities\EntitiesFilter.cpp ..\src\entities\EntitiesWorld.cpp ..\src\entities\Entity.cpp ..\src\entities\MatrixTransformComponent.cpp ..\src\entities\QuadtreeEntitiesFilter.cpp ..\src\entities\Render2dComponent.cpp ..\src\entities\RenderSystem2d.cpp ..\src\entities\System.cpp ..\src\entities\Transform2dComponent.cpp ..\src\entities\TransformSystem2d.cpp ..\src\exports\llge.cpp ..\src\exports\llgeDrawing.cpp ..\src\exports\llgeEntities.cpp ..\src\exports\llgeGeometry.cpp ..\src\exports\llgeGraphics.cpp ..\src\exports\llgeResources.cpp ..\src\graphics\AttributeInfo.cpp ..\src\graphics\Attributes.cpp ..\src\graphics\Color.cpp ..\src\graphics\Effect.cpp ..\src\graphics\EffectBase.cpp ..\src\graphics\EffectConstant.cpp ..\src\graphics\EffectRenderDepth.cpp ..\src\graphics\EffectSolid.cpp ..\src\graphics\EffectSolidColor.cpp ..\src\graphics\EffectTextureColor.cpp ..\src\graphics\EffectTextureLightMapColor.cpp ..\src\graphics\EffectWater.cpp ..\src\graphics\Effects.cpp ..\src\graphics\EffectsPostProcess.cpp ..\src\graphics\Errors.cpp ..\src\graphics\GraphicsDevice.cpp ..\src\graphics\Image2dData.cpp ..\src\graphics\RenderConverter.cpp ..\src\graphics\RenderState.cpp ..\src\graphics\StaticBatch.cpp ..\src\graphics\Texture.cpp ..\src\graphics\TextureCubemap.cpp ..\src\graphics\TextureImage2d.cpp ..\src\graphics\TextureLoader.cpp ..\src\graphics\TextureRenderTarget2d.cpp ..\src\graphics\TextureRenderTargetDepth2d.cpp ..\src\graphics\Uniform.cpp ..\src\graphics\UniformInfo.cpp ..\src\graphics\UniformValue.cpp ..\src\graphics\UniformValueCubemap.cpp ..\src\graphics\UniformValueFloat.cpp ..\src\graphics\UniformValueMatrix.cpp ..\src\graphics\UniformValueTexture.cpp ..\src\graphics\UniformValueVector3.cpp ..\src\graphics\Uniforms.cpp ..\src\graphics\VertexBuffer.cpp ..\src\graphics\VertexFormat.cpp ..\src\graphics\VertexFormats.cpp ..\src\resources\ContentManager.cpp ..\src\resources\ContentProviderObb.cpp ..\src\resources\ContentProviderWindows.cpp ..\src\spine\SpineAnimationState.cpp ..\src\spine\SpineAnimationStateData.cpp ..\src\spine\SpineSkeleton.cpp ..\src\spine\SpineSkeletonAnimation.cpp ..\src\spine\SpineSkeletonResource.cpp ..\src\spine\spine.cpp (TaskId:17)
   Tracking command: (TaskId:17)
-  C:\Program Files (x86)\MSBuild\12.0\bin\Tracker.exe /d "C:\Program Files (x86)\MSBuild\12.0\bin\FileTracker.dll" /i C:\_faust\FaustEngine\FaustGames\Native\llge\Debug\llge.tlog /r C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\RESOURCES\CONTENTMANAGER.CPP /b MSBuildConsole_CancelEvent77b16480b7f64dfeacd39b3546fa0ab9  /c "C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe"  /c /I..\include /I..\..\CommonSources\include /I..\src\resources\zlib /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _USRDLL /D LLGE_EXPORTS /D LIBPNG_EXPORTS /D _CRT_SECURE_NO_WARNINGS /D _WINDLL /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt ..\src\resources\ContentManager.cpp (TaskId:17)
+  C:\Program Files (x86)\MSBuild\12.0\bin\Tracker.exe /d "C:\Program Files (x86)\MSBuild\12.0\bin\FileTracker.dll" /i C:\_faust\FaustEngine\FaustGames\Native\llge\Debug\llge.tlog /r "C:\_FAUST\FAUSTENGINE\FAUSTGAMES\COMMONSOURCES\GEN\LLGEPINVOKE.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\DRAWING\BATCHER.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\DRAWING\CAMERA.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\DRAWING\POSTPROCESS.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\DRAWING\RENDERER2D.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\DRAWING\RENDERITEM2D.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\DRAWING\RENDERMESH2D.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\DRAWING\WATERRENDERER.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\ENTITIES\AABB2DCOMPONENT.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\ENTITIES\COMPONENT.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\ENTITIES\DUMMYENTITIESFILTER.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\ENTITIES\ENTITIESFILTER.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\ENTITIES\ENTITIESWORLD.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\ENTITIES\ENTITY.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\ENTITIES\MATRIXTRANSFORMCOMPONENT.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\ENTITIES\QUADTREEENTITIESFILTER.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\ENTITIES\RENDER2DCOMPONENT.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\ENTITIES\RENDERSYSTEM2D.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\ENTITIES\SYSTEM.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\ENTITIES\TRANSFORM2DCOMPONENT.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\ENTITIES\TRANSFORMSYSTEM2D.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\EXPORTS\LLGE.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\EXPORTS\LLGEDRAWING.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\EXPORTS\LLGEENTITIES.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\EXPORTS\LLGEGEOMETRY.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\EXPORTS\LLGEGRAPHICS.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\EXPORTS\LLGERESOURCES.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\ATTRIBUTEINFO.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\ATTRIBUTES.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\COLOR.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\EFFECT.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\EFFECTBASE.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\EFFECTCONSTANT.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\EFFECTRENDERDEPTH.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\EFFECTS.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\EFFECTSOLID.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\EFFECTSOLIDCOLOR.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\EFFECTSPOSTPROCESS.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\EFFECTTEXTURECOLOR.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\EFFECTTEXTURELIGHTMAPCOLOR.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\EFFECTWATER.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\ERRORS.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\GRAPHICSDEVICE.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\IMAGE2DDATA.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\RENDERCONVERTER.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\RENDERSTATE.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\STATICBATCH.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\TEXTURE.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\TEXTURECUBEMAP.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\TEXTUREIMAGE2D.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\TEXTURELOADER.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\TEXTURERENDERTARGET2D.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\TEXTURERENDERTARGETDEPTH2D.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\UNIFORM.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\UNIFORMINFO.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\UNIFORMS.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\UNIFORMVALUE.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\UNIFORMVALUECUBEMAP.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\UNIFORMVALUEFLOAT.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\UNIFORMVALUEMATRIX.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\UNIFORMVALUETEXTURE.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\UNIFORMVALUEVECTOR3.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\VERTEXBUFFER.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\VERTEXFORMAT.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\GRAPHICS\VERTEXFORMATS.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\RESOURCES\CONTENTMANAGER.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\RESOURCES\CONTENTPROVIDEROBB.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\RESOURCES\CONTENTPROVIDERWINDOWS.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\SPINE\SPINE.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\SPINE\SPINEANIMATIONSTATE.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\SPINE\SPINEANIMATIONSTATEDATA.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\SPINE\SPINESKELETON.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\SPINE\SPINESKELETONANIMATION.CPP|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\SRC\SPINE\SPINESKELETONRESOURCE.CPP" /b MSBuildConsole_CancelEvent24009e9e4ec94e04896809961b29cd43  /c "C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe"  /c /I..\include /I..\..\CommonSources\include /I..\src\resources\zlib /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _USRDLL /D LLGE_EXPORTS /D LIBPNG_EXPORTS /D _CRT_SECURE_NO_WARNINGS /D _WINDLL /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt ..\..\CommonSources\gen\llgePInvoke.cpp ..\src\drawing\Batcher.cpp ..\src\drawing\Camera.cpp ..\src\drawing\PostProcess.cpp ..\src\drawing\RenderItem2d.cpp ..\src\drawing\RenderMesh2d.cpp ..\src\drawing\Renderer2d.cpp ..\src\drawing\WaterRenderer.cpp ..\src\entities\Aabb2dComponent.cpp ..\src\entities\Component.cpp ..\src\entities\DummyEntitiesFilter.cpp ..\src\entities\EntitiesFilter.cpp ..\src\entities\EntitiesWorld.cpp ..\src\entities\Entity.cpp ..\src\entities\MatrixTransformComponent.cpp ..\src\entities\QuadtreeEntitiesFilter.cpp ..\src\entities\Render2dComponent.cpp ..\src\entities\RenderSystem2d.cpp ..\src\entities\System.cpp ..\src\entities\Transform2dComponent.cpp ..\src\entities\TransformSystem2d.cpp ..\src\exports\llge.cpp ..\src\exports\llgeDrawing.cpp ..\src\exports\llgeEntities.cpp ..\src\exports\llgeGeometry.cpp ..\src\exports\llgeGraphics.cpp ..\src\exports\llgeResources.cpp ..\src\graphics\AttributeInfo.cpp ..\src\graphics\Attributes.cpp ..\src\graphics\Color.cpp ..\src\graphics\Effect.cpp ..\src\graphics\EffectBase.cpp ..\src\graphics\EffectConstant.cpp ..\src\graphics\EffectRenderDepth.cpp ..\src\graphics\EffectSolid.cpp ..\src\graphics\EffectSolidColor.cpp ..\src\graphics\EffectTextureColor.cpp ..\src\graphics\EffectTextureLightMapColor.cpp ..\src\graphics\EffectWater.cpp ..\src\graphics\Effects.cpp ..\src\graphics\EffectsPostProcess.cpp ..\src\graphics\Errors.cpp ..\src\graphics\GraphicsDevice.cpp ..\src\graphics\Image2dData.cpp ..\src\graphics\RenderConverter.cpp ..\src\graphics\RenderState.cpp ..\src\graphics\StaticBatch.cpp ..\src\graphics\Texture.cpp ..\src\graphics\TextureCubemap.cpp ..\src\graphics\TextureImage2d.cpp ..\src\graphics\TextureLoader.cpp ..\src\graphics\TextureRenderTarget2d.cpp ..\src\graphics\TextureRenderTargetDepth2d.cpp ..\src\graphics\Uniform.cpp ..\src\graphics\UniformInfo.cpp ..\src\graphics\UniformValue.cpp ..\src\graphics\UniformValueCubemap.cpp ..\src\graphics\UniformValueFloat.cpp ..\src\graphics\UniformValueMatrix.cpp ..\src\graphics\UniformValueTexture.cpp ..\src\graphics\UniformValueVector3.cpp ..\src\graphics\Uniforms.cpp ..\src\graphics\VertexBuffer.cpp ..\src\graphics\VertexFormat.cpp ..\src\graphics\VertexFormats.cpp ..\src\resources\ContentManager.cpp ..\src\resources\ContentProviderObb.cpp ..\src\resources\ContentProviderWindows.cpp ..\src\spine\SpineAnimationState.cpp ..\src\spine\SpineAnimationStateData.cpp ..\src\spine\SpineSkeleton.cpp ..\src\spine\SpineSkeletonAnimation.cpp ..\src\spine\SpineSkeletonResource.cpp ..\src\spine\spine.cpp (TaskId:17)
+  spine.cpp (TaskId:17)
+c:\_faust\faustengine\faustgames\native\src\spine\spine.cpp(11): warning C4018: '<' : signed/unsigned mismatch
   ContentManager.cpp (TaskId:17)
-c:\_faust\faustengine\faustgames\native\src\resources\contentmanager.cpp(249): warning C4018: '<' : signed/unsigned mismatch
 c:\_faust\faustengine\faustgames\native\src\resources\contentmanager.cpp(261): warning C4018: '<' : signed/unsigned mismatch
-c:\_faust\faustengine\faustgames\native\src\resources\contentmanager.cpp(352): warning C4018: '>=' : signed/unsigned mismatch
+c:\_faust\faustengine\faustgames\native\src\resources\contentmanager.cpp(273): warning C4018: '<' : signed/unsigned mismatch
+  llgePInvoke.cpp (TaskId:17)
+  Generating Code... (TaskId:17)
+  Compiling... (TaskId:17)
+  SpineSkeletonResource.cpp (TaskId:17)
+c:\_faust\faustengine\faustgames\native\src\spine\spineskeletonresource.cpp(37): warning C4018: '<' : signed/unsigned mismatch
+c:\_faust\faustengine\faustgames\native\src\spine\spineskeletonresource.cpp(43): warning C4018: '<' : signed/unsigned mismatch
+c:\_faust\faustengine\faustgames\native\src\spine\spineskeletonresource.cpp(62): warning C4018: '<' : signed/unsigned mismatch
+c:\_faust\faustengine\faustgames\native\src\spine\spineskeletonresource.cpp(67): warning C4018: '<' : signed/unsigned mismatch
+  SpineSkeletonAnimation.cpp (TaskId:17)
+  SpineSkeleton.cpp (TaskId:17)
+  SpineAnimationStateData.cpp (TaskId:17)
+  SpineAnimationState.cpp (TaskId:17)
+c:\_faust\faustengine\faustgames\native\src\spine\spineanimationstate.cpp(46): warning C4101: 'previousDelta' : unreferenced local variable
+  llgeResources.cpp (TaskId:17)
+  llge.cpp (TaskId:17)
+  Generating Code... (TaskId:17)
+  Compiling... (TaskId:17)
+  EffectRenderDepth.cpp (TaskId:17)
+  Generating Code... (TaskId:17)
+  Compiling... (TaskId:17)
+  EffectSolid.cpp (TaskId:17)
+  Generating Code... (TaskId:17)
+  Compiling... (TaskId:17)
+  EffectSolidColor.cpp (TaskId:17)
+  Generating Code... (TaskId:17)
+  Compiling... (TaskId:17)
+  EffectTextureColor.cpp (TaskId:17)
+  Generating Code... (TaskId:17)
+  Compiling... (TaskId:17)
+  EffectTextureLightMapColor.cpp (TaskId:17)
+  Generating Code... (TaskId:17)
+  Compiling... (TaskId:17)
+  EffectWater.cpp (TaskId:17)
+  Generating Code... (TaskId:17)
+  Compiling... (TaskId:17)
+  EffectsPostProcess.cpp (TaskId:17)
+  Generating Code... (TaskId:17)
+  Skipping... (no relevant changes detected) (TaskId:17)
+  ContentProviderWindows.cpp (TaskId:17)
+  ContentProviderObb.cpp (TaskId:17)
+  VertexFormats.cpp (TaskId:17)
+  VertexFormat.cpp (TaskId:17)
+  VertexBuffer.cpp (TaskId:17)
+  Uniforms.cpp (TaskId:17)
+  UniformValueVector3.cpp (TaskId:17)
+  UniformValueTexture.cpp (TaskId:17)
+  UniformValueMatrix.cpp (TaskId:17)
+  UniformValueFloat.cpp (TaskId:17)
+  UniformValueCubemap.cpp (TaskId:17)
+  UniformValue.cpp (TaskId:17)
+  UniformInfo.cpp (TaskId:17)
+  Uniform.cpp (TaskId:17)
+  TextureRenderTargetDepth2d.cpp (TaskId:17)
+  TextureRenderTarget2d.cpp (TaskId:17)
+  TextureLoader.cpp (TaskId:17)
+  TextureImage2d.cpp (TaskId:17)
+  TextureCubemap.cpp (TaskId:17)
+  Texture.cpp (TaskId:17)
+  StaticBatch.cpp (TaskId:17)
+  RenderState.cpp (TaskId:17)
+  RenderConverter.cpp (TaskId:17)
+  Image2dData.cpp (TaskId:17)
+  GraphicsDevice.cpp (TaskId:17)
+  Errors.cpp (TaskId:17)
+  Effects.cpp (TaskId:17)
+  EffectConstant.cpp (TaskId:17)
+  EffectBase.cpp (TaskId:17)
+  Effect.cpp (TaskId:17)
+  Color.cpp (TaskId:17)
+  Attributes.cpp (TaskId:17)
+  AttributeInfo.cpp (TaskId:17)
+  llgeGraphics.cpp (TaskId:17)
+  llgeGeometry.cpp (TaskId:17)
+  llgeEntities.cpp (TaskId:17)
+  llgeDrawing.cpp (TaskId:17)
+  TransformSystem2d.cpp (TaskId:17)
+  Transform2dComponent.cpp (TaskId:17)
+  System.cpp (TaskId:17)
+  RenderSystem2d.cpp (TaskId:17)
+  Render2dComponent.cpp (TaskId:17)
+  QuadtreeEntitiesFilter.cpp (TaskId:17)
+  MatrixTransformComponent.cpp (TaskId:17)
+  Entity.cpp (TaskId:17)
+  EntitiesWorld.cpp (TaskId:17)
+  EntitiesFilter.cpp (TaskId:17)
+  DummyEntitiesFilter.cpp (TaskId:17)
+  Component.cpp (TaskId:17)
+  Aabb2dComponent.cpp (TaskId:17)
+  WaterRenderer.cpp (TaskId:17)
+  Renderer2d.cpp (TaskId:17)
+  RenderMesh2d.cpp (TaskId:17)
+  RenderItem2d.cpp (TaskId:17)
+  PostProcess.cpp (TaskId:17)
+  Camera.cpp (TaskId:17)
+  Batcher.cpp (TaskId:17)
 Done executing task "CL". (TaskId:17)
 Task "CL" (TaskId:18)
   Task Parameter:BuildingInIde=True (TaskId:18)
@@ -17589,10 +17758,10 @@ Task "Link" (TaskId:27)
   	C:\WORK\SOURCES\GITHUB\MOON\SOLUTIONS\DEBUG\LLGE.ILK (TaskId:27)
   	C:\WORK\SOURCES\GITHUB\MOON\SOLUTIONS\DEBUG\LLGE.DLL (TaskId:27)
   	C:\WORK\SOURCES\GITHUB\MOON\SOLUTIONS\DEBUG\LLGE.PDB (TaskId:27)
-  Input details (162 of them) were not logged for performance reasons. (TaskId:27)
-  Source compilation required: input C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\CONTENTMANAGER.OBJ is newer than output C:\WORK\SOURCES\GITHUB\MOON\SOLUTIONS\DEBUG\LLGE.PDB. (TaskId:27)
+  Input details (165 of them) were not logged for performance reasons. (TaskId:27)
+  Source compilation required: input C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\EFFECTSPOSTPROCESS.OBJ is newer than output C:\WORK\SOURCES\GITHUB\MOON\SOLUTIONS\DEBUG\LLGE.DLL. (TaskId:27)
   Environment Variables passed to tool: (TaskId:27)
-    VS_UNICODE_OUTPUT=2732 (TaskId:27)
+    VS_UNICODE_OUTPUT=2856 (TaskId:27)
   C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\work\sources\github\moon\Solutions\Debug\llge.dll" /INCREMENTAL /NOLOGO /LIBPATH:..\lib\Win32 opengl32.lib glew32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\work\sources\github\moon\Solutions\Debug\llge.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\work\sources\github\moon\Solutions\Debug\llge.lib" /MACHINE:X86 /DLL Debug\llgePInvoke.obj
   Debug\BasicTest.obj
   Debug\HollowsAllocationPolicy.obj
@@ -17737,7 +17906,7 @@ Task "Link" (TaskId:27)
   Debug\dllmain.obj
   Debug\stdafx.obj (TaskId:27)
   Tracking command: (TaskId:27)
-  C:\Program Files (x86)\MSBuild\12.0\bin\Tracker.exe /a /d "C:\Program Files (x86)\MSBuild\12.0\bin\FileTracker.dll" /i C:\_faust\FaustEngine\FaustGames\Native\llge\Debug\llge.tlog /r "C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\AABB2D.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\AABB2DCOMPONENT.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\ADLER32.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\ANIMATION.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\ANIMATIONSTATE.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\ANIMATIONSTATEDATA.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\ATLAS.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\ATLASATTACHMENTLOADER.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\ATTACHMENT.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\ATTACHMENTLOADER.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\ATTRIBUTEINFO.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\ATTRIBUTES.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\BASICTEST.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\BATCHER.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\BONE.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\BONEDATA.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\BOUNDINGBOXATTACHMENT.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\CAMERA.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\COLOR.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\COMPONENT.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\COMPRESS.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\CONTENTMANAGER.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\CONTENTPROVIDEROBB.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\CONTENTPROVIDERWINDOWS.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\CRC32.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\DEFLATE.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\DLLMAIN.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\DUMMYENTITIESFILTER.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\EFFECT.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\EFFECTBASE.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\EFFECTCONSTANT.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\EFFECTRENDERDEPTH.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\EFFECTS.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\EFFECTSOLID.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\EFFECTSOLIDCOLOR.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\EFFECTSPOSTPROCESS.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\EFFECTTEXTURECOLOR.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\EFFECTTEXTURELIGHTMAPCOLOR.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\EFFECTWATER.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\ENTITIESFILTER.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\ENTITIESWORLD.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\ENTITY.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\ERRORS.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\EVENT.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\EVENTDATA.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\EXAMPLE.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\EXTENSION.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\GRAPHICSDEVICE.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\GZCLOSE.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\GZLIB.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\GZREAD.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\GZWRITE.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\HOLLOWSALLOCATIONPOLICY.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\IKCONSTRAINT.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\IKCONSTRAINTDATA.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\IMAGE2DDATA.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\INFBACK.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\INFFAST.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\INFLATE.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\INFTREES.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\JSON.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\LLGE.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\LLGEDRAWING.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\LLGEENTITIES.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\LLGEGEOMETRY.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\LLGEGRAPHICS.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\LLGEPINVOKE.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\LLGERESOURCES.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\MATH.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\MATRIX.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\MATRIXTRANSFORMCOMPONENT.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\MESHATTACHMENT.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\PNG.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\PNGERROR.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\PNGGET.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\PNGMEM.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\PNGPREAD.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\PNGREAD.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\PNGRIO.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\PNGRTRAN.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\PNGRUTIL.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\PNGSET.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\PNGTEST.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\PNGTRANS.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\PNGWIO.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\PNGWRITE.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\PNGWTRAN.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\PNGWUTIL.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\POSTPROCESS.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\QUADTREE2D.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\QUADTREE2DNODE.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\QUADTREEENTITIESFILTER.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\REGIONATTACHMENT.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\RENDER2DCOMPONENT.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\RENDERCONVERTER.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\RENDERER2D.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\RENDERITEM2D.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\RENDERMESH2D.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\RENDERSTATE.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\RENDERSYSTEM2D.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\SKELETON.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\SKELETONBOUNDS.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\SKELETONDATA.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\SKELETONJSON.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\SKIN.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\SKINNEDMESHATTACHMENT.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\SLOT.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\SLOTDATA.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\SPINE.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\SPINEANIMATIONSTATE.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\SPINEANIMATIONSTATEDATA.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\SPINESKELETON.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\SPINESKELETONANIMATION.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\SPINESKELETONRESOURCE.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\STATICBATCH.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\STDAFX.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\SYSTEM.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\SYSTEMALLOCATIONPOLICY.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\TESTSTANDARTALLOCATIONS.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\TEXTURE.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\TEXTURECUBEMAP.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\TEXTUREIMAGE2D.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\TEXTURELOADER.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\TEXTURERENDERTARGET2D.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\TEXTURERENDERTARGETDEPTH2D.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\TRANSFORM2DCOMPONENT.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\TRANSFORMSYSTEM2D.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\TREES.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\UNCOMPR.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\UNIFORM.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\UNIFORMINFO.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\UNIFORMS.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\UNIFORMVALUE.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\UNIFORMVALUECUBEMAP.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\UNIFORMVALUEFLOAT.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\UNIFORMVALUEMATRIX.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\UNIFORMVALUETEXTURE.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\UNIFORMVALUEVECTOR3.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\VERTEXBUFFER.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\VERTEXFORMAT.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\VERTEXFORMATS.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\WATERRENDERER.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\ZUTIL.OBJ" /b MSBuildConsole_CancelEvente0df12e81468470c94ade2425abaccc6  /c "C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe"  /ERRORREPORT:PROMPT /OUT:"C:\work\sources\github\moon\Solutions\Debug\llge.dll" /INCREMENTAL /NOLOGO /LIBPATH:..\lib\Win32 opengl32.lib glew32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\work\sources\github\moon\Solutions\Debug\llge.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\work\sources\github\moon\Solutions\Debug\llge.lib" /MACHINE:X86 /DLL Debug\llgePInvoke.obj
+  C:\Program Files (x86)\MSBuild\12.0\bin\Tracker.exe /a /d "C:\Program Files (x86)\MSBuild\12.0\bin\FileTracker.dll" /i C:\_faust\FaustEngine\FaustGames\Native\llge\Debug\llge.tlog /r "C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\AABB2D.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\AABB2DCOMPONENT.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\ADLER32.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\ANIMATION.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\ANIMATIONSTATE.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\ANIMATIONSTATEDATA.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\ATLAS.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\ATLASATTACHMENTLOADER.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\ATTACHMENT.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\ATTACHMENTLOADER.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\ATTRIBUTEINFO.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\ATTRIBUTES.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\BASICTEST.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\BATCHER.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\BONE.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\BONEDATA.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\BOUNDINGBOXATTACHMENT.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\CAMERA.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\COLOR.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\COMPONENT.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\COMPRESS.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\CONTENTMANAGER.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\CONTENTPROVIDEROBB.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\CONTENTPROVIDERWINDOWS.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\CRC32.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\DEFLATE.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\DLLMAIN.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\DUMMYENTITIESFILTER.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\EFFECT.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\EFFECTBASE.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\EFFECTCONSTANT.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\EFFECTRENDERDEPTH.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\EFFECTS.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\EFFECTSOLID.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\EFFECTSOLIDCOLOR.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\EFFECTSPOSTPROCESS.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\EFFECTTEXTURECOLOR.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\EFFECTTEXTURELIGHTMAPCOLOR.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\EFFECTWATER.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\ENTITIESFILTER.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\ENTITIESWORLD.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\ENTITY.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\ERRORS.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\EVENT.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\EVENTDATA.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\EXAMPLE.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\EXTENSION.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\GRAPHICSDEVICE.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\GZCLOSE.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\GZLIB.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\GZREAD.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\GZWRITE.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\HOLLOWSALLOCATIONPOLICY.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\IKCONSTRAINT.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\IKCONSTRAINTDATA.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\IMAGE2DDATA.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\INFBACK.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\INFFAST.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\INFLATE.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\INFTREES.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\JSON.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\LLGE.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\LLGEDRAWING.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\LLGEENTITIES.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\LLGEGEOMETRY.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\LLGEGRAPHICS.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\LLGEPINVOKE.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\LLGERESOURCES.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\MATH.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\MATRIX.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\MATRIXTRANSFORMCOMPONENT.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\MESHATTACHMENT.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\PNG.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\PNGERROR.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\PNGGET.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\PNGMEM.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\PNGPREAD.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\PNGREAD.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\PNGRIO.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\PNGRTRAN.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\PNGRUTIL.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\PNGSET.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\PNGTEST.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\PNGTRANS.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\PNGWIO.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\PNGWRITE.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\PNGWTRAN.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\PNGWUTIL.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\POSTPROCESS.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\QUADTREE2D.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\QUADTREE2DNODE.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\QUADTREEENTITIESFILTER.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\REGIONATTACHMENT.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\RENDER2DCOMPONENT.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\RENDERCONVERTER.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\RENDERER2D.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\RENDERITEM2D.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\RENDERMESH2D.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\RENDERSTATE.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\RENDERSYSTEM2D.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\SKELETON.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\SKELETONBOUNDS.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\SKELETONDATA.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\SKELETONJSON.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\SKIN.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\SKINNEDMESHATTACHMENT.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\SLOT.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\SLOTDATA.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\SPINE.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\SPINEANIMATIONSTATE.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\SPINEANIMATIONSTATEDATA.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\SPINESKELETON.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\SPINESKELETONANIMATION.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\SPINESKELETONRESOURCE.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\STATICBATCH.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\STDAFX.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\SYSTEM.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\SYSTEMALLOCATIONPOLICY.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\TESTSTANDARTALLOCATIONS.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\TEXTURE.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\TEXTURECUBEMAP.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\TEXTUREIMAGE2D.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\TEXTURELOADER.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\TEXTURERENDERTARGET2D.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\TEXTURERENDERTARGETDEPTH2D.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\TRANSFORM2DCOMPONENT.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\TRANSFORMSYSTEM2D.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\TREES.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\UNCOMPR.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\UNIFORM.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\UNIFORMINFO.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\UNIFORMS.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\UNIFORMVALUE.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\UNIFORMVALUECUBEMAP.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\UNIFORMVALUEFLOAT.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\UNIFORMVALUEMATRIX.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\UNIFORMVALUETEXTURE.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\UNIFORMVALUEVECTOR3.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\VERTEXBUFFER.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\VERTEXFORMAT.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\VERTEXFORMATS.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\WATERRENDERER.OBJ|C:\_FAUST\FAUSTENGINE\FAUSTGAMES\NATIVE\LLGE\DEBUG\ZUTIL.OBJ" /b MSBuildConsole_CancelEventee4662cd936e4bcf8be7bbf54f389c01  /c "C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe"  /ERRORREPORT:PROMPT /OUT:"C:\work\sources\github\moon\Solutions\Debug\llge.dll" /INCREMENTAL /NOLOGO /LIBPATH:..\lib\Win32 opengl32.lib glew32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\work\sources\github\moon\Solutions\Debug\llge.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\work\sources\github\moon\Solutions\Debug\llge.lib" /MACHINE:X86 /DLL Debug\llgePInvoke.obj
   Debug\BasicTest.obj
   Debug\HollowsAllocationPolicy.obj
   Debug\Math.obj
@@ -17880,6 +18049,7 @@ Task "Link" (TaskId:27)
   Debug\TestStandartAllocations.obj
   Debug\dllmain.obj
   Debug\stdafx.obj (TaskId:27)
+     Creating library C:\work\sources\github\moon\Solutions\Debug\llge.lib and object C:\work\sources\github\moon\Solutions\Debug\llge.exp (TaskId:27)
 Done executing task "Link". (TaskId:27)
 Task "Message" (TaskId:28)
   Task Parameter:Text=llge.vcxproj -> C:\work\sources\github\moon\Solutions\Debug\llge.dll (TaskId:28)
@@ -18022,41 +18192,44 @@ Done building target "Build" in project "llge.vcxproj".: (TargetId:102)
 Done Building Project "C:\_faust\FaustEngine\FaustGames\Native\llge\llge.vcxproj" (Build target(s)).
 
 Project Performance Summary:
-     3500 ms  C:\_faust\FaustEngine\FaustGames\Native\llge\llge.vcxproj   1 calls
-               3500 ms  Build                                      1 calls
+    14307 ms  C:\_faust\FaustEngine\FaustGames\Native\llge\llge.vcxproj   1 calls
+              14307 ms  Build                                      1 calls
 
 Target Performance Summary:
         0 ms  AfterBuild                                 1 calls
+        0 ms  SelectClCompile                            1 calls
+        0 ms  GetCopyToOutputDirectoryXamlAppDefs        1 calls
+        0 ms  _CheckForCompileOutputs                    1 calls
         0 ms  GetResolvedWinMD                           1 calls
         0 ms  _Manifest                                  1 calls
         0 ms  _SelectedFiles                             1 calls
         0 ms  _PrepareForBuild                           1 calls
         0 ms  PostBuildEvent                             1 calls
+        0 ms  ResolveReferences                          1 calls
         0 ms  _Midl                                      1 calls
-        0 ms  SelectCustomBuild                          1 calls
         0 ms  _ClCompile                                 1 calls
+        0 ms  GetReferenceAssemblyPaths                  1 calls
         0 ms  CreateCustomManifestResourceNames          1 calls
-        0 ms  ResolveAssemblyReferences                  1 calls
         0 ms  BeforeLink                                 1 calls
-        0 ms  ComputeCLInputPDBName                      1 calls
         0 ms  AfterBuildCompileEvent                     1 calls
-        0 ms  GetCopyToOutputDirectoryItems              1 calls
         0 ms  _BuildLinkAction                           1 calls
         0 ms  BeforeResourceCompile                      1 calls
         0 ms  AfterMidl                                  1 calls
-        0 ms  GetCopyToOutputDirectoryXamlAppDefs        1 calls
+        0 ms  SelectCustomBuild                          1 calls
         0 ms  PreLinkEvent                               1 calls
-        0 ms  SelectClCompile                            1 calls
         0 ms  ComputeManifestGeneratedLinkerInputs       1 calls
+        0 ms  BuildCompileTraverse                       1 calls
         0 ms  BuildGenerateSources                       1 calls
         0 ms  _CopySourceItemsToOutputDirectory          1 calls
         0 ms  GetFrameworkPaths                          1 calls
         0 ms  AfterResourceCompile                       1 calls
         0 ms  _Xsd                                       1 calls
         0 ms  ComputeCustomBuildOutput                   1 calls
-        0 ms  MakeDirsForBscMake                         1 calls
         0 ms  _GenerateSatelliteAssemblyInputs           1 calls
+        0 ms  MakeDirsForResourceCompile                 1 calls
+        0 ms  AfterBuildGenerateSources                  1 calls
         0 ms  _ResourceCompile                           1 calls
+        0 ms  Build                                      1 calls
         0 ms  _Link                                      1 calls
         0 ms  BuildLinkTraverse                          1 calls
         0 ms  ComputeRCOutputs                           1 calls
@@ -18064,85 +18237,82 @@ Target Performance Summary:
         0 ms  CreateSatelliteAssemblies                  1 calls
         0 ms  CopyFilesToOutputDirectory                 1 calls
         0 ms  ExpandSDKReferences                        1 calls
-        0 ms  AfterBuildGenerateSources                  1 calls
-        0 ms  ResolveReferences                          1 calls
+        0 ms  ComputeLinkInputsFromProject               1 calls
         0 ms  _Deploy                                    1 calls
         0 ms  ComputeMIDLGeneratedCompileInputs          1 calls
-        0 ms  MakeDirsForMidl                            1 calls
-        0 ms  BuildGenerateSourcesTraverse               1 calls
-        0 ms  BeforeResolveReferences                    1 calls
+        0 ms  BeforeClCompile                            1 calls
+        0 ms  AfterBuildGenerateSourcesEvent             1 calls
+        0 ms  ComputeCLCompileGeneratedSbrFiles          1 calls
         0 ms  _SplitProjectReferencesByFileExistence     1 calls
+        0 ms  AfterResolveReferences                     1 calls
+        0 ms  BeforeResolveReferences                    1 calls
+        0 ms  ComputeReferenceCLInput                    1 calls
+        0 ms  _PrepareForReferenceResolution             1 calls
         0 ms  PrepareForRun                              1 calls
         0 ms  PreBuildEvent                              1 calls
-        0 ms  ResolveProjectReferences                   1 calls
-        0 ms  BeforeClCompile                            1 calls
-        0 ms  ComputeCLGeneratedLinkInputs               1 calls
+        0 ms  MakeDirsForMidl                            1 calls
+        0 ms  _BscMake                                   1 calls
         0 ms  _Appverifier                               1 calls
         0 ms  _ALink                                     1 calls
         0 ms  _BuildGenerateSourcesAction                1 calls
-        0 ms  ResolveSDKReferences                       1 calls
         0 ms  BuildLink                                  1 calls
-        0 ms  ComputeCLCompileGeneratedSbrFiles          1 calls
-        0 ms  _BscMake                                   1 calls
-        0 ms  AfterBuildGenerateSourcesEvent             1 calls
-        0 ms  AfterResolveReferences                     1 calls
+        0 ms  PrepareResourceNames                       1 calls
         0 ms  AfterLink                                  1 calls
-        0 ms  ComputeLegacyManifestEmbedding             1 calls
+        0 ms  ResolveSDKReferences                       1 calls
+        0 ms  ComputeRCGeneratedLinkInputs               1 calls
         0 ms  BeforeBuildGenerateSources                 1 calls
         0 ms  AfterClCompile                             1 calls
         0 ms  ResolvedXDCMake                            1 calls
+        0 ms  AssignTargetPaths                          1 calls
+        0 ms  BuildGenerateSourcesTraverse               1 calls
         0 ms  PlatformPrepareForBuild                    1 calls
         0 ms  MakeDirsForXdcMake                         1 calls
         0 ms  GetInstalledSDKLocations                   1 calls
-        0 ms  PrepareResourceNames                       1 calls
         0 ms  _BuildCompileAction                        1 calls
-        0 ms  AssignTargetPaths                          1 calls
-        0 ms  ComputeRCGeneratedLinkInputs               1 calls
         0 ms  BuildCompile                               1 calls
+        1 ms  MakeDirsForBscMake                         1 calls
+        1 ms  ComputeManifestInputsTargets               1 calls
+        1 ms  ResolveAssemblyReferences                  1 calls
+        1 ms  ComputeLegacyManifestEmbedding             1 calls
+        1 ms  GetCopyToOutputDirectoryItems              1 calls
         1 ms  ComputeLinkSwitches                        1 calls
-        1 ms  GetReferenceAssemblyPaths                  1 calls
-        1 ms  ComputeLinkInputsFromProject               1 calls
-        1 ms  MakeDirsForResourceCompile                 1 calls
-        1 ms  ComputeReferenceCLInput                    1 calls
-        1 ms  FinalizeBuildStatus                        1 calls
-        1 ms  MakeDirsForLink                            1 calls
-        1 ms  BuildCompileTraverse                       1 calls
-        1 ms  _CheckForCompileOutputs                    1 calls
-        1 ms  Build                                      1 calls
         1 ms  SplitResourcesByCulture                    1 calls
-        1 ms  AssignProjectConfiguration                 1 calls
-        1 ms  SetBuildDefaultEnvironmentVariables        1 calls
-        1 ms  _PrepareForReferenceResolution             1 calls
-        1 ms  MakeDirsForCl                              1 calls
+        1 ms  ResolveProjectReferences                   1 calls
         1 ms  DoLinkOutputFilesMatch                     1 calls
-        2 ms  RegisterOutput                             1 calls
-        2 ms  PrepareForBuild                            1 calls
+        1 ms  AssignProjectConfiguration                 1 calls
+        1 ms  ComputeCLInputPDBName                      1 calls
+        1 ms  MakeDirsForLink                            1 calls
+        1 ms  ComputeCLGeneratedLinkInputs               1 calls
+        1 ms  MakeDirsForCl                              1 calls
+        2 ms  SetBuildDefaultEnvironmentVariables        1 calls
         2 ms  ComputeCLCompileGeneratedXDCFiles          1 calls
+        2 ms  PrepareForBuild                            1 calls
+        3 ms  FinalizeBuildStatus                        1 calls
         3 ms  _CheckForInvalidConfigurationAndPlatform   1 calls
-        3 ms  ComputeManifestInputsTargets               1 calls
-        3 ms  SetCABuildNativeEnvironmentVariables       1 calls
-        4 ms  ComputeLinkImportLibraryOutputsForClean    1 calls
-        9 ms  ComputeCLOutputs                           1 calls
-       10 ms  InitializeBuildStatus                      1 calls
-       28 ms  WarnCompileDuplicatedFilename              1 calls
-     1090 ms  ClCompile                                  1 calls
-     2326 ms  Link                                       1 calls
+        3 ms  InitializeBuildStatus                      1 calls
+        3 ms  ComputeLinkImportLibraryOutputsForClean    1 calls
+        4 ms  RegisterOutput                             1 calls
+        6 ms  ComputeCLOutputs                           1 calls
+       37 ms  WarnCompileDuplicatedFilename              1 calls
+       74 ms  SetCABuildNativeEnvironmentVariables       1 calls
+     5110 ms  Link                                       1 calls
+     9039 ms  ClCompile                                  1 calls
 
 Task Performance Summary:
         0 ms  AssignTargetPath                           6 calls
-        0 ms  SetEnv                                     4 calls
-        0 ms  AssignCulture                              1 calls
-        1 ms  SetEnvironmentVariable                     1 calls
-        1 ms  Delete                                     1 calls
-        1 ms  Touch                                      2 calls
+        0 ms  MakeDir                                    9 calls
+        0 ms  Delete                                     1 calls
+        0 ms  Message                                    3 calls
+        0 ms  ReadLinesFromFile                          1 calls
+        1 ms  AssignCulture                              1 calls
+        1 ms  SetEnv                                     4 calls
         1 ms  AssignProjectConfiguration                 1 calls
-        1 ms  Message                                    3 calls
-        2 ms  MakeDir                                    9 calls
-        5 ms  WriteLinesToFile                           2 calls
-        6 ms  ReadLinesFromFile                          1 calls
-     1061 ms  CL                                         2 calls
-     2310 ms  Link                                       1 calls
+        1 ms  SetEnvironmentVariable                     1 calls
+        2 ms  Touch                                      2 calls
+        4 ms  WriteLinesToFile                           2 calls
+     5086 ms  Link                                       1 calls
+     9017 ms  CL                                         2 calls
 
 Build succeeded.
 
-Time Elapsed 00:00:03.50
+Time Elapsed 00:00:14.30

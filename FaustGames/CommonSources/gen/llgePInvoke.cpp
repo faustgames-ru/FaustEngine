@@ -801,6 +801,11 @@ namespace llge
 		classInstance->loadImage(id, textureImage);
 	}
 	
+	extern "C" DLLEXPORT void API_CALL llge_ContentManager_reloadImages (IContentManager * classInstance)
+	{
+		classInstance->reloadImages();
+	}
+	
 	extern "C" DLLEXPORT ITextureBuffer2d * API_CALL llge_ContentManager_loadBuffer (IContentManager * classInstance, int id)
 	{
 		return classInstance->loadBuffer(id);

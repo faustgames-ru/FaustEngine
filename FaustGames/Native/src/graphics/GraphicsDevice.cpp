@@ -134,6 +134,10 @@ namespace graphics
 	void GraphicsDevice::resetState()
 	{
 		renderState = RenderState();
+		_viewportX = 0;
+		_viewportY = 0;
+		_viewportWidth = 0;
+		_viewportHeight = 0;
 	}
 
 

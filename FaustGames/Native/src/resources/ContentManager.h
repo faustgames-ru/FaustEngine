@@ -5,6 +5,8 @@
 
 namespace resources
 {
+	typedef std::map<std::string, graphics::TextureImage2d *> TexturesMap;
+
 	struct LoadImageEntry
 	{
 		std::string fileName;
@@ -64,6 +66,7 @@ namespace resources
 		virtual void API_CALL replaceSeparator(bool value);
 		virtual void API_CALL setObbFile(char * obbFile);
 		virtual int API_CALL registerImage(char * name);
+		virtual void API_CALL reloadImages();
 		virtual void API_CALL startLoad();
 		virtual bool API_CALL update();
 		virtual void API_CALL loadImage(int id, llge::ITextureImage2d *textureImage);
@@ -80,6 +83,7 @@ namespace resources
 		void setPage(int pageWidth, int pageHeight);
 		static ContentManager Default;
 		static bool _replaceSeparator;
+		TexturesMap _loadedImages;
 	private:
 		std::vector<std::string> _files;
 		std::vector<LoadImageEntry> _loadEntries;

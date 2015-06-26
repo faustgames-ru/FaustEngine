@@ -1322,6 +1322,13 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private void llge_ContentManager_loadImage (IntPtr classInstance, int id, IntPtr textureImage);
+		public void ReloadImages ()
+		{
+			llge_ContentManager_reloadImages(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_ContentManager_reloadImages (IntPtr classInstance);
 		public TextureBuffer2d LoadBuffer (int id)
 		{
 			return new TextureBuffer2d{ ClassInstance = llge_ContentManager_loadBuffer(ClassInstance, id) };

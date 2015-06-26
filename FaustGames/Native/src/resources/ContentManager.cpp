@@ -229,6 +229,18 @@ namespace resources
 		return registerTexture(name);
 	}
 
+	void API_CALL ContentManager::reloadImages()
+	{
+		for (resources::TexturesMap::iterator it = resources::ContentManager::Default._loadedImages.begin(); it != resources::ContentManager::Default._loadedImages.end(); it++)
+		{
+			LoadImageEntry entry;
+			graphics::TextureImage2d *image = it->second;
+			entry.fileName = it->first;
+			entry.textureImage = image;
+			_loadEntries.push_back(entry);
+		}
+	}
+
 	void API_CALL ContentManager::startLoad()
 	{
 		open();

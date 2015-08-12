@@ -5,6 +5,7 @@ namespace drawing
 	Batcher::Batcher() : _batchBufferIndex(0), _format(graphics::VertexFormats::positionTextureColor())
 	{
 		_buffer = new RenderBuffer();
+		_localBuffer = (TVertex *)malloc(graphics::GraphicsConstants::LocalBufferSize * sizeof(TVertex));
 		//_backBuffer = new RenderBuffer();
 		_graphicsDevice = &graphics::GraphicsDevice::Default;
 		_x = 0;
@@ -17,6 +18,7 @@ namespace drawing
 	Batcher::~Batcher()
 	{
 		delete _buffer;
+		free(_localBuffer);
 		//delete _backBuffer;
 	}
 	
@@ -160,7 +162,10 @@ namespace drawing
 			_graphicsDevice->renderState.setBlend(graphics::BlendState::Alpha);
 			_graphicsDevice->renderState.setEffect(i->Effect);
 			//_graphicsDevice->renderState.setEffect(graphics::Effects::textureColor());
-			_graphicsDevice->drawPrimitives(_format, currentBuffer->getVertices(), i->IndicesStart, i->IndicesCount / 3);
+			//_graphicsDevice->drawPrimitives(_format, currentBuffer->getVertices(), i->IndicesStart, i->IndicesCount / 3);
+			
+			memcpy(_localBuffer, currentBuffer->getVertices(), currentBuffer->getVerticesCount() * sizeof(TVertex));
+			_graphicsDevice->drawPrimitives(_format, _localBuffer, i->IndicesStart, i->IndicesCount / 3);
 		}
 		if (usePostProcess)
 		{

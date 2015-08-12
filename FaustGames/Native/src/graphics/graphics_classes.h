@@ -91,7 +91,8 @@ namespace graphics
 		static const int SamplersCubeLimit = 2;
 		static const int StaticBatchBufferSize = 32768;
 		static const int StaticBatchBlocksLimit = 2;
-	};	
+		static const int LocalBufferSize = 32768;
+	};
 }
 
 #endif /*GRAPHICS_CLASSES_H*/

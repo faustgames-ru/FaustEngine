@@ -97,7 +97,6 @@ namespace spine
 				}
 				case SP_ATTACHMENT_SKINNED_MESH:
 				{
-
 					spSkinnedMeshAttachment * skinnedMesh = SUB_CAST(spSkinnedMeshAttachment, slot->attachment);
 					spSkinnedMeshAttachment_computeWorldVertices(skinnedMesh, slot, _mesh.Vertices);
 					for (int j = 0; j < skinnedMesh->uvsCount; j += 2)

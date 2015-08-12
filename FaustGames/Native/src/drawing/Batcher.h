@@ -260,6 +260,7 @@ namespace drawing
 		float _y;
 		float _w;
 		float _h;
+		TVertex* _localBuffer;
 	};
 }
 

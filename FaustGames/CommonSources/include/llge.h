@@ -40,6 +40,8 @@ namespace llge
 		EffectRenderDepth = 0x4,
 		EffectSolidColor = 0x5,
 		EffectBloomFilter = 0x6,
+		EffectTextureColorHighlight = 0x7,
+		EffectTextureAlphamaskColor = 0x8,
 	};
 
 	enum GraphicsVertexFormats
@@ -160,6 +162,9 @@ namespace llge
 		virtual void API_CALL drawVertexBuffer(GraphicsEffects effect, GraphicsVertexFormats vertexFormat, IVertexBuffer *vertexBuffer, void *indices, int primitivesCount) = 0;
 		virtual void API_CALL setEffectConstantFloat(GraphicsEffects effect, char *name, float value) = 0;
 		virtual void API_CALL setEffectConstantColor(GraphicsEffects effect, char *name, uint value) = 0;
+		virtual int API_CALL getPixelsWidth() = 0;
+		virtual int API_CALL getPixelsHeight() = 0;
+		virtual void API_CALL getPixels(IntPtr target) = 0;
 
         virtual void API_CALL create() = 0;
 		virtual void API_CALL grabDefaultRenderTarget() = 0;
@@ -287,6 +292,7 @@ namespace llge
 	public:
 		virtual IntPtr API_CALL getNativeInstance() = 0;
 		virtual void API_CALL addProjection(void *floatMatrix) = 0;
+		virtual void API_CALL addRenderTarget(IntPtr *renderTargetInstance) = 0;
 		virtual void API_CALL startBatch() = 0;
 		virtual void API_CALL finishBatch() = 0;
 		virtual void API_CALL setToneMap(uint tonemapId) = 0;
@@ -307,7 +313,7 @@ namespace llge
 		virtual float API_CALL getMaxY() = 0;
 		virtual float API_CALL getZ() = 0;
 
-		virtual void API_CALL render(IBatch2d * batch, int lightmapId) = 0;
+		virtual void API_CALL render(IBatch2d * batch, int lightmapId, GraphicsEffects effect) = 0;
 		virtual int API_CALL getGeometry(void *vertices, int verticeLimit, void *indices, int indicesLimit) = 0;
 		virtual IntPtr API_CALL getNativeInstance() = 0;
 		virtual void API_CALL updateWorldTransform() = 0;

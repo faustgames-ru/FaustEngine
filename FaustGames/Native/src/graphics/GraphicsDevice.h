@@ -25,6 +25,7 @@ namespace graphics
 	public:
 		static GraphicsDevice Default;
 		RenderState renderState;
+		IRenderTarget * actualRenderTarget;
 		GraphicsDevice();
 		~GraphicsDevice();
 		void setClearState(unsigned int color, float depth);
@@ -40,6 +41,9 @@ namespace graphics
 		void resetRenderState();
         void grabDefaultRenderTarget();
         void setActiveTexture(uint value);
+		int getPixelsWidth();
+		int getPixelsHeight();
+		void readPixels(void * pixels);
         static void create();
 		PostProcessTargetManager PostProcessTargets;
 		PostProcessTargetManager PostProcessScaledTargets;

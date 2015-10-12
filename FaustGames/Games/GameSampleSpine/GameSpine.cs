@@ -20,7 +20,7 @@ namespace GameSampleSpine
             var atlas = File.ReadAllText("spineboy.atlas");
             var json = File.ReadAllText("spineboy.json");
             _content.StartLoad();
-            _spineResource.Load(atlas, json);
+            _spineResource.Load(atlas, json, "");
             _content.FinishLoad();
 
             //for (var i = 0; i < _spineResource.GetSpineAnimationsCount(); i++)

@@ -10,9 +10,19 @@ namespace graphics
 	class RenderConverter
 	{
 	public:
+		static RenderConverter * lastCreatedInstance;
+		static RenderConverter * getInstance() 
+		{
+			if (!lastCreatedInstance)
+				lastCreatedInstance = new RenderConverter();
+			return lastCreatedInstance;
+		}
 		RenderConverter()
 		{
+			lastCreatedInstance = this;
 			_effects[llge::EffectTextureColor] = Effects::textureColor();
+			_effects[llge::EffectTextureColorHighlight] = Effects::textureColorHighlight();
+			_effects[llge::EffectTextureAlphamaskColor] = Effects::textureAlphamaskColor();			
 			_effects[llge::EffectTextureLightmapColor] = Effects::textureLightmapColor();
 			_effects[llge::EffectWater] = 0;// Effects::water();
 			_effects[llge::EffectSolid] = Effects::solid();
@@ -28,6 +38,10 @@ namespace graphics
 		}
 		inline EffectBase * getEffect(llge::GraphicsEffects effect)
 		{
+			if (effect == llge::GraphicsEffects::EffectTextureColor)
+			{
+				effect = llge::GraphicsEffects::EffectTextureColor;
+			}
 			return _effects[(int)effect];
 		}
 		inline VertexFormat * getFormat(llge::GraphicsVertexFormats format)

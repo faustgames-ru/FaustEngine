@@ -8,6 +8,11 @@ namespace resources
 #ifdef WIN32
 	FILE * _file;
 
+	bool ContentProvider::existContent(const char *name) 
+	{
+		return GetFileAttributesA(name) != INVALID_FILE_ATTRIBUTES;
+	}
+	
 	void ContentProvider::openContent(const char *name)
 	{
 		_file = fopen(name, "rb");

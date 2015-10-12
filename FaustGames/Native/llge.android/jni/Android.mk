@@ -15,6 +15,7 @@ FILE_LIST += $(wildcard $(LOCAL_PATH)/../../../Native/src/resources/*.c*)
 FILE_LIST += $(wildcard $(LOCAL_PATH)/../../../Native/src/resources/lpng/*.c*)
 FILE_LIST += $(wildcard $(LOCAL_PATH)/../../../Native/src/spine/*.c*)
 FILE_LIST += $(wildcard $(LOCAL_PATH)/../../../Native/src/spine/runtime/*.c*)
+FILE_LIST += $(wildcard $(LOCAL_PATH)/../../../Native/src/plugins/asteroids_wallpapers/*.c*)
 LOCAL_SRC_FILES :=$(FILE_LIST:$(LOCAL_PATH)/%=%)
 LOCAL_LDLIBS := -lGLESv2 -lz -llog
 include $(BUILD_SHARED_LIBRARY)

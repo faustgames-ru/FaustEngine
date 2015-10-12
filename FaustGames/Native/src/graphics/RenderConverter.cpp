@@ -2,4 +2,5 @@
 
 namespace graphics
 {
+	RenderConverter *RenderConverter::lastCreatedInstance = 0;
 }

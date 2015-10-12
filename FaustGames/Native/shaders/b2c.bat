@@ -4,6 +4,10 @@ bin2c -o solid_color_frag.h shader_solid_color.frag
 bin2c -o solid_color_vert.h shader_solid_color.vert
 bin2c -o texture_color_frag.h shader_texture_color.frag
 bin2c -o texture_color_vert.h shader_texture_color.vert
+bin2c -o texture_color_highlight_frag.h shader_texture_color_highlight.frag
+bin2c -o texture_color_highlight_vert.h shader_texture_color_highlight.vert
+bin2c -o texture_alphamask_color_frag.h shader_texture_alphamask_color.frag
+bin2c -o texture_alphamask_color_vert.h shader_texture_alphamask_color.vert
 bin2c -o shader_render_depth_frag.h shader_render_depth.frag
 bin2c -o shader_render_depth_vert.h shader_render_depth.vert
 bin2c -o texture_lightmap_color_frag.h shader_texture_lightmap_color.frag

@@ -58,7 +58,7 @@ namespace drawing
 	class FilterAdd
 	{
 	public:
-		virtual void execute(graphics::TextureRenderTarget2d *value0, graphics::TextureRenderTarget2d *value1, graphics::TextureRenderTarget2d *target);
+		virtual void execute(graphics::TextureRenderTarget2d *value0, graphics::TextureRenderTarget2d *value1, graphics::IRenderTarget *target);
 	};
 	
 	class PostProcessBloom
@@ -75,6 +75,7 @@ namespace drawing
 
 		uint _tonemapId;
 		graphics::TextureRenderTarget2d *_source;
+		graphics::IRenderTarget *_beginTarget;
 		/*
 		graphics::TextureRenderTarget2d *_target0;
 		graphics::TextureRenderTarget2d *_target1;

@@ -10,7 +10,7 @@ namespace spine
 	public:
 		SpineSkeleton(SpineSkeletonResource *resource, float* transform);
 		~SpineSkeleton();
-		virtual void API_CALL render(llge::IBatch2d * batch, int lightmapId);
+		virtual void API_CALL render(llge::IBatch2d * batch, int lightmapId, llge::GraphicsEffects effect);
 		virtual int API_CALL getGeometry(void *vertices, int verticeLimit, void *indices, int indicesLimit);
 		void cleanup();
 		void updateAabb();

@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="res">
+      <UniqueIdentifier>0b966281-3e45-4213-9f21-26670685ca30</UniqueIdentifier>
+    </Filter>
+    <Filter Include="res\values">
+      <UniqueIdentifier>83fe9198-45a8-4dfc-88f3-3f1f80a6cd8e</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{759689fc-8017-464a-bc39-e3d6ef4c157b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\er">
+      <UniqueIdentifier>{4ff40e5f-1c22-4073-9204-5211d158a622}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\er\werwer">
+      <UniqueIdentifier>{e6b7b4f4-686d-4e9c-87ca-24158576a4b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="jni">
+      <UniqueIdentifier>{71dd9465-5442-4a57-970c-ce23ccfea58f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidBuild Include="AndroidManifest.xml" />
+    <AndroidBuild Include="res\values\strings.xml">
+      <Filter>res\values</Filter>
+    </AndroidBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <JCompile Include="src\er\werwer\Android1.java">
+      <Filter>src\er\werwer</Filter>
+    </JCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="jni\Android1.cpp">
+      <Filter>jni</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

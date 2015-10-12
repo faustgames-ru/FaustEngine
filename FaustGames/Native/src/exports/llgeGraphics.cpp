@@ -213,6 +213,22 @@ namespace llge
 			VertexFormats::create();
 		}
 
+		virtual int API_CALL getPixelsWidth()
+		{
+			return graphicsDevice->getPixelsWidth();
+		}
+
+		virtual int API_CALL getPixelsHeight() 
+		{
+			return graphicsDevice->getPixelsHeight();
+		}
+
+		virtual void API_CALL getPixels(IntPtr target) 
+		{
+			return graphicsDevice->readPixels(target);
+		}
+
+
 		virtual void API_CALL cleanup()
 		{
 			Effects::cleanup();

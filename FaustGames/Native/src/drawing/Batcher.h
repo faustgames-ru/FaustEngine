@@ -17,6 +17,7 @@ namespace drawing
 		int IndicesCount;
 		int BatchBufferIndex;
 		int TransformIndex;
+		int RenderTargetIndex;
 		graphics::BlendState::e Blend;
 		graphics::EffectBase *Effect;
 	};
@@ -108,6 +109,7 @@ namespace drawing
 		int _verticesCount;
 	};
 
+	typedef std::vector<graphics::IRenderTarget *> TBatchRenderTargets;
 	typedef std::vector<core::MatrixContainer> TBatchTransforms;
 	typedef std::vector<BatchBuffer *> TBatchBuffers;
 	typedef std::vector<BatchEntry> TBatchEntries;
@@ -118,6 +120,7 @@ namespace drawing
 		TBatchBuffers Buffers;
 		TBatchEntries Entries;
 		TBatchTransforms Transforms;
+		TBatchRenderTargets RenderTargets;
 		RenderBuffer()
 		{
 			Entries.reserve(128);
@@ -212,6 +215,13 @@ namespace drawing
 			_buffer->Transforms.push_back(_projection);
 			applyEntry();
 		}
+
+		virtual void API_CALL addRenderTarget(IntPtr *renderTargetInstance)
+		{
+			_buffer->RenderTargets.push_back((graphics::IRenderTarget *)renderTargetInstance);
+			applyEntry();
+		}
+
 		virtual void API_CALL startBatch()
 		{
 			start();

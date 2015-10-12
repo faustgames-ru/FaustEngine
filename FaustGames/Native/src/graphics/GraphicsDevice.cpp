@@ -10,7 +10,7 @@ namespace graphics
 	GraphicsDevice GraphicsDevice::Default;
     int GraphicsDevice::_primaryFbo(0);
 
-	GraphicsDevice::GraphicsDevice() : _colorState(0), _depthState(-1.0f), _activeTextureState(-1), _drawCalls(0)
+	GraphicsDevice::GraphicsDevice() : _colorState(0), _depthState(-1.0f), _activeTextureState(-1), _drawCalls(0), actualRenderTarget(0)
 	{
 	}
 	
@@ -24,10 +24,12 @@ namespace graphics
         if (color != _colorState)
         {
             glClearColor((float)Color::getR(color) / 255.0f, (float)Color::getG(color) / 255.0f, (float)Color::getB(color) / 255.0f, (float)Color::getA(color) / 255.0f);
+			_colorState = color;
         }
         if (core::Math::abs(depth - _depthState) < 0.0001f)
         {
             glClearDepthf(depth);
+			_depthState = depth;
         }
     }
 
@@ -73,6 +75,7 @@ namespace graphics
 	
 	void GraphicsDevice::setRenderTarget(IRenderTarget *renderTarget)
 	{
+		actualRenderTarget = renderTarget;
 		if (!renderTarget)
 		{
 			glBindFramebuffer(GL_FRAMEBUFFER, _primaryFbo);
@@ -197,6 +200,36 @@ namespace graphics
         }
     }
 
+	int GraphicsDevice::getPixelsWidth() 
+	{
+		if (actualRenderTarget)
+		{
+			return actualRenderTarget->getWidth();
+		}
+		else
+		{
+			return _viewportWidth;
+		}
+	}
+	
+	int GraphicsDevice::getPixelsHeight() 
+	{
+		if (actualRenderTarget)
+		{
+			return actualRenderTarget->getHeight();
+		}
+		else
+		{
+			return _viewportHeight;
+		}
+	}
+
+
+	void GraphicsDevice::readPixels(void* pixels)
+	{
+		glReadPixels(0, 0, getPixelsWidth(), getPixelsHeight(), GL_RGBA, GL_UNSIGNED_BYTE, pixels);
+	}
+	
 	void GraphicsDevice::create()
 	{        
 		TextureImage2d::createStatic();

@@ -171,7 +171,11 @@
     <ClInclude Include="..\shaders\solid_color_vert.h" />
     <ClInclude Include="..\shaders\solid_frag.h" />
     <ClInclude Include="..\shaders\solid_vert.h" />
+    <ClInclude Include="..\shaders\texture_alphamask_color_frag.h" />
+    <ClInclude Include="..\shaders\texture_alphamask_color_vert.h" />
     <ClInclude Include="..\shaders\texture_color_frag.h" />
+    <ClInclude Include="..\shaders\texture_color_highlight_frag.h" />
+    <ClInclude Include="..\shaders\texture_color_highlight_vert.h" />
     <ClInclude Include="..\shaders\texture_color_vert.h" />
     <ClInclude Include="..\shaders\texture_lightmap_color_frag.h" />
     <ClInclude Include="..\shaders\texture_lightmap_color_vert.h" />
@@ -233,7 +237,9 @@
     <ClInclude Include="..\src\graphics\Effects.h" />
     <ClInclude Include="..\src\graphics\EffectSolid.h" />
     <ClInclude Include="..\src\graphics\EffectSolidColor.h" />
+    <ClInclude Include="..\src\graphics\EffectTextureAlphamaskColor.h" />
     <ClInclude Include="..\src\graphics\EffectTextureColor.h" />
+    <ClInclude Include="..\src\graphics\EffectTextureColorHighlight.h" />
     <ClInclude Include="..\src\graphics\EffectTextureLightMapColor.h" />
     <ClInclude Include="..\src\graphics\EffectWater.h" />
     <ClInclude Include="..\src\graphics\Errors.h" />
@@ -360,7 +366,9 @@
     <ClCompile Include="..\src\graphics\EffectSolid.cpp" />
     <ClCompile Include="..\src\graphics\EffectSolidColor.cpp" />
     <ClCompile Include="..\src\graphics\EffectsPostProcess.cpp" />
+    <ClCompile Include="..\src\graphics\EffectTextureAlphamaskColor.cpp" />
     <ClCompile Include="..\src\graphics\EffectTextureColor.cpp" />
+    <ClCompile Include="..\src\graphics\EffectTextureColorHighlight.cpp" />
     <ClCompile Include="..\src\graphics\EffectTextureLightMapColor.cpp" />
     <ClCompile Include="..\src\graphics\EffectWater.cpp" />
     <ClCompile Include="..\src\graphics\Errors.cpp" />

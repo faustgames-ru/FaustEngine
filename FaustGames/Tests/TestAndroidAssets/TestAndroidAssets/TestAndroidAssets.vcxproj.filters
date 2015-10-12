@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="res">
+      <UniqueIdentifier>2112a596-b561-4c73-b0ed-03f15a93dbdb</UniqueIdentifier>
+    </Filter>
+    <Filter Include="res\values">
+      <UniqueIdentifier>520ed3ee-f3e3-43fd-926e-62790c92b600</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{fdffeae0-33e0-45d8-b07c-f452300a3f3b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\ru">
+      <UniqueIdentifier>{7fa1edd7-ffc3-4fe7-9a45-f1cdff579864}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\ru\faustgames">
+      <UniqueIdentifier>{2308cb01-5c62-4485-b585-2463e9159b5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\ru\faustgames\testassets">
+      <UniqueIdentifier>{65d332ee-1453-4aad-83f2-f1c5a5e8af58}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="jni">
+      <UniqueIdentifier>{fd62926f-0369-4e45-b054-dc9976861fdd}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidBuild Include="AndroidManifest.xml" />
+    <AndroidBuild Include="res\values\strings.xml">
+      <Filter>res\values</Filter>
+    </AndroidBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <JCompile Include="src\ru\faustgames\testassets\TestAndroidAssets.java">
+      <Filter>src\ru\faustgames\testassets</Filter>
+    </JCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="jni\TestAndroidAssets.cpp">
+      <Filter>jni</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

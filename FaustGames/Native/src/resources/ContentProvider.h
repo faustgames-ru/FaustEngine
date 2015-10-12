@@ -8,6 +8,7 @@ namespace resources
 	class ContentProvider
 	{
 	public:
+		static bool existContent(const char *name);
 		static void openContent(const char *name);
 		static int read(void *buffer, int bytesLimit);
 		static void closeContent();

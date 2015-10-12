@@ -3,7 +3,7 @@ using System.ComponentModel;
 
 namespace FaustGames.Framework.WinForms
 {
-    internal class DisposableContainerComponent : IComponent
+    public class DisposableContainerComponent : IComponent
     {
         private readonly IDisposable _disposable;
         public bool IsDisposed;

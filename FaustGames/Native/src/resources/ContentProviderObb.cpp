@@ -124,6 +124,12 @@ namespace resources
 
 
 #ifdef __ANDROID__
+
+	bool ContentProvider::existContent(const char *name)
+	{
+		return ObbContentProvider::existsContent(name);
+	}
+
 	void ContentProvider::openContent(const char *name)
 	{
 		ObbContentProvider::openContent(name);
@@ -144,6 +150,11 @@ namespace resources
 #endif /*__ANDROID__*/
     
 #ifdef __APPLE__
+	bool ContentProvider::existContent(const char *name)
+	{
+		return ObbContentProvider::existsContent(name);
+	}
+	
     void ContentProvider::openContent(const char *name)
     {
         ObbContentProvider::openContent(name);

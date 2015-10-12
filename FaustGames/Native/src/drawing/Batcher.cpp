@@ -85,6 +85,7 @@ namespace drawing
 			_currentEntry.Blend = _blend = blend;
 			_currentEntry.Effect = _effect = effect;
 			_currentEntry.TransformIndex = _buffer->Transforms.size() - 1;
+			_currentEntry.RenderTargetIndex = _buffer->RenderTargets.size() - 1;
 		}
 
 		_textureId = textureId;
@@ -128,6 +129,7 @@ namespace drawing
 			_currentEntry.Blend = _blend = mesh.State.Blend;
 			_currentEntry.Effect = _effect = mesh.State.Effect;
 			_currentEntry.TransformIndex = _buffer->Transforms.size() - 1;
+			_currentEntry.RenderTargetIndex = _buffer->RenderTargets.size() - 1;
 		}
 
 		_textureId = mesh.State.TextureId;
@@ -158,6 +160,7 @@ namespace drawing
 			graphics::UniformValues::texture()->setValue(i->TextureId);
 			graphics::UniformValues::lightmap()->setValue(i->LightmapId);
 			graphics::UniformValues::projection()->setValue(_backBuffer->Transforms[i->TransformIndex]);
+
 			//_graphicsDevice->renderState.setBlend(i->Blend);
 			_graphicsDevice->renderState.setBlend(graphics::BlendState::Alpha);
 			_graphicsDevice->renderState.setEffect(i->Effect);

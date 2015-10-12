@@ -68,7 +68,8 @@ namespace resources
 
 	graphics::Image2dData * ContentManager::loadUnregisteredTexture(const char *name)
 	{
-
+		if (!ContentProvider::existContent(name))
+			return 0;
 		//todo: load data from content provider
 		ContentProvider::openContent(name);
 

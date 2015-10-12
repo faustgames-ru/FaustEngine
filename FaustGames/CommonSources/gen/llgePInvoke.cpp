@@ -241,6 +241,21 @@ namespace llge
 		classInstance->setEffectConstantColor(effect, name, value);
 	}
 	
+	extern "C" DLLEXPORT int API_CALL llge_GraphicsFacade_getPixelsWidth (IGraphicsFacade * classInstance)
+	{
+		return classInstance->getPixelsWidth();
+	}
+	
+	extern "C" DLLEXPORT int API_CALL llge_GraphicsFacade_getPixelsHeight (IGraphicsFacade * classInstance)
+	{
+		return classInstance->getPixelsHeight();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_GraphicsFacade_getPixels (IGraphicsFacade * classInstance, IntPtr target)
+	{
+		classInstance->getPixels(target);
+	}
+	
 	extern "C" DLLEXPORT void API_CALL llge_GraphicsFacade_create (IGraphicsFacade * classInstance)
 	{
 		classInstance->create();
@@ -521,6 +536,11 @@ namespace llge
 		classInstance->addProjection(floatMatrix);
 	}
 	
+	extern "C" DLLEXPORT void API_CALL llge_Batch2d_addRenderTarget (IBatch2d * classInstance, IntPtr * renderTargetInstance)
+	{
+		classInstance->addRenderTarget(renderTargetInstance);
+	}
+	
 	extern "C" DLLEXPORT void API_CALL llge_Batch2d_startBatch (IBatch2d * classInstance)
 	{
 		classInstance->startBatch();
@@ -581,9 +601,9 @@ namespace llge
 		return classInstance->getZ();
 	}
 	
-	extern "C" DLLEXPORT void API_CALL llge_SpineSkeleton_render (ISpineSkeleton * classInstance, IBatch2d * batch, int lightmapId)
+	extern "C" DLLEXPORT void API_CALL llge_SpineSkeleton_render (ISpineSkeleton * classInstance, IBatch2d * batch, int lightmapId, GraphicsEffects effect)
 	{
-		classInstance->render(batch, lightmapId);
+		classInstance->render(batch, lightmapId, effect);
 	}
 	
 	extern "C" DLLEXPORT int API_CALL llge_SpineSkeleton_getGeometry (ISpineSkeleton * classInstance, void * vertices, int verticeLimit, void * indices, int indicesLimit)

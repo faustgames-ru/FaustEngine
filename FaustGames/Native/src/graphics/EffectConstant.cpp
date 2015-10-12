@@ -26,7 +26,6 @@ namespace graphics
 		setChanged();
 	}
 
-
 	void EffectConstant::create(Effect *effect)
 	{
 		_owner = effect;
@@ -50,7 +49,6 @@ namespace graphics
 		glUniform4f(_parameterHandler, red, green, blue, alpha);
 		Errors::check(Errors::Uniform1f);
 	}
-
 
 	void EffectConstant::apply()
 	{

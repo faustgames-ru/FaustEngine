@@ -1,2 +1,2 @@
-C:\NVPACK\android-ndk-r10c\ndk-build
+C:\Users\Kovalishin_A\Documents\Android\ndk\android-ndk-r10d\ndk-build
 pause

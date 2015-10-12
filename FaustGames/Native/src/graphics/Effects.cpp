@@ -9,6 +9,8 @@ namespace graphics
 	EffectSolid Effects::_solid;
 	EffectSolidColor Effects::_solidColor;
 	EffectTextureColor Effects::_textureColor;
+	EffectTextureAlphamaskColor Effects::_textureAlphamaskColor;
+	EffectTextureColorHighlight Effects::_textureColorHighlight;
 	EffectTextureLightMapColor Effects::_textureLightmapColor;
 	//EffectWater Effects::_water;
 	EffectRenderDepth Effects::_renderDepth;
@@ -25,6 +27,8 @@ namespace graphics
 		_solid.create();
 		_solidColor.create();
 		_textureColor.create();
+		_textureAlphamaskColor.create();
+		_textureColorHighlight.create();
 		_textureLightmapColor.create();
 		//_water.create();
 		_renderDepth.create();
@@ -40,6 +44,9 @@ namespace graphics
 		_solid.getEffect()->cleanup();
 		_solidColor.getEffect()->cleanup();
 		_textureColor.getEffect()->cleanup();
+		_textureAlphamaskColor.getEffect()->cleanup();
+		_textureColorHighlight.getEffect()->cleanup();
+
 		_textureLightmapColor.getEffect()->cleanup();
 		//_water.getEffect()->cleanup();
 		_renderDepth.getEffect()->cleanup();
@@ -62,6 +69,16 @@ namespace graphics
 	EffectTextureColor * Effects::textureColor()
 	{
 		return &_textureColor;
+	}
+	
+	EffectTextureAlphamaskColor * Effects::textureAlphamaskColor() 
+	{
+		return &_textureAlphamaskColor;
+	}
+	
+	EffectTextureColorHighlight * Effects::textureColorHighlight()
+	{
+		return &_textureColorHighlight;
 	}
 
 	EffectTextureLightMapColor * Effects::textureLightmapColor()

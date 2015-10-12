@@ -44,7 +44,8 @@ namespace graphics
 #ifdef __ANDROID__
 			__android_log_print(ANDROID_LOG_ERROR, "TRACKERS", "%s", getActionName(actionType));
 			__android_log_print(ANDROID_LOG_ERROR, "TRACKERS", "%s", to_string(error).c_str());
-#endif
+#else
+
 #ifdef __APPLE__
             fprintf(stderr, getActionName(actionType));
             fprintf(stderr, "\n");
@@ -52,6 +53,9 @@ namespace graphics
             fprintf(stderr, to_string(error).c_str());
             fprintf(stderr, "\n");
 
+#else
+			throw std::exception();
+#endif
 #endif
 			//throwException(getActionName(actionType));
 			

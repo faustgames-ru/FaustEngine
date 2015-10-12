@@ -32,6 +32,8 @@ namespace llge
 		EffectRenderDepth = 0x4,
 		EffectSolidColor = 0x5,
 		EffectBloomFilter = 0x6,
+		EffectTextureColorHighlight = 0x7,
+		EffectTextureAlphamaskColor = 0x8,
 	}
 	
 	public enum GraphicsVertexFormats
@@ -428,6 +430,27 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private void llge_GraphicsFacade_setEffectConstantColor (IntPtr classInstance, GraphicsEffects effect, string name, uint value);
+		public int GetPixelsWidth ()
+		{
+			return llge_GraphicsFacade_getPixelsWidth(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private int llge_GraphicsFacade_getPixelsWidth (IntPtr classInstance);
+		public int GetPixelsHeight ()
+		{
+			return llge_GraphicsFacade_getPixelsHeight(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private int llge_GraphicsFacade_getPixelsHeight (IntPtr classInstance);
+		public void GetPixels (IntPtr target)
+		{
+			llge_GraphicsFacade_getPixels(ClassInstance, target);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_GraphicsFacade_getPixels (IntPtr classInstance, IntPtr target);
 		public void Create ()
 		{
 			llge_GraphicsFacade_create(ClassInstance);
@@ -880,6 +903,13 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private void llge_Batch2d_addProjection (IntPtr classInstance, IntPtr floatMatrix);
+		public void AddRenderTarget (IntPtr renderTargetInstance)
+		{
+			llge_Batch2d_addRenderTarget(ClassInstance, renderTargetInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_Batch2d_addRenderTarget (IntPtr classInstance, IntPtr renderTargetInstance);
 		public void StartBatch ()
 		{
 			llge_Batch2d_startBatch(ClassInstance);
@@ -969,13 +999,13 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private float llge_SpineSkeleton_getZ (IntPtr classInstance);
-		public void Render (Batch2d batch, int lightmapId)
+		public void Render (Batch2d batch, int lightmapId, GraphicsEffects effect)
 		{
-			llge_SpineSkeleton_render(ClassInstance, batch.ClassInstance, lightmapId);
+			llge_SpineSkeleton_render(ClassInstance, batch.ClassInstance, lightmapId, effect);
 		}
 		
 		[DllImport(Version.Dll)]
-		static extern private void llge_SpineSkeleton_render (IntPtr classInstance, IntPtr batch, int lightmapId);
+		static extern private void llge_SpineSkeleton_render (IntPtr classInstance, IntPtr batch, int lightmapId, GraphicsEffects effect);
 		public int GetGeometry (IntPtr vertices, int verticeLimit, IntPtr indices, int indicesLimit)
 		{
 			return llge_SpineSkeleton_getGeometry(ClassInstance, vertices, verticeLimit, indices, indicesLimit);

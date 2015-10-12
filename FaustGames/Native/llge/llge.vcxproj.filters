@@ -52,6 +52,9 @@
     <Filter Include="spine\runtime">
       <UniqueIdentifier>{106823d2-47e2-4009-aea8-15ca367459e3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="plugins">
+      <UniqueIdentifier>{a3c22ea2-dc24-4e3e-ad0c-ab636365c746}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\CommonSources\include\llge.h">
@@ -509,6 +512,24 @@
     <ClInclude Include="..\shaders\post_process_tonemapping.h">
       <Filter>shaders</Filter>
     </ClInclude>
+    <ClInclude Include="..\shaders\texture_color_highlight_frag.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shaders\texture_color_highlight_vert.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\EffectTextureColorHighlight.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shaders\texture_alphamask_color_frag.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shaders\texture_alphamask_color_vert.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\EffectTextureAlphamaskColor.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\CommonSources\gen\llgePInvoke.cpp">
@@ -934,6 +955,12 @@
       <Filter>drawing</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\EffectsPostProcess.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\EffectTextureColorHighlight.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\EffectTextureAlphamaskColor.cpp">
       <Filter>graphics</Filter>
     </ClCompile>
   </ItemGroup>

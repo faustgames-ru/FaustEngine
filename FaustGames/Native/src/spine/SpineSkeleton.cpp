@@ -277,13 +277,15 @@ namespace spine
 	}
 
 
-	void API_CALL SpineSkeleton::render(llge::IBatch2d * batch, int lightmapId)
+
+	void API_CALL SpineSkeleton::render(llge::IBatch2d * batch, int lightmapId, llge::GraphicsEffects effect)
 	{
 		drawing::Batcher* batcher = (drawing::Batcher*)batch->getNativeInstance();
 		spSkeleton *s = (spSkeleton *)_spSkeleton;
 		geometry::Aabb2d aabb;
 		_mesh.Z = _transform.getWz();
 		_mesh.State.LightmapId = lightmapId;
+		graphics::EffectBase * effectInstance = graphics::RenderConverter::getInstance()->getEffect(effect);
 		for (int i = 0; i < s->slotsCount; i++)
 		{
 			spSlot* slot = s->drawOrder[i];
@@ -292,7 +294,8 @@ namespace spine
 			_mesh.State.Blend = slot->data->additiveBlending == 0 
 				? graphics::BlendState::Alpha 
 				: graphics::BlendState::Additive;
-			_mesh.State.Effect = graphics::Effects::textureLightmapColor();
+
+			_mesh.State.Effect = effectInstance;// graphics::Effects::textureLightmapColor();
 
 			switch (slot->attachment->type)
 			{

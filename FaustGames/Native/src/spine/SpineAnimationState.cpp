@@ -55,11 +55,20 @@ namespace spine
 
 	void SpineAnimationState::setAnimation(SpineSkeletonAnimation *animation, bool loop, bool normalize)
 	{
+		float duration;
+		if (_animation)
+		{
+			duration = ((spAnimation *)_animation)->duration;
+		}
+		else
+		{
+			duration = ((spAnimation *)animation->getAnimation())->duration;
+		}
 		_animation = animation->getAnimation();
 		spAnimationState_setAnimation((spAnimationState*)_spAnimationState, 0, (spAnimation *)_animation, loop);		
 		if (normalize)
 		{
-			_timeNormalized = _prevTime / ((spAnimation *)_animation)->duration;
+			_timeNormalized = _prevTime / duration;
 			spAnimationState_dummy_update((spAnimationState*)_spAnimationState, _timeNormalized * ((spAnimation *)_animation)->duration);
 		}
 	}

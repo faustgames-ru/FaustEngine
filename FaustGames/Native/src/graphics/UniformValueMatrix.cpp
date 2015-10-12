@@ -18,7 +18,7 @@ namespace graphics
 	}
 	void UniformValueMatrix::apply(Uniform *uniform)
 	{
-		if (_equal) return;
+		//if (_equal) return;
 		unsigned int shaderMask = uniform->getShaderMask();
 		if ((_applyMask & shaderMask) != 0) return;
 		_applyMask |= shaderMask;

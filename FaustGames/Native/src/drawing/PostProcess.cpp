@@ -57,7 +57,7 @@ namespace drawing
 	}
 
 
-	void FilterAdd::execute(graphics::TextureRenderTarget2d *value0, graphics::TextureRenderTarget2d *value1, graphics::TextureRenderTarget2d *target)
+	void FilterAdd::execute(graphics::TextureRenderTarget2d *value0, graphics::TextureRenderTarget2d *value1, graphics::IRenderTarget *target)
 	{
 		graphics::GraphicsDevice::Default.setRenderTarget(target);
 		graphics::UniformValues::texture()->setValue(value0->getHandle());
@@ -72,6 +72,7 @@ namespace drawing
 	{
 		_tonemapId = tonemapId;
 		_source = graphics::GraphicsDevice::Default.PostProcessTargets.pop();
+		_beginTarget = graphics::GraphicsDevice::Default.actualRenderTarget;
 		graphics::GraphicsDevice::Default.setRenderTarget(_source);
 	}
 	
@@ -103,7 +104,7 @@ namespace drawing
 
 		_vBlur.execute(blur0, blur1);
 		_hBlur.execute(blur1, blur0);
-		_add.execute(_source, blur0, 0);
+		_add.execute(_source, blur0, _beginTarget);
 
 		graphics::GraphicsDevice::Default.PostProcessScaledTargets.push(blur0);
 		graphics::GraphicsDevice::Default.PostProcessScaledTargets.push(blur1);

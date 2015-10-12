@@ -8,6 +8,8 @@
 #include "EffectSolid.h"
 #include "EffectSolidColor.h"
 #include "EffectTextureColor.h"
+#include "EffectTextureAlphamaskColor.h"
+#include "EffectTextureColorHighlight.h"
 #include "EffectTextureLightMapColor.h"
 #include "EffectWater.h"
 #include "EffectRenderDepth.h"
@@ -23,6 +25,8 @@ namespace graphics
 		static EffectSolid * solid();
 		static EffectSolidColor * solidColor();
 		static EffectTextureColor * textureColor();
+		static EffectTextureAlphamaskColor * textureAlphamaskColor();
+		static EffectTextureColorHighlight * textureColorHighlight();
 		static EffectTextureLightMapColor * textureLightmapColor();
 		//static EffectWater * water();
 		static EffectRenderDepth * renderDepth();
@@ -36,6 +40,8 @@ namespace graphics
 		static EffectSolid _solid;
 		static EffectSolidColor _solidColor;
 		static EffectTextureColor _textureColor;
+		static EffectTextureAlphamaskColor _textureAlphamaskColor;
+		static EffectTextureColorHighlight _textureColorHighlight;
 		static EffectTextureLightMapColor _textureLightmapColor;
 		//static EffectWater _water;
 		static EffectRenderDepth _renderDepth;

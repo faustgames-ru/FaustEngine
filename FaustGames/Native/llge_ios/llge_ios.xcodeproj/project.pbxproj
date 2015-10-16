@@ -133,6 +133,8 @@
 		440CBA011B1D8AF7009FDC49 /* SpineSkeletonResource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 440CB96E1B1D8AF7009FDC49 /* SpineSkeletonResource.cpp */; };
 		440CBA061B1D8B94009FDC49 /* llgePInvoke.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 440CBA051B1D8B94009FDC49 /* llgePInvoke.cpp */; };
 		44328EB41B1C4A3400CC67BE /* libllge_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 44328EA81B1C4A3400CC67BE /* libllge_ios.a */; };
+		448513231BCBF16B008F3079 /* EffectTextureAlphamaskColor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 448513211BCBF16B008F3079 /* EffectTextureAlphamaskColor.cpp */; settings = {ASSET_TAGS = (); }; };
+		448513241BCBF16B008F3079 /* EffectTextureColorHighlight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 448513221BCBF16B008F3079 /* EffectTextureColorHighlight.cpp */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -403,6 +405,10 @@
 		44328EA81B1C4A3400CC67BE /* libllge_ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libllge_ios.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		44328EB31B1C4A3400CC67BE /* llge_iosTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = llge_iosTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		44328EB91B1C4A3400CC67BE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4485131F1BCBF16B008F3079 /* EffectTextureAlphamaskColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EffectTextureAlphamaskColor.h; sourceTree = "<group>"; };
+		448513201BCBF16B008F3079 /* EffectTextureColorHighlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EffectTextureColorHighlight.h; sourceTree = "<group>"; };
+		448513211BCBF16B008F3079 /* EffectTextureAlphamaskColor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EffectTextureAlphamaskColor.cpp; sourceTree = "<group>"; };
+		448513221BCBF16B008F3079 /* EffectTextureColorHighlight.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EffectTextureColorHighlight.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -560,6 +566,10 @@
 		440CB8B11B1D8AF7009FDC49 /* graphics */ = {
 			isa = PBXGroup;
 			children = (
+				4485131F1BCBF16B008F3079 /* EffectTextureAlphamaskColor.h */,
+				448513201BCBF16B008F3079 /* EffectTextureColorHighlight.h */,
+				448513211BCBF16B008F3079 /* EffectTextureAlphamaskColor.cpp */,
+				448513221BCBF16B008F3079 /* EffectTextureColorHighlight.cpp */,
 				440CB8B21B1D8AF7009FDC49 /* AttributeInfo.cpp */,
 				440CB8B31B1D8AF7009FDC49 /* AttributeInfo.h */,
 				440CB8B41B1D8AF7009FDC49 /* Attributes.cpp */,
@@ -993,10 +1003,12 @@
 				440CB9771B1D8AF7009FDC49 /* HollowsAllocationPolicy.cpp in Sources */,
 				440CB9951B1D8AF7009FDC49 /* llgeResources.cpp in Sources */,
 				440CB9851B1D8AF7009FDC49 /* DummyEntitiesFilter.cpp in Sources */,
+				448513231BCBF16B008F3079 /* EffectTextureAlphamaskColor.cpp in Sources */,
 				440CB9C11B1D8AF7009FDC49 /* ContentProviderWindows.cpp in Sources */,
 				440CBA061B1D8B94009FDC49 /* llgePInvoke.cpp in Sources */,
 				440CB9B21B1D8AF7009FDC49 /* TextureRenderTargetDepth2d.cpp in Sources */,
 				440CB99E1B1D8AF7009FDC49 /* EffectConstant.cpp in Sources */,
+				448513241BCBF16B008F3079 /* EffectTextureColorHighlight.cpp in Sources */,
 				440CB99F1B1D8AF7009FDC49 /* EffectRenderDepth.cpp in Sources */,
 				440CB97E1B1D8AF7009FDC49 /* PostProcess.cpp in Sources */,
 				440CB9F51B1D8AF7009FDC49 /* SkeletonBounds.c in Sources */,

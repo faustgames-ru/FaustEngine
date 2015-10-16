@@ -319,9 +319,17 @@ namespace llge
 		virtual void API_CALL updateWorldTransform() = 0;
 		virtual void API_CALL setBonesToSetupPose() = 0;
 		virtual void API_CALL setSlotsToSetupPose() = 0;
+		virtual void API_CALL applySkin(IntPtr spineSkinNativeInstance) = 0;
 		virtual void API_CALL dispose() = 0;
 	};
 
+
+	class ISpineSkin
+	{
+	public:
+		virtual IntPtr API_CALL getNativeInstance() = 0;
+		virtual IntPtr API_CALL getName() = 0;
+	};
 
 	class ISpineAnimation
 	{
@@ -363,6 +371,8 @@ namespace llge
 		virtual void API_CALL unLoad() = 0;
 		virtual ISpineAnimation* API_CALL getSpineAnimation(int i) = 0;
 		virtual int API_CALL getSpineAnimationsCount() = 0;
+		virtual ISpineSkin* API_CALL getSpineSkin(int i) = 0;
+		virtual int API_CALL getSpineSkinsCount() = 0;
 		virtual ISpineEvent* API_CALL getSpineEvent(int i) = 0;
 		virtual int API_CALL getSpineEventsCount() = 0;
 		virtual ISpineSkeleton* API_CALL createSkeleton(void *floatMatrix) = 0;

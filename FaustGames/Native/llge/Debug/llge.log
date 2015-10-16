@@ -1,36 +1,74 @@
-﻿Build started 12.10.2015 15:04:41.
+﻿Build started 16.10.2015 10:57:10.
      1>Project "C:\_faust\FaustEngine\FaustGames\Native\llge\llge.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I..\include /I..\..\CommonSources\include /I..\src\resources\zlib /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _USRDLL /D LLGE_EXPORTS /D LIBPNG_EXPORTS /D _CRT_SECURE_NO_WARNINGS /D _WINDLL /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt ..\src\drawing\Batcher.cpp ..\src\drawing\Camera.cpp ..\src\drawing\PostProcess.cpp ..\src\drawing\RenderItem2d.cpp ..\src\drawing\RenderMesh2d.cpp ..\src\drawing\Renderer2d.cpp ..\src\drawing\WaterRenderer.cpp ..\src\entities\Aabb2dComponent.cpp ..\src\entities\Component.cpp ..\src\entities\DummyEntitiesFilter.cpp ..\src\entities\EntitiesFilter.cpp ..\src\entities\EntitiesWorld.cpp ..\src\entities\Entity.cpp ..\src\entities\MatrixTransformComponent.cpp ..\src\entities\QuadtreeEntitiesFilter.cpp ..\src\entities\Render2dComponent.cpp ..\src\entities\RenderSystem2d.cpp ..\src\entities\System.cpp ..\src\entities\Transform2dComponent.cpp ..\src\entities\TransformSystem2d.cpp ..\src\exports\llge.cpp ..\src\exports\llgeDrawing.cpp ..\src\exports\llgeEntities.cpp ..\src\exports\llgeGraphics.cpp ..\src\exports\llgeResources.cpp ..\src\graphics\RenderConverter.cpp ..\src\resources\ContentManager.cpp ..\src\resources\ContentProviderObb.cpp ..\src\resources\ContentProviderWindows.cpp ..\src\spine\SpineAnimationState.cpp ..\src\spine\SpineAnimationStateData.cpp ..\src\spine\SpineSkeleton.cpp ..\src\spine\SpineSkeletonAnimation.cpp ..\src\spine\SpineSkeletonResource.cpp ..\src\spine\spine.cpp
-         Batcher.cpp
-     1>c:\_faust\faustengine\faustgames\native\src\drawing\batcher.cpp(63): warning C4018: '<=' : signed/unsigned mismatch
-     1>c:\_faust\faustengine\faustgames\native\src\drawing\batcher.cpp(107): warning C4018: '<=' : signed/unsigned mismatch
-     1>c:\_faust\faustengine\faustgames\native\src\drawing\batcher.cpp(151): warning C4101: 'target' : unreferenced local variable
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I..\include /I..\..\CommonSources\include /I..\src\resources\zlib /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _USRDLL /D LLGE_EXPORTS /D LIBPNG_EXPORTS /D _CRT_SECURE_NO_WARNINGS /D _WINDLL /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt ..\..\CommonSources\gen\llgePInvoke.cpp ..\src\drawing\Batcher.cpp ..\src\drawing\Camera.cpp ..\src\drawing\PostProcess.cpp ..\src\drawing\RenderItem2d.cpp ..\src\drawing\RenderMesh2d.cpp ..\src\drawing\Renderer2d.cpp ..\src\drawing\WaterRenderer.cpp ..\src\entities\Aabb2dComponent.cpp ..\src\entities\Component.cpp ..\src\entities\DummyEntitiesFilter.cpp ..\src\entities\EntitiesFilter.cpp ..\src\entities\EntitiesWorld.cpp ..\src\entities\Entity.cpp ..\src\entities\MatrixTransformComponent.cpp ..\src\entities\QuadtreeEntitiesFilter.cpp ..\src\entities\Render2dComponent.cpp ..\src\entities\RenderSystem2d.cpp ..\src\entities\System.cpp ..\src\entities\Transform2dComponent.cpp ..\src\entities\TransformSystem2d.cpp ..\src\exports\llge.cpp ..\src\exports\llgeDrawing.cpp ..\src\exports\llgeEntities.cpp ..\src\exports\llgeGeometry.cpp ..\src\exports\llgeGraphics.cpp ..\src\exports\llgeResources.cpp ..\src\graphics\AttributeInfo.cpp ..\src\graphics\Attributes.cpp ..\src\graphics\Color.cpp ..\src\graphics\Effect.cpp ..\src\graphics\EffectBase.cpp ..\src\graphics\EffectConstant.cpp ..\src\graphics\EffectRenderDepth.cpp ..\src\graphics\EffectSolid.cpp ..\src\graphics\EffectSolidColor.cpp ..\src\graphics\EffectTextureAlphamaskColor.cpp ..\src\graphics\EffectTextureColor.cpp ..\src\graphics\EffectTextureColorHighlight.cpp ..\src\graphics\EffectTextureLightMapColor.cpp ..\src\graphics\EffectWater.cpp ..\src\graphics\Effects.cpp ..\src\graphics\EffectsPostProcess.cpp ..\src\graphics\Errors.cpp ..\src\graphics\GraphicsDevice.cpp ..\src\graphics\Image2dData.cpp ..\src\graphics\RenderConverter.cpp ..\src\graphics\RenderState.cpp ..\src\graphics\StaticBatch.cpp ..\src\graphics\Texture.cpp ..\src\graphics\TextureCubemap.cpp ..\src\graphics\TextureImage2d.cpp ..\src\graphics\TextureLoader.cpp ..\src\graphics\TextureRenderTarget2d.cpp ..\src\graphics\TextureRenderTargetDepth2d.cpp ..\src\graphics\Uniform.cpp ..\src\graphics\UniformInfo.cpp ..\src\graphics\UniformValue.cpp ..\src\graphics\UniformValueCubemap.cpp ..\src\graphics\UniformValueFloat.cpp ..\src\graphics\UniformValueMatrix.cpp ..\src\graphics\UniformValueTexture.cpp ..\src\graphics\UniformValueVector3.cpp ..\src\graphics\Uniforms.cpp ..\src\graphics\VertexBuffer.cpp ..\src\graphics\VertexFormat.cpp ..\src\graphics\VertexFormats.cpp ..\src\resources\ContentManager.cpp ..\src\resources\ContentProviderObb.cpp ..\src\resources\ContentProviderWindows.cpp ..\src\spine\SpineAnimationState.cpp ..\src\spine\SpineAnimationStateData.cpp ..\src\spine\SpineSkeleton.cpp ..\src\spine\SpineSkeletonAnimation.cpp ..\src\spine\SpineSkeletonResource.cpp ..\src\spine\spine.cpp
+         SpineSkeleton.cpp
+         llgePInvoke.cpp
          Generating Code...
          Compiling...
-         spine.cpp
-     1>c:\_faust\faustengine\faustgames\native\src\spine\spine.cpp(11): warning C4018: '<' : signed/unsigned mismatch
          SpineSkeletonResource.cpp
-     1>c:\_faust\faustengine\faustgames\native\src\spine\spineskeletonresource.cpp(37): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\_faust\faustengine\faustgames\native\src\spine\spineskeletonresource.cpp(43): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\_faust\faustengine\faustgames\native\src\spine\spineskeletonresource.cpp(62): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\_faust\faustengine\faustgames\native\src\spine\spineskeletonresource.cpp(54): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\_faust\faustengine\faustgames\native\src\spine\spineskeletonresource.cpp(60): warning C4018: '<' : signed/unsigned mismatch
      1>c:\_faust\faustengine\faustgames\native\src\spine\spineskeletonresource.cpp(67): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\_faust\faustengine\faustgames\native\src\spine\spineskeletonresource.cpp(85): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\_faust\faustengine\faustgames\native\src\spine\spineskeletonresource.cpp(90): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\_faust\faustengine\faustgames\native\src\spine\spineskeletonresource.cpp(95): warning C4018: '<' : signed/unsigned mismatch
          SpineSkeletonAnimation.cpp
-         SpineSkeleton.cpp
-         SpineAnimationStateData.cpp
          SpineAnimationState.cpp
      1>c:\_faust\faustengine\faustgames\native\src\spine\spineanimationstate.cpp(46): warning C4101: 'previousDelta' : unreferenced local variable
-         llgeGraphics.cpp
-         llgeDrawing.cpp
-         llge.cpp
          Generating Code...
          Skipping... (no relevant changes detected)
+         spine.cpp
+         SpineAnimationStateData.cpp
          ContentProviderWindows.cpp
          ContentProviderObb.cpp
          ContentManager.cpp
+         VertexFormats.cpp
+         VertexFormat.cpp
+         VertexBuffer.cpp
+         Uniforms.cpp
+         UniformValueVector3.cpp
+         UniformValueTexture.cpp
+         UniformValueMatrix.cpp
+         UniformValueFloat.cpp
+         UniformValueCubemap.cpp
+         UniformValue.cpp
+         UniformInfo.cpp
+         Uniform.cpp
+         TextureRenderTargetDepth2d.cpp
+         TextureRenderTarget2d.cpp
+         TextureLoader.cpp
+         TextureImage2d.cpp
+         TextureCubemap.cpp
+         Texture.cpp
+         StaticBatch.cpp
+         RenderState.cpp
          RenderConverter.cpp
+         Image2dData.cpp
+         GraphicsDevice.cpp
+         Errors.cpp
+         EffectsPostProcess.cpp
+         Effects.cpp
+         EffectWater.cpp
+         EffectTextureLightMapColor.cpp
+         EffectTextureColorHighlight.cpp
+         EffectTextureColor.cpp
+         EffectTextureAlphamaskColor.cpp
+         EffectSolidColor.cpp
+         EffectSolid.cpp
+         EffectRenderDepth.cpp
+         EffectConstant.cpp
+         EffectBase.cpp
+         Effect.cpp
+         Color.cpp
+         Attributes.cpp
+         AttributeInfo.cpp
          llgeResources.cpp
+         llgeGraphics.cpp
+         llgeGeometry.cpp
          llgeEntities.cpp
+         llgeDrawing.cpp
+         llge.cpp
          TransformSystem2d.cpp
          Transform2dComponent.cpp
          System.cpp
@@ -50,6 +88,7 @@
          RenderItem2d.cpp
          PostProcess.cpp
          Camera.cpp
+         Batcher.cpp
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\work\sources\github\moon\Solutions\Debug\llge.dll" /INCREMENTAL /NOLOGO /LIBPATH:..\lib\Win32 opengl32.lib glew32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\work\sources\github\moon\Solutions\Debug\llge.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\work\sources\github\moon\Solutions\Debug\llge.lib" /MACHINE:X86 /DLL Debug\llgePInvoke.obj
          Debug\BasicTest.obj
@@ -196,9 +235,10 @@
          Debug\TestStandartAllocations.obj
          Debug\dllmain.obj
          Debug\stdafx.obj
+            Creating library C:\work\sources\github\moon\Solutions\Debug\llge.lib and object C:\work\sources\github\moon\Solutions\Debug\llge.exp
          llge.vcxproj -> C:\work\sources\github\moon\Solutions\Debug\llge.dll
      1>Done Building Project "C:\_faust\FaustEngine\FaustGames\Native\llge\llge.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:08.10
+Time Elapsed 00:00:05.58

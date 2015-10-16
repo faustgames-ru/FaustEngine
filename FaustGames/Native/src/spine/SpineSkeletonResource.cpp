@@ -24,6 +24,23 @@ namespace spine
 		_name = name;
 	}
 
+	IntPtr API_CALL SpineSkin::getName() 
+	{
+		return (IntPtr)_name.c_str();
+	}
+
+	IntPtr API_CALL SpineSkin::getNativeInstance() 
+	{
+		return _spSkin;
+	}
+	SpineSkin::SpineSkin(void * skin) 
+	{
+		_spSkin = skin;
+		spSkin* s = (spSkin*)_spSkin;
+		_name = s->name;
+	}
+
+
 
 	void API_CALL SpineSkeletonResource::load(String atlasText, String jsonText, String dir)
 	{
@@ -45,6 +62,12 @@ namespace spine
 			spEventData* e = sd->events[i];
 			e->intValue = i;
 			_events[i] = new SpineEvent(e->name);
+		}
+		_skins.resize(sd->skinsCount);
+		for (int i = 0; i < _skins.size(); i++)
+		{
+			spSkin* s = sd->skins[i];
+			_skins[i] = new SpineSkin(s);
 		}
 	}
 
@@ -69,6 +92,11 @@ namespace spine
 			delete _events[i];
 		}
 		_events.clear();
+		for (int i = 0; i < _skins.size(); i++)
+		{
+			delete _skins[i];
+		}
+		_skins.clear();
 	}
 
 	llge::ISpineAnimation* API_CALL SpineSkeletonResource::getSpineAnimation(int i)
@@ -79,6 +107,16 @@ namespace spine
 	int API_CALL SpineSkeletonResource::getSpineAnimationsCount()
 	{
 		return getAnimationsCount();
+	}
+
+	llge::ISpineSkin* API_CALL SpineSkeletonResource::getSpineSkin(int i) 
+	{
+		return _skins[i];
+	}
+
+	int API_CALL SpineSkeletonResource::getSpineSkinsCount() 
+	{
+		return _skins.size();
 	}
 
 	llge::ISpineEvent* API_CALL SpineSkeletonResource::getSpineEvent(int i)

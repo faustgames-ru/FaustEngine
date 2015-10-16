@@ -1041,6 +1041,13 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private void llge_SpineSkeleton_setSlotsToSetupPose (IntPtr classInstance);
+		public void ApplySkin (IntPtr spineSkinNativeInstance)
+		{
+			llge_SpineSkeleton_applySkin(ClassInstance, spineSkinNativeInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_SpineSkeleton_applySkin (IntPtr classInstance, IntPtr spineSkinNativeInstance);
 		public void Dispose ()
 		{
 			llge_SpineSkeleton_dispose(ClassInstance);
@@ -1048,6 +1055,25 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private void llge_SpineSkeleton_dispose (IntPtr classInstance);
+	}
+	
+	public class SpineSkin
+	{
+		public IntPtr ClassInstance;
+		public IntPtr GetNativeInstance ()
+		{
+			return llge_SpineSkin_getNativeInstance(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_SpineSkin_getNativeInstance (IntPtr classInstance);
+		public IntPtr GetName ()
+		{
+			return llge_SpineSkin_getName(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_SpineSkin_getName (IntPtr classInstance);
 	}
 	
 	public class SpineAnimation
@@ -1192,6 +1218,20 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private int llge_SpineResource_getSpineAnimationsCount (IntPtr classInstance);
+		public SpineSkin GetSpineSkin (int i)
+		{
+			return new SpineSkin{ ClassInstance = llge_SpineResource_getSpineSkin(ClassInstance, i) };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_SpineResource_getSpineSkin (IntPtr classInstance, int i);
+		public int GetSpineSkinsCount ()
+		{
+			return llge_SpineResource_getSpineSkinsCount(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private int llge_SpineResource_getSpineSkinsCount (IntPtr classInstance);
 		public SpineEvent GetSpineEvent (int i)
 		{
 			return new SpineEvent{ ClassInstance = llge_SpineResource_getSpineEvent(ClassInstance, i) };

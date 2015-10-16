@@ -18,6 +18,7 @@ namespace spine
 		void API_CALL updateWorldTransform();
 		void *getSkeleton();
 		virtual IntPtr API_CALL getNativeInstance();
+		virtual void API_CALL applySkin(IntPtr spineSkinNativeInstance);
 		virtual void API_CALL dispose();
 		virtual void API_CALL setTransform(void *floatMatrix);
 		virtual void API_CALL setColor(uint color);

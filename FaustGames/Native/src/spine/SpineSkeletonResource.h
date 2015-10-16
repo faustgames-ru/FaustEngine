@@ -14,6 +14,17 @@ namespace spine
 		std::string _name;
 	};
 
+	class SpineSkin : public llge::ISpineSkin
+	{
+	public:
+		virtual IntPtr API_CALL getName();
+		virtual IntPtr API_CALL getNativeInstance();
+		SpineSkin(void * spSkin);
+	private:
+		std::string _name;
+		void * _spSkin;
+	};
+
 	class SpineSkeletonResource : public llge::ISpineResource
 	{
 	public:
@@ -27,6 +38,8 @@ namespace spine
 		virtual void API_CALL unLoad();
 		virtual llge::ISpineAnimation* API_CALL getSpineAnimation(int i);
 		virtual int API_CALL getSpineAnimationsCount();
+		virtual llge::ISpineSkin* API_CALL getSpineSkin(int i);
+		virtual int API_CALL getSpineSkinsCount();
 		virtual llge::ISpineEvent* API_CALL getSpineEvent(int i);
 		virtual int API_CALL getSpineEventsCount();
 		virtual llge::ISpineSkeleton* API_CALL createSkeleton(void *floatMatrix);
@@ -39,6 +52,7 @@ namespace spine
 		void *_spSkeletonData;
 		std::vector<SpineSkeletonAnimation *> _animations;
 		std::vector<SpineEvent *> _events;
+		std::vector<SpineSkin *> _skins;
 	};
 }
 

@@ -631,9 +631,24 @@ namespace llge
 		classInstance->setSlotsToSetupPose();
 	}
 	
+	extern "C" DLLEXPORT void API_CALL llge_SpineSkeleton_applySkin (ISpineSkeleton * classInstance, IntPtr spineSkinNativeInstance)
+	{
+		classInstance->applySkin(spineSkinNativeInstance);
+	}
+	
 	extern "C" DLLEXPORT void API_CALL llge_SpineSkeleton_dispose (ISpineSkeleton * classInstance)
 	{
 		classInstance->dispose();
+	}
+	
+	extern "C" DLLEXPORT IntPtr API_CALL llge_SpineSkin_getNativeInstance (ISpineSkin * classInstance)
+	{
+		return classInstance->getNativeInstance();
+	}
+	
+	extern "C" DLLEXPORT IntPtr API_CALL llge_SpineSkin_getName (ISpineSkin * classInstance)
+	{
+		return classInstance->getName();
 	}
 	
 	extern "C" DLLEXPORT IntPtr API_CALL llge_SpineAnimation_getNativeInstance (ISpineAnimation * classInstance)
@@ -719,6 +734,16 @@ namespace llge
 	extern "C" DLLEXPORT int API_CALL llge_SpineResource_getSpineAnimationsCount (ISpineResource * classInstance)
 	{
 		return classInstance->getSpineAnimationsCount();
+	}
+	
+	extern "C" DLLEXPORT ISpineSkin * API_CALL llge_SpineResource_getSpineSkin (ISpineResource * classInstance, int i)
+	{
+		return classInstance->getSpineSkin(i);
+	}
+	
+	extern "C" DLLEXPORT int API_CALL llge_SpineResource_getSpineSkinsCount (ISpineResource * classInstance)
+	{
+		return classInstance->getSpineSkinsCount();
 	}
 	
 	extern "C" DLLEXPORT ISpineEvent * API_CALL llge_SpineResource_getSpineEvent (ISpineResource * classInstance, int i)

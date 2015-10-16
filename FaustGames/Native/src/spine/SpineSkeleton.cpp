@@ -49,6 +49,12 @@ namespace spine
 		cleanup();
 	}
 
+	void API_CALL SpineSkeleton::applySkin(IntPtr spineSkinNativeInstance)
+	{
+		spSkeleton *s = (spSkeleton*)_spSkeleton;
+		spSkeleton_setSkin(s, (spSkin *)spineSkinNativeInstance);
+	}
+	
 	void SpineSkeleton::transform(float *x, float *y)
 	{
 		float x0 = *x;

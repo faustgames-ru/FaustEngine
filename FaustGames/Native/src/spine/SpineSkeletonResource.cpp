@@ -47,6 +47,7 @@ namespace spine
 		_spAtlas = spAtlas_create(atlasText, strlen(atlasText), dir, 0);
 		_spSkeletonJson = spSkeletonJson_create((spAtlas *)_spAtlas);
 		_spSkeletonData = spSkeletonJson_readSkeletonData((spSkeletonJson*)_spSkeletonJson, jsonText);
+		
 
 		spSkeletonData* sd = (spSkeletonData*)_spSkeletonData;
 		_animations.resize(sd->animationsCount);

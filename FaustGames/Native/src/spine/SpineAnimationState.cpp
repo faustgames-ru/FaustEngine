@@ -64,12 +64,21 @@ namespace spine
 		{
 			duration = ((spAnimation *)animation->getAnimation())->duration;
 		}
+		
 		_animation = animation->getAnimation();
-		spAnimationState_setAnimation((spAnimationState*)_spAnimationState, 0, (spAnimation *)_animation, loop);		
+
+		spAnimationState_setAnimation((spAnimationState*)_spAnimationState, 0, (spAnimation *)_animation, loop);
 		if (normalize)
 		{
 			_timeNormalized = _prevTime / duration;
-			spAnimationState_dummy_update((spAnimationState*)_spAnimationState, _timeNormalized * ((spAnimation *)_animation)->duration);
+			float time = _timeNormalized * ((spAnimation *)_animation)->duration;
+			spAnimationState_dummy_update((spAnimationState*)_spAnimationState, time);
+			_prevTime = time;
+		}
+		else
+		{
+			spAnimationState_dummy_update((spAnimationState*)_spAnimationState, 0);
+			_prevTime = 0;
 		}
 	}
 	
@@ -87,6 +96,8 @@ namespace spine
 			if (state->tracks[0])
 			{
 				_prevTime = state->tracks[0]->lastTime;
+				if (_prevTime < 0)
+					_prevTime = 0.0f;
 				_time = state->tracks[0]->time;
 			}
 		}

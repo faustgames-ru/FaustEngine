@@ -32,6 +32,7 @@ namespace spine
 	void SpineAnimationStateData::initFromResource(SpineSkeletonResource* resource)
 	{
 		_spAnimationStateData = spAnimationStateData_create((spSkeletonData *)resource->getSkeletonData());
+		((spAnimationStateData *)_spAnimationStateData)->defaultMix = 0.0f;
 	}
 	
 	void SpineAnimationStateData::cleanup()

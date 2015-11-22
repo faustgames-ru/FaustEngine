@@ -1,6 +1,5 @@
 #include "RenderState.h"
 #include "Effect.h"
-#include "Effects.h"
 
 namespace graphics
 {

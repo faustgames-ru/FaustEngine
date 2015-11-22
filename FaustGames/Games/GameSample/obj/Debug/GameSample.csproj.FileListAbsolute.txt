@@ -15,3 +15,6 @@ C:\_faust\FaustEngine\FaustGames\Games\GameSample\bin\Debug\GameSample.exe
 C:\_faust\FaustEngine\FaustGames\Games\GameSample\bin\Debug\GameSample.pdb
 C:\_faust\FaustEngine\FaustGames\Games\GameSample\obj\Debug\GameSample.exe
 C:\_faust\FaustEngine\FaustGames\Games\GameSample\obj\Debug\GameSample.pdb
+F:\sources\github\FaustEngine\FaustGames\Games\GameSample\bin\Debug\GameSample.exe.config
+F:\sources\github\FaustEngine\FaustGames\Games\GameSample\obj\Debug\GameSample.exe
+F:\sources\github\FaustEngine\FaustGames\Games\GameSample\obj\Debug\GameSample.pdb

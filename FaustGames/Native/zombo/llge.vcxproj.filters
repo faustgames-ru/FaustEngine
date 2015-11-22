@@ -1,0 +1,565 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="core">
+      <UniqueIdentifier>{fc049044-9e3f-4ecb-b8f8-541a36e33886}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="graphics">
+      <UniqueIdentifier>{ee58e0fc-0a4b-48bf-bf4d-f409427ea5a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="exports">
+      <UniqueIdentifier>{6c50707c-2f2a-4e4d-bb55-718fee7238d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="common">
+      <UniqueIdentifier>{52296692-4906-4308-88b5-5d16497cca62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="shaders">
+      <UniqueIdentifier>{f56f7ea8-0aaf-4aed-ab59-4898beff468c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resources">
+      <UniqueIdentifier>{bdb4f70e-f3cf-47b8-b7be-fe7a8f39cb1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resources\lpng">
+      <UniqueIdentifier>{2ce19b8f-6064-4c0e-a28f-dc92489470fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resources\zlib">
+      <UniqueIdentifier>{6e8df11f-5e40-4d37-ab8c-3ea1fcc3c1f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="zombo">
+      <UniqueIdentifier>{48a8caf6-e1e8-42b0-b0cd-c353f1f25e90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="zombo\render">
+      <UniqueIdentifier>{61e9efeb-9ce0-4ce6-9daa-a8cd7803daab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="zombo\animation">
+      <UniqueIdentifier>{8f794bbd-4107-486d-802b-f965b2e54b19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="zombo\content">
+      <UniqueIdentifier>{0c20176f-8e0b-438a-b9f0-e406634b56d8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\CommonSources\include\llge.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="..\src\core\core_classes.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\core_platform.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Lazy.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Math.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Matrix.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\StaticArray.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Vector.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\AttributeInfo.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\Attributes.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\Color.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\Effect.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\EffectBase.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\EffectSolidColor.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\EffectTextureColor.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\Errors.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\GraphicsDevice.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\graphics_classes.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\graphics_platform.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\graphics_references.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\Image2dData.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\RenderState.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\State.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\StateCompare.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\Texture.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\TextureImage2d.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\TextureLoader.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\TextureRenderTarget2d.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\Uniform.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\UniformInfo.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\Uniforms.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\UniformValue.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\UniformValueFloat.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\UniformValueMatrix.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\UniformValueTexture.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\VertexFormat.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\VertexFormatPositionColor.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\VertexFormatPositionTextureColor.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\graphics.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\core.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shaders\solid_color_frag.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shaders\solid_color_vert.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shaders\texture_color_frag.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shaders\texture_color_vert.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\VertexBuffer.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\StaticBatch.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\Batcher.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\BasicTest.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Allocator.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\SystemAllocationPolicy.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\HollowsAllocationPolicy.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\TextureCubemap.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\UniformValueVector3.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\resources\zlib\crc32.h">
+      <Filter>resources\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\resources\zlib\deflate.h">
+      <Filter>resources\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\resources\zlib\gzguts.h">
+      <Filter>resources\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\resources\zlib\inffast.h">
+      <Filter>resources\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\resources\zlib\inffixed.h">
+      <Filter>resources\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\resources\zlib\inflate.h">
+      <Filter>resources\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\resources\zlib\inftrees.h">
+      <Filter>resources\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\resources\zlib\trees.h">
+      <Filter>resources\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\resources\zlib\zconf.h">
+      <Filter>resources\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\resources\zlib\zlib.h">
+      <Filter>resources\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\resources\zlib\zutil.h">
+      <Filter>resources\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\resources\lpng\png.h">
+      <Filter>resources\lpng</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\resources\lpng\pngconf.h">
+      <Filter>resources\lpng</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\resources\lpng\pngdebug.h">
+      <Filter>resources\lpng</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\resources\lpng\pnginfo.h">
+      <Filter>resources\lpng</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\resources\lpng\pnglibconf.h">
+      <Filter>resources\lpng</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\resources\lpng\pngpriv.h">
+      <Filter>resources\lpng</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\resources\lpng\pngstruct.h">
+      <Filter>resources\lpng</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\resources\ContentManager.h">
+      <Filter>resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\resources\resources.h">
+      <Filter>resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\resources\resources_classes.h">
+      <Filter>resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\resources\resources_references.h">
+      <Filter>resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\resources\resources_platform.h">
+      <Filter>resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\resources\ContentProvider.h">
+      <Filter>resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\EffectConstant.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\TextureRenderTargetDepth2d.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\RenderConverter.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\CommonSources\include\zombo.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\EffectsBasic.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\RenderConverterBasic.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\config_defines.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\VertexFormatsBasic.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\zombo\ZomboGame.h">
+      <Filter>zombo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\CommonSources\include\BaseObjects.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\zombo\zombo_classes.h">
+      <Filter>zombo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\zombo\zombo_references.h">
+      <Filter>zombo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\zombo\render\ZomboRenderSprite.h">
+      <Filter>zombo\render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\zombo\render\ZomboRenderSystem.h">
+      <Filter>zombo\render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\zombo\content\ZomboAtlas.h">
+      <Filter>zombo\content</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\zombo\animation\ZomboFrameAnimation.h">
+      <Filter>zombo\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\zombo\animation\ZomboFrameAnimationSystem.h">
+      <Filter>zombo\animation</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\CommonSources\gen\llgePInvoke.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="..\src\core\Math.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\Matrix.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\AttributeInfo.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\Attributes.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\Color.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\Effect.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\EffectBase.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\EffectSolidColor.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\EffectTextureColor.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\Errors.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\GraphicsDevice.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\Image2dData.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\RenderState.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\Texture.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\TextureImage2d.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\TextureLoader.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\TextureRenderTarget2d.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\Uniform.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\UniformInfo.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\Uniforms.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\UniformValue.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\UniformValueFloat.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\UniformValueMatrix.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\UniformValueTexture.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\VertexFormat.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\exports\llgeGraphics.cpp">
+      <Filter>exports</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\VertexBuffer.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\StaticBatch.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\BasicTest.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\SystemAllocationPolicy.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\HollowsAllocationPolicy.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\TextureCubemap.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\UniformValueVector3.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\zlib\adler32.c">
+      <Filter>resources\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\zlib\compress.c">
+      <Filter>resources\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\zlib\crc32.c">
+      <Filter>resources\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\zlib\deflate.c">
+      <Filter>resources\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\zlib\gzclose.c">
+      <Filter>resources\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\zlib\gzlib.c">
+      <Filter>resources\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\zlib\gzread.c">
+      <Filter>resources\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\zlib\gzwrite.c">
+      <Filter>resources\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\zlib\infback.c">
+      <Filter>resources\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\zlib\inffast.c">
+      <Filter>resources\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\zlib\inflate.c">
+      <Filter>resources\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\zlib\inftrees.c">
+      <Filter>resources\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\zlib\trees.c">
+      <Filter>resources\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\zlib\uncompr.c">
+      <Filter>resources\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\zlib\zutil.c">
+      <Filter>resources\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\lpng\example.c">
+      <Filter>resources\lpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\lpng\png.c">
+      <Filter>resources\lpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\lpng\pngerror.c">
+      <Filter>resources\lpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\lpng\pngget.c">
+      <Filter>resources\lpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\lpng\pngmem.c">
+      <Filter>resources\lpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\lpng\pngpread.c">
+      <Filter>resources\lpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\lpng\pngread.c">
+      <Filter>resources\lpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\lpng\pngrio.c">
+      <Filter>resources\lpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\lpng\pngrtran.c">
+      <Filter>resources\lpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\lpng\pngrutil.c">
+      <Filter>resources\lpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\lpng\pngset.c">
+      <Filter>resources\lpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\lpng\pngtest.c">
+      <Filter>resources\lpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\lpng\pngtrans.c">
+      <Filter>resources\lpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\lpng\pngwio.c">
+      <Filter>resources\lpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\lpng\pngwrite.c">
+      <Filter>resources\lpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\lpng\pngwtran.c">
+      <Filter>resources\lpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\lpng\pngwutil.c">
+      <Filter>resources\lpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\ContentManager.cpp">
+      <Filter>resources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\ContentProviderWindows.cpp">
+      <Filter>resources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\EffectConstant.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\exports\llgeResources.cpp">
+      <Filter>exports</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\TextureRenderTargetDepth2d.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\ContentProviderObb.cpp">
+      <Filter>resources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\RenderConverter.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\CommonSources\gen\zomboPInvoke.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\EffectsBasic.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\RenderConverterBasic.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\VertexFormatsBasic.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\zombo\ZomboGame.cpp">
+      <Filter>zombo</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

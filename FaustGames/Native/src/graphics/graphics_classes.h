@@ -2,6 +2,7 @@
 #define GRAPHICS_CLASSES_H
 
 #include "llge.h"
+#include "config_defines.h"
 #include "graphics_platform.h"
 #include "graphics_references.h"
 
@@ -64,12 +65,12 @@ namespace graphics
 			Color,
 			Normal,
 			TextureCoord,
+			TextureCoordPacked,
 		};
 	};
 
 
 	class Uniforms;
-	class Effects;
 
 	class Effect;
 	class UniformInfo;

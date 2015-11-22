@@ -12,12 +12,14 @@ namespace graphics
 		static AttributeInfo *position();
 		static AttributeInfo *normal();
 		static AttributeInfo *textureCoords();
+		static AttributeInfo *textureCoordsPacked();
 		static AttributeInfo *color();
 	protected:
 	private:
 		static AttributeInfo _position;
 		static AttributeInfo _normal;
 		static AttributeInfo _textureCoords;
+		static AttributeInfo _textureCoordsPacked;
 		static AttributeInfo _color;
 	};
 }

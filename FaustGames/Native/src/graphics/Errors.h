@@ -64,8 +64,6 @@ namespace graphics
 		static void check(const char* errorText);
 		static void check(Errors::e actionType);
 		static void rise(Errors::e actionType);
-	protected:
-	private:
 	};
 }
 

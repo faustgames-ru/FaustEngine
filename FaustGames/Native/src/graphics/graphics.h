@@ -1,11 +1,12 @@
+#include "config_defines.h"
 #include "Attributes.h"
 #include "Color.h"
-#include "Effects.h"
+#include INCLUDE_EFFECTS
 #include "GraphicsDevice.h"
 #include "RenderState.h"
 #include "Uniforms.h"
 #include "TextureImage2d.h"
 #include "TextureCubemap.h"
 #include "TextureRenderTargetDepth2d.h"
-#include "VertexFormats.h"
-#include "RenderConverter.h"
+#include INCLUDE_VERTEX_FORMATS
+#include INCLUDE_RENDER_CONVERTER

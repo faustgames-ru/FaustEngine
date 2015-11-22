@@ -18,6 +18,17 @@ namespace graphics
 		}
 	};
 
+	class VertexFormatPositionColorTexturePacked : public VertexFormat
+	{
+	public:
+		VertexFormatPositionColorTexturePacked()
+		{
+			addAttribute(Attributes::position());
+			addAttribute(Attributes::color());
+			addAttribute(Attributes::textureCoordsPacked());
+		}
+	};
+
 	class VertexFormatPositionTextureColor : public VertexFormat
 	{
 	public:

@@ -14,6 +14,12 @@ namespace graphics
 			_elementsCount = 1;
 			_normalized = false;
 			break;
+		case AttributeType::TextureCoordPacked:
+			_elementType = GL_UNSIGNED_SHORT;
+			_elementSize = 2;
+			_elementsCount = 2;
+			_normalized = true;
+			break;
 		case AttributeType::TextureCoord:
 		case AttributeType::Vector2:
 			_elementType = GL_FLOAT;

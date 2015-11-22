@@ -94,7 +94,7 @@ namespace llge
 	class GraphicsFacade : public IGraphicsFacade
 	{
 	public:
-		RenderConverter _converter;
+		RENDER_CONVERTER_CLASS _converter;
 
 		GraphicsDevice *graphicsDevice;
 		UniformsFacade *uniformsFacade;
@@ -209,8 +209,8 @@ namespace llge
 			graphicsDevice->renderState = RenderState(); /// ???
 			graphicsDevice->renderState.init();
 			GraphicsDevice::create();
-			Effects::create();
-			VertexFormats::create();
+			EFFECTS_CALL_CREATE
+			FORMATS_CALL_CREATE
 		}
 
 		virtual int API_CALL getPixelsWidth()
@@ -231,7 +231,7 @@ namespace llge
 
 		virtual void API_CALL cleanup()
 		{
-			Effects::cleanup();
+			EFFECTS_CALL_CLEANUP;
 		}
 
 		virtual void API_CALL dispose()

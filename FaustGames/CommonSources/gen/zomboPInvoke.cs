@@ -19,27 +19,34 @@ namespace zombo
 	public class ZomboGame
 	{
 		public IntPtr ClassInstance;
-		public void Load ()
+		public void Load (int w, int h)
 		{
-			zombo_ZomboGame_load(ClassInstance);
+			zombo_ZomboGame_load(ClassInstance, w, h);
 		}
 		
 		[DllImport(Version.Dll)]
-		static extern private void zombo_ZomboGame_load (IntPtr classInstance);
-		public void Update (float ellapsedTime)
+		static extern private void zombo_ZomboGame_load (IntPtr classInstance, int w, int h);
+		public void Update (int w, int h, float ellapsedTime)
 		{
-			zombo_ZomboGame_update(ClassInstance, ellapsedTime);
+			zombo_ZomboGame_update(ClassInstance, w, h, ellapsedTime);
 		}
 		
 		[DllImport(Version.Dll)]
-		static extern private void zombo_ZomboGame_update (IntPtr classInstance, float ellapsedTime);
-		public void Render ()
+		static extern private void zombo_ZomboGame_update (IntPtr classInstance, int w, int h, float ellapsedTime);
+		public void Render (int w, int h, float ellapsedTime)
 		{
-			zombo_ZomboGame_render(ClassInstance);
+			zombo_ZomboGame_render(ClassInstance, w, h, ellapsedTime);
 		}
 		
 		[DllImport(Version.Dll)]
-		static extern private void zombo_ZomboGame_render (IntPtr classInstance);
+		static extern private void zombo_ZomboGame_render (IntPtr classInstance, int w, int h, float ellapsedTime);
+		public void Release ()
+		{
+			zombo_ZomboGame_release(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void zombo_ZomboGame_release (IntPtr classInstance);
 	}
 	
 	public class zombo
@@ -51,6 +58,13 @@ namespace zombo
 		
 		[DllImport(Version.Dll)]
 		static extern private IntPtr createZomboGame ();
+		static public void InitZomboRenderContext ()
+		{
+			initZomboRenderContext();
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void initZomboRenderContext ();
 	}
 	
 }

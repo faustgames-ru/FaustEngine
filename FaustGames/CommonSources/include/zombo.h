@@ -30,12 +30,14 @@ namespace zombo
 	class IZomboGame : IBaseObject
 	{
 	public:
-		virtual void API_CALL load() = 0;
-		virtual void API_CALL update(float ellapsedTime) = 0;
-		virtual void API_CALL render() = 0;
+		virtual void API_CALL load(int w, int h) = 0;
+		virtual void API_CALL update(int w, int h, float ellapsedTime) = 0;
+		virtual void API_CALL render(int w, int h, float ellapsedTime) = 0;
+		virtual void API_CALL release() = 0;
 	};
 
 	extern "C" DLLEXPORT IZomboGame * API_CALL createZomboGame();
+	extern "C" DLLEXPORT void API_CALL initZomboRenderContext();
 }
 
 #endif /*ZOMBO_H*/

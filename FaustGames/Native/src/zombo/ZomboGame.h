@@ -6,12 +6,13 @@
 
 namespace zombo
 {
-	class ZomboGame : IZomboGame
+	class ZomboGame : public IZomboGame
 	{
 	public:
-		virtual void API_CALL load() OVERRIDE;
-		virtual void API_CALL update(float ellapsedTime) OVERRIDE;
-		virtual void API_CALL render() OVERRIDE;
+		virtual void API_CALL load(int w, int h) OVERRIDE;
+		virtual void API_CALL update(int w, int h, float ellapsedTime) OVERRIDE;
+		virtual void API_CALL render(int w, int h, float ellapsedTime) OVERRIDE;
+		virtual void API_CALL release() OVERRIDE;
 	};
 }
 

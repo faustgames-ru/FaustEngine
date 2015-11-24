@@ -6,19 +6,24 @@
 
 namespace zombo
 {
-	extern "C" DLLEXPORT void API_CALL zombo_ZomboGame_load (IZomboGame * classInstance)
+	extern "C" DLLEXPORT void API_CALL zombo_ZomboGame_load (IZomboGame * classInstance, int w, int h)
 	{
-		classInstance->load();
+		classInstance->load(w, h);
 	}
 	
-	extern "C" DLLEXPORT void API_CALL zombo_ZomboGame_update (IZomboGame * classInstance, float ellapsedTime)
+	extern "C" DLLEXPORT void API_CALL zombo_ZomboGame_update (IZomboGame * classInstance, int w, int h, float ellapsedTime)
 	{
-		classInstance->update(ellapsedTime);
+		classInstance->update(w, h, ellapsedTime);
 	}
 	
-	extern "C" DLLEXPORT void API_CALL zombo_ZomboGame_render (IZomboGame * classInstance)
+	extern "C" DLLEXPORT void API_CALL zombo_ZomboGame_render (IZomboGame * classInstance, int w, int h, float ellapsedTime)
 	{
-		classInstance->render();
+		classInstance->render(w, h, ellapsedTime);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL zombo_ZomboGame_release (IZomboGame * classInstance)
+	{
+		classInstance->release();
 	}
 	
 }

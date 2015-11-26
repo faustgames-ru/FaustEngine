@@ -272,7 +272,7 @@ namespace graphics
 	
 	void PostProcessTargetManager::setViewport(int width, int height)
 	{
-		for (int i = 0; i < _all.size(); i++)
+		for (uint i = 0; i < _all.size(); i++)
 		{
 			TextureRenderTarget2d *rt = _all[i];
 			if ((rt->getWidth() != width) || (rt->getHeight() != height))

@@ -140,6 +140,22 @@ namespace core
 			Value = *((Matrix *)value);
 		}
 	};
+
+	class Matrix2
+	{
+	public:
+		Matrix2(float m11, float m12, float m21, float m22);		
+		inline float getXx() const;
+		inline float getXy() const;
+		inline float getYx() const;
+		inline float getYy() const;
+		static Matrix2 identity;		
+		inline static Matrix2 mul(const Matrix2 &a, const Matrix2 &b);
+		inline static Matrix2 createRotation(float angle);
+		inline static Matrix2 createScale(float scaleX, float scaleY);
+	private:
+		float _values[4];
+	};
 }
 
 #endif /*MATRIX_H*/

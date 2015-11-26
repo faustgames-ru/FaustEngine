@@ -24,6 +24,15 @@ namespace core
 		return ::trunc(a);
 	}
 
+	float Math::cos(float a)
+	{
+		return ::cos(a);
+	}
+
+	float Math::sin(float a)
+	{
+		return ::sin(a);
+	}
 
 	bool Math::equals(float a, float b, float epsilon)
 	{

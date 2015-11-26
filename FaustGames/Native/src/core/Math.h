@@ -15,6 +15,8 @@ namespace core
 		static float abs(float a);
 		static float saturate(float a);
 		static float trunc(float a);
+		static float cos(float a);
+		static float sin(float a);
 	};
 }
 

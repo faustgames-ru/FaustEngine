@@ -2,16 +2,15 @@
 #define ZOMBO_RENDER_SPRITE_H
 
 #include "../zombo_classes.h"
+#include "../common/ZomboTransfom.h"
 
 namespace zombo
 {
 	class ZomboRenderSprite
 	{
 	public:
-		core::Vector3 position;
 		ZomboSpriteImage texture;
-		float rotation;
-		float scale;
+		ZomboTransfom transform;
 	};
 }
 

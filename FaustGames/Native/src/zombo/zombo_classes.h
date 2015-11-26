@@ -24,7 +24,6 @@ namespace zombo
 	public:
 		uint textureId;
 		TextureCoords uvs[4];
-
 	};
 
 }

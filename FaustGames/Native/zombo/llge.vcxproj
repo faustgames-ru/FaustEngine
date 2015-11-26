@@ -246,6 +246,7 @@
     <ClInclude Include="..\src\resources\zlib\zutil.h" />
     <ClInclude Include="..\src\zombo\animation\ZomboFrameAnimation.h" />
     <ClInclude Include="..\src\zombo\animation\ZomboFrameAnimationSystem.h" />
+    <ClInclude Include="..\src\zombo\common\ZomboTransfom.h" />
     <ClInclude Include="..\src\zombo\content\ZomboAtlas.h" />
     <ClInclude Include="..\src\zombo\render\ZomboRenderSprite.h" />
     <ClInclude Include="..\src\zombo\render\ZomboRenderSystem.h" />

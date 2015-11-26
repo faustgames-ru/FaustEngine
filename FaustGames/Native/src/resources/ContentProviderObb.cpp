@@ -73,7 +73,7 @@ namespace resources
 	{
 		std::string replace = name;
 //#ifdef __ANDROID__
-		for (int i = 0; i < replace.size(); i++)
+		for (uint i = 0; i < replace.size(); i++)
 		{
 			if (replace[i] == '\\')
 				replace[i] = '_';
@@ -94,7 +94,7 @@ namespace resources
         _obbFile = fopen(_obbPath.c_str(), "rb");
 		std::string replace = name;
 		//#ifdef __ANDROID__
-		for (int i = 0; i < replace.size(); i++)
+		for (uint i = 0; i < replace.size(); i++)
 		{
 			if (replace[i] == '\\')
 				replace[i] = '_';

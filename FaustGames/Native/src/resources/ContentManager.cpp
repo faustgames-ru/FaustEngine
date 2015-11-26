@@ -259,7 +259,7 @@ namespace resources
 			open();
 
 
-		for (int i = 0; i < _loadEntries.size(); i++)
+		for (uint i = 0; i < _loadEntries.size(); i++)
 		{
 			/*
 			fprintf(stderr, _loadEntries[i].fileName.c_str());
@@ -271,7 +271,7 @@ namespace resources
 				_loadEntries[i].textureImage->LoadPixels(image->Width, image->Height, (llge::TextureImage2dFormat)image->Format, image->Pixels);
 		}
 		_loadEntries.clear();
-		for (int i = 0; i < _disposeEntries.size(); i++)
+		for (uint i = 0; i < _disposeEntries.size(); i++)
 		{
 			_disposeEntries[i]->cleanup();
 			delete _disposeEntries[i];

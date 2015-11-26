@@ -37,6 +37,9 @@
     <Filter Include="zombo\content">
       <UniqueIdentifier>{0c20176f-8e0b-438a-b9f0-e406634b56d8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="zombo\common">
+      <UniqueIdentifier>{d2271228-6fb2-45ee-9128-2a3d8e0a0186}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\CommonSources\include\llge.h">
@@ -322,6 +325,9 @@
     </ClInclude>
     <ClInclude Include="..\src\zombo\animation\ZomboFrameAnimationSystem.h">
       <Filter>zombo\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\zombo\common\ZomboTransfom.h">
+      <Filter>zombo\common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -2,7 +2,7 @@
 #define ZOMBO_GAME_H
 
 #include "../../CommonSources/include/zombo.h"
-#include "zombo_classes.h";
+#include "zombo_classes.h"
 
 namespace zombo
 {

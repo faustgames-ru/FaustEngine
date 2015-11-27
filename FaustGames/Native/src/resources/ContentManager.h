@@ -84,6 +84,8 @@ namespace resources
 		static ContentManager Default;
 		static bool _replaceSeparator;
 		TexturesMap _loadedImages;
+		void *getBuffer() const;
+		int getBufferSize() const;
 	private:
 		std::vector<std::string> _files;
 		std::vector<LoadImageEntry> _loadEntries;

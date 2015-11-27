@@ -6,6 +6,11 @@
 
 namespace zombo
 {
+	extern "C" DLLEXPORT void API_CALL zombo_ZomboGame_setRootPath (IZomboGame * classInstance, String rootPath)
+	{
+		classInstance->setRootPath(rootPath);
+	}
+	
 	extern "C" DLLEXPORT void API_CALL zombo_ZomboGame_load (IZomboGame * classInstance, int w, int h)
 	{
 		classInstance->load(w, h);

@@ -128,6 +128,7 @@ namespace Zombo.Windows
 
         private void LoadGame()
         {
+            _game.SetRootPath(Application.StartupPath.Replace('\\', '/') +"/");
             _game.Load(ClientSize.Width, ClientSize.Height);
         }
 

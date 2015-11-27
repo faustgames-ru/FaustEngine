@@ -19,6 +19,13 @@ namespace zombo
 	public class ZomboGame
 	{
 		public IntPtr ClassInstance;
+		public void SetRootPath (String rootPath)
+		{
+			zombo_ZomboGame_setRootPath(ClassInstance, rootPath);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void zombo_ZomboGame_setRootPath (IntPtr classInstance, String rootPath);
 		public void Load (int w, int h)
 		{
 			zombo_ZomboGame_load(ClassInstance, w, h);

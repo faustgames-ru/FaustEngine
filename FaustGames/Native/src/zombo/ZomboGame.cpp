@@ -4,13 +4,22 @@
 
 namespace zombo
 {
+	void ZomboGame::setRootPath(String rootPath)
+	{
+		_rootPath = rootPath;
+	}
+
 	void ZomboGame::load(int w, int h)
 	{
 		graphics::GraphicsDevice::Default.setClearState(0x805050, 1.0f);
+		resources::ContentManager::Default.open();
+		std::string path = _rootPath + std::string("Content/character/character0.atlas");
+		_contentBlock.enqueueResource(path.c_str());
 	}
 
 	void ZomboGame::update(int w, int h, float ellapsedTime)
 	{
+		_contentBlock.update();
 	}
 
 	void ZomboGame::render(int w, int h, float ellapsedTime)

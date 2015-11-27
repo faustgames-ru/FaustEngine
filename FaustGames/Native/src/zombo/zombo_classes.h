@@ -3,6 +3,7 @@
 
 #include "zombo.h"
 #include "zombo_references.h"
+#include "zombo_platform.h"
 
 namespace zombo
 {
@@ -19,6 +20,13 @@ namespace zombo
 		TextureCoords uv;
 	};
 
+	struct ZomboRect
+	{
+		core::Vector2 position;
+		core::Vector2 size;
+	};
+	
+
 	class ZomboSpriteImage
 	{
 	public:
@@ -26,6 +34,8 @@ namespace zombo
 		TextureCoords uvs[4];
 	};
 
+	template <typename TResult>
+	class ZomboAsyncState;
 }
 
 #endif /* ZOMBO_CLASSES_H */

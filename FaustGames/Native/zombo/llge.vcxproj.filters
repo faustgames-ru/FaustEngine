@@ -40,6 +40,12 @@
     <Filter Include="zombo\common">
       <UniqueIdentifier>{d2271228-6fb2-45ee-9128-2a3d8e0a0186}</UniqueIdentifier>
     </Filter>
+    <Filter Include="zombo\cjson">
+      <UniqueIdentifier>{cdc68fc0-b98f-45cb-accb-26b60fb8a4ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="zombo\content\loaders">
+      <UniqueIdentifier>{4bbac86c-1110-45eb-b20b-39e34fceb0ee}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\CommonSources\include\llge.h">
@@ -317,9 +323,6 @@
     <ClInclude Include="..\src\zombo\render\ZomboRenderSystem.h">
       <Filter>zombo\render</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\zombo\content\ZomboAtlas.h">
-      <Filter>zombo\content</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\zombo\animation\ZomboFrameAnimation.h">
       <Filter>zombo\animation</Filter>
     </ClInclude>
@@ -328,6 +331,33 @@
     </ClInclude>
     <ClInclude Include="..\src\zombo\common\ZomboTransfom.h">
       <Filter>zombo\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\zombo\cjson\cJSON.h">
+      <Filter>zombo\cjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\zombo\content\ZomboContentSystem.h">
+      <Filter>zombo\content</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\zombo\common\ZomboAsyncState.h">
+      <Filter>zombo\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\zombo\content\ZomboContentBlock.h">
+      <Filter>zombo\content</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\zombo\zombo_platform.h">
+      <Filter>zombo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Path.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Convert.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\zombo\content\loaders\LoaderJsonAtlas.h">
+      <Filter>zombo\content\loaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\zombo\content\ZomboAtlas.h">
+      <Filter>zombo\content</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -566,6 +596,21 @@
     </ClCompile>
     <ClCompile Include="..\src\zombo\ZomboGame.cpp">
       <Filter>zombo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\zombo\cjson\cJSON.c">
+      <Filter>zombo\cjson</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\zombo\content\ZomboContentBlock.cpp">
+      <Filter>zombo\content</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\Path.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\Convert.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\zombo\content\loaders\LoaderJsonAtlas.cpp">
+      <Filter>zombo\content\loaders</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

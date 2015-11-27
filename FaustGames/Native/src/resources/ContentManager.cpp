@@ -335,6 +335,19 @@ namespace resources
 		_pageHeight = pageHeight;
 	}
 
+	void* ContentManager::getBuffer() const
+	{
+		if (_image == 0)
+			return 0;
+		return _image->Pixels;
+	}
+
+	int ContentManager::getBufferSize() const
+	{
+		if (_image == 0)
+			return 0;
+		return ImageBufferSize;
+	}
 
 	void API_CALL ContentManager::finishLoad()
 	{

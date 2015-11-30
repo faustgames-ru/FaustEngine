@@ -13,19 +13,19 @@ namespace zombo
 	class ZomboContentImage
 	{
 	public:
-		uint textureId;
+		graphics::TextureImage2d *texture;
 		std::string name;
-		ZomboRect origins;
-		ZomboRect region;
-		core::Vector2 pivot;
 		std::vector<ZomboImageVertex> vertices;
 		std::vector<short> indices;		
+
+		static ZomboContentImage * create();
+		void dispose() const;
 	};
 
 	class ZomboContentTexture
 	{
 	public:
-		uint textureId;
+		graphics::TextureImage2d *texture;
 		std::string fileName;
 	};
 
@@ -34,6 +34,12 @@ namespace zombo
 	public:
 		ZomboContentTexture texture;
 		std::vector<ZomboContentImage *> images;
+		
+		static ZomboContentAtlasPage * create();
+		void dispose() const;
+		
+		ZomboContentAtlasPage();
+		~ZomboContentAtlasPage();
 	};
 
 	class ZomboContentAtlas
@@ -41,12 +47,16 @@ namespace zombo
 	public:
 		std::string name;
 		std::vector<ZomboContentAtlasPage *> pages;
+		static ZomboContentAtlas * create();
+		void dispose() const;
 	};
 
 	class ZomboContentFrameAnimation
 	{
 	public:
 		std::vector<ZomboContentImage *> frames;
+		static ZomboContentFrameAnimation* create();
+		void dispose() const;
 	};
 }
 

@@ -24,8 +24,7 @@ namespace zombo
 	{
 		core::Vector2 position;
 		core::Vector2 size;
-	};
-	
+	};	
 
 	class ZomboSpriteImage
 	{

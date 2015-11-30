@@ -13,13 +13,24 @@ namespace zombo
 	{
 		graphics::GraphicsDevice::Default.setClearState(0x805050, 1.0f);
 		resources::ContentManager::Default.open();
-		std::string path = _rootPath + std::string("Content/character/character0.atlas");
-		_contentBlock.enqueueResource(path.c_str());
+		_contentBlock.setRoot(_rootPath);
+		
+		_contentBlock.enqueueResource("Content/character/character{n}.atlas");	
 	}
 
 	void ZomboGame::update(int w, int h, float ellapsedTime)
 	{
-		_contentBlock.update();
+		if (!_contentBlock.isLoaded())
+		{
+			_contentBlock.update();
+		}
+		else
+		{
+			if (_aniamtion == 0)
+			{
+				_aniamtion = _contentBlock.createAnimation("Content/character/character0.atlas/Attack__{n:000}.png");
+			}
+		}
 	}
 
 	void ZomboGame::render(int w, int h, float ellapsedTime)

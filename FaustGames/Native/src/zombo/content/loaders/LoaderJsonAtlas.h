@@ -2,6 +2,7 @@
 #define LOADER_JSON_ATLAS_H
 
 #include "../../zombo_classes.h"
+#include "../ZomboAtlas.h"
 #include "../../cjson/cJSON.h"
 
 namespace zombo
@@ -77,6 +78,7 @@ namespace zombo
 		JsonAtlasMeta meta;
 		JsonAtlas(const char *jsonString);
 		~JsonAtlas();
+		ZomboContentAtlasPage* createContentAtlasPage();
 	private:
 		cJSON * _json;
 	};

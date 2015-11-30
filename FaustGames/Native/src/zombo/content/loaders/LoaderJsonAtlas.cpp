@@ -25,10 +25,57 @@ namespace zombo
 
 	JsonAtlas::~JsonAtlas()
 	{
+		for (uint i = 0; i < frames.size(); i++)
+		{
+			delete frames[i];
+		}
 		if (_json != 0)
 		{
 			cJSON_Delete(_json);
 		}
+	}
+
+	class ZomboContentAtlasPage* JsonAtlas::createContentAtlasPage()
+	{
+		ZomboContentAtlasPage* page = ZomboContentAtlasPage::create();
+		page->texture.fileName = meta.image;
+		float scaleX = 1.0f / (float)meta.size.w;
+		float scaleY = 1.0f / (float)meta.size.h;
+		for (uint i = 0; i < frames.size(); i++)
+		{
+			JsonAtlasFrame * frame = frames[i];
+			ZomboContentImage * image = ZomboContentImage::create();
+
+
+			image->name = frame->filename;
+			if (frame->vertices.size() != frame->verticesUV.size())
+			{
+				// handle exception
+			}
+			else
+			{
+				core::Vector2 center((float)frame->sourceSize.w * frame->pivot.x, (float)frame->sourceSize.h * frame->pivot.y);
+				for (uint i = 0; i < frame->vertices.size(); i++)
+				{
+					ZomboImageVertex v;
+					// todo: handle rotation
+					v.xy.setX(frame->vertices[i].x - center.getX());
+					v.xy.setY(frame->vertices[i].y - center.getY());
+					v.uv.setX(frame->verticesUV[i].x * scaleX);
+					v.uv.setY(frame->verticesUV[i].y * scaleY);
+					image->vertices.push_back(v);
+				}
+				for (uint i = 0; i < frame->triangles.size(); i++)
+				{
+					image->indices.push_back(frame->triangles[i].indices[0]);
+					image->indices.push_back(frame->triangles[i].indices[1]);
+					image->indices.push_back(frame->triangles[i].indices[2]);
+				}
+			}
+
+			page->images.push_back(image);			
+		}
+		return page;
 	}
 
 	JsonAtlas::JsonAtlas(const char* jsonString)

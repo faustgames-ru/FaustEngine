@@ -26,4 +26,26 @@ namespace core
 		std::transform(result.begin(), result.end(), result.begin(), ::tolower);
 		return result;
 	}
+
+	std::string Path::getFilePath(const std::string& fileName)
+	{
+		int max = fileName.size() - 1;
+		int i = max;
+		bool find = false;
+		for (; i >= 0; i--)
+		{
+			if (fileName[i] == '/')
+			{
+				find = true;
+				break;
+			}
+		}
+		i++;
+		if (!find)
+			return emptyString;
+		if (i == max)
+			return emptyString;
+		std::string result = fileName.substr(0, i);
+		return result;
+	}
 }

@@ -9,6 +9,7 @@ namespace core
 	{
 	public:
 		static std::string toString(int n);
+		static std::string toString(int n, int leadingZeros);
 	};
 }
 

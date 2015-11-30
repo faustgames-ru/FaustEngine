@@ -346,6 +346,7 @@
     <ClCompile Include="..\src\resources\zlib\zutil.c" />
     <ClCompile Include="..\src\zombo\cjson\cJSON.c" />
     <ClCompile Include="..\src\zombo\content\loaders\LoaderJsonAtlas.cpp" />
+    <ClCompile Include="..\src\zombo\content\ZomboAtlas.cpp" />
     <ClCompile Include="..\src\zombo\content\ZomboContentBlock.cpp" />
     <ClCompile Include="..\src\zombo\ZomboGame.cpp" />
     <ClCompile Include="dllmain.cpp" />

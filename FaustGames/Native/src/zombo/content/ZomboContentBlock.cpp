@@ -22,6 +22,34 @@ namespace zombo
 		return _loaded;
 	}
 
+	ZomboContentFrameAnimation* ZomboContentBlock::createAnimation(const char* fileName) const
+	{
+		int leadingZeros = 0;
+		if (hasFormat(fileName, "{n:000}"))
+		{
+			leadingZeros = 3;
+		}
+		else if (hasFormat(fileName, "{n:00}"))
+		{
+			leadingZeros = 2;
+		}
+		ZomboContentFrameAnimation *animation = ZomboContentFrameAnimation::create();
+		for (int i = 0; i < 100; i++) // todo: make constant for max frames count
+		{
+			std::string imageName = format(fileName, i, leadingZeros);
+			ZomboContentImage* image = getImage(imageName.c_str());
+			if (image == 0)
+				break;
+			animation->frames.push_back(image);
+		}
+		return animation;
+	}
+
+	ZomboContentImage* ZomboContentBlock::getImage(const char* fileName) const
+	{
+		return getMapValue(_images, fileName);
+	}
+
 	ZomboContentTexture* ZomboContentBlock::getTexture(const char* fileName) const
 	{
 		return getMapValue(_textures, fileName);
@@ -51,6 +79,11 @@ namespace zombo
 		loadResource(fileName);
 	}
 
+	void ZomboContentBlock::setRoot(const std::string &rootPath)
+	{
+		_rootPath = rootPath;
+	}
+
 	bool replace(std::string& str, const std::string& from, const std::string& to)
 	{
 		size_t start_pos = str.find(from);
@@ -60,9 +93,16 @@ namespace zombo
 		return true;
 	}
 
-	bool ZomboContentBlock::hasFormat(const std::string& fileName)
+	bool ZomboContentBlock::hasFormat(const std::string& fileName, const std::string& format)
 	{
-		return fileName.find("{n}") != fileName.npos;
+		return fileName.find(format) != fileName.npos;
+	}
+
+	std::string ZomboContentBlock::format(const std::string& fileName, int number, int leadingZeros)
+	{
+		std::string result = fileName;
+		replace(result, "{n:000}", core::Convert::toString(number, leadingZeros));
+		return result;
 	}
 
 	std::string ZomboContentBlock::format(const std::string& fileName, int number)
@@ -82,7 +122,7 @@ namespace zombo
 		else if (ext == "atlas")
 		{
 			// todo: test multipack
-			if (hasFormat(fileName))
+			if (hasFormat(fileName, "{n}"))
 			{
 				loadAtlas(fileName);
 			}
@@ -97,16 +137,18 @@ namespace zombo
 	{
 	}
 
-	void ZomboContentBlock::loadAtlasPage(const std::string& fileName)
+	ZomboContentAtlasPage* ZomboContentBlock::loadAtlasPage(const std::string& fileName)
 	{
 		resources::ContentManager content = resources::ContentManager::Default;
-		if (!resources::ContentProvider::existContent(fileName.c_str()))
+		std::string fullPath = _rootPath + fileName;
+		if (!resources::ContentProvider::existContent(fullPath.c_str()))
 		{
 			// todo: handle error
+			return 0;
 		}
 		else
 		{
-			resources::ContentProvider::openContent(fileName.c_str());
+			resources::ContentProvider::openContent(fullPath.c_str());
 			char * jsonString = (char *)content.getBuffer();
 			int len = 0;
 			const int pageSize = 256 * 1024; 
@@ -115,17 +157,46 @@ namespace zombo
 			{
 				len += count;
 			}
-			JsonAtlas atlas(jsonString);
-			for (uint i = 0; i < atlas.frames.size(); i++)
-			{
-				
-			}
+			JsonAtlas atlas(jsonString);			
+			ZomboContentAtlasPage* page = atlas.createContentAtlasPage();
 			resources::ContentProvider::closeContent();
+			_altasPages[fileName] = page;
+
+			std::string path = core::Path::getFilePath(fileName);
+			graphics::Image2dData* imageData = content.loadUnregisteredTexture((_rootPath + path + page->texture.fileName).c_str());
+			// todo: configure loading;
+			page->texture.texture = new graphics::TextureImage2d(false, false);
+			if (imageData != 0)
+			{
+				page->texture.texture->setData(imageData);
+				page->texture.texture->create();
+			}
+			else
+			{
+				// todo: handle error
+			}
+			for (uint i = 0; i < page->images.size(); i++)
+			{
+				page->images[i]->texture = page->texture.texture;
+				_images[fileName + "/" + page->images[i]->name] = page->images[i];
+			}
+			return page;
 		}
 	}
 
 	void ZomboContentBlock::loadAtlas(const std::string& fileName)
 	{
 		/// todo load pages while exists
+		ZomboContentAtlas* altas = ZomboContentAtlas::create();
+		altas->name = fileName;
+		for (int i = 0; i < 100; i++) // todo: make constant for max atlas pages
+		{
+			std::string file = format(fileName.c_str(), i);
+			if (!resources::ContentProvider::existContent(file.c_str()))
+				break;
+			ZomboContentAtlasPage* page = loadAtlasPage(file);
+			altas->pages.push_back(page);
+		}
+		_altases[fileName] = altas;
 	}
 }

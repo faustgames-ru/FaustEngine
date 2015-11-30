@@ -17,6 +17,7 @@ namespace zombo
 		virtual void API_CALL release() OVERRIDE;
 	private:
 		ZomboContentBlock _contentBlock;
+		ZomboContentFrameAnimation *_aniamtion;
 		std::string _rootPath;
 	};
 }

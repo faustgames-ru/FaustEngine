@@ -612,5 +612,8 @@
     <ClCompile Include="..\src\zombo\content\loaders\LoaderJsonAtlas.cpp">
       <Filter>zombo\content\loaders</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\zombo\content\ZomboAtlas.cpp">
+      <Filter>zombo\content</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

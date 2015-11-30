@@ -10,6 +10,7 @@ namespace core
 	public:
 		static std::string emptyString;
 		static std::string getFileExt(const std::string &fileName);
+		static std::string getFilePath(const std::string &fileName);
 	};
 }
 

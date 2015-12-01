@@ -46,6 +46,15 @@
     <Filter Include="zombo\content\loaders">
       <UniqueIdentifier>{4bbac86c-1110-45eb-b20b-39e34fceb0ee}</UniqueIdentifier>
     </Filter>
+    <Filter Include="zombo\scenes">
+      <UniqueIdentifier>{fd770cb4-4d76-4f59-b9a5-85983bf7822c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="zombo\common\states">
+      <UniqueIdentifier>{d952ff55-03c1-470a-9652-82183a96a69a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="zombo\common\asyncs">
+      <UniqueIdentifier>{5a4bf914-7265-4f24-ae5f-96b59f4485fa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\CommonSources\include\llge.h">
@@ -338,9 +347,6 @@
     <ClInclude Include="..\src\zombo\content\ZomboContentSystem.h">
       <Filter>zombo\content</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\zombo\common\ZomboAsyncState.h">
-      <Filter>zombo\common</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\zombo\content\ZomboContentBlock.h">
       <Filter>zombo\content</Filter>
     </ClInclude>
@@ -358,6 +364,15 @@
     </ClInclude>
     <ClInclude Include="..\src\zombo\content\ZomboAtlas.h">
       <Filter>zombo\content</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\zombo\common\asyncs\ZomboAsyncState.h">
+      <Filter>zombo\common\asyncs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\zombo\common\states\ZomboStateController.h">
+      <Filter>zombo\common\states</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\zombo\scenes\ZomboScene.h">
+      <Filter>zombo\scenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -614,6 +629,15 @@
     </ClCompile>
     <ClCompile Include="..\src\zombo\content\ZomboAtlas.cpp">
       <Filter>zombo\content</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\zombo\common\asyncs\ZomboAsyncState.cpp">
+      <Filter>zombo\common\asyncs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\zombo\common\states\ZomboStateController.cpp">
+      <Filter>zombo\common\states</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\zombo\scenes\ZomboScene.cpp">
+      <Filter>zombo\scenes</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

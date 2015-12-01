@@ -29,7 +29,7 @@ namespace zombo
 		{
 			delete frames[i];
 		}
-		if (_json != 0)
+		if (_json != nullptr)
 		{
 			cJSON_Delete(_json);
 		}
@@ -39,8 +39,6 @@ namespace zombo
 	{
 		ZomboContentAtlasPage* page = ZomboContentAtlasPage::create();
 		page->texture.fileName = meta.image;
-		float scaleX = 1.0f / (float)meta.size.w;
-		float scaleY = 1.0f / (float)meta.size.h;
 		for (uint i = 0; i < frames.size(); i++)
 		{
 			JsonAtlasFrame * frame = frames[i];
@@ -50,26 +48,26 @@ namespace zombo
 			image->name = frame->filename;
 			if (frame->vertices.size() != frame->verticesUV.size())
 			{
-				// handle exception
+				// handle error
 			}
 			else
 			{
-				core::Vector2 center((float)frame->sourceSize.w * frame->pivot.x, (float)frame->sourceSize.h * frame->pivot.y);
-				for (uint i = 0; i < frame->vertices.size(); i++)
+				core::Vector2 center(static_cast<float>(frame->sourceSize.w) * frame->pivot.x, static_cast<float>(frame->sourceSize.h) * frame->pivot.y);
+				for (uint j = 0; j < frame->vertices.size(); j++)
 				{
 					ZomboImageVertex v;
 					// todo: handle rotation
-					v.xy.setX(frame->vertices[i].x - center.getX());
-					v.xy.setY(frame->vertices[i].y - center.getY());
-					v.uv.setX(frame->verticesUV[i].x * scaleX);
-					v.uv.setY(frame->verticesUV[i].y * scaleY);
+					v.xy.setX(frame->vertices[j].x - center.getX());
+					v.xy.setY(frame->vertices[j].y - center.getY());
+					v.u = frame->verticesUV[j].x * USHRT_MAX / meta.size.w;
+					v.v = frame->verticesUV[j].y * USHRT_MAX / meta.size.h;
 					image->vertices.push_back(v);
 				}
-				for (uint i = 0; i < frame->triangles.size(); i++)
+				for (uint j = 0; j < frame->triangles.size(); j++)
 				{
-					image->indices.push_back(frame->triangles[i].indices[0]);
-					image->indices.push_back(frame->triangles[i].indices[1]);
-					image->indices.push_back(frame->triangles[i].indices[2]);
+					image->indices.push_back(frame->triangles[j].indices[0]);
+					image->indices.push_back(frame->triangles[j].indices[1]);
+					image->indices.push_back(frame->triangles[j].indices[2]);
 				}
 			}
 
@@ -80,7 +78,7 @@ namespace zombo
 
 	JsonAtlas::JsonAtlas(const char* jsonString)
 	{
-		_json = 0;
+		_json = nullptr;
 
 		cJSON * json = cJSON_Parse(jsonString);
 		cJSON * jsonMeta = cJSON_GetObjectItem(json, "meta");
@@ -104,7 +102,7 @@ namespace zombo
 		meta.size.h = jsonMetaSizeW->valueint;
 
 		cJSON *jsonFrame = jsonFrames->child;
-		while (jsonFrame != 0)
+		while (jsonFrame != nullptr)
 		{
 			JsonAtlasFrame *frame = new JsonAtlasFrame();
 			cJSON * jsonFrameFilename = cJSON_GetObjectItem(jsonFrame, "filename");
@@ -144,11 +142,11 @@ namespace zombo
 			frame->spriteSourceSize.size.h = jsonFrameSpriteSourceSizeH->valueint;
 			frame->sourceSize.w = jsonFrameSourceSizeW->valueint;
 			frame->sourceSize.h = jsonFrameSourceSizeH->valueint;
-			frame->pivot.x = (float)jsonFramePivotX->valuedouble;
-			frame->pivot.y = (float)jsonFramePivotY->valuedouble;
+			frame->pivot.x = static_cast<float>(jsonFramePivotX->valuedouble);
+			frame->pivot.y = static_cast<float>(jsonFramePivotY->valuedouble);
 
 			cJSON *jsonFrameVertex = jsonFrameVertices->child;
-			while (jsonFrameVertex != 0)
+			while (jsonFrameVertex != nullptr)
 			{
 				cJSON *jsonFrameVertexX = jsonFrameVertex->child;
 				cJSON *jsonFrameVertexY = jsonFrameVertexX->next;
@@ -157,7 +155,7 @@ namespace zombo
 			}
 
 			cJSON *jsonFrameVertexUV = jsonFrameVerticesUV->child;
-			while (jsonFrameVertexUV != 0)
+			while (jsonFrameVertexUV != nullptr)
 			{
 				cJSON *jsonFrameVertexU = jsonFrameVertexUV->child;
 				cJSON *jsonFrameVertexV = jsonFrameVertexU->next;
@@ -166,7 +164,7 @@ namespace zombo
 			}
 
 			cJSON *jsonFrameTriangle = jsonFrameTriangles->child;
-			while (jsonFrameTriangle != 0)
+			while (jsonFrameTriangle != nullptr)
 			{
 				cJSON *jsonFrameVertexA = jsonFrameTriangle->child;
 				cJSON *jsonFrameVertexB = jsonFrameVertexA->next;

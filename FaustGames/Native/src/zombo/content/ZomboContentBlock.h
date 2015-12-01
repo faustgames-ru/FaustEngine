@@ -6,6 +6,7 @@
 
 namespace zombo
 {
+	// todo: unloading
 	class ZomboContentBlock
 	{
 	public:
@@ -52,7 +53,7 @@ namespace zombo
 	{
 		typename std::map<std::string, T*>::iterator it = map.find(fileName);
 		if (it == map.end())
-			return 0;
+			return nullptr;
 		return it->second;
 	}
 }

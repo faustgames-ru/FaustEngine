@@ -8,7 +8,8 @@ namespace zombo
 	struct ZomboImageVertex
 	{
 		core::Vector2 xy;
-		core::Vector2 uv;
+		ushort u;
+		ushort v;
 	};
 	class ZomboContentImage
 	{

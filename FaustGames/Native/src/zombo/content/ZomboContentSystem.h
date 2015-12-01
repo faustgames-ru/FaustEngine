@@ -9,8 +9,8 @@ namespace zombo
 	class ZomboContentSystem
 	{
 	public:
-		ZomboAsyncState<void> load(ZomboContentBlock *contentBlock);
-		ZomboAsyncState<void> unload(ZomboContentBlock *contentBlock);
+		ZomboAsyncState* load(ZomboContentBlock *contentBlock);
+		ZomboAsyncState* unload(ZomboContentBlock *contentBlock);
 		void update();
 	private:
 	};

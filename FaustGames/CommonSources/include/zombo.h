@@ -6,11 +6,13 @@
 #define API_CALL JNICALL
 #define DLLEXPORT JNIEXPORT
 #define OVERRIDE
+#define nullptr 0
 #else 
 #ifdef __APPLE__
 #define API_CALL
 #define DLLEXPORT
 #define OVERRIDE
+#define nullptr 0
 #else
 #define API_CALL __stdcall
 #define DLLEXPORT __declspec( dllexport )

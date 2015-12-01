@@ -33,7 +33,6 @@ namespace zombo
 		TextureCoords uvs[4];
 	};
 
-	template <typename TResult>
 	class ZomboAsyncState;
 }
 

@@ -38,7 +38,7 @@ namespace zombo
 		{
 			std::string imageName = format(fileName, i, leadingZeros);
 			ZomboContentImage* image = getImage(imageName.c_str());
-			if (image == 0)
+			if (image == nullptr)
 				break;
 			animation->frames.push_back(image);
 		}
@@ -144,44 +144,41 @@ namespace zombo
 		if (!resources::ContentProvider::existContent(fullPath.c_str()))
 		{
 			// todo: handle error
-			return 0;
+			return nullptr;
+		}
+		resources::ContentProvider::openContent(fullPath.c_str());
+		char * jsonString = static_cast<char *>(content.getBuffer());
+		int len = 0;
+		const int pageSize = 256 * 1024; 
+		int count = 0;
+		while ((count = resources::ContentProvider::read(jsonString + len, pageSize)) > 0)
+		{
+			len += count;
+		}
+		JsonAtlas atlas(jsonString);			
+		ZomboContentAtlasPage* page = atlas.createContentAtlasPage();
+		resources::ContentProvider::closeContent();
+		_altasPages[fileName] = page;
+
+		std::string path = core::Path::getFilePath(fileName);
+		graphics::Image2dData* imageData = content.loadUnregisteredTexture((_rootPath + path + page->texture.fileName).c_str());
+		// todo: configure loading;
+		page->texture.texture = new graphics::TextureImage2d(false, false);
+		if (imageData != nullptr)
+		{
+			page->texture.texture->setData(imageData);
+			page->texture.texture->create();
 		}
 		else
 		{
-			resources::ContentProvider::openContent(fullPath.c_str());
-			char * jsonString = (char *)content.getBuffer();
-			int len = 0;
-			const int pageSize = 256 * 1024; 
-			int count = 0;
-			while ((count = resources::ContentProvider::read(jsonString + len, pageSize)) > 0)
-			{
-				len += count;
-			}
-			JsonAtlas atlas(jsonString);			
-			ZomboContentAtlasPage* page = atlas.createContentAtlasPage();
-			resources::ContentProvider::closeContent();
-			_altasPages[fileName] = page;
-
-			std::string path = core::Path::getFilePath(fileName);
-			graphics::Image2dData* imageData = content.loadUnregisteredTexture((_rootPath + path + page->texture.fileName).c_str());
-			// todo: configure loading;
-			page->texture.texture = new graphics::TextureImage2d(false, false);
-			if (imageData != 0)
-			{
-				page->texture.texture->setData(imageData);
-				page->texture.texture->create();
-			}
-			else
-			{
-				// todo: handle error
-			}
-			for (uint i = 0; i < page->images.size(); i++)
-			{
-				page->images[i]->texture = page->texture.texture;
-				_images[fileName + "/" + page->images[i]->name] = page->images[i];
-			}
-			return page;
+			// todo: handle error
 		}
+		for (uint i = 0; i < page->images.size(); i++)
+		{
+			page->images[i]->texture = page->texture.texture;
+			_images[fileName + "/" + page->images[i]->name] = page->images[i];
+		}
+		return page;
 	}
 
 	void ZomboContentBlock::loadAtlas(const std::string& fileName)

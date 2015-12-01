@@ -249,7 +249,8 @@
     <ClInclude Include="..\src\zombo\animation\ZomboFrameAnimation.h" />
     <ClInclude Include="..\src\zombo\animation\ZomboFrameAnimationSystem.h" />
     <ClInclude Include="..\src\zombo\cjson\cJSON.h" />
-    <ClInclude Include="..\src\zombo\common\ZomboAsyncState.h" />
+    <ClInclude Include="..\src\zombo\common\asyncs\ZomboAsyncState.h" />
+    <ClInclude Include="..\src\zombo\common\states\ZomboStateController.h" />
     <ClInclude Include="..\src\zombo\common\ZomboTransfom.h" />
     <ClInclude Include="..\src\zombo\content\loaders\LoaderJsonAtlas.h" />
     <ClInclude Include="..\src\zombo\content\ZomboAtlas.h" />
@@ -257,6 +258,7 @@
     <ClInclude Include="..\src\zombo\content\ZomboContentSystem.h" />
     <ClInclude Include="..\src\zombo\render\ZomboRenderSprite.h" />
     <ClInclude Include="..\src\zombo\render\ZomboRenderSystem.h" />
+    <ClInclude Include="..\src\zombo\scenes\ZomboScene.h" />
     <ClInclude Include="..\src\zombo\ZomboGame.h" />
     <ClInclude Include="..\src\zombo\zombo_classes.h" />
     <ClInclude Include="..\src\zombo\zombo_platform.h" />
@@ -345,9 +347,12 @@
     <ClCompile Include="..\src\resources\zlib\uncompr.c" />
     <ClCompile Include="..\src\resources\zlib\zutil.c" />
     <ClCompile Include="..\src\zombo\cjson\cJSON.c" />
+    <ClCompile Include="..\src\zombo\common\asyncs\ZomboAsyncState.cpp" />
+    <ClCompile Include="..\src\zombo\common\states\ZomboStateController.cpp" />
     <ClCompile Include="..\src\zombo\content\loaders\LoaderJsonAtlas.cpp" />
     <ClCompile Include="..\src\zombo\content\ZomboAtlas.cpp" />
     <ClCompile Include="..\src\zombo\content\ZomboContentBlock.cpp" />
+    <ClCompile Include="..\src\zombo\scenes\ZomboScene.cpp" />
     <ClCompile Include="..\src\zombo\ZomboGame.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="stdafx.cpp" />

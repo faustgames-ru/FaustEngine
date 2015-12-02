@@ -3,13 +3,14 @@
 
 #include "../zombo_classes.h"
 #include "../common/ZomboTransfom.h"
+#include "../content/ZomboAtlas.h"
 
 namespace zombo
 {
 	class ZomboRenderSprite
 	{
 	public:
-		ZomboSpriteImage texture;
+		ZomboContentImage *image;
 		ZomboTransfom transform;
 	};
 }

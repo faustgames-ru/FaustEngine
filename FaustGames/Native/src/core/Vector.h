@@ -11,6 +11,8 @@ namespace core
 	private:
 		float _values[2];
 	public:
+		static Vector2 empty;
+
 		Vector2(){}
 		Vector2(float x, float y)
 		{
@@ -35,6 +37,7 @@ namespace core
 	private:
 		float _values[3];
 	public:
+		static Vector3 empty;
 		Vector3() {}
 		Vector3(float x, float y, float z)
 		{

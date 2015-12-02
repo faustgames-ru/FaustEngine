@@ -55,6 +55,9 @@
     <Filter Include="zombo\common\asyncs">
       <UniqueIdentifier>{5a4bf914-7265-4f24-ae5f-96b59f4485fa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="zombo\render\Batcher">
+      <UniqueIdentifier>{d09abccf-29eb-4f77-9d18-b8c7cb0cbb08}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\CommonSources\include\llge.h">
@@ -374,6 +377,9 @@
     <ClInclude Include="..\src\zombo\scenes\ZomboScene.h">
       <Filter>zombo\scenes</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\zombo\ZomboEntity.h">
+      <Filter>zombo</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\CommonSources\gen\llgePInvoke.cpp">
@@ -638,6 +644,15 @@
     </ClCompile>
     <ClCompile Include="..\src\zombo\scenes\ZomboScene.cpp">
       <Filter>zombo\scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\zombo\common\ZomboTransfom.cpp">
+      <Filter>zombo\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\Vector.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\zombo\ZomboEntity.cpp">
+      <Filter>zombo</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

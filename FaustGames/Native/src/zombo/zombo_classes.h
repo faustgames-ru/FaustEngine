@@ -26,13 +26,6 @@ namespace zombo
 		core::Vector2 size;
 	};	
 
-	class ZomboSpriteImage
-	{
-	public:
-		uint textureId;
-		TextureCoords uvs[4];
-	};
-
 	class ZomboAsyncState;
 }
 

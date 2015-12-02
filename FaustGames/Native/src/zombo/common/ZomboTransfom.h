@@ -8,6 +8,7 @@ namespace zombo
 	class ZomboTransfom
 	{
 	public:
+		ZomboTransfom();
 		core::Vector3 position;
 		core::Matrix2 rotationScale;
 	};

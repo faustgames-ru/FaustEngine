@@ -12,6 +12,13 @@ namespace zombo
 	public:
 		ZomboContentImage *image;
 		ZomboTransfom transform;
+
+		static ZomboComponentTypes::e ComponentType;
+		static ZomboRenderSprite * create();
+		
+		ZomboRenderSprite();
+		~ZomboRenderSprite();
+		void dispose() const;
 	};
 }
 

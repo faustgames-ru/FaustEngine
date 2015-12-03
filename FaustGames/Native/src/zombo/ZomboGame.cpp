@@ -35,6 +35,7 @@ namespace zombo
 
 	void ZomboGame::render(int w, int h, float ellapsedTime)
 	{
+		graphics::GraphicsDevice::Default.setViewport(0, 0, w, h);
 		graphics::GraphicsDevice::Default.clear();
 	}
 

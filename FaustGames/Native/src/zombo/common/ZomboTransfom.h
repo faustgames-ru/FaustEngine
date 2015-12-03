@@ -8,9 +8,15 @@ namespace zombo
 	class ZomboTransfom
 	{
 	public:
-		ZomboTransfom();
 		core::Vector3 position;
 		core::Matrix2 rotationScale;
+
+		static ZomboComponentTypes::e ComponentType;
+		static ZomboTransfom* create();
+
+		ZomboTransfom();
+		~ZomboTransfom();
+		void dispose() const;
 	};
 }
 

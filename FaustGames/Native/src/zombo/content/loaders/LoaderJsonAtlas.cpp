@@ -57,8 +57,8 @@ namespace zombo
 				{
 					ZomboImageVertex v;
 					// todo: handle rotation
-					v.xy.setX(frame->vertices[j].x - center.getX());
-					v.xy.setY(frame->vertices[j].y - center.getY());
+					v.xy.setX((frame->vertices[j].x - center.getX()) * scale);
+					v.xy.setY((frame->vertices[j].y - center.getY()) * scale);
 					v.u = frame->verticesUV[j].x * USHRT_MAX / meta.size.w;
 					v.v = frame->verticesUV[j].y * USHRT_MAX / meta.size.h;
 					image->vertices.push_back(v);
@@ -76,8 +76,9 @@ namespace zombo
 		return page;
 	}
 
-	JsonAtlas::JsonAtlas(const char* jsonString)
+	JsonAtlas::JsonAtlas(const char* jsonString, float verticesScale)
 	{
+		scale = verticesScale;
 		_json = nullptr;
 
 		cJSON * json = cJSON_Parse(jsonString);

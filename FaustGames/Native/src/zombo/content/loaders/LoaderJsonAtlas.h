@@ -74,9 +74,10 @@ namespace zombo
 	class JsonAtlas
 	{
 	public:
+		float scale;
 		std::vector<JsonAtlasFrame *> frames;
 		JsonAtlasMeta meta;
-		JsonAtlas(const char *jsonString);
+		JsonAtlas(const char *jsonString, float verticesScale);
 		~JsonAtlas();
 		ZomboContentAtlasPage* createContentAtlasPage();
 	private:

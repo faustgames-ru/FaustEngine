@@ -9,7 +9,8 @@ namespace zombo
 	class ZomboRenderSystem
 	{
 	public:
-		inline void renderSprite(ZomboRenderSprite* sprite);
+		void renderSprite(ZomboTransfom* tramsform,  ZomboRenderSprite* sprite);
+		void update(float ellapsedTime);
 	};
 }
 

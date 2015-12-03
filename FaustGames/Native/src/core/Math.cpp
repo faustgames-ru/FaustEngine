@@ -4,6 +4,7 @@ namespace core
 {
 	const float Math::Epsilon(1e-8f);
 	const float Math::MaxValue(1e10f);
+	const float Math::Pi(3.14159265359f);
 
 	float Math::abs(float a)
 	{
@@ -22,6 +23,11 @@ namespace core
 	float Math::trunc(float a)
 	{
 		return ::trunc(a);
+	}
+
+	float Math::round(float a)
+	{
+		return ::round(a);
 	}
 
 	float Math::cos(float a)

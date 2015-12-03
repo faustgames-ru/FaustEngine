@@ -155,7 +155,7 @@ namespace zombo
 		{
 			len += count;
 		}
-		JsonAtlas atlas(jsonString);			
+		JsonAtlas atlas(jsonString, ZomboConstants::GameScale);			
 		ZomboContentAtlasPage* page = atlas.createContentAtlasPage();
 		resources::ContentProvider::closeContent();
 		_altasPages[fileName] = page;

@@ -1,9 +1,10 @@
 #ifndef ZOMBO_GAME_H
 #define ZOMBO_GAME_H
 
+#include "zombo_classes.h"
 #include "../../CommonSources/include/zombo.h"
 #include "content/ZomboContentBlock.h"
-#include "zombo_classes.h"
+#include "ZomboWorld.h"
 
 namespace zombo
 {
@@ -16,6 +17,8 @@ namespace zombo
 		virtual void API_CALL render(int w, int h, float ellapsedTime) OVERRIDE;
 		virtual void API_CALL release() OVERRIDE;
 	private:
+		ZomboWorld zomboWorld;
+		
 		ZomboContentBlock _contentBlock;
 		ZomboContentFrameAnimation *_aniamtion;
 		std::string _rootPath;

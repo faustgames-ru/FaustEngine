@@ -2,21 +2,24 @@
 #define ZOMBO_FRAME_ANIMATION_H
 
 #include "../zombo_classes.h"
+#include "../content/ZomboAtlas.h"
 
 namespace zombo
 {
-	template <int framesCount>
 	class ZomboFrameAnimation
 	{
 	public:
-		float frameIndex;
-		float fps;
-		ZomboSpriteImage frames[framesCount];
+		static ZomboComponentTypes::e ComponentType;
+		static ZomboFrameAnimation * create();
+		ZomboFrameAnimation();
+		~ZomboFrameAnimation();
+		void dispose() const;
+		void setAnimation(ZomboContentFrameAnimation* value);
+	private:
+		ulong _startTime;
+		ZomboContentImage* _actualImage;
+		ZomboContentFrameAnimation* _animation;
 	};
-
-	typedef ZomboFrameAnimation<10> ZomboFrameAnimation10;
-	typedef ZomboFrameAnimation<15> ZomboFrameAnimation15;
-	typedef ZomboFrameAnimation<30> ZomboFrameAnimation30;
 }
 
 #endif /* ZOMBO_FRAME_ANIMATION_H */

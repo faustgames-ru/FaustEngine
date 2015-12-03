@@ -58,6 +58,9 @@
     <Filter Include="zombo\render\Batcher">
       <UniqueIdentifier>{d09abccf-29eb-4f77-9d18-b8c7cb0cbb08}</UniqueIdentifier>
     </Filter>
+    <Filter Include="zombo\entities">
+      <UniqueIdentifier>{c8af4861-f5d1-4ec8-84a2-8ddee2ed9deb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\CommonSources\include\llge.h">
@@ -380,6 +383,24 @@
     <ClInclude Include="..\src\zombo\ZomboEntity.h">
       <Filter>zombo</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\zombo\common\ZomboBounds.h">
+      <Filter>zombo\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\zombo\ZomboWorld.h">
+      <Filter>zombo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\zombo\common\ZomboCamera.h">
+      <Filter>zombo\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\zombo\entities\ZomboPlayer.h">
+      <Filter>zombo\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\zombo\common\ZomboGameEnvironment.h">
+      <Filter>zombo\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\zombo\common\ZomboTimeLine.h">
+      <Filter>zombo\common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\CommonSources\gen\llgePInvoke.cpp">
@@ -653,6 +674,36 @@
     </ClCompile>
     <ClCompile Include="..\src\zombo\ZomboEntity.cpp">
       <Filter>zombo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\zombo\render\ZomboRenderSprite.cpp">
+      <Filter>zombo\render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\zombo\common\ZomboBounds.cpp">
+      <Filter>zombo\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\zombo\ZomboWorld.cpp">
+      <Filter>zombo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\zombo\render\ZomboRenderSystem.cpp">
+      <Filter>zombo\render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\zombo\common\ZomboCamera.cpp">
+      <Filter>zombo\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\zombo\zombo_classes.cpp">
+      <Filter>zombo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\zombo\entities\ZomboPlayer.cpp">
+      <Filter>zombo\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\zombo\animation\ZomboFrameAnimation.cpp">
+      <Filter>zombo\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\zombo\common\ZomboGameEnvironment.cpp">
+      <Filter>zombo\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\zombo\common\ZomboTimeLine.cpp">
+      <Filter>zombo\common</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

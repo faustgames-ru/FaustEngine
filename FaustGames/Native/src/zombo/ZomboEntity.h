@@ -2,6 +2,7 @@
 #define ZOMBO_ENTITY_H
 
 #include "zombo_classes.h"
+#include "behaviors/ZomboBehaviors.h"
 
 namespace zombo
 {
@@ -9,10 +10,9 @@ namespace zombo
 	{
 	public:		
 		ZomboEntity();
-		~ZomboEntity();
 		
 		template <typename TComponent>
-		void createComponent();		
+		TComponent * createComponent();
 		
 		template <typename TComponent>
 		void disposeComponent();
@@ -24,10 +24,11 @@ namespace zombo
 	};
 
 	template <typename TComponent>
-	void ZomboEntity::createComponent()
+	TComponent * ZomboEntity::createComponent()
 	{
 		TComponent *component = TComponent::create();
 		_components[TComponent::ComponentType] = component;
+		return component;
 	}
 
 	template <typename TComponent>

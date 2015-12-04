@@ -11,6 +11,7 @@ namespace zombo
 	public:
 		ZomboPlayer();
 		~ZomboPlayer();
+	private:
 	};
 }
 

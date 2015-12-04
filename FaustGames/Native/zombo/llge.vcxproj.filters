@@ -61,6 +61,9 @@
     <Filter Include="zombo\entities">
       <UniqueIdentifier>{c8af4861-f5d1-4ec8-84a2-8ddee2ed9deb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="zombo\behaviors">
+      <UniqueIdentifier>{dae8dab4-add5-4bfa-8645-525cd6a408c6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\CommonSources\include\llge.h">
@@ -401,6 +404,15 @@
     <ClInclude Include="..\src\zombo\common\ZomboTimeLine.h">
       <Filter>zombo\common</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\zombo\content\loaders\ZomboJsonScene.h">
+      <Filter>zombo\content\loaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\zombo\behaviors\ZomboBehaviorPlayer.h">
+      <Filter>zombo\behaviors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\zombo\behaviors\ZomboBehaviors.h">
+      <Filter>zombo\behaviors</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\CommonSources\gen\llgePInvoke.cpp">
@@ -704,6 +716,15 @@
     </ClCompile>
     <ClCompile Include="..\src\zombo\common\ZomboTimeLine.cpp">
       <Filter>zombo\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\zombo\content\ZomboContentSystem.cpp">
+      <Filter>zombo\content</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\zombo\behaviors\ZomboBehaviorPlayer.cpp">
+      <Filter>zombo\behaviors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\zombo\behaviors\ZomboBehaviors.cpp">
+      <Filter>zombo\behaviors</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -2,6 +2,8 @@
 
 namespace zombo
 {
+	ZomboComponentTypes::e ZomboRenderSprite::ComponentType(ZomboComponentTypes::RenderSprite);
+	
 	ZomboRenderSprite* ZomboRenderSprite::create()
 	{
 		return new ZomboRenderSprite();

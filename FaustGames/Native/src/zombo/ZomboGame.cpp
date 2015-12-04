@@ -1,6 +1,8 @@
 #include "ZomboGame.h"
 #include "../core/core.h"
 #include "../graphics/graphics.h"
+#include "../graphics/EffectsBasic.h"
+#include "../graphics/VertexFormatsBasic.h"
 
 namespace zombo
 {
@@ -12,25 +14,16 @@ namespace zombo
 	void ZomboGame::load(int w, int h)
 	{
 		graphics::GraphicsDevice::Default.setClearState(0x805050, 1.0f);
-		resources::ContentManager::Default.open();
-		_contentBlock.setRoot(_rootPath);
-		
-		_contentBlock.enqueueResource("Content/character/character{n}.atlas");	
+		graphics::GraphicsDevice::Default.renderState = graphics::RenderState(); /// ???
+		graphics::GraphicsDevice::Default.renderState.init();
+		graphics::GraphicsDevice::Default.create();
+		EFFECTS_CALL_CREATE
+		FORMATS_CALL_CREATE
 	}
 
 	void ZomboGame::update(int w, int h, float ellapsedTime)
 	{
-		if (!_contentBlock.isLoaded())
-		{
-			_contentBlock.update();
-		}
-		else
-		{
-			if (_aniamtion == 0)
-			{
-				_aniamtion = _contentBlock.createAnimation("Content/character/character0.atlas/Attack__{n:000}.png");
-			}
-		}
+		_zomboWorld.update(ellapsedTime);
 	}
 
 	void ZomboGame::render(int w, int h, float ellapsedTime)

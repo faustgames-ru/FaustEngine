@@ -10,7 +10,7 @@ namespace zombo
 	ZomboCamera::ZomboCamera(): 
 		position(0.0f, 0.0, -10.0f), 
 		fov(core::Math::Pi * 0.5f), 
-		nearPlane(10), 
+		nearPlane(1), 
 		farPlane(100)
 	{
 	}
@@ -26,11 +26,11 @@ namespace zombo
 
 	ZomboRect ZomboCamera::getFrustumRect(float zLayer)
 	{
-
+		return ZomboRect();
 	}
 
 	bool ZomboCamera::areBoundsVisible(const core::Vector3& position, const core::Vector2& size)
 	{
-
+		return false;
 	}
 }

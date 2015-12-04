@@ -4,6 +4,7 @@
 #include "zombo_classes.h"
 #include "ZomboEntity.h"
 #include "render/ZomboRenderSystem.h"
+#include "content/ZomboContentSystem.h"
 
 namespace zombo
 {
@@ -11,6 +12,8 @@ namespace zombo
 	{
 	public:
 		ZomboRenderSystem renderSystem;
+		ZomboRenderSystem animationSystem;
+		ZomboContentSystem contentSystem;
 		void update(float ellapsedTime);
 	private:
 		std::vector<ZomboEntity *> _entities;

@@ -34,6 +34,7 @@ namespace zombo
 			Transform = 0x1,
 			RenderSprite = 0x2,
 			FrameAnimation = 0x3,
+			Behaviors = 0x3,
 			Count = 0x4,
 		};
 	};
@@ -42,9 +43,10 @@ namespace zombo
 	{
 	public:
 		static const float GameScale; // 100 dip per meter
+		static const uint LongTimeScale = 0xffffffff; // does 136 years of game time good enough?
 	};
 
-	class ZomboAsyncState;
+	class ZomboEntity;
 }
 
 

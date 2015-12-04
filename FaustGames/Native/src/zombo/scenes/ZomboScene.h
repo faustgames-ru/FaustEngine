@@ -14,7 +14,7 @@ namespace zombo
 	class SceneStateHide;
 	class SceneStateUnloading;
 
-	class Scene
+	class ZomboScene
 	{
 	public:
 		ZomboContentBlock content;
@@ -24,8 +24,8 @@ namespace zombo
 		SceneStateHide *stateHide;
 		SceneStateUnloading *stateUnloading;
 		StateController *stateController;
-		Scene();
-		~Scene();
+		ZomboScene();
+		~ZomboScene();
 		void update(float ellapsedTime) const;
 	private:
 	};
@@ -33,42 +33,45 @@ namespace zombo
 	class SceneState : public StateBase
 	{
 	public:
-		Scene *scene;
-		SceneState(Scene *sceneValue);
+		ZomboScene *scene;
+		SceneState(ZomboScene *sceneValue);
 	};
 
 	// display black screen 
 	class SceneStateLoading : public SceneState
 	{
 	public:
-		SceneStateLoading(Scene *sceneValue);
+		SceneStateLoading(ZomboScene *sceneValue);
+		virtual void activated() OVERRIDE;
+		virtual void deactivated() OVERRIDE;
+		virtual void update(float ellapsedTime) OVERRIDE;
 	};
 
 	// fade black screen hide
 	class SceneStateShow : public SceneState
 	{
 	public:
-		SceneStateShow(Scene* sceneValue);
+		SceneStateShow(ZomboScene* sceneValue);
 	};
 
 	class SceneStateIdle : public SceneState
 	{
 	public:
-		SceneStateIdle(Scene *sceneValue);
+		SceneStateIdle(ZomboScene *sceneValue);
 	};
 
 	// fade black screen show
 	class SceneStateHide : public SceneState
 	{
 	public:
-		SceneStateHide(Scene *sceneValue);
+		SceneStateHide(ZomboScene *sceneValue);
 	};
 
 	// display black screen 
 	class SceneStateUnloading : public SceneState
 	{
 	public:
-		SceneStateUnloading(Scene *sceneValue);
+		SceneStateUnloading(ZomboScene *sceneValue);
 	};
 }
 

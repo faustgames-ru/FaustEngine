@@ -9,8 +9,4 @@ namespace zombo
 			_components[i] = nullptr;
 		}
 	}
-
-	ZomboEntity::~ZomboEntity()
-	{
-	}
 }

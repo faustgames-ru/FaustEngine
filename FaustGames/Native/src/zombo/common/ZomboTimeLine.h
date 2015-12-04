@@ -11,11 +11,13 @@ namespace zombo
 	class ZomboTimeLine
 	{
 	public:
-		void update();
-		void addTimer(ulong alarmTime, ZomboTimeLineEventListener *listener);
-		void addTimer(float duration, ZomboTimeLineEventListener *listener);
+		static void update();
+		static void addTimer(ulong alarmTime, ZomboTimeLineEventListener *listener, void *senderData);
+		static void addTimer(float duration, ZomboTimeLineEventListener *listener, void *senderData);
+
+		typedef std::multiset<ZomboTimeLineEvent> Events;
 	private:
-		std::multiset<ZomboTimeLineEvent> _events;
+		static Events _events;
 	};
 
 	class ZomboTimeLineEventListener
@@ -34,6 +36,8 @@ namespace zombo
 		ulong time;
 		ZomboTimeLineEventListener *listener;
 		void *senderData;
+		ZomboTimeLineEvent(ulong timeValue, ZomboTimeLineEventListener *listenerValue, void *senderDataValue);
+		bool operator <  (const ZomboTimeLineEvent &right) const;
 	};
 }
 

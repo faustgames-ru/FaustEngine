@@ -9,7 +9,8 @@ namespace zombo
 	{
 	public:
 		static ulong gameTime;
-		static float ellapsedTime;
+		static ulong ellapsedTime;
+		static float ellapsedSeconds;
 		static void update(float ellapsedTime);
 	};
 }

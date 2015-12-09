@@ -1,6 +1,7 @@
 #include "TextureRenderTarget2d.h"
 #include "TextureImage2d.h"
 #include "Errors.h"
+#include "GraphicsDevice.h"
 
 namespace graphics
 {
@@ -21,6 +22,7 @@ namespace graphics
 		
 		glGenTextures(1, &_handle);
 		Errors::check(Errors::GenTextures);
+		GraphicsDevice::Default.resetSamplersState();
 		glActiveTexture(GL_TEXTURE0);
 		Errors::check(Errors::ActiveTexture);
 		glBindTexture(GL_TEXTURE_2D, _handle);

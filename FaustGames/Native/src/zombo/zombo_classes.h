@@ -47,6 +47,30 @@ namespace zombo
 	};
 
 	class ZomboEntity;
+	
+	struct ZomboType
+	{
+		enum e
+		{
+			None,
+			Int,
+			Float,
+			String,
+			Array,
+			Object
+		};
+	};
+	
+	class ZomboValue;
+	class ZomboObject;
+	class ZomboArray;
+
+	class IZomboSerialable
+	{
+	public:
+		void deserialize(ZomboObject* source);
+		void serialize(ZomboObject* target);
+	};
 }
 
 

@@ -141,6 +141,7 @@ namespace graphics
 		_viewportY = 0;
 		_viewportWidth = 0;
 		_viewportHeight = 0;
+		_activeTextureState = -1;
 	}
 
 
@@ -178,6 +179,11 @@ namespace graphics
 		glDrawElements(GL_TRIANGLES, primitivesCount * 3, GL_UNSIGNED_SHORT, indexBuffer);
 		Errors::check(Errors::DrawElements);
 		++_drawCalls;
+	}
+
+	void GraphicsDevice::resetSamplersState()
+	{
+		_activeTextureState = -1;
 	}
 
 	void GraphicsDevice::resetRenderState()

@@ -1,6 +1,7 @@
 #include "UniformValueCubemap.h"
 #include "Errors.h"
 #include "Math.h"
+#include "GraphicsDevice.h"
 
 namespace graphics
 {
@@ -19,6 +20,7 @@ namespace graphics
 	void UniformValueCubemap::apply(Uniform *uniform)
 	{
 		if (_equal) return;
+		GraphicsDevice::Default.resetSamplersState();
 		glActiveTexture(GL_TEXTURE0 + GraphicsConstants::SamplersCubeStart + _samplerIndex);
 		Errors::check(Errors::ActiveTexture);
 		glBindTexture(GL_TEXTURE_CUBE_MAP, _value);

@@ -260,6 +260,10 @@
     <ClInclude Include="..\src\zombo\common\ZomboTransfom.h" />
     <ClInclude Include="..\src\zombo\content\loaders\LoaderJsonAtlas.h" />
     <ClInclude Include="..\src\zombo\content\loaders\ZomboJsonScene.h" />
+    <ClInclude Include="..\src\zombo\content\serialization\ZomboArray.h" />
+    <ClInclude Include="..\src\zombo\content\serialization\ZomboObject.h" />
+    <ClInclude Include="..\src\zombo\content\serialization\ZomboSerializer.h" />
+    <ClInclude Include="..\src\zombo\content\serialization\ZomboValue.h" />
     <ClInclude Include="..\src\zombo\content\ZomboAtlas.h" />
     <ClInclude Include="..\src\zombo\content\ZomboContentBlock.h" />
     <ClInclude Include="..\src\zombo\content\ZomboContentSystem.h" />
@@ -369,6 +373,9 @@
     <ClCompile Include="..\src\zombo\common\ZomboTimeLine.cpp" />
     <ClCompile Include="..\src\zombo\common\ZomboTransfom.cpp" />
     <ClCompile Include="..\src\zombo\content\loaders\LoaderJsonAtlas.cpp" />
+    <ClCompile Include="..\src\zombo\content\serialization\ZomboArray.cpp" />
+    <ClCompile Include="..\src\zombo\content\serialization\ZomboObject.cpp" />
+    <ClCompile Include="..\src\zombo\content\serialization\ZomboValue.cpp" />
     <ClCompile Include="..\src\zombo\content\ZomboAtlas.cpp" />
     <ClCompile Include="..\src\zombo\content\ZomboContentBlock.cpp" />
     <ClCompile Include="..\src\zombo\content\ZomboContentSystem.cpp" />

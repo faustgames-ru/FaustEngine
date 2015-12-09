@@ -30,8 +30,8 @@ namespace zombo
 		ZomboContentFrameAnimation* jump;
 		ZomboBehaviorPlayerStaticData();
 		~ZomboBehaviorPlayerStaticData();
-		virtual void load(ZomboLoadContext *context) OVERRIDE;
-		virtual void unload() OVERRIDE;
+		//virtual void load(ZomboLoadContext *context) OVERRIDE;
+		//virtual void unload() OVERRIDE;
 	};
 }
 

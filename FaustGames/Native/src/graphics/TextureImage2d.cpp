@@ -1,6 +1,7 @@
 #include "TextureImage2d.h"
 #include "Uniforms.h"
 #include "Errors.h"
+#include "GraphicsDevice.h"
 
 namespace graphics
 {
@@ -55,6 +56,7 @@ namespace graphics
 		//UniformValues::resetSamplers();
 		glGenTextures(1, &_handle);
 		Errors::check(Errors::GenTextures);
+		GraphicsDevice::Default.resetSamplersState();
 		glActiveTexture(GL_TEXTURE0 + GraphicsConstants::Samplers2DStart);
 		Errors::check(Errors::ActiveTexture);
 		glBindTexture(GL_TEXTURE_2D, _handle);

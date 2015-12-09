@@ -30,7 +30,7 @@ namespace zombo
 	{
 		for (int i = 0; i < _behaviors.size(); i++)
 		{
-			_behaviors[i]->load(entity, content);
+			//_behaviors[i]->load(entity, content);
 		}
 	}
 
@@ -38,7 +38,7 @@ namespace zombo
 	{
 		for (int i = 0; i < _behaviors.size(); i++)
 		{
-			_behaviors[i]->update(entity, ellapsedTime);
+			//_behaviors[i]->update(entity, ellapsedTime);
 		}
 	}
 }

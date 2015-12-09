@@ -38,6 +38,7 @@ namespace graphics
 		void drawEdges(VertexFormat *vertexFormat, void *vertexBuffer, int primitivesCount);
 		void drawTriangles(VertexFormat *vertexFormat, void *vertexBuffer, int primitivesCount);
 		void drawPrimitives(VertexFormat *vertexFormat, void *vertexBuffer, unsigned short *indexBuffer, int primitivesCount);
+		void resetSamplersState();
 		void resetRenderState();
         void grabDefaultRenderTarget();
         void setActiveTexture(uint value);

@@ -1,10 +1,21 @@
 #include "Convert.h"
+#include <string>
+#include <sstream>
 
 namespace core
 {
+
+	template <typename T>
+	std::string to_string(T value)
+	{
+		std::ostringstream os;
+		os << value;
+		return os.str();
+	}
+
 	std::string Convert::toString(int n)
 	{
-		return std::to_string(n);
+		return to_string(n);
 	}
 
 	std::string Convert::toString(int n, int leadingZeros)

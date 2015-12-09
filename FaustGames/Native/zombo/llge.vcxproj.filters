@@ -64,6 +64,9 @@
     <Filter Include="zombo\behaviors">
       <UniqueIdentifier>{dae8dab4-add5-4bfa-8645-525cd6a408c6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="zombo\content\serialization">
+      <UniqueIdentifier>{01b64bbd-1a57-435c-9980-7723eb22b8ad}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\CommonSources\include\llge.h">
@@ -413,6 +416,18 @@
     <ClInclude Include="..\src\zombo\behaviors\ZomboBehaviors.h">
       <Filter>zombo\behaviors</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\zombo\content\serialization\ZomboSerializer.h">
+      <Filter>zombo\content\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\zombo\content\serialization\ZomboValue.h">
+      <Filter>zombo\content\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\zombo\content\serialization\ZomboArray.h">
+      <Filter>zombo\content\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\zombo\content\serialization\ZomboObject.h">
+      <Filter>zombo\content\serialization</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\CommonSources\gen\llgePInvoke.cpp">
@@ -725,6 +740,15 @@
     </ClCompile>
     <ClCompile Include="..\src\zombo\behaviors\ZomboBehaviors.cpp">
       <Filter>zombo\behaviors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\zombo\content\serialization\ZomboValue.cpp">
+      <Filter>zombo\content\serialization</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\zombo\content\serialization\ZomboObject.cpp">
+      <Filter>zombo\content\serialization</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\zombo\content\serialization\ZomboArray.cpp">
+      <Filter>zombo\content\serialization</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

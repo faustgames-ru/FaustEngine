@@ -375,6 +375,7 @@
     <ClCompile Include="..\src\zombo\content\loaders\LoaderJsonAtlas.cpp" />
     <ClCompile Include="..\src\zombo\content\serialization\ZomboArray.cpp" />
     <ClCompile Include="..\src\zombo\content\serialization\ZomboObject.cpp" />
+    <ClCompile Include="..\src\zombo\content\serialization\ZomboSerializer.cpp" />
     <ClCompile Include="..\src\zombo\content\serialization\ZomboValue.cpp" />
     <ClCompile Include="..\src\zombo\content\ZomboAtlas.cpp" />
     <ClCompile Include="..\src\zombo\content\ZomboContentBlock.cpp" />

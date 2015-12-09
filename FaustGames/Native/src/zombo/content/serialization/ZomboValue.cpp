@@ -46,8 +46,30 @@ namespace zombo
 		return _stringValue.c_str();
 	}
 
+	std::string ZomboValue::toString() const
+	{
+		switch (_type)
+		{
+		case ZomboType::None: return "null";
+		case ZomboType::Int: return core::Convert::toString(_intValue);
+		case ZomboType::Float: return core::Convert::toString(_floatValue);
+		case ZomboType::String: return _stringValue;
+		case ZomboType::Array: 
+			if (_array == nullptr)
+				return "null";
+			return _array->toString();
+		case ZomboType::Object: 
+			if (_object == nullptr)
+				return "null";
+			return _object->toString();
+		default: 
+			return "null";
+		}
+	}
+
 	ZomboObject* ZomboValue::asObject()
 	{
+		_type = ZomboType::Object;
 		if (_object == nullptr)
 		{
 			_object = new ZomboObject();
@@ -57,6 +79,7 @@ namespace zombo
 
 	ZomboArray* ZomboValue::asArray()
 	{
+		_type = ZomboType::Array;
 		if (_array == nullptr)
 		{
 			_array = new ZomboArray();			

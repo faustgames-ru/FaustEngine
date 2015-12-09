@@ -750,5 +750,8 @@
     <ClCompile Include="..\src\zombo\content\serialization\ZomboArray.cpp">
       <Filter>zombo\content\serialization</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\zombo\content\serialization\ZomboSerializer.cpp">
+      <Filter>zombo\content\serialization</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

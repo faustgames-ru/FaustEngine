@@ -14,6 +14,7 @@ namespace zombo
 		int asInt() const;
 		float asFloat() const;
 		const char* asString() const;
+		std::string toString() const;
 		ZomboObject* asObject();
 		ZomboArray* asArray();
 

@@ -8,10 +8,14 @@ namespace zombo
 	class ZomboSerializer
 	{
 	public:
-		ZomboObject *getRoot();		
-		
+		ZomboSerializer();
+		~ZomboSerializer();
+		ZomboObject *getRoot() const;
 		static ZomboSerializer* createFromJson(const char* jsonString);
-		void dispose();
+		void dispose() const;
+	private:
+		ZomboSerializer(ZomboObject *root);
+		ZomboObject *_root;
 	};
 }
 

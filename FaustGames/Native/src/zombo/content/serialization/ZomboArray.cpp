@@ -22,7 +22,7 @@ namespace zombo
 		std::string result = "[";
 		for (int i = 0; i < _values.size(); i++)
 		{
-			result += _values[i].asString();
+			result += _values[i].toString();
 			result += ",";
 		}
 		result += "]";

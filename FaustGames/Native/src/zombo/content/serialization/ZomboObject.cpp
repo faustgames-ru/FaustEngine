@@ -19,7 +19,7 @@ namespace zombo
 			ZomboValue *v = i->second;
 			result += i->first;
 			result += ":";
-			result += v->asString();
+			result += v->toString();
 			result += ",";
 		}
 		result += "}";

@@ -2,7 +2,7 @@
 
 namespace zombo
 {
-	const ZomboValue* ZomboArray::operator[](int i) const
+	ZomboValue* ZomboArray::operator[](int i)
 	{
 		return &_values[i];
 	}
@@ -12,8 +12,20 @@ namespace zombo
 		_values.resize(value);
 	}
 
-	int ZomboArray::size()
+	int ZomboArray::size() const
 	{
 		return _values.size();
+	}
+
+	std::string ZomboArray::toString()
+	{
+		std::string result = "[";
+		for (int i = 0; i < _values.size(); i++)
+		{
+			result += _values[i].asString();
+			result += ",";
+		}
+		result += "]";
+		return result;
 	}
 }

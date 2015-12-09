@@ -9,10 +9,11 @@ namespace zombo
 	class ZomboObject
 	{
 	public:
-		ZomboValue* operator[](const char *fieldName) const;
+		ZomboValue* operator[](const char *fieldName);
+		std::string toString();
 		typedef std::map<std::string, ZomboValue *> ValuesMap;
 	private:
-		std::map<std::string, ZomboValue *> _values;
+		ValuesMap _values;
 	};
 }
 

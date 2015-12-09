@@ -9,9 +9,10 @@ namespace zombo
 	class ZomboArray
 	{
 	public:
-		const ZomboValue* operator[](int i) const;
+		ZomboValue* operator[](int i);
 		void resize(int value);
-		int size();
+		int size() const;
+		std::string toString();
 	private:
 		std::vector<ZomboValue> _values;
 	};

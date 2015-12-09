@@ -10,21 +10,21 @@ namespace zombo
 	public:
 		ZomboValue();
 		~ZomboValue();
-		ZomboType::e getType();
-		int asInt();
-		float asFloat();
-		char* asString();
+		ZomboType::e getType() const;
+		int asInt() const;
+		float asFloat() const;
+		const char* asString() const;
 		ZomboObject* asObject();
 		ZomboArray* asArray();
 
 		void setAsInt(int value);
 		void setAsFloat(float value);
-		void setAsString(char* value);
+		void setAsString(const char* value);
 	private:
 		ZomboType::e _type;
 		int _intValue;
 		float _floatValue;
-		std::string* _stringValue;
+		std::string _stringValue;
 		ZomboObject* _object;
 		ZomboArray* _array;
 	};

@@ -2,6 +2,18 @@
 
 namespace zombo
 {
+	ZomboObject::ZomboObject()
+	{
+	}
+
+	ZomboObject::~ZomboObject()
+	{
+		for (ValuesMap::iterator i = _values.begin(); i != _values.end(); ++i)
+		{
+			delete i->second;
+		}
+	}
+
 	ZomboValue* ZomboObject::operator[](const char* fieldName)
 	{
 		std::string name(fieldName);

@@ -20,7 +20,7 @@ namespace zombo
 		ZomboWorld _zomboWorld;
 		ZomboScene _zomboScene;
 		//
-		//ZomboContentBlock _contentBlock;
+		ZomboContentBlock _contentBlock;
 		//ZomboContentFrameAnimation *_aniamtion;
 		std::string _rootPath;
 	};

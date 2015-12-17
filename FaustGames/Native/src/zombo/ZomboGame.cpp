@@ -3,6 +3,10 @@
 #include "../graphics/graphics.h"
 #include "../graphics/EffectsBasic.h"
 #include "../graphics/VertexFormatsBasic.h"
+#include "content/serialization/ZomboValue.h"
+#include "content/serialization/ZomboObject.h"
+#include "content/serialization/ZomboArray.h"
+#include "content/serialization/ZomboSerializer.h"
 
 namespace zombo
 {
@@ -19,10 +23,36 @@ namespace zombo
 		graphics::GraphicsDevice::Default.create();
 		EFFECTS_CALL_CREATE
 		FORMATS_CALL_CREATE
+
+		resources::ContentManager::Default.open();
+		_contentBlock.setRoot(_rootPath);
+		_contentBlock.enqueueResource("Content/character/character{n}.atlas");
+
+		resources::ContentManager content = resources::ContentManager::Default;
+		std::string fullPath = _rootPath + "Content/test.scene";
+		if (resources::ContentProvider::existContent(fullPath.c_str()))
+		{
+			resources::ContentProvider::openContent(fullPath.c_str());
+			char * jsonString = static_cast<char *>(content.getBuffer());
+			int len = 0;
+			const int pageSize = 256 * 1024;
+			int count = 0;
+			while ((count = resources::ContentProvider::read(jsonString + len, pageSize)) > 0)
+			{
+				len += count;
+			}
+
+			ZomboValue *sceneValue = ZomboSerializer::deserializeFromJson(jsonString);
+			ZomboObject * sceneObject = sceneValue->asObject();
+			ZomboArray *resources = (*sceneObject)["resources"]->asArray();
+			int resourcesCount = resources->size();
+		}
+
 	}
 
 	void ZomboGame::update(int w, int h, float ellapsedTime)
 	{
+		_contentBlock.update();
 		_zomboWorld.update(ellapsedTime);
 	}
 

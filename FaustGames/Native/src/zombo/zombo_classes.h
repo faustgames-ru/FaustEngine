@@ -54,6 +54,7 @@ namespace zombo
 		{
 			None,
 			Int,
+			Bool,
 			Float,
 			String,
 			Array,

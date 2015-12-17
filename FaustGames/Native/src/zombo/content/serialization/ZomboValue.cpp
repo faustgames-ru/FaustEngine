@@ -4,10 +4,21 @@
 
 namespace zombo
 {
+	ZomboValue* ZomboValue::create()
+	{
+		return new ZomboValue();
+	}
+
+	void ZomboValue::dispose() const
+	{
+		delete this;
+	}
+
 	ZomboValue::ZomboValue(): 
 		_type(ZomboType::None), 
 		_intValue(0), 
 		_floatValue(0), 
+		_boolValue(false), 
 		_stringValue(""), 
 		_object(nullptr), 
 		_array(nullptr)
@@ -41,6 +52,11 @@ namespace zombo
 		return _floatValue;
 	}
 
+	bool ZomboValue::asBool() const
+	{
+		return _boolValue;
+	}
+
 	const char* ZomboValue::asString() const
 	{
 		return _stringValue.c_str();
@@ -53,6 +69,7 @@ namespace zombo
 		case ZomboType::None: return "null";
 		case ZomboType::Int: return core::Convert::toString(_intValue);
 		case ZomboType::Float: return core::Convert::toString(_floatValue);
+		case ZomboType::Bool: return core::Convert::toString(_boolValue);
 		case ZomboType::String: return _stringValue;
 		case ZomboType::Array: 
 			if (_array == nullptr)
@@ -91,6 +108,12 @@ namespace zombo
 	{
 		_type = ZomboType::Int;
 		_intValue = value;
+	}
+
+	void ZomboValue::setAsBool(int value)
+	{
+		_type = ZomboType::Bool;
+		_boolValue = value;
 	}
 
 	void ZomboValue::setAsFloat(float value)

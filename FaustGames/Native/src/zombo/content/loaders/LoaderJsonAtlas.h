@@ -48,7 +48,7 @@ namespace zombo
 	class JsonAtlasFrame
 	{
 	public:
-		char* filename;
+		std::string filename;
 		JsonAtlasRect frame;
 		bool rotated;
 		bool trimmed;
@@ -63,25 +63,23 @@ namespace zombo
 	class JsonAtlasMeta
 	{
 	public:
-		char * app;
-		char * version;
-		char * image;
-		char * format;
+		std::string app;
+		std::string version;
+		std::string image;
+		std::string format;
 		JsonAtlasSize size;
-		char * scale;
+		std::string scale;
 	};
 
 	class JsonAtlas
 	{
 	public:
 		float scale;
-		std::vector<JsonAtlasFrame *> frames;
+		std::vector<JsonAtlasFrame*> frames;
 		JsonAtlasMeta meta;
 		JsonAtlas(const char *jsonString, float verticesScale);
 		~JsonAtlas();
 		ZomboContentAtlasPage* createContentAtlasPage();
-	private:
-		cJSON * _json;
 	};
 }
 

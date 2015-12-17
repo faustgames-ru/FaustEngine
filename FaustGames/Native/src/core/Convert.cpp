@@ -41,6 +41,11 @@ namespace core
 		return toInt(atof(v.c_str()));
 	}
 
+	std::string Convert::toString(bool b)
+	{
+		return to_string(b);
+	}
+
 	std::string Convert::toString(int n)
 	{
 		return to_string(n);

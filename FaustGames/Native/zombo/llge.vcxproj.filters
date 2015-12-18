@@ -428,6 +428,9 @@
     <ClInclude Include="..\src\zombo\content\serialization\ZomboObject.h">
       <Filter>zombo\content\serialization</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\zombo\content\ZomboContentScene.h">
+      <Filter>zombo\content</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\CommonSources\gen\llgePInvoke.cpp">
@@ -752,6 +755,9 @@
     </ClCompile>
     <ClCompile Include="..\src\zombo\content\serialization\ZomboSerializer.cpp">
       <Filter>zombo\content\serialization</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\zombo\content\ZomboContentScene.cpp">
+      <Filter>zombo\content</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

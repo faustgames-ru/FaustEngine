@@ -31,5 +31,20 @@ namespace zombo
 		classInstance->release();
 	}
 	
+	extern "C" DLLEXPORT void API_CALL zombo_ZomboEditor_updateMouse (IZomboEditor * classInstance, int w, int h, int x, int y, uint buttons)
+	{
+		classInstance->updateMouse(w, h, x, y, buttons);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL zombo_ZomboEditor_render (IZomboEditor * classInstance, int w, int h)
+	{
+		classInstance->render(w, h);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL zombo_ZomboEditor_release (IZomboEditor * classInstance)
+	{
+		classInstance->release();
+	}
+	
 }
 

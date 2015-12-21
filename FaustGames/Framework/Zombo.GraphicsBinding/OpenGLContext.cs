@@ -1,6 +1,6 @@
 using System;
 
-namespace Zombo.Windows
+namespace Zombo.GraphicsBinding
 {
     public class OpenGLContext
     {

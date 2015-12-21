@@ -67,6 +67,9 @@
     <Filter Include="zombo\content\serialization">
       <UniqueIdentifier>{01b64bbd-1a57-435c-9980-7723eb22b8ad}</UniqueIdentifier>
     </Filter>
+    <Filter Include="zombo\_editor">
+      <UniqueIdentifier>{3fed44d5-15ce-430b-a376-c7e41713626c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\CommonSources\include\llge.h">
@@ -431,6 +434,9 @@
     <ClInclude Include="..\src\zombo\content\ZomboContentScene.h">
       <Filter>zombo\content</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\zombo\_editor\ZomboEditor.h">
+      <Filter>zombo\_editor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\CommonSources\gen\llgePInvoke.cpp">
@@ -758,6 +764,9 @@
     </ClCompile>
     <ClCompile Include="..\src\zombo\content\ZomboContentScene.cpp">
       <Filter>zombo\content</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\zombo\_editor\ZomboEditor.cpp">
+      <Filter>zombo\_editor</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

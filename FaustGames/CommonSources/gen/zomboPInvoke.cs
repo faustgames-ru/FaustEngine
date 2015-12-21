@@ -56,6 +56,32 @@ namespace zombo
 		static extern private void zombo_ZomboGame_release (IntPtr classInstance);
 	}
 	
+	public class ZomboEditor
+	{
+		public IntPtr ClassInstance;
+		public void UpdateMouse (int w, int h, int x, int y, uint buttons)
+		{
+			zombo_ZomboEditor_updateMouse(ClassInstance, w, h, x, y, buttons);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void zombo_ZomboEditor_updateMouse (IntPtr classInstance, int w, int h, int x, int y, uint buttons);
+		public void Render (int w, int h)
+		{
+			zombo_ZomboEditor_render(ClassInstance, w, h);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void zombo_ZomboEditor_render (IntPtr classInstance, int w, int h);
+		public void Release ()
+		{
+			zombo_ZomboEditor_release(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void zombo_ZomboEditor_release (IntPtr classInstance);
+	}
+	
 	public class zombo
 	{
 		static public ZomboGame CreateZomboGame ()
@@ -65,6 +91,13 @@ namespace zombo
 		
 		[DllImport(Version.Dll)]
 		static extern private IntPtr createZomboGame ();
+		static public ZomboEditor CreateZomboEditor ()
+		{
+			return new ZomboEditor{ ClassInstance = createZomboEditor() };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr createZomboEditor ();
 		static public void InitZomboRenderContext ()
 		{
 			initZomboRenderContext();

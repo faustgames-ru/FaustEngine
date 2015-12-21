@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D62167E5-7648-4BF9-997F-FCEDF7E3480F}</ProjectGuid>
+    <ProjectGuid>{B363B552-FD19-4B91-88A4-B2E1F0EA71CC}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Zombo.Windows</RootNamespace>
-    <AssemblyName>Zombo.Windows</AssemblyName>
+    <RootNamespace>Zombo.Editor</RootNamespace>
+    <AssemblyName>Zombo.Editor</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -22,7 +22,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -50,16 +49,25 @@
     <Compile Include="..\..\CommonSources\gen\zomboPInvoke.cs">
       <Link>zomboPInvoke.cs</Link>
     </Compile>
-    <Compile Include="GameWindow.cs">
+    <Compile Include="Controls\ZomboEditSceneControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ZomboEditSceneControl.Designer.cs">
+      <DependentUpon>ZomboEditSceneControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GameWindow.Designer.cs">
-      <DependentUpon>GameWindow.cs</DependentUpon>
+    <Compile Include="MainWindow.Designer.cs">
+      <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="GameWindow.resx">
-      <DependentUpon>GameWindow.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\ZomboEditSceneControl.resx">
+      <DependentUpon>ZomboEditSceneControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainWindow.resx">
+      <DependentUpon>MainWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

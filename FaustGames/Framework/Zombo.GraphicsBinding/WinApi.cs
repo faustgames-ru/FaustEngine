@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace Zombo.Windows
+namespace Zombo.GraphicsBinding
 {
     [Flags]
     public enum PFDBitFlag

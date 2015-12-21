@@ -2,7 +2,7 @@ using System;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-namespace Zombo.Windows
+namespace Zombo.GraphicsBinding
 {
     public class GLWindow
     {

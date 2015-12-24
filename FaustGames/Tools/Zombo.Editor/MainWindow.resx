@@ -117,4 +117,35 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <metadata name="_toolbox.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <metadata name="statusStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>122, 17</value>
+  </metadata>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAQAAMMOAADDDgAAAAAAAAAA
+        AAB/f3//f39//39/f/9/f3//f39//39/f/9/f3//f39//39/f/9/f3//f39//39/f/9/f3//f39//39/
+        f/9/f3//f39/////////////////////////////////////////////////////////////////////
+        ////////f39//39/f///////JBzt/yQc7f8kHO3//////yd///8nf///J3///yd///8nf///J3///yd/
+        //8nf////////39/f/9/f3///////yQc7f//////////////////////////////////////////////
+        ////////J3////////9/f3//f39///////8kHO3/////////////////////////////////////////
+        /////////////yd/////////f39//39/f///////JBzt////////////JBzt//////8kHO3/////////
+        /////////////////////////////39/f/9/f3///////yQc7f///////////yQc7f//////JBzt/yQc
+        7f8kHO3/////////////////JBzt//////9/f3//f39///////8kHO3///////////8kHO3/////////
+        ////////JBzt/////////////////yQc7f//////f39//39/f///////JBzt////////////JBzt////
+        //8nf///J3///yd///8nf/////////////8kHO3//////39/f/9/f3///////yQc7f///////////yQc
+        7f//////////////////////J3//////////////JBzt//////9/f3//f39/////////////////////
+        //8kHO3/JBzt/yQc7f8kHO3/JBzt/yQc7f///////////yQc7f//////f39//39/f///////J3//////
+        //////////////////////////////////////////////////8kHO3//////39/f/9/f3///////yd/
+        ////////////////////////////////////////////////////////JBzt//////9/f3//f39/////
+        //8nf///J3///yd///8nf///J3///yd///8nf///J3////////8kHO3/JBzt/yQc7f//////f39//39/
+        f////////////////////////////////////////////////////////////////////////////39/
+        f/9/f3//f39//39/f/9/f3//f39//39/f/9/f3//f39//39/f/9/f3//f39//39/f/9/f3//f39//39/
+        f/9/f3//AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAA==
+</value>
+  </data>
 </root>

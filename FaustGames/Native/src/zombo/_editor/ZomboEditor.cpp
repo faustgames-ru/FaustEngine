@@ -1,16 +1,24 @@
 #include "ZomboEditor.h"
+#include "ZomboEditorViewport.h"
+#include "ZomboEditorRenderService.h"
 
 namespace zombo
 {
-	void ZomboEditor::updateMouse(int w, int h, int x, int y, uint buttons)
+	void ZomboEditor::setMode(String modeName)
 	{
 	}
 
-	void ZomboEditor::render(int w, int h)
+	void ZomboEditor::update()
+	{
+	}
+
+	void ZomboEditor::render()
 	{
 		graphics::GraphicsDevice::Default.setClearState(0x805050, 1.0f);
-		graphics::GraphicsDevice::Default.setViewport(0, 0, w, h);
+		graphics::GraphicsDevice::Default.setViewport(0, 0, ZomboEditorViewport::Default.w, ZomboEditorViewport::Default.h);
 		graphics::GraphicsDevice::Default.clear();
+
+		ZomboEditorRenderService::Default.applyRenderCommands();
 	}
 
 	void ZomboEditor::release()

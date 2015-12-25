@@ -40,16 +40,37 @@ namespace zombo
 		virtual void API_CALL release() = 0;
 	};
 
+	class IZomboEditorMouse : IBaseObject
+	{
+	public:
+		virtual void API_CALL update(int mouseX, int mouseY, uint mouseButtons) = 0;
+	};
+	
+	class IZomboEditorInput : IBaseObject
+	{
+	public:
+		virtual IZomboEditorMouse* API_CALL getEditorMouse() = 0;
+	};
+
+	class IZomboEditorViewport : IBaseObject
+	{
+	public:
+		virtual void API_CALL update(int width, int height) = 0;
+	};
+
 	class IZomboEditor : IBaseObject
 	{
 	public:
-		virtual void API_CALL updateMouse(int w, int h, int x, int y, uint buttons) = 0;
-		virtual void API_CALL render(int w, int h) = 0;
+		virtual void API_CALL setMode(String modeName) = 0;
+		virtual void API_CALL update() = 0;
+		virtual void API_CALL render() = 0;
 		virtual void API_CALL release() = 0;
 	};
 
-	extern "C" DLLEXPORT IZomboGame * API_CALL createZomboGame();
-	extern "C" DLLEXPORT IZomboEditor * API_CALL createZomboEditor();
+	extern "C" DLLEXPORT IZomboGame* API_CALL createZomboGame();
+	extern "C" DLLEXPORT IZomboEditor* API_CALL createZomboEditor();
+	extern "C" DLLEXPORT IZomboEditorInput* API_CALL getZomboEditorInput();
+	extern "C" DLLEXPORT IZomboEditorViewport* API_CALL getZomboEditorViewport();
 	extern "C" DLLEXPORT void API_CALL initZomboRenderContext();
 }
 

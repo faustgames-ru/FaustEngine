@@ -31,14 +31,34 @@ namespace zombo
 		classInstance->release();
 	}
 	
-	extern "C" DLLEXPORT void API_CALL zombo_ZomboEditor_updateMouse (IZomboEditor * classInstance, int w, int h, int x, int y, uint buttons)
+	extern "C" DLLEXPORT void API_CALL zombo_ZomboEditorMouse_update (IZomboEditorMouse * classInstance, int mouseX, int mouseY, uint mouseButtons)
 	{
-		classInstance->updateMouse(w, h, x, y, buttons);
+		classInstance->update(mouseX, mouseY, mouseButtons);
 	}
 	
-	extern "C" DLLEXPORT void API_CALL zombo_ZomboEditor_render (IZomboEditor * classInstance, int w, int h)
+	extern "C" DLLEXPORT IZomboEditorMouse * API_CALL zombo_ZomboEditorInput_getEditorMouse (IZomboEditorInput * classInstance)
 	{
-		classInstance->render(w, h);
+		return classInstance->getEditorMouse();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL zombo_ZomboEditorViewport_update (IZomboEditorViewport * classInstance, int width, int height)
+	{
+		classInstance->update(width, height);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL zombo_ZomboEditor_setMode (IZomboEditor * classInstance, String modeName)
+	{
+		classInstance->setMode(modeName);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL zombo_ZomboEditor_update (IZomboEditor * classInstance)
+	{
+		classInstance->update();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL zombo_ZomboEditor_render (IZomboEditor * classInstance)
+	{
+		classInstance->render();
 	}
 	
 	extern "C" DLLEXPORT void API_CALL zombo_ZomboEditor_release (IZomboEditor * classInstance)

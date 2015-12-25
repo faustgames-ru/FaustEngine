@@ -56,23 +56,66 @@ namespace zombo
 		static extern private void zombo_ZomboGame_release (IntPtr classInstance);
 	}
 	
+	public class ZomboEditorMouse
+	{
+		public IntPtr ClassInstance;
+		public void Update (int mouseX, int mouseY, uint mouseButtons)
+		{
+			zombo_ZomboEditorMouse_update(ClassInstance, mouseX, mouseY, mouseButtons);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void zombo_ZomboEditorMouse_update (IntPtr classInstance, int mouseX, int mouseY, uint mouseButtons);
+	}
+	
+	public class ZomboEditorInput
+	{
+		public IntPtr ClassInstance;
+		public ZomboEditorMouse GetEditorMouse ()
+		{
+			return new ZomboEditorMouse{ ClassInstance = zombo_ZomboEditorInput_getEditorMouse(ClassInstance) };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr zombo_ZomboEditorInput_getEditorMouse (IntPtr classInstance);
+	}
+	
+	public class ZomboEditorViewport
+	{
+		public IntPtr ClassInstance;
+		public void Update (int width, int height)
+		{
+			zombo_ZomboEditorViewport_update(ClassInstance, width, height);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void zombo_ZomboEditorViewport_update (IntPtr classInstance, int width, int height);
+	}
+	
 	public class ZomboEditor
 	{
 		public IntPtr ClassInstance;
-		public void UpdateMouse (int w, int h, int x, int y, uint buttons)
+		public void SetMode (String modeName)
 		{
-			zombo_ZomboEditor_updateMouse(ClassInstance, w, h, x, y, buttons);
+			zombo_ZomboEditor_setMode(ClassInstance, modeName);
 		}
 		
 		[DllImport(Version.Dll)]
-		static extern private void zombo_ZomboEditor_updateMouse (IntPtr classInstance, int w, int h, int x, int y, uint buttons);
-		public void Render (int w, int h)
+		static extern private void zombo_ZomboEditor_setMode (IntPtr classInstance, String modeName);
+		public void Update ()
 		{
-			zombo_ZomboEditor_render(ClassInstance, w, h);
+			zombo_ZomboEditor_update(ClassInstance);
 		}
 		
 		[DllImport(Version.Dll)]
-		static extern private void zombo_ZomboEditor_render (IntPtr classInstance, int w, int h);
+		static extern private void zombo_ZomboEditor_update (IntPtr classInstance);
+		public void Render ()
+		{
+			zombo_ZomboEditor_render(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void zombo_ZomboEditor_render (IntPtr classInstance);
 		public void Release ()
 		{
 			zombo_ZomboEditor_release(ClassInstance);
@@ -98,6 +141,20 @@ namespace zombo
 		
 		[DllImport(Version.Dll)]
 		static extern private IntPtr createZomboEditor ();
+		static public ZomboEditorInput GetZomboEditorInput ()
+		{
+			return new ZomboEditorInput{ ClassInstance = getZomboEditorInput() };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr getZomboEditorInput ();
+		static public ZomboEditorViewport GetZomboEditorViewport ()
+		{
+			return new ZomboEditorViewport{ ClassInstance = getZomboEditorViewport() };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr getZomboEditorViewport ();
 		static public void InitZomboRenderContext ()
 		{
 			initZomboRenderContext();

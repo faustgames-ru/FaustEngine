@@ -16,6 +16,9 @@ namespace Zombo.Editor.Controls
     {
         private readonly GLWindow _glWindow;
         private readonly ZomboEditor _editor;
+        private readonly ZomboEditorMouse _editorMouse;
+        private readonly ZomboEditorViewport _editorViewport;
+
         private readonly Lazy<Font> _designerModeFont = new Lazy<Font>(()=>new Font(FontFamily.GenericSansSerif, 8.0f));
         public ZomboEditSceneControl()
         {
@@ -26,6 +29,9 @@ namespace Zombo.Editor.Controls
                 try
                 {
                     _editor = zombo.zombo.CreateZomboEditor();
+                    var editorInput = zombo.zombo.GetZomboEditorInput();
+                    _editorMouse = editorInput.GetEditorMouse();
+                    _editorViewport = zombo.zombo.GetZomboEditorViewport();
                     //components.Add(new ZomboEditorDisposer(_editor));
                 }
                 catch (Exception ex)
@@ -34,23 +40,12 @@ namespace Zombo.Editor.Controls
                 }
             }
         }
-        
+
         protected override void OnPaint(PaintEventArgs e)
         {
             if (!DesignMode)
             {
-                ExecuteOpenGLAction(() =>
-                {
-                    try
-                    {
-                        _editor.Render(ClientSize.Width, ClientSize.Height);
-                    }
-                    catch (Exception ex)
-                    {
-                        OnException(ex);
-                    }
-                    _glWindow.SwapOpenGLBuffers();
-                });
+                CallRender();
             }
             else
             {
@@ -88,19 +83,49 @@ namespace Zombo.Editor.Controls
             return buttonsState;
         }
 
+        private void CallRender()
+        {
+            ExecuteOpenGLAction(() =>
+            {
+                try
+                {
+                    _editorViewport.Update(ClientSize.Width, ClientSize.Height);
+                    _editor.Render();
+                }
+                catch (Exception ex)
+                {
+                    OnException(ex);
+                }
+                _glWindow.SwapOpenGLBuffers();
+            });
+        }
+
+        private void CallUpdateAndRender()
+        {            
+            _editorViewport.Update(ClientSize.Width, ClientSize.Height);
+            _editor.Update();
+            CallRender();
+        }
+
         private void ZomboEditSceneControl_MouseMove(object sender, MouseEventArgs e)
         {
-            _editor.UpdateMouse(ClientSize.Width, ClientSize.Height, e.X, e.Y, GetMouseState());
+            if (DesignMode) return;
+            _editorMouse.Update(e.X, e.Y, GetMouseState());
+            CallUpdateAndRender();
         }
 
         private void ZomboEditSceneControl_MouseDown(object sender, MouseEventArgs e)
         {
-            _editor.UpdateMouse(ClientSize.Width, ClientSize.Height, e.X, e.Y, GetMouseState());
+            if (DesignMode) return;
+            _editorMouse.Update(e.X, e.Y, GetMouseState());
+            CallUpdateAndRender();
         }
 
         private void ZomboEditSceneControl_MouseUp(object sender, MouseEventArgs e)
         {
-            _editor.UpdateMouse(ClientSize.Width, ClientSize.Height, e.X, e.Y, GetMouseState());
+            if (DesignMode) return;
+            _editorMouse.Update(e.X, e.Y, GetMouseState());
+            CallUpdateAndRender();
         }
     }
 

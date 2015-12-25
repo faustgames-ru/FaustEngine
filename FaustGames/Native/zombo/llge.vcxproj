@@ -279,6 +279,9 @@
     <ClInclude Include="..\src\zombo\zombo_platform.h" />
     <ClInclude Include="..\src\zombo\zombo_references.h" />
     <ClInclude Include="..\src\zombo\_editor\ZomboEditor.h" />
+    <ClInclude Include="..\src\zombo\_editor\ZomboEditorInput.h" />
+    <ClInclude Include="..\src\zombo\_editor\ZomboEditorRenderService.h" />
+    <ClInclude Include="..\src\zombo\_editor\ZomboEditorViewport.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
@@ -392,6 +395,9 @@
     <ClCompile Include="..\src\zombo\ZomboWorld.cpp" />
     <ClCompile Include="..\src\zombo\zombo_classes.cpp" />
     <ClCompile Include="..\src\zombo\_editor\ZomboEditor.cpp" />
+    <ClCompile Include="..\src\zombo\_editor\ZomboEditorInput.cpp" />
+    <ClCompile Include="..\src\zombo\_editor\ZomboEditorRenderService.cpp" />
+    <ClCompile Include="..\src\zombo\_editor\ZomboEditorViewport.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="stdafx.cpp" />
   </ItemGroup>

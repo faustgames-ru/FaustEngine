@@ -70,6 +70,9 @@
     <Filter Include="zombo\_editor">
       <UniqueIdentifier>{3fed44d5-15ce-430b-a376-c7e41713626c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="zombo\_editor\modes">
+      <UniqueIdentifier>{38a1747e-18c6-49aa-a41c-35d2adcd65d9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\CommonSources\include\llge.h">
@@ -437,6 +440,15 @@
     <ClInclude Include="..\src\zombo\_editor\ZomboEditor.h">
       <Filter>zombo\_editor</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\zombo\_editor\ZomboEditorInput.h">
+      <Filter>zombo\_editor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\zombo\_editor\ZomboEditorViewport.h">
+      <Filter>zombo\_editor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\zombo\_editor\ZomboEditorRenderService.h">
+      <Filter>zombo\_editor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\CommonSources\gen\llgePInvoke.cpp">
@@ -766,6 +778,15 @@
       <Filter>zombo\content</Filter>
     </ClCompile>
     <ClCompile Include="..\src\zombo\_editor\ZomboEditor.cpp">
+      <Filter>zombo\_editor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\zombo\_editor\ZomboEditorInput.cpp">
+      <Filter>zombo\_editor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\zombo\_editor\ZomboEditorViewport.cpp">
+      <Filter>zombo\_editor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\zombo\_editor\ZomboEditorRenderService.cpp">
       <Filter>zombo\_editor</Filter>
     </ClCompile>
   </ItemGroup>

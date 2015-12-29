@@ -46,9 +46,34 @@ namespace zombo
 		classInstance->update(width, height);
 	}
 	
+	extern "C" DLLEXPORT IntPtr API_CALL zombo_ZomboEditor_getMode (IZomboEditor * classInstance)
+	{
+		return classInstance->getMode();
+	}
+	
 	extern "C" DLLEXPORT void API_CALL zombo_ZomboEditor_setMode (IZomboEditor * classInstance, String modeName)
 	{
 		classInstance->setMode(modeName);
+	}
+	
+	extern "C" DLLEXPORT bool API_CALL zombo_ZomboEditor_isUndoAvaliable (IZomboEditor * classInstance)
+	{
+		return classInstance->isUndoAvaliable();
+	}
+	
+	extern "C" DLLEXPORT bool API_CALL zombo_ZomboEditor_isRedoAvaliable (IZomboEditor * classInstance)
+	{
+		return classInstance->isRedoAvaliable();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL zombo_ZomboEditor_undo (IZomboEditor * classInstance)
+	{
+		classInstance->undo();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL zombo_ZomboEditor_redo (IZomboEditor * classInstance)
+	{
+		classInstance->redo();
 	}
 	
 	extern "C" DLLEXPORT void API_CALL zombo_ZomboEditor_update (IZomboEditor * classInstance)

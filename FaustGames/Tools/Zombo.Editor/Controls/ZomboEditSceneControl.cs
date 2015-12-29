@@ -20,6 +20,9 @@ namespace Zombo.Editor.Controls
         private readonly ZomboEditorViewport _editorViewport;
 
         private readonly Lazy<Font> _designerModeFont = new Lazy<Font>(()=>new Font(FontFamily.GenericSansSerif, 8.0f));
+
+        public ZomboEditor ZomboEditor => _editor;
+
         public ZomboEditSceneControl()
         {
             InitializeComponent();
@@ -28,7 +31,7 @@ namespace Zombo.Editor.Controls
                 _glWindow = new GLWindow(this, OpenGLGlobals.OpenGLContext);
                 try
                 {
-                    _editor = zombo.zombo.CreateZomboEditor();
+                    _editor = zombo.zombo.GetZomboEditor();
                     var editorInput = zombo.zombo.GetZomboEditorInput();
                     _editorMouse = editorInput.GetEditorMouse();
                     _editorViewport = zombo.zombo.GetZomboEditorViewport();
@@ -144,21 +147,5 @@ namespace Zombo.Editor.Controls
         }
 
         public static bool IsGLInitialized = false;
-    }
-
-    class ZomboEditorDisposer : Component
-    {
-        private ZomboEditor _editor;
-
-        public ZomboEditorDisposer(ZomboEditor editor)
-        {
-            _editor = editor;
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            _editor.Release();
-            base.Dispose(disposing);
-        }
     }
 }

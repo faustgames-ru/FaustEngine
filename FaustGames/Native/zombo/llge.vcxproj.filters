@@ -73,6 +73,9 @@
     <Filter Include="zombo\_editor\modes">
       <UniqueIdentifier>{38a1747e-18c6-49aa-a41c-35d2adcd65d9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="zombo\_editor\commands">
+      <UniqueIdentifier>{c3dc1251-5328-460d-beae-161dd7743094}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\CommonSources\include\llge.h">
@@ -449,6 +452,21 @@
     <ClInclude Include="..\src\zombo\_editor\ZomboEditorRenderService.h">
       <Filter>zombo\_editor</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\zombo\_editor\commands\ZomboEditorCommands.h">
+      <Filter>zombo\_editor\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\zombo\_editor\commands\ZomboEditorCommand.h">
+      <Filter>zombo\_editor\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\zombo\_editor\commands\ZomboSetEditorMode.h">
+      <Filter>zombo\_editor\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\zombo\_editor\modes\ZomboEditorSelectionMode.h">
+      <Filter>zombo\_editor\modes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\zombo\_editor\EditorMode.h">
+      <Filter>zombo\_editor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\CommonSources\gen\llgePInvoke.cpp">
@@ -788,6 +806,18 @@
     </ClCompile>
     <ClCompile Include="..\src\zombo\_editor\ZomboEditorRenderService.cpp">
       <Filter>zombo\_editor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\zombo\_editor\commands\ZomboEditorCommands.cpp">
+      <Filter>zombo\_editor\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\zombo\_editor\commands\ZomboEditorCommand.cpp">
+      <Filter>zombo\_editor\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\zombo\_editor\commands\ZomboSetEditorMode.cpp">
+      <Filter>zombo\_editor\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\zombo\_editor\modes\ZomboEditorSelectionMode.cpp">
+      <Filter>zombo\_editor\modes</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

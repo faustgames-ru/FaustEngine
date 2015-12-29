@@ -1,11 +1,57 @@
 #include "ZomboEditor.h"
 #include "ZomboEditorViewport.h"
 #include "ZomboEditorRenderService.h"
+#include "commands/ZomboEditorCommands.h"
+#include "commands/ZomboSetEditorMode.h"
 
 namespace zombo
 {
-	void ZomboEditor::setMode(String modeName)
+	ZomboEditor ZomboEditor::Default;
+
+
+	String ZomboEditor::getEditorModeInternal() const
 	{
+		return _actualModeName.c_str();;
+	}
+
+	void ZomboEditor::setEditorModeInternal(String mode)
+	{
+		_actualModeName = mode;
+	}
+
+	IntPtr ZomboEditor::getMode()
+	{
+		char *str = const_cast<char *>(_actualModeName.c_str());
+		return str;
+	}
+
+	void ZomboEditor::setMode(String modeName)
+	{		
+		ZomboEditorCommand *command = new ZomboSetEditorMode(modeName);
+		if (ZomboEditorCommands::Default.doCommand(command) == CommandExecutonStatus::CommandExecutionNotAvaliable)
+		{
+			delete command;
+		}
+	}
+
+	bool ZomboEditor::isUndoAvaliable()
+	{
+		return ZomboEditorCommands::Default.isUndoAvaliable();
+	}
+
+	bool ZomboEditor::isRedoAvaliable()
+	{
+		return ZomboEditorCommands::Default.isRedoAvaliable();
+	}
+
+	void ZomboEditor::undo()
+	{
+		ZomboEditorCommands::Default.undo();
+	}
+
+	void ZomboEditor::redo()
+	{
+		ZomboEditorCommands::Default.redo();
 	}
 
 	void ZomboEditor::update()
@@ -26,9 +72,9 @@ namespace zombo
 		delete this;
 	}
 
-	extern "C" DLLEXPORT IZomboEditor * API_CALL createZomboEditor()
+	extern "C" DLLEXPORT IZomboEditor * API_CALL getZomboEditor()
 	{
-		return new ZomboEditor();
+		return &ZomboEditor::Default;
 	}
 
 }

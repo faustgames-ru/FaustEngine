@@ -61,14 +61,20 @@ namespace zombo
 	class IZomboEditor : IBaseObject
 	{
 	public:
+		virtual IntPtr API_CALL getMode() = 0;
 		virtual void API_CALL setMode(String modeName) = 0;
+		virtual bool API_CALL isUndoAvaliable() = 0;
+		virtual bool API_CALL isRedoAvaliable() = 0;
+		virtual void API_CALL undo() = 0;
+		virtual void API_CALL redo() = 0;
 		virtual void API_CALL update() = 0;
 		virtual void API_CALL render() = 0;
 		virtual void API_CALL release() = 0;
 	};
 
 	extern "C" DLLEXPORT IZomboGame* API_CALL createZomboGame();
-	extern "C" DLLEXPORT IZomboEditor* API_CALL createZomboEditor();
+	
+	extern "C" DLLEXPORT IZomboEditor* API_CALL getZomboEditor();
 	extern "C" DLLEXPORT IZomboEditorInput* API_CALL getZomboEditorInput();
 	extern "C" DLLEXPORT IZomboEditorViewport* API_CALL getZomboEditorViewport();
 	extern "C" DLLEXPORT void API_CALL initZomboRenderContext();

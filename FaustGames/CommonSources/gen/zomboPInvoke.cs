@@ -95,6 +95,13 @@ namespace zombo
 	public class ZomboEditor
 	{
 		public IntPtr ClassInstance;
+		public IntPtr GetMode ()
+		{
+			return zombo_ZomboEditor_getMode(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr zombo_ZomboEditor_getMode (IntPtr classInstance);
 		public void SetMode (String modeName)
 		{
 			zombo_ZomboEditor_setMode(ClassInstance, modeName);
@@ -102,6 +109,34 @@ namespace zombo
 		
 		[DllImport(Version.Dll)]
 		static extern private void zombo_ZomboEditor_setMode (IntPtr classInstance, String modeName);
+		public bool IsUndoAvaliable ()
+		{
+			return zombo_ZomboEditor_isUndoAvaliable(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private bool zombo_ZomboEditor_isUndoAvaliable (IntPtr classInstance);
+		public bool IsRedoAvaliable ()
+		{
+			return zombo_ZomboEditor_isRedoAvaliable(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private bool zombo_ZomboEditor_isRedoAvaliable (IntPtr classInstance);
+		public void Undo ()
+		{
+			zombo_ZomboEditor_undo(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void zombo_ZomboEditor_undo (IntPtr classInstance);
+		public void Redo ()
+		{
+			zombo_ZomboEditor_redo(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void zombo_ZomboEditor_redo (IntPtr classInstance);
 		public void Update ()
 		{
 			zombo_ZomboEditor_update(ClassInstance);
@@ -134,13 +169,13 @@ namespace zombo
 		
 		[DllImport(Version.Dll)]
 		static extern private IntPtr createZomboGame ();
-		static public ZomboEditor CreateZomboEditor ()
+		static public ZomboEditor GetZomboEditor ()
 		{
-			return new ZomboEditor{ ClassInstance = createZomboEditor() };
+			return new ZomboEditor{ ClassInstance = getZomboEditor() };
 		}
 		
 		[DllImport(Version.Dll)]
-		static extern private IntPtr createZomboEditor ();
+		static extern private IntPtr getZomboEditor ();
 		static public ZomboEditorInput GetZomboEditorInput ()
 		{
 			return new ZomboEditorInput{ ClassInstance = getZomboEditorInput() };

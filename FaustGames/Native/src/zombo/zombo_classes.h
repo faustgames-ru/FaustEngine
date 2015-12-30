@@ -13,6 +13,12 @@ namespace zombo
 		ushort v;
 	};
 	
+	struct ColorVertex
+	{
+		core::Vector3 xyz;
+		uint color;
+	};
+
 	struct RenderVertex
 	{
 		core::Vector3 xyz;

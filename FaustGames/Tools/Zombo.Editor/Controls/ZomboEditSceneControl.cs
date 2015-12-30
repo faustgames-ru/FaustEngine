@@ -35,7 +35,6 @@ namespace Zombo.Editor.Controls
                     var editorInput = zombo.zombo.GetZomboEditorInput();
                     _editorMouse = editorInput.GetEditorMouse();
                     _editorViewport = zombo.zombo.GetZomboEditorViewport();
-                    //components.Add(new ZomboEditorDisposer(_editor));
                 }
                 catch (Exception ex)
                 {

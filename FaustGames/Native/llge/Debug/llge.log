@@ -1,2 +1,175 @@
-﻿  GraphicsDevice.cpp
+﻿  stdafx.cpp
+  dllmain.cpp
+  TestStandartAllocations.cpp
+  spine.cpp
+c:\_faust\faustengine\faustgames\native\src\spine\spine.cpp(11): warning C4018: '<' : signed/unsigned mismatch
+  SpineSkeletonResource.cpp
+c:\_faust\faustengine\faustgames\native\src\spine\spineskeletonresource.cpp(55): warning C4018: '<' : signed/unsigned mismatch
+c:\_faust\faustengine\faustgames\native\src\spine\spineskeletonresource.cpp(61): warning C4018: '<' : signed/unsigned mismatch
+c:\_faust\faustengine\faustgames\native\src\spine\spineskeletonresource.cpp(68): warning C4018: '<' : signed/unsigned mismatch
+c:\_faust\faustengine\faustgames\native\src\spine\spineskeletonresource.cpp(86): warning C4018: '<' : signed/unsigned mismatch
+c:\_faust\faustengine\faustgames\native\src\spine\spineskeletonresource.cpp(91): warning C4018: '<' : signed/unsigned mismatch
+c:\_faust\faustengine\faustgames\native\src\spine\spineskeletonresource.cpp(96): warning C4018: '<' : signed/unsigned mismatch
+  SpineSkeletonAnimation.cpp
+  SpineSkeleton.cpp
+  SpineAnimationStateData.cpp
+  SpineAnimationState.cpp
+c:\_faust\faustengine\faustgames\native\src\spine\spineanimationstate.cpp(46): warning C4101: 'previousDelta' : unreferenced local variable
+  ContentProviderWindows.cpp
+  ContentProviderObb.cpp
+  ContentManager.cpp
+  VertexFormats.cpp
+  VertexFormat.cpp
+  VertexBuffer.cpp
+  UniformValueVector3.cpp
+  UniformValueTexture.cpp
+  UniformValueMatrix.cpp
+  UniformValueFloat.cpp
+  UniformValueCubemap.cpp
+  Generating Code...
+  Compiling...
+  UniformValue.cpp
+  Uniforms.cpp
+  UniformInfo.cpp
+  Uniform.cpp
+  TextureRenderTargetDepth2d.cpp
+  TextureRenderTarget2d.cpp
+  TextureLoader.cpp
+  TextureImage2d.cpp
+  TextureCubemap.cpp
+  Texture.cpp
+  StaticBatch.cpp
+  RenderState.cpp
+  RenderConverter.cpp
+  Image2dData.cpp
+  GraphicsDevice.cpp
+  Errors.cpp
+  EffectWater.cpp
+  EffectTextureLightMapColor.cpp
+  EffectTextureColorHighlight.cpp
+  EffectTextureColor.cpp
+  Generating Code...
+  Compiling...
+  EffectTextureAlphamaskColor.cpp
+  EffectsPostProcess.cpp
+  EffectSolidColor.cpp
+  EffectSolid.cpp
+  Effects.cpp
+  EffectRenderDepth.cpp
+  EffectConstant.cpp
+  EffectBase.cpp
+  Effect.cpp
+  Color.cpp
+  Attributes.cpp
+  AttributeInfo.cpp
+  Quadtree2dNode.cpp
+  Quadtree2d.cpp
+  Aabb2d.cpp
+  llgeResources.cpp
+  llge.cpp
+  llgeGraphics.cpp
+  llgeGeometry.cpp
+  llgeEntities.cpp
+  Generating Code...
+  Compiling...
+  llgeDrawing.cpp
+  TransformSystem2d.cpp
+  Transform2dComponent.cpp
+  System.cpp
+  RenderSystem2d.cpp
+  Render2dComponent.cpp
+  QuadtreeEntitiesFilter.cpp
+  MatrixTransformComponent.cpp
+  DummyEntitiesFilter.cpp
+  EntitiesWorld.cpp
+  Entity.cpp
+  EntitiesFilter.cpp
+  Component.cpp
+  Aabb2dComponent.cpp
+  WaterRenderer.cpp
+  RenderMesh2d.cpp
+  RenderItem2d.cpp
+  Renderer2d.cpp
+  PostProcess.cpp
+  Camera.cpp
+  Generating Code...
+  Compiling...
+  Batcher.cpp
+c:\_faust\faustengine\faustgames\native\src\drawing\batcher.cpp(63): warning C4018: '<=' : signed/unsigned mismatch
+c:\_faust\faustengine\faustgames\native\src\drawing\batcher.cpp(107): warning C4018: '<=' : signed/unsigned mismatch
+c:\_faust\faustengine\faustgames\native\src\drawing\batcher.cpp(151): warning C4101: 'target' : unreferenced local variable
+  SystemAllocationPolicy.cpp
+  Matrix.cpp
+  Math.cpp
+  HollowsAllocationPolicy.cpp
+  BasicTest.cpp
+  llgePInvoke.cpp
+  Generating Code...
+  SlotData.c
+  Slot.c
+  SkinnedMeshAttachment.c
+  Skin.c
+  SkeletonJson.c
+  SkeletonData.c
+  SkeletonBounds.c
+  Skeleton.c
+  RegionAttachment.c
+  MeshAttachment.c
+  Json.c
+  IkConstraintData.c
+  IkConstraint.c
+  extension.c
+  EventData.c
+  Event.c
+  BoundingBoxAttachment.c
+  BoneData.c
+  Bone.c
+  AttachmentLoader.c
+  Generating Code...
+  Compiling...
+  Attachment.c
+  AtlasAttachmentLoader.c
+  Atlas.c
+  AnimationStateData.c
+  AnimationState.c
+  Animation.c
+c:\_faust\faustengine\faustgames\native\src\spine\runtime\animation.c(811): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\spine\runtime\animation.c(813): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\spine\runtime\animation.c(835): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+  zutil.c
+  uncompr.c
+  trees.c
+  inftrees.c
+  inflate.c
+  inffast.c
+  infback.c
+  gzwrite.c
+  gzread.c
+  gzlib.c
+  gzclose.c
+  deflate.c
+  crc32.c
+  compress.c
+  Generating Code...
+  Compiling...
+  adler32.c
+  pngwutil.c
+  pngwtran.c
+  pngwrite.c
+  pngwio.c
+  pngtrans.c
+  pngtest.c
+  pngset.c
+  pngrutil.c
+  pngrtran.c
+  pngrio.c
+  pngread.c
+  pngpread.c
+  pngmem.c
+  pngget.c
+  pngerror.c
+  png.c
+  example.c
+  Generating Code...
+     Creating library C:\work\sources\github\moon\Solutions\Debug\llge.lib and object C:\work\sources\github\moon\Solutions\Debug\llge.exp
   llge.vcxproj -> C:\work\sources\github\moon\Solutions\Debug\llge.dll

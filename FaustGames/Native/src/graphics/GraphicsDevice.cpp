@@ -154,6 +154,15 @@ namespace graphics
 		++_drawCalls;
 	}
 
+	void GraphicsDevice::drawEdgesPrimitives(VertexFormat *vertexFormat, void *vertexBuffer, unsigned short *indexBuffer, int primitivesCount)
+	{
+		renderState.setVertexBuffer(0);
+		renderState.apply(vertexFormat, vertexBuffer);
+		glDrawElements(GL_LINES, primitivesCount * 2, GL_UNSIGNED_SHORT, indexBuffer);
+		Errors::check(Errors::DrawElements);
+		++_drawCalls;
+	}
+
 	void GraphicsDevice::drawEdges(VertexFormat *vertexFormat, void *vertexBuffer, int primitivesCount)
 	{
 		renderState.setVertexBuffer(0);

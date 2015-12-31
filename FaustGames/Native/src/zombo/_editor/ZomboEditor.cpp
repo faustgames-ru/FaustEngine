@@ -3,11 +3,17 @@
 #include "ZomboEditorRenderService.h"
 #include "commands/ZomboEditorCommands.h"
 #include "commands/ZomboSetEditorMode.h"
+#include "modes/ZomboEditorSelectionMode.h"
 
 namespace zombo
 {
 	ZomboEditor ZomboEditor::Default;
 
+
+	ZomboEditor::ZomboEditor()
+	{
+		_mode = new ZomboEditorSelectionMode();
+	}
 
 	String ZomboEditor::getEditorModeInternal() const
 	{
@@ -54,8 +60,20 @@ namespace zombo
 		ZomboEditorCommands::Default.redo();
 	}
 
+	void ZomboEditor::init()
+	{
+		graphics::GraphicsDevice::Default.setClearState(0x805050, 1.0f);
+		graphics::GraphicsDevice::Default.renderState = graphics::RenderState(); /// ???
+		graphics::GraphicsDevice::Default.renderState.init();
+		graphics::GraphicsDevice::Default.create();
+		EFFECTS_CALL_CREATE
+		FORMATS_CALL_CREATE
+	}
+
 	void ZomboEditor::update()
 	{
+		ZomboEditorRenderService::Default.resetBuffers();
+		_mode->update();
 	}
 
 	void ZomboEditor::render()

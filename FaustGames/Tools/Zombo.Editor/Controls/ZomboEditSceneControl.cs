@@ -18,10 +18,12 @@ namespace Zombo.Editor.Controls
         private readonly ZomboEditor _editor;
         private readonly ZomboEditorMouse _editorMouse;
         private readonly ZomboEditorViewport _editorViewport;
+        private bool _initialized;
 
         private readonly Lazy<Font> _designerModeFont = new Lazy<Font>(()=>new Font(FontFamily.GenericSansSerif, 8.0f));
 
         public ZomboEditor ZomboEditor => _editor;
+        public bool _ready = false;
 
         public ZomboEditSceneControl()
         {
@@ -29,6 +31,14 @@ namespace Zombo.Editor.Controls
             if (!DesignMode)
             {
                 _glWindow = new GLWindow(this, OpenGLGlobals.OpenGLContext);
+                try
+                {
+                    OpenGLGlobals.InitializeGLFunctionsEntires(_glWindow);
+                }
+                catch (Exception ex)
+                {
+                    OnException(ex);
+                }
                 try
                 {
                     _editor = zombo.zombo.GetZomboEditor();
@@ -41,6 +51,7 @@ namespace Zombo.Editor.Controls
                     OnException(ex);
                 }
             }
+            _ready = true;
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -61,6 +72,13 @@ namespace Zombo.Editor.Controls
 
         private void OnException(Exception ex)
         {
+        }
+
+        protected override void OnResize(EventArgs e)
+        {
+            base.OnResize(e);
+            if (!_ready) return;
+            CallUpdateAndRender();
         }
 
         public void ExecuteOpenGLAction(Action action)
@@ -105,6 +123,14 @@ namespace Zombo.Editor.Controls
         private void CallUpdateAndRender()
         {            
             _editorViewport.Update(ClientSize.Width, ClientSize.Height);
+            if (!_initialized)
+            {
+                _initialized = true;
+                ExecuteOpenGLAction(() =>
+                {
+                    _editor.Init();
+                });
+            }
             _editor.Update();
             CallRender();
         }

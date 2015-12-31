@@ -15,6 +15,17 @@ namespace zombo
 	
 	struct ColorVertex
 	{
+		ColorVertex()
+			: color(0)
+		{};
+		ColorVertex(float x, float y, float z, uint c)
+			: color(0)
+		{
+			xyz.setX(x);
+			xyz.setY(y);
+			xyz.setZ(z);
+			color = c;
+		};
 		core::Vector3 xyz;
 		uint color;
 	};

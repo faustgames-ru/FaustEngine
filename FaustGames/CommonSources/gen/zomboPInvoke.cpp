@@ -76,6 +76,11 @@ namespace zombo
 		classInstance->redo();
 	}
 	
+	extern "C" DLLEXPORT void API_CALL zombo_ZomboEditor_init (IZomboEditor * classInstance)
+	{
+		classInstance->init();
+	}
+	
 	extern "C" DLLEXPORT void API_CALL zombo_ZomboEditor_update (IZomboEditor * classInstance)
 	{
 		classInstance->update();

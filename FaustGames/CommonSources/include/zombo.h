@@ -67,6 +67,7 @@ namespace zombo
 		virtual bool API_CALL isRedoAvaliable() = 0;
 		virtual void API_CALL undo() = 0;
 		virtual void API_CALL redo() = 0;
+		virtual void API_CALL init() = 0;
 		virtual void API_CALL update() = 0;
 		virtual void API_CALL render() = 0;
 		virtual void API_CALL release() = 0;

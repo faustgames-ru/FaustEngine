@@ -3,8 +3,8 @@
 namespace zombo
 {
 #define ZOMBO_MOUSE_LEFT_BUTTON 0x1
-#define ZOMBO_MOUSE_RIGHT_BUTTON 0x1
-#define ZOMBO_MOUSE_MIDDLE_BUTTON 0x2
+#define ZOMBO_MOUSE_RIGHT_BUTTON 0x2
+#define ZOMBO_MOUSE_MIDDLE_BUTTON 0x4
 
 	bool ZomboEditorMouse::isLeftPressed() const
 	{

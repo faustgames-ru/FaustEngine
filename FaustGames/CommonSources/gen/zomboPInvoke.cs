@@ -92,6 +92,39 @@ namespace zombo
 		static extern private void zombo_ZomboEditorViewport_update (IntPtr classInstance, int width, int height);
 	}
 	
+	public class ZomboEditorCamera
+	{
+		public IntPtr ClassInstance;
+		public void SetScale (float scale)
+		{
+			zombo_ZomboEditorCamera_setScale(ClassInstance, scale);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void zombo_ZomboEditorCamera_setScale (IntPtr classInstance, float scale);
+		public void SetFov (float scale)
+		{
+			zombo_ZomboEditorCamera_setFov(ClassInstance, scale);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void zombo_ZomboEditorCamera_setFov (IntPtr classInstance, float scale);
+		public float GetScale ()
+		{
+			return zombo_ZomboEditorCamera_getScale(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private float zombo_ZomboEditorCamera_getScale (IntPtr classInstance);
+		public float GetFov ()
+		{
+			return zombo_ZomboEditorCamera_getFov(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private float zombo_ZomboEditorCamera_getFov (IntPtr classInstance);
+	}
+	
 	public class ZomboEditor
 	{
 		public IntPtr ClassInstance;
@@ -144,13 +177,13 @@ namespace zombo
 		
 		[DllImport(Version.Dll)]
 		static extern private void zombo_ZomboEditor_init (IntPtr classInstance);
-		public void Update ()
+		public void Update (float ellapsedTime)
 		{
-			zombo_ZomboEditor_update(ClassInstance);
+			zombo_ZomboEditor_update(ClassInstance, ellapsedTime);
 		}
 		
 		[DllImport(Version.Dll)]
-		static extern private void zombo_ZomboEditor_update (IntPtr classInstance);
+		static extern private void zombo_ZomboEditor_update (IntPtr classInstance, float ellapsedTime);
 		public void Render ()
 		{
 			zombo_ZomboEditor_render(ClassInstance);
@@ -197,6 +230,13 @@ namespace zombo
 		
 		[DllImport(Version.Dll)]
 		static extern private IntPtr getZomboEditorViewport ();
+		static public ZomboEditorCamera GetZomboEditorCamera ()
+		{
+			return new ZomboEditorCamera{ ClassInstance = getZomboEditorCamera() };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr getZomboEditorCamera ();
 		static public void InitZomboRenderContext ()
 		{
 			initZomboRenderContext();

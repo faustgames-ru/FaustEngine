@@ -4,6 +4,8 @@
 #include "commands/ZomboEditorCommands.h"
 #include "commands/ZomboSetEditorMode.h"
 #include "modes/ZomboEditorSelectionMode.h"
+#include "ZomboEditorCamera.h"
+#include "../common/ZomboGameEnvironment.h"
 
 namespace zombo
 {
@@ -70,17 +72,21 @@ namespace zombo
 		FORMATS_CALL_CREATE
 	}
 
-	void ZomboEditor::update()
+	void ZomboEditor::update(float ellapsedTime)
 	{
+		ZomboGameEnvironment::update(ellapsedTime);
 		ZomboEditorRenderService::Default.resetBuffers();
+		ZomboEditorCamera::Default.update();
 		_mode->update();
 	}
 
 	void ZomboEditor::render()
-	{
+	{		
 		graphics::GraphicsDevice::Default.setClearState(0x805050, 1.0f);
 		graphics::GraphicsDevice::Default.setViewport(0, 0, ZomboEditorViewport::Default.w, ZomboEditorViewport::Default.h);
 		graphics::GraphicsDevice::Default.clear();
+
+		graphics::UniformValues::projection()->setValue(ZomboEditorCamera::Default.matrix);
 
 		ZomboEditorRenderService::Default.applyRenderCommands();
 	}

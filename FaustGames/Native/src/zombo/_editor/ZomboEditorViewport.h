@@ -7,18 +7,13 @@
 
 namespace zombo
 {
-	class ZomboEditorCamera
-	{
-	public:
-		ZomboCamera camera;
-	};
-
 	class ZomboEditorViewport : public IZomboEditorViewport
 	{
 	public:
 		static ZomboEditorViewport Default;
 		int w;
 		int h;
+		float getAspect() const;
 		virtual void API_CALL update(int width, int height) OVERRIDE;
 	};
 }

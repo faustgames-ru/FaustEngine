@@ -467,6 +467,9 @@
     <ClInclude Include="..\src\zombo\_editor\EditorMode.h">
       <Filter>zombo\_editor</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\zombo\_editor\ZomboEditorCamera.h">
+      <Filter>zombo\_editor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\CommonSources\gen\llgePInvoke.cpp">
@@ -818,6 +821,9 @@
     </ClCompile>
     <ClCompile Include="..\src\zombo\_editor\modes\ZomboEditorSelectionMode.cpp">
       <Filter>zombo\_editor\modes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\zombo\_editor\ZomboEditorCamera.cpp">
+      <Filter>zombo\_editor</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

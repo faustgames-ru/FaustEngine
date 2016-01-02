@@ -8,8 +8,9 @@ namespace zombo
 	class ZomboCamera
 	{
 	public:
-		core::Vector3 position;
 		float fov;
+		float scale;
+		float aspect;
 		float nearPlane;
 		float farPlane;
 
@@ -18,7 +19,6 @@ namespace zombo
 		~ZomboCamera();
 		void dispose() const;
 		
-		ZomboRect getFrustumRect(float zLayer);
 		bool areBoundsVisible(const core::Vector3 &position, const core::Vector2 &size);
 	};
 }

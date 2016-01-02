@@ -268,7 +268,25 @@ namespace Zombo.GraphicsBinding
         public uint dwDamageMask;
     }
 
-    internal static class WinApi
+    [StructLayout(LayoutKind.Sequential)]
+    public struct Point
+    {
+        long x;
+        long y;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct NativeMessage
+    {
+        public IntPtr Handle;
+        public uint Message;
+        public IntPtr WParameter;
+        public IntPtr LParameter;
+        public uint Time;
+        public Point Location;
+    }
+
+    public static class WinApi
     {
         [DllImport("user32.dll")]
         public static extern IntPtr GetDC(IntPtr hWnd);
@@ -284,5 +302,7 @@ namespace Zombo.GraphicsBinding
         [DllImport("opengl32.dll")]
         public static extern IntPtr wglCreateContext(IntPtr hdc);
 
+        [DllImport("user32.dll")]
+        public static extern int PeekMessage(out NativeMessage message, IntPtr window, uint filterMin, uint filterMax, uint remove);
     }
 }

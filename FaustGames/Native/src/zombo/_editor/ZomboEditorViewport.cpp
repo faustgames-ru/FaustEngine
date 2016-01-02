@@ -3,7 +3,11 @@
 namespace zombo
 {
 	ZomboEditorViewport ZomboEditorViewport::Default;
-
+	
+	float ZomboEditorViewport::getAspect() const
+	{
+		return static_cast<float>(w) / static_cast<float>(h);
+	}
 
 	void ZomboEditorViewport::update(int width, int height)
 	{

@@ -22,12 +22,13 @@ namespace zombo
 		virtual void API_CALL undo() OVERRIDE;
 		virtual void API_CALL redo() OVERRIDE;
 		virtual void API_CALL init() OVERRIDE;
-		virtual void API_CALL update() OVERRIDE;
+		virtual void API_CALL update(float ellapsedTime) OVERRIDE;
 		virtual void API_CALL render() OVERRIDE;
 		virtual void API_CALL release() OVERRIDE;
 	private:
 		std::string _actualModeName;
 		IEditorMode *_mode;
+
 	};
 }
 

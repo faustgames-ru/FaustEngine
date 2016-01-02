@@ -39,7 +39,7 @@ namespace zombo
 		std::vector<ZomboEditorRenderBuffers *> _buffers;
 		std::vector<ZomboEditorRenderBuffers *> _existingBuffers;
 		std::vector<ZomboEditorRenderEntry> _entries;
-		int _entriesCount;
+		uint _entriesCount;
 	};
 
 	class ZomboEditorRenderEntry

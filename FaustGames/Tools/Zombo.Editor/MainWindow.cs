@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using Zombo.GraphicsBinding;
 
 namespace Zombo.Editor
 {
@@ -13,6 +14,27 @@ namespace Zombo.Editor
         {
             InitializeComponent();
             InvalidateModeButtons();
+            Application.Idle += ApplicationIdle;
+            Closed += MainWindowClosed;
+        }
+
+        private void MainWindowClosed(object sender, EventArgs e)
+        {
+            Application.Idle -= ApplicationIdle;
+        }
+
+        bool IsApplicationIdle()
+        {
+            NativeMessage result;
+            return WinApi.PeekMessage(out result, IntPtr.Zero, (uint)0, (uint)0, (uint)0) == 0;
+        }
+
+        private void ApplicationIdle(object sender, EventArgs e)
+        {
+            while (IsApplicationIdle())
+            {
+                _zomboEditScene.InternalCallUpdateAndRender();
+            }
         }
 
         private void InvalidateModeButtons()

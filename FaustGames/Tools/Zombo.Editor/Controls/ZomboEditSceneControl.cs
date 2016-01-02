@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Forms;
 using zombo;
 using Zombo.GraphicsBinding;
@@ -16,9 +12,11 @@ namespace Zombo.Editor.Controls
     {
         private readonly GLWindow _glWindow;
         private readonly ZomboEditor _editor;
+        private readonly ZomboEditorCamera _camera;
         private readonly ZomboEditorMouse _editorMouse;
         private readonly ZomboEditorViewport _editorViewport;
         private bool _initialized;
+        private Stopwatch _stopwatch = new Stopwatch();
 
         private readonly Lazy<Font> _designerModeFont = new Lazy<Font>(()=>new Font(FontFamily.GenericSansSerif, 8.0f));
 
@@ -45,6 +43,7 @@ namespace Zombo.Editor.Controls
                     var editorInput = zombo.zombo.GetZomboEditorInput();
                     _editorMouse = editorInput.GetEditorMouse();
                     _editorViewport = zombo.zombo.GetZomboEditorViewport();
+                    _camera = zombo.zombo.GetZomboEditorCamera();
                 }
                 catch (Exception ex)
                 {
@@ -52,6 +51,45 @@ namespace Zombo.Editor.Controls
                 }
             }
             _ready = true;
+        }
+
+        protected override void OnMouseWheel(MouseEventArgs e)
+        {
+            base.OnMouseWheel(e);
+            var scale = _camera.GetScale();
+            var delta = -e.Delta / 120.0f;
+            if (delta > 0)
+            {
+                while (delta > 0)
+                {
+                    scale *= 1.25f;
+                    delta--;
+                }
+            }
+            else
+            {
+                while (delta < 0)
+                {
+                    scale *= 0.75f;
+                    delta++;
+                }
+            }
+            _editorMouse.Update(e.X, e.Y, GetMouseState());
+            _camera.SetScale(LimitScale(scale));
+            CallUpdateAndRender();
+        }
+
+        float LimitScale(float scale)
+        {
+            if (scale < 0.1f)
+                scale = 0.1f;
+            if (scale > 100.0f)
+                scale = 100.0f;
+            return scale;
+        }
+
+        private void CallUpdateAndRender()
+        {
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -78,6 +116,7 @@ namespace Zombo.Editor.Controls
         {
             base.OnResize(e);
             if (!_ready) return;
+            if (DesignMode) return;
             CallUpdateAndRender();
         }
 
@@ -120,8 +159,8 @@ namespace Zombo.Editor.Controls
             });
         }
 
-        private void CallUpdateAndRender()
-        {            
+        public void InternalCallUpdateAndRender()
+        {
             _editorViewport.Update(ClientSize.Width, ClientSize.Height);
             if (!_initialized)
             {
@@ -131,7 +170,8 @@ namespace Zombo.Editor.Controls
                     _editor.Init();
                 });
             }
-            _editor.Update();
+            _editor.Update((float)_stopwatch.Elapsed.TotalSeconds);
+            _stopwatch.Restart();
             CallRender();
         }
 

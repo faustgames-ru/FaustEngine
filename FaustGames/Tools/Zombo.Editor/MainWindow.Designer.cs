@@ -30,12 +30,12 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this._toolbox = new System.Windows.Forms.ToolStrip();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this._editorModeSelect = new System.Windows.Forms.ToolStripButton();
             this._editorModeDrawCurve = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this._undo = new System.Windows.Forms.ToolStripButton();
             this._redo = new System.Windows.Forms.ToolStripButton();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this._zomboEditScene = new Zombo.Editor.Controls.ZomboEditSceneControl();
             this._toolbox.SuspendLayout();
             this.SuspendLayout();
@@ -50,22 +50,9 @@
             this._redo});
             this._toolbox.Location = new System.Drawing.Point(0, 0);
             this._toolbox.Name = "_toolbox";
-            this._toolbox.Size = new System.Drawing.Size(875, 25);
+            this._toolbox.Size = new System.Drawing.Size(821, 25);
             this._toolbox.TabIndex = 1;
             this._toolbox.Text = "toolStrip1";
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-            // 
-            // statusStrip1
-            // 
-            this.statusStrip1.Location = new System.Drawing.Point(0, 411);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(875, 22);
-            this.statusStrip1.TabIndex = 2;
-            this.statusStrip1.Text = "statusStrip1";
             // 
             // _editorModeSelect
             // 
@@ -89,6 +76,11 @@
             this._editorModeDrawCurve.Text = "toolStripButton2";
             this._editorModeDrawCurve.Click += new System.EventHandler(this.EditorModeSwitch);
             // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
             // _undo
             // 
             this._undo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -109,19 +101,27 @@
             this._redo.Text = "toolStripButton2";
             this._redo.Click += new System.EventHandler(this._redo_Click);
             // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Location = new System.Drawing.Point(0, 435);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(821, 22);
+            this.statusStrip1.TabIndex = 2;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
             // _zomboEditScene
             // 
             this._zomboEditScene.Dock = System.Windows.Forms.DockStyle.Fill;
             this._zomboEditScene.Location = new System.Drawing.Point(0, 25);
             this._zomboEditScene.Name = "_zomboEditScene";
-            this._zomboEditScene.Size = new System.Drawing.Size(875, 386);
+            this._zomboEditScene.Size = new System.Drawing.Size(821, 410);
             this._zomboEditScene.TabIndex = 0;
             // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(875, 433);
+            this.ClientSize = new System.Drawing.Size(821, 457);
             this.Controls.Add(this._zomboEditScene);
             this.Controls.Add(this._toolbox);
             this.Controls.Add(this.statusStrip1);

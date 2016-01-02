@@ -15,17 +15,17 @@ namespace zombo
 	{
 		ColorVertex rect[11] = 
 		{ 
-			ColorVertex(-0.25f, -0.25f, 0.5f, 0xff00ffff),
-			ColorVertex(-0.25f,  0.25f, 0.5f, 0xff00ffff),
-			ColorVertex( 0.25f,  0.25f, 0.5f, 0xff00ffff),
-			ColorVertex( 0.25f, -0.125f, 0.5f, 0xff00ffff),
-			ColorVertex(-0.125f, -0.125f, 0.5f, 0xff00ffff),
-			ColorVertex(-0.125f,  0.125f, 0.5f, 0xff00ffff),
-			ColorVertex( 0.125f,  0.125f, 0.5f, 0xff00ffff),
-			ColorVertex( 0.125f, -0.0625, 0.5f, 0xff00ffff),
-			ColorVertex(-0.0625, -0.0625, 0.5f, 0xff00ffff),
-			ColorVertex(-0.0625,  0.0625, 0.5f, 0xff00ffff),
-			ColorVertex( 0.0625,  0.0625, 0.5f, 0xff00ffff),
+			ColorVertex(-1.0f, -1.0f, 0.0f, 0xff00ffff),
+			ColorVertex(-1.0f,  1.0f, 0.0f, 0xff00ffff),
+			ColorVertex( 1.0f,  1.0f, 0.0f, 0xff00ffff),
+			ColorVertex( 1.0f, -0.5f, 0.0f, 0xff00ffff),
+			ColorVertex(-0.5f, -0.5f, 0.0f, 0xff00ffff),
+			ColorVertex(-0.5f,  0.5f, 0.0f, 0xff00ffff),
+			ColorVertex( 0.5f,  0.5f, 0.0f, 0xff00ffff),
+			ColorVertex( 0.5f, -0.125, 0.0f, 0xff00ffff),
+			ColorVertex(-0.125, -0.125, 0.0f, 0xff00ffff),
+			ColorVertex(-0.125,  0.125, 0.0f, 0xff00ffff),
+			ColorVertex( 0.125,  0.125, 0.0f, 0xff00ffff),
 			//ColorVertex (0.0625, -0.0625, 0.5f, 0xff00ffff),
 		};
 		ushort inds[20] = 

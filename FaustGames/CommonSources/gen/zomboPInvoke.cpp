@@ -46,6 +46,26 @@ namespace zombo
 		classInstance->update(width, height);
 	}
 	
+	extern "C" DLLEXPORT void API_CALL zombo_ZomboEditorCamera_setScale (IZomboEditorCamera * classInstance, float scale)
+	{
+		classInstance->setScale(scale);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL zombo_ZomboEditorCamera_setFov (IZomboEditorCamera * classInstance, float scale)
+	{
+		classInstance->setFov(scale);
+	}
+	
+	extern "C" DLLEXPORT float API_CALL zombo_ZomboEditorCamera_getScale (IZomboEditorCamera * classInstance)
+	{
+		return classInstance->getScale();
+	}
+	
+	extern "C" DLLEXPORT float API_CALL zombo_ZomboEditorCamera_getFov (IZomboEditorCamera * classInstance)
+	{
+		return classInstance->getFov();
+	}
+	
 	extern "C" DLLEXPORT IntPtr API_CALL zombo_ZomboEditor_getMode (IZomboEditor * classInstance)
 	{
 		return classInstance->getMode();
@@ -81,9 +101,9 @@ namespace zombo
 		classInstance->init();
 	}
 	
-	extern "C" DLLEXPORT void API_CALL zombo_ZomboEditor_update (IZomboEditor * classInstance)
+	extern "C" DLLEXPORT void API_CALL zombo_ZomboEditor_update (IZomboEditor * classInstance, float ellapsedTime)
 	{
-		classInstance->update();
+		classInstance->update(ellapsedTime);
 	}
 	
 	extern "C" DLLEXPORT void API_CALL zombo_ZomboEditor_render (IZomboEditor * classInstance)

@@ -58,6 +58,15 @@ namespace zombo
 		virtual void API_CALL update(int width, int height) = 0;
 	};
 
+	class IZomboEditorCamera: IBaseObject
+	{
+	public:
+		virtual void API_CALL setScale(float scale) = 0;
+		virtual void API_CALL setFov(float scale) = 0;
+		virtual float API_CALL getScale() = 0;
+		virtual float API_CALL getFov() = 0;
+	};
+
 	class IZomboEditor : IBaseObject
 	{
 	public:
@@ -68,7 +77,7 @@ namespace zombo
 		virtual void API_CALL undo() = 0;
 		virtual void API_CALL redo() = 0;
 		virtual void API_CALL init() = 0;
-		virtual void API_CALL update() = 0;
+		virtual void API_CALL update(float ellapsedTime) = 0;
 		virtual void API_CALL render() = 0;
 		virtual void API_CALL release() = 0;
 	};
@@ -78,6 +87,7 @@ namespace zombo
 	extern "C" DLLEXPORT IZomboEditor* API_CALL getZomboEditor();
 	extern "C" DLLEXPORT IZomboEditorInput* API_CALL getZomboEditorInput();
 	extern "C" DLLEXPORT IZomboEditorViewport* API_CALL getZomboEditorViewport();
+	extern "C" DLLEXPORT IZomboEditorCamera* API_CALL getZomboEditorCamera();
 	extern "C" DLLEXPORT void API_CALL initZomboRenderContext();
 }
 

@@ -2,6 +2,7 @@
 #define MATRIX_H
 
 #include "core_classes.h"
+#include "Math.h"
 
 namespace core
 {
@@ -101,7 +102,23 @@ namespace core
 				0, 0, 1, 0,
 				x, y, z, 1);
 		}
+		
+		static Matrix createOrtho(float aspect, float scale, float depth)
+		{
+			float h = scale;
+			float w = h * aspect;
+			float l = -w * 0.5f;
+			float r = w * 0.5f;
+			float t = h * 0.5f;
+			float b = -h * 0.5f;
 
+			return core::Matrix(
+				2.0f / w, 0, 0, 0,
+				0, 2.0f / h, 0, 0,
+				0, 0, 1.0f / depth, 0.0f,
+				0, 0, 0, 1);
+		}
+		
 		static Matrix createProjection(float fov, float aspect, float zn, float zf)
 		{
 			float h = 1.0f / tan(fov *0.5f);
@@ -134,6 +151,12 @@ namespace core
 			Value = value;
 		}
 
+		inline void setValue(const Matrix &value)
+		{
+			++id;
+			Value = value;
+		}
+		
 		inline void setValue(const float *value)
 		{
 			++id;

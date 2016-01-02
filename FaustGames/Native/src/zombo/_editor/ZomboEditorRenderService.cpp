@@ -20,7 +20,7 @@ namespace zombo
 	{
 		if (_entries.size() <= _entriesCount)
 			_entries.resize(_entriesCount + 1);
-		int indicesCount = primitivesCount * 2;
+		uint indicesCount = primitivesCount * 2;
 		ZomboEditorRenderBuffer* buffer = getBuffer(vertexSize, verticesCount, indicesCount);
 		bool newEntry = _entriesCount == 0;
 		int entriesHigh;
@@ -63,9 +63,6 @@ namespace zombo
 
 	void ZomboEditorRenderService::applyRenderCommands()
 	{
-		core::MatrixContainer container;
-		container.setValue(reinterpret_cast<float *>(&core::Matrix::identity));
-		graphics::UniformValues::projection()->setValue(container);
 		for (uint i = 0; i < _entriesCount; i++)
 		{
 			graphics::GraphicsDevice::Default.renderState.setEffect(_entries[i].effect);

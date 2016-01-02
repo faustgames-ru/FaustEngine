@@ -1,7 +1,7 @@
 #include "ZomboCamera.h"
 
 namespace zombo
-{
+{	
 	ZomboCamera* ZomboCamera::create()
 	{
 		return new ZomboCamera();
@@ -11,7 +11,7 @@ namespace zombo
 		position(0.0f, 0.0, -10.0f), 
 		fov(core::Math::Pi * 0.5f), 
 		nearPlane(1), 
-		farPlane(100)
+		farPlane(100), 
 	{
 	}
 

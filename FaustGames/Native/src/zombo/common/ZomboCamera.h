@@ -12,7 +12,7 @@ namespace zombo
 		float fov;
 		float nearPlane;
 		float farPlane;
-		
+
 		static ZomboCamera* create();
 		ZomboCamera();
 		~ZomboCamera();

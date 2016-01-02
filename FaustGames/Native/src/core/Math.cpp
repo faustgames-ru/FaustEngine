@@ -40,6 +40,11 @@ namespace core
 		return ::sin(a);
 	}
 
+	float Math::tan(float a)
+	{
+		return ::tan(a);
+	}
+
 	bool Math::equals(float a, float b, float epsilon)
 	{
 		float d = a - b;

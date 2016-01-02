@@ -3,9 +3,16 @@
 
 #include "../zombo_classes.h"
 #include "../../CommonSources/include/zombo.h"
+#include "../common/ZomboCamera.h"
 
 namespace zombo
 {
+	class ZomboEditorCamera
+	{
+	public:
+		ZomboCamera camera;
+	};
+
 	class ZomboEditorViewport : public IZomboEditorViewport
 	{
 	public:

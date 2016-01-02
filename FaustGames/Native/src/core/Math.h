@@ -19,6 +19,7 @@ namespace core
 		static float round(float a);
 		static float cos(float a);
 		static float sin(float a);
+		static float tan(float a);
 	};
 }
 

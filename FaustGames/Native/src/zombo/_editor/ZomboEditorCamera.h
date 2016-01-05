@@ -6,6 +6,13 @@
 
 namespace zombo
 {
+	struct VelocityStackEntry
+	{
+		float time;
+		core::Vector2 velocity;
+		VelocityStackEntry(float t, core::Vector2 v);
+	};
+
 	class ZomboEditorCamera : public IZomboEditorCamera
 	{
 	public:
@@ -32,12 +39,11 @@ namespace zombo
 		float _interpoaltedScale;
 
 		float _scaleVelocity;
-		float _lastMouseX;
-		float _lastMouseY;
-		float _velocityX;
-		float _velocityY;
-		float _velocityOriginX;
-		float _velocityOriginY;
+		core::Vector2 _lastMouse;
+		core::Vector2 _velocity;
+		core::Vector2 _velocityOrigin;
+		float _midDownTime;
+		std::queue<VelocityStackEntry> velocities;
 	};
 }
 

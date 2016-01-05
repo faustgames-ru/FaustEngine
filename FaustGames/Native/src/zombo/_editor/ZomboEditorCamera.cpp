@@ -7,8 +7,15 @@ namespace zombo
 {
 	ZomboEditorCamera ZomboEditorCamera::Default;
 
-	ZomboEditorCamera::ZomboEditorCamera() : scale(1.0f), fov(0.0f), depth(5000.0f), _interpoaltedScale(1.0), _scaleVelocity(0), _lastMouseX(0), _lastMouseY(0), _velocityX(0), _velocityY(0), _velocityOriginX(0), _velocityOriginY(0)
+	VelocityStackEntry::VelocityStackEntry(float t, core::Vector2 v)
 	{
+		time = t;
+		velocity = v;
+	}
+
+	ZomboEditorCamera::ZomboEditorCamera() : scale(1.0f), fov(0.0f), depth(5000.0f), _interpoaltedScale(1.0), _scaleVelocity(0), _midDownTime(0)
+	{
+		_lastMouse = core::Vector2(-1, -1);
 	}
 
 	ZomboEditorCamera::~ZomboEditorCamera()
@@ -53,35 +60,64 @@ namespace zombo
 	void ZomboEditorCamera::updateInput()
 	{
 		float ellapsedTime = ZomboGameEnvironment::ellapsedSeconds;
-		if ((_velocityX *_velocityOriginX) < 0)
-			_velocityX = 0;
-		if ((_velocityY *_velocityOriginY) < 0)
-			_velocityY = 0;
+		if ((_velocity.getX() *_velocityOrigin.getX()) < 0)
+		{
+			_velocity.setX(0.0f);
+			_velocityOrigin.setX(0.0f);
+		}
+		if ((_velocity.getY() *_velocityOrigin.getY()) < 0)
+		{
+			_velocity.setY(0.0f);
+			_velocityOrigin.setY(0.0f);
+		}
 		if (ZomboEditorInput::Default.mouse.isMiddlePressed())
 		{
-			if (_lastMouseX > 0)
+			if ((_lastMouse.getX() >= 0) && (_lastMouse.getY() >= 0))
 			{
-				float dx = (ZomboEditorInput::Default.mouse.x - _lastMouseX) * _interpoaltedScale / ZomboEditorViewport::Default.h;
-				_velocityOriginX = _velocityX = -dx / ellapsedTime;
+				_midDownTime += ellapsedTime;
+				float dx = (ZomboEditorInput::Default.mouse.x - _lastMouse.getX()) * _interpoaltedScale / ZomboEditorViewport::Default.h;
+				float dy = (ZomboEditorInput::Default.mouse.y - _lastMouse.getY()) * _interpoaltedScale / ZomboEditorViewport::Default.h;
+
 				position.setX(position.getX() - dx);
-			}
-			if (_lastMouseY > 0)
-			{
-				float dy = (ZomboEditorInput::Default.mouse.y - _lastMouseY) * _interpoaltedScale / ZomboEditorViewport::Default.h;
-				_velocityOriginY = _velocityY = dy / ellapsedTime;
 				position.setY(position.getY() + dy);
+				velocities.push(VelocityStackEntry(_midDownTime, core::Vector2(-dx / ellapsedTime, dy / ellapsedTime)));
+				while ((velocities.front().time < (_midDownTime - 0.1f)) || (velocities.size() > 100))
+				{
+					velocities.pop();
+					if (velocities.empty()) break;
+				}
 			}
-			_lastMouseX = ZomboEditorInput::Default.mouse.x;
-			_lastMouseY = ZomboEditorInput::Default.mouse.y;
+			_lastMouse.setX(ZomboEditorInput::Default.mouse.x);
+			_lastMouse.setY(ZomboEditorInput::Default.mouse.y);
 		}
 		else
 		{
-			_lastMouseX = -1;
-			_lastMouseY = -1;
-			position.setX(position.getX() + _velocityX * ellapsedTime);
-			position.setY(position.getY() + _velocityY * ellapsedTime);
-			_velocityX -= _velocityOriginX*3.0f*ellapsedTime;
-			_velocityY -= _velocityOriginY*3.0f*ellapsedTime;
+			if (!velocities.empty())
+			{
+				float vx = 0;
+				float vy = 0;
+				int vc = 0;
+				while (!velocities.empty())
+				{
+					vx += velocities.front().velocity.getX();
+					vy += velocities.front().velocity.getY();
+					vc++;
+					velocities.pop();
+				}
+				_velocity.setX(vx / vc);
+				_velocity.setY(vy / vc);
+				_velocityOrigin.setX(vx / vc);
+				_velocityOrigin.setY(vy / vc);
+			}
+
+			_midDownTime = 0;
+
+			_lastMouse.setX(-1);
+			_lastMouse.setY(-1);
+			position.setX(position.getX() + _velocity.getX() * ellapsedTime);
+			position.setY(position.getY() + _velocity.getY() * ellapsedTime);
+			_velocity.setX(_velocity.getX() - _velocityOrigin.getX()*3.0f*ellapsedTime) ;
+			_velocity.setY(_velocity.getY() - _velocityOrigin.getY()*3.0f*ellapsedTime);
 		}
 	}
 

@@ -33,8 +33,8 @@ namespace zombo
 		void applyRenderCommands();
 		void resetBuffers();
 	private:
-		ZomboEditorRenderBuffer *getBuffer(int vertexSize, int verticesCount, int indicesCount);
-		ZomboEditorRenderBuffers *getBuffers(int vertexSize);
+		ZomboEditorRenderBuffer *getBuffer(uint vertexSize, uint verticesCount, uint indicesCount);
+		ZomboEditorRenderBuffers *getBuffers(uint vertexSize);
 
 		std::vector<ZomboEditorRenderBuffers *> _buffers;
 		std::vector<ZomboEditorRenderBuffers *> _existingBuffers;
@@ -56,33 +56,33 @@ namespace zombo
 	class ZomboEditorRenderBuffers
 	{
 	public:	
-		ZomboEditorRenderBuffers(int vertexSize);
+		ZomboEditorRenderBuffers(uint vertexSize);
 		~ZomboEditorRenderBuffers();
-		ZomboEditorRenderBuffer *getBuffer(int verticesCount, int indicesCount);
+		ZomboEditorRenderBuffer *getBuffer(uint verticesCount, uint indicesCount);
 		void reset();
 	private:
 		std::vector<ZomboEditorRenderBuffer *> _items;
-		int _vertexSize;
-		int _count;
+		uint _vertexSize;
+		uint _count;
 	};
 	
 	class ZomboEditorRenderBuffer
 	{
 	public:
-		const int VerticesLimit = 32768;
-		const int IndicesLimit = 32768;
-		ZomboEditorRenderBuffer(int vertexSize);
+		static uint VerticesLimit;
+		static uint IndicesLimit;
+		ZomboEditorRenderBuffer(uint vertexSize);
 		~ZomboEditorRenderBuffer();
-		bool canAdd(int verticesCount, int indicesCount) const;
-		ushort *add(void* vertices, int verticesCount, ushort* indices, int indicesCount);
+		bool canAdd(uint verticesCount, uint indicesCount) const;
+		ushort *add(void* vertices, uint verticesCount, ushort* indices, uint indicesCount);
 		void reset();
 		void *getBuffer() const;
 	private:
-		int _vertexSize;
+		uint _vertexSize;
 		void *_buffer;
-		int _verticesCount;
+		uint _verticesCount;
 		ushort *_indices;
-		int _indicesCount;
+		uint _indicesCount;
 	};
 
 }

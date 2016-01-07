@@ -15,7 +15,7 @@ namespace zombo
 
 	ZomboBehaviors::~ZomboBehaviors()
 	{
-		for (int i = 0; i < _behaviors.size(); i++)
+		for (uint i = 0; i < _behaviors.size(); i++)
 		{
 			delete _behaviors[i];
 		}
@@ -28,7 +28,7 @@ namespace zombo
 
 	void ZomboBehaviors::load(ZomboEntity* entity, ZomboContentBlock* content)
 	{
-		for (int i = 0; i < _behaviors.size(); i++)
+		for (uint i = 0; i < _behaviors.size(); i++)
 		{
 			//_behaviors[i]->load(entity, content);
 		}
@@ -36,7 +36,7 @@ namespace zombo
 
 	void ZomboBehaviors::update(ZomboEntity* entity, float ellapsedTime)
 	{
-		for (int i = 0; i < _behaviors.size(); i++)
+		for (uint i = 0; i < _behaviors.size(); i++)
 		{
 			//_behaviors[i]->update(entity, ellapsedTime);
 		}

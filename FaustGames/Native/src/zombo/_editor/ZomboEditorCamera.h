@@ -5,7 +5,7 @@
 #include "../../CommonSources/include/zombo.h"
 
 namespace zombo
-{
+{	
 	struct VelocityStackEntry
 	{
 		float time;
@@ -13,21 +13,29 @@ namespace zombo
 		VelocityStackEntry(float t, core::Vector2 v);
 	};
 
+	class ZomboCameraMode : IBaseObject
+	{
+	public:
+		virtual void updateInput() = 0;
+	};
+	
 	class ZomboEditorCamera : public IZomboEditorCamera
 	{
 	public:
 		static ZomboEditorCamera Default;
+
+		ZomboCameraMode * mode;
 
 		float scale;
 		float fov;
 		float depth;
 		core::Vector3 position;
 		core::MatrixContainer matrix;
-		
+		core::Matrix rotation;
+
 		ZomboEditorCamera();
 		~ZomboEditorCamera();
 		void updateInterpoaltedScale();
-		void updateInput();
 		void update();
 
 		virtual void API_CALL setScale(float value) OVERRIDE;
@@ -35,15 +43,15 @@ namespace zombo
 		virtual float API_CALL getScale() OVERRIDE;
 		virtual float API_CALL getFov() OVERRIDE;
 
+		float getInterpoaltedScale() const;
+		void setPositionX(float x);
+		void setPositionY(float y);
+		float getPositionX() const;
+		float getPositionY() const;
 	private:
 		float _interpoaltedScale;
 
 		float _scaleVelocity;
-		core::Vector2 _lastMouse;
-		core::Vector2 _velocity;
-		core::Vector2 _velocityOrigin;
-		float _midDownTime;
-		std::queue<VelocityStackEntry> velocities;
 	};
 }
 

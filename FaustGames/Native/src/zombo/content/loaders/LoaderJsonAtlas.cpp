@@ -96,7 +96,7 @@ namespace zombo
 		meta.size.h = (*zomboMetaSize)["h"]->asInt();
 		
 		frames.resize(zomboFrames->size());
-		for (int i = 0; i < frames.size(); i++)
+		for (uint i = 0; i < frames.size(); i++)
 		{
 			ZomboObject* zomboFrame = (*zomboFrames)[i]->asObject();
 			ZomboObject* zomboFrameFrame = (*zomboFrame)["frame"]->asObject();

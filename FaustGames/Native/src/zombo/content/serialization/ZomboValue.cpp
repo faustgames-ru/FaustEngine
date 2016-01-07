@@ -113,7 +113,7 @@ namespace zombo
 	void ZomboValue::setAsBool(int value)
 	{
 		_type = ZomboType::Bool;
-		_boolValue = value;
+		_boolValue = value == 0 ? false : true;
 	}
 
 	void ZomboValue::setAsFloat(float value)

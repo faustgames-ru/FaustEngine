@@ -45,6 +45,16 @@ namespace core
 		return ::tan(a);
 	}
 
+	float Math::sqrt(float x)
+	{
+		return ::sqrt(x);
+	}
+
+	float Math::acos(float v)
+	{
+		return ::acos(v);
+	}
+
 	bool Math::equals(float a, float b, float epsilon)
 	{
 		float d = a - b;

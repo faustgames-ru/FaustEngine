@@ -23,8 +23,7 @@ namespace zombo
 
 	void ZomboEditorMouse::update(int mouseX, int mouseY, uint mouseButtons)
 	{
-		x = mouseX;
-		y = mouseY;
+		position = core::Vector2(static_cast<float>(mouseX), static_cast<float>(mouseY));
 		buttons = mouseButtons;
 	}
 

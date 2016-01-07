@@ -76,6 +76,9 @@
     <Filter Include="zombo\_editor\commands">
       <UniqueIdentifier>{c3dc1251-5328-460d-beae-161dd7743094}</UniqueIdentifier>
     </Filter>
+    <Filter Include="zombo\_editor\camera">
+      <UniqueIdentifier>{b8f2d8c1-1785-4bb8-b91d-d7ae74b01245}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\CommonSources\include\llge.h">
@@ -470,6 +473,12 @@
     <ClInclude Include="..\src\zombo\_editor\ZomboEditorCamera.h">
       <Filter>zombo\_editor</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\zombo\_editor\camera\ZomboCameraMoveXY.h">
+      <Filter>zombo\_editor\camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\zombo\_editor\camera\ZomboCameraRotate.h">
+      <Filter>zombo\_editor\camera</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\CommonSources\gen\llgePInvoke.cpp">
@@ -824,6 +833,12 @@
     </ClCompile>
     <ClCompile Include="..\src\zombo\_editor\ZomboEditorCamera.cpp">
       <Filter>zombo\_editor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\zombo\_editor\camera\ZomboCameraMoveXY.cpp">
+      <Filter>zombo\_editor\camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\zombo\_editor\camera\ZomboCameraRotate.cpp">
+      <Filter>zombo\_editor\camera</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

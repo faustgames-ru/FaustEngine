@@ -23,12 +23,12 @@ namespace core
 
 	float Convert::toFloat(int v)
 	{
-		return v;
+		return static_cast<float>(v);
 	}
 
 	float Convert::toFloat(const std::string& v)
 	{
-		return atof(v.c_str());
+		return static_cast<float>(atof(v.c_str()));
 	}
 
 	int Convert::toInt(float v)
@@ -38,7 +38,7 @@ namespace core
 
 	int Convert::toInt(const std::string &v)
 	{
-		return toInt(atof(v.c_str()));
+		return toInt(static_cast<float>(atof(v.c_str())));
 	}
 
 	std::string Convert::toString(bool b)

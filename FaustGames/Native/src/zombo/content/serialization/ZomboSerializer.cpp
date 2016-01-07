@@ -45,7 +45,7 @@ namespace zombo
 			break;
 		case cJSON_Number:
 			result->setAsInt(json->valueint);
-			result->setAsFloat(json->valuedouble);
+			result->setAsFloat(static_cast<float>(json->valuedouble));
 			break;
 		case cJSON_String:
 			result->setAsString(json->valuestring);

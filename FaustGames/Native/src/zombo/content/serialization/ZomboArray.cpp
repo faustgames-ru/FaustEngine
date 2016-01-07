@@ -20,7 +20,7 @@ namespace zombo
 	std::string ZomboArray::toString()
 	{
 		std::string result = "[";
-		for (int i = 0; i < _values.size(); i++)
+		for (uint i = 0; i < _values.size(); i++)
 		{
 			result += _values[i].toString();
 			result += ",";

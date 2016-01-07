@@ -3,6 +3,7 @@
 
 #include "core_classes.h"
 #include "Math.h"
+#include "Vector.h"
 
 namespace core
 {
@@ -45,13 +46,20 @@ namespace core
 		}
 		
 		inline const float *getData() const { return &(_values[0]); }
+
+		static Matrix createRotation(Vector3 n, float a);
+
 		static float DotProduct(
 			float x1, float y1, float z1, float w1,
 			float x2, float y2, float z2, float w2)
 		{
 			return x1*x2 + y1*y2 + z1*z2 + w1*w2;
 		}
-		static Matrix mul(Matrix a, Matrix b)
+		static Matrix mul(const Matrix &a, const Matrix &b, const Matrix &c)
+		{
+			return mul(mul(a, b), c);
+		}
+		static Matrix mul(const Matrix &a, const Matrix &b)
 		{
 			return Matrix(
 				DotProduct(a.getXx(), a.getXy(), a.getXz(), a.getXw(), b.getXx(), b.getYx(), b.getZx(), b.getWx()),
@@ -72,27 +80,89 @@ namespace core
 				DotProduct(a.getWx(), a.getWy(), a.getWz(), a.getWw(), b.getXw(), b.getYw(), b.getZw(), b.getWw()));
 		}
 
-		inline float getXx() { return _values[0]; }
-		inline float getXy() { return _values[1]; }
-		inline float getXz() { return _values[2]; }
-		inline float getXw() { return _values[3]; }
+		inline float getXx() const { return _values[0]; }
+		inline float getXy() const { return _values[1]; }
+		inline float getXz() const { return _values[2]; }
+		inline float getXw() const { return _values[3]; }
 
-		inline float getYx() { return _values[4]; }
-		inline float getYy() { return _values[5]; }
-		inline float getYz() { return _values[6]; }
-		inline float getYw() { return _values[7]; }
+		inline float getYx() const { return _values[4]; }
+		inline float getYy() const { return _values[5]; }
+		inline float getYz() const { return _values[6]; }
+		inline float getYw() const { return _values[7]; }
 
-		inline float getZx() { return _values[8]; }
-		inline float getZy() { return _values[9]; }
-		inline float getZz() { return _values[10]; }
-		inline float getZw() { return _values[11]; }
+		inline float getZx() const { return _values[8]; }
+		inline float getZy() const { return _values[9]; }
+		inline float getZz() const { return _values[10]; }
+		inline float getZw() const { return _values[11]; }
 
-		inline float getWx() { return _values[12]; }
-		inline float getWy() { return _values[13]; }
-		inline float getWz() { return _values[14]; }
-		inline float getWw() { return _values[15]; }
+		inline float getWx() const { return _values[12]; }
+		inline float getWy() const { return _values[13]; }
+		inline float getWz() const { return _values[14]; }
+		inline float getWw() const { return _values[15]; }
+
+		Matrix transpose() const
+		{
+			return Matrix(
+				getXx(), getYx(), getZx(), getWx(),
+				getXy(), getYy(), getZy(), getWy(),
+				getXz(), getYz(), getZz(), getWz(),
+				getXw(), getYw(), getZw(), getWw());
+		}
+
+		Matrix inverse()
+		{
+			float xx = +determinant3X3(getYy(), getYz(), getYw(), getZy(), getZz(), getZw(), getWy(), getWz(), getWw());
+			float xy = -determinant3X3(getYx(), getYz(), getYw(), getZx(), getZz(), getZw(), getWx(), getWz(), getWw());
+			float xz = +determinant3X3(getYx(), getYy(), getYw(), getZx(), getZy(), getZw(), getWx(), getWy(), getWw());
+			float xw = -determinant3X3(getYx(), getYy(), getYz(), getZx(), getZy(), getZz(), getWx(), getWy(), getWz());
+
+			float yx = -determinant3X3(getXy(), getXz(), getXw(), getZy(), getZz(), getZw(), getWy(), getWz(), getWw());
+			float yy = +determinant3X3(getXx(), getXz(), getXw(), getZx(), getZz(), getZw(), getWx(), getWz(), getWw());
+			float yz = -determinant3X3(getXx(), getXy(), getXw(), getZx(), getZy(), getZw(), getWx(), getWy(), getWw());
+			float yw = +determinant3X3(getXx(), getXy(), getXz(), getZx(), getZy(), getZz(), getWx(), getWy(), getWz());
+
+			float zx = +determinant3X3(getXy(), getXz(), getXw(), getYy(), getYz(), getYw(), getWy(), getWz(), getWw());
+			float zy = -determinant3X3(getXx(), getXz(), getXw(), getYx(), getYz(), getYw(), getWx(), getWz(), getWw());
+			float zz = +determinant3X3(getXx(), getXy(), getXw(), getYx(), getYy(), getYw(), getWx(), getWy(), getWw());
+			float zw = -determinant3X3(getXx(), getXy(), getXz(), getYx(), getYy(), getYz(), getWx(), getWy(), getWz());
+
+			float wx = -determinant3X3(getXy(), getXz(), getXw(), getYy(), getYz(), getYw(), getZy(), getZz(), getZw());
+			float wy = +determinant3X3(getXx(), getXz(), getXw(), getYx(), getYz(), getYw(), getZx(), getZz(), getZw());
+			float wz = -determinant3X3(getXx(), getXy(), getXw(), getYx(), getYy(), getYw(), getZx(), getZy(), getZw());
+			float ww = +determinant3X3(getXx(), getXy(), getXz(), getYx(), getYy(), getYz(), getZx(), getZy(), getZz());
+
+			float l = getXx()*xx + getXy()*xy + getXz()*xz + getXw()*xw;
+			if (Math::abs(l) < Math::Epsilon)
+			{
+				return *this;
+			}
+			float d = 1 / l;
+			return Matrix(
+				xx*d, yx*d, zx*d, wx*d,
+				xy*d, yy*d, zy*d, wy*d,
+				xz*d, yz*d, zz*d, wz*d,
+				xw*d, yw*d, zw*d, ww*d);
+		}
 
 		static Matrix identity;
+
+		static Vector3 transform(Matrix m, Vector2 v)
+		{
+			float w = 1.0f / (v.getX() * m.getXw() + v.getY() * m.getYw() + m.getWw());
+			return Vector3(
+				(v.getX() * m.getXx() + v.getY() * m.getYx() + m.getWx()) * w,
+				(v.getX() * m.getXy() + v.getY() * m.getYy() + m.getWy()) * w,
+				(v.getX() * m.getXz() + v.getY() * m.getYz() + m.getWz()) * w);
+		}
+		
+		static Vector3 transform(Matrix m, Vector3 v)
+		{
+			float w = 1.0f / (v.getX() * m.getXw() + v.getY() * m.getYw() + v.getZ() * m.getZw() + m.getWw());
+			return Vector3(
+				(v.getX() * m.getXx() + v.getY() * m.getYx() + v.getZ() * m.getZx() + m.getWx()) * w,
+				(v.getX() * m.getXy() + v.getY() * m.getYy() + v.getZ() * m.getZy() + m.getWy()) * w,
+				(v.getX() * m.getXz() + v.getY() * m.getYz() + v.getZ() * m.getZz() + m.getWz()) * w);
+		}
 
 		static Matrix createTranslate(float x, float y, float z)
 		{
@@ -131,6 +201,16 @@ namespace core
 				0, 0, zf / (zf - zn), 1,
 				0, 0, -zn * zf / (zf - zn), 0);
 		}
+
+		static float determinant3X3(
+			float xx, float xy, float xz,
+			float yx, float yy, float yz,
+			float zx, float zy, float zz)
+		{
+			return xx * yy * zz + xy * yz * zx + yx * zy * xz - zx * yy * xz - xy * yx * zz - zy * yz * xx;
+		}
+
+
 	};
 
 	class MatrixContainer

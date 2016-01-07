@@ -20,6 +20,8 @@ namespace core
 		static float cos(float a);
 		static float sin(float a);
 		static float tan(float a);
+		static float sqrt(float x);
+		static float acos(float v);
 	};
 }
 

@@ -88,13 +88,13 @@ namespace zombo
 		_entriesCount = 0;
 	}
 
-	ZomboEditorRenderBuffer* ZomboEditorRenderService::getBuffer(int vertexSize, int verticesCount, int indicesCount)
+	ZomboEditorRenderBuffer* ZomboEditorRenderService::getBuffer(uint vertexSize, uint verticesCount, uint indicesCount)
 	{
 		ZomboEditorRenderBuffers* buffers = getBuffers(vertexSize);
 		return buffers->getBuffer(verticesCount, indicesCount);
 	}
 
-	ZomboEditorRenderBuffers* ZomboEditorRenderService::getBuffers(int vertexSize)
+	ZomboEditorRenderBuffers* ZomboEditorRenderService::getBuffers(uint vertexSize)
 	{
 		if (_buffers.size() < vertexSize)
 			_buffers.resize(vertexSize + 1);
@@ -111,7 +111,7 @@ namespace zombo
 	{
 	}
 
-	ZomboEditorRenderBuffers::ZomboEditorRenderBuffers(int vertexSize) : _count(0), _vertexSize(vertexSize)
+	ZomboEditorRenderBuffers::ZomboEditorRenderBuffers(uint vertexSize) : _vertexSize(vertexSize), _count(0)
 	{
 	}
 
@@ -123,7 +123,7 @@ namespace zombo
 		}
 	}
 
-	ZomboEditorRenderBuffer* ZomboEditorRenderBuffers::getBuffer(int verticesCount, int indicesCount)
+	ZomboEditorRenderBuffer* ZomboEditorRenderBuffers::getBuffer(uint verticesCount, uint indicesCount)
 	{
 		if (_items.size() <= _count)
 		{
@@ -151,7 +151,11 @@ namespace zombo
 		_count = 0;
 	}
 
-	ZomboEditorRenderBuffer::ZomboEditorRenderBuffer(int vertexSize): _vertexSize(vertexSize), _verticesCount(0), _indicesCount(0)
+	uint ZomboEditorRenderBuffer::VerticesLimit = 32768;
+	uint ZomboEditorRenderBuffer::IndicesLimit = 32768;
+
+
+	ZomboEditorRenderBuffer::ZomboEditorRenderBuffer(uint vertexSize): _vertexSize(vertexSize), _verticesCount(0), _indicesCount(0)
 	{
 		_buffer = core::Mem::allocate(VerticesLimit * _vertexSize);
 		_indices = static_cast<ushort *>(core::Mem::allocate(IndicesLimit*sizeof(ushort)));
@@ -163,12 +167,12 @@ namespace zombo
 		core::Mem::deallocate(_indices);
 	}
 
-	bool ZomboEditorRenderBuffer::canAdd(int verticesCount, int indicesCount) const
+	bool ZomboEditorRenderBuffer::canAdd(uint verticesCount, uint indicesCount) const
 	{
 		return ((_verticesCount + verticesCount) < VerticesLimit) && ((_indicesCount + indicesCount) < IndicesLimit);
 	}
 
-	ushort* ZomboEditorRenderBuffer::add(void* vertices, int verticesCount, ushort* indices, int indicesCount)
+	ushort* ZomboEditorRenderBuffer::add(void* vertices, uint verticesCount, ushort* indices, uint indicesCount)
 	{
 		ushort* result = _indices + _indicesCount;
 		for (uint i = 0; i < indicesCount; i++)

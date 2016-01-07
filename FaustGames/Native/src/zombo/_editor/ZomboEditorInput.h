@@ -9,9 +9,8 @@ namespace zombo
 	class ZomboEditorMouse : public IZomboEditorMouse
 	{
 	public:
-		int x;
-		int y;
 		uint buttons;
+		core::Vector2 position;
 		bool isLeftPressed() const;
 		bool isRightPressed() const;
 		bool isMiddlePressed() const;

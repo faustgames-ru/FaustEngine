@@ -13,6 +13,24 @@ namespace core
 
 	Matrix2 Matrix2::identity(1, 0, 0, 1);
 
+	Matrix Matrix::createRotation(Vector3 n, float a)
+	{
+		float u = n.getX();
+		float v = n.getY();
+		float w = n.getZ();
+		float u2 = u*u;
+		float v2 = v*v;
+		float w2 = w*w;
+		float c = Math::cos(a);
+		float s = Math::sin(a);
+
+		return Matrix(
+			u2 + (1 - u2)*c, u*v*(1 - c) - w*s, u*w*(1 - c) + v*s, 0.0f,
+			u*v*(1 - c) + w*s, v2 + (1 - v2)*c, v*w*(1 - c) - u*s, 0.0f,
+			u*w*(1 - c) - v*s, v*w*(1 - c) + u*s, w2 + (1 - w2)*c, 0.0f,
+			0.0f, 0.0f, 0.0f, 1.0f);
+	}
+
 	Matrix2::Matrix2(
 		float m11, float m12,
 		float m21, float m22)

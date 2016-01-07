@@ -278,6 +278,8 @@
     <ClInclude Include="..\src\zombo\zombo_classes.h" />
     <ClInclude Include="..\src\zombo\zombo_platform.h" />
     <ClInclude Include="..\src\zombo\zombo_references.h" />
+    <ClInclude Include="..\src\zombo\_editor\camera\ZomboCameraMoveXY.h" />
+    <ClInclude Include="..\src\zombo\_editor\camera\ZomboCameraRotate.h" />
     <ClInclude Include="..\src\zombo\_editor\commands\ZomboEditorCommand.h" />
     <ClInclude Include="..\src\zombo\_editor\commands\ZomboEditorCommands.h" />
     <ClInclude Include="..\src\zombo\_editor\commands\ZomboSetEditorMode.h" />
@@ -400,6 +402,8 @@
     <ClCompile Include="..\src\zombo\ZomboGame.cpp" />
     <ClCompile Include="..\src\zombo\ZomboWorld.cpp" />
     <ClCompile Include="..\src\zombo\zombo_classes.cpp" />
+    <ClCompile Include="..\src\zombo\_editor\camera\ZomboCameraMoveXY.cpp" />
+    <ClCompile Include="..\src\zombo\_editor\camera\ZomboCameraRotate.cpp" />
     <ClCompile Include="..\src\zombo\_editor\commands\ZomboEditorCommand.cpp" />
     <ClCompile Include="..\src\zombo\_editor\commands\ZomboEditorCommands.cpp" />
     <ClCompile Include="..\src\zombo\_editor\commands\ZomboSetEditorMode.cpp" />

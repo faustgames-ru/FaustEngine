@@ -55,6 +55,16 @@ namespace core
 		return ::acos(v);
 	}
 
+	float Math::atan(float v)
+	{
+		return ::atan(v);
+	}
+
+	float Math::atan2(float y, float x)
+	{
+		return ::atan2(y, x);
+	}
+
 	bool Math::equals(float a, float b, float epsilon)
 	{
 		float d = a - b;

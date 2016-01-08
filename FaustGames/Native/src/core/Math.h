@@ -22,6 +22,8 @@ namespace core
 		static float tan(float a);
 		static float sqrt(float x);
 		static float acos(float v);
+		static float atan(float v);
+		static float atan2(float y, float x);
 	};
 }
 

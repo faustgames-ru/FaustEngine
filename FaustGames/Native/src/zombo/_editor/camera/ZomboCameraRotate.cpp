@@ -30,7 +30,7 @@ namespace zombo
 				float l = n.length();
 				if (l > core::Math::Epsilon)
 				{
-					ZomboEditorCamera::Default.rotation = core::Matrix::mul(_originRotation, core::Matrix::createRotation(n3, core::Math::Pi * n.length() / ZomboEditorViewport::Default.h));
+					ZomboEditorCamera::Default.rotation = core::Matrix::mul(_originRotation, core::Matrix::createRotation(n3, -core::Math::Pi * l / ZomboEditorViewport::Default.h));
 				}
 				else
 				{

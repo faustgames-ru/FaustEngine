@@ -47,6 +47,7 @@ namespace core
 		
 		inline const float *getData() const { return &(_values[0]); }
 
+		static Matrix createScale(float x, float y, float z);
 		static Matrix createRotation(Vector3 n, float a);
 
 		static float DotProduct(
@@ -58,6 +59,14 @@ namespace core
 		static Matrix mul(const Matrix &a, const Matrix &b, const Matrix &c)
 		{
 			return mul(mul(a, b), c);
+		}
+		static Matrix mul(const Matrix &a, const Matrix &b, const Matrix &c, const Matrix &d)
+		{
+			return mul(mul(mul(a, b), c), d);
+		}
+		static Matrix mul(const Matrix &a, const Matrix &b, const Matrix &c, const Matrix &d, const Matrix &e)
+		{
+			return mul(mul(mul(mul(a, b), c), d), e);
 		}
 		static Matrix mul(const Matrix &a, const Matrix &b)
 		{
@@ -177,14 +186,10 @@ namespace core
 		{
 			float h = scale;
 			float w = h * aspect;
-			float l = -w * 0.5f;
-			float r = w * 0.5f;
-			float t = h * 0.5f;
-			float b = -h * 0.5f;
 
-			return core::Matrix(
-				2.0f / w, 0, 0, 0,
-				0, 2.0f / h, 0, 0,
+			return Matrix(
+				1.0f / w, 0, 0, 0,
+				0, 1.0f / h, 0, 0,
 				0, 0, 1.0f / depth, 0.0f,
 				0, 0, 0, 1);
 		}
@@ -192,10 +197,10 @@ namespace core
 		static Matrix createProjection(float fov, float aspect, float zn, float zf)
 		{
 			float h = 1.0f / tan(fov *0.5f);
-			float xScale = h * aspect;
+			float xScale = h / aspect;
 			float yScale = h;
 
-			return core::Matrix(
+			return Matrix(
 				xScale, 0, 0, 0,
 				0, yScale, 0, 0,
 				0, 0, zf / (zf - zn), 1,

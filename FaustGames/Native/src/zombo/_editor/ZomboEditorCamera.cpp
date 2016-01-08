@@ -66,15 +66,20 @@ namespace zombo
 		mode->updateInput();
 		
 		updateInterpoaltedScale();
-		core::Matrix translate = core::Matrix::createTranslate(-position.getX(), -position.getY(), -position.getZ());
-		if (fov < core::Math::Epsilon)
+		core::Matrix translate = core::Matrix::createTranslate(-position.getX(), -position.getY(), 0);
+		float minFov = core::Math::atan2(1.0f, depth*0.5f) * 2.0f;
+		if (fov < minFov)
 		{
-			core::Matrix ortho = core::Matrix::createOrtho(ZomboEditorViewport::Default.getAspect(), _interpoaltedScale, depth);
+			core::Matrix ortho = core::Matrix::createOrtho(ZomboEditorViewport::Default.getAspect(), _interpoaltedScale, depth*0.5f);
 			matrix.setValue(core::Matrix::mul(translate, rotation, ortho));
 		}
 		else
 		{
-			// todo: projection matrix support
+			core::Matrix proj = core::Matrix::createProjection(fov, ZomboEditorViewport::Default.getAspect(), 0.01f, depth);
+			float z = 1.0f / core::Math::tan(fov * 0.5f);
+			core::Matrix translateZ = core::Matrix::createTranslate(0, 0, z);
+			core::Matrix scale = core::Matrix::createScale(1.0f / _interpoaltedScale, 1.0f / _interpoaltedScale, 1.0f / _interpoaltedScale);
+			matrix.setValue(core::Matrix::mul(translate, rotation, scale, translateZ, proj));
 		}
 	}
 

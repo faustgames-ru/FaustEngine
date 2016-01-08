@@ -13,6 +13,15 @@ namespace core
 
 	Matrix2 Matrix2::identity(1, 0, 0, 1);
 
+	Matrix Matrix::createScale(float x, float y, float z)
+	{
+		return Matrix(
+			x, 0, 0, 0,
+			0, y, 0, 0,
+			0, 0, z, 0,
+			0, 0, 0, 1);
+	}
+
 	Matrix Matrix::createRotation(Vector3 n, float a)
 	{
 		float u = n.getX();

@@ -21,6 +21,7 @@ namespace Zombo.Editor.Controls
         private readonly Lazy<Font> _designerModeFont = new Lazy<Font>(()=>new Font(FontFamily.GenericSansSerif, 8.0f));
 
         public ZomboEditor ZomboEditor => _editor;
+        public ZomboEditorCamera ZomboCamera => _camera;
         public bool _ready = false;
 
         public ZomboEditSceneControl()

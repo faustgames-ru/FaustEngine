@@ -153,9 +153,35 @@ namespace core
 				xw*d, yw*d, zw*d, ww*d);
 		}
 
+		inline void GetRotation(float& p, float& h, float& b) const
+		{
+			b = Math::atan2(getYx(), getYy());
+			h = Math::atan2(getXz(), getZz());
+			float sinP = -getYz();
+			if (sinP > 1.0f)
+				sinP = 1.0f;
+			if (sinP < -1.0f)
+				sinP = -1.0f;
+			p = Math::asin(sinP);
+		}
+
 		static Matrix identity;
 
-		static Vector3 transform(Matrix m, Vector2 v)
+		static Matrix createEuler(float p, float h, float b)
+		{
+			return Matrix(
+				Math::cos(h)*Math::cos(b) + Math::sin(h)*Math::sin(p)*Math::sin(b), 
+				Math::cos(b)*Math::sin(h)*Math::sin(p) - Math::sin(b)*Math::cos(h), 
+				Math::cos(p)*Math::sin(h), 0,
+				Math::cos(p)*Math::sin(b), 
+				Math::cos(b)*Math::cos(p), 
+				-Math::sin(p), 0,
+				Math::sin(b)*Math::cos(h)*Math::sin(p) - Math::sin(h)*Math::cos(b), 
+				Math::sin(h)*Math::sin(b) + Math::cos(b)*Math::cos(h)*Math::sin(p), 
+				Math::cos(p)*Math::cos(h), 0, 0, 0, 0, 1);
+
+		}
+			static Vector3 transform(Matrix m, Vector2 v)
 		{
 			float w = 1.0f / (v.getX() * m.getXw() + v.getY() * m.getYw() + m.getWw());
 			return Vector3(

@@ -11,11 +11,27 @@ namespace zombo
 	ZomboCameraMoveXY::ZomboCameraMoveXY() : _midDownTime(0)
 	{
 		_lastMouse = core::Vector2(-1, -1);
+	}
 
+	void ZomboCameraMoveXY::activated()
+	{
+		float p, h, b;
+		ZomboEditorCamera::Default.rotation.GetRotation(p, h, b);
+		_pAngle.setValue(p);
+		_hAngle.setValue(h);
+		_bAngle.setValue(b);
+		_pAngle.setTargetValue(0);
+		_hAngle.setTargetValue(0);
+		_bAngle.setTargetValue(0);
 	}
 
 	void ZomboCameraMoveXY::updateInput()
 	{
+		_pAngle.update();
+		_hAngle.update();
+		_bAngle.update();
+		ZomboEditorCamera::Default.rotation = core::Matrix::createEuler(_pAngle.getValue(), _hAngle.getValue(), _bAngle.getValue());
+
 		float ellapsedTime = ZomboGameEnvironment::ellapsedSeconds;
 		if ((_velocity.getX() *_velocityOrigin.getX()) < 0)
 		{
@@ -73,7 +89,7 @@ namespace zombo
 			_lastMouse.setY(-1);
 
 			ZomboEditorCamera::Default.position += _velocity * ellapsedTime;
-			_velocity -= _velocityOrigin*3.0f*ellapsedTime;
+			_velocity -= _velocityOrigin*6.0f*ellapsedTime;
 		}
 	}
 }

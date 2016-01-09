@@ -24,6 +24,8 @@ namespace core
 		static float acos(float v);
 		static float atan(float v);
 		static float atan2(float y, float x);
+		static float lerp(float from, float to, float u);
+		static float asin(float v);
 	};
 }
 

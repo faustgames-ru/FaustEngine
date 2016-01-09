@@ -33,18 +33,18 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.trackBar1 = new System.Windows.Forms.TrackBar();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this._editorModeSelect = new System.Windows.Forms.ToolStripButton();
             this._editorModeDrawCurve = new System.Windows.Forms.ToolStripButton();
             this._undo = new System.Windows.Forms.ToolStripButton();
             this._redo = new System.Windows.Forms.ToolStripButton();
             this._cameraModeMove = new System.Windows.Forms.ToolStripButton();
             this._cameraModeRotate = new System.Windows.Forms.ToolStripButton();
+            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
+            this._comboFov = new System.Windows.Forms.ToolStripComboBox();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this._zomboEditScene = new Zombo.Editor.Controls.ZomboEditSceneControl();
             this._toolbox.SuspendLayout();
-            this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.SuspendLayout();
             // 
             // _toolbox
@@ -57,7 +57,11 @@
             this._redo,
             this.toolStripSeparator2,
             this._cameraModeMove,
-            this._cameraModeRotate});
+            this._cameraModeRotate,
+            this.toolStripSeparator3,
+            this.toolStripLabel1,
+            this._comboFov,
+            this.toolStripSeparator4});
             this._toolbox.Location = new System.Drawing.Point(0, 0);
             this._toolbox.Name = "_toolbox";
             this._toolbox.Size = new System.Drawing.Size(821, 25);
@@ -82,23 +86,10 @@
             this.statusStrip1.TabIndex = 2;
             this.statusStrip1.Text = "statusStrip1";
             // 
-            // panel1
+            // toolStripSeparator3
             // 
-            this.panel1.Controls.Add(this.trackBar1);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 366);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(821, 69);
-            this.panel1.TabIndex = 3;
-            // 
-            // trackBar1
-            // 
-            this.trackBar1.Location = new System.Drawing.Point(12, 12);
-            this.trackBar1.Maximum = 170;
-            this.trackBar1.Name = "trackBar1";
-            this.trackBar1.Size = new System.Drawing.Size(780, 45);
-            this.trackBar1.TabIndex = 0;
-            this.trackBar1.ValueChanged += new System.EventHandler(this.trackBar1_ValueChanged);
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
             // 
             // _editorModeSelect
             // 
@@ -162,12 +153,39 @@
             this._cameraModeRotate.Text = "Rotate";
             this._cameraModeRotate.Click += new System.EventHandler(this.CameraModeSwitch);
             // 
+            // toolStripLabel1
+            // 
+            this.toolStripLabel1.Name = "toolStripLabel1";
+            this.toolStripLabel1.Size = new System.Drawing.Size(73, 22);
+            this.toolStripLabel1.Text = "Field of view";
+            // 
+            // _comboFov
+            // 
+            this._comboFov.Items.AddRange(new object[] {
+            "0",
+            "10",
+            "20",
+            "40",
+            "60",
+            "90",
+            "100",
+            "120"});
+            this._comboFov.Name = "_comboFov";
+            this._comboFov.Size = new System.Drawing.Size(75, 25);
+            this._comboFov.Text = "0";
+            this._comboFov.TextChanged += new System.EventHandler(this._comboFov_TextChanged);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
+            // 
             // _zomboEditScene
             // 
             this._zomboEditScene.Dock = System.Windows.Forms.DockStyle.Fill;
             this._zomboEditScene.Location = new System.Drawing.Point(0, 25);
             this._zomboEditScene.Name = "_zomboEditScene";
-            this._zomboEditScene.Size = new System.Drawing.Size(821, 341);
+            this._zomboEditScene.Size = new System.Drawing.Size(821, 410);
             this._zomboEditScene.TabIndex = 0;
             // 
             // MainWindow
@@ -176,7 +194,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(821, 457);
             this.Controls.Add(this._zomboEditScene);
-            this.Controls.Add(this.panel1);
             this.Controls.Add(this._toolbox);
             this.Controls.Add(this.statusStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -184,9 +201,6 @@
             this.Text = "Zombo Editor";
             this._toolbox.ResumeLayout(false);
             this._toolbox.PerformLayout();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -203,10 +217,12 @@
         private System.Windows.Forms.ToolStripButton _undo;
         private System.Windows.Forms.ToolStripButton _redo;
         private System.Windows.Forms.ToolStripButton _cameraModeRotate;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.TrackBar trackBar1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripButton _cameraModeMove;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel1;
+        private System.Windows.Forms.ToolStripComboBox _comboFov;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
     }
 }
 

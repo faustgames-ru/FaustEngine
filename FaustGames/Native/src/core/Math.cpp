@@ -65,6 +65,16 @@ namespace core
 		return ::atan2(y, x);
 	}
 
+	float Math::lerp(float from, float to, float u)
+	{
+		return from + u * (to - from);
+	}
+
+	float Math::asin(float v)
+	{
+		return ::asin(v);
+	}
+
 	bool Math::equals(float a, float b, float epsilon)
 	{
 		float d = a - b;

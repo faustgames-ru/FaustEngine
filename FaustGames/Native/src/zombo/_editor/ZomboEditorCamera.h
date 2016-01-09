@@ -3,6 +3,7 @@
 
 #include "../zombo_classes.h"
 #include "../../CommonSources/include/zombo.h"
+#include "../common/ZomboInterpolatedValue.h"
 
 namespace zombo
 {	
@@ -16,6 +17,7 @@ namespace zombo
 	class ZomboCameraMode : IBaseObject
 	{
 	public:
+		virtual void activated() = 0;
 		virtual void updateInput() = 0;
 	};
 	
@@ -23,13 +25,11 @@ namespace zombo
 	{
 	public:
 		static ZomboEditorCamera Default;
-
-
+		
 		ZomboCameraMode * mode;
 
-		float scale;
-		float fov;
 		float depth;
+		
 		core::Vector3 position;
 		core::MatrixContainer matrix;
 		core::Matrix rotation;
@@ -53,9 +53,9 @@ namespace zombo
 		float getPositionX() const;
 		float getPositionY() const;
 	private:
-		float _interpoaltedScale;
 		std::string _actualModeName;
-		float _scaleVelocity;
+		ZomboInterpolatedValue _scaleValue;
+		ZomboInterpolatedValue _fovValue;
 	};
 }
 

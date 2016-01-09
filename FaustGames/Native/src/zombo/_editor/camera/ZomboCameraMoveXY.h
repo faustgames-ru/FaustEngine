@@ -13,6 +13,7 @@ namespace zombo
 		static ZomboCameraMoveXY Default;
 		static std::string ModeName;
 		ZomboCameraMoveXY();
+		virtual void activated() OVERRIDE;
 		virtual void updateInput() OVERRIDE;
 	private:
 		core::Vector2 _lastMouse;
@@ -21,6 +22,9 @@ namespace zombo
 		core::Vector2 _velocity;
 		core::Vector2 _velocityOrigin;
 		std::queue<VelocityStackEntry> velocities;
+		ZomboInterpolatedValue _pAngle;
+		ZomboInterpolatedValue _hAngle;
+		ZomboInterpolatedValue _bAngle;
 	};
 }
 

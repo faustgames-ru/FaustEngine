@@ -479,6 +479,9 @@
     <ClInclude Include="..\src\zombo\_editor\camera\ZomboCameraRotate.h">
       <Filter>zombo\_editor\camera</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\zombo\common\ZomboInterpolatedValue.h">
+      <Filter>zombo\common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\CommonSources\gen\llgePInvoke.cpp">
@@ -839,6 +842,9 @@
     </ClCompile>
     <ClCompile Include="..\src\zombo\_editor\camera\ZomboCameraRotate.cpp">
       <Filter>zombo\_editor\camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\zombo\common\ZomboInterpolatedValue.cpp">
+      <Filter>zombo\common</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -14,6 +14,7 @@ namespace zombo
 		static ZomboCameraRotate Default;
 		static std::string ModeName;
 		ZomboCameraRotate();
+		virtual void activated() OVERRIDE;
 		virtual void updateInput() OVERRIDE;
 	private:
 		core::Vector2 _mouseDownPosition;

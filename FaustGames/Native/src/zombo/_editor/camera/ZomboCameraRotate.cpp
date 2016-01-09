@@ -13,6 +13,10 @@ namespace zombo
 		_mouseDownPosition = core::Vector2(-1.0f, -1.0f);
 	}
 
+	void ZomboCameraRotate::activated()
+	{
+	}
+
 	void ZomboCameraRotate::updateInput()
 	{
 		core::Vector2 position = ZomboEditorInput::Default.mouse.position;

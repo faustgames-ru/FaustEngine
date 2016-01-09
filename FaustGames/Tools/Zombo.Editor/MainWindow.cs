@@ -91,9 +91,13 @@ namespace Zombo.Editor
             InvalidateModeButtons();
         }
 
-        private void trackBar1_ValueChanged(object sender, EventArgs e)
+        private void _comboFov_TextChanged(object sender, EventArgs e)
         {
-            _zomboEditScene.ZomboCamera.SetFov((float)(trackBar1.Value * Math.PI / 180.0));
+            int value;
+            if (int.TryParse(_comboFov.Text, out value))
+            {
+                _zomboEditScene.ZomboCamera.SetFov((float)(value * Math.PI / 180.0f));
+            }
         }
     }
 }

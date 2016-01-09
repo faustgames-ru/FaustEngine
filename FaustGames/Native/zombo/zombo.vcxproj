@@ -256,6 +256,7 @@
     <ClInclude Include="..\src\zombo\common\states\ZomboStateController.h" />
     <ClInclude Include="..\src\zombo\common\ZomboBounds.h" />
     <ClInclude Include="..\src\zombo\common\ZomboCamera.h" />
+    <ClInclude Include="..\src\zombo\common\ZomboInterpolatedValue.h" />
     <ClInclude Include="..\src\zombo\common\ZomboTimeLine.h" />
     <ClInclude Include="..\src\zombo\common\ZomboTransfom.h" />
     <ClInclude Include="..\src\zombo\content\loaders\LoaderJsonAtlas.h" />
@@ -383,6 +384,7 @@
     <ClCompile Include="..\src\zombo\common\ZomboBounds.cpp" />
     <ClCompile Include="..\src\zombo\common\ZomboCamera.cpp" />
     <ClCompile Include="..\src\zombo\common\ZomboGameEnvironment.cpp" />
+    <ClCompile Include="..\src\zombo\common\ZomboInterpolatedValue.cpp" />
     <ClCompile Include="..\src\zombo\common\ZomboTimeLine.cpp" />
     <ClCompile Include="..\src\zombo\common\ZomboTransfom.cpp" />
     <ClCompile Include="..\src\zombo\content\loaders\LoaderJsonAtlas.cpp" />

@@ -18,8 +18,8 @@ namespace zombo
 	ZomboEditorCamera::ZomboEditorCamera() : scale(1.0f), fov(0.0f), depth(5000.0f), _interpoaltedScale(1.0), _scaleVelocity(0)
 	{
 		rotation = core::Matrix::identity;
-		//mode = &ZomboCameraMoveXY::Default;
-		mode = &ZomboCameraRotate::Default;
+		mode = &ZomboCameraMoveXY::Default;
+		_actualModeName = ZomboCameraMoveXY::ModeName;
 	}
 
 	ZomboEditorCamera::~ZomboEditorCamera()
@@ -57,8 +57,11 @@ namespace zombo
 		float ny = (-ZomboEditorInput::Default.mouse.position.getY() + ZomboEditorViewport::Default.h * 0.5f) * _interpoaltedScale / ZomboEditorViewport::Default.h;
 		float dx = nx - x;
 		float dy = ny - y;
-		position.setX(position.getX() - dx);
-		position.setY(position.getY() - dy);
+		if (mode == &ZomboCameraMoveXY::Default)
+		{
+			position.setX(position.getX() - dx);
+			position.setY(position.getY() - dy);
+		}
 	}
 
 	void ZomboEditorCamera::update()
@@ -83,6 +86,18 @@ namespace zombo
 		}
 	}
 
+	IntPtr ZomboEditorCamera::getMode()
+	{
+		char *str = const_cast<char *>(_actualModeName.c_str());
+		return str;
+
+	}
+
+	void ZomboEditorCamera::setMode(String modeName)
+	{
+		setEditorModeInternal(modeName);
+	}
+
 	void ZomboEditorCamera::setScale(float value)
 	{
 		scale = value;
@@ -101,6 +116,19 @@ namespace zombo
 	float ZomboEditorCamera::getFov()
 	{
 		return fov;
+	}
+
+	void ZomboEditorCamera::setEditorModeInternal(String modeName)
+	{
+		_actualModeName = modeName;
+		if (_actualModeName == ZomboCameraMoveXY::ModeName)
+		{
+			mode = &ZomboCameraMoveXY::Default;
+		}
+		else if (_actualModeName == ZomboCameraRotate::ModeName)
+		{
+			mode = &ZomboCameraRotate::Default;
+		}
 	}
 
 	float ZomboEditorCamera::getInterpoaltedScale() const

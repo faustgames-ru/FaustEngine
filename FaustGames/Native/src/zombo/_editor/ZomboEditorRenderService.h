@@ -29,7 +29,7 @@ namespace zombo
 		static ZomboEditorRenderService Default;
 		void draw(ZomboEditorPrimitivesType::e type, graphics::EffectBase *effect, void* vertices, int vertexSize, int verticesCount, ushort* indices, int primitivesCount);
 		void drawLines(ColorVertex* vertices, int verticesCount, ushort* indices, int primitivesCount);
-		
+
 		void applyRenderCommands();
 		void resetBuffers();
 	private:

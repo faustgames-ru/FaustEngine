@@ -12,6 +12,7 @@ namespace zombo
 	{
 	public:
 		static ZomboCameraRotate Default;
+		static std::string ModeName;
 		ZomboCameraRotate();
 		virtual void updateInput() OVERRIDE;
 	private:

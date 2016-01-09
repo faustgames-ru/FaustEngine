@@ -61,6 +61,8 @@ namespace zombo
 	class IZomboEditorCamera: IBaseObject
 	{
 	public:
+		virtual IntPtr API_CALL getMode() = 0;
+		virtual void API_CALL setMode(String modeName) = 0;
 		virtual void API_CALL setScale(float scale) = 0;
 		virtual void API_CALL setFov(float scale) = 0;
 		virtual float API_CALL getScale() = 0;

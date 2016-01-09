@@ -5,6 +5,8 @@
 namespace zombo
 {
 	ZomboCameraRotate ZomboCameraRotate::Default;
+	std::string ZomboCameraRotate::ModeName("Rotate");
+
 
 	ZomboCameraRotate::ZomboCameraRotate()
 	{

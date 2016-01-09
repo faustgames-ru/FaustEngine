@@ -24,6 +24,7 @@ namespace zombo
 	public:
 		static ZomboEditorCamera Default;
 
+
 		ZomboCameraMode * mode;
 
 		float scale;
@@ -38,11 +39,14 @@ namespace zombo
 		void updateInterpoaltedScale();
 		void update();
 
+
+		virtual IntPtr API_CALL getMode() OVERRIDE;
+		virtual void API_CALL setMode(String modeName) OVERRIDE;
 		virtual void API_CALL setScale(float value) OVERRIDE;
 		virtual void API_CALL setFov(float value) OVERRIDE;
 		virtual float API_CALL getScale() OVERRIDE;
 		virtual float API_CALL getFov() OVERRIDE;
-
+		void setEditorModeInternal(String mode);
 		float getInterpoaltedScale() const;
 		void setPositionX(float x);
 		void setPositionY(float y);
@@ -50,7 +54,7 @@ namespace zombo
 		float getPositionY() const;
 	private:
 		float _interpoaltedScale;
-
+		std::string _actualModeName;
 		float _scaleVelocity;
 	};
 }

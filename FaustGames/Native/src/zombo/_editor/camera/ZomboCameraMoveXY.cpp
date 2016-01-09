@@ -6,7 +6,8 @@
 namespace zombo
 {
 	ZomboCameraMoveXY ZomboCameraMoveXY::Default;
-		
+	std::string ZomboCameraMoveXY::ModeName("Move");
+
 	ZomboCameraMoveXY::ZomboCameraMoveXY() : _midDownTime(0)
 	{
 		_lastMouse = core::Vector2(-1, -1);
@@ -31,8 +32,8 @@ namespace zombo
 			if ((_lastMouse.getX() >= 0) && (_lastMouse.getY() >= 0))
 			{
 				_midDownTime += ellapsedTime;
-				float dx = (ZomboEditorInput::Default.mouse.position.getX() - _lastMouse.getX()) * ZomboEditorCamera::Default.getInterpoaltedScale() / ZomboEditorViewport::Default.h;
-				float dy = (ZomboEditorInput::Default.mouse.position.getY() - _lastMouse.getY()) * ZomboEditorCamera::Default.getInterpoaltedScale() / ZomboEditorViewport::Default.h;
+				float dx = 2.0f * (ZomboEditorInput::Default.mouse.position.getX() - _lastMouse.getX()) * ZomboEditorCamera::Default.getInterpoaltedScale() / ZomboEditorViewport::Default.h;
+				float dy = 2.0f * (ZomboEditorInput::Default.mouse.position.getY() - _lastMouse.getY()) * ZomboEditorCamera::Default.getInterpoaltedScale() / ZomboEditorViewport::Default.h;
 
 
 				ZomboEditorCamera::Default.position += core::Vector2(-dx, dy);

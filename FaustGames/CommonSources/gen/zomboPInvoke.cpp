@@ -46,6 +46,16 @@ namespace zombo
 		classInstance->update(width, height);
 	}
 	
+	extern "C" DLLEXPORT IntPtr API_CALL zombo_ZomboEditorCamera_getMode (IZomboEditorCamera * classInstance)
+	{
+		return classInstance->getMode();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL zombo_ZomboEditorCamera_setMode (IZomboEditorCamera * classInstance, String modeName)
+	{
+		classInstance->setMode(modeName);
+	}
+	
 	extern "C" DLLEXPORT void API_CALL zombo_ZomboEditorCamera_setScale (IZomboEditorCamera * classInstance, float scale)
 	{
 		classInstance->setScale(scale);

@@ -95,6 +95,20 @@ namespace zombo
 	public class ZomboEditorCamera
 	{
 		public IntPtr ClassInstance;
+		public IntPtr GetMode ()
+		{
+			return zombo_ZomboEditorCamera_getMode(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr zombo_ZomboEditorCamera_getMode (IntPtr classInstance);
+		public void SetMode (String modeName)
+		{
+			zombo_ZomboEditorCamera_setMode(ClassInstance, modeName);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void zombo_ZomboEditorCamera_setMode (IntPtr classInstance, String modeName);
 		public void SetScale (float scale)
 		{
 			zombo_ZomboEditorCamera_setScale(ClassInstance, scale);

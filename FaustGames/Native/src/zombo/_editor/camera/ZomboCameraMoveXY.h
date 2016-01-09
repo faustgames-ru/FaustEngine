@@ -11,6 +11,7 @@ namespace zombo
 	{
 	public:
 		static ZomboCameraMoveXY Default;
+		static std::string ModeName;
 		ZomboCameraMoveXY();
 		virtual void updateInput() OVERRIDE;
 	private:

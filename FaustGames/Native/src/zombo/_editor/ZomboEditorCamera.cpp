@@ -9,13 +9,67 @@ namespace zombo
 {
 	ZomboEditorCamera ZomboEditorCamera::Default;
 
-	VelocityStackEntry::VelocityStackEntry(float t, core::Vector2 v)
+	ZomboCameraVelocityEntry::ZomboCameraVelocityEntry(ulong t, core::Vector2 v)
 	{
 		time = t;
 		velocity = v;
 	}
 
-	ZomboEditorCamera::ZomboEditorCamera() : depth(5000.0f), _scaleValue(1.0f), _fovValue(0.0f)
+	ZomboCameraVelocityStack::ZomboCameraVelocityStack() : _resistance(4.0f)
+	{
+	}
+
+	void ZomboCameraVelocityStack::updateMove(const core::Vector2& v)
+	{
+		ulong time = ZomboGameEnvironment::gameTime;
+		float ellapsedTime = ZomboGameEnvironment::ellapsedSeconds;
+		_velocities.push_back(ZomboCameraVelocityEntry(time, v / ellapsedTime));
+		ulong d = ZomboGameEnvironment::getTime(0.1f);
+		if (time > d)
+		{
+			ulong lowTime = time - d;
+			while ((_velocities.front().time < lowTime) || (_velocities.size() > 500))
+			{
+				_velocities.pop_front();
+				if (_velocities.empty()) break;
+			}
+		}
+		core::Vector2 velocity = core::Vector2::empty;
+		int vc = 0;
+		for (Velocities::iterator i = _velocities.begin(); i != _velocities.end(); ++i)
+		{
+			velocity += i->velocity;
+			vc++;
+		}
+		if (vc > 0)
+		{
+			_velocity = velocity / vc;
+			_velocityOrigin = _velocity;
+		}
+		else
+		{
+			_velocity = _velocityOrigin = core::Vector2::empty;
+		}
+	}
+
+	core::Vector2 ZomboCameraVelocityStack::updateVelocity()
+	{
+		_velocities.clear();
+		float ellapsedTime = ZomboGameEnvironment::ellapsedSeconds;
+		_velocity -= _velocityOrigin*(_resistance*ellapsedTime);
+		if ((_velocity.getX() *_velocityOrigin.getX()) < 0)
+		{
+			_velocity.setX(0.0f);
+			_velocityOrigin.setX(0.0f);
+		}
+		if ((_velocity.getY() *_velocityOrigin.getY()) < 0)
+		{
+			_velocity.setY(0.0f);
+			_velocityOrigin.setY(0.0f);
+		}
+		return _velocity;
+	}
+	ZomboEditorCamera::ZomboEditorCamera() : depth(5000.0f), _scaleValue(1.0f), _fovValue(core::Math::Pi * 40.0f / 180.0f)
 	{
 		rotation = core::Matrix::identity;
 		mode = &ZomboCameraMoveXY::Default;
@@ -27,30 +81,36 @@ namespace zombo
 	}
 
 	void ZomboEditorCamera::updateInterpoaltedScale()
-	{		
+	{	
+		/*
 		float x = (ZomboEditorInput::Default.mouse.position.getX() - ZomboEditorViewport::Default.w * 0.5f) * _scaleValue.getValue() / ZomboEditorViewport::Default.h;
 		float y = (-ZomboEditorInput::Default.mouse.position.getY() + ZomboEditorViewport::Default.h * 0.5f) * _scaleValue.getValue() / ZomboEditorViewport::Default.h;
-		
+		*/
+
 		_scaleValue.update();
-		
+		/*
 		float nx = (ZomboEditorInput::Default.mouse.position.getX() - ZomboEditorViewport::Default.w * 0.5f) * _scaleValue.getValue() / ZomboEditorViewport::Default.h;
 		float ny = (-ZomboEditorInput::Default.mouse.position.getY() + ZomboEditorViewport::Default.h * 0.5f) * _scaleValue.getValue() / ZomboEditorViewport::Default.h;
+		
 		float dx = nx - x;
 		float dy = ny - y;
+		
 		if (mode == &ZomboCameraMoveXY::Default)
 		{
-			position.setX(position.getX() - dx);
-			position.setY(position.getY() - dy);
+			_positionX.setAllValues(_positionX.getValue() - dx);
+			_positionY.setAllValues(_positionY.getValue() - dy);
 		}
-		
+		*/
 	}
 
 	void ZomboEditorCamera::update()
 	{
 		mode->updateInput();
 		_fovValue.update();
+		_positionX.update();
+		_positionY.update();
 		updateInterpoaltedScale();
-		core::Matrix translate = core::Matrix::createTranslate(-position.getX(), -position.getY(), 0);
+		core::Matrix translate = core::Matrix::createTranslate(-_positionX.getValue(), -_positionY.getValue(), 0);
 		float minFov = core::Math::atan2(1.0f, depth*0.5f) * 2.0f;
 		float fov = _fovValue.getValue();
 		if (fov < minFov)
@@ -129,22 +189,39 @@ namespace zombo
 
 	void ZomboEditorCamera::setPositionX(float x)
 	{
-		position.setX(x);
+		_positionX.setTargetValue(x);
 	}
 
 	void ZomboEditorCamera::setPositionY(float y)
 	{
-		position.setY(y);
+		_positionY.setTargetValue(y);
 	}
 
 	float ZomboEditorCamera::getPositionX() const
 	{
-		return position.getX();
+		return _positionX.getTargetValue();
 	}
 
 	float ZomboEditorCamera::getPositionY() const
 	{
-		return position.getY();
+		return _positionY.getTargetValue();
+	}
+
+	void ZomboEditorCamera::setPositionXY(const core::Vector2 &v)
+	{
+		_positionX.setTargetValue(v.getX());
+		_positionY.setTargetValue(v.getY());
+	}
+
+	core::Vector2 ZomboEditorCamera::getPositionXY() const
+	{
+		return core::Vector2(_positionX.getTargetValue(), _positionY.getTargetValue());
+	}
+
+	void ZomboEditorCamera::addPositionXY(const core::Vector2 &d)
+	{
+		_positionX.setAllValues(_positionX.getValue() + d.getX());
+		_positionY.setAllValues(_positionY.getValue() + d.getY());
 	}
 
 	extern "C" DLLEXPORT IZomboEditorCamera* API_CALL getZomboEditorCamera()

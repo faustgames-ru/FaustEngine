@@ -18,7 +18,9 @@ namespace zombo
 		virtual void updateInput() OVERRIDE;
 	private:
 		core::Vector2 _mouseDownPosition;
+		core::Vector2 _lastMouse;
 		core::Matrix _originRotation;
+		ZomboCameraVelocityStack _velocityStack;
 	};
 }
 

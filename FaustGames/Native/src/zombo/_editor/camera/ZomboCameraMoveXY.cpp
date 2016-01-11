@@ -2,13 +2,46 @@
 #include "../../common/ZomboGameEnvironment.h"
 #include "../ZomboEditorInput.h"
 #include "../ZomboEditorViewport.h"
+#include "../commands/ZomboEditorCommands.h"
 
 namespace zombo
 {
 	ZomboCameraMoveXY ZomboCameraMoveXY::Default;
 	std::string ZomboCameraMoveXY::ModeName("Move");
 
-	ZomboCameraMoveXY::ZomboCameraMoveXY() : _midDownTime(0)
+
+	ZomboCopmmandCameraMoveXY::ZomboCopmmandCameraMoveXY(const core::Vector2 prevPosition, const core::Vector2 newPosition)
+	{
+		_targetPosition = newPosition;
+		_prevPosition = prevPosition;
+	}
+
+	void ZomboCopmmandCameraMoveXY::invalidate(const core::Vector2 newPosition)
+	{
+		_targetPosition = newPosition;
+	}
+
+	bool ZomboCopmmandCameraMoveXY::isExecutionAvaliable()
+	{
+		return !core::Vector2::equals(_prevPosition, _targetPosition);
+	}
+
+	bool ZomboCopmmandCameraMoveXY::isUndoAvaliable()
+	{
+		return !core::Vector2::equals(_prevPosition, _targetPosition);
+	}
+
+	void ZomboCopmmandCameraMoveXY::execute()
+	{
+		ZomboEditorCamera::Default.setPositionXY(_targetPosition);
+	}
+
+	void ZomboCopmmandCameraMoveXY::undo()
+	{
+		ZomboEditorCamera::Default.setPositionXY(_prevPosition);
+	}
+
+	ZomboCameraMoveXY::ZomboCameraMoveXY(): _actualCommand(nullptr), _prevMidButtonState(false)
 	{
 		_lastMouse = core::Vector2(-1, -1);
 	}
@@ -33,63 +66,65 @@ namespace zombo
 		ZomboEditorCamera::Default.rotation = core::Matrix::createEuler(_pAngle.getValue(), _hAngle.getValue(), _bAngle.getValue());
 
 		float ellapsedTime = ZomboGameEnvironment::ellapsedSeconds;
-		if ((_velocity.getX() *_velocityOrigin.getX()) < 0)
+		bool isMiddlePressed = ZomboEditorInput::Default.mouse.isMiddlePressed();
+		if (isMiddlePressed)
 		{
-			_velocity.setX(0.0f);
-			_velocityOrigin.setX(0.0f);
-		}
-		if ((_velocity.getY() *_velocityOrigin.getY()) < 0)
-		{
-			_velocity.setY(0.0f);
-			_velocityOrigin.setY(0.0f);
-		}
-		if (ZomboEditorInput::Default.mouse.isMiddlePressed())
-		{
+			if (!_prevMidButtonState)
+			{
+				_prevPosition = ZomboEditorCamera::Default.getPositionXY();
+				_actualCommand = nullptr;
+			}
 			if ((_lastMouse.getX() >= 0) && (_lastMouse.getY() >= 0))
 			{
-				_midDownTime += ellapsedTime;
 				float dx = 2.0f * (ZomboEditorInput::Default.mouse.position.getX() - _lastMouse.getX()) * ZomboEditorCamera::Default.getInterpoaltedScale() / ZomboEditorViewport::Default.h;
 				float dy = 2.0f * (ZomboEditorInput::Default.mouse.position.getY() - _lastMouse.getY()) * ZomboEditorCamera::Default.getInterpoaltedScale() / ZomboEditorViewport::Default.h;
-
-
-				ZomboEditorCamera::Default.position += core::Vector2(-dx, dy);
-
-				velocities.push(VelocityStackEntry(_midDownTime, core::Vector2(-dx / ellapsedTime, dy / ellapsedTime)));
-				while ((velocities.front().time < (_midDownTime - 0.1f)) || (velocities.size() > 100))
-				{
-					velocities.pop();
-					if (velocities.empty()) break;
-				}
+				
+				velocityStack.updateMove(core::Vector2(-dx, dy));
+				ZomboEditorCamera::Default.addPositionXY(core::Vector2(-dx, dy));							
 			}
 			_lastMouse = ZomboEditorInput::Default.mouse.position;
 		}
 		else
 		{
-			if (!velocities.empty())
+			if (_prevMidButtonState)
 			{
-				float vx = 0;
-				float vy = 0;
-				int vc = 0;
-				while (!velocities.empty())
+				if (_actualCommand == nullptr)
 				{
-					vx += velocities.front().velocity.getX();
-					vy += velocities.front().velocity.getY();
-					vc++;
-					velocities.pop();
+					_actualCommand = new ZomboCopmmandCameraMoveXY(_prevPosition, ZomboEditorCamera::Default.getPositionXY());
 				}
-				_velocity.setX(vx / vc);
-				_velocity.setY(vy / vc);
-				_velocityOrigin.setX(vx / vc);
-				_velocityOrigin.setY(vy / vc);
 			}
-
-			_midDownTime = 0;
+			
+			core::Vector2 v = velocityStack.updateVelocity();
 
 			_lastMouse.setX(-1);
 			_lastMouse.setY(-1);
+			
+			if (!core::Vector2::equals(v, core::Vector2::empty)) 
+			{
+				ZomboEditorCamera::Default.addPositionXY(v*ellapsedTime);
+			}
+			else
+			{
+				if (_actualCommand != nullptr)
+				{
+					_actualCommand->invalidate(ZomboEditorCamera::Default.getPositionXY());
+					if (ZomboEditorCommands::Default.doCommand(_actualCommand) != CommandExecutonStatus::CommandExecuted)
+					{
+						delete _actualCommand;
+						_actualCommand = nullptr;
+					}
+					_actualCommand = nullptr;
+				}
 
-			ZomboEditorCamera::Default.position += _velocity * ellapsedTime;
-			_velocity -= _velocityOrigin*6.0f*ellapsedTime;
+			}
+			
 		}
+		/*
+		if (_actualCommand != nullptr)
+		{
+			_actualCommand->invalidate(ZomboEditorCamera::Default.getPositionXY());
+		}
+		*/
+		_prevMidButtonState = isMiddlePressed;
 	}
 }

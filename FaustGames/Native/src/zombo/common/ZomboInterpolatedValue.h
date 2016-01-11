@@ -38,6 +38,7 @@ namespace zombo
 		void update();
 		float getValue() const;
 		float getTargetValue() const;
+		void setAllValues(float value);
 		void setValue(float value);
 		void setTargetValue(float target);
 		void setDuration(float duration);

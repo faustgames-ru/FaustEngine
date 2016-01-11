@@ -4,9 +4,25 @@
 #include "../../zombo_classes.h"
 #include "../../CommonSources/include/zombo.h"
 #include "../ZomboEditorCamera.h"
+#include "../commands/ZomboEditorCommand.h"
 
 namespace zombo
 {
+	class ZomboCopmmandCameraMoveXY: public ZomboEditorCommand
+	{
+	public:
+		ZomboCopmmandCameraMoveXY(const core::Vector2 prevPosition, const core::Vector2 newPosition);
+		void invalidate(const core::Vector2 newPosition);
+
+		virtual bool isExecutionAvaliable() OVERRIDE;
+		virtual bool isUndoAvaliable() OVERRIDE;
+		virtual void execute() OVERRIDE;
+		virtual void undo() OVERRIDE;
+	private:
+		core::Vector2 _prevPosition;
+		core::Vector2 _targetPosition;
+	};
+
 	class ZomboCameraMoveXY : public ZomboCameraMode
 	{
 	public:
@@ -18,13 +34,13 @@ namespace zombo
 	private:
 		core::Vector2 _lastMouse;
 		core::Matrix _rotation;
-		float _midDownTime;
-		core::Vector2 _velocity;
-		core::Vector2 _velocityOrigin;
-		std::queue<VelocityStackEntry> velocities;
+		ZomboCameraVelocityStack velocityStack;
 		ZomboInterpolatedValue _pAngle;
 		ZomboInterpolatedValue _hAngle;
 		ZomboInterpolatedValue _bAngle;
+		ZomboCopmmandCameraMoveXY * _actualCommand;
+		core::Vector2 _prevPosition;
+		bool _prevMidButtonState;
 	};
 }
 

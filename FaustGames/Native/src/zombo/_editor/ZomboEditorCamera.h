@@ -7,11 +7,25 @@
 
 namespace zombo
 {	
-	struct VelocityStackEntry
+	struct ZomboCameraVelocityEntry
 	{
-		float time;
+		ulong time;
 		core::Vector2 velocity;
-		VelocityStackEntry(float t, core::Vector2 v);
+		ZomboCameraVelocityEntry(ulong t, core::Vector2 v);
+	};
+
+	class ZomboCameraVelocityStack
+	{
+	public:
+		ZomboCameraVelocityStack();
+		typedef std::list<ZomboCameraVelocityEntry> Velocities;
+		void updateMove(const core::Vector2 &v);
+		core::Vector2 updateVelocity();
+	private:
+		float _resistance;
+		core::Vector2 _velocity;
+		core::Vector2 _velocityOrigin;
+		Velocities _velocities;
 	};
 
 	class ZomboCameraMode : IBaseObject
@@ -30,7 +44,6 @@ namespace zombo
 
 		float depth;
 		
-		core::Vector3 position;
 		core::MatrixContainer matrix;
 		core::Matrix rotation;
 
@@ -52,10 +65,16 @@ namespace zombo
 		void setPositionY(float y);
 		float getPositionX() const;
 		float getPositionY() const;
+		void addPositionXY(const core::Vector2 &d);
+		void setPositionXY(const core::Vector2 &v);
+		core::Vector2 getPositionXY() const;
 	private:
 		std::string _actualModeName;
 		ZomboInterpolatedValue _scaleValue;
 		ZomboInterpolatedValue _fovValue;
+		ZomboInterpolatedValue _positionX;
+		ZomboInterpolatedValue _positionY;
+		ZomboInterpolatedValue _positionZ;
 	};
 }
 

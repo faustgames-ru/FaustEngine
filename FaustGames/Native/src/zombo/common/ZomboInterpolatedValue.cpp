@@ -57,6 +57,11 @@ namespace zombo
 		return _target;
 	}
 
+	void ZomboInterpolatedValue::setAllValues(float value)
+	{
+		_value = _target = value;
+	}
+
 	void ZomboInterpolatedValue::setValue(float value)
 	{
 		_value = value;

@@ -14,10 +14,30 @@ namespace Zombo.Editor
         public MainWindow()
         {
             InitializeComponent();
-            InvalidateModeButtons();
-            InvalidateCameraModeButtons();
             Application.Idle += ApplicationIdle;
             Closed += MainWindowClosed;
+        }
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            switch (keyData)
+            {
+                case (Keys.Control | Keys.Z):
+                    _undo.PerformClick();
+                    break;
+                case (Keys.Control | Keys.Shift | Keys.Z):
+                    _redo.PerformClick();
+                    break;
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
+
+        private void InvalidateComboFov()
+        {
+            _comboFov.TextChanged -= _comboFov_TextChanged;
+            var fov = (int)Math.Round(_zomboEditScene.ZomboCamera.GetFov() * 180.0f / Math.PI);
+            _comboFov.Text = $"{fov}";
+            _comboFov.TextChanged += _comboFov_TextChanged;
         }
 
         private void MainWindowClosed(object sender, EventArgs e)
@@ -36,7 +56,14 @@ namespace Zombo.Editor
             while (IsApplicationIdle())
             {
                 _zomboEditScene.InternalCallUpdateAndRender();
+                InvalidateUndoButtons();
             }
+        }
+
+        private void InvalidateUndoButtons()
+        {
+            _undo.Enabled = _zomboEditScene.ZomboEditor.IsUndoAvaliable();
+            _redo.Enabled = _zomboEditScene.ZomboEditor.IsRedoAvaliable();
         }
 
         private void InvalidateCameraModeButtons()
@@ -55,8 +82,7 @@ namespace Zombo.Editor
             {
                 toolButton.Checked = toolButton.Name == EditorModeToolStripButtonName + mode;
             }
-            _undo.Enabled = _zomboEditScene.ZomboEditor.IsUndoAvaliable();
-            _redo.Enabled = _zomboEditScene.ZomboEditor.IsRedoAvaliable();
+            InvalidateUndoButtons();
         }
 
         private void CameraModeSwitch(object sender, EventArgs e)
@@ -98,6 +124,29 @@ namespace Zombo.Editor
             {
                 _zomboEditScene.ZomboCamera.SetFov((float)(value * Math.PI / 180.0f));
             }
+            else
+            {
+                InvalidateComboFov();
+            }
+        }
+
+        private void MainWindow_Load(object sender, EventArgs e)
+        {
+            InvalidateModeButtons();
+            InvalidateCameraModeButtons();
+            InvalidateComboFov();
+        }
+
+        private void _zomboEditScene_MouseDown(object sender, MouseEventArgs e)
+        {
+        }
+
+        private void _zomboEditScene_MouseUp(object sender, MouseEventArgs e)
+        {
+        }
+
+        private void _zomboEditScene_Move(object sender, EventArgs e)
+        {
         }
     }
 }

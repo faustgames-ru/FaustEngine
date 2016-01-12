@@ -43,6 +43,7 @@ namespace zombo
 		void setTargetValue(float target);
 		void setDuration(float duration);
 		void setMinVelocity(float minVelocity);
+		bool isUpdating();
 	private:
 		IZomboEase* _ease;
 		float _value;

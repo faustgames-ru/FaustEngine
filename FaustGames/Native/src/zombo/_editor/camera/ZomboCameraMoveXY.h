@@ -8,10 +8,10 @@
 
 namespace zombo
 {
-	class ZomboCopmmandCameraMoveXY: public ZomboEditorCommand
+	class ZomboCommandCameraMoveXY: public ZomboEditorCommand
 	{
 	public:
-		ZomboCopmmandCameraMoveXY(const core::Vector2 prevPosition, const core::Vector2 newPosition);
+		ZomboCommandCameraMoveXY(const core::Vector2 prevPosition, const core::Vector2 newPosition);
 		void invalidate(const core::Vector2 newPosition);
 
 		virtual bool isExecutionAvaliable() OVERRIDE;
@@ -38,7 +38,7 @@ namespace zombo
 		ZomboInterpolatedValue _pAngle;
 		ZomboInterpolatedValue _hAngle;
 		ZomboInterpolatedValue _bAngle;
-		ZomboCopmmandCameraMoveXY * _actualCommand;
+		ZomboCommandCameraMoveXY * _actualCommand;
 		core::Vector2 _prevPosition;
 		bool _prevMidButtonState;
 	};

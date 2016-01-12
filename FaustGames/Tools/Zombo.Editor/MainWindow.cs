@@ -18,8 +18,96 @@ namespace Zombo.Editor
             Closed += MainWindowClosed;
         }
 
+        public static Control FindFocusedControl(Control control)
+        {
+            var container = control as ContainerControl;
+            return (null != container
+                ? FindFocusedControl(container.ActiveControl)
+                : control);
+        }
+
+        public static string GetControlPath(Control control)
+        {
+            var path = control.Name;
+            var parent = control.Parent;
+            while (parent != null)
+            {
+                path = parent.Name + "/" + path;
+                parent = parent.Parent;
+            }
+            return path;
+        }
+
+        private static ToolStripControlHost Find(Control c)
+        {
+            var p = c.Parent;
+            while (p != null)
+            {
+                if (p is ToolStrip)
+                    break;
+                p = p.Parent;
+            }
+            if (p == null)
+                return null;
+
+            ToolStrip ts = (ToolStrip)p;
+            foreach (ToolStripItem i in ts.Items)
+            {
+                var h = Find(i, c);
+                if (h != null)
+                    return h;
+            }
+            return null;
+        }
+
+        private static ToolStripControlHost Find(ToolStripItem item, Control c)
+        {
+            ToolStripControlHost result = null;
+            if (item is ToolStripControlHost)
+            {
+                var h = (ToolStripControlHost)item;
+                if (h.Control == c)
+                {
+                    result = h;
+                }
+            }
+            else if (item is ToolStripDropDownItem)
+            {
+                var ddm = (ToolStripDropDownItem)item;
+                foreach (ToolStripItem i in ddm.DropDown.Items)
+                {
+                    result = Find(i, c);
+                    if (result != null)
+                        break;
+                }
+            }
+            return result;
+        }
+
+        public static ToolStripControlHost FindHost(Control control)
+        {
+            return Find(control);
+        }
+
+        public static bool IsControlTextEdit(Control control)
+        {
+            if (control is TextBox) return true;
+            var host = FindHost(control);
+            if (host is ToolStripTextBox) return true;
+            return false;
+
+        }
+
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
+            var focused = FindFocusedControl(this);
+            if (focused != null)
+            {
+                if (IsControlTextEdit(focused))
+                {
+                    return base.ProcessCmdKey(ref msg, keyData);
+                }
+            }
             switch (keyData)
             {
                 case (Keys.Control | Keys.Z):
@@ -34,9 +122,11 @@ namespace Zombo.Editor
 
         private void InvalidateComboFov()
         {
-            _comboFov.TextChanged -= _comboFov_TextChanged;
             var fov = (int)Math.Round(_zomboEditScene.ZomboCamera.GetFov() * 180.0f / Math.PI);
-            _comboFov.Text = $"{fov}";
+            var newValue = $"{fov}";
+            if (_comboFov.Text == newValue) return;
+            _comboFov.TextChanged -= _comboFov_TextChanged;
+            _comboFov.Text = newValue;
             _comboFov.TextChanged += _comboFov_TextChanged;
         }
 
@@ -57,6 +147,7 @@ namespace Zombo.Editor
             {
                 _zomboEditScene.InternalCallUpdateAndRender();
                 InvalidateUndoButtons();
+                InvalidateComboFov();
             }
         }
 

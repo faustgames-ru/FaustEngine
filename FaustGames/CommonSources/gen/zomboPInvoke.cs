@@ -137,11 +137,46 @@ namespace zombo
 		
 		[DllImport(Version.Dll)]
 		static extern private float zombo_ZomboEditorCamera_getFov (IntPtr classInstance);
+		public bool IsUndoAvaliable ()
+		{
+			return zombo_ZomboEditorCamera_isUndoAvaliable(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private bool zombo_ZomboEditorCamera_isUndoAvaliable (IntPtr classInstance);
+		public bool IsRedoAvaliable ()
+		{
+			return zombo_ZomboEditorCamera_isRedoAvaliable(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private bool zombo_ZomboEditorCamera_isRedoAvaliable (IntPtr classInstance);
+		public void Undo ()
+		{
+			zombo_ZomboEditorCamera_undo(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void zombo_ZomboEditorCamera_undo (IntPtr classInstance);
+		public void Redo ()
+		{
+			zombo_ZomboEditorCamera_redo(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void zombo_ZomboEditorCamera_redo (IntPtr classInstance);
 	}
 	
 	public class ZomboEditor
 	{
 		public IntPtr ClassInstance;
+		public void SetRootPath (String rootPath)
+		{
+			zombo_ZomboEditor_setRootPath(ClassInstance, rootPath);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void zombo_ZomboEditor_setRootPath (IntPtr classInstance, String rootPath);
 		public IntPtr GetMode ()
 		{
 			return zombo_ZomboEditor_getMode(ClassInstance);

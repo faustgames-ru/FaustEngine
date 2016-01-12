@@ -15,6 +15,7 @@ namespace zombo
 		String getEditorModeInternal() const;
 		void setEditorModeInternal(String mode);
 
+		virtual void API_CALL setRootPath(String rootPath) OVERRIDE;
 		virtual IntPtr API_CALL getMode() OVERRIDE;
 		virtual void API_CALL setMode(String modeName) OVERRIDE;
 		virtual bool API_CALL isUndoAvaliable() OVERRIDE;
@@ -28,7 +29,7 @@ namespace zombo
 	private:
 		std::string _actualModeName;
 		IEditorMode *_mode;
-
+		std::string _rootPath;
 	};
 }
 

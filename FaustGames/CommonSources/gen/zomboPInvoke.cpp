@@ -76,6 +76,31 @@ namespace zombo
 		return classInstance->getFov();
 	}
 	
+	extern "C" DLLEXPORT bool API_CALL zombo_ZomboEditorCamera_isUndoAvaliable (IZomboEditorCamera * classInstance)
+	{
+		return classInstance->isUndoAvaliable();
+	}
+	
+	extern "C" DLLEXPORT bool API_CALL zombo_ZomboEditorCamera_isRedoAvaliable (IZomboEditorCamera * classInstance)
+	{
+		return classInstance->isRedoAvaliable();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL zombo_ZomboEditorCamera_undo (IZomboEditorCamera * classInstance)
+	{
+		classInstance->undo();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL zombo_ZomboEditorCamera_redo (IZomboEditorCamera * classInstance)
+	{
+		classInstance->redo();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL zombo_ZomboEditor_setRootPath (IZomboEditor * classInstance, String rootPath)
+	{
+		classInstance->setRootPath(rootPath);
+	}
+	
 	extern "C" DLLEXPORT IntPtr API_CALL zombo_ZomboEditor_getMode (IZomboEditor * classInstance)
 	{
 		return classInstance->getMode();

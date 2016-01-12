@@ -44,6 +44,7 @@
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this._zomboEditScene = new Zombo.Editor.Controls.ZomboEditSceneControl();
+            this.toolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
             this._toolbox.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -61,7 +62,8 @@
             this.toolStripSeparator3,
             this.toolStripLabel1,
             this._comboFov,
-            this.toolStripSeparator4});
+            this.toolStripSeparator4,
+            this.toolStripTextBox1});
             this._toolbox.Location = new System.Drawing.Point(0, 0);
             this._toolbox.Name = "_toolbox";
             this._toolbox.Size = new System.Drawing.Size(747, 25);
@@ -191,6 +193,11 @@
             this._zomboEditScene.MouseUp += new System.Windows.Forms.MouseEventHandler(this._zomboEditScene_MouseUp);
             this._zomboEditScene.Move += new System.EventHandler(this._zomboEditScene_Move);
             // 
+            // toolStripTextBox1
+            // 
+            this.toolStripTextBox1.Name = "toolStripTextBox1";
+            this.toolStripTextBox1.Size = new System.Drawing.Size(100, 25);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -227,6 +234,7 @@
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
         private System.Windows.Forms.ToolStripComboBox _comboFov;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripTextBox toolStripTextBox1;
     }
 }
 

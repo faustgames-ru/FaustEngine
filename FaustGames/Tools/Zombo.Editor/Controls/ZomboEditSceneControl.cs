@@ -41,6 +41,7 @@ namespace Zombo.Editor.Controls
                 try
                 {
                     _editor = zombo.zombo.GetZomboEditor();
+                    _editor.SetRootPath(Application.StartupPath.Replace('\\', '/') + "/");
                     var editorInput = zombo.zombo.GetZomboEditorInput();
                     _editorMouse = editorInput.GetEditorMouse();
                     _editorViewport = zombo.zombo.GetZomboEditorViewport();
@@ -91,6 +92,7 @@ namespace Zombo.Editor.Controls
 
         private void CallUpdateAndRender()
         {
+            InternalCallUpdateAndRender();
         }
 
         protected override void OnPaint(PaintEventArgs e)

@@ -10,33 +10,33 @@ namespace zombo
 	std::string ZomboCameraMoveXY::ModeName("Move");
 
 
-	ZomboCopmmandCameraMoveXY::ZomboCopmmandCameraMoveXY(const core::Vector2 prevPosition, const core::Vector2 newPosition)
+	ZomboCommandCameraMoveXY::ZomboCommandCameraMoveXY(const core::Vector2 prevPosition, const core::Vector2 newPosition)
 	{
 		_targetPosition = newPosition;
 		_prevPosition = prevPosition;
 	}
 
-	void ZomboCopmmandCameraMoveXY::invalidate(const core::Vector2 newPosition)
+	void ZomboCommandCameraMoveXY::invalidate(const core::Vector2 newPosition)
 	{
 		_targetPosition = newPosition;
 	}
 
-	bool ZomboCopmmandCameraMoveXY::isExecutionAvaliable()
+	bool ZomboCommandCameraMoveXY::isExecutionAvaliable()
 	{
 		return !core::Vector2::equals(_prevPosition, _targetPosition);
 	}
 
-	bool ZomboCopmmandCameraMoveXY::isUndoAvaliable()
+	bool ZomboCommandCameraMoveXY::isUndoAvaliable()
 	{
 		return !core::Vector2::equals(_prevPosition, _targetPosition);
 	}
 
-	void ZomboCopmmandCameraMoveXY::execute()
+	void ZomboCommandCameraMoveXY::execute()
 	{
 		ZomboEditorCamera::Default.setPositionXY(_targetPosition);
 	}
 
-	void ZomboCopmmandCameraMoveXY::undo()
+	void ZomboCommandCameraMoveXY::undo()
 	{
 		ZomboEditorCamera::Default.setPositionXY(_prevPosition);
 	}
@@ -88,9 +88,14 @@ namespace zombo
 		{
 			if (_prevMidButtonState)
 			{
-				if (_actualCommand == nullptr)
+				//if (_actualCommand == nullptr)
 				{
-					_actualCommand = new ZomboCopmmandCameraMoveXY(_prevPosition, ZomboEditorCamera::Default.getPositionXY());
+					_actualCommand = new ZomboCommandCameraMoveXY(_prevPosition, ZomboEditorCamera::Default.getPositionXY());
+					if (ZomboEditorCommands::camera()->doCommand(_actualCommand) != CommandExecutonStatus::CommandExecuted)
+					{
+						delete _actualCommand;
+						_actualCommand = nullptr;
+					}
 				}
 			}
 			
@@ -101,23 +106,12 @@ namespace zombo
 			
 			if (!core::Vector2::equals(v, core::Vector2::empty)) 
 			{
-				ZomboEditorCamera::Default.addPositionXY(v*ellapsedTime);
-			}
-			else
-			{
 				if (_actualCommand != nullptr)
 				{
 					_actualCommand->invalidate(ZomboEditorCamera::Default.getPositionXY());
-					if (ZomboEditorCommands::Default.doCommand(_actualCommand) != CommandExecutonStatus::CommandExecuted)
-					{
-						delete _actualCommand;
-						_actualCommand = nullptr;
-					}
-					_actualCommand = nullptr;
 				}
-
-			}
-			
+				ZomboEditorCamera::Default.addPositionXY(v*ellapsedTime);
+			}			
 		}
 		/*
 		if (_actualCommand != nullptr)

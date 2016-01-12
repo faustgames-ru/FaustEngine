@@ -93,4 +93,9 @@ namespace zombo
 	{
 		_minVelocity = minVelocity;
 	}
+
+	bool ZomboInterpolatedValue::isUpdating()
+	{
+		return _actualDuration >= core::Math::Epsilon;
+	}
 }

@@ -67,11 +67,16 @@ namespace zombo
 		virtual void API_CALL setFov(float scale) = 0;
 		virtual float API_CALL getScale() = 0;
 		virtual float API_CALL getFov() = 0;
+		virtual bool API_CALL isUndoAvaliable() = 0;
+		virtual bool API_CALL isRedoAvaliable() = 0;
+		virtual void API_CALL undo() = 0;
+		virtual void API_CALL redo() = 0;
 	};
 
 	class IZomboEditor : IBaseObject
 	{
 	public:
+		virtual void API_CALL setRootPath(String rootPath) = 0;
 		virtual IntPtr API_CALL getMode() = 0;
 		virtual void API_CALL setMode(String modeName) = 0;
 		virtual bool API_CALL isUndoAvaliable() = 0;

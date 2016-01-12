@@ -3,6 +3,12 @@
 namespace zombo
 {
 	ZomboEditorCommands ZomboEditorCommands::Default;
+	//ZomboEditorCommands ZomboEditorCommands::Camera;
+
+	ZomboEditorCommands* ZomboEditorCommands::camera()
+	{
+		return &Default;
+	}
 
 	CommandExecutonStatus::e ZomboEditorCommands::doCommand(ZomboEditorCommand* command)
 	{

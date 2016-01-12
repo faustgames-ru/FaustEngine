@@ -84,10 +84,11 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>EFFECTS_BASIC;WIN32;_DEBUG;_WINDOWS;_USRDLL;LLGE_EXPORTS;LIBPNG_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>EFFECTS_BASIC;WIN32;_DEBUG;_WINDOWS;_USRDLL;LLGE_EXPORTS;LIBPNG_EXPORTS;_CRT_SECURE_NO_WARNINGS;_LIB;FT_DEBUG_LEVEL_ERROR;FT_DEBUG_LEVEL_TRACE;FT2_BUILD_LIBRARY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <AdditionalIncludeDirectories>..\include;..\..\CommonSources\include;..\src\resources\zlib</AdditionalIncludeDirectories>
+      <CompileAsManaged>false</CompileAsManaged>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -415,7 +416,46 @@
     <ClCompile Include="..\src\zombo\_editor\ZomboEditorInput.cpp" />
     <ClCompile Include="..\src\zombo\_editor\ZomboEditorRenderService.cpp" />
     <ClCompile Include="..\src\zombo\_editor\ZomboEditorViewport.cpp" />
+    <ClCompile Include="..\src_freetype\autofit\autofit.c" />
+    <ClCompile Include="..\src_freetype\base\ftbase.c" />
+    <ClCompile Include="..\src_freetype\base\ftbbox.c" />
+    <ClCompile Include="..\src_freetype\base\ftbitmap.c" />
+    <ClCompile Include="..\src_freetype\base\ftfntfmt.c" />
+    <ClCompile Include="..\src_freetype\base\ftfstype.c" />
+    <ClCompile Include="..\src_freetype\base\ftgasp.c" />
+    <ClCompile Include="..\src_freetype\base\ftglyph.c" />
+    <ClCompile Include="..\src_freetype\base\ftgxval.c" />
+    <ClCompile Include="..\src_freetype\base\ftinit.c" />
+    <ClCompile Include="..\src_freetype\base\ftlcdfil.c" />
+    <ClCompile Include="..\src_freetype\base\ftmm.c" />
+    <ClCompile Include="..\src_freetype\base\ftotval.c" />
+    <ClCompile Include="..\src_freetype\base\ftpatent.c" />
+    <ClCompile Include="..\src_freetype\base\ftpfr.c" />
+    <ClCompile Include="..\src_freetype\base\ftstroke.c" />
+    <ClCompile Include="..\src_freetype\base\ftsynth.c" />
+    <ClCompile Include="..\src_freetype\base\ftsystem.c" />
+    <ClCompile Include="..\src_freetype\base\fttype1.c" />
+    <ClCompile Include="..\src_freetype\base\ftwinfnt.c" />
+    <ClCompile Include="..\src_freetype\bdf\bdf.c" />
+    <ClCompile Include="..\src_freetype\cache\ftcache.c" />
+    <ClCompile Include="..\src_freetype\cff\cff.c" />
+    <ClCompile Include="..\src_freetype\cid\type1cid.c" />
+    <ClCompile Include="..\src_freetype\gzip\ftgzip.c" />
+    <ClCompile Include="..\src_freetype\lzw\ftlzw.c" />
+    <ClCompile Include="..\src_freetype\pcf\pcf.c" />
+    <ClCompile Include="..\src_freetype\pfr\pfr.c" />
+    <ClCompile Include="..\src_freetype\psaux\psaux.c" />
+    <ClCompile Include="..\src_freetype\pshinter\pshinter.c" />
+    <ClCompile Include="..\src_freetype\psnames\psmodule.c" />
+    <ClCompile Include="..\src_freetype\raster\raster.c" />
+    <ClCompile Include="..\src_freetype\sfnt\sfnt.c" />
+    <ClCompile Include="..\src_freetype\smooth\smooth.c" />
+    <ClCompile Include="..\src_freetype\truetype\truetype.c" />
+    <ClCompile Include="..\src_freetype\type1\type1.c" />
+    <ClCompile Include="..\src_freetype\type42\type42.c" />
+    <ClCompile Include="..\src_freetype\winfonts\winfnt.c" />
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="ftdebug.c" />
     <ClCompile Include="stdafx.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

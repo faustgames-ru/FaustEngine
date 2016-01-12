@@ -4,10 +4,67 @@
 #include "ZomboEditorInput.h"
 #include "camera/ZomboCameraMoveXY.h"
 #include "camera/ZomboCameraRotate.h"
+#include "commands/ZomboEditorCommands.h"
 
 namespace zombo
 {
 	ZomboEditorCamera ZomboEditorCamera::Default;
+
+
+	ZomboCommandCameraSetFov::ZomboCommandCameraSetFov(float fov): _fov(fov), _prevFov(0)
+	{
+	}
+
+	bool ZomboCommandCameraSetFov::isExecutionAvaliable()
+	{
+		return !core::Math::equals(ZomboEditorCamera::Default.getFov(), _fov);
+	}
+
+	bool ZomboCommandCameraSetFov::isUndoAvaliable()
+	{
+		return !core::Math::equals(ZomboEditorCamera::Default.getFov(), _prevFov);
+	}
+
+	void ZomboCommandCameraSetFov::execute()
+	{
+		_prevFov = ZomboEditorCamera::Default.getFov();
+		ZomboEditorCamera::Default.setFovInternal(_fov);
+	}
+
+	void ZomboCommandCameraSetFov::undo()
+	{
+		ZomboEditorCamera::Default.setFovInternal(_prevFov);
+	}
+
+	ZomboCommandCameraSetScale::ZomboCommandCameraSetScale(float scale): _scale(scale), _prevscale(0)
+	{		
+	}
+
+	bool ZomboCommandCameraSetScale::isExecutionAvaliable()
+	{
+		return !core::Math::equals(ZomboEditorCamera::Default.getScale(), _scale);
+	}
+
+	bool ZomboCommandCameraSetScale::isUndoAvaliable()
+	{
+		return !core::Math::equals(ZomboEditorCamera::Default.getScale(), _prevscale);
+	}
+
+	void ZomboCommandCameraSetScale::execute()
+	{
+		_prevscale = ZomboEditorCamera::Default.getScale();
+		ZomboEditorCamera::Default.setScaleInternal(_scale);
+	}
+
+	void ZomboCommandCameraSetScale::undo()
+	{
+		ZomboEditorCamera::Default.setScaleInternal(_prevscale);
+	}
+
+	void ZomboCommandCameraSetScale::invalidate(float value)
+	{
+		_scale = value;
+	}
 
 	ZomboCameraVelocityEntry::ZomboCameraVelocityEntry(ulong t, core::Vector2 v)
 	{
@@ -15,7 +72,7 @@ namespace zombo
 		velocity = v;
 	}
 
-	ZomboCameraVelocityStack::ZomboCameraVelocityStack() : _resistance(4.0f)
+	ZomboCameraVelocityStack::ZomboCameraVelocityStack() : _resistance(6.0f)
 	{
 	}
 
@@ -28,7 +85,7 @@ namespace zombo
 		if (time > d)
 		{
 			ulong lowTime = time - d;
-			while ((_velocities.front().time < lowTime) || (_velocities.size() > 500))
+			while ((_velocities.front().time < lowTime) || (_velocities.size() > 100))
 			{
 				_velocities.pop_front();
 				if (_velocities.empty()) break;
@@ -43,7 +100,7 @@ namespace zombo
 		}
 		if (vc > 0)
 		{
-			_velocity = velocity / vc;
+			_velocity = velocity / static_cast<float>(vc);
 			_velocityOrigin = _velocity;
 		}
 		else
@@ -143,12 +200,29 @@ namespace zombo
 
 	void ZomboEditorCamera::setScale(float value)
 	{
-		_scaleValue.setTargetValue(value);
+		if (_scaleValue.isUpdating() && (_lastZoomCommand != nullptr))
+		{
+			_lastZoomCommand->invalidate(value);
+			setScaleInternal(value);
+		}
+		else
+		{
+			_lastZoomCommand = new ZomboCommandCameraSetScale(value);
+			if (ZomboEditorCommands::camera()->doCommand(_lastZoomCommand) != CommandExecutonStatus::CommandExecuted)
+			{
+				delete _lastZoomCommand;
+				_lastZoomCommand = nullptr;
+			}
+		}
 	}
 
 	void ZomboEditorCamera::setFov(float value)
 	{
-		_fovValue.setTargetValue(value);
+		ZomboCommandCameraSetFov* command = new ZomboCommandCameraSetFov(value);
+		if (ZomboEditorCommands::camera()->doCommand(command) != CommandExecutonStatus::CommandExecuted)
+		{
+			delete command;
+		}
 	}
 
 	float ZomboEditorCamera::getScale()
@@ -159,6 +233,26 @@ namespace zombo
 	float ZomboEditorCamera::getFov()
 	{
 		return _fovValue.getTargetValue();
+	}
+
+	bool ZomboEditorCamera::isUndoAvaliable()
+	{
+		return ZomboEditorCommands::camera()->isUndoAvaliable();
+	}
+
+	bool ZomboEditorCamera::isRedoAvaliable()
+	{
+		return ZomboEditorCommands::camera()->isRedoAvaliable();
+	}
+
+	void ZomboEditorCamera::undo()
+	{
+		ZomboEditorCommands::camera()->undo();
+	}
+
+	void ZomboEditorCamera::redo()
+	{
+		ZomboEditorCommands::camera()->redo();
 	}
 
 	void ZomboEditorCamera::setEditorModeInternal(String modeName)
@@ -216,6 +310,16 @@ namespace zombo
 	core::Vector2 ZomboEditorCamera::getPositionXY() const
 	{
 		return core::Vector2(_positionX.getTargetValue(), _positionY.getTargetValue());
+	}
+
+	void ZomboEditorCamera::setFovInternal(float value)
+	{
+		_fovValue.setTargetValue(value);
+	}
+
+	void ZomboEditorCamera::setScaleInternal(float value)
+	{
+		_scaleValue.setTargetValue(value);
 	}
 
 	void ZomboEditorCamera::addPositionXY(const core::Vector2 &d)

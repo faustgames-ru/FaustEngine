@@ -3,6 +3,19 @@
 namespace zombo
 {
 	ZomboEditorRenderService ZomboEditorRenderService::Default;
+	ZomboEditorFontRenderer ZomboEditorFontRenderer::Default;
+
+	void ZomboEditorFontRenderer::drawEdge(uint color, const core::Vector3 a, const core::Vector3 b)
+	{
+		vertices[0].xyz = a;
+		vertices[0].color = color;
+		vertices[1].xyz = b;
+		vertices[1].color = color;
+
+		indices[0] = 0;
+		indices[1] = 1;
+		ZomboEditorRenderService::Default.drawLines(vertices, 2, indices, 1);
+	}
 
 	ZomboEditorRenderService::ZomboEditorRenderService(): _entriesCount(0)
 	{

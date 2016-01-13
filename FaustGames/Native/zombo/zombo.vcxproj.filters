@@ -85,6 +85,12 @@
     <Filter Include="freetype\FT_MODULES">
       <UniqueIdentifier>{83b895e8-07ba-4e09-9af3-7e1bc22466d9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="fonts">
+      <UniqueIdentifier>{8b450da8-2d40-46ba-a4bd-67e6c39214f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="geometry">
+      <UniqueIdentifier>{fc4ca26f-4c00-4c23-bdfc-caf553e82e4b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\CommonSources\include\llge.h">
@@ -487,6 +493,54 @@
     </ClInclude>
     <ClInclude Include="..\src\zombo\common\ZomboInterpolatedValue.h">
       <Filter>zombo\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\fonts\Font.h">
+      <Filter>fonts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\fonts\fonts_classes.h">
+      <Filter>fonts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\fonts\fonts_references.h">
+      <Filter>fonts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\fonts\fonts_platform.h">
+      <Filter>fonts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\fonts\IFontRenderer.h">
+      <Filter>fonts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\fonts\FontsManager.h">
+      <Filter>fonts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\fonts\OutlineVectorFont.h">
+      <Filter>fonts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\fonts\FontCharSet.h">
+      <Filter>fonts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\geometry\Aabb2d.h">
+      <Filter>geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\geometry\geometry.h">
+      <Filter>geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\geometry\geometry_classes.h">
+      <Filter>geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\geometry\geometry_platform.h">
+      <Filter>geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\geometry\geometry_references.h">
+      <Filter>geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\geometry\Quadtree2d.h">
+      <Filter>geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\geometry\Quadtree2dItem.h">
+      <Filter>geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\geometry\Quadtree2dNode.h">
+      <Filter>geometry</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -968,6 +1022,27 @@
     </ClCompile>
     <ClCompile Include="..\src_freetype\truetype\truetype.c">
       <Filter>freetype\FT_MODULES</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\fonts\Font.cpp">
+      <Filter>fonts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\fonts\FontsManager.cpp">
+      <Filter>fonts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\fonts\OutlineVectorFont.cpp">
+      <Filter>fonts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\fonts\FontCharSet.cpp">
+      <Filter>fonts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\geometry\Aabb2d.cpp">
+      <Filter>geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\geometry\Quadtree2d.cpp">
+      <Filter>geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\geometry\Quadtree2dNode.cpp">
+      <Filter>geometry</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

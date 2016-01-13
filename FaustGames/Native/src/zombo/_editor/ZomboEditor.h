@@ -4,6 +4,7 @@
 #include "../zombo_classes.h"
 #include "../../CommonSources/include/zombo.h"
 #include "EditorMode.h"
+#include "../../fonts/OutlineVectorFont.h"
 
 namespace zombo
 {
@@ -30,6 +31,7 @@ namespace zombo
 		std::string _actualModeName;
 		IEditorMode *_mode;
 		std::string _rootPath;
+		fonts::OutlineVectorFont *_font;
 	};
 }
 

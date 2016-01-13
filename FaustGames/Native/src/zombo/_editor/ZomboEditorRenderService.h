@@ -3,6 +3,7 @@
 
 #include "../zombo_classes.h"
 #include "../../CommonSources/include/zombo.h"
+#include "../../fonts/IFontRenderer.h"
 
 namespace zombo
 {
@@ -20,6 +21,15 @@ namespace zombo
 		};
 	};
 
+
+	class ZomboEditorFontRenderer : public fonts::IFontRenderer
+	{
+	public:
+		static ZomboEditorFontRenderer Default;
+		ushort indices[2];
+		ColorVertex vertices[2];
+		virtual void drawEdge(uint color, const core::Vector3 a, const core::Vector3 b) OVERRIDE;
+	};
 
 	class ZomboEditorRenderService
 	{

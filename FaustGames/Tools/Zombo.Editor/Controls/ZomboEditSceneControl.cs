@@ -92,7 +92,6 @@ namespace Zombo.Editor.Controls
 
         private void CallUpdateAndRender()
         {
-            InternalCallUpdateAndRender();
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -120,7 +119,7 @@ namespace Zombo.Editor.Controls
             base.OnResize(e);
             if (!_ready) return;
             if (DesignMode) return;
-            CallUpdateAndRender();
+            InternalCallUpdateAndRender();
         }
 
         public void ExecuteOpenGLAction(Action action)
@@ -173,8 +172,9 @@ namespace Zombo.Editor.Controls
                     _editor.Init();
                 });
             }
-            _editor.Update((float)_stopwatch.Elapsed.TotalSeconds);
+            float seconds = (float) _stopwatch.Elapsed.TotalSeconds;
             _stopwatch.Restart();
+            _editor.Update(seconds);
             CallRender();
         }
 

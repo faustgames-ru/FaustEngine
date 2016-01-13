@@ -17,6 +17,11 @@ namespace geometry
 		{
 		}
 
+		Aabb2d(core::Vector2 min, core::Vector2 max) :
+			Min(min),
+			Max(max)
+		{
+		}
 		Aabb2d(float minX, float minY, float maxX, float maxY) :
 			Min(minX, minY),
 			Max(maxX, maxY)
@@ -63,16 +68,26 @@ namespace geometry
 			Max.setY(Min.getY() + size.getY());
 		}
 		
-		inline void expand(float x, float y)
+		inline void expandX(float x)
 		{
 			if (Min.getX() > x)
 				Min.setX(x);
-			if (Min.getY() > y)
-				Min.setY(y);
 			if (Max.getX() < x)
 				Max.setX(x);
+		}
+
+		inline void expandY(float y)
+		{
+			if (Min.getY() > y)
+				Min.setY(y);
 			if (Max.getY() < y)
 				Max.setY(y);
+		}
+
+		inline void expand(float x, float y)
+		{
+			expandX(x);
+			expandY(y);
 		}
 
 		inline bool contains(const Aabb2d &aabb) const

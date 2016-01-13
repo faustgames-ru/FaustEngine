@@ -106,12 +106,13 @@ namespace zombo
 			
 			if (!core::Vector2::equals(v, core::Vector2::empty)) 
 			{
+				ZomboEditorCamera::Default.addPositionXY(v*ellapsedTime);
 				if (_actualCommand != nullptr)
 				{
 					_actualCommand->invalidate(ZomboEditorCamera::Default.getPositionXY());
 				}
-				ZomboEditorCamera::Default.addPositionXY(v*ellapsedTime);
-			}			
+			}
+			
 		}
 		/*
 		if (_actualCommand != nullptr)

@@ -222,6 +222,14 @@ namespace core
 		return *this;
 	}
 
+	Vector3 Vector3::operator+(const Vector3& right) const
+	{
+		return Vector3(
+			_values[iX] + right.getX(),
+			_values[iY] + right.getY(),
+			_values[iZ] + right.getZ());
+	}
+
 	Vector3 Vector3::normalize() const
 	{
 		float l = length();
@@ -254,6 +262,14 @@ namespace core
 	void Vector3::inverseZ()
 	{
 		_values[iZ] = -_values[iZ];
+	}
+
+	Vector3 Vector3::lerp(const Vector3& p1, const Vector3& p2, float u)
+	{
+		return Vector3(
+			Math::lerp(p1.getX(), p2.getX(), u),
+			Math::lerp(p1.getY(), p2.getY(), u),
+			Math::lerp(p1.getZ(), p2.getZ(), u));
 	}
 
 	Vector3 Vector3::crossProduct(Vector3 u, Vector3 v)

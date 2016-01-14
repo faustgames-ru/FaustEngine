@@ -230,10 +230,31 @@ namespace core
 			_values[iZ] + right.getZ());
 	}
 
+	Vector3 Vector3::operator*(const Vector3& right) const
+	{
+		return Vector3(
+			_values[iX] * right.getX(),
+			_values[iY] * right.getY(),
+			_values[iZ] * right.getZ());
+	}
+
+	Vector3 Vector3::operator*(float right) const
+	{
+		return Vector3(
+			_values[iX] * right,
+			_values[iY] * right,
+			_values[iZ] * right);
+	}
+
 	Vector3 Vector3::normalize() const
 	{
 		float l = length();
 		return Vector3(getX() / l, getY() / l, getZ() / l);
+	}
+
+	Vector2 Vector3::toVector2() const
+	{
+		return Vector2(getX(), getY());
 	}
 
 	float Vector3::length() const

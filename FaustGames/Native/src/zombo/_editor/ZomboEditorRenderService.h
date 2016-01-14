@@ -26,9 +26,12 @@ namespace zombo
 	{
 	public:
 		static ZomboEditorFontRenderer Default;
-		ushort indices[2];
-		ColorVertex vertices[2];
+		ushort indices[6];
+		ColorVertex vertices[4];
 		virtual void drawEdge(uint color, const core::Vector3 a, const core::Vector3 b) OVERRIDE;
+		virtual void drawTriangle(uint color, core::Vector3 a, core::Vector3 b, core::Vector3 c) OVERRIDE;
+		virtual void drawTriangle(uint ca, uint cb, uint cc, core::Vector3 a, core::Vector3 b, core::Vector3 c) OVERRIDE;
+		virtual void drawQuad(uint ca, uint cb, uint cc, uint cd, core::Vector3 a, core::Vector3 b, core::Vector3 c, core::Vector3 d) OVERRIDE;
 	};
 
 	class ZomboEditorRenderService
@@ -39,6 +42,7 @@ namespace zombo
 		static ZomboEditorRenderService Default;
 		void draw(ZomboEditorPrimitivesType::e type, graphics::EffectBase *effect, void* vertices, int vertexSize, int verticesCount, ushort* indices, int primitivesCount);
 		void drawLines(ColorVertex* vertices, int verticesCount, ushort* indices, int primitivesCount);
+		void drawTriangles(ColorVertex* vertices, int verticesCount, ushort* indices, int primitivesCount);
 
 		void applyRenderCommands();
 		void resetBuffers();

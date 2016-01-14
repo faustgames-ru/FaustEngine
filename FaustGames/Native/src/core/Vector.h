@@ -92,7 +92,10 @@ namespace core
 		
 		Vector3& operator+=(const Vector2& right);
 		Vector3 operator+(const Vector3 &right) const;
+		Vector3 operator*(const Vector3 &right) const;
+		Vector3 operator*(float right) const;
 		Vector3 normalize() const;
+		Vector2 toVector2() const;
 		float length() const;
 		float lengthSqr() const;
 		Vector3& operator/=(float v);
@@ -101,7 +104,6 @@ namespace core
 		static Vector3 lerp(const Vector3 &p1, const Vector3 &p2, float u);
 		static Vector3 crossProduct(Vector3 v1, Vector3 v2);
 		static float dotProduct(Vector3 v1, Vector3 v2);
-
 		static inline bool equals(const Vector3 &a, const Vector3 &b)
 		{
 			return

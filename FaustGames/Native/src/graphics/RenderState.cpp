@@ -49,7 +49,7 @@ namespace graphics
 		{
 			/// apply depth			
 		}
-
+		
 		if (!_blendState.isEqual())
 		{
 			switch (_blendState.getValue())
@@ -70,7 +70,7 @@ namespace graphics
 			}
 			/// apply blend
 		}
-
+		
 		if (!_effect.isEqual())
 		{
 			_effect.getValue()->applyShader();

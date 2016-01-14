@@ -91,6 +91,15 @@
     <Filter Include="geometry">
       <UniqueIdentifier>{fc4ca26f-4c00-4c23-bdfc-caf553e82e4b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="poly2tri">
+      <UniqueIdentifier>{37c29d14-8ca3-490b-8c57-de10feac7b94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="poly2tri\common">
+      <UniqueIdentifier>{53dc5fa3-fe57-42b4-9d74-187b0c558a23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="poly2tri\sweep">
+      <UniqueIdentifier>{6f4882aa-ffc7-45cc-8d14-3a17d1e04ae8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\CommonSources\include\llge.h">
@@ -541,6 +550,27 @@
     </ClInclude>
     <ClInclude Include="..\src\geometry\Quadtree2dNode.h">
       <Filter>geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_poly2tri\poly2tri.h">
+      <Filter>poly2tri</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_poly2tri\sweep\advancing_front.h">
+      <Filter>poly2tri\sweep</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_poly2tri\sweep\cdt.h">
+      <Filter>poly2tri\sweep</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_poly2tri\sweep\sweep.h">
+      <Filter>poly2tri\sweep</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_poly2tri\sweep\sweep_context.h">
+      <Filter>poly2tri\sweep</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_poly2tri\common\shapes.h">
+      <Filter>poly2tri\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_poly2tri\common\utils.h">
+      <Filter>poly2tri\common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1043,6 +1073,21 @@
     </ClCompile>
     <ClCompile Include="..\src\geometry\Quadtree2dNode.cpp">
       <Filter>geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_poly2tri\sweep\advancing_front.cc">
+      <Filter>poly2tri\sweep</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_poly2tri\sweep\cdt.cc">
+      <Filter>poly2tri\sweep</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_poly2tri\sweep\sweep.cc">
+      <Filter>poly2tri\sweep</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_poly2tri\sweep\sweep_context.cc">
+      <Filter>poly2tri\sweep</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_poly2tri\common\shapes.cc">
+      <Filter>poly2tri\common</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -1,7 +1,7 @@
 #include "OutlineVectorFont.h"
 #include "FontsManager.h"
+#include "../src_poly2tri/poly2tri.h"
 #include <freetype/ftbbox.h>
-
 
 namespace fonts
 {
@@ -64,6 +64,125 @@ namespace fonts
 		s.p[si] = first;
 		outlines.back().segments.push_back(s);
 	}
+	
+	void OutlineVectorFontGlyph::triangulate()
+	{
+		if (outlines.size() == 0) 
+			return;
+		std::vector<std::vector<uint>> polylinesIndices;
+		std::vector<std::vector<p2t::Point *>> polylines;
+		std::vector<p2t::Point> allPoints;
+		polylines.resize(outlines.size());
+		polylinesIndices.resize(outlines.size());
+		std::vector<core::Vector3> polygon;
+		FontGlyphSegment seg;
+
+		for (uint j = 0; j < outlines.size(); j++)
+		{
+			polygon.clear();
+			for (uint k = 0; k < outlines[j].segments.size(); k++)
+			{
+				seg = outlines[j].segments[k];
+				polygon.push_back(points[seg.p[0]].toVector3());
+				if (seg.p[3] >= 0)
+				{
+					// cubic
+					OutlineVectorFont::addCubic(
+						points[seg.p[0]].toVector3(),
+						points[seg.p[1]].toVector3(),
+						points[seg.p[2]].toVector3(),
+						points[seg.p[3]].toVector3(), polygon);
+				}
+				else if (seg.p[2] >= 0)
+				{
+					// conic
+					OutlineVectorFont::addConic(
+						points[seg.p[0]].toVector3(),
+						points[seg.p[1]].toVector3(),
+						points[seg.p[2]].toVector3(), polygon);
+				}
+			}
+			outlinePolygons.push_back(std::vector<core::Vector2>());
+			outlinePrevNormals.push_back(std::vector<core::Vector2>());
+			outlineNextNormals.push_back(std::vector<core::Vector2>());
+			for (uint k = 0; k < polygon.size(); k++)
+			{
+				int prev = k == 0? polygon.size() -1:k - 1;
+				if (core::Vector3::equals(polygon[k], polygon[prev])) continue;
+				uint i = allPoints.size();
+				allPoints.push_back(p2t::Point(polygon[k].getX(), polygon[k].getY()));
+				meshPoints.push_back(polygon[k].toVector2());
+				polylinesIndices[j].push_back(i);
+				outlinePolygons.back().push_back(polygon[k].toVector2());
+			}
+
+			uint size = outlinePolygons.back().size();
+			for (uint k = 0; k < size; k++)
+			{
+				uint ip = k == 0 ? size - 1 : k - 1;
+				uint in = k == (size - 1) ? 0 : k + 1;
+
+				core::Vector2 p0 = outlinePolygons.back()[ip];
+				core::Vector2 p1 = outlinePolygons.back()[k];
+				core::Vector2 p2 = outlinePolygons.back()[in];
+				core::Vector2 n0 = (p1 - p0).normalize().rotate90cw();
+				core::Vector2 n2 = (p2 - p1).normalize().rotate90cw();
+
+				float cross = core::Vector2::crossProduct(n0, n2);
+				if (cross < 0)
+				{
+					core::Vector2 n = (n0 + n2).normalize();
+					outlinePrevNormals.back().push_back(n);
+					outlineNextNormals.back().push_back(n);
+				}
+				else
+				{
+					outlinePrevNormals.back().push_back(n0);
+					outlineNextNormals.back().push_back(n2);
+				}
+			}
+		}
+		if (polylines.size() > 0)
+		{
+			for (uint j = 0; j < polylines.size(); j++)
+			{
+				polylines[j].resize(polylinesIndices[j].size());
+				for (uint k = 0; k < polylinesIndices[j].size(); k++)
+				{					
+					polylines[j][k] = &(allPoints[polylinesIndices[j][k]]);
+				}
+			}
+			p2t::CDT cdt(polylines.back());
+			for (uint k = 0; k < (polylines.size() - 1); k++)
+			{
+				cdt.AddHole(polylines[k]);
+			}
+			cdt.Triangulate();
+			std::vector<p2t::Triangle *> triangles = cdt.GetTriangles();
+			p2t::Point *baseArd = &allPoints[0];
+
+			for (uint j = 0; j < triangles.size(); j++)
+			{
+				p2t::Point *p0 = triangles[j]->GetPoint(0);
+				p2t::Point *p1 = triangles[j]->GetPoint(1);
+				p2t::Point *p2 = triangles[j]->GetPoint(2);
+
+				ushort i0 = p0 - baseArd;
+				ushort i1 = p1 - baseArd;
+				ushort i2 = p2 - baseArd;
+				if (i0 >= allPoints.size())
+					continue;
+				if (i1 >= allPoints.size())
+					continue;
+				if (i2 >= allPoints.size())
+					continue;
+				meshIndices.push_back(i0);
+				meshIndices.push_back(i1);
+				meshIndices.push_back(i2);
+			}
+
+		}
+	}
 
 	OutlineVectorFont::OutlineVectorFont()
 	{
@@ -108,7 +227,7 @@ namespace fonts
 			72,     /* horizontal device resolution    */
 			72);   /* vertical device resolution      */
 
-		for (int n = 0; n < charset->charset.size(); n++)
+		for (uint n = 0; n < charset->charset.size(); n++)
 		{
 			/* retrieve glyph index from character code */
 			char symbol = charset->charset[n];
@@ -174,6 +293,40 @@ namespace fonts
 		}
 	}
 
+	void OutlineVectorFont::addConic(const core::Vector3 &p1, const core::Vector3 &p2, const core::Vector3 &p3, std::vector<core::Vector3> &points)
+	{
+		// todo: detail curve upon its len
+		float step = 0.25f;
+		float h = 1.0f - step * 0.5f;
+		for (float t = step; t < h; t += step)
+		{
+			core::Vector3 a = core::Vector3::lerp(p1, p2, t);
+			core::Vector3 b = core::Vector3::lerp(p2, p3, t);
+			core::Vector3 p = core::Vector3::lerp(a, b, t);
+			points.push_back(p);
+		}
+	}
+
+
+	void OutlineVectorFont::addCubic(const core::Vector3& p1, const core::Vector3& p2, const core::Vector3& p3, const core::Vector3& p4, std::vector<core::Vector3> &points)
+	{
+		// todo: detail curve upon its len
+		float step = 0.2f;
+		float h = 1.0f - step * 0.5f;
+		for (float t = step; t < h; t += step)
+		{
+			core::Vector3 a = core::Vector3::lerp(p1, p2, t);
+			core::Vector3 b = core::Vector3::lerp(p2, p3, t);
+			core::Vector3 c = core::Vector3::lerp(p3, p4, t);
+
+			core::Vector3 d = core::Vector3::lerp(a, b, t);
+			core::Vector3 e = core::Vector3::lerp(b, c, t);
+
+			core::Vector3 p = core::Vector3::lerp(d, e, t);
+			points.push_back(p);
+		}
+	}
+
 	core::Vector2 OutlineVectorFont::getSize(float scale, const char* text)
 	{
 		scale /= 512.0f;
@@ -201,9 +354,9 @@ namespace fonts
 		if (text == nullptr) return;
 		core::Vector3 pen = position;
 		scale /= 512.0f;
+		FontGlyphSegment seg;
 		for (uint i = 0; text[i] != 0; i++)
 		{
-			FontGlyphSegment seg;
 			OutlineVectorFontGlyph* glyph = _glyphs[text[i]];
 			if (glyph != nullptr)
 			{
@@ -243,9 +396,130 @@ namespace fonts
 		}
 	}
 
+	void OutlineVectorFont::renderTringlesEdges(const core::Vector3& position, float scale, const char* text, IFontRenderer* renderer)
+	{
+		if (text == nullptr) return;
+		core::Vector3 pen = position;
+		scale /= 512.0f;
+		FontGlyphSegment seg;
+		for (uint i = 0; text[i] != 0; i++)
+		{			
+			OutlineVectorFontGlyph* glyph = _glyphs[text[i]];
+			if (glyph != nullptr)
+			{
+				uint triasCount = glyph->meshIndices.size() / 3;
+				for (uint j = 0; j < triasCount; j++)
+				{
+					int p0 = glyph->meshIndices[j * 3 + 0];
+					int p1 = glyph->meshIndices[j * 3 + 1];
+					int p2 = glyph->meshIndices[j * 3 + 2];
+					// line
+					renderer->drawEdge(0xffffffff,
+						pen + (glyph->meshPoints[p0] * scale).toVector3(),
+						pen + (glyph->meshPoints[p1] * scale).toVector3());
+					renderer->drawEdge(0xffffffff,
+						pen + (glyph->meshPoints[p1] * scale).toVector3(),
+						pen + (glyph->meshPoints[p2] * scale).toVector3());
+					renderer->drawEdge(0xffffffff,
+						pen + (glyph->meshPoints[p2] * scale).toVector3(),
+						pen + (glyph->meshPoints[p0] * scale).toVector3());
+				}
+				pen.setX(pen.getX() + glyph->advance.getX() * scale);
+			}
+		}
+	}
+
+	void OutlineVectorFont::renderTringles(const core::Vector3& position, float scale, const char* text, IFontRenderer* renderer)
+	{
+		if (text == nullptr) return;
+		core::Vector3 pen = position;
+		scale /= 512.0f;
+		FontGlyphSegment seg;
+		for (uint i = 0; text[i] != 0; i++)
+		{
+			OutlineVectorFontGlyph* glyph = _glyphs[text[i]];
+			if (glyph != nullptr)
+			{
+				uint triasCount = glyph->meshIndices.size() / 3;
+				for (uint j = 0; j < triasCount; j++)
+				{
+					int i0 = glyph->meshIndices[j * 3 + 0];
+					int i1 = glyph->meshIndices[j * 3 + 1];
+					int i2 = glyph->meshIndices[j * 3 + 2];
+					// line
+					
+					core::Vector2 p0 = glyph->meshPoints[i0];
+					core::Vector2 p1 = glyph->meshPoints[i1];
+					core::Vector2 p2 = glyph->meshPoints[i2];
+
+					renderer->drawTriangle(0xffffffff,
+						pen + p0.toVector3() * scale,
+						pen + p1.toVector3() * scale,
+						pen + p2.toVector3() * scale);			
+				}
+				pen.setX(pen.getX() + glyph->advance.getX() * scale);
+			}
+		}
+	}
+
+	void OutlineVectorFont::renderTringlesSmooth(const core::Vector3& position, float scale, float smoothScale, const char* text, IFontRenderer* renderer)
+	{
+		if (text == nullptr) return;
+		core::Vector3 pen = position;
+		scale /= 512.0f;
+		float d = 2.0f*smoothScale / scale;
+		FontGlyphSegment seg;
+		uint bc = 0x00ffffff;
+		uint fc = 0xffffffff;
+		for (uint i = 0; text[i] != 0; i++)
+		{
+			OutlineVectorFontGlyph* glyph = _glyphs[text[i]];
+			if (glyph != nullptr)
+			{
+				for (uint j = 0; j < glyph->outlinePolygons.size(); j++)
+				{
+					uint size = glyph->outlinePolygons[j].size();
+					for (uint k = 0; k < size; k++)
+					{
+						uint ip = k == 0 ? size - 1 : k - 1;
+
+						core::Vector2 p0 = glyph->outlinePolygons[j][ip];
+						core::Vector2 p1 = glyph->outlinePolygons[j][k];
+						core::Vector2 n0 = glyph->outlineNextNormals[j][ip] * d;
+						core::Vector2 n1 = glyph->outlinePrevNormals[j][k] * d;
+						core::Vector2 n2 = glyph->outlineNextNormals[j][k] * d;
+						
+						renderer->drawQuad(
+								bc,
+								bc,
+								fc,
+								fc,
+								pen + (p0 + n0).toVector3() * scale,
+								pen + (p1 + n1).toVector3() * scale,
+								pen + p1.toVector3() * scale,
+								pen + p0.toVector3() * scale);
+
+							renderer->drawTriangle(
+								bc,
+								bc,
+								fc,
+								pen + (p1 + n1).toVector3() * scale,
+								pen + (p1 + n2).toVector3() * scale,
+								pen + p1.toVector3() * scale);												
+					}
+				}
+				pen.setX(pen.getX() + glyph->advance.getX() * scale);
+			}
+		}
+	}
+
 	void OutlineVectorFont::loadOutline(FT_GlyphSlot slot, char symbol)
 	{
 		if (_glyphs[symbol] != nullptr) return;
+		if(symbol=='i')
+		{
+			symbol = 'i';
+		}
 		OutlineVectorFontGlyph *glyph = new OutlineVectorFontGlyph();
 		glyph->advance = core::Vector2(static_cast<float>(slot->advance.x) / 64.0f, static_cast<float>(slot->advance.y) / 64.0f);
 		glyph->min = core::Vector2(static_cast<float>(slot->metrics.horiBearingX) / 64.0f, static_cast<float>(slot->metrics.horiBearingY - slot->metrics.height) / 64.0f);
@@ -265,7 +539,7 @@ namespace fonts
 			end = slot->outline.contours[i];
 			contour.clear();	
 			int onCount = 0;
-			for (uint j = start; j <= end; j++)
+			for (short j = start; j <= end; j++)
 			{
 				if (j < slot->outline.n_points)
 				{
@@ -327,5 +601,6 @@ namespace fonts
 			}
 			start = end + 1;
 		}
+		glyph->triangulate();
 	}
 }

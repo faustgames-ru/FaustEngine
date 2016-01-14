@@ -76,7 +76,7 @@ namespace zombo
 	void ZomboEditor::init()
 	{
 		resources::ContentManager::Default.open();
-		std::string fontPath = _rootPath + std::string("Content/Quicksand-Bold.otf");
+		std::string fontPath = _rootPath + std::string("Content/Quicksand-Regular.otf");
 		resources::ContentProvider::openContent(fontPath.c_str());
 		unsigned char* buffer = static_cast<unsigned char*>(resources::ContentManager::Default.getBuffer());
 		int len = 0;
@@ -88,7 +88,10 @@ namespace zombo
 		}
 
 		fonts::FontsManager::Default.init();
-		_font = fonts::FontsManager::Default.createOutlineVectorFont(buffer, len, &fonts::FontCharSet::latin);
+		_font = fonts::FontsManager::Default.createOutlineVectorFont(buffer, len,
+			&fonts::FontCharSet::latin
+			/*new fonts::FontCharSet("i")*/
+			);
 		resources::ContentManager::Default.close();
 
 		graphics::GraphicsDevice::Default.setClearState(0x805050, 1.0f);
@@ -106,9 +109,12 @@ namespace zombo
 		ZomboEditorCamera::Default.update();
 		_mode->update();
 		
-		const char *fuckenString = "Zombo Editor";
-		core::Vector2 size = _font->getSize(0.25f, fuckenString);
-		_font->render((size * -0.5f).toVector3(), 0.25f, fuckenString, &ZomboEditorFontRenderer::Default);
+		const char *zomboString = "Zombo Editor";
+		core::Vector2 size = _font->getSize(0.25f, zomboString);
+		//_font->render((size * -0.5f).toVector3(), 0.25f, zomboString, &ZomboEditorFontRenderer::Default);
+		_font->renderTringles((size * -0.5f).toVector3(), 0.25f, zomboString, &ZomboEditorFontRenderer::Default);
+		float smoothScale = ZomboEditorCamera::Default.getInterpoaltedScale() / ZomboEditorViewport::Default.h;
+		_font->renderTringlesSmooth((size * -0.5f).toVector3(), 0.25f, smoothScale, zomboString, &ZomboEditorFontRenderer::Default);
 	}
 
 	void ZomboEditor::render()

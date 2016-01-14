@@ -308,6 +308,13 @@
     <ClInclude Include="..\src\zombo\_editor\ZomboEditorInput.h" />
     <ClInclude Include="..\src\zombo\_editor\ZomboEditorRenderService.h" />
     <ClInclude Include="..\src\zombo\_editor\ZomboEditorViewport.h" />
+    <ClInclude Include="..\src_poly2tri\common\shapes.h" />
+    <ClInclude Include="..\src_poly2tri\common\utils.h" />
+    <ClInclude Include="..\src_poly2tri\poly2tri.h" />
+    <ClInclude Include="..\src_poly2tri\sweep\advancing_front.h" />
+    <ClInclude Include="..\src_poly2tri\sweep\cdt.h" />
+    <ClInclude Include="..\src_poly2tri\sweep\sweep.h" />
+    <ClInclude Include="..\src_poly2tri\sweep\sweep_context.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
@@ -477,6 +484,11 @@
     <ClCompile Include="..\src_freetype\type1\type1.c" />
     <ClCompile Include="..\src_freetype\type42\type42.c" />
     <ClCompile Include="..\src_freetype\winfonts\winfnt.c" />
+    <ClCompile Include="..\src_poly2tri\common\shapes.cc" />
+    <ClCompile Include="..\src_poly2tri\sweep\advancing_front.cc" />
+    <ClCompile Include="..\src_poly2tri\sweep\cdt.cc" />
+    <ClCompile Include="..\src_poly2tri\sweep\sweep.cc" />
+    <ClCompile Include="..\src_poly2tri\sweep\sweep_context.cc" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="ftdebug.c" />
     <ClCompile Include="stdafx.cpp" />

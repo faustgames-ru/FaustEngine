@@ -7,7 +7,7 @@
 namespace graphics
 {
 	EffectSolidColor EffectsBasic::_solidColor;
-	EffectTextureColor EffectsBasic::_textureColor;
+	EffectTexturePackedColor EffectsBasic::_textureColor;
 
 	void EffectsBasic::create()
 	{
@@ -28,7 +28,7 @@ namespace graphics
 		return &_solidColor;
 	}
 
-	EffectTextureColor * EffectsBasic::textureColor()
+	EffectTexturePackedColor * EffectsBasic::textureColor()
 	{
 		return &_textureColor;
 	}

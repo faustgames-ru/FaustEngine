@@ -3,6 +3,7 @@
 
 #include "fonts_classes.h"
 #include "OutlineVectorFont.h"
+#include "BitmapFont.h"
 
 namespace fonts
 {
@@ -16,6 +17,7 @@ namespace fonts
 		void *getFontLibraryInstance() const;
 
 		OutlineVectorFont *createOutlineVectorFont(void *buffer, uint bytesCount, FontCharSet *charset) const;
+		BitmapFont *createBitmapFont(void *buffer, uint bytesCount, float pixelSize, FontCharSet *charset) const;
 	private:
 		FT_Library _ftLibrary;
 	};

@@ -11,6 +11,15 @@
 
 namespace graphics
 {
+	class EffectTexturePackedColor : public EffectBase
+	{
+	public:
+		EffectTexturePackedColor();
+		~EffectTexturePackedColor();
+		void create();
+	protected:
+	private:
+	};
 	class EffectTextureColor : public EffectBase
 	{
 	public:

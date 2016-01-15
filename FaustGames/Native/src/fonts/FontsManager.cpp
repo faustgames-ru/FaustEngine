@@ -33,4 +33,11 @@ namespace fonts
 		result->load(buffer, bytesCount, charset);
 		return result;
 	}
+
+	BitmapFont* FontsManager::createBitmapFont(void* buffer, uint bytesCount, float pixelSize, FontCharSet* charset) const
+	{
+		BitmapFont* result = new BitmapFont();
+		result->load(buffer, bytesCount, pixelSize, charset);
+		return result;
+	}
 }

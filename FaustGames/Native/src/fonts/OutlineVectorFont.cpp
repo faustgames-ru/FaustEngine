@@ -310,8 +310,19 @@ namespace fonts
 
 	void OutlineVectorFont::addCubic(const core::Vector3& p1, const core::Vector3& p2, const core::Vector3& p3, const core::Vector3& p4, std::vector<core::Vector3> &points)
 	{
+		float len = (p4 - p3).length() + (p3 - p2).length() + (p2 - p1).length();
+
 		// todo: detail curve upon its len
-		float step = 0.2f;
+		if (core::Math::equals(len, 0, 0.01f)) return;
+		if (len < 1.0f)
+			len = 1.0f;
+
+		float step = 10.0f / len;// 0.2f;
+		if (step > 0.3f)
+			step = 0.3f;
+		if (step < 0.1f)
+			step = 0.1f;
+
 		float h = 1.0f - step * 0.5f;
 		for (float t = step; t < h; t += step)
 		{
@@ -467,7 +478,7 @@ namespace fonts
 		if (text == nullptr) return;
 		core::Vector3 pen = position;
 		scale /= 512.0f;
-		float d = 2.0f*smoothScale / scale;
+		float d = -1.0f*smoothScale / scale;
 		FontGlyphSegment seg;
 		uint bc = 0x00ffffff;
 		uint fc = 0xffffffff;

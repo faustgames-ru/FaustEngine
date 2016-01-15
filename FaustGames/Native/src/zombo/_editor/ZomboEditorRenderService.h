@@ -4,6 +4,7 @@
 #include "../zombo_classes.h"
 #include "../../CommonSources/include/zombo.h"
 #include "../../fonts/IFontRenderer.h"
+#include "../../fonts/BitmapFont.h"
 
 namespace zombo
 {
@@ -17,11 +18,21 @@ namespace zombo
 		{
 			None,
 			Edges,
-			Triangles
+			Triangles,
+			TrianglesTextured
 		};
 	};
 
 
+	class ZomboEditorBitmapFontRenderer : public fonts::IBitmapFontRenderer
+	{
+	public:
+		static ZomboEditorBitmapFontRenderer Default;
+		ushort indices[6];
+		RenderVertex vertices[4];
+		virtual void drawQuad(uint color, graphics::Texture *texture, const fonts::BitmapFontVertex &min, const fonts::BitmapFontVertex &max, float z, bool rotate) OVERRIDE;
+	};
+	
 	class ZomboEditorFontRenderer : public fonts::IFontRenderer
 	{
 	public:
@@ -40,13 +51,15 @@ namespace zombo
 		ZomboEditorRenderService();
 		~ZomboEditorRenderService();
 		static ZomboEditorRenderService Default;
-		void draw(ZomboEditorPrimitivesType::e type, graphics::EffectBase *effect, void* vertices, int vertexSize, int verticesCount, ushort* indices, int primitivesCount);
+		void draw(ZomboEditorPrimitivesType::e type, uint actualTexture, graphics::EffectBase *effect, void* vertices, int vertexSize, int verticesCount, ushort* indices, int primitivesCount);
 		void drawLines(ColorVertex* vertices, int verticesCount, ushort* indices, int primitivesCount);
 		void drawTriangles(ColorVertex* vertices, int verticesCount, ushort* indices, int primitivesCount);
+		void drawTrianglesTextured(graphics::Texture* texture, RenderVertex* vertices, int verticesCount, ushort* indices, int primitivesCount);
 
 		void applyRenderCommands();
 		void resetBuffers();
-	private:
+		;
+private:
 		ZomboEditorRenderBuffer *getBuffer(uint vertexSize, uint verticesCount, uint indicesCount);
 		ZomboEditorRenderBuffers *getBuffers(uint vertexSize);
 
@@ -64,6 +77,7 @@ namespace zombo
 		ZomboEditorRenderBuffer* buffer;
 		ushort *indices;
 		int indicesCount;
+		uint texture;
 		ZomboEditorRenderEntry();
 	};
 

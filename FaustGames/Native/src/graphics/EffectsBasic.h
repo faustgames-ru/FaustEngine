@@ -17,10 +17,10 @@ namespace graphics
 		static void create();
 		static void cleanup();
 		static EffectSolidColor * solidColor();
-		static EffectTextureColor * textureColor();
+		static EffectTexturePackedColor * textureColor();
 	private:
 		static EffectSolidColor _solidColor;
-		static EffectTextureColor _textureColor;
+		static EffectTexturePackedColor _textureColor;
 	};
 }
 

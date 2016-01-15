@@ -9,8 +9,8 @@ namespace zombo
 {
 	struct TextureCoords
 	{
-		ushort u;
-		ushort v;
+		unsigned short u;
+		unsigned short v;
 	};
 	
 	struct ColorVertex
@@ -35,6 +35,17 @@ namespace zombo
 		core::Vector3 xyz;
 		uint color;
 		TextureCoords uv;
+		RenderVertex(): color(0)
+		{}
+		RenderVertex(float x, float y, float z, uint c, ushort u, ushort v)
+		{
+			xyz.setX(x);
+			xyz.setY(y);
+			xyz.setZ(z);
+			color = c;
+			uv.u = u;
+			uv.v = v;
+		}
 	};
 
 	struct ZomboRect

@@ -5,6 +5,7 @@
 #include "../../CommonSources/include/zombo.h"
 #include "EditorMode.h"
 #include "../../fonts/OutlineVectorFont.h"
+#include "../../fonts/BitmapFont.h"
 
 namespace zombo
 {
@@ -32,6 +33,10 @@ namespace zombo
 		IEditorMode *_mode;
 		std::string _rootPath;
 		fonts::OutlineVectorFont *_font;
+		fonts::BitmapFont *_bitmapFont;
+		graphics::TextureImage2d * _textureFiltered;
+		graphics::TextureImage2d * _texture;
+
 	};
 }
 

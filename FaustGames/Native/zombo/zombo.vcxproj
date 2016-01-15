@@ -180,8 +180,10 @@
     <ClInclude Include="..\src\core\Matrix.h" />
     <ClInclude Include="..\src\core\StaticArray.h" />
     <ClInclude Include="..\src\core\Vector.h" />
+    <ClInclude Include="..\src\fonts\BitmapFont.h" />
     <ClInclude Include="..\src\fonts\FontCharSet.h" />
     <ClInclude Include="..\src\fonts\Font.h" />
+    <ClInclude Include="..\src\fonts\FontRects.h" />
     <ClInclude Include="..\src\fonts\FontsManager.h" />
     <ClInclude Include="..\src\fonts\fonts_classes.h" />
     <ClInclude Include="..\src\fonts\fonts_platform.h" />
@@ -315,6 +317,12 @@
     <ClInclude Include="..\src_poly2tri\sweep\cdt.h" />
     <ClInclude Include="..\src_poly2tri\sweep\sweep.h" />
     <ClInclude Include="..\src_poly2tri\sweep\sweep_context.h" />
+    <ClInclude Include="..\src_rectanglebinpack\GuillotineBinPack.h" />
+    <ClInclude Include="..\src_rectanglebinpack\MaxRectsBinPack.h" />
+    <ClInclude Include="..\src_rectanglebinpack\Rect.h" />
+    <ClInclude Include="..\src_rectanglebinpack\ShelfBinPack.h" />
+    <ClInclude Include="..\src_rectanglebinpack\ShelfNextFitBinPack.h" />
+    <ClInclude Include="..\src_rectanglebinpack\SkylineBinPack.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
@@ -331,8 +339,10 @@
     <ClCompile Include="..\src\core\Vector.cpp" />
     <ClCompile Include="..\src\exports\llgeGraphics.cpp" />
     <ClCompile Include="..\src\exports\llgeResources.cpp" />
+    <ClCompile Include="..\src\fonts\BitmapFont.cpp" />
     <ClCompile Include="..\src\fonts\Font.cpp" />
     <ClCompile Include="..\src\fonts\FontCharSet.cpp" />
+    <ClCompile Include="..\src\fonts\FontRects.cpp" />
     <ClCompile Include="..\src\fonts\FontsManager.cpp" />
     <ClCompile Include="..\src\fonts\OutlineVectorFont.cpp" />
     <ClCompile Include="..\src\geometry\Aabb2d.cpp" />
@@ -489,6 +499,12 @@
     <ClCompile Include="..\src_poly2tri\sweep\cdt.cc" />
     <ClCompile Include="..\src_poly2tri\sweep\sweep.cc" />
     <ClCompile Include="..\src_poly2tri\sweep\sweep_context.cc" />
+    <ClCompile Include="..\src_rectanglebinpack\GuillotineBinPack.cpp" />
+    <ClCompile Include="..\src_rectanglebinpack\MaxRectsBinPack.cpp" />
+    <ClCompile Include="..\src_rectanglebinpack\Rect.cpp" />
+    <ClCompile Include="..\src_rectanglebinpack\ShelfBinPack.cpp" />
+    <ClCompile Include="..\src_rectanglebinpack\ShelfNextFitBinPack.cpp" />
+    <ClCompile Include="..\src_rectanglebinpack\SkylineBinPack.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="ftdebug.c" />
     <ClCompile Include="stdafx.cpp" />

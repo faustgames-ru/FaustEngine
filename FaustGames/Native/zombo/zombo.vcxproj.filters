@@ -100,6 +100,9 @@
     <Filter Include="poly2tri\sweep">
       <UniqueIdentifier>{6f4882aa-ffc7-45cc-8d14-3a17d1e04ae8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="rectanglebinpack">
+      <UniqueIdentifier>{c21c60a6-b459-4b1f-a051-6fccd687f60e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\CommonSources\include\llge.h">
@@ -571,6 +574,30 @@
     </ClInclude>
     <ClInclude Include="..\src_poly2tri\common\utils.h">
       <Filter>poly2tri\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\fonts\BitmapFont.h">
+      <Filter>fonts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\fonts\FontRects.h">
+      <Filter>fonts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_rectanglebinpack\GuillotineBinPack.h">
+      <Filter>rectanglebinpack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_rectanglebinpack\MaxRectsBinPack.h">
+      <Filter>rectanglebinpack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_rectanglebinpack\Rect.h">
+      <Filter>rectanglebinpack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_rectanglebinpack\ShelfBinPack.h">
+      <Filter>rectanglebinpack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_rectanglebinpack\ShelfNextFitBinPack.h">
+      <Filter>rectanglebinpack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_rectanglebinpack\SkylineBinPack.h">
+      <Filter>rectanglebinpack</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1088,6 +1115,30 @@
     </ClCompile>
     <ClCompile Include="..\src_poly2tri\common\shapes.cc">
       <Filter>poly2tri\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\fonts\BitmapFont.cpp">
+      <Filter>fonts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\fonts\FontRects.cpp">
+      <Filter>fonts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_rectanglebinpack\GuillotineBinPack.cpp">
+      <Filter>rectanglebinpack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_rectanglebinpack\MaxRectsBinPack.cpp">
+      <Filter>rectanglebinpack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_rectanglebinpack\Rect.cpp">
+      <Filter>rectanglebinpack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_rectanglebinpack\ShelfBinPack.cpp">
+      <Filter>rectanglebinpack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_rectanglebinpack\ShelfNextFitBinPack.cpp">
+      <Filter>rectanglebinpack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_rectanglebinpack\SkylineBinPack.cpp">
+      <Filter>rectanglebinpack</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

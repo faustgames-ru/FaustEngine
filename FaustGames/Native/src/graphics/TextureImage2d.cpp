@@ -35,7 +35,7 @@ namespace graphics
 		_handleDefault = _empty.getHandle();
 	}
 	
-	TextureImage2d::TextureImage2d(bool generateMipmaps, bool useFilter) : _wrap(false), _filter(useFilter), _createMipmaps(generateMipmaps)
+	TextureImage2d::TextureImage2d(bool generateMipmaps, bool useFilter) : _createMipmaps(generateMipmaps), _wrap(false), _filter(useFilter)
 	{
 		_size = 0;
 		_handle = 0;

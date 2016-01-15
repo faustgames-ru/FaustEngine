@@ -4,6 +4,67 @@ namespace zombo
 {
 	ZomboEditorRenderService ZomboEditorRenderService::Default;
 	ZomboEditorFontRenderer ZomboEditorFontRenderer::Default;
+	ZomboEditorBitmapFontRenderer ZomboEditorBitmapFontRenderer::Default;
+
+	void ZomboEditorBitmapFontRenderer::drawQuad(uint color, graphics::Texture* texture, const fonts::BitmapFontVertex& min, const fonts::BitmapFontVertex& max, float z, bool rotate)
+	{
+		ushort t0 = 1;
+		ushort t1 = 65535;
+
+		if(rotate)
+		{			
+			vertices[0].xyz = core::Vector3(min.xy.getX(), min.xy.getY(), z);
+			vertices[0].color = color;
+			vertices[0].uv.u = max.u;
+			vertices[0].uv.v = min.v;
+
+			vertices[1].xyz = core::Vector3(min.xy.getX(), max.xy.getY(), z);;
+			vertices[1].color = color;
+			vertices[1].uv.u = min.u;
+			vertices[1].uv.v = min.v;
+
+			vertices[2].xyz = core::Vector3(max.xy.getX(), max.xy.getY(), z);;
+			vertices[2].color = color;
+			vertices[2].uv.u = min.u;
+			vertices[2].uv.v = max.v;
+
+			vertices[3].xyz = core::Vector3(max.xy.getX(), min.xy.getY(), z);;
+			vertices[3].color = color;
+			vertices[3].uv.u = max.u;
+			vertices[3].uv.v = max.v;
+		}
+		else
+		{			
+			vertices[0].xyz = core::Vector3(min.xy.getX(), min.xy.getY(), z);
+			vertices[0].color = color;
+			vertices[0].uv.u = min.u;
+			vertices[0].uv.v = min.v;
+
+			vertices[1].xyz = core::Vector3(min.xy.getX(), max.xy.getY(), z);;
+			vertices[1].color = color;
+			vertices[1].uv.u = min.u;
+			vertices[1].uv.v = max.v;
+
+			vertices[2].xyz = core::Vector3(max.xy.getX(), max.xy.getY(), z);;
+			vertices[2].color = color;
+			vertices[2].uv.u = max.u;
+			vertices[2].uv.v = max.v;
+
+			vertices[3].xyz = core::Vector3(max.xy.getX(), min.xy.getY(), z);;
+			vertices[3].color = color;
+			vertices[3].uv.u = max.u;
+			vertices[3].uv.v = min.v;
+		}
+
+
+		indices[0] = 0;
+		indices[1] = 1;
+		indices[2] = 2;
+		indices[3] = 0;
+		indices[4] = 2;
+		indices[5] = 3;
+		ZomboEditorRenderService::Default.drawTrianglesTextured(texture, vertices, 4, indices, 2);
+	}
 
 	void ZomboEditorFontRenderer::drawEdge(uint color, const core::Vector3 a, const core::Vector3 b)
 	{
@@ -79,7 +140,7 @@ namespace zombo
 		}
 	}
 
-	void ZomboEditorRenderService::draw(ZomboEditorPrimitivesType::e type, graphics::EffectBase* effect, void* vertices, int vertexSize, int verticesCount, ushort* indices, int primitivesCount)
+	void ZomboEditorRenderService::draw(ZomboEditorPrimitivesType::e type, uint actualTexture, graphics::EffectBase* effect, void* vertices, int vertexSize, int verticesCount, ushort* indices, int primitivesCount)
 	{
 		if (_entries.size() <= _entriesCount)
 			_entries.resize(_entriesCount + 1);
@@ -92,6 +153,7 @@ namespace zombo
 			primitiveSize = 2;
 			break;
 		case ZomboEditorPrimitivesType::Triangles:
+		case ZomboEditorPrimitivesType::TrianglesTextured:
 			primitiveSize = 3;
 			break;
 		default: 
@@ -114,6 +176,8 @@ namespace zombo
 				newEntry = true;
 			if (_entries[entriesHigh].type != type)
 				newEntry = true;
+			if (_entries[entriesHigh].texture != actualTexture)
+				newEntry = true;
 		}
 		if (newEntry)
 		{
@@ -133,16 +197,22 @@ namespace zombo
 		_entries[entriesHigh].buffer = buffer;
 		_entries[entriesHigh].effect = effect;
 		_entries[entriesHigh].type = type;
+		_entries[entriesHigh].texture = actualTexture;
 	}
 
 	void ZomboEditorRenderService::drawLines(ColorVertex* vertices, int verticesCount, ushort* indices, int primitivesCount)
 	{
-		draw(ZomboEditorPrimitivesType::Edges, graphics::EffectsBasic::solidColor(), vertices, sizeof(ColorVertex), verticesCount, indices, primitivesCount);
+		draw(ZomboEditorPrimitivesType::Edges, 0, graphics::EffectsBasic::solidColor(), vertices, sizeof(ColorVertex), verticesCount, indices, primitivesCount);
 	}
 
 	void ZomboEditorRenderService::drawTriangles(ColorVertex* vertices, int verticesCount, ushort* indices, int primitivesCount)
 	{
-		draw(ZomboEditorPrimitivesType::Triangles, graphics::EffectsBasic::solidColor(), vertices, sizeof(ColorVertex), verticesCount, indices, primitivesCount);
+		draw(ZomboEditorPrimitivesType::Triangles, 0, graphics::EffectsBasic::solidColor(), vertices, sizeof(ColorVertex), verticesCount, indices, primitivesCount);
+	}
+
+	void ZomboEditorRenderService::drawTrianglesTextured(graphics::Texture* texture, RenderVertex* vertices, int verticesCount, ushort* indices, int primitivesCount)
+	{
+		draw(ZomboEditorPrimitivesType::TrianglesTextured, texture->getHandle(), graphics::EffectsBasic::textureColor(), vertices, sizeof(RenderVertex), verticesCount, indices, primitivesCount);
 	}
 
 	void ZomboEditorRenderService::applyRenderCommands()
@@ -158,6 +228,10 @@ namespace zombo
 				break;
 			case ZomboEditorPrimitivesType::Triangles: 
 				graphics::GraphicsDevice::Default.drawPrimitives(graphics::VertexFormatsBasic::positionColor(), _entries[i].buffer->getBuffer(), _entries[i].indices, _entries[i].indicesCount / 3);
+				break;
+			case ZomboEditorPrimitivesType::TrianglesTextured:
+				graphics::UniformValues::texture()->setValue(_entries[i].texture);
+				graphics::GraphicsDevice::Default.drawPrimitives(graphics::VertexFormatsBasic::positionColorTexture(), _entries[i].buffer->getBuffer(), _entries[i].indices, _entries[i].indicesCount / 3);
 				break;
 			default: break;
 			}
@@ -191,7 +265,7 @@ namespace zombo
 		return buffers;
 	}
 
-	ZomboEditorRenderEntry::ZomboEditorRenderEntry(): type(ZomboEditorPrimitivesType::None), effect(nullptr), buffer(nullptr), indices(nullptr), indicesCount(0)
+	ZomboEditorRenderEntry::ZomboEditorRenderEntry(): type(ZomboEditorPrimitivesType::None), effect(nullptr), buffer(nullptr), indices(nullptr), indicesCount(0), texture(0)
 	{
 	}
 

@@ -3,6 +3,7 @@
 #include "../ZomboEditorInput.h"
 #include "../ZomboEditorViewport.h"
 #include "../commands/ZomboEditorCommands.h"
+#include "../../ZomboLog.h"
 
 namespace zombo
 {
@@ -33,11 +34,13 @@ namespace zombo
 
 	void ZomboCommandCameraMoveXY::execute()
 	{
+		ZomboLog::Default.m("Do: Move camera");
 		ZomboEditorCamera::Default.setPositionXY(_targetPosition);
 	}
 
 	void ZomboCommandCameraMoveXY::undo()
 	{
+		ZomboLog::Default.m("Undo: Move camera");
 		ZomboEditorCamera::Default.setPositionXY(_prevPosition);
 	}
 
@@ -49,7 +52,8 @@ namespace zombo
 	void ZomboCameraMoveXY::activated()
 	{
 		float p, h, b;
-		ZomboEditorCamera::Default.rotation.GetRotation(p, h, b);
+		ZomboEditorCamera::Default.rotator.ternimateInterpolator();
+		ZomboEditorCamera::Default.rotator.actualRotation.getRotation(p, h, b);
 		_pAngle.setValue(p);
 		_hAngle.setValue(h);
 		_bAngle.setValue(b);
@@ -63,7 +67,7 @@ namespace zombo
 		_pAngle.update();
 		_hAngle.update();
 		_bAngle.update();
-		ZomboEditorCamera::Default.rotation = core::Matrix::createEuler(_pAngle.getValue(), _hAngle.getValue(), _bAngle.getValue());
+		ZomboEditorCamera::Default.rotator.setRotation(core::Matrix::createEuler(_pAngle.getValue(), _hAngle.getValue(), _bAngle.getValue()));
 
 		float ellapsedTime = ZomboGameEnvironment::ellapsedSeconds;
 		bool isMiddlePressed = ZomboEditorInput::Default.mouse.isMiddlePressed();

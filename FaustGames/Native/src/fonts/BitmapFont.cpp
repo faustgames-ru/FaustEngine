@@ -24,7 +24,39 @@ namespace fonts
 		}
 	}
 
-	void BitmapFont::render(const core::Vector3& position, float scale, const char* text, IBitmapFontRenderer* renderer)
+	core::Vector2 BitmapFont::getSize(float scale, const char* text)
+	{
+		if (text == nullptr) return core::Vector2::empty;
+		core::Vector2 pen = core::Vector2::empty;
+		geometry::Aabb2d aabb(core::Vector2::empty, core::Vector2::empty);
+		for (uint i = 0; text[i] != 0; i++)
+		{
+			BitmapFontGlyph* glyph = _glyphs[text[i]];
+			if (glyph != nullptr)
+			{
+				aabb.expandY(pen.getY() + glyph->min.xy.getY() * scale);
+				aabb.expandY(pen.getY() + glyph->max.xy.getY() * scale);
+
+				pen.setX(pen.getX() + glyph->advance.getX() * scale);
+
+				aabb.expand(pen.getX(), pen.getY());
+				aabb.expandX(pen.getX());
+			}
+		}
+		return aabb.Max - aabb.Min;
+	}
+
+	void BitmapFont::render(int x, int y, uint color, float scale, const char* text, IBitmapFontRenderer* renderer)
+	{
+		render(core::Vector3(static_cast<float>(x), static_cast<float>(y), 0.0f), scale, color, text, renderer);
+	}
+
+	void BitmapFont::render(int x, int y, uint color, const char* text, IBitmapFontRenderer* renderer)
+	{
+		render(core::Vector3(static_cast<float>(x), static_cast<float>(y), 0.0f), 1.0f, color, text, renderer);
+	}
+
+	void BitmapFont::render(const core::Vector3& position, float scale, uint color, const char* text, IBitmapFontRenderer* renderer)
 	{
 		if (text == nullptr) return;
 		core::Vector3 pen = position;
@@ -42,7 +74,7 @@ namespace fonts
 					BitmapFontVertex max = glyph->max;
 					max.xy *= scale;
 					max.xy += pen.toVector2();
-					renderer->drawQuad(0xffffffff, _textures[glyph->pageIndex], min, max, pen.getZ(), glyph->rotation);
+					renderer->drawQuad(color, _textures[glyph->pageIndex], min, max, pen.getZ(), glyph->rotation);
 				}
 				pen.setX(pen.getX() + glyph->advance.getX() * scale);
 			}
@@ -51,6 +83,7 @@ namespace fonts
 
 	void BitmapFont::load(void* inBuffer, int bytesCount, float pixelSize, FontCharSet* charset)
 	{
+		fontPixelSize = pixelSize;
 		// allow use resources buffer for image allocations
 		void* buffer = core::Mem::allocate(bytesCount); 
 		memcpy(buffer, inBuffer, bytesCount);
@@ -94,7 +127,7 @@ namespace fonts
 		}
 
 		std::vector<FontRectsPage> pages;
-		FontRects::build(128, 128, sizes, pages);
+		FontRects::build(1024, 1024, sizes, pages);
 		ushort maxT = 65535;
 		for (uint i = 0; i < pages.size(); i++)
 		{

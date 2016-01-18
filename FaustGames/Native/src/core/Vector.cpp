@@ -293,6 +293,11 @@ namespace core
 		_values[iZ] = -_values[iZ];
 	}
 
+	bool Vector3::isEmpty() const
+	{
+		return Vector3::equals(*this, empty);
+	}
+
 	Vector3 Vector3::lerp(const Vector3& p1, const Vector3& p2, float u)
 	{
 		return Vector3(

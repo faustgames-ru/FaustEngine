@@ -47,6 +47,7 @@ namespace core
 		
 		inline const float *getData() const { return &(_values[0]); }
 
+		static bool equals(const Matrix &a, const Matrix &b);
 		static Matrix createScale(float x, float y, float z);
 		static Matrix createRotation(Vector3 n, float a);
 
@@ -153,7 +154,7 @@ namespace core
 				xw*d, yw*d, zw*d, ww*d);
 		}
 
-		inline void GetRotation(float& p, float& h, float& b) const
+		inline void getRotation(float& p, float& h, float& b) const
 		{
 			b = Math::atan2(getYx(), getYy());
 			h = Math::atan2(getXz(), getZz());

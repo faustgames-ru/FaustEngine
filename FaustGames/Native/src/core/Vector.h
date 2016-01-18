@@ -102,6 +102,7 @@ namespace core
 		Vector3& operator/=(float v);
 		void inverseY();
 		void inverseZ();
+		bool isEmpty() const;
 		static Vector3 lerp(const Vector3 &p1, const Vector3 &p2, float u);
 		static Vector3 crossProduct(Vector3 v1, Vector3 v2);
 		static float dotProduct(Vector3 v1, Vector3 v2);

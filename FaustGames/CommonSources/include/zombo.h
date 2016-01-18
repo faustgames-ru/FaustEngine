@@ -24,7 +24,7 @@
 
 typedef unsigned short ushort;
 typedef unsigned int uint;
-typedef unsigned long ulong;
+typedef unsigned long long ulong;
 typedef const char * String;
 typedef void * IntPtr;
 

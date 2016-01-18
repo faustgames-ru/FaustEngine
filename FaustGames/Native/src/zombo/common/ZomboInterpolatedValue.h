@@ -40,9 +40,11 @@ namespace zombo
 		float getTargetValue() const;
 		void setAllValues(float value);
 		void setValue(float value);
+		void setTargetValueIfNotEqual(float target);
 		void setTargetValue(float target);
 		void setDuration(float duration);
 		void setMinVelocity(float minVelocity);
+		void setEase(IZomboEase* ease);
 		bool isUpdating();
 	private:
 		IZomboEase* _ease;

@@ -67,6 +67,12 @@ namespace zombo
 		_value = value;
 	}
 
+	void ZomboInterpolatedValue::setTargetValueIfNotEqual(float target)
+	{
+		if (core::Math::equals(target, _target)) return;
+		setTargetValue(target);
+	}
+	
 	void ZomboInterpolatedValue::setTargetValue(float target)
 	{
 		_source = _value;
@@ -92,6 +98,11 @@ namespace zombo
 	void ZomboInterpolatedValue::setMinVelocity(float minVelocity)
 	{
 		_minVelocity = minVelocity;
+	}
+
+	void ZomboInterpolatedValue::setEase(IZomboEase* ease)
+	{
+		_ease = ease;
 	}
 
 	bool ZomboInterpolatedValue::isUpdating()

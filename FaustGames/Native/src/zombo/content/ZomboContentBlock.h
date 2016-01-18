@@ -3,6 +3,7 @@
 
 #include "../zombo_classes.h"
 #include "ZomboAtlas.h"
+#include "ZomboBitmapFont.h"
 
 namespace zombo
 {
@@ -20,6 +21,7 @@ namespace zombo
 		ZomboContentTexture* getTexture(const char * fileName) const;
 		ZomboContentAtlasPage* getAtlasPage(const char * fileName) const;
 		ZomboContentAtlas* getAtlas(const char * fileName) const;
+		ZomboBitmapFont* getBitmapFont(const char* fileName) const;
 		void update();
 		void setRoot(const std::string &rootPath);
 		typedef std::map<std::string, ZomboContentTexture*> TexturesMap;
@@ -27,6 +29,7 @@ namespace zombo
 		typedef std::map<std::string, ZomboContentAtlas*> AtlasMap;
 		typedef std::map<std::string, ZomboContentImage*> ImagesMap;
 		typedef std::map<std::string, ZomboContentFrameAnimation*> FrameAnimationsMap;
+		typedef std::map<std::string, ZomboBitmapFont*> BitmapFontsMap;
 	private:
 		template <typename T> T* getMapValue(std::map<std::string, T*> map, const char * fileName) const;
 		TexturesMap _textures;
@@ -34,10 +37,13 @@ namespace zombo
 		AtlasMap _altases;
 		ImagesMap _images;
 		FrameAnimationsMap _frameAnimations;
+		BitmapFontsMap _bitmapFonts;
 		std::string _rootPath;
 		std::queue<std::string> _loadingQueue;
 		bool _loaded;
-		
+
+		std::string getBitmapFontFileName(const std::string& fileName);
+		int getBitmapFontSize(const std::string& fileName);
 		static bool hasFormat(const std::string &fileName, const std::string& format);
 		static std::string format(const std::string& fileName, int number, int leadingZeros);
 		static std::string format(const std::string &fileName, int number);
@@ -46,6 +52,7 @@ namespace zombo
 		void loadTexture(const std::string &fileName);
 		ZomboContentAtlasPage* loadAtlasPage(const std::string &fileName);
 		void loadAtlas(const std::string &fileName);
+		void loadBitmapFont(const std::string &fileName, int size);
 	};
 
 	template <typename T>

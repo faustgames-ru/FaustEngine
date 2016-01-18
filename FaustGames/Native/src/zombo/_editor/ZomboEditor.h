@@ -6,9 +6,16 @@
 #include "EditorMode.h"
 #include "../../fonts/OutlineVectorFont.h"
 #include "../../fonts/BitmapFont.h"
+#include "../content/ZomboContentBlock.h"
 
 namespace zombo
 {
+	class ZomboEditorConstants
+	{
+	public:
+		static std::string LogDisplayerFont;
+	};
+
 	class ZomboEditor : public IZomboEditor
 	{
 	public:
@@ -16,6 +23,7 @@ namespace zombo
 		static ZomboEditor Default;
 		String getEditorModeInternal() const;
 		void setEditorModeInternal(String mode);
+		ZomboContentBlock internalContent;
 
 		virtual void API_CALL setRootPath(String rootPath) OVERRIDE;
 		virtual IntPtr API_CALL getMode() OVERRIDE;
@@ -29,15 +37,16 @@ namespace zombo
 		virtual void API_CALL render() OVERRIDE;
 		virtual void API_CALL release() OVERRIDE;
 	private:
+		void renderGui();		
+		void internalUpdate();
+		void contentLoaded();
+
 		std::string _actualModeName;
 		IEditorMode *_mode;
 		std::string _rootPath;
-		fonts::OutlineVectorFont *_font;
-		fonts::BitmapFont *_bitmapFont;
-		graphics::TextureImage2d * _textureFiltered;
-		graphics::TextureImage2d * _texture;
+		core::MatrixContainer _guiMatrix;
+		bool _needCallContetnLoaded;
 
 	};
 }
-
 #endif /* ZOMBO_EDITOR_H */

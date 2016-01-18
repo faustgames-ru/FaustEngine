@@ -599,6 +599,15 @@
     <ClInclude Include="..\src_rectanglebinpack\SkylineBinPack.h">
       <Filter>rectanglebinpack</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\zombo\ZomboLog.h">
+      <Filter>zombo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\zombo\_editor\ZomboEditorLogDisplayer.h">
+      <Filter>zombo\_editor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\zombo\content\ZomboBitmapFont.h">
+      <Filter>zombo\content</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\CommonSources\gen\llgePInvoke.cpp">
@@ -1139,6 +1148,15 @@
     </ClCompile>
     <ClCompile Include="..\src_rectanglebinpack\SkylineBinPack.cpp">
       <Filter>rectanglebinpack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\zombo\ZomboLog.cpp">
+      <Filter>zombo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\zombo\_editor\ZomboEditorLogDisplayer.cpp">
+      <Filter>zombo\_editor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\zombo\content\ZomboBitmapFont.cpp">
+      <Filter>zombo\content</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

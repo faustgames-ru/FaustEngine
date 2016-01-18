@@ -12,6 +12,7 @@ namespace zombo
 		static ulong ellapsedTime;
 		static float ellapsedSeconds;
 		static ulong getTime(float seconds);
+		static float getSeconds(ulong delta);
 		static void update(float ellapsedTime);
 	};
 }

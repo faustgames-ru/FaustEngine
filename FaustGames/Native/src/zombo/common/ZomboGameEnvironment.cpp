@@ -12,6 +12,11 @@ namespace zombo
 		return static_cast<ulong>(core::Math::round(seconds * ZomboConstants::LongTimeScale));
 	}
 
+	float ZomboGameEnvironment::getSeconds(ulong delta)
+	{
+		return static_cast<float>(delta) / static_cast<float>(ZomboConstants::LongTimeScale);
+	}
+
 	void ZomboGameEnvironment::update(float ellapsedTime)
 	{
 		ellapsedSeconds = ellapsedTime;

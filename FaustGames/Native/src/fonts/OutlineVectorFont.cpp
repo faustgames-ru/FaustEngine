@@ -478,7 +478,7 @@ namespace fonts
 		if (text == nullptr) return;
 		core::Vector3 pen = position;
 		scale /= 512.0f;
-		float d = -1.0f*smoothScale / scale;
+		float d = -2.0f*smoothScale / scale;
 		FontGlyphSegment seg;
 		uint bc = 0x00ffffff;
 		uint fc = 0xffffffff;

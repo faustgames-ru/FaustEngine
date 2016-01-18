@@ -17,6 +17,7 @@ namespace zombo
 		virtual bool isUndoAvaliable() OVERRIDE;
 		virtual void execute() OVERRIDE;
 		virtual void undo() OVERRIDE;
+	private:
 	};
 }
 

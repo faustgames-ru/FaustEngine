@@ -33,9 +33,13 @@ namespace fonts
 	class BitmapFont : public IBaseObject
 	{
 	public:
+		float fontPixelSize;
 		BitmapFont();
 		~BitmapFont();
-		void render(const core::Vector3 &position, float scale, const char *text, IBitmapFontRenderer* renderer);
+		core::Vector2 getSize(float scale, const char* text);
+		void render(int x, int y, uint color, float scale, const char *text, IBitmapFontRenderer* renderer);
+		void render(int x, int y, uint color, const char *text, IBitmapFontRenderer* renderer);
+		void render(const core::Vector3 &position, float scale, uint color, const char *text, IBitmapFontRenderer* renderer);
 		void load(void *buffer, int bytesCount, float pixelSize, FontCharSet *charset);
 		void unload();
 		std::vector<graphics::TextureImage2d *> _textures;

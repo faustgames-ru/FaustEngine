@@ -8,6 +8,7 @@
 
 namespace zombo
 {
+	class ZomboEditorRenderService;
 	class ZomboEditorRenderBuffer;
 	class ZomboEditorRenderBuffers;
 	class ZomboEditorRenderEntry;
@@ -27,7 +28,7 @@ namespace zombo
 	class ZomboEditorBitmapFontRenderer : public fonts::IBitmapFontRenderer
 	{
 	public:
-		static ZomboEditorBitmapFontRenderer Default;
+		ZomboEditorRenderService* renderService;
 		ushort indices[6];
 		RenderVertex vertices[4];
 		virtual void drawQuad(uint color, graphics::Texture *texture, const fonts::BitmapFontVertex &min, const fonts::BitmapFontVertex &max, float z, bool rotate) OVERRIDE;
@@ -48,17 +49,18 @@ namespace zombo
 	class ZomboEditorRenderService
 	{
 	public:
+		ZomboEditorBitmapFontRenderer FontRenderer;
 		ZomboEditorRenderService();
 		~ZomboEditorRenderService();
 		static ZomboEditorRenderService Default;
+		static ZomboEditorRenderService Gui;
 		void draw(ZomboEditorPrimitivesType::e type, uint actualTexture, graphics::EffectBase *effect, void* vertices, int vertexSize, int verticesCount, ushort* indices, int primitivesCount);
 		void drawLines(ColorVertex* vertices, int verticesCount, ushort* indices, int primitivesCount);
 		void drawTriangles(ColorVertex* vertices, int verticesCount, ushort* indices, int primitivesCount);
 		void drawTrianglesTextured(graphics::Texture* texture, RenderVertex* vertices, int verticesCount, ushort* indices, int primitivesCount);
 
 		void applyRenderCommands();
-		void resetBuffers();
-		;
+		void resetBuffers();		
 private:
 		ZomboEditorRenderBuffer *getBuffer(uint vertexSize, uint verticesCount, uint indicesCount);
 		ZomboEditorRenderBuffers *getBuffers(uint vertexSize);

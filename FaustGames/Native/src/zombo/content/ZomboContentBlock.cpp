@@ -1,5 +1,8 @@
 #include "ZomboContentBlock.h"
 #include "loaders/LoaderJsonAtlas.h"
+#include <cctype>
+#include "../ZomboLog.h"
+#include "../../fonts/FontsManager.h"
 
 namespace zombo
 {
@@ -65,6 +68,11 @@ namespace zombo
 		return getMapValue(_altases, fileName);
 	}
 
+	ZomboBitmapFont* ZomboContentBlock::getBitmapFont(const char* fileName) const
+	{
+		return getMapValue(_bitmapFonts, fileName);
+	}
+
 	void ZomboContentBlock::update()
 	{
 		// todo: make update logic here
@@ -93,6 +101,60 @@ namespace zombo
 		return true;
 	}
 
+	std::string ZomboContentBlock::getBitmapFontFileName(const std::string& fileName)
+	{
+		std::string result;
+		bool listen = false;
+		for (uint i = 0; i < fileName.size(); i++)
+		{
+			if (fileName[i] == ']')
+			{
+				listen = false;
+				continue;
+			}
+			if (fileName[i] == '[')
+			{
+				listen = true;
+				continue;
+			}
+			if (!listen)
+			{
+				result += fileName[i];
+			}
+		}
+		return result;
+	}
+	
+	int ZomboContentBlock::getBitmapFontSize(const std::string& fileName)
+	{
+		std::string valueStr;
+		std::string dimStr;
+		bool listen = false;
+		for (uint i = 0; i < fileName.size(); i++)
+		{
+			if (fileName[i] == ']') break;
+			if (fileName[i] == '[')
+			{
+				listen = true;
+				continue;
+			}
+			if (listen)
+			{
+				if (isdigit(fileName[i]))
+				{
+					valueStr += fileName[i];
+				}
+				else
+				{
+					dimStr += fileName[i];
+				}
+			}
+		}
+		if (valueStr.size() == 0) return 0;
+		// todo: support em or other resolution independent dimensions
+		return core::Convert::toInt(valueStr);
+	}
+	
 	bool ZomboContentBlock::hasFormat(const std::string& fileName, const std::string& format)
 	{
 		return fileName.find(format) != fileName.npos;
@@ -129,6 +191,17 @@ namespace zombo
 			else
 			{
 				loadAtlasPage(fileName);
+			}
+		} if (ext == "otf"|| ext == "ttf")
+		{
+			int size = getBitmapFontSize(fileName);
+			if (size > 0)
+			{
+				loadBitmapFont(fileName, size);
+			}
+			else
+			{
+				// todo: load outline vector font
 			}
 		}
 	}
@@ -195,5 +268,32 @@ namespace zombo
 			altas->pages.push_back(page);
 		}
 		_altases[fileName] = altas;
+	}
+
+	void ZomboContentBlock::loadBitmapFont(const std::string& fileName, int size)
+	{
+		std::string fontFile = getBitmapFontFileName(fileName);
+		resources::ContentManager content = resources::ContentManager::Default;
+		std::string fullPath = _rootPath + fontFile;
+		if (!resources::ContentProvider::existContent(fullPath.c_str()))
+		{
+			// todo: handle error
+			ZomboLog::Default.e("file not found: " + fileName);
+			return;
+		}
+		resources::ContentProvider::openContent(fullPath.c_str());
+		char* buffer = static_cast<char *>(content.getBuffer());
+		int len = 0;
+		const int pageSize = 256 * 1024;
+		int count = 0;
+		while ((count = resources::ContentProvider::read(buffer + len, pageSize)) > 0)
+		{
+			len += count;
+		}
+
+		ZomboBitmapFont *font = ZomboBitmapFont::create();
+		font->font = fonts::FontsManager::Default.createBitmapFont(buffer, len, static_cast<float>(size),
+			&fonts::FontCharSet::all);
+		_bitmapFonts[fileName] = font;
 	}
 }

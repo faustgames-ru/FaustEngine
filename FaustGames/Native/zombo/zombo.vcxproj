@@ -285,6 +285,7 @@
     <ClInclude Include="..\src\zombo\content\serialization\ZomboSerializer.h" />
     <ClInclude Include="..\src\zombo\content\serialization\ZomboValue.h" />
     <ClInclude Include="..\src\zombo\content\ZomboAtlas.h" />
+    <ClInclude Include="..\src\zombo\content\ZomboBitmapFont.h" />
     <ClInclude Include="..\src\zombo\content\ZomboContentBlock.h" />
     <ClInclude Include="..\src\zombo\content\ZomboContentScene.h" />
     <ClInclude Include="..\src\zombo\content\ZomboContentSystem.h" />
@@ -294,6 +295,7 @@
     <ClInclude Include="..\src\zombo\scenes\ZomboScene.h" />
     <ClInclude Include="..\src\zombo\ZomboEntity.h" />
     <ClInclude Include="..\src\zombo\ZomboGame.h" />
+    <ClInclude Include="..\src\zombo\ZomboLog.h" />
     <ClInclude Include="..\src\zombo\ZomboWorld.h" />
     <ClInclude Include="..\src\zombo\zombo_classes.h" />
     <ClInclude Include="..\src\zombo\zombo_platform.h" />
@@ -310,6 +312,7 @@
     <ClInclude Include="..\src\zombo\_editor\ZomboEditorInput.h" />
     <ClInclude Include="..\src\zombo\_editor\ZomboEditorRenderService.h" />
     <ClInclude Include="..\src\zombo\_editor\ZomboEditorViewport.h" />
+    <ClInclude Include="..\src\zombo\_editor\ZomboEditorLogDisplayer.h" />
     <ClInclude Include="..\src_poly2tri\common\shapes.h" />
     <ClInclude Include="..\src_poly2tri\common\utils.h" />
     <ClInclude Include="..\src_poly2tri\poly2tri.h" />
@@ -434,6 +437,7 @@
     <ClCompile Include="..\src\zombo\content\serialization\ZomboSerializer.cpp" />
     <ClCompile Include="..\src\zombo\content\serialization\ZomboValue.cpp" />
     <ClCompile Include="..\src\zombo\content\ZomboAtlas.cpp" />
+    <ClCompile Include="..\src\zombo\content\ZomboBitmapFont.cpp" />
     <ClCompile Include="..\src\zombo\content\ZomboContentBlock.cpp" />
     <ClCompile Include="..\src\zombo\content\ZomboContentScene.cpp" />
     <ClCompile Include="..\src\zombo\content\ZomboContentSystem.cpp" />
@@ -443,6 +447,7 @@
     <ClCompile Include="..\src\zombo\scenes\ZomboScene.cpp" />
     <ClCompile Include="..\src\zombo\ZomboEntity.cpp" />
     <ClCompile Include="..\src\zombo\ZomboGame.cpp" />
+    <ClCompile Include="..\src\zombo\ZomboLog.cpp" />
     <ClCompile Include="..\src\zombo\ZomboWorld.cpp" />
     <ClCompile Include="..\src\zombo\zombo_classes.cpp" />
     <ClCompile Include="..\src\zombo\_editor\camera\ZomboCameraMoveXY.cpp" />
@@ -456,6 +461,7 @@
     <ClCompile Include="..\src\zombo\_editor\ZomboEditorInput.cpp" />
     <ClCompile Include="..\src\zombo\_editor\ZomboEditorRenderService.cpp" />
     <ClCompile Include="..\src\zombo\_editor\ZomboEditorViewport.cpp" />
+    <ClCompile Include="..\src\zombo\_editor\ZomboEditorLogDisplayer.cpp" />
     <ClCompile Include="..\src_freetype\autofit\autofit.c" />
     <ClCompile Include="..\src_freetype\base\ftbase.c" />
     <ClCompile Include="..\src_freetype\base\ftbbox.c" />

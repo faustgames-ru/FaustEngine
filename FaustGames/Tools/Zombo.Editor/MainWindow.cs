@@ -148,6 +148,7 @@ namespace Zombo.Editor
             {
                 _zomboEditScene.InternalCallUpdateAndRender();
                 InvalidateUndoButtons();
+                InvalidateCameraModeButtons();
                 InvalidateComboFov();
             }
         }

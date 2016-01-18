@@ -8,6 +8,19 @@
 
 namespace zombo
 {	
+	class ZomboCommandCameraSetMode : public ZomboEditorCommand
+	{
+	public:
+		std::string originMode;
+		std::string targetMode;
+		ZomboCommandCameraSetMode(const std::string &mode);
+		virtual bool isExecutionAvaliable() OVERRIDE;
+		virtual bool isUndoAvaliable() OVERRIDE;
+		virtual void execute() OVERRIDE;
+		virtual void undo() OVERRIDE;
+	private:
+	};
+
 	class ZomboCommandCameraSetFov : public ZomboEditorCommand
 	{
 	public:
@@ -63,6 +76,22 @@ namespace zombo
 		virtual void updateInput() = 0;
 	};
 	
+	class ZomboEditorCameraRotator
+	{
+	public:
+		ZomboEditorCameraRotator();
+		void setRotation(const core::Matrix &matrix);
+		core::Matrix originRotation;
+		core::Matrix actualRotation;
+		core::Matrix targetRotation;
+		void ternimateInterpolator();
+		void rotate(core::Matrix originMatrix, core::Vector3 n, float a, core::Matrix targetMatrix);
+		void update();
+	private:
+		core::Vector3 _normal;
+		ZomboInterpolatedValue _angle;
+	};
+
 	class ZomboEditorCamera : public IZomboEditorCamera
 	{
 	public:
@@ -73,7 +102,7 @@ namespace zombo
 		float depth;
 		
 		core::MatrixContainer matrix;
-		core::Matrix rotation;
+		ZomboEditorCameraRotator rotator;
 
 		ZomboEditorCamera();
 		~ZomboEditorCamera();
@@ -92,7 +121,7 @@ namespace zombo
 		virtual void API_CALL undo() OVERRIDE;
 		virtual void API_CALL redo() OVERRIDE;
 
-		void setEditorModeInternal(String mode);
+		void setModeInternal(String mode);
 		float getInterpoaltedScale() const;
 		void setPositionX(float x);
 		void setPositionY(float y);
@@ -103,6 +132,7 @@ namespace zombo
 		core::Vector2 getPositionXY() const;
 		void setFovInternal(float value);
 		void setScaleInternal(float value);
+		std::string getModeInternal();
 	private:
 		std::string _actualModeName;
 		ZomboInterpolatedValue _scaleValue;

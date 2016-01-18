@@ -13,6 +13,32 @@ namespace core
 
 	Matrix2 Matrix2::identity(1, 0, 0, 1);
 
+	bool Matrix::equals(const Matrix& a, const Matrix& b)
+	{
+		{
+			return
+				Math::equals(a.getXx(), b.getXx(), Math::Epsilon) &&
+				Math::equals(a.getXy(), b.getXy(), Math::Epsilon) &&
+				Math::equals(a.getXz(), b.getXz(), Math::Epsilon) &&
+				Math::equals(a.getXw(), b.getXw(), Math::Epsilon) &&
+
+				Math::equals(a.getYx(), b.getYx(), Math::Epsilon) &&
+				Math::equals(a.getYy(), b.getYy(), Math::Epsilon) &&
+				Math::equals(a.getYz(), b.getYz(), Math::Epsilon) &&
+				Math::equals(a.getYw(), b.getYw(), Math::Epsilon) &&
+
+				Math::equals(a.getZx(), b.getZx(), Math::Epsilon) &&
+				Math::equals(a.getZy(), b.getZy(), Math::Epsilon) &&
+				Math::equals(a.getZz(), b.getZz(), Math::Epsilon) &&
+				Math::equals(a.getZw(), b.getZw(), Math::Epsilon) &&
+
+				Math::equals(a.getWx(), b.getWx(), Math::Epsilon) &&
+				Math::equals(a.getWy(), b.getWy(), Math::Epsilon) &&
+				Math::equals(a.getWz(), b.getWz(), Math::Epsilon) &&
+				Math::equals(a.getWw(), b.getWw(), Math::Epsilon);
+		}
+	}
+
 	Matrix Matrix::createScale(float x, float y, float z)
 	{
 		return Matrix(

@@ -5,11 +5,40 @@
 #include "camera/ZomboCameraMoveXY.h"
 #include "camera/ZomboCameraRotate.h"
 #include "commands/ZomboEditorCommands.h"
+#include "../ZomboLog.h"
 
 namespace zombo
 {
 	ZomboEditorCamera ZomboEditorCamera::Default;
 
+	ZomboCommandCameraSetMode::ZomboCommandCameraSetMode(const std::string& mode)
+	{
+		targetMode = mode;
+	}
+
+	bool ZomboCommandCameraSetMode::isExecutionAvaliable()
+	{
+		return ZomboEditorCamera::Default.getModeInternal() != targetMode;
+	}
+
+	bool ZomboCommandCameraSetMode::isUndoAvaliable()
+	{
+		return ZomboEditorCamera::Default.getModeInternal() != originMode;
+	}
+
+	void ZomboCommandCameraSetMode::execute()
+	{
+		ZomboLog::Default.m("Camera mode: "+ targetMode);
+		originMode = ZomboEditorCamera::Default.getModeInternal();
+		ZomboEditorCamera::Default.setModeInternal(targetMode.c_str());
+	}
+
+	void ZomboCommandCameraSetMode::undo()
+	{
+		ZomboLog::Default.m("Camera mode: " + originMode);
+		ZomboEditorCamera::Default.setModeInternal(originMode.c_str());
+		originMode = "";
+	}
 
 	ZomboCommandCameraSetFov::ZomboCommandCameraSetFov(float fov): _fov(fov), _prevFov(0)
 	{
@@ -27,12 +56,14 @@ namespace zombo
 
 	void ZomboCommandCameraSetFov::execute()
 	{
+		ZomboLog::Default.m("Do: Change fov");
 		_prevFov = ZomboEditorCamera::Default.getFov();
 		ZomboEditorCamera::Default.setFovInternal(_fov);
 	}
 
 	void ZomboCommandCameraSetFov::undo()
 	{
+		ZomboLog::Default.m("Undo: Change fov");
 		ZomboEditorCamera::Default.setFovInternal(_prevFov);
 	}
 
@@ -53,11 +84,27 @@ namespace zombo
 	void ZomboCommandCameraSetScale::execute()
 	{
 		_prevscale = ZomboEditorCamera::Default.getScale();
+		if (_prevscale > _scale)
+		{
+			ZomboLog::Default.m("Do: Zoom in");
+		}
+		else
+		{
+			ZomboLog::Default.m("Do: Zoom out");
+		}
 		ZomboEditorCamera::Default.setScaleInternal(_scale);
 	}
 
 	void ZomboCommandCameraSetScale::undo()
 	{
+		if (_prevscale > _scale)
+		{
+			ZomboLog::Default.m("Undo: Zoom in");
+		}
+		else
+		{
+			ZomboLog::Default.m("Undo: Zoom out");
+		}
 		ZomboEditorCamera::Default.setScaleInternal(_prevscale);
 	}
 
@@ -126,9 +173,50 @@ namespace zombo
 		}
 		return _velocity;
 	}
-	ZomboEditorCamera::ZomboEditorCamera() : depth(5000.0f), _scaleValue(1.0f), _fovValue(core::Math::Pi * 40.0f / 180.0f)
+
+	ZomboEditorCameraRotator::ZomboEditorCameraRotator()
 	{
-		rotation = core::Matrix::identity;
+		originRotation = targetRotation = actualRotation = core::Matrix::identity;
+	}
+
+	void ZomboEditorCameraRotator::setRotation(const core::Matrix& matrix)
+	{
+		originRotation = targetRotation = actualRotation = matrix;
+	}
+
+
+	void ZomboEditorCameraRotator::ternimateInterpolator()
+	{
+		setRotation(actualRotation);
+		_angle.setAllValues(0);
+	}
+
+	void ZomboEditorCameraRotator::rotate(core::Matrix originMatrix, core::Vector3 n, float a, core::Matrix targetMatrix)
+	{
+		if (core::Matrix::equals(targetRotation, targetMatrix))
+			return;
+		originRotation = originMatrix;
+		targetRotation = targetMatrix;
+		_normal = n;
+		_angle.setValue(0);
+		_angle.setTargetValue(a);
+	}
+
+	void ZomboEditorCameraRotator::update()
+	{
+		_angle.update();
+		if (_angle.isUpdating())
+		{
+			actualRotation = core::Matrix::mul(originRotation, core::Matrix::createRotation(_normal, _angle.getValue()));
+		}
+		else
+		{
+			actualRotation = targetRotation;
+		}
+	}
+
+	ZomboEditorCamera::ZomboEditorCamera() : depth(5000.0f), _scaleValue(1.0f), _fovValue(core::Math::Pi * 40.0f / 180.0f), _lastZoomCommand(nullptr)
+	{
 		mode = &ZomboCameraMoveXY::Default;
 		_actualModeName = ZomboCameraMoveXY::ModeName;
 	}
@@ -163,6 +251,7 @@ namespace zombo
 	void ZomboEditorCamera::update()
 	{
 		mode->updateInput();
+		rotator.update();
 		_fovValue.update();
 		_positionX.update();
 		_positionY.update();
@@ -173,7 +262,7 @@ namespace zombo
 		if (fov < minFov)
 		{
 			core::Matrix ortho = core::Matrix::createOrtho(ZomboEditorViewport::Default.getAspect(), _scaleValue.getValue(), depth*0.5f);
-			matrix.setValue(core::Matrix::mul(translate, rotation, ortho));
+			matrix.setValue(core::Matrix::mul(translate, rotator.actualRotation, ortho));
 		}
 		else
 		{
@@ -182,7 +271,7 @@ namespace zombo
 			core::Matrix translateZ = core::Matrix::createTranslate(0, 0, z);
 			float scaleValue = _scaleValue.getValue();
 			core::Matrix scale = core::Matrix::createScale(1.0f / scaleValue, 1.0f / scaleValue, 1.0f / scaleValue);
-			matrix.setValue(core::Matrix::mul(translate, rotation, scale, translateZ, proj));
+			matrix.setValue(core::Matrix::mul(translate, rotator.actualRotation, scale, translateZ, proj));
 		}
 	}
 
@@ -195,7 +284,11 @@ namespace zombo
 
 	void ZomboEditorCamera::setMode(String modeName)
 	{
-		setEditorModeInternal(modeName);
+		ZomboEditorCommand *command = new ZomboCommandCameraSetMode(modeName);
+		if (ZomboEditorCommands::Default.doCommand(command) == CommandExecutonStatus::CommandExecutionNotAvaliable)
+		{
+			delete command;
+		}
 	}
 
 	void ZomboEditorCamera::setScale(float value)
@@ -255,7 +348,7 @@ namespace zombo
 		ZomboEditorCommands::camera()->redo();
 	}
 
-	void ZomboEditorCamera::setEditorModeInternal(String modeName)
+	void ZomboEditorCamera::setModeInternal(String modeName)
 	{
 		_actualModeName = modeName;
 		if (_actualModeName == ZomboCameraMoveXY::ModeName)
@@ -320,6 +413,11 @@ namespace zombo
 	void ZomboEditorCamera::setScaleInternal(float value)
 	{
 		_scaleValue.setTargetValue(value);
+	}
+
+	std::string ZomboEditorCamera::getModeInternal()
+	{
+		return _actualModeName;
 	}
 
 	void ZomboEditorCamera::addPositionXY(const core::Vector2 &d)

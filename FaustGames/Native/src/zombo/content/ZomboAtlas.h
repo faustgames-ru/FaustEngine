@@ -18,7 +18,8 @@ namespace zombo
 		std::string name;
 		std::vector<ZomboImageVertex> vertices;
 		std::vector<short> indices;		
-
+		geometry::Aabb2d bounds;
+		void initWithQuad(float w, float h);
 		static ZomboContentImage * create();
 		void dispose() const;
 	};

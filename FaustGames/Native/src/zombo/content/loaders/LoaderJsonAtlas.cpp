@@ -79,11 +79,11 @@ namespace zombo
 	JsonAtlas::JsonAtlas(const char* jsonString, float verticesScale)
 	{
 		scale = verticesScale;
-		ZomboValue *zomboRootValue = ZomboSerializer::deserializeFromJson(jsonString);
-		ZomboObject *zomboRoot = zomboRootValue->asObject();
-		ZomboObject *zomboMeta = (*zomboRoot)["meta"]->asObject();
-		ZomboObject *zomboMetaSize = (*zomboMeta)["size"]->asObject();
-		ZomboArray * zomboFrames = (*zomboRoot)["frames"]->asArray();
+		ZomboValue* zomboRootValue = ZomboSerializer::deserializeFromJson(jsonString);
+		ZomboObject* zomboRoot = zomboRootValue->asObject();
+		ZomboObject* zomboMeta = (*zomboRoot)["meta"]->asObject();
+		ZomboObject* zomboMetaSize = (*zomboMeta)["size"]->asObject();
+		ZomboArray* zomboFrames = (*zomboRoot)["frames"]->asArray();
 
 
 		meta.app = (*zomboMeta)["app"]->asString();

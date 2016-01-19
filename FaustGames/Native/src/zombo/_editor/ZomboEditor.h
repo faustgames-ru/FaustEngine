@@ -7,6 +7,9 @@
 #include "../../fonts/OutlineVectorFont.h"
 #include "../../fonts/BitmapFont.h"
 #include "../content/ZomboContentBlock.h"
+#include "../content/ZomboContentScene.h"
+#include "../content/ZomboContentGame.h"
+#include "toolbox/ZomboToolBox.h"
 
 namespace zombo
 {
@@ -14,6 +17,7 @@ namespace zombo
 	{
 	public:
 		static std::string LogDisplayerFont;
+		static std::string GameFile;
 	};
 
 	class ZomboEditor : public IZomboEditor
@@ -24,6 +28,7 @@ namespace zombo
 		String getEditorModeInternal() const;
 		void setEditorModeInternal(String mode);
 		ZomboContentBlock internalContent;
+		ZomboContentBlock gameContent;
 
 		virtual void API_CALL setRootPath(String rootPath) OVERRIDE;
 		virtual IntPtr API_CALL getMode() OVERRIDE;
@@ -46,7 +51,9 @@ namespace zombo
 		std::string _rootPath;
 		core::MatrixContainer _guiMatrix;
 		bool _needCallContetnLoaded;
-
+		ZomboContentGame *_game;
+		ZomboContentScene *_scene;
+		std::list<ZomboContentPlatform *> _platforms;
 	};
 }
 #endif /* ZOMBO_EDITOR_H */

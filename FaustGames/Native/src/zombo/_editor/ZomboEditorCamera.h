@@ -19,6 +19,7 @@ namespace zombo
 		virtual void execute() OVERRIDE;
 		virtual void undo() OVERRIDE;
 	private:
+		core::Matrix _prevRotation;
 	};
 
 	class ZomboCommandCameraSetFov : public ZomboEditorCommand
@@ -86,10 +87,15 @@ namespace zombo
 		core::Matrix targetRotation;
 		void ternimateInterpolator();
 		void rotate(core::Matrix originMatrix, core::Vector3 n, float a, core::Matrix targetMatrix);
+		void setRotationAnimated(const core::Matrix &matrix);
+		void updateEuler();
 		void update();
 	private:
 		core::Vector3 _normal;
 		ZomboInterpolatedValue _angle;
+		ZomboInterpolatedValue _pAngle;
+		ZomboInterpolatedValue _hAngle;
+		ZomboInterpolatedValue _bAngle;
 	};
 
 	class ZomboEditorCamera : public IZomboEditorCamera

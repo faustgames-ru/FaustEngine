@@ -103,6 +103,9 @@
     <Filter Include="rectanglebinpack">
       <UniqueIdentifier>{c21c60a6-b459-4b1f-a051-6fccd687f60e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="zombo\_editor\toolbox">
+      <UniqueIdentifier>{3b3ae215-a92c-4d9a-b250-74a57c2cccca}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\CommonSources\include\llge.h">
@@ -607,6 +610,12 @@
     </ClInclude>
     <ClInclude Include="..\src\zombo\content\ZomboBitmapFont.h">
       <Filter>zombo\content</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\zombo\content\ZomboContentGame.h">
+      <Filter>zombo\content</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\zombo\_editor\toolbox\ZomboToolBox.h">
+      <Filter>zombo\_editor\toolbox</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1157,6 +1166,12 @@
     </ClCompile>
     <ClCompile Include="..\src\zombo\content\ZomboBitmapFont.cpp">
       <Filter>zombo\content</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\zombo\content\ZomboContentGame.cpp">
+      <Filter>zombo\content</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\zombo\_editor\toolbox\ZomboToolBox.cpp">
+      <Filter>zombo\_editor\toolbox</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

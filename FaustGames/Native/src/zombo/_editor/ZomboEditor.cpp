@@ -13,13 +13,14 @@
 
 namespace zombo
 {
-	std::string ZomboEditorConstants::LogDisplayerFont("Content/Quicksand-Regular[30px].otf");
+	std::string ZomboEditorConstants::LogDisplayerFont("InternalContent/Quicksand-Regular[30px].otf");
+	std::string ZomboEditorConstants::GameFile("Content/main.game");
 
 
 	ZomboEditor ZomboEditor::Default;
 
 
-	ZomboEditor::ZomboEditor() : _needCallContetnLoaded(true)
+	ZomboEditor::ZomboEditor() : _needCallContetnLoaded(true), _game(nullptr), _scene(nullptr)
 	{
 		_mode = new ZomboEditorSelectionMode();
 	}
@@ -38,6 +39,7 @@ namespace zombo
 	{
 		_rootPath = rootPath;
 		internalContent.setRoot(_rootPath);
+		gameContent.setRoot(_rootPath);
 	}
 
 	IntPtr ZomboEditor::getMode()
@@ -90,36 +92,10 @@ namespace zombo
 		fonts::FontsManager::Default.init();
 		resources::ContentManager::Default.open();
 		internalContent.enqueueResource(ZomboEditorConstants::LogDisplayerFont.c_str());
+		gameContent.enqueueResource(ZomboEditorConstants::GameFile.c_str());
 		_needCallContetnLoaded = true;
 
-		/*
-		resources::ContentManager::Default.open();
-		std::string fontPath = _rootPath + std::string("Content/Quicksand-Regular.otf");
-		resources::ContentProvider::openContent(fontPath.c_str());
-		unsigned char* buffer = static_cast<unsigned char*>(resources::ContentManager::Default.getBuffer());
-		int len = 0;
-		const int pageSize = 256 * 1024;
-		int count = 0;
-		while ((count = resources::ContentProvider::read(buffer + len, pageSize)) > 0)
-		{
-			len += count;
-		}
-
-		_font = fonts::FontsManager::Default.createOutlineVectorFont(buffer, len,
-			&fonts::FontCharSet::latin
-			//new fonts::FontCharSet("i")
-			);
-
-		_bitmapFont = fonts::FontsManager::Default.createBitmapFont(buffer, len, fontSize*scaleFonts,
-			&fonts::FontCharSet::latin
-			//new fonts::FontCharSet("123")
-			);
-
-		resources::ContentManager::Default.close();
-		*/
 	}
-
-	
 
 	void ZomboEditor::update(float ellapsedTime)
 	{
@@ -131,7 +107,6 @@ namespace zombo
 		{
 			if (_needCallContetnLoaded)
 			{
-				resources::ContentManager::Default.close();
 				contentLoaded();
 				_needCallContetnLoaded = false;
 			}
@@ -139,12 +114,51 @@ namespace zombo
 			{
 				internalUpdate();
 			}
-		}		
+		}	
+
+		// todo: async loading tree
+
+		if (gameContent.isLoaded())
+		{
+			if (_game == nullptr)
+			{
+				_game = gameContent.getGame(ZomboEditorConstants::GameFile.c_str());
+				gameContent.enqueueResource((_game->thisDir + _game->startup).c_str());
+			}
+			else
+			{
+				if (_scene == nullptr)
+				{
+					_scene = gameContent.getScene((_game->thisDir + _game->startup).c_str());
+					for (uint i = 0; i < _scene->resources.size(); i++)
+					{
+						gameContent.enqueueResource((_scene->thisDir + _scene->resources[i]).c_str());
+					}
+					for (uint i = 0; i < _scene->platforms.size(); i++)
+					{
+						gameContent.enqueueResource((_scene->thisDir + _scene->platforms[i]).c_str());
+					}
+				}
+				else
+				{
+					if (_platforms.empty())
+					{
+						for (uint i = 0; i < _scene->platforms.size(); i++)
+						{
+							_platforms.push_back(gameContent.getPlatform((_scene->thisDir + _scene->platforms[i]).c_str()));
+							ZomboToolBox::Default.addItem(new ZomboToolBoxItem());
+						}
+						resources::ContentManager::Default.close();
+					}
+				}
+			}
+		}
 	}
 		
 	void ZomboEditor::render()
 	{		
 		internalContent.update();
+		gameContent.update();
 
 		graphics::GraphicsDevice::Default.setClearState(0x805050, 1.0f);
 		graphics::GraphicsDevice::Default.setViewport(0, 0, ZomboEditorViewport::Default.w, ZomboEditorViewport::Default.h);
@@ -173,9 +187,11 @@ namespace zombo
 
 	void ZomboEditor::internalUpdate()
 	{
+		ZomboToolBox::Default.updateInput();
 		ZomboEditorCamera::Default.update();
 		_mode->update();
 		ZomboEditorLogDisplayer::Default.update();
+		ZomboToolBox::Default.update();
 	}
 
 	void ZomboEditor::contentLoaded()

@@ -29,6 +29,7 @@ namespace zombo
 	void ZomboCommandCameraSetMode::execute()
 	{
 		ZomboLog::Default.m("Camera mode: "+ targetMode);
+		_prevRotation = ZomboEditorCamera::Default.rotator.actualRotation;
 		originMode = ZomboEditorCamera::Default.getModeInternal();
 		ZomboEditorCamera::Default.setModeInternal(targetMode.c_str());
 	}
@@ -36,6 +37,7 @@ namespace zombo
 	void ZomboCommandCameraSetMode::undo()
 	{
 		ZomboLog::Default.m("Camera mode: " + originMode);
+		ZomboEditorCamera::Default.rotator.setRotationAnimated(_prevRotation);
 		ZomboEditorCamera::Default.setModeInternal(originMode.c_str());
 		originMode = "";
 	}
@@ -202,16 +204,44 @@ namespace zombo
 		_angle.setTargetValue(a);
 	}
 
+	void ZomboEditorCameraRotator::setRotationAnimated(const core::Matrix& matrix)
+	{
+		float p, h, b;
+		matrix.getRotation(p, h, b);
+		originRotation = actualRotation;
+		targetRotation = matrix;
+		_pAngle.setTargetValue(p);
+		_hAngle.setTargetValue(h);
+		_bAngle.setTargetValue(b);
+	}
+	void ZomboEditorCameraRotator::updateEuler()
+	{		
+		float p, h, b;
+		actualRotation.getRotation(p, h, b);
+		_pAngle.setAllValues(p);
+		_hAngle.setAllValues(h);
+		_bAngle.setAllValues(b);
+	}
+
 	void ZomboEditorCameraRotator::update()
 	{
 		_angle.update();
+		_pAngle.update();
+		_hAngle.update();
+		_bAngle.update();
 		if (_angle.isUpdating())
 		{
 			actualRotation = core::Matrix::mul(originRotation, core::Matrix::createRotation(_normal, _angle.getValue()));
+			updateEuler();
+		}
+		else if (_pAngle.isUpdating() || _hAngle.isUpdating() || _bAngle.isUpdating())
+		{
+			actualRotation = core::Matrix::createEuler(_pAngle.getValue(), _hAngle.getValue(), _bAngle.getValue());
 		}
 		else
 		{
 			actualRotation = targetRotation;
+			updateEuler();
 		}
 	}
 

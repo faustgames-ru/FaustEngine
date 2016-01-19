@@ -5,4 +5,5 @@
 #include "../core/Convert.h"
 #include "../graphics/graphics.h"
 #include "../resources/resources.h"
+#include "../geometry/Aabb2d.h"
 #include "cjson/cJSON.h"

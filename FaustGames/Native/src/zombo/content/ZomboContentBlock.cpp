@@ -3,6 +3,7 @@
 #include <cctype>
 #include "../ZomboLog.h"
 #include "../../fonts/FontsManager.h"
+#include "ZomboContentGame.h"
 
 namespace zombo
 {
@@ -18,6 +19,7 @@ namespace zombo
 	void ZomboContentBlock::enqueueResource(const char* fileName)
 	{
 		_loadingQueue.push(fileName);
+		_loaded = false;
 	}
 
 	bool ZomboContentBlock::isLoaded() const
@@ -71,6 +73,21 @@ namespace zombo
 	ZomboBitmapFont* ZomboContentBlock::getBitmapFont(const char* fileName) const
 	{
 		return getMapValue(_bitmapFonts, fileName);
+	}
+
+	ZomboContentGame* ZomboContentBlock::getGame(const char* fileName) const
+	{
+		return getMapValue(_games, fileName);
+	}
+
+	ZomboContentScene* ZomboContentBlock::getScene(const char* fileName) const
+	{
+		return getMapValue(_scenes, fileName);
+	}
+
+	ZomboContentPlatform* ZomboContentBlock::getPlatform(const char* fileName) const
+	{
+		return getMapValue(_platforms, fileName);
 	}
 
 	void ZomboContentBlock::update()
@@ -192,7 +209,8 @@ namespace zombo
 			{
 				loadAtlasPage(fileName);
 			}
-		} if (ext == "otf"|| ext == "ttf")
+		} 
+		if (ext == "otf"|| ext == "ttf")
 		{
 			int size = getBitmapFontSize(fileName);
 			if (size > 0)
@@ -204,10 +222,126 @@ namespace zombo
 				// todo: load outline vector font
 			}
 		}
+		else if (ext == "platform")
+		{
+			loadPlatform(fileName);
+		}
+		else if (ext == "scene")
+		{
+			loadScene(fileName);
+		}
+		else if (ext == "game")
+		{
+			loadGame(fileName);
+		}
 	}
 
-	void ZomboContentBlock::loadTexture(const std::string& fileName)
+	ZomboContentPlatform* ZomboContentBlock::loadPlatform(const std::string& fileName)
 	{
+		resources::ContentManager content = resources::ContentManager::Default;
+		std::string fullPath = _rootPath + fileName;
+		if (!resources::ContentProvider::existContent(fullPath.c_str()))
+		{
+			// todo: handle error
+			ZomboLog::Default.e("Unable to find resource: " + fileName);
+			return nullptr;
+		}
+		resources::ContentProvider::openContent(fullPath.c_str());
+		char * jsonString = static_cast<char *>(content.getBuffer());
+		int len = 0;
+		const int pageSize = 256 * 1024;
+		int count = 0;
+		while ((count = resources::ContentProvider::read(jsonString + len, pageSize)) > 0)
+		{
+			len += count;
+		}
+		ZomboContentPlatform* platform = ZomboContentPlatform::createFromJson(jsonString);
+		platform->thisDir = core::Path::getFilePath(fileName);
+		_platforms[fileName] = platform;
+		return platform;
+	}
+
+	ZomboContentScene* ZomboContentBlock::loadScene(const std::string& fileName)
+	{
+		resources::ContentManager content = resources::ContentManager::Default;
+		std::string fullPath = _rootPath + fileName;
+		if (!resources::ContentProvider::existContent(fullPath.c_str()))
+		{
+			// todo: handle error
+			ZomboLog::Default.e("Unable to find resource: " + fileName);
+			return nullptr;
+		}
+		resources::ContentProvider::openContent(fullPath.c_str());
+		char * jsonString = static_cast<char *>(content.getBuffer());
+		int len = 0;
+		const int pageSize = 256 * 1024;
+		int count = 0;
+		while ((count = resources::ContentProvider::read(jsonString + len, pageSize)) > 0)
+		{
+			len += count;
+		}
+		ZomboContentScene* scene = ZomboContentScene::createFromJson(jsonString);
+		scene->thisDir = core::Path::getFilePath(fileName);
+		_scenes[fileName] = scene;
+		return scene;
+	}
+
+	ZomboContentGame* ZomboContentBlock::loadGame(const std::string& fileName)
+	{
+		resources::ContentManager content = resources::ContentManager::Default;
+		std::string fullPath = _rootPath + fileName;
+		if (!resources::ContentProvider::existContent(fullPath.c_str()))
+		{
+			// todo: handle error
+			ZomboLog::Default.e("Unable to find resource: " + fileName);
+			return nullptr;
+		}
+		resources::ContentProvider::openContent(fullPath.c_str());
+		char * jsonString = static_cast<char *>(content.getBuffer());
+		int len = 0;
+		const int pageSize = 256 * 1024;
+		int count = 0;
+		while ((count = resources::ContentProvider::read(jsonString + len, pageSize)) > 0)
+		{
+			len += count;
+		}
+		ZomboContentGame* game = ZomboContentGame::createFromJson(jsonString);
+		game->thisDir = core::Path::getFilePath(fileName);
+		_games[fileName] = game;
+		return game;
+	}
+
+	ZomboContentImage* ZomboContentBlock::loadTexture(const std::string& fileName)
+	{
+		resources::ContentManager content = resources::ContentManager::Default;
+		std::string fullPath = _rootPath + fileName;
+		if (!resources::ContentProvider::existContent(fullPath.c_str()))
+		{
+			// todo: handle error
+			ZomboLog::Default.e("Unable to find resource: " + fileName);
+			return nullptr;
+		}
+		graphics::Image2dData* imageData = content.loadUnregisteredTexture(fullPath.c_str());
+		if (imageData != nullptr)
+		{
+			ZomboContentImage* image = ZomboContentImage::create();
+			// todo: configure loading;
+			image->texture = new graphics::TextureImage2d(false, true);
+			image->texture->create();
+			image->texture->setData(imageData);
+			image->name = fileName;
+			image->initWithQuad(
+				static_cast<float>(imageData->Width) * ZomboConstants::GameScale, 
+				static_cast<float>(imageData->Height) * ZomboConstants::GameScale);
+			_images[fileName] = image;
+			return image;
+		}
+		else
+		{
+			// todo: handle error
+			ZomboLog::Default.e("Unable to load png: " + fileName);
+			return nullptr;
+		}
 	}
 
 	ZomboContentAtlasPage* ZomboContentBlock::loadAtlasPage(const std::string& fileName)
@@ -239,8 +373,8 @@ namespace zombo
 		page->texture.texture = new graphics::TextureImage2d(false, false);
 		if (imageData != nullptr)
 		{
-			page->texture.texture->setData(imageData);
 			page->texture.texture->create();
+			page->texture.texture->setData(imageData);
 		}
 		else
 		{

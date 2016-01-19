@@ -4,9 +4,12 @@
 #include "../zombo_classes.h"
 #include "ZomboAtlas.h"
 #include "ZomboBitmapFont.h"
+#include "ZomboContentScene.h"
 
 namespace zombo
 {
+	class ZomboContentGame;
+
 	// todo: unloading
 	class ZomboContentBlock
 	{
@@ -22,6 +25,9 @@ namespace zombo
 		ZomboContentAtlasPage* getAtlasPage(const char * fileName) const;
 		ZomboContentAtlas* getAtlas(const char * fileName) const;
 		ZomboBitmapFont* getBitmapFont(const char* fileName) const;
+		ZomboContentGame* getGame(const char* fileName) const;
+		ZomboContentScene* getScene(const char* fileName) const;
+		ZomboContentPlatform* getPlatform(const char* fileName) const;
 		void update();
 		void setRoot(const std::string &rootPath);
 		typedef std::map<std::string, ZomboContentTexture*> TexturesMap;
@@ -30,6 +36,9 @@ namespace zombo
 		typedef std::map<std::string, ZomboContentImage*> ImagesMap;
 		typedef std::map<std::string, ZomboContentFrameAnimation*> FrameAnimationsMap;
 		typedef std::map<std::string, ZomboBitmapFont*> BitmapFontsMap;
+		typedef std::map<std::string, ZomboContentGame*> GamesMap;
+		typedef std::map<std::string, ZomboContentScene*> ScenesMap;
+		typedef std::map<std::string, ZomboContentPlatform*> PlatformsMap;
 	private:
 		template <typename T> T* getMapValue(std::map<std::string, T*> map, const char * fileName) const;
 		TexturesMap _textures;
@@ -38,6 +47,9 @@ namespace zombo
 		ImagesMap _images;
 		FrameAnimationsMap _frameAnimations;
 		BitmapFontsMap _bitmapFonts;
+		GamesMap _games;
+		ScenesMap _scenes;
+		PlatformsMap _platforms;
 		std::string _rootPath;
 		std::queue<std::string> _loadingQueue;
 		bool _loaded;
@@ -49,7 +61,10 @@ namespace zombo
 		static std::string format(const std::string &fileName, int number);
 
 		void loadResource(const std::string &fileName);
-		void loadTexture(const std::string &fileName);
+		ZomboContentPlatform* loadPlatform(const std::string &fileName);
+		ZomboContentScene* loadScene(const std::string &fileName);
+		ZomboContentGame* loadGame(const std::string &fileName);
+		ZomboContentImage* loadTexture(const std::string &fileName);
 		ZomboContentAtlasPage* loadAtlasPage(const std::string &fileName);
 		void loadAtlas(const std::string &fileName);
 		void loadBitmapFont(const std::string &fileName, int size);

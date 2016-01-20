@@ -21,6 +21,15 @@ namespace graphics
 		return fromRgba((unsigned char)r, (unsigned char)g, (unsigned char)b, (unsigned char)a);
 	}
 
+	unsigned int Color::mulA(unsigned int value, float a)
+	{
+		int r = getR(value);
+		int g = getG(value);
+		int b = getB(value);
+		int alpha = (int)core::Math::round(getA(value)*a);
+		return fromRgba((unsigned char)r, (unsigned char)g, (unsigned char)b, (unsigned char)alpha);
+	}
+
 
 	unsigned int Color::fromRgba(float r, float g, float b, float a)
 	{		

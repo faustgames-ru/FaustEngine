@@ -8,6 +8,7 @@ namespace graphics
 	class Color
 	{
 	public:
+		static unsigned int mulA(unsigned int value, float a);
 		static unsigned int premul(unsigned int value, bool additive);
 		static unsigned int fromRgba(float r, float g, float b, float a);
 		static unsigned int fromRgba(unsigned char r, unsigned char g, unsigned char b, unsigned char a);

@@ -6,32 +6,41 @@ namespace zombo
 	{
 		w *= 0.5f;
 		h *= 0.5f;
-		ushort t0 = 1;
-		ushort t1 = 65535;
-		vertices.resize(4);
-		vertices[0].xy = core::Vector2(-w, -h);
-		vertices[0].u = t0;
-		vertices[0].v = t0;
+		uint detail = 8;
 
-		vertices[1].xy = core::Vector2(-w,  h);
-		vertices[1].u = t0;
-		vertices[1].v = t1;
+		ZomboImageVertex vertex;
+		for (uint y = 0; y <= detail; y++)
+		{
+			float v = static_cast<float>(y) / static_cast<float>(detail);
+			vertex.xy.setY(core::Math::lerp(-h, h, v));
+			vertex.v = static_cast<ushort>(v * static_cast<float>(ZomboConstants::t1));
+			vertex.normalized.setY(v);
+			for (uint x = 0; x <= detail; x++)
+			{
+				float u = static_cast<float>(x) / static_cast<float>(detail);
+				vertex.xy.setX(core::Math::lerp(-w, w, u));
+				vertex.u = static_cast<ushort>(u * static_cast<float>(ZomboConstants::t1));;
+				vertex.normalized.setX(u);
+				vertices.push_back(vertex);
+			}
+		}
+		for (uint y = 0; y < detail; y++)
+		{			
+			for (uint x = 0; x < detail; x++)
+			{
+				ushort lt = y * (detail + 1) + x;
+				ushort rt = y * (detail + 1) + x + 1;
+				ushort lb = (y + 1) * (detail + 1) + x;
+				ushort rb = (y + 1) * (detail + 1) + x + 1;
+				indices.push_back(lt);
+				indices.push_back(rt);
+				indices.push_back(rb);
+				indices.push_back(lt);
+				indices.push_back(rb);
+				indices.push_back(lb);
+			}
+		}
 
-		vertices[2].xy = core::Vector2( w,  h);
-		vertices[2].u = t1;
-		vertices[2].v = t1;
-
-		vertices[3].xy = core::Vector2( w, -h);
-		vertices[3].u = t1;
-		vertices[3].v = t0;
-
-		indices.resize(6);
-		indices[0] = 0;
-		indices[1] = 1;
-		indices[2] = 2;
-		indices[3] = 0;
-		indices[4] = 2;
-		indices[5] = 3;
 		bounds.Min = core::Vector2(-w, -h);
 		bounds.Max = core::Vector2(w, h);
 	}

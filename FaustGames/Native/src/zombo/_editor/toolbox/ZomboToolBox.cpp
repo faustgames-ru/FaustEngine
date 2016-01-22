@@ -7,25 +7,29 @@ namespace zombo
 {
 	ZomboToolBox ZomboToolBox::Default;
 	ZomboToolBoxBoxRender ZomboToolBoxBoxRender::Default;
-
+	
 	float ZomboToolBoxBoxRender::getSizeX()
 	{
-		return 64;
+		return 48;
 	}
 
 	float ZomboToolBoxBoxRender::getSizeY()
 	{
-		return 64;
+		return 48;
 	}
 
-	void ZomboToolBoxBoxRender::render(core::Vector2 position, float scale, IZomboToolBoxItemRenderModilier* renderModilier)
+	void ZomboToolBoxBoxRender::render(ZomboToolBoxItemRenderer& render)
 	{
-		ColorVertex vertices[4] =
+		ushort t0 = 1;
+		ushort t1 = 65535;
+		float hsX = getSizeX() / 2;
+		float hsY = getSizeY() / 2;
+		RenderVertex vertices[4] =
 		{
-			ColorVertex(-scale*getSizeX() / 2, -scale*getSizeY() / 2, 0, 0xff277fff),
-			ColorVertex(-scale*getSizeX() / 2, scale*getSizeY() / 2, 0, 0xff11305c),
-			ColorVertex(scale*getSizeX() / 2, scale*getSizeY() / 2, 0, 0xff11305c),
-			ColorVertex(scale*getSizeX() / 2, -scale*getSizeY() / 2, 0, 0xff277fff),
+			RenderVertex(-hsX, -hsY, 0, 0xff277fff, t0, t0),
+			RenderVertex(-hsX, hsY, 0, 0xff11305c, t0, t1),
+			RenderVertex(hsX, hsY, 0, 0xff11305c, t1, t1),
+			RenderVertex(hsX, -hsY, 0, 0xff277fff, t1, t0),
 		};
 		ushort indices[12] =
 		{
@@ -33,76 +37,34 @@ namespace zombo
 			0, 2, 3,
 		};
 
-		for (uint i = 0; i < 4; i++)
-		{
-			float a = renderModilier->getAlpha(vertices[i].xyz.getY(), getSizeY(), scale);
-			
-			vertices[i].xyz = (position + renderModilier->getPosition(vertices[i].xyz.toVector2())).toVector3();
-			vertices[i].color = graphics::Color::mulA(vertices[i].color, a);
-		}
-
-		ZomboEditorRenderService::Gui.drawTriangles(vertices, 8, indices, 4);
+		render.drawTextured(ZomboToolBox::Default.whiteTexture, vertices, 4, indices, 2);
 	}
 
-	float EmptyRenderModilier::getAlpha(float value, float size, float scale)
-	{
-		return 1.0f;
-	}
-
-	core::Vector2 EmptyRenderModilier::getPosition(const core::Vector2 position)
-	{
-		return position;
-	}
-
-	MirrorRenderModilier::MirrorRenderModilier(): yAxis(0)
-	{
-	}
-
-	float MirrorRenderModilier::getAlpha(float value, float size, float scale)
-	{
-		return (1.0f - (value / (scale*size) + 0.5f)) * 0.4f;
-	}
-
-	core::Vector2 MirrorRenderModilier::getPosition(const core::Vector2 position)
-	{
-		return core::Vector2(position.getX(), -position.getY());
-	}
-
-	ZomboToolBoxItem::ZomboToolBoxItem(): sizeX(64), sizeY(64), render(&ZomboToolBoxBoxRender::Default), normalModilier(nullptr), mirrorModilier(nullptr), _scale(0.5f), _offset0(0.0f), _offset1(0.0f)
+	ZomboToolBoxItem::ZomboToolBoxItem(): render(&ZomboToolBoxBoxRender::Default), isSelected(false), isHovered(false), _scale(0.5f), _offset0(0.0f), _offset1(0.0f)
 	{
 		_scale.setDuration(0.15f);
 		_offset0.setDuration(0.15f);
 		_offset1.setDuration(0.3f);
 	}
 
-	void ZomboToolBoxItem::updateSize()
-	{
-		if (render != nullptr)
-		{
-			sizeX = render->getSizeX();
-			sizeY = render->getSizeY();
-		}
-	}
-
-	void ZomboToolBoxItem::updatePosition(const core::Vector2& value)
-	{
-		position = value;
-	}
-
-	void ZomboToolBoxItem::updateInput()
+	void ZomboToolBoxItem::updateInput(const core::Vector2& position, float scale)
 	{
 		bool midOrRight = ZomboEditorInput::Default.mouse.isMiddlePressed() || ZomboEditorInput::Default.mouse.isRightPressed();
 		float mx = ZomboEditorInput::Default.mouse.position.getX();
 		float my = ZomboEditorViewport::Default.h - ZomboEditorInput::Default.mouse.position.getY();
-		float sx = sizeX*_scale.getValue() * 0.5f;
-		float sy = sizeY*_scale.getValue() * 0.5f;
+		float sx = getSizeX()*_scale.getValue()*scale * 0.5f;
+		float sy = getSizeY()*_scale.getValue()*scale * 0.5f;
 		float px = position.getX();
 		float py = position.getY();
-		if (px - sx <= mx && mx <= px + sx &&
-			py - sy <= my && my <= py + sy && !midOrRight)
+		isSelected = false;
+		isHovered = 
+			px - sx <= mx && mx <= px + sx &&
+			py - sy <= my && my <= py + sy && !midOrRight;
+		if (isHovered)
 		{
 			if (ZomboEditorInput::Default.mouse.isLeftPressed())
 			{
+				isSelected = true;
 				_scale.setTargetValueIfNotEqual(1.5f);
 			}
 			else
@@ -120,64 +82,113 @@ namespace zombo
 		}
 	}
 
-	void ZomboToolBoxItem::update()
+	void ZomboToolBoxItem::update(const core::Vector2& position, float scale, float alpha, ZomboToolBoxItemRenderer &renderer)
 	{
 		_scale.update();
 		_offset0.update();
 		_offset1.update();
-		
-		float scale = _scale.getValue();
+		_alpha.update();
+		float s = _scale.getValue()*scale;
 		float offset = _offset0.getValue()+ _offset1.getValue();
 		if (render != nullptr)
 		{
-			render->render(core::Vector2(position.getX(), offset + position.getY()), scale, normalModilier);
-			render->render(core::Vector2(position.getX(), position.getY() - (sizeY + offset)*scale), scale, mirrorModilier);
+			renderer.clear();
+			render->render(renderer);
 		}	
+		renderer.apply(
+			core::Vector2(position.getX(), offset + position.getY()), 
+			core::Vector2(position.getX(), position.getY() - (getSizeY() + offset)*s), 
+			s, alpha*_alpha.getValue());
+	}
+
+	float ZomboToolBoxItem::getSizeX() const
+	{
+		return render->getSizeX();
+	}
+
+	float ZomboToolBoxItem::getSizeY() const
+	{
+		return render->getSizeY();
+	}
+
+	void ZomboToolBoxItem::setAlpha(float alpha)
+	{
+		_alpha.setTargetValueIfNotEqual(alpha);
+	}
+
+	ZomboToolBox::ZomboToolBox(): whiteTexture(nullptr), autoHideMode(ZomboToolBoxAutoHideMode::None), _sizeX(0), _sizeY(0), _notPaddedSizeY(0), _hasSelection(false)
+	{		
+	}
+
+	void ZomboToolBox::calcBounds()
+	{
+		float minSizeX = static_cast<float>(ZomboEditorViewport::Default.w / 2)+1;
+		_sizeY = 0;
+		float padding = 16;
+		_sizeX = padding;
+		for (uint i = 0; i < _items.size(); i++)
+		{
+			_sizeX += _items[i]->render->getSizeX() + padding;
+			if (_sizeY < _items[i]->render->getSizeY())
+			{
+				_sizeY = _items[i]->render->getSizeY();
+			}
+		}
+
+		if (_sizeX < minSizeX)
+		{
+			_sizeX = minSizeX;
+		}
+
+		_notPaddedSizeY = _sizeY;
+		_sizeY += padding * 2;
+	}
+
+	core::Vector2 ZomboToolBox::getItemPosition(uint i) const
+	{
+		uint centerX = ZomboEditorViewport::Default.w / 2;
+		float posX = centerX - _sizeX / 2 + (i + 0.5f) * _sizeX / (_items.size());
+		float posY = _sizeY*0.6f;
+		return core::Vector2(posX, posY);
 	}
 
 	void ZomboToolBox::updateInput()
 	{
+		calcBounds();
+		_hasSelection = false;
 		for (uint i = 0; i < _items.size(); i++)
 		{
-			_items[i]->updateSize();
-			_items[i]->updateInput();
-		}
+			_items[i]->updateInput(getItemPosition(i), 1.0f);
+			if (_items[i]->isSelected)
+			{
+				_hasSelection = true;
+			}
+		}		
 	}
 
 	void ZomboToolBox::update()
 	{
-		float minSizeX = static_cast<float>(ZomboEditorViewport::Default.w);
-		float sizeY = 0;
-		float padding = 16;
-		float sizeX = padding;
-		for (uint i = 0; i < _items.size(); i++)
+		calcBounds();
+		_alpha.update();
+		if (_hasSelection)
 		{
-			_items[i]->updateSize();
-			sizeX += _items[i]->sizeX + padding;
-			if (sizeY < _items[i]->sizeY)
-			{
-				sizeY = _items[i]->sizeY;
-			}
+			_alpha.setTargetValueIfNotEqual(0.0f);
 		}
-
-		if (sizeX < minSizeX)
-		{
-			sizeX = minSizeX;
+		else
+		{			
+			_alpha.setTargetValueIfNotEqual(1.0f);
 		}
-
-		float notPaddedSize = sizeY;
-		sizeY += padding * 2;
 
 		uint centerX = ZomboEditorViewport::Default.w / 2;
-		uint bgBotColor = 0x80000000;
-		uint bgTopColor = 0x80000000;
+		uint bgBotColor = graphics::Color::mulA(0x80000000, _alpha.getValue());
+		uint bgTopColor = graphics::Color::mulA(0x40000000, _alpha.getValue());
 
 		ColorVertex vertices[4] = 
 		{
-			ColorVertex(centerX - sizeX / 2, 0, 0, bgBotColor),
-			ColorVertex(centerX - sizeX / 2, sizeY*0.75f, 0, bgTopColor),
-			ColorVertex(centerX + sizeX / 2, sizeY*0.75f, 0, bgTopColor),
-			ColorVertex(centerX + sizeX / 2, 0, 0, bgBotColor),
+			ColorVertex(centerX - _sizeX / 2 - _sizeY*0.5f, 0, 0, bgBotColor),
+			ColorVertex(centerX - _sizeX / 2, _sizeY*0.5f, 0, bgTopColor),
+			ColorVertex(centerX + _sizeX / 2, _sizeY*0.5f, 0, bgTopColor),
+			ColorVertex(centerX + _sizeX / 2 + _sizeY*0.5f, 0, 0, bgBotColor),
 		};
 		ushort indices[6] =
 		{
@@ -186,21 +197,37 @@ namespace zombo
 		};
 
 		ZomboEditorRenderService::Gui.drawTriangles(vertices, 4, indices, 2);
-		_modifierMirror.yAxis = sizeY*0.75 - notPaddedSize*0.5;
 		for (uint i = 0; i < _items.size(); i++)
 		{
-			float posX = centerX - sizeX / 2 + (i + 0.5f) * sizeX / (_items.size());
-			float posY = sizeY*0.75f;
-			_items[i]->updatePosition(core::Vector2(posX, posY));
-			_items[i]->update();
+			if (_hasSelection)
+			{
+				if (_items[i]->isSelected || _items[i]->isHovered)
+				{
+					_items[i]->setAlpha(1.0f);
+				}
+				else
+				{
+					_items[i]->setAlpha(0.0f);
+				}
+			}
+			else
+			{				
+				_items[i]->setAlpha(1.0f);
+			}
+			_items[i]->update(getItemPosition(i), 1.0f, 1.0f, _toolBoxItemRenderer);
 		}
 	}
 
 	void ZomboToolBox::addItem(ZomboToolBoxItem* item)
 	{
-		item->updateSize();
-		item->normalModilier = &_modifierNormal;
-		item->mirrorModilier = &_modifierMirror;
 		_items.push_back(item);
+	}
+
+	void ZomboToolBox::load()
+	{
+		whiteTexture = new graphics::TextureImage2d(false, false);
+		whiteTexture->create();
+		uint pixel = 0xffffffff;
+		whiteTexture->LoadPixels(1, 1, llge::Rgba, &pixel);
 	}
 }

@@ -106,6 +106,9 @@
     <Filter Include="zombo\_editor\toolbox">
       <UniqueIdentifier>{3b3ae215-a92c-4d9a-b250-74a57c2cccca}</UniqueIdentifier>
     </Filter>
+    <Filter Include="zombo\objects">
+      <UniqueIdentifier>{8111468f-e9df-436a-aa5a-258a4d95fad3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\CommonSources\include\llge.h">
@@ -616,6 +619,12 @@
     </ClInclude>
     <ClInclude Include="..\src\zombo\_editor\toolbox\ZomboToolBox.h">
       <Filter>zombo\_editor\toolbox</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\zombo\_editor\toolbox\ZomboToolBoxItemRenderer.h">
+      <Filter>zombo\_editor\toolbox</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\zombo\objects\ZomboPlatform.h">
+      <Filter>zombo\objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1172,6 +1181,12 @@
     </ClCompile>
     <ClCompile Include="..\src\zombo\_editor\toolbox\ZomboToolBox.cpp">
       <Filter>zombo\_editor\toolbox</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\zombo\_editor\toolbox\ZomboToolBoxItemRenderer.cpp">
+      <Filter>zombo\_editor\toolbox</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\zombo\objects\ZomboPlatform.cpp">
+      <Filter>zombo\objects</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

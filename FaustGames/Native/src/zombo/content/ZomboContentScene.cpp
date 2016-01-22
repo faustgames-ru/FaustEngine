@@ -46,7 +46,10 @@ namespace zombo
 		ZomboValue* zomboRootValue = ZomboSerializer::deserializeFromJson(jsonString);
 		ZomboObject* zomboRoot = zomboRootValue->asObject();
 
+
 		ZomboContentScene* result = new ZomboContentScene();
+		result->background = (*zomboRoot)["background"]->asString();
+
 		ZomboArray *resourcesArray = (*zomboRoot)["resources"]->asArray();
 		result->resources.resize(resourcesArray->size());
 		for (uint i = 0; i < result->resources.size(); i++)

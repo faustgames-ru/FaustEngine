@@ -70,6 +70,9 @@ namespace zombo
 	class ZomboConstants
 	{
 	public:
+		static const ushort t0 = 1;
+		static const ushort t1 = 65535;
+		static ushort quadIndices[6];
 		static const float GameScale; // 100 dip per meter
 		static const uint LongTimeScale = 0xffffffff; // does 136 years of game time good enough?
 	};

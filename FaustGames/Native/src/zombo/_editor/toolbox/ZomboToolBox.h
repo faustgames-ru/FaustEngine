@@ -3,22 +3,16 @@
 
 #include "../../zombo_classes.h"
 #include "../../common/ZomboInterpolatedValue.h"
+#include "ZomboToolBoxItemRenderer.h"
 
 namespace zombo
 {
-	class IZomboToolBoxItemRenderModilier : public IBaseObject
-	{
-	public:
-		virtual float getAlpha(float value, float size, float scale) = 0;
-		virtual core::Vector2 getPosition(const core::Vector2 position) = 0;
-	};
-
 	class IZomboToolBoxRender : public IBaseObject
 	{
 	public:
 		virtual float getSizeX() = 0;
 		virtual float getSizeY() = 0;
-		virtual void render(core::Vector2 position, float scale, IZomboToolBoxItemRenderModilier *renderModilier) = 0;
+		virtual void render(ZomboToolBoxItemRenderer &render) = 0;
 	};
 
 	class ZomboToolBoxBoxRender : public IZomboToolBoxRender
@@ -27,56 +21,59 @@ namespace zombo
 		static ZomboToolBoxBoxRender Default;
 		virtual float getSizeX() OVERRIDE;
 		virtual float getSizeY() OVERRIDE;
-		virtual void render(core::Vector2 position, float scale, IZomboToolBoxItemRenderModilier *renderModilier) OVERRIDE;
+		virtual void render(ZomboToolBoxItemRenderer &render) OVERRIDE;
 	};
-
-	class EmptyRenderModilier : public IZomboToolBoxItemRenderModilier
-	{
-		virtual float getAlpha(float value, float size, float scale) OVERRIDE;
-		virtual core::Vector2 getPosition(const core::Vector2 position) OVERRIDE;
-	};
-
-	class MirrorRenderModilier : public IZomboToolBoxItemRenderModilier
-	{
-	public:
-		float yAxis;
-		MirrorRenderModilier();
-		virtual float getAlpha(float value, float size, float scale) OVERRIDE;
-		virtual core::Vector2 getPosition(const core::Vector2 position) OVERRIDE;
-	private:
-	};
-
+	
 	class ZomboToolBoxItem
 	{
 	public:
-		float sizeX;
-		float sizeY;
-		core::Vector2 position;
 		IZomboToolBoxRender *render;
-		IZomboToolBoxItemRenderModilier *normalModilier;
-		IZomboToolBoxItemRenderModilier *mirrorModilier;
+		bool isSelected;
+		bool isHovered;
 		ZomboToolBoxItem();
-		void updateSize();
-		void updatePosition(const core::Vector2 &value);
-		void updateInput();
-		void update();
+		void updateInput(const core::Vector2& position, float scale);
+		void update(const core::Vector2& position, float scale, float alpha, ZomboToolBoxItemRenderer &renderer);
+		float getSizeX() const;
+		float getSizeY() const;
+		void setAlpha(float alpha);
 	private:
 		ZomboInterpolatedValue _scale;
 		ZomboInterpolatedValue _offset0; 
 		ZomboInterpolatedValue _offset1;
+		ZomboInterpolatedValue _alpha;
+	};
+
+	struct ZomboToolBoxAutoHideMode
+	{
+		enum e
+		{
+			None,
+			Blend,
+			Move
+		};
 	};
 
 	class ZomboToolBox
 	{
 	public:
 		static ZomboToolBox Default;
+		ZomboToolBox();
+		void calcBounds();
+		core::Vector2 getItemPosition(uint i) const;
 		void updateInput();
 		void update();
 		void addItem(ZomboToolBoxItem* item);
+		void load();
+		graphics::TextureImage2d* whiteTexture;
+		ZomboToolBoxAutoHideMode::e autoHideMode;
 	private:
 		std::vector<ZomboToolBoxItem* > _items;
-		EmptyRenderModilier _modifierNormal;
-		MirrorRenderModilier _modifierMirror;
+		ZomboToolBoxItemRenderer _toolBoxItemRenderer;
+		float _sizeX;
+		float _sizeY;
+		float _notPaddedSizeY;
+		bool _hasSelection;
+		ZomboInterpolatedValue _alpha;
 	};
 }
 

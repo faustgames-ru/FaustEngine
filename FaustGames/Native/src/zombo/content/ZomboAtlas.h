@@ -8,6 +8,7 @@ namespace zombo
 	struct ZomboImageVertex
 	{
 		core::Vector2 xy;
+		core::Vector2 normalized;
 		ushort u;
 		ushort v;
 	};
@@ -17,7 +18,7 @@ namespace zombo
 		graphics::TextureImage2d *texture;
 		std::string name;
 		std::vector<ZomboImageVertex> vertices;
-		std::vector<short> indices;		
+		std::vector<ushort> indices;
 		geometry::Aabb2d bounds;
 		void initWithQuad(float w, float h);
 		static ZomboContentImage * create();

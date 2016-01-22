@@ -291,6 +291,7 @@
     <ClInclude Include="..\src\zombo\content\ZomboContentScene.h" />
     <ClInclude Include="..\src\zombo\content\ZomboContentSystem.h" />
     <ClInclude Include="..\src\zombo\entities\ZomboPlayer.h" />
+    <ClInclude Include="..\src\zombo\objects\ZomboPlatform.h" />
     <ClInclude Include="..\src\zombo\render\ZomboRenderSprite.h" />
     <ClInclude Include="..\src\zombo\render\ZomboRenderSystem.h" />
     <ClInclude Include="..\src\zombo\scenes\ZomboScene.h" />
@@ -309,6 +310,7 @@
     <ClInclude Include="..\src\zombo\_editor\EditorMode.h" />
     <ClInclude Include="..\src\zombo\_editor\modes\ZomboEditorSelectionMode.h" />
     <ClInclude Include="..\src\zombo\_editor\toolbox\ZomboToolBox.h" />
+    <ClInclude Include="..\src\zombo\_editor\toolbox\ZomboToolBoxItemRenderer.h" />
     <ClInclude Include="..\src\zombo\_editor\ZomboEditor.h" />
     <ClInclude Include="..\src\zombo\_editor\ZomboEditorCamera.h" />
     <ClInclude Include="..\src\zombo\_editor\ZomboEditorInput.h" />
@@ -445,6 +447,7 @@
     <ClCompile Include="..\src\zombo\content\ZomboContentScene.cpp" />
     <ClCompile Include="..\src\zombo\content\ZomboContentSystem.cpp" />
     <ClCompile Include="..\src\zombo\entities\ZomboPlayer.cpp" />
+    <ClCompile Include="..\src\zombo\objects\ZomboPlatform.cpp" />
     <ClCompile Include="..\src\zombo\render\ZomboRenderSprite.cpp" />
     <ClCompile Include="..\src\zombo\render\ZomboRenderSystem.cpp" />
     <ClCompile Include="..\src\zombo\scenes\ZomboScene.cpp" />
@@ -460,6 +463,7 @@
     <ClCompile Include="..\src\zombo\_editor\commands\ZomboSetEditorMode.cpp" />
     <ClCompile Include="..\src\zombo\_editor\modes\ZomboEditorSelectionMode.cpp" />
     <ClCompile Include="..\src\zombo\_editor\toolbox\ZomboToolBox.cpp" />
+    <ClCompile Include="..\src\zombo\_editor\toolbox\ZomboToolBoxItemRenderer.cpp" />
     <ClCompile Include="..\src\zombo\_editor\ZomboEditor.cpp" />
     <ClCompile Include="..\src\zombo\_editor\ZomboEditorCamera.cpp" />
     <ClCompile Include="..\src\zombo\_editor\ZomboEditorInput.cpp" />

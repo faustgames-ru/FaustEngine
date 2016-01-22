@@ -21,6 +21,7 @@ namespace zombo
 	{
 	public:
 		std::string thisDir;
+		std::string background;
 		std::vector<std::string> resources;
 		std::vector<std::string> platforms;
 		static ZomboContentScene* createFromJson(const char* jsonString);

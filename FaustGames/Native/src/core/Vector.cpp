@@ -222,6 +222,21 @@ namespace core
 		return *this;
 	}
 
+	Vector3& Vector3::operator-=(const Vector2& right)
+	{
+		_values[iX] -= right.getX();
+		_values[iY] -= right.getY();
+		return *this;
+	}
+
+	Vector3& Vector3::operator*=(float right)
+	{
+		_values[iX] *= right;
+		_values[iY] *= right;
+		_values[iZ] *= right;
+		return *this;
+	}
+
 	Vector3 Vector3::operator+(const Vector3& right) const
 	{
 		return Vector3(

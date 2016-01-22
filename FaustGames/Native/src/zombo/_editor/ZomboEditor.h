@@ -42,18 +42,28 @@ namespace zombo
 		virtual void API_CALL render() OVERRIDE;
 		virtual void API_CALL release() OVERRIDE;
 	private:
-		void renderGui();		
+		void renderBackground();
+		void renderGui();
 		void internalUpdate();
 		void contentLoaded();
+
+		void addBackgroundEdgeVertex(uint i);
 
 		std::string _actualModeName;
 		IEditorMode *_mode;
 		std::string _rootPath;
 		core::MatrixContainer _guiMatrix;
+		core::MatrixContainer _backgroundMatrix;
 		bool _needCallContetnLoaded;
 		ZomboContentGame *_game;
 		ZomboContentScene *_scene;
-		std::list<ZomboContentPlatform *> _platforms;
+		std::vector<ZomboContentPlatform *> _platforms;
+		ZomboContentImage* _background;
+		std::vector<RenderVertex> _backgroundVertices;
+		std::vector<ushort> _backgroundIndices;
+		std::vector<ColorVertex> _backgroundEdgesVertices;
+		ZomboInterpolatedValue _backgrounAlpha;
+		bool _renderBackgroundEdges;
 	};
 }
 #endif /* ZOMBO_EDITOR_H */

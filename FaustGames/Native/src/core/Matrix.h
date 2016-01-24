@@ -47,6 +47,8 @@ namespace core
 		
 		inline const float *getData() const { return &(_values[0]); }
 
+		Matrix toSkyboxProjection() const;
+
 		static bool equals(const Matrix &a, const Matrix &b);
 		static Matrix createScale(float x, float y, float z);
 		static Matrix createRotation(Vector3 n, float a);

@@ -13,6 +13,15 @@ namespace core
 
 	Matrix2 Matrix2::identity(1, 0, 0, 1);
 
+	Matrix Matrix::toSkyboxProjection() const
+	{
+		return Matrix(
+			getXx(), getXy(), getXz(), 0,
+			getYx(), getYy(), getYz(), 0,
+			getZx(), getZy(), getZz(), 0,
+			0, 0, 0, 1.0f);
+	}
+
 	bool Matrix::equals(const Matrix& a, const Matrix& b)
 	{
 		{

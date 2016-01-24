@@ -43,6 +43,7 @@ namespace zombo
 		virtual void API_CALL release() OVERRIDE;
 	private:
 		void renderBackground();
+		void renderBackgroundAsSkybox();
 		void renderGui();
 		void internalUpdate();
 		void contentLoaded();

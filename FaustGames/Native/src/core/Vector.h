@@ -49,6 +49,8 @@ namespace core
 		Vector2 normalize() const;
 		float length() const;
 		Vector3 toVector3() const;
+		Vector3 toVector3(float z) const;
+		static Vector2 cubic(Vector2 p0, Vector2 p1, Vector2 p2, Vector2 p3, float u);
 		static float crossProduct(Vector2 v1, Vector2 v2);
 		static float dotProduct(Vector2 v1, Vector2 v2);
 		static bool equals(const Vector2& a, const Vector2& b);

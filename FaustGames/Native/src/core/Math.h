@@ -8,9 +8,9 @@ namespace core
 	class Math
 	{
 	public:
-		static const float Epsilon;
-		static const float MaxValue;
-		static const float Pi;
+		static float Epsilon;
+		static float MaxValue;
+		static float Pi;
 
 		static bool equals(float a, float b, float epsilon = Epsilon);
 		static float abs(float a);
@@ -25,7 +25,10 @@ namespace core
 		static float atan(float v);
 		static float atan2(float y, float x);
 		static float lerp(float from, float to, float u);
+		static float conic(float p0, float p1, float p2, float u);
+		static float cubic(float p0, float p1, float p2, float p3, float u);
 		static float asin(float v);
+		static float frac(float v);
 	};
 }
 

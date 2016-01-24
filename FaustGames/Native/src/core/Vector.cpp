@@ -169,6 +169,18 @@ namespace core
 		return Vector3(getX(), getY(), 0.0f);
 	}
 
+	Vector3 Vector2::toVector3(float z) const
+	{
+		return Vector3(getX(), getY(), z);
+	}
+
+	Vector2 Vector2::cubic(Vector2 p0, Vector2 p1, Vector2 p2, Vector2 p3, float u)
+	{
+		return Vector2(
+			Math::cubic(p0.getX(), p1.getX(), p2.getX(), p3.getX(), u),
+			Math::cubic(p0.getY(), p1.getY(), p2.getY(), p3.getY(), u));
+	}
+
 	float Vector2::crossProduct(Vector2 v1, Vector2 v2)
 	{
 		return v1.getX()*v2.getY() - v1.getY()*v2.getX();

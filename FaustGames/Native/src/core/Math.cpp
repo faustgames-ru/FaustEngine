@@ -2,9 +2,9 @@
 
 namespace core
 {
-	const float Math::Epsilon(1e-8f);
-	const float Math::MaxValue(1e10f);
-	const float Math::Pi(3.14159265359f);
+	float Math::Epsilon(1e-8f);
+	float Math::MaxValue(1e10f);
+	float Math::Pi(3.14159265359f);
 
 	float Math::abs(float a)
 	{
@@ -70,9 +70,24 @@ namespace core
 		return from + u * (to - from);
 	}
 
+	float Math::conic(float p0, float p1, float p2, float u)
+	{
+		return lerp(lerp(p0, p1, u), lerp(p1, p2, u), u);
+	}
+
+	float Math::cubic(float p0, float p1, float p2, float p3, float u)
+	{
+		return conic(lerp(p0, p1, u), lerp(p1, p2, u), lerp(p2, p3, u), u);
+	}
+
 	float Math::asin(float v)
 	{
 		return ::asin(v);
+	}
+
+	float Math::frac(float v)
+	{
+		return v - trunc(v);
 	}
 
 	bool Math::equals(float a, float b, float epsilon)

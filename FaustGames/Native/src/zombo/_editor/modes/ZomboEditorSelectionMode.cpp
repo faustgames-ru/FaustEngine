@@ -13,6 +13,7 @@ namespace zombo
 
 	void ZomboEditorSelectionMode::update()
 	{
+		return;
 		ColorVertex rect[8] = 
 		{ 
 			ColorVertex(-0.5f, -0.5f, -0.5f, 0xff00ffff),

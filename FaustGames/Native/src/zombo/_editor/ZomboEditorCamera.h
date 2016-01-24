@@ -106,15 +106,20 @@ namespace zombo
 		ZomboCameraMode * mode;
 
 		float depth;
-		
+
 		core::MatrixContainer matrix;
+		core::MatrixContainer skyboxMatrix;
 		ZomboEditorCameraRotator rotator;
+
+		core::Matrix transformToView;
+		core::Matrix transformFromView;
 
 		ZomboEditorCamera();
 		~ZomboEditorCamera();
 		void updateInterpoaltedScale();
 		void update();
 
+		core::Vector2 getMouseProjection(float z) const;
 
 		virtual IntPtr API_CALL getMode() OVERRIDE;
 		virtual void API_CALL setMode(String modeName) OVERRIDE;

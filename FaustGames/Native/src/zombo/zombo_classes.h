@@ -18,6 +18,16 @@ namespace zombo
 		ColorVertex()
 			: color(0)
 		{};
+		ColorVertex(core::Vector2 position, uint c)
+		{
+			xyz = position.toVector3();
+			color = c;
+		}
+		ColorVertex(core::Vector3 position, uint c)
+		{
+			xyz = position;
+			color = c;
+		}
 		ColorVertex(float x, float y, float z, uint c)
 			: color(0)
 		{
@@ -37,6 +47,14 @@ namespace zombo
 		TextureCoords uv;
 		RenderVertex(): color(0)
 		{}
+		RenderVertex(core::Vector3 position, uint c, ushort u, ushort v)
+		{
+			xyz = position;
+			color = c;
+			uv.u = u;
+			uv.v = v;
+		}
+		
 		RenderVertex(float x, float y, float z, uint c, ushort u, ushort v)
 		{
 			xyz.setX(x);

@@ -292,7 +292,10 @@ namespace zombo
 		if (fov < minFov)
 		{
 			core::Matrix ortho = core::Matrix::createOrtho(ZomboEditorViewport::Default.getAspect(), _scaleValue.getValue(), depth*0.5f);
-			matrix.setValue(core::Matrix::mul(translate, rotator.actualRotation, ortho));
+			core::Matrix orthoSkybox = core::Matrix::createOrtho(ZomboEditorViewport::Default.getAspect(), 1.0f, depth*0.5f);
+			skyboxMatrix.setValue(orthoSkybox);
+			transformToView = core::Matrix::mul(translate, rotator.actualRotation, ortho);
+			matrix.setValue(transformToView);
 		}
 		else
 		{
@@ -301,8 +304,21 @@ namespace zombo
 			core::Matrix translateZ = core::Matrix::createTranslate(0, 0, z);
 			float scaleValue = _scaleValue.getValue();
 			core::Matrix scale = core::Matrix::createScale(1.0f / scaleValue, 1.0f / scaleValue, 1.0f / scaleValue);
-			matrix.setValue(core::Matrix::mul(translate, rotator.actualRotation, scale, translateZ, proj));
+			transformToView = core::Matrix::mul(translate, rotator.actualRotation, scale, translateZ, proj);
+			matrix.setValue(transformToView);
+			skyboxMatrix.setValue(core::Matrix::mul(rotator.actualRotation, proj));
 		}
+		transformFromView = transformToView.inverse();
+	}
+
+	core::Vector2 ZomboEditorCamera::getMouseProjection(float z) const
+	{
+		core::Vector2 m;
+		m.setX(-1.0f + ZomboEditorInput::Default.mouse.position.getX() * 2.0f / ZomboEditorViewport::Default.w);
+		m.setY(1.0f - ZomboEditorInput::Default.mouse.position.getY() * 2.0f / ZomboEditorViewport::Default.h);
+
+		core::Vector3 zero = core::Matrix::transform(transformToView, core::Vector3(0, 0, z));
+		return core::Matrix::transform(transformFromView, m.toVector3(zero.getZ())).toVector2();
 	}
 
 	IntPtr ZomboEditorCamera::getMode()

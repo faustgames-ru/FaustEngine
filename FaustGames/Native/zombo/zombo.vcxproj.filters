@@ -109,6 +109,9 @@
     <Filter Include="zombo\objects">
       <UniqueIdentifier>{8111468f-e9df-436a-aa5a-258a4d95fad3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="zombo\_editor\curves">
+      <UniqueIdentifier>{b8ec91b9-5acb-45fc-b328-9c107f34e9ae}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\CommonSources\include\llge.h">
@@ -625,6 +628,9 @@
     </ClInclude>
     <ClInclude Include="..\src\zombo\objects\ZomboPlatform.h">
       <Filter>zombo\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\zombo\_editor\curves\CurvesManager.h">
+      <Filter>zombo\_editor\curves</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1187,6 +1193,9 @@
     </ClCompile>
     <ClCompile Include="..\src\zombo\objects\ZomboPlatform.cpp">
       <Filter>zombo\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\zombo\_editor\curves\CurvesManager.cpp">
+      <Filter>zombo\_editor\curves</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

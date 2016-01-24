@@ -10,6 +10,7 @@
 #include "../../fonts/FontsManager.h"
 #include "../ZomboLog.h"
 #include "ZomboEditorLogDisplayer.h"
+#include "curves/CurvesManager.h"
 
 namespace zombo
 {
@@ -102,6 +103,10 @@ namespace zombo
 		_needCallContetnLoaded = true;
 
 		ZomboToolBox::Default.load();
+
+		CurvesManager::Default.addCurve(core::Vector2(-1, -0.5f), core::Vector2(-0.5f, 0.25f), core::Vector2(0.5f, 0.25f), core::Vector2(1, -0.5f));
+		CurvesManager::Default.addCurve(core::Vector2(-1, -1.5f), core::Vector2(-0.5f, -0.75f), core::Vector2(0.5f, -0.75f), core::Vector2(1, -1.5f));
+		CurvesManager::Default.addCurve(core::Vector2(-1, 0.5f), core::Vector2(-0.5f, 1.25f), core::Vector2(0.5f, 1.25f), core::Vector2(1, 0.5f));
 	}
 
 	void ZomboEditor::update(float ellapsedTime)
@@ -173,8 +178,9 @@ namespace zombo
 		graphics::GraphicsDevice::Default.setViewport(0, 0, ZomboEditorViewport::Default.w, ZomboEditorViewport::Default.h);
 		graphics::GraphicsDevice::Default.clear();
 
-		renderBackground();
-		graphics::UniformValues::projection()->setValue(ZomboEditorCamera::Default.matrix);		
+		//renderBackground();
+		renderBackgroundAsSkybox();
+		graphics::UniformValues::projection()->setValue(ZomboEditorCamera::Default.matrix);
 		ZomboEditorRenderService::Default.applyRenderCommands();
 		renderGui();
 	}
@@ -200,7 +206,7 @@ namespace zombo
 
 			ushort t0 = ZomboConstants::t0;
 			ushort t1 = ZomboConstants::t1;
-			int tilesCount = 3;
+			uint tilesCount = 3;
 			_backgroundVertices.resize(_background->vertices.size() * tilesCount);
 			_backgroundIndices.resize(_background->indices.size() * tilesCount);
 			float sizeX = _background->bounds.Max.getX() - _background->bounds.Min.getX();
@@ -243,6 +249,108 @@ namespace zombo
 		}
 	}
 
+	core::Vector3 getPosFromAngles(float a, float h)
+	{
+		float y = -core::Math::sin(h);
+		float l = core::Math::cos(h);
+		float x = l * core::Math::sin(a);
+		float z = l * core::Math::cos(a);
+		return core::Vector3(x, y, z);
+	}
+
+	void ZomboEditor::renderBackgroundAsSkybox()
+	{
+		if (_background == nullptr) return;
+		_backgrounAlpha.setTargetValueIfNotEqual(1.0f);
+		_backgrounAlpha.update();
+		graphics::GraphicsDevice::Default.renderState.setEffect(graphics::EffectsBasic::textureColor());
+		graphics::UniformValues::projection()->setValue(ZomboEditorCamera::Default.skyboxMatrix);
+		graphics::UniformValues::texture()->setValue(_background->texture->getHandle());
+
+		_backgroundVertices.clear();
+		_backgroundIndices.clear();
+
+		uint detailX = 32;
+		uint detailY = 8;
+		uint tilesPerPlane = 1;
+		for (uint j = 0; j < detailX; j++)
+		{
+			float a0 = j * core::Math::Pi * 2.0f / detailX;
+			float a1 = (j+1) * core::Math::Pi * 2.0f / detailX;
+
+			ushort tx0 = static_cast<ushort>(j * ZomboConstants::t1 * 4* tilesPerPlane / detailX);
+			ushort tx1 = static_cast<ushort>((j + 1) * ZomboConstants::t1 * 4* tilesPerPlane / detailX);
+
+			float hAngle = core::Math::Pi *0.25f;
+			float hAngleOffset = hAngle*0.8f;
+
+			if (tx0 > tx1)
+			{
+				tx0 = 0;
+			}
+
+			for (uint i = 0; i < detailY; i++)
+			{
+				float h0 = i * hAngle / detailY;
+				float h1 = (i + 1) * hAngle / detailY;
+
+				ushort ty0 = static_cast<ushort>(i * ZomboConstants::t1 / detailY);
+				ushort ty1 = static_cast<ushort>((i + 1) * ZomboConstants::t1 / detailY);
+
+
+				h0 -= hAngleOffset;
+				h1 -= hAngleOffset;
+
+				core::Vector3 p00 = getPosFromAngles(a0, h0);
+				core::Vector3 p01 = getPosFromAngles(a0, h1);
+				core::Vector3 p10 = getPosFromAngles(a1, h0);
+				core::Vector3 p11 = getPosFromAngles(a1, h1);
+
+				uint k = _backgroundVertices.size();
+				_backgroundIndices.push_back(k + 0);
+				_backgroundIndices.push_back(k + 1);
+				_backgroundIndices.push_back(k + 2);
+				_backgroundIndices.push_back(k + 0);
+				_backgroundIndices.push_back(k + 2);
+				_backgroundIndices.push_back(k + 3);
+				uint c = graphics::Color::mulA(0xffffffff, _backgrounAlpha.getValue());;
+				_backgroundVertices.push_back(RenderVertex(p00, c, tx0, ty0));
+				_backgroundVertices.push_back(RenderVertex(p01, c, tx0, ty1));
+				_backgroundVertices.push_back(RenderVertex(p11, c, tx1, ty1));
+				_backgroundVertices.push_back(RenderVertex(p10, c, tx1, ty0));
+			}
+
+			uint k = _backgroundVertices.size();
+			_backgroundIndices.push_back(k + 0);
+			_backgroundIndices.push_back(k + 1);
+			_backgroundIndices.push_back(k + 2);
+			_backgroundIndices.push_back(k + 3);
+			_backgroundIndices.push_back(k + 4);
+			_backgroundIndices.push_back(k + 5);
+			uint c = graphics::Color::mulA(0xffffffff, _backgrounAlpha.getValue());;
+
+			core::Vector3 p00 = getPosFromAngles(a0, -hAngleOffset);
+			core::Vector3 p10 = getPosFromAngles(a1, -hAngleOffset);
+			core::Vector3 p01 = getPosFromAngles(a0, -hAngleOffset + hAngle);
+			core::Vector3 p11 = getPosFromAngles(a1, -hAngleOffset + hAngle);
+
+			ushort ty0 = ZomboConstants::t0;
+			ushort ty1 = ZomboConstants::t1;
+
+			_backgroundVertices.push_back(RenderVertex(p00, c, tx0, ty0));
+			_backgroundVertices.push_back(RenderVertex(p10, c, tx1, ty0));
+			_backgroundVertices.push_back(RenderVertex(core::Vector3(0, 1, 0), c, tx1, ty0));
+
+			_backgroundVertices.push_back(RenderVertex(p01, c, tx0, ty1));
+			_backgroundVertices.push_back(RenderVertex(p11, c, tx1, ty1));
+			_backgroundVertices.push_back(RenderVertex(core::Vector3(0, -1, 0), c, tx1, ty1));
+		}
+
+		graphics::GraphicsDevice::Default.drawPrimitives(graphics::VertexFormatsBasic::positionColorTexture(),
+			_backgroundVertices.data(), _backgroundIndices.data(), _backgroundIndices.size() / 3);
+
+	}
+
 	void ZomboEditor::renderGui()
 	{
 		_guiMatrix.setValue(core::Matrix::mul(
@@ -258,6 +366,7 @@ namespace zombo
 		ZomboToolBox::Default.updateInput();
 		ZomboEditorCamera::Default.update();
 		_mode->update();
+		CurvesManager::Default.update();
 		ZomboEditorLogDisplayer::Default.update();
 		ZomboToolBox::Default.update();
 	}

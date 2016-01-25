@@ -96,6 +96,7 @@ namespace core
 		Vector3& operator-=(const Vector2& right);
 		Vector3& operator*=(float right);
 		Vector3 operator+(const Vector3 &right) const;
+		Vector3 operator+(const Vector2 &right) const;
 		Vector3 operator-(const Vector3 &right) const;
 		Vector3 operator*(const Vector3 &right) const;
 		Vector3 operator*(float right) const;

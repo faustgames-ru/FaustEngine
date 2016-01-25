@@ -11,6 +11,8 @@
 #include "../ZomboLog.h"
 #include "ZomboEditorLogDisplayer.h"
 #include "curves/CurvesManager.h"
+#include "drawing/Drawer.h"
+#include "ZomboEditorInput.h"
 
 namespace zombo
 {
@@ -71,7 +73,8 @@ namespace zombo
 
 	bool ZomboEditor::isRedoAvaliable()
 	{
-		return ZomboEditorCommands::Default.isRedoAvaliable();
+		bool res = ZomboEditorCommands::Default.isRedoAvaliable();
+		return res;
 	}
 
 	void ZomboEditor::undo()
@@ -111,10 +114,13 @@ namespace zombo
 
 	void ZomboEditor::update(float ellapsedTime)
 	{
+
 		ZomboGameEnvironment::update(ellapsedTime);
+		ZomboEditorInput::Default.mouse.internalUpdate();
+			
 		ZomboEditorRenderService::Default.resetBuffers();
 		ZomboEditorRenderService::Gui.resetBuffers();
-		
+
 		if (internalContent.isLoaded())
 		{
 			if (_needCallContetnLoaded)
@@ -365,6 +371,12 @@ namespace zombo
 	{
 		ZomboToolBox::Default.updateInput();
 		ZomboEditorCamera::Default.update();
+
+		ZomboDrawer::Default.setScaleToPixels(ZomboEditorViewport::Default.h * 0.5f / ZomboEditorCamera::Default.getInterpoaltedScale());
+		ZomboDrawer::Gui.setScaleToPixels(1.0f);
+		ZomboDrawer::Default.setSmoothR(ZomboConstants::SmoothLevel);
+		ZomboDrawer::Gui.setSmoothR(ZomboConstants::SmoothLevel);
+
 		_mode->update();
 		CurvesManager::Default.update();
 		ZomboEditorLogDisplayer::Default.update();

@@ -11,7 +11,7 @@ namespace zombo
 	{
 	public:
 		static ZomboEditorCommands Default;
-		//static ZomboEditorCommands Camera;
+		static ZomboEditorCommands Camera;
 		static ZomboEditorCommands* camera();
 		CommandExecutonStatus::e doCommand(ZomboEditorCommand *command);
 		void undo();

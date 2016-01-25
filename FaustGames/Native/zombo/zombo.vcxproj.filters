@@ -112,6 +112,9 @@
     <Filter Include="zombo\_editor\curves">
       <UniqueIdentifier>{b8ec91b9-5acb-45fc-b328-9c107f34e9ae}</UniqueIdentifier>
     </Filter>
+    <Filter Include="zombo\_editor\drawing">
+      <UniqueIdentifier>{19871925-a362-48f9-9449-bad5ce817e59}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\CommonSources\include\llge.h">
@@ -631,6 +634,9 @@
     </ClInclude>
     <ClInclude Include="..\src\zombo\_editor\curves\CurvesManager.h">
       <Filter>zombo\_editor\curves</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\zombo\_editor\drawing\Drawer.h">
+      <Filter>zombo\_editor\drawing</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1196,6 +1202,9 @@
     </ClCompile>
     <ClCompile Include="..\src\zombo\_editor\curves\CurvesManager.cpp">
       <Filter>zombo\_editor\curves</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\zombo\_editor\drawing\Drawer.cpp">
+      <Filter>zombo\_editor\drawing</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -155,8 +155,10 @@ namespace Zombo.Editor
 
         private void InvalidateUndoButtons()
         {
-            _undo.Enabled = _zomboEditScene.ZomboEditor.IsUndoAvaliable();
-            _redo.Enabled = _zomboEditScene.ZomboEditor.IsRedoAvaliable();
+            var undo = _zomboEditScene.ZomboEditor.IsUndoAvaliable();
+            _undo.Enabled = undo;
+            var redo = _zomboEditScene.ZomboEditor.IsRedoAvaliable();
+            _redo.Enabled = redo;
         }
 
         private void InvalidateCameraModeButtons()

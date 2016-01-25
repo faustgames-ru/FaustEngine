@@ -22,6 +22,7 @@ namespace zombo
 	public:
 		CommandExecutonStatus::e status;
 		ZomboEditorCommand();
+		virtual ~ZomboEditorCommand();
 		virtual bool isExecutionAvaliable();
 		virtual bool isUndoAvaliable();
 		virtual void execute() = 0;

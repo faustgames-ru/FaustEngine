@@ -308,6 +308,7 @@
     <ClInclude Include="..\src\zombo\_editor\commands\ZomboEditorCommands.h" />
     <ClInclude Include="..\src\zombo\_editor\commands\ZomboSetEditorMode.h" />
     <ClInclude Include="..\src\zombo\_editor\curves\CurvesManager.h" />
+    <ClInclude Include="..\src\zombo\_editor\drawing\Drawer.h" />
     <ClInclude Include="..\src\zombo\_editor\EditorMode.h" />
     <ClInclude Include="..\src\zombo\_editor\modes\ZomboEditorSelectionMode.h" />
     <ClInclude Include="..\src\zombo\_editor\toolbox\ZomboToolBox.h" />
@@ -463,6 +464,7 @@
     <ClCompile Include="..\src\zombo\_editor\commands\ZomboEditorCommands.cpp" />
     <ClCompile Include="..\src\zombo\_editor\commands\ZomboSetEditorMode.cpp" />
     <ClCompile Include="..\src\zombo\_editor\curves\CurvesManager.cpp" />
+    <ClCompile Include="..\src\zombo\_editor\drawing\Drawer.cpp" />
     <ClCompile Include="..\src\zombo\_editor\modes\ZomboEditorSelectionMode.cpp" />
     <ClCompile Include="..\src\zombo\_editor\toolbox\ZomboToolBox.cpp" />
     <ClCompile Include="..\src\zombo\_editor\toolbox\ZomboToolBoxItemRenderer.cpp" />

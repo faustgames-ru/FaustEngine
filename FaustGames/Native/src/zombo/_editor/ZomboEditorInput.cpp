@@ -21,10 +21,38 @@ namespace zombo
 		return (buttons & ZOMBO_MOUSE_MIDDLE_BUTTON) != 0;
 	}
 
-	void ZomboEditorMouse::update(int mouseX, int mouseY, uint mouseButtons)
+	bool ZomboEditorMouse::isPrevStateLeftPressed() const
 	{
-		position = core::Vector2(static_cast<float>(mouseX), static_cast<float>(mouseY));
-		buttons = mouseButtons;
+		return (prevButtonsState & ZOMBO_MOUSE_LEFT_BUTTON) != 0;
+	}
+
+	bool ZomboEditorMouse::isPrevStateRightPressed() const
+	{
+		return (prevButtonsState & ZOMBO_MOUSE_RIGHT_BUTTON) != 0;
+	}
+
+	bool ZomboEditorMouse::isPrevStateMiddlePressed() const
+	{
+		return (prevButtonsState & ZOMBO_MOUSE_MIDDLE_BUTTON) != 0;
+	}
+
+	void ZomboEditorMouse::update(int mouseX, int mouseY, uint mouseButtons)
+	{		
+		internalPosition = core::Vector2(static_cast<float>(mouseX), static_cast<float>(mouseY));
+		internalButtons = mouseButtons;
+	}
+
+	void ZomboEditorMouse::internalUpdate()
+	{
+		prevPosition = position;
+		prevButtonsState = buttons;
+		position = internalPosition;
+		buttons = internalButtons;
+	}
+
+	void ZomboEditorMouse::reset()
+	{
+		internalButtons = 0;
 	}
 
 	ZomboEditorInput ZomboEditorInput::Default;

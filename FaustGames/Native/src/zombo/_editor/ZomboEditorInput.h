@@ -10,11 +10,22 @@ namespace zombo
 	{
 	public:
 		uint buttons;
+		uint prevButtonsState;
 		core::Vector2 position;
+		core::Vector2 prevPosition;
 		bool isLeftPressed() const;
 		bool isRightPressed() const;
 		bool isMiddlePressed() const;
+
+		bool isPrevStateLeftPressed() const;
+		bool isPrevStateRightPressed() const;
+		bool isPrevStateMiddlePressed() const;
 		virtual void API_CALL update(int mouseX, int mouseY, uint mouseButtons) OVERRIDE;
+		void internalUpdate();
+		void reset();
+	private:
+		core::Vector2 internalPosition;
+		uint internalButtons;
 	};
 
 	class ZomboEditorInput : public IZomboEditorInput

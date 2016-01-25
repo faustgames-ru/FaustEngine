@@ -257,6 +257,14 @@ namespace core
 			_values[iZ] + right.getZ());
 	}
 
+	Vector3 Vector3::operator+(const Vector2& right) const
+	{
+		return Vector3(
+			_values[iX] + right.getX(),
+			_values[iY] + right.getY(),
+			_values[iZ]);
+	}
+
 	Vector3 Vector3::operator-(const Vector3& right) const
 	{
 		return Vector3(

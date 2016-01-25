@@ -6,6 +6,10 @@ namespace zombo
 	{
 	}
 
+	ZomboEditorCommand::~ZomboEditorCommand()
+	{
+	}
+
 	bool ZomboEditorCommand::isExecutionAvaliable()
 	{
 		return true;

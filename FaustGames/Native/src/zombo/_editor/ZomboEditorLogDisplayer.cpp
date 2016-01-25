@@ -34,7 +34,7 @@ namespace zombo
 			ulong entryTime = ZomboLog::Default.entries.back().gameTime;
 			ulong delta = ZomboGameEnvironment::gameTime - entryTime;
 			float deltaSec = ZomboGameEnvironment::getSeconds(delta);
-			float corner = 10;
+			float corner = fontSize*0.33f;
 			float smooth = 100;
 
 			const char *zomboString = ZomboLog::Default.entries.back().text.c_str();

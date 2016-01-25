@@ -58,14 +58,14 @@ namespace zombo
 
 	void ZomboCommandCameraSetFov::execute()
 	{
-		//ZomboLog::Default.m("Do: Change fov");
+		ZomboLog::Default.m("Do: Change fov");
 		_prevFov = ZomboEditorCamera::Default.getFov();
 		ZomboEditorCamera::Default.setFovInternal(_fov);
 	}
 
 	void ZomboCommandCameraSetFov::undo()
 	{
-		//ZomboLog::Default.m("Undo: Change fov");
+		ZomboLog::Default.m("Undo: Change fov");
 		ZomboEditorCamera::Default.setFovInternal(_prevFov);
 	}
 
@@ -88,11 +88,11 @@ namespace zombo
 		_prevscale = ZomboEditorCamera::Default.getScale();
 		if (_prevscale > _scale)
 		{
-			//ZomboLog::Default.m("Do: Zoom in");
+			ZomboLog::Default.m("Do: Zoom in");
 		}
 		else
 		{
-			//ZomboLog::Default.m("Do: Zoom out");
+			ZomboLog::Default.m("Do: Zoom out");
 		}
 		ZomboEditorCamera::Default.setScaleInternal(_scale);
 	}
@@ -101,11 +101,11 @@ namespace zombo
 	{
 		if (_prevscale > _scale)
 		{
-			//ZomboLog::Default.m("Undo: Zoom in");
+			ZomboLog::Default.m("Undo: Zoom in");
 		}
 		else
 		{
-			//ZomboLog::Default.m("Undo: Zoom out");
+			ZomboLog::Default.m("Undo: Zoom out");
 		}
 		ZomboEditorCamera::Default.setScaleInternal(_prevscale);
 	}
@@ -331,7 +331,7 @@ namespace zombo
 	void ZomboEditorCamera::setMode(String modeName)
 	{
 		ZomboEditorCommand *command = new ZomboCommandCameraSetMode(modeName);
-		if (ZomboEditorCommands::Default.doCommand(command) == CommandExecutonStatus::CommandExecutionNotAvaliable)
+		if (ZomboEditorCommands::camera()->doCommand(command) == CommandExecutonStatus::CommandExecutionNotAvaliable)
 		{
 			delete command;
 		}

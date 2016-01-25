@@ -16,7 +16,7 @@
 
 namespace zombo
 {
-	std::string ZomboEditorConstants::LogDisplayerFont("InternalContent/Quicksand-Regular[30px].otf");
+	std::string ZomboEditorConstants::LogDisplayerFont("InternalContent/Quicksand-Regular[18px].otf");
 	std::string ZomboEditorConstants::GameFile("Content/main.game");
 
 

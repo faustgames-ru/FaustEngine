@@ -34,13 +34,13 @@ namespace zombo
 
 	void ZomboCommandCameraMoveXY::execute()
 	{
-		//ZomboLog::Default.m("Do: Move camera");
+		ZomboLog::Default.m("Do: Move camera");
 		ZomboEditorCamera::Default.setPositionXY(_targetPosition);
 	}
 
 	void ZomboCommandCameraMoveXY::undo()
 	{
-		//ZomboLog::Default.m("Undo: Move camera");
+		ZomboLog::Default.m("Undo: Move camera");
 		ZomboEditorCamera::Default.setPositionXY(_prevPosition);
 	}
 

@@ -10,11 +10,26 @@ namespace zombo
 	class CurvesPoint;
 	class CurveSegment;
 
+	class ICurvesState: public IBaseObject
+	{
+	public:
+		virtual void start() = 0;
+		virtual void unpdate() = 0;
+		virtual void finish() = 0;
+	};
+
+	class CurvesState : public ICurvesState
+	{
+	public:
+		virtual void start() OVERRIDE;
+		virtual void unpdate() OVERRIDE;
+		virtual void finish() OVERRIDE;
+	};
 
 	class ZomboCommandReplaceCurvePoint : public ZomboEditorCommand
 	{
 	public:
-		ZomboCommandReplaceCurvePoint(CurveSegment *segment, uint pointIndex, CurvesPoint *newPoint);
+		//ZomboCommandReplaceCurvePoint(CurveSegment *segment, uint pointIndex, CurvesPoint *newPoint);
 	};
 
 	class ZomboCommandMoveCurvePoint : public ZomboEditorCommand

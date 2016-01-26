@@ -638,6 +638,9 @@
     <ClInclude Include="..\src\zombo\_editor\drawing\Drawer.h">
       <Filter>zombo\_editor\drawing</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\zombo\_editor\curves\CurvesStateSelect.h">
+      <Filter>zombo\_editor\curves</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\CommonSources\gen\llgePInvoke.cpp">
@@ -1205,6 +1208,9 @@
     </ClCompile>
     <ClCompile Include="..\src\zombo\_editor\drawing\Drawer.cpp">
       <Filter>zombo\_editor\drawing</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\zombo\_editor\curves\CurvesStateSelect.cpp">
+      <Filter>zombo\_editor\curves</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

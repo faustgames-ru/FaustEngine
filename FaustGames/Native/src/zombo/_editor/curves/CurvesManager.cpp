@@ -9,6 +9,18 @@
 
 namespace zombo
 {
+	void CurvesState::start()
+	{
+	}
+
+	void CurvesState::unpdate()
+	{
+	}
+
+	void CurvesState::finish()
+	{
+	}
+
 	ZomboCommandMoveCurvePoint::ZomboCommandMoveCurvePoint(CurvesPoint* point, const core::Vector2 prevPosition, const core::Vector2 newPosition)
 	{
 		_point = point;

@@ -42,9 +42,9 @@
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this._comboFov = new System.Windows.Forms.ToolStripComboBox();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this._zomboEditScene = new Zombo.Editor.Controls.ZomboEditSceneControl();
-            this.toolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
             this._toolbox.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -79,6 +79,7 @@
             this._editorModeSelect.Name = "_editorModeSelect";
             this._editorModeSelect.Size = new System.Drawing.Size(23, 22);
             this._editorModeSelect.Text = "Select";
+            this._editorModeSelect.Visible = false;
             this._editorModeSelect.Click += new System.EventHandler(this.EditorModeSwitch);
             // 
             // _editorModeDrawCurve
@@ -90,12 +91,14 @@
             this._editorModeDrawCurve.Name = "_editorModeDrawCurve";
             this._editorModeDrawCurve.Size = new System.Drawing.Size(23, 22);
             this._editorModeDrawCurve.Text = "Curve";
+            this._editorModeDrawCurve.Visible = false;
             this._editorModeDrawCurve.Click += new System.EventHandler(this.EditorModeSwitch);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator1.Visible = false;
             // 
             // _undo
             // 
@@ -121,6 +124,7 @@
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator2.Visible = false;
             // 
             // _cameraModeMove
             // 
@@ -130,6 +134,7 @@
             this._cameraModeMove.Name = "_cameraModeMove";
             this._cameraModeMove.Size = new System.Drawing.Size(23, 22);
             this._cameraModeMove.Text = "Move";
+            this._cameraModeMove.Visible = false;
             this._cameraModeMove.Click += new System.EventHandler(this.CameraModeSwitch);
             // 
             // _cameraModeRotate
@@ -140,6 +145,7 @@
             this._cameraModeRotate.Name = "_cameraModeRotate";
             this._cameraModeRotate.Size = new System.Drawing.Size(23, 22);
             this._cameraModeRotate.Text = "Rotate";
+            this._cameraModeRotate.Visible = false;
             this._cameraModeRotate.Click += new System.EventHandler(this.CameraModeSwitch);
             // 
             // toolStripSeparator3
@@ -174,6 +180,11 @@
             this.toolStripSeparator4.Name = "toolStripSeparator4";
             this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
             // 
+            // toolStripTextBox1
+            // 
+            this.toolStripTextBox1.Name = "toolStripTextBox1";
+            this.toolStripTextBox1.Size = new System.Drawing.Size(100, 25);
+            // 
             // statusStrip1
             // 
             this.statusStrip1.Location = new System.Drawing.Point(0, 412);
@@ -192,11 +203,6 @@
             this._zomboEditScene.MouseDown += new System.Windows.Forms.MouseEventHandler(this._zomboEditScene_MouseDown);
             this._zomboEditScene.MouseUp += new System.Windows.Forms.MouseEventHandler(this._zomboEditScene_MouseUp);
             this._zomboEditScene.Move += new System.EventHandler(this._zomboEditScene_Move);
-            // 
-            // toolStripTextBox1
-            // 
-            this.toolStripTextBox1.Name = "toolStripTextBox1";
-            this.toolStripTextBox1.Size = new System.Drawing.Size(100, 25);
             // 
             // MainWindow
             // 

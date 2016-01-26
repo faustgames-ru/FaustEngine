@@ -11,6 +11,12 @@ namespace zombo
 	class CurveSegment;
 
 
+	class ZomboCommandReplaceCurvePoint : public ZomboEditorCommand
+	{
+	public:
+		ZomboCommandReplaceCurvePoint(CurveSegment *segment, uint pointIndex, CurvesPoint *newPoint);
+	};
+
 	class ZomboCommandMoveCurvePoint : public ZomboEditorCommand
 	{
 	public:
@@ -40,6 +46,7 @@ namespace zombo
 		CurvesPoint(core::Vector2 p);
 		float getR();
 		bool isUnderMouse();
+		float distanceToMouse() const;
 		void update();
 		void setScale(float scale);
 		void setAlpha(float a);
@@ -72,15 +79,22 @@ namespace zombo
 		core::Vector2 mousePos;
 		core::Vector2 prevMousePos;
 		CurvesManager();
+		CurvesPoint *snap(core::Vector2 &p);
+		void moveSelected();
 		void update();
+		void updateHover();
+		void findSelected();
 		void addCurve(core::Vector2 p0, core::Vector2 p1, core::Vector2 p2, core::Vector2 p3);
 		ZomboInterpolatedValue scale;
 	private:
 		std::vector<CurvesPoint *> _points;
 		std::vector<CurveSegment *> _segments;
 		CurvesPoint *_selectedPoint;
+		CurvesPoint *_replacePoint;
 		core::Vector2 _prevSelectedPosition;
+		core::Vector2 _downMousePos;
 		ZomboCommandMoveCurvePoint* _actualMovePointCommand;
+		float _snappingRange;
 	};
 }
 

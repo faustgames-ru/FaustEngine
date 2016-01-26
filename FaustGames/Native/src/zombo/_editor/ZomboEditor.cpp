@@ -179,8 +179,8 @@ namespace zombo
 		internalContent.update();
 		gameContent.update();
 
-		//graphics::GraphicsDevice::Default.setClearState(0x805050, 1.0f);
-		graphics::GraphicsDevice::Default.setClearState(0x0, 1.0f);
+		graphics::GraphicsDevice::Default.setClearState(0x805050, 1.0f);
+		//graphics::GraphicsDevice::Default.setClearState(0x0, 1.0f);
 		graphics::GraphicsDevice::Default.setViewport(0, 0, ZomboEditorViewport::Default.w, ZomboEditorViewport::Default.h);
 		graphics::GraphicsDevice::Default.clear();
 

@@ -83,7 +83,11 @@ namespace zombo
 			px - sx <= mx && mx <= px + sx &&
 			py - sy <= my && my <= py + sy;
 	}
-	
+
+	float CurvesPoint::distanceToMouse() const
+	{
+		return (CurvesManager::Default.mousePos - getXY()).length();
+	}
 
 	void renderEdge(core::Vector2 p0, core::Vector2 p1)
 	{
@@ -103,10 +107,10 @@ namespace zombo
 
 	void renderPoint(core::Vector2 xy, float r, float a, float rot)
 	{
-		uint c0 = graphics::Color::mulA(0xff000000, a);
-		uint c1 = graphics::Color::mulA(0xffffffff, a);
+		uint c1 = 0xffffffff;
+		uint c0 = graphics::Color::mulA(0xffffffff, a);
 		
-		ZomboDrawer::Default.fillRing(c1, xy.toVector3(), r, r*0.02f);
+		ZomboDrawer::Default.fillRing(c0, xy.toVector3(), r, r*0.02f);
 		ZomboDrawer::Default.fillRect(c1, xy.toVector3(), r*0.8f, rot);
 
 	}
@@ -140,28 +144,28 @@ namespace zombo
 	{
 		setAlpha(1.0f);
 		setScale(1.5f);
-		setRot(core::Math::Pi * 1.25);
+		setRot(core::Math::Pi * 1.25f);
 	}
 
 	void CurvesPoint::updateHoverState()
 	{
 		setAlpha(1.0f);
 		setScale(1.2f);
-		setRot(core::Math::Pi * 0.5);
+		setRot(core::Math::Pi * 0.5f);
 	}
 
 	void CurvesPoint::updateRegularState()
 	{
 		setAlpha(1.0f);
 		setScale(1.0f);
-		setRot(core::Math::Pi * 0.25);
+		setRot(core::Math::Pi * 0.25f);
 	}
 
 	void CurvesPoint::updateHidenState()
 	{
 		setAlpha(0.0f);
 		setScale(1.0f);
-		setRot(core::Math::Pi * 0.25);
+		setRot(core::Math::Pi * 0.25f);
 	}
 
 	void CurveSegment::updateInput()
@@ -187,8 +191,55 @@ namespace zombo
 
 	CurvesManager CurvesManager::Default;
 
-	CurvesManager::CurvesManager() : scale(1.0f), _selectedPoint(nullptr), _actualMovePointCommand(nullptr)
+	CurvesManager::CurvesManager() : scale(1.0f), _selectedPoint(nullptr), _replacePoint(nullptr), _actualMovePointCommand(nullptr), _snappingRange(0.1f)
 	{
+	}
+
+	CurvesPoint *CurvesManager::snap(core::Vector2& p)
+	{
+		for (uint i = 0; i < _points.size(); i++)
+		{
+			if (_points[i] == _selectedPoint) continue;
+			float r = (p - _points[i]->getXY()).length();
+			if (r < _snappingRange)
+			{
+				p = _points[i]->getXY();
+				return _points[i];
+			}
+		}
+		return nullptr;
+	}
+
+	void CurvesManager::moveSelected()
+	{
+		core::Vector2 md = mousePos - _downMousePos;
+		core::Vector2 sp = _prevSelectedPosition + md;
+
+		// todo: snapping
+		CurvesPoint *replacePoint = snap(sp);
+		if (replacePoint != _replacePoint)
+		{
+			_selectedPoint->x.setTargetValueIfNotEqual(sp.getX());
+			_selectedPoint->y.setTargetValueIfNotEqual(sp.getY());
+		}
+		else
+		{
+			_selectedPoint->x.setAllValues(sp.getX());
+			_selectedPoint->y.setAllValues(sp.getY());
+		}
+		_replacePoint = replacePoint;
+		for (uint i = 0; i < _points.size(); i++)
+		{
+			if (_points[i] != _selectedPoint)
+			{
+				_points[i]->updateHidenState();
+			}
+			else
+			{
+				_points[i]->updateSelectedState();
+
+			}
+		}
 	}
 
 	void CurvesManager::update()
@@ -201,49 +252,18 @@ namespace zombo
 		{
 			if (!wasLeftPressed)
 			{
-				for (uint i = 0; i < _points.size(); i++)
-				{
-					if (_points[i]->isUnderMouse())
-					{
-						_selectedPoint = _points[i];
-						_prevSelectedPosition = _selectedPoint->getTargetXY();
-						break;
-					}
-				}
+				_downMousePos = mousePos;
+				findSelected();
 			}
 			else
 			{
 				if (_selectedPoint != nullptr)
 				{
-					core::Vector2 md = mousePos - prevMousePos;
-					_selectedPoint->x.setAllValues(_selectedPoint->x.getTargetValue() + md.getX());
-					_selectedPoint->y.setAllValues(_selectedPoint->y.getTargetValue() + md.getY());
-					for (uint i = 0; i < _points.size(); i++)
-					{
-						if (_points[i] != _selectedPoint)
-						{
-							_points[i]->updateHidenState();
-						}
-						else
-						{
-							_points[i]->updateSelectedState();
-
-						}
-					}
+					moveSelected();
 				}
 				else
 				{
-					for (uint i = 0; i < _points.size(); i++)
-					{
-						if (_points[i]->isUnderMouse())
-						{
-							_points[i]->updateHoverState();
-						}
-						else
-						{
-							_points[i]->updateRegularState();
-						}
-					}
+					updateHover();
 				}
 			}
 		}
@@ -263,17 +283,8 @@ namespace zombo
 			}
 
 			_selectedPoint = nullptr;
-			for (uint i = 0; i < _points.size(); i++)
-			{
-				if (_points[i]->isUnderMouse())
-				{
-					_points[i]->updateHoverState();
-				} 
-				else
-				{
-					_points[i]->updateRegularState();
-				}
-			}
+			_replacePoint = nullptr;
+			updateHover();
 		}
 		prevMousePos = mousePos;
 		for (uint i = 0; i < _points.size(); i++)
@@ -284,6 +295,53 @@ namespace zombo
 		{
 			_segments[i]->update();
 		}		
+	}
+
+	void CurvesManager::updateHover()
+	{
+		float l = core::Math::MaxValue;
+		CurvesPoint *hover = nullptr;
+		for (uint i = 0; i < _points.size(); i++)
+		{
+			if (_points[i]->isUnderMouse())
+			{
+				float ml = _points[i]->distanceToMouse();
+				if (ml < l)
+				{
+					hover = _points[i];
+					l = ml;
+				}
+			}
+		}
+		for (uint i = 0; i < _points.size(); i++)
+		{
+			if (_points[i] != hover)
+			{
+				_points[i]->updateRegularState();
+			}
+			else
+			{
+				_points[i]->updateHoverState();
+			}
+		}
+	}
+
+	void CurvesManager::findSelected()
+	{
+		float l = core::Math::MaxValue;
+		for (uint i = 0; i < _points.size(); i++)
+		{
+			if (_points[i]->isUnderMouse())
+			{
+				float ml = _points[i]->distanceToMouse();
+				if (ml < l)
+				{
+					_selectedPoint = _points[i];
+					_prevSelectedPosition = _selectedPoint->getTargetXY();
+					l = ml;
+				}
+			}
+		}
 	}
 
 	void CurvesManager::addCurve(core::Vector2 p0, core::Vector2 p1, core::Vector2 p2, core::Vector2 p3)

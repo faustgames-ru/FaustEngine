@@ -79,9 +79,9 @@ namespace zombo
 		{
 			count = 64;
 		}
-		if (count < 6)
+		if (count < 3)
 		{
-			count = 6;
+			count = 3;
 		}
 		float a = 0;
 		float da = 2.0f * core::Math::Pi / count;
@@ -195,6 +195,49 @@ namespace zombo
 			_indices.push_back(startIndex + (i + 1) % count);
 
 		}
+		_renderService->drawTriangles(_colorVertices.data(), _colorVertices.size(), _indices.data(), _indices.size() / 3);
+	}
+
+	void ZomboDrawer::fillEdge(uint color, const core::Vector3& p0, const core::Vector3& p1, float r)
+	{
+		_colorVertices.clear();
+		_indices.clear();
+		core::Vector2 n = (p1 - p0).toVector2().rotate90cw().normalize()*r;		
+
+		_colorVertices.push_back(ColorVertex(p0 + n, color));
+		_colorVertices.push_back(ColorVertex(p1 + n, color));
+		_colorVertices.push_back(ColorVertex(p1 - n, color));
+		_colorVertices.push_back(ColorVertex(p0 - n, color));
+
+		color = graphics::Color::mulA(color, 0.0f);
+		n = (p1 - p0).toVector2().rotate90cw().normalize()*(r + _smoothR / _scaleToPixels);
+
+		_colorVertices.push_back(ColorVertex(p0 + n, color));
+		_colorVertices.push_back(ColorVertex(p1 + n, color));
+		_colorVertices.push_back(ColorVertex(p1 - n, color));
+		_colorVertices.push_back(ColorVertex(p0 - n, color));
+
+		_indices.push_back(0);
+		_indices.push_back(1);
+		_indices.push_back(2);
+		_indices.push_back(0);
+		_indices.push_back(2);
+		_indices.push_back(3);
+
+		_indices.push_back(0);
+		_indices.push_back(4);
+		_indices.push_back(1);
+		_indices.push_back(1);
+		_indices.push_back(5);
+		_indices.push_back(4);
+
+		_indices.push_back(2);
+		_indices.push_back(6);
+		_indices.push_back(3);
+		_indices.push_back(3);
+		_indices.push_back(7);
+		_indices.push_back(6);
+
 		_renderService->drawTriangles(_colorVertices.data(), _colorVertices.size(), _indices.data(), _indices.size() / 3);
 	}
 }

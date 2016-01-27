@@ -106,10 +106,15 @@ namespace zombo
 		_needCallContetnLoaded = true;
 
 		ZomboToolBox::Default.load();
-
-		CurvesManager::Default.addCurve(core::Vector2(-1, -0.5f), core::Vector2(-0.5f, 0.25f), core::Vector2(0.5f, 0.25f), core::Vector2(1, -0.5f));
-		CurvesManager::Default.addCurve(core::Vector2(-1, -1.5f), core::Vector2(-0.5f, -0.75f), core::Vector2(0.5f, -0.75f), core::Vector2(1, -1.5f));
-		CurvesManager::Default.addCurve(core::Vector2(-1, 0.5f), core::Vector2(-0.5f, 1.25f), core::Vector2(0.5f, 1.25f), core::Vector2(1, 0.5f));
+		for (int j = -50; j <= 50; j++)
+		{
+			for (int i = -48; i <= 48; i+=3)
+			{
+				CurvesManager::Default.addCurve(core::Vector2(i - 1, j - 0.5f), core::Vector2(i - 0.5f, j + 0.25f), core::Vector2(i + 0.5f, j + 0.25f), core::Vector2(i + 1, j - 0.5f));
+				//CurvesManager::Default.addCurve(core::Vector2(i - 1, -1.5f), core::Vector2(i - 0.5f, -0.75f), core::Vector2(i + 0.5f, -0.75f), core::Vector2(i + 1, -1.5f));
+				//CurvesManager::Default.addCurve(core::Vector2(i - 1, 0.5f), core::Vector2(i - 0.5f, 1.25f), core::Vector2(i + 0.5f, 1.25f), core::Vector2(i + 1, 0.5f));
+			}
+		}
 	}
 
 	void ZomboEditor::update(float ellapsedTime)

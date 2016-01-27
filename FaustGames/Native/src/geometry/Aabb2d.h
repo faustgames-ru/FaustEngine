@@ -76,6 +76,12 @@ namespace geometry
 				Max.setX(x);
 		}
 
+		inline void expand(const core::Vector2 v)
+		{
+			expandX(v.getX());
+			expandY(v.getY());
+		}
+
 		inline void expandY(float y)
 		{
 			if (Min.getY() > y)

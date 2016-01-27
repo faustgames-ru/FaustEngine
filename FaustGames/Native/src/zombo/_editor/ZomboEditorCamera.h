@@ -5,6 +5,7 @@
 #include "../../CommonSources/include/zombo.h"
 #include "../common/ZomboInterpolatedValue.h"
 #include "commands/ZomboEditorCommand.h"
+#include "../../geometry/Frustum.h"
 
 namespace zombo
 {	
@@ -107,6 +108,7 @@ namespace zombo
 
 		float depth;
 
+		geometry::Frustum frustum;
 		core::MatrixContainer matrix;
 		core::MatrixContainer skyboxMatrix;
 		ZomboEditorCameraRotator rotator;

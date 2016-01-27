@@ -164,6 +164,11 @@ namespace core
 		return Math::sqrt(getX()*getX() + getY()*getY());
 	}
 
+	float Vector2::lengthSqr() const
+	{
+		return getX()*getX() + getY()*getY();
+	}
+
 	Vector3 Vector2::toVector3() const
 	{
 		return Vector3(getX(), getY(), 0.0f);
@@ -197,7 +202,17 @@ namespace core
 			core::Math::equals(a.getX(), b.getX()) &&
 			core::Math::equals(a.getY(), b.getY());
 	}
-	
+
+	float Vector2::distanceToEdge(const Vector2& p, const Vector2& e0, const Vector2& e1)
+	{
+		const float l2 = (e1 - e0).lengthSqr();
+		if (Math::equals(l2, 0.0f)) return (p - e0).length();
+		const float t = dotProduct(p - e0, e1 - e0) / l2;
+		if (t < 0.0) return (p - e0).length();
+		if (t > 1.0) return (p - e1).length();
+		Vector2 projection = e0 + (e1 - e0)*t;
+		return (p - projection).length();
+	}
 
 	Vector3 Vector3::eX(1.0f, 0.0f, 0.0f);
 	Vector3 Vector3::eY(0.0f, 1.0f, 0.0f);
@@ -271,6 +286,14 @@ namespace core
 			_values[iX] - right.getX(),
 			_values[iY] - right.getY(),
 			_values[iZ] - right.getZ());
+	}
+
+	Vector3 Vector3::operator-(const Vector2& right) const
+	{
+		return Vector3(
+			_values[iX] - right.getX(),
+			_values[iY] - right.getY(),
+			_values[iZ]);
 	}
 
 	Vector3 Vector3::operator*(const Vector3& right) const

@@ -48,12 +48,14 @@ namespace core
 		Vector2 rotate90ccw() const;
 		Vector2 normalize() const;
 		float length() const;
+		float lengthSqr() const;
 		Vector3 toVector3() const;
 		Vector3 toVector3(float z) const;
 		static Vector2 cubic(Vector2 p0, Vector2 p1, Vector2 p2, Vector2 p3, float u);
 		static float crossProduct(Vector2 v1, Vector2 v2);
 		static float dotProduct(Vector2 v1, Vector2 v2);
 		static bool equals(const Vector2& a, const Vector2& b);
+		static float distanceToEdge(const Vector2 &p, const Vector2 &e0, const Vector2 &e1);
 	};
 
 	class Vector3
@@ -98,6 +100,7 @@ namespace core
 		Vector3 operator+(const Vector3 &right) const;
 		Vector3 operator+(const Vector2 &right) const;
 		Vector3 operator-(const Vector3 &right) const;
+		Vector3 operator-(const Vector2 &right) const;
 		Vector3 operator*(const Vector3 &right) const;
 		Vector3 operator*(float right) const;
 		Vector3 normalize() const;

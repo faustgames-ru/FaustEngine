@@ -17,6 +17,7 @@ namespace zombo
 		void fillCircle(uint color, const core::Vector3 &p, float r);
 		void fillRing(uint color, const core::Vector3 &p, float r, float d);
 		void fillRect(uint color, const core::Vector3 &p, float r, float angle);
+		void fillEdge(uint color, const core::Vector3 &p0, const core::Vector3 &p1, float r);
 	private:
 		ZomboEditorRenderService *_renderService;
 		float _smoothR;

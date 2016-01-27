@@ -308,6 +308,7 @@ namespace zombo
 			matrix.setValue(transformToView);
 			skyboxMatrix.setValue(core::Matrix::mul(rotator.actualRotation, proj));
 		}
+		frustum = geometry::Frustum(transformToView);
 		transformFromView = transformToView.inverse();
 	}
 

@@ -10,8 +10,12 @@ namespace zombo
 	{
 	public:	
 		static CurvesStateSelect Default;
-		virtual void unpdate() OVERRIDE;
+		static void updatePointState(CurvesPoint* point, const CurvesSelection &selection);
+		static void updateSegmentState(CurveSegment* segment, const CurvesSelection &selection);
+		static void updatePoints(const std::vector<CurvesPoint *> &points, const CurvesSelection &selection);
+		static void updateSegments(const std::vector<CurveSegment*> &segment, const CurvesSelection &selection);
+		virtual void update() OVERRIDE;
 	};
 }
 
-#endif /**/
+#endif /*ZOMBO_EDITOR_CURVES_CURVES_STATE_SELECT_H*/

@@ -6,6 +6,7 @@
 #include "../drawing/Drawer.h"
 #include "../../ZomboLog.h"
 #include "../commands/ZomboEditorCommands.h"
+#include "CurvesStateSelect.h"
 
 namespace zombo
 {
@@ -13,7 +14,7 @@ namespace zombo
 	{
 	}
 
-	void CurvesState::unpdate()
+	void CurvesState::update()
 	{
 	}
 
@@ -71,13 +72,14 @@ namespace zombo
 	{
 	}
 
-	CurvesPoint::CurvesPoint(core::Vector2 p): x(p.getX()), y(p.getY()), _scale(1.0f), _alpha(1.0f), _rot(0.0f)
+	CurvesPoint::CurvesPoint(core::Vector2 p): x(p.getX()), y(p.getY()), _scale(1.0f), _scaleEx(1.0f), _alpha(1.0f), _rot(0.0f)
 	{
 		_scale.setDuration(0.1f);
 		_alpha.setDuration(0.3f);
+		_scaleEx.setDuration(0.5f);
 	}
 
-	float CurvesPoint::getR()
+	float CurvesPoint::getR() const
 	{
 		return 0.1f;
 	}
@@ -101,20 +103,11 @@ namespace zombo
 		return (CurvesManager::Default.mousePos - getXY()).length();
 	}
 
-	void renderEdge(core::Vector2 p0, core::Vector2 p1)
-	{
-		uint c = 0xffffffff;
-		ColorVertex pointRest[2] =
-		{
-			ColorVertex(p0, c),
-			ColorVertex(p1, c),
-		};
-
-		ushort indices[8] =
-		{
-			0, 1,
-		};
-		ZomboEditorRenderService::Default.drawLines(pointRest, 2, indices, 1);
+	void renderEdge(uint c, core::Vector2 p0, core::Vector2 p1, float r)
+	{		
+		ZomboDrawer::Default.fillEdge(c, p0.toVector3(), p1.toVector3(), r);
+		//ZomboDrawer::Default.fillCircle(c, p0.toVector3(), r);
+		//ZomboDrawer::Default.fillCircle(c, p1.toVector3(), r);
 	}
 
 	void renderPoint(core::Vector2 xy, float r, float a, float rot)
@@ -124,7 +117,6 @@ namespace zombo
 		
 		ZomboDrawer::Default.fillRing(c0, xy.toVector3(), r, r*0.02f);
 		ZomboDrawer::Default.fillRect(c1, xy.toVector3(), r*0.8f, rot);
-
 	}
 		
 	void CurvesPoint::update()
@@ -132,14 +124,25 @@ namespace zombo
 		x.update();
 		y.update();
 		_scale.update();
+		_scaleEx.update();
 		_alpha.update();
 		_rot.update();
-		renderPoint(core::Vector2(x.getValue(), y.getValue()), getR() * _scale.getValue(), _alpha.getValue(), _rot.getValue());
+		renderPoint(core::Vector2(x.getValue(), y.getValue()), getR() * _scale.getValue()*_scaleEx.getValue(), _alpha.getValue(), _rot.getValue());
 	}
 
 	void CurvesPoint::setScale(float scale)
 	{
 		_scale.setTargetValueIfNotEqual(scale);
+	}
+
+	void CurvesPoint::setScaleEx(float scale)
+	{
+		_scaleEx.setTargetValueIfNotEqual(scale);
+	}
+
+	void CurvesPoint::setScaleFullEx(float scale)
+	{
+		_scaleEx.setAllValues(scale);
 	}
 
 	void CurvesPoint::setAlpha(float a)
@@ -180,182 +183,195 @@ namespace zombo
 		setRot(core::Math::Pi * 0.25f);
 	}
 
+	geometry::Aabb2d CurvesPoint::getAabb()
+	{
+		return geometry::Aabb2d(getXY() - core::Vector2(getR(), getR()), getXY() + core::Vector2(getR(), getR()));
+	}
+
+	float CurvesPoint::getScale() const
+	{
+		return _scale.getValue();
+	}
+
+	float CurvesPoint::getScaleEx() const
+	{
+		return _scaleEx.getValue();
+	}
+
+	CurveSegment::CurveSegment(): p0(nullptr), p1(nullptr), color(0xffffffff), _scale(1.0f)
+	{
+		_scale.setDuration(0.1f);
+	}
+
 	void CurveSegment::updateInput()
 	{
 	}
+
+	uint segmentDetail = 16;
+	float segnemtLen = 0.1f;
 
 	void CurveSegment::update()
 	{
 		//renderPoint(p0->xy + d0, p0->_scale.getValue() * p0->getR() * 0.5f, p0->_alpha.getValue());
 		//renderPoint(p1->xy + d1, p1->_scale.getValue() * p1->getR() * 0.5f, p1->_alpha.getValue());
-
-		uint count = 16;
+		_scale.update();
+		uint count = calcDetail();// segmentDetail;
 
 		core::Vector2 ps = core::Vector2::cubic(p0->getXY(), p0->getXY() + d0, p1->getXY() + d1, p1->getXY(), 0);
 		for (uint i = 1; i < count; i++)
 		{
 			float u = static_cast<float>(i) / static_cast<float>(count - 1);
 			core::Vector2 pf = core::Vector2::cubic(p0->getXY(), p0->getXY() + d0, p1->getXY() + d1, p1->getXY(), u);
-			renderEdge(ps, pf);
+			renderEdge(color, ps, pf, getR()*_scale.getValue());
 			ps = pf;
 		}
 	}
 
+	uint CurveSegment::calcDetail() const
+	{
+		uint r = static_cast<uint>(core::Math::round(getBaseLen() / segnemtLen));
+		if (r < 6)
+			r = 6;
+		if (r > 64)
+			r = 64;
+		return r;
+	}
+
+	float CurveSegment::getBaseLen() const
+	{
+		return d0.length() + (p0->getXY() + d0 - p1->getXY() - d1).length() + d1.length();
+	}
+
+	float CurveSegment::getR() const
+	{
+		return 0.01f;
+	}
+
+	bool CurveSegment::isUnderMouse() const
+	{
+		core::Vector2 m = CurvesManager::Default.mousePos;
+
+		geometry::Aabb2d bounds = getAabb();
+		if (!bounds.contains(m)) return false;
+
+		uint count = calcDetail();
+		core::Vector2 ps = core::Vector2::cubic(p0->getXY(), p0->getXY() + d0, p1->getXY() + d1, p1->getXY(), 0);
+		for (uint i = 1; i < count; i++)
+		{
+			float u = static_cast<float>(i) / static_cast<float>(count - 1);
+			core::Vector2 pf = core::Vector2::cubic(p0->getXY(), p0->getXY() + d0, p1->getXY() + d1, p1->getXY(), u);
+			float l = core::Vector2::distanceToEdge(m, pf, ps);
+			ps = pf;
+			if (l < getR()*2.0f)
+				return true;
+		}
+		return false;
+	}
+
+	float CurveSegment::distanceToMouse() const
+	{
+		core::Vector2 m = CurvesManager::Default.mousePos;
+		uint count = calcDetail();
+		float minL = core::Math::MaxValue;
+		core::Vector2 ps = core::Vector2::cubic(p0->getXY(), p0->getXY() + d0, p1->getXY() + d1, p1->getXY(), 0);
+		for (uint i = 1; i < count; i++)
+		{
+			float u = static_cast<float>(i) / static_cast<float>(count - 1);
+			core::Vector2 pf = core::Vector2::cubic(p0->getXY(), p0->getXY() + d0, p1->getXY() + d1, p1->getXY(), u);
+			float l = core::Vector2::distanceToEdge(m, pf, ps);
+			ps = pf;
+			if (l < minL)
+			{
+				minL = l;
+			}
+		}
+		return minL;
+	}
+
+	void CurveSegment::updateRegularState()
+	{
+		//color = 0xffffffff;
+		_scale.setTargetValueIfNotEqual(1.0f);
+	}
+
+	void CurveSegment::updateHoverState()
+	{
+		_scale.setTargetValueIfNotEqual(2.0f);
+		//color = 0xffff00ff;
+	}
+
+	geometry::Aabb2d CurveSegment::getAabb() const
+	{
+		geometry::Aabb2d bounds;
+		bounds.expand(p0->getXY());
+		bounds.expand(p0->getXY() + d0);
+		bounds.expand(p1->getXY());
+		bounds.expand(p1->getXY() + d1);
+		return bounds;
+	}
+
+	void CurvesVisibleItems::clear()
+	{
+		points.clear();
+		segments.clear();
+	}
+
+
+	CurvesSelection::CurvesSelection(): point(nullptr), segment(nullptr)
+	{
+	}
+
+	CurvesSelection::CurvesSelection(CurvesPoint* p) : point(p), segment(nullptr)
+	{
+	}
+
+	CurvesSelection::CurvesSelection(CurveSegment* s): point(nullptr), segment(s)
+	{
+	}
+
 	CurvesManager CurvesManager::Default;
 
-	CurvesManager::CurvesManager() : scale(1.0f), _selectedPoint(nullptr), _replacePoint(nullptr), _actualMovePointCommand(nullptr), _snappingRange(0.1f)
+	CurvesManager::CurvesManager() : scale(1.0f), _snappingRange(0.1)
 	{
+		_actualState = &CurvesStateSelect::Default;
 	}
 
-	CurvesPoint *CurvesManager::snap(core::Vector2& p)
-	{
-		for (uint i = 0; i < _points.size(); i++)
+	CurvesPoint *CurvesManager::snap(core::Vector2& p, CurvesPoint *selection)
+	{		
+		for (uint i = 0; i < _visibleItems.points.size(); i++)
 		{
-			if (_points[i] == _selectedPoint) continue;
-			float r = (p - _points[i]->getXY()).length();
+			if (_visibleItems.points[i] == selection) continue;
+			float r = (p - _visibleItems.points[i]->getXY()).length();
 			if (r < _snappingRange)
 			{
-				p = _points[i]->getXY();
-				return _points[i];
+				p = _visibleItems.points[i]->getXY();
+				return _visibleItems.points[i];
 			}
-		}
+		}		
 		return nullptr;
-	}
-
-	void CurvesManager::moveSelected()
-	{
-		core::Vector2 md = mousePos - _downMousePos;
-		core::Vector2 sp = _prevSelectedPosition + md;
-
-		// todo: snapping
-		CurvesPoint *replacePoint = snap(sp);
-		if (replacePoint != _replacePoint)
-		{
-			_selectedPoint->x.setTargetValueIfNotEqual(sp.getX());
-			_selectedPoint->y.setTargetValueIfNotEqual(sp.getY());
-		}
-		else
-		{
-			_selectedPoint->x.setAllValues(sp.getX());
-			_selectedPoint->y.setAllValues(sp.getY());
-		}
-		_replacePoint = replacePoint;
-		for (uint i = 0; i < _points.size(); i++)
-		{
-			if (_points[i] != _selectedPoint)
-			{
-				_points[i]->updateHidenState();
-			}
-			else
-			{
-				_points[i]->updateSelectedState();
-
-			}
-		}
 	}
 
 	void CurvesManager::update()
 	{
 		scale.update();
-		mousePos = ZomboEditorCamera::Default.getMouseProjection(0);		
-		bool isLeftPressed = ZomboEditorInput::Default.mouse.isLeftPressed();
-		bool wasLeftPressed = ZomboEditorInput::Default.mouse.isPrevStateLeftPressed();
-		if (isLeftPressed)
+		mousePos = ZomboEditorCamera::Default.getMouseProjection(0);
+		_visibleItems.clear();
+		queryVisibleItems(_visibleItems);
+		if (_actualState != nullptr)
 		{
-			if (!wasLeftPressed)
-			{
-				_downMousePos = mousePos;
-				findSelected();
-			}
-			else
-			{
-				if (_selectedPoint != nullptr)
-				{
-					moveSelected();
-				}
-				else
-				{
-					updateHover();
-				}
-			}
+			_actualState->update();
 		}
-		else
+		
+		for (uint i = 0; i < _visibleItems.points.size(); i++)
 		{
-			if (wasLeftPressed)
-			{
-				if (_selectedPoint != nullptr)
-				{
-					_actualMovePointCommand = new ZomboCommandMoveCurvePoint(_selectedPoint, _prevSelectedPosition, _selectedPoint->getTargetXY());
-					if (ZomboEditorCommands::Default.doCommand(_actualMovePointCommand) != CommandExecutonStatus::CommandExecuted)
-					{
-						delete _actualMovePointCommand;
-						_actualMovePointCommand = nullptr;
-					}
-				}
-			}
-
-			_selectedPoint = nullptr;
-			_replacePoint = nullptr;
-			updateHover();
+			_visibleItems.points[i]->update();
 		}
-		prevMousePos = mousePos;
-		for (uint i = 0; i < _points.size(); i++)
+		for (uint i = 0; i < _visibleItems.segments.size(); i++)
 		{
-			_points[i]->update();
-		}
-		for (uint i = 0; i < _segments.size(); i++)
-		{
-			_segments[i]->update();
-		}		
-	}
-
-	void CurvesManager::updateHover()
-	{
-		float l = core::Math::MaxValue;
-		CurvesPoint *hover = nullptr;
-		for (uint i = 0; i < _points.size(); i++)
-		{
-			if (_points[i]->isUnderMouse())
-			{
-				float ml = _points[i]->distanceToMouse();
-				if (ml < l)
-				{
-					hover = _points[i];
-					l = ml;
-				}
-			}
-		}
-		for (uint i = 0; i < _points.size(); i++)
-		{
-			if (_points[i] != hover)
-			{
-				_points[i]->updateRegularState();
-			}
-			else
-			{
-				_points[i]->updateHoverState();
-			}
+			_visibleItems.segments[i]->update();
 		}
 	}
-
-	void CurvesManager::findSelected()
-	{
-		float l = core::Math::MaxValue;
-		for (uint i = 0; i < _points.size(); i++)
-		{
-			if (_points[i]->isUnderMouse())
-			{
-				float ml = _points[i]->distanceToMouse();
-				if (ml < l)
-				{
-					_selectedPoint = _points[i];
-					_prevSelectedPosition = _selectedPoint->getTargetXY();
-					l = ml;
-				}
-			}
-		}
-	}
-
+	
 	void CurvesManager::addCurve(core::Vector2 p0, core::Vector2 p1, core::Vector2 p2, core::Vector2 p3)
 	{
 		CurvesPoint *cp0 = new CurvesPoint(p0);
@@ -370,5 +386,90 @@ namespace zombo
 		_points.push_back(cp0);
 		_points.push_back(cp1);
 		_segments.push_back(seg);
+	}
+
+	CurvesSelection CurvesManager::findSelection(CurvesVisibleItems& items)
+	{
+		float l = core::Math::MaxValue;
+		CurvesPoint * selectedPoint = nullptr;
+		for (uint i = 0; i < items.points.size(); i++)
+		{
+			if (items.points[i]->isUnderMouse())
+			{
+				float ml = items.points[i]->distanceToMouse();
+				if (ml < l)
+				{
+					selectedPoint = items.points[i];
+					l = ml;
+				}
+			}
+		}
+		if (selectedPoint != nullptr)
+		{
+			return CurvesSelection(selectedPoint);
+		}
+		CurveSegment * selectedSegment= nullptr;
+		for (uint i = 0; i < items.segments.size(); i++)
+		{
+			if (items.segments[i]->isUnderMouse())
+			{
+				float ml = items.segments[i]->distanceToMouse();
+				if (ml < l)
+				{
+					selectedSegment = items.segments[i];
+					l = ml;
+				}
+			}
+		}
+		return CurvesSelection(selectedSegment);
+	}
+
+	CurvesVisibleItems& CurvesManager::getVisibleItems()
+	{
+		return _visibleItems;
+	}
+
+	void CurvesManager::queryVisibleItems(CurvesVisibleItems& items)
+	{
+		geometry::Frustum frustum = ZomboEditorCamera::Default.frustum;
+		float scale = ZomboEditorViewport::Default.h * 0.5f / ZomboEditorCamera::Default.getInterpoaltedScale();
+		segnemtLen = 8 / scale;
+		// todo:: optimize;
+		for (uint i = 0; i < _points.size(); i++)
+		{
+			geometry::Aabb2d aabb = _points[i]->getAabb();
+			core::Vector2 size = (aabb.Max - aabb.Min)*scale;
+			float pxMin = 16;
+			if (size.getX() < pxMin && size.getY() < pxMin)
+			{
+				_points[i]->setScaleEx(0);
+				if (_points[i]->getScaleEx() < 0.001f)
+					continue;
+			}
+			else
+			{
+				_points[i]->setScaleEx(1);
+			}
+			if (!frustum.include(aabb, 0)) {
+				continue;
+			}
+			items.points.push_back(_points[i]);
+		}
+		for (uint i = 0; i < _segments.size(); i++)
+		{
+			if (frustum.include(_segments[i]->getAabb(), 0))
+			{
+				items.segments.push_back(_segments[i]);
+			}
+		}
+	}
+
+	void CurvesManager::setState(ICurvesState* state)
+	{
+		if (_actualState != nullptr)
+			_actualState->finish();
+		_actualState = state;
+		if (_actualState != nullptr)
+			_actualState->start();
 	}
 }

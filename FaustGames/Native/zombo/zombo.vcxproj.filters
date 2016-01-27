@@ -641,6 +641,15 @@
     <ClInclude Include="..\src\zombo\_editor\curves\CurvesStateSelect.h">
       <Filter>zombo\_editor\curves</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\zombo\_editor\curves\CurvesStateMovePoint.h">
+      <Filter>zombo\_editor\curves</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\zombo\_editor\curves\CurvesStateMoveSegment.h">
+      <Filter>zombo\_editor\curves</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\geometry\Frustum.h">
+      <Filter>geometry</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\CommonSources\gen\llgePInvoke.cpp">
@@ -1211,6 +1220,15 @@
     </ClCompile>
     <ClCompile Include="..\src\zombo\_editor\curves\CurvesStateSelect.cpp">
       <Filter>zombo\_editor\curves</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\zombo\_editor\curves\CurvesStateMovePoint.cpp">
+      <Filter>zombo\_editor\curves</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\zombo\_editor\curves\CurvesStateMoveSegment.cpp">
+      <Filter>zombo\_editor\curves</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\geometry\Frustum.cpp">
+      <Filter>geometry</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -55,6 +55,21 @@
     <Filter Include="plugins">
       <UniqueIdentifier>{a3c22ea2-dc24-4e3e-ad0c-ab636365c746}</UniqueIdentifier>
     </Filter>
+    <Filter Include="navmesh">
+      <UniqueIdentifier>{a78ae904-280e-46b4-bd07-710c353e151d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="clipper">
+      <UniqueIdentifier>{fc2d1862-f455-40a7-ad14-cc9f4848e38e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="poly2tri">
+      <UniqueIdentifier>{737c8af4-d7bd-4605-abd8-84909b2aa7ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="poly2tri\common">
+      <UniqueIdentifier>{a1d4bcf3-673b-40e8-abef-0924490b5e4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="poly2tri\sweep">
+      <UniqueIdentifier>{43beceb5-caf9-45c4-80af-4880771240ff}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\CommonSources\include\llge.h">
@@ -530,6 +545,42 @@
     <ClInclude Include="..\src\graphics\EffectTextureAlphamaskColor.h">
       <Filter>graphics</Filter>
     </ClInclude>
+    <ClInclude Include="..\src_poly2tri\poly2tri.h">
+      <Filter>poly2tri</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_poly2tri\sweep\advancing_front.h">
+      <Filter>poly2tri\sweep</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_poly2tri\sweep\cdt.h">
+      <Filter>poly2tri\sweep</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_poly2tri\sweep\sweep.h">
+      <Filter>poly2tri\sweep</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_poly2tri\sweep\sweep_context.h">
+      <Filter>poly2tri\sweep</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_poly2tri\common\shapes.h">
+      <Filter>poly2tri\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_poly2tri\common\utils.h">
+      <Filter>poly2tri\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_clipper\clipper.hpp">
+      <Filter>clipper</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\navmesh\NavMesh.h">
+      <Filter>navmesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\navmesh\navmesh_classes.h">
+      <Filter>navmesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\navmesh\navmesh_platform.h">
+      <Filter>navmesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\navmesh\navmesh_references.h">
+      <Filter>navmesh</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\CommonSources\gen\llgePInvoke.cpp">
@@ -962,6 +1013,30 @@
     </ClCompile>
     <ClCompile Include="..\src\graphics\EffectTextureAlphamaskColor.cpp">
       <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_poly2tri\sweep\advancing_front.cc">
+      <Filter>poly2tri\sweep</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_poly2tri\sweep\cdt.cc">
+      <Filter>poly2tri\sweep</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_poly2tri\sweep\sweep.cc">
+      <Filter>poly2tri\sweep</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_poly2tri\sweep\sweep_context.cc">
+      <Filter>poly2tri\sweep</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_poly2tri\common\shapes.cc">
+      <Filter>poly2tri\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_clipper\clipper.cpp">
+      <Filter>clipper</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\navmesh\NavMesh.cpp">
+      <Filter>navmesh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\Vector.cpp">
+      <Filter>core</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

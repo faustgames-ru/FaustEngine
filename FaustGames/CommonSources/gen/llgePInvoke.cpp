@@ -906,5 +906,45 @@ namespace llge
 		classInstance->closeContent();
 	}
 	
+	extern "C" DLLEXPORT void API_CALL llge_NavMeshConfig_clear (INavMeshConfig * classInstance)
+	{
+		classInstance->clear();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_NavMeshConfig_addPolygon (INavMeshConfig * classInstance, IntPtr vertices2f, uint verticesCount)
+	{
+		classInstance->addPolygon(vertices2f, verticesCount);
+	}
+	
+	extern "C" DLLEXPORT IntPtr API_CALL llge_NavMeshConfig_getNativeInstance (INavMeshConfig * classInstance)
+	{
+		return classInstance->getNativeInstance();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_NavMeshConfig_dispose (INavMeshConfig * classInstance)
+	{
+		classInstance->dispose();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_NavMesh_buildNavMesh (INavMesh * classInstance, INavMeshConfig * config)
+	{
+		classInstance->buildNavMesh(config);
+	}
+	
+	extern "C" DLLEXPORT int API_CALL llge_NavMesh_getTriagnlesCount (INavMesh * classInstance)
+	{
+		return classInstance->getTriagnlesCount();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_NavMesh_getTriagnles (INavMesh * classInstance, IntPtr triangles3f)
+	{
+		classInstance->getTriagnles(triangles3f);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_NavMesh_dispose (INavMesh * classInstance)
+	{
+		classInstance->dispose();
+	}
+	
 }
 

@@ -1483,6 +1483,72 @@ namespace llge
 		static extern private void llge_ObbContentProvider_closeContent (IntPtr classInstance);
 	}
 	
+	public class NavMeshConfig
+	{
+		public IntPtr ClassInstance;
+		public void Clear ()
+		{
+			llge_NavMeshConfig_clear(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_NavMeshConfig_clear (IntPtr classInstance);
+		public void AddPolygon (IntPtr vertices2f, uint verticesCount)
+		{
+			llge_NavMeshConfig_addPolygon(ClassInstance, vertices2f, verticesCount);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_NavMeshConfig_addPolygon (IntPtr classInstance, IntPtr vertices2f, uint verticesCount);
+		public IntPtr GetNativeInstance ()
+		{
+			return llge_NavMeshConfig_getNativeInstance(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_NavMeshConfig_getNativeInstance (IntPtr classInstance);
+		public void Dispose ()
+		{
+			llge_NavMeshConfig_dispose(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_NavMeshConfig_dispose (IntPtr classInstance);
+	}
+	
+	public class NavMesh
+	{
+		public IntPtr ClassInstance;
+		public void BuildNavMesh (NavMeshConfig config)
+		{
+			llge_NavMesh_buildNavMesh(ClassInstance, config.ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_NavMesh_buildNavMesh (IntPtr classInstance, IntPtr config);
+		public int GetTriagnlesCount ()
+		{
+			return llge_NavMesh_getTriagnlesCount(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private int llge_NavMesh_getTriagnlesCount (IntPtr classInstance);
+		public void GetTriagnles (IntPtr triangles3f)
+		{
+			llge_NavMesh_getTriagnles(ClassInstance, triangles3f);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_NavMesh_getTriagnles (IntPtr classInstance, IntPtr triangles3f);
+		public void Dispose ()
+		{
+			llge_NavMesh_dispose(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_NavMesh_dispose (IntPtr classInstance);
+	}
+	
 	public class llge
 	{
 		static public Batch2d CreateBatch2d ()
@@ -1555,6 +1621,20 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private IntPtr createSpineResource ();
+		static public NavMesh CreateNavMesh ()
+		{
+			return new NavMesh{ ClassInstance = createNavMesh() };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr createNavMesh ();
+		static public NavMeshConfig CreateNavMeshConfig ()
+		{
+			return new NavMeshConfig{ ClassInstance = createNavMeshConfig() };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr createNavMeshConfig ();
 	}
 	
 }

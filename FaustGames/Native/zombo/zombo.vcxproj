@@ -242,6 +242,9 @@
     <ClInclude Include="..\src\graphics\VertexFormatPositionColor.h" />
     <ClInclude Include="..\src\graphics\VertexFormatPositionTextureColor.h" />
     <ClInclude Include="..\src\graphics\VertexFormatsBasic.h" />
+    <ClInclude Include="..\src\navmesh\NavMesh.h" />
+    <ClInclude Include="..\src\navmesh\navmesh_classes.h" />
+    <ClInclude Include="..\src\navmesh\navmesh_platform.h" />
     <ClInclude Include="..\src\resources\ContentManager.h" />
     <ClInclude Include="..\src\resources\ContentProvider.h" />
     <ClInclude Include="..\src\resources\lpng\png.h" />
@@ -323,6 +326,7 @@
     <ClInclude Include="..\src\zombo\_editor\ZomboEditorRenderService.h" />
     <ClInclude Include="..\src\zombo\_editor\ZomboEditorViewport.h" />
     <ClInclude Include="..\src\zombo\_editor\ZomboEditorLogDisplayer.h" />
+    <ClInclude Include="..\src_clipper\clipper.hpp" />
     <ClInclude Include="..\src_poly2tri\common\shapes.h" />
     <ClInclude Include="..\src_poly2tri\common\utils.h" />
     <ClInclude Include="..\src_poly2tri\poly2tri.h" />
@@ -395,6 +399,8 @@
     <ClCompile Include="..\src\graphics\VertexBuffer.cpp" />
     <ClCompile Include="..\src\graphics\VertexFormat.cpp" />
     <ClCompile Include="..\src\graphics\VertexFormatsBasic.cpp" />
+    <ClCompile Include="..\src\navmesh\NavMesh.cpp" />
+    <ClCompile Include="..\src\navmesh\navmesh_references.h" />
     <ClCompile Include="..\src\resources\ContentManager.cpp" />
     <ClCompile Include="..\src\resources\ContentProviderObb.cpp" />
     <ClCompile Include="..\src\resources\ContentProviderWindows.cpp" />
@@ -482,6 +488,7 @@
     <ClCompile Include="..\src\zombo\_editor\ZomboEditorRenderService.cpp" />
     <ClCompile Include="..\src\zombo\_editor\ZomboEditorViewport.cpp" />
     <ClCompile Include="..\src\zombo\_editor\ZomboEditorLogDisplayer.cpp" />
+    <ClCompile Include="..\src_clipper\clipper.cpp" />
     <ClCompile Include="..\src_freetype\autofit\autofit.c" />
     <ClCompile Include="..\src_freetype\base\ftbase.c" />
     <ClCompile Include="..\src_freetype\base\ftbbox.c" />

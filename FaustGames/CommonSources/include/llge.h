@@ -434,6 +434,24 @@ namespace llge
 		virtual int API_CALL getContentSize() = 0;
 		virtual void API_CALL closeContent() = 0;
 	};
+
+	class INavMeshConfig
+	{
+	public:
+		virtual void API_CALL clear() = 0;
+		virtual void API_CALL addPolygon(IntPtr vertices2f, uint verticesCount) = 0;
+		virtual IntPtr API_CALL getNativeInstance() = 0;
+		virtual void API_CALL dispose() = 0;
+	};
+	
+	class INavMesh
+	{
+	public:
+		virtual void API_CALL buildNavMesh(INavMeshConfig* config) = 0;
+		virtual int API_CALL getTriagnlesCount() = 0;
+		virtual void API_CALL getTriagnles(IntPtr triangles3f) = 0;
+		virtual void API_CALL dispose() = 0;
+	};
 	
 	extern "C" DLLEXPORT IBatch2d * API_CALL createBatch2d();
     
@@ -448,6 +466,8 @@ namespace llge
 	extern "C" DLLEXPORT INativeMemoryProfiler * API_CALL createNativeMemoryProfiler();
 	extern "C" DLLEXPORT ISpineResource * API_CALL createSpineResource();
     
+	extern "C" DLLEXPORT INavMesh * API_CALL createNavMesh();
+	extern "C" DLLEXPORT INavMeshConfig * API_CALL createNavMeshConfig();
 }
 
 #endif /*LLGE_H*/

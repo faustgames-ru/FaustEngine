@@ -115,6 +115,12 @@
     <Filter Include="zombo\_editor\drawing">
       <UniqueIdentifier>{19871925-a362-48f9-9449-bad5ce817e59}</UniqueIdentifier>
     </Filter>
+    <Filter Include="navmesh">
+      <UniqueIdentifier>{48b2ed21-5b20-47d3-a294-1df782e97f54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="clipper">
+      <UniqueIdentifier>{9a845750-8430-40ba-a241-d0f598660bf9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\CommonSources\include\llge.h">
@@ -649,6 +655,18 @@
     </ClInclude>
     <ClInclude Include="..\src\geometry\Frustum.h">
       <Filter>geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\navmesh\navmesh_classes.h">
+      <Filter>navmesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\navmesh\navmesh_platform.h">
+      <Filter>navmesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_clipper\clipper.hpp">
+      <Filter>clipper</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\navmesh\NavMesh.h">
+      <Filter>navmesh</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1229,6 +1247,15 @@
     </ClCompile>
     <ClCompile Include="..\src\geometry\Frustum.cpp">
       <Filter>geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_clipper\clipper.cpp">
+      <Filter>clipper</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\navmesh\navmesh_references.h">
+      <Filter>navmesh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\navmesh\NavMesh.cpp">
+      <Filter>navmesh</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

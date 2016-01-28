@@ -276,6 +276,10 @@
     <ClInclude Include="..\src\graphics\VertexFormatPositionColor.h" />
     <ClInclude Include="..\src\graphics\VertexFormatPositionTextureColor.h" />
     <ClInclude Include="..\src\graphics\VertexFormats.h" />
+    <ClInclude Include="..\src\navmesh\NavMesh.h" />
+    <ClInclude Include="..\src\navmesh\navmesh_classes.h" />
+    <ClInclude Include="..\src\navmesh\navmesh_platform.h" />
+    <ClInclude Include="..\src\navmesh\navmesh_references.h" />
     <ClInclude Include="..\src\resources\ContentManager.h" />
     <ClInclude Include="..\src\resources\ContentProvider.h" />
     <ClInclude Include="..\src\resources\lpng\png.h" />
@@ -312,6 +316,14 @@
     <ClInclude Include="..\src\tests\tests_classes.h" />
     <ClInclude Include="..\src\tests\tests_platform.h" />
     <ClInclude Include="..\src\tests\tests_references.h" />
+    <ClInclude Include="..\src_clipper\clipper.hpp" />
+    <ClInclude Include="..\src_poly2tri\common\shapes.h" />
+    <ClInclude Include="..\src_poly2tri\common\utils.h" />
+    <ClInclude Include="..\src_poly2tri\poly2tri.h" />
+    <ClInclude Include="..\src_poly2tri\sweep\advancing_front.h" />
+    <ClInclude Include="..\src_poly2tri\sweep\cdt.h" />
+    <ClInclude Include="..\src_poly2tri\sweep\sweep.h" />
+    <ClInclude Include="..\src_poly2tri\sweep\sweep_context.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
@@ -326,6 +338,7 @@
     <ClInclude Include="..\src\drawing\drawing_references.h">
       <FileType>CppHeader</FileType>
     </ClInclude>
+    <ClCompile Include="..\src\core\Vector.cpp" />
     <ClCompile Include="..\src\drawing\Batcher.cpp" />
     <ClCompile Include="..\src\drawing\Camera.cpp" />
     <ClCompile Include="..\src\drawing\PostProcess.cpp" />
@@ -395,6 +408,7 @@
     <ClCompile Include="..\src\graphics\VertexBuffer.cpp" />
     <ClCompile Include="..\src\graphics\VertexFormat.cpp" />
     <ClCompile Include="..\src\graphics\VertexFormats.cpp" />
+    <ClCompile Include="..\src\navmesh\NavMesh.cpp" />
     <ClCompile Include="..\src\resources\ContentManager.cpp" />
     <ClCompile Include="..\src\resources\ContentProviderObb.cpp" />
     <ClCompile Include="..\src\resources\ContentProviderWindows.cpp" />
@@ -463,6 +477,12 @@
     <ClCompile Include="..\src\spine\SpineSkeletonResource.cpp" />
     <ClCompile Include="..\src\spine\spine.cpp" />
     <ClCompile Include="..\src\tests\TestStandartAllocations.cpp" />
+    <ClCompile Include="..\src_clipper\clipper.cpp" />
+    <ClCompile Include="..\src_poly2tri\common\shapes.cc" />
+    <ClCompile Include="..\src_poly2tri\sweep\advancing_front.cc" />
+    <ClCompile Include="..\src_poly2tri\sweep\cdt.cc" />
+    <ClCompile Include="..\src_poly2tri\sweep\sweep.cc" />
+    <ClCompile Include="..\src_poly2tri\sweep\sweep_context.cc" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="stdafx.cpp" />
   </ItemGroup>

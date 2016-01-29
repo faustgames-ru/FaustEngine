@@ -75,19 +75,29 @@ namespace navmesh
 		pRoot.push_back(toClipper(core::Vector2(_minX, _maxY)));
 		pRoot.push_back(toClipper(core::Vector2(_maxX, _maxY)));
 		pRoot.push_back(toClipper(core::Vector2(_maxX, _minY)));
-		ClipperLib::PolyType type = ClipperLib::ptClip;
 		
-		clipper.AddPath(pRoot, type, true);
+		clipper.AddPath(pRoot, ClipperLib::ptClip, true);
 		for (uint i = 0; i < staticPolygons.size(); i++)
 		{
 			const std::vector<core::Vector2> &poly = staticPolygons[i];
 			ClipperLib::Path p;
+			ClipperLib::ClipperOffset offset;
 			for (uint j = 0; j < poly.size(); j++)
 			{
 				p.push_back(toClipper(poly[j]));
 			}
-			clipper.AddPath(p, type, true);
+			ClipperLib::Paths offPath;
+			SimplifyPolygon(p, offPath);
+			for (uint j = 0; j < offPath.size(); j++)
+			{
+				if (!ClipperLib::Orientation(offPath[j]))
+				{
+					ClipperLib::ReversePath(offPath[j]);
+				}
+				clipper.AddPath(offPath[j], ClipperLib::ptClip, true);
+			}
 		}
+
 		ClipperLib::PolyTree solution = ClipperLib::PolyTree();
 		clipper.Execute(ClipperLib::ctXor, solution, ClipperLib::pftEvenOdd, ClipperLib::pftEvenOdd);
 
@@ -165,6 +175,7 @@ namespace navmesh
 		bool isHole = root->IsHole();
 
 		createRootTriangles(root);
+		//createRootTrianglesWithHolesOffset(root);
 
 		for (int i = 0; i < root->ChildCount(); i++)
 		{
@@ -194,44 +205,60 @@ namespace navmesh
 		std::vector<p2t::Point> allPoints;
 		std::vector<ClipperLib::IntPoint> allPointsSources;
 
-		std::vector<p2t::Point *> contour;
-		std::vector<std::vector<p2t::Point *>> holes;
+		std::vector<int> contourIndices;
+		std::vector<std::vector<int>> holesIndices;
 		for (uint i = 0; i < root->Contour.size(); i++)
 		{
-			allPoints.push_back(p2t::Point(
-				static_cast<double>(root->Contour[i].X),
-				static_cast<double>(root->Contour[i].Y)));
-		}
-		for (int i = 0; i < root->ChildCount(); i++)
-		{
-			ClipperLib::PolyNode *hole = root->Childs[i];
-			bool isHole = hole->IsHole();
-			for (uint j = 0; j < hole ->Contour.size(); j++)
+			int n = -1;//find(allPointsSources, root->Contour[i]);
+			if (n < 0)
 			{
-				allPoints.push_back(p2t::Point(
-					static_cast<double>(hole->Contour[j].X),
-					static_cast<double>(hole->Contour[j].Y)));
+				n = allPointsSources.size();
+				allPointsSources.push_back(root->Contour[i]);
 			}
+			contourIndices.push_back(n);
 		}
 
-		uint index = 0;
-		for (uint i = 0; i < root->Contour.size(); i++)
+		holesIndices.resize(root->ChildCount());
+		for (uint j = 0; j < root->ChildCount(); j++)
 		{
-			p2t::Point* p = allPoints.data() + index;
+			ClipperLib::PolyNode *hole = root->Childs[j];
+			std::vector<int> &holeIndices = holesIndices[j];
+			for (uint i = 0; i <  hole->Contour.size(); i++)
+			{
+				int n = -1;// find(allPointsSources, hole->Contour[i]);
+				if (n < 0)
+				{
+					n = allPointsSources.size();
+					allPointsSources.push_back(hole->Contour[i]);
+				}
+				holeIndices.push_back(n);
+			}
+		}
+		for (uint i = 0; i < allPointsSources.size(); i++)
+		{
+			allPoints.push_back(p2t::Point(
+				static_cast<double>(allPointsSources[i].X),
+				static_cast<double>(allPointsSources[i].Y)));
+		}
+
+		std::vector<p2t::Point *> contour;
+		std::vector<std::vector<p2t::Point *>> holes;
+		
+		for (uint i = 0; i < contourIndices.size(); i++)
+		{
+			p2t::Point* p = allPoints.data() + contourIndices[i];
 			contour.push_back(p);
-			index++;
 		}
 		p2t::CDT cdt(contour);
-		holes.resize(root->ChildCount());
-		for (int i = 0; i < root->ChildCount(); i++)
+		holes.resize(holesIndices.size());
+		for (int i = 0; i < holesIndices.size(); i++)
 		{
 			ClipperLib::PolyNode *hole = root->Childs[i];
 			std::vector<p2t::Point *> &contourHole = holes[i];
-			for (uint j = 0; j < hole->Contour.size(); j++)
+			for (uint j = 0; j < holesIndices[i].size(); j++)
 			{
-				p2t::Point* p = allPoints.data() + index;
+				p2t::Point* p = allPoints.data() + holesIndices[i][j];
 				contourHole.push_back(p);
-				index++;
 			}
 			cdt.AddHole(holes[i]);
 		}
@@ -250,11 +277,142 @@ namespace navmesh
 		{
 			NavMeshTriangle* t = new NavMeshTriangle();
 			p2t::Triangle *st = triangles[i];
+			bool removeTria = false;
 			for (uint j = 0; j < 3; j++)
 			{
-				t->points[j] = _points[baseIndex + (st->GetPoint(j) - baseArd)];
+				p2t::Point *p = st->GetPoint(j);
+				uint n = p - baseArd;
+				if (n < _points.size())
+				{
+					t->points[j] = _points[baseIndex + (st->GetPoint(j) - baseArd)];
+				}
+				else
+				{
+					removeTria = true;
+				}
 			}
-			_triangles.push_back(t);
+			if (removeTria)
+			{
+				// log error
+				delete t;
+			}
+			else
+			{
+				_triangles.push_back(t);
+			}
+		}
+	}
+
+	void NavMesh::createRootTrianglesWithHolesOffset(ClipperLib::PolyNode* root)
+	{
+		ClipperLib::ClipperOffset offset;
+		offset.AddPath(root->Contour, ClipperLib::jtMiter, ClipperLib::etClosedPolygon);
+		ClipperLib::Paths offsetContours;
+		offset.Execute(offsetContours, 0.0);
+
+		std::vector<p2t::Point> allPoints;
+		std::vector<int> contourIndices;
+		std::vector<std::vector<int>> holesIndices;
+
+		if (offsetContours.size() != 1)
+		{
+			// log error
+			return;
+		}
+		else
+		{
+			for (uint i = 0; i < offsetContours[0].size(); i++)
+			{
+				contourIndices.push_back(allPoints.size());
+				allPoints.push_back(p2t::Point(
+					static_cast<double>(offsetContours[0][i].X),
+					static_cast<double>(offsetContours[0][i].Y)));
+			}
+		}
+
+		holesIndices.resize(root->ChildCount());
+		for (uint j = 0; j < root->ChildCount(); j++)
+		{
+			ClipperLib::PolyNode *hole = root->Childs[j];
+			std::vector<int> &holeIndices = holesIndices[j];
+			ClipperLib::ClipperOffset offsetHole;
+			offsetHole.AddPath(hole->Contour, ClipperLib::jtMiter, ClipperLib::etClosedPolygon);
+			ClipperLib::Paths res;
+			offsetHole.Execute(res, -0.0);
+
+			if (res.size() != 1)
+			{
+				// log error
+				return;
+			}
+
+			for (uint i = 0; i < res[0].size(); i++)
+			{
+				holeIndices.push_back(allPoints.size());
+				allPoints.push_back(p2t::Point(
+					static_cast<double>(res[0][i].X),
+					static_cast<double>(res[0][i].Y)));
+			}
+		}
+		std::vector<p2t::Point *> contour;
+		std::vector<std::vector<p2t::Point *>> holes;
+
+		for (uint i = 0; i < contourIndices.size(); i++)
+		{
+			p2t::Point* p = allPoints.data() + contourIndices[i];
+			contour.push_back(p);
+		}
+		p2t::CDT cdt(contour);
+		holes.resize(holesIndices.size());
+		for (int i = 0; i < holesIndices.size(); i++)
+		{
+			ClipperLib::PolyNode *hole = root->Childs[i];
+			std::vector<p2t::Point *> &contourHole = holes[i];
+			for (uint j = 0; j < holesIndices[i].size(); j++)
+			{
+				p2t::Point* p = allPoints.data() + holesIndices[i][j];
+				contourHole.push_back(p);
+			}
+			cdt.AddHole(holes[i]);
+		}
+
+		cdt.Triangulate();
+		//todo: create triangles;
+		std::vector<p2t::Triangle *> triangles = cdt.GetTriangles();
+		p2t::Point *baseArd = &allPoints[0];
+
+		uint baseIndex = _points.size();
+		for (uint i = 0; i < allPoints.size(); i++)
+		{
+			_points.push_back(new NavMeshPoint(toVector(allPoints[i])));
+		}
+		for (uint i = 0; i < triangles.size(); i++)
+		{
+			NavMeshTriangle* t = new NavMeshTriangle();
+			p2t::Triangle *st = triangles[i];
+			bool removeTria = false;
+			for (uint j = 0; j < 3; j++)
+			{
+				p2t::Point *p = st->GetPoint(j);
+				uint n = p - baseArd;
+				if (n < _points.size())
+				{
+					t->points[j] = _points[baseIndex + (st->GetPoint(j) - baseArd)];
+				}
+				else
+				{
+					removeTria = true;
+				}
+			}
+			if (removeTria)
+			{
+				// log error
+				delete t;
+			}
+			else
+			{
+				_triangles.push_back(t);
+			}
 		}
 	}
 

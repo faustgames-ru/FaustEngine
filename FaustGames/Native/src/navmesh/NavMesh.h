@@ -74,6 +74,7 @@ namespace navmesh
 		core::Vector2 toVector(const p2t::Point &v) const;
 		void buildRoot(ClipperLib::PolyNode *root);
 		void createRootTriangles(ClipperLib::PolyNode *root);
+		void createRootTrianglesWithHolesOffset(ClipperLib::PolyNode *root);
 		void clear();
 		std::vector<NavMeshTriangle* > _triangles;
 		std::vector<NavMeshEdge* > _edges;

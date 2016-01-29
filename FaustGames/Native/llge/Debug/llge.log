@@ -1,2 +1,8 @@
-﻿  NavMesh.cpp
+﻿  shapes.cc
+  NavMesh.cpp
+c:\_faust\faustengine\faustgames\native\src\navmesh\navmesh.cpp(222): warning C4018: '<' : signed/unsigned mismatch
+c:\_faust\faustengine\faustgames\native\src\navmesh\navmesh.cpp(254): warning C4018: '<' : signed/unsigned mismatch
+c:\_faust\faustengine\faustgames\native\src\navmesh\navmesh.cpp(334): warning C4018: '<' : signed/unsigned mismatch
+c:\_faust\faustengine\faustgames\native\src\navmesh\navmesh.cpp(367): warning C4018: '<' : signed/unsigned mismatch
+  Generating Code...
   llge.vcxproj -> C:\work\sources\github\moon\Solutions\Debug\llge.dll

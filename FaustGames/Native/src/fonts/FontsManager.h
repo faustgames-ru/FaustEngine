@@ -16,8 +16,8 @@ namespace fonts
 		static void onFontError(int errorCode);
 		void *getFontLibraryInstance() const;
 
-		OutlineVectorFont *createOutlineVectorFont(void *buffer, uint bytesCount, FontCharSet *charset) const;
-		BitmapFont *createBitmapFont(void *buffer, uint bytesCount, float pixelSize, FontCharSet *charset) const;
+		OutlineVectorFont *createOutlineVectorFont(const void *buffer, uint bytesCount, FontCharSet *charset) const;
+		BitmapFont *createBitmapFont(const void *buffer, uint bytesCount, float pixelSize, FontCharSet *charset) const;
 	private:
 		FT_Library _ftLibrary;
 	};

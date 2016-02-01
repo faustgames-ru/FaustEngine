@@ -162,6 +162,7 @@
     <ClInclude Include="..\..\CommonSources\include\BaseObjects.h" />
     <ClInclude Include="..\..\CommonSources\include\llge.h" />
     <ClInclude Include="..\..\CommonSources\include\zombo.h" />
+    <ClInclude Include="..\resources_fonts\FontQuicksandRegular.h" />
     <ClInclude Include="..\shaders\solid_color_frag.h" />
     <ClInclude Include="..\shaders\solid_color_vert.h" />
     <ClInclude Include="..\shaders\texture_color_frag.h" />
@@ -323,6 +324,7 @@
     <ClInclude Include="..\src\zombo\_editor\ZomboEditor.h" />
     <ClInclude Include="..\src\zombo\_editor\ZomboEditorCamera.h" />
     <ClInclude Include="..\src\zombo\_editor\ZomboEditorInput.h" />
+    <ClInclude Include="..\src\zombo\_editor\ZomboEditorLoadingScreen.h" />
     <ClInclude Include="..\src\zombo\_editor\ZomboEditorRenderService.h" />
     <ClInclude Include="..\src\zombo\_editor\ZomboEditorViewport.h" />
     <ClInclude Include="..\src\zombo\_editor\ZomboEditorLogDisplayer.h" />
@@ -485,6 +487,7 @@
     <ClCompile Include="..\src\zombo\_editor\ZomboEditor.cpp" />
     <ClCompile Include="..\src\zombo\_editor\ZomboEditorCamera.cpp" />
     <ClCompile Include="..\src\zombo\_editor\ZomboEditorInput.cpp" />
+    <ClCompile Include="..\src\zombo\_editor\ZomboEditorLoadingScreen.cpp" />
     <ClCompile Include="..\src\zombo\_editor\ZomboEditorRenderService.cpp" />
     <ClCompile Include="..\src\zombo\_editor\ZomboEditorViewport.cpp" />
     <ClCompile Include="..\src\zombo\_editor\ZomboEditorLogDisplayer.cpp" />

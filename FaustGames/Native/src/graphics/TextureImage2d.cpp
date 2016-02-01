@@ -129,8 +129,15 @@ namespace graphics
 			break;
 		}
 		Size += _size;
-		glBindTexture(GL_TEXTURE_2D, _handle);
+		UniformValues::resetSamplers();
+		GraphicsDevice::Default.resetSamplersState();
+
+		glActiveTexture(GL_TEXTURE0);
+		Errors::check(Errors::ActiveTexture);
+
+		glBindTexture(GL_TEXTURE_2D, _handle);		
 		Errors::check(Errors::BindTexture);
+
 		if (_createMipmaps)
 		{
 			int w = width;

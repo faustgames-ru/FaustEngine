@@ -1,0 +1,1 @@
+bin2c -o FontQuicksandRegular.h FontQuicksandRegular.otf

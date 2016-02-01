@@ -141,7 +141,73 @@ namespace zombo
 		}
 		return result;
 	}
-	
+
+	void ZomboContentBlock::getBitmapFontConfig(const std::string& fileName, int& size, fonts::FontCharSet*& charset)
+	{
+		std::string configStr;
+		bool listen = false;
+		bool hasSeparator = false;
+		for (uint i = 0; i < fileName.size(); i++)
+		{
+			if (fileName[i] == ']') break;
+			if (fileName[i] == '[')
+			{
+				listen = true;
+				continue;
+			}
+			if (listen)
+			{
+				configStr += fileName[i];
+				if (fileName[i] == ':')
+				{
+					hasSeparator = true;
+				}
+			}
+		}
+		std::string charsetStr;
+		std::string sizeStr;
+		std::string dimStr;
+
+		bool listenCharSet = hasSeparator;
+		for (uint i = 0; i < configStr.size(); i++)
+		{
+			if (configStr[i] == ':')
+			{
+				listenCharSet = false;
+				continue;
+			}
+			if (listenCharSet)
+			{
+				charsetStr += configStr[i];
+			}
+			else
+			{
+				if (isdigit(configStr[i]))
+				{
+					sizeStr += configStr[i];
+				}
+				else
+				{
+					dimStr += configStr[i];
+				}
+			}
+		}
+		size = core::Convert::toInt(sizeStr);
+		// todo: support em or other resolution independent dimensions
+		if (charsetStr == "latin")
+		{
+			charset = &fonts::FontCharSet::latin;
+		}
+		else if (charsetStr == "loading")
+		{
+			charset = &fonts::FontCharSet::loading;
+		}
+		else
+		{
+			charset = &fonts::FontCharSet::all;
+		}
+	}
+
 	int ZomboContentBlock::getBitmapFontSize(const std::string& fileName)
 	{
 		std::string valueStr;
@@ -212,10 +278,12 @@ namespace zombo
 		} 
 		if (ext == "otf"|| ext == "ttf")
 		{
-			int size = getBitmapFontSize(fileName);
+			int size;
+			fonts::FontCharSet *charset;
+			getBitmapFontConfig(fileName, size, charset);
 			if (size > 0)
 			{
-				loadBitmapFont(fileName, size);
+				loadBitmapFont(fileName, size, charset);
 			}
 			else
 			{
@@ -404,7 +472,7 @@ namespace zombo
 		_altases[fileName] = altas;
 	}
 
-	void ZomboContentBlock::loadBitmapFont(const std::string& fileName, int size)
+	void ZomboContentBlock::loadBitmapFont(const std::string& fileName, int size, fonts::FontCharSet* charset)
 	{
 		std::string fontFile = getBitmapFontFileName(fileName);
 		resources::ContentManager content = resources::ContentManager::Default;
@@ -426,8 +494,7 @@ namespace zombo
 		}
 
 		ZomboBitmapFont *font = ZomboBitmapFont::create();
-		font->font = fonts::FontsManager::Default.createBitmapFont(buffer, len, static_cast<float>(size),
-			&fonts::FontCharSet::all);
+		font->font = fonts::FontsManager::Default.createBitmapFont(buffer, len, static_cast<float>(size), charset);
 		_bitmapFonts[fileName] = font;
 	}
 }

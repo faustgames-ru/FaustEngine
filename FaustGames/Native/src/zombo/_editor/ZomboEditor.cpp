@@ -13,15 +13,25 @@
 #include "curves/CurvesManager.h"
 #include "drawing/Drawer.h"
 #include "ZomboEditorInput.h"
+#include "ZomboEditorLoadingScreen.h"
+#include "../resources_fonts/FontQuicksandRegular.h"
 
 namespace zombo
 {
-	std::string ZomboEditorConstants::LogDisplayerFont("InternalContent/Quicksand-Regular[18px].otf");
+	ZomboEditorSharedData ZomboEditorSharedData::Default;
+
+
+	std::string ZomboEditorConstants::LoadingScreenFont("InternalContent/Quicksand-Regular[loading:64px].otf");
+	std::string ZomboEditorConstants::LogDisplayerFont("InternalContent/Quicksand-Regular[latin:18px].otf");
 	std::string ZomboEditorConstants::GameFile("Content/main.game");
 
 
 	ZomboEditor ZomboEditor::Default;
 
+
+	ZomboEditorSharedData::ZomboEditorSharedData()
+	{
+	}
 
 	ZomboEditor::ZomboEditor() : 
 		_needCallContetnLoaded(true), 
@@ -31,7 +41,7 @@ namespace zombo
 		_renderBackgroundEdges(false)
 	{
 		_mode = new ZomboEditorSelectionMode();
-		_backgrounAlpha.setDuration(1.0f);
+		_backgrounAlpha.setConfig(&SConfig::VerySlow);
 	}
 
 	String ZomboEditor::getEditorModeInternal() const
@@ -98,9 +108,12 @@ namespace zombo
 		graphics::GraphicsDevice::Default.create();
 		EFFECTS_CALL_CREATE
 		FORMATS_CALL_CREATE
+			
+		ZomboEditorLoadingScreen::Default.showImmediately();
 
 		fonts::FontsManager::Default.init();
 		resources::ContentManager::Default.open();
+		internalContent.enqueueResource(ZomboEditorConstants::LoadingScreenFont.c_str());
 		internalContent.enqueueResource(ZomboEditorConstants::LogDisplayerFont.c_str());
 		gameContent.enqueueResource(ZomboEditorConstants::GameFile.c_str());
 		_needCallContetnLoaded = true;
@@ -119,13 +132,12 @@ namespace zombo
 
 	void ZomboEditor::update(float ellapsedTime)
 	{
-
 		ZomboGameEnvironment::update(ellapsedTime);
 		ZomboEditorInput::Default.mouse.internalUpdate();
 			
 		ZomboEditorRenderService::Default.resetBuffers();
 		ZomboEditorRenderService::Gui.resetBuffers();
-
+		
 		if (internalContent.isLoaded())
 		{
 			if (_needCallContetnLoaded)
@@ -172,11 +184,14 @@ namespace zombo
 							ZomboToolBox::Default.addItem(new ZomboToolBoxItem());
 						}
 						_background = gameContent.getImage((_scene->thisDir + _scene->background).c_str());
+						ZomboEditorLoadingScreen::Default.hide();
 						resources::ContentManager::Default.close();
 					}
 				}
 			}
 		}
+		
+		ZomboEditorLoadingScreen::Default.update();
 	}
 		
 	void ZomboEditor::render()
@@ -188,11 +203,12 @@ namespace zombo
 		//graphics::GraphicsDevice::Default.setClearState(0x0, 1.0f);
 		graphics::GraphicsDevice::Default.setViewport(0, 0, ZomboEditorViewport::Default.w, ZomboEditorViewport::Default.h);
 		graphics::GraphicsDevice::Default.clear();
-
+		
 		//renderBackground();
 		renderBackgroundAsSkybox();
 		graphics::UniformValues::projection()->setValue(ZomboEditorCamera::Default.matrix);
 		ZomboEditorRenderService::Default.applyRenderCommands();
+		
 		renderGui();
 	}
 
@@ -205,7 +221,7 @@ namespace zombo
 	{
 		if (_background != nullptr)
 		{
-			_backgrounAlpha.setTargetValueIfNotEqual(1.0f);
+			_backgrounAlpha.setTarget(1.0f);
 			_backgrounAlpha.update();
 			float scale = 2.0f / (_background->bounds.Max.getY() - _background->bounds.Min.getY());
 
@@ -234,7 +250,7 @@ namespace zombo
 					_backgroundVertices[o + i].xyz = core::Vector3(_background->vertices[i].xy.getX() + posX, _background->vertices[i].xy.getY(), 0);
 					_backgroundVertices[o + i].uv.u = _background->vertices[i].u;
 					_backgroundVertices[o + i].uv.v = _background->vertices[i].v;
-					_backgroundVertices[o + i].color = graphics::Color::mulA(0xffffffff, _backgrounAlpha.getValue());
+					_backgroundVertices[o + i].color = graphics::Color::mulA(0xffffffff, _backgrounAlpha.get());
 				}
 				posX += sizeX;
 			}
@@ -272,7 +288,7 @@ namespace zombo
 	void ZomboEditor::renderBackgroundAsSkybox()
 	{
 		if (_background == nullptr) return;
-		_backgrounAlpha.setTargetValueIfNotEqual(1.0f);
+		_backgrounAlpha.setTarget(1.0f);
 		_backgrounAlpha.update();
 		graphics::GraphicsDevice::Default.renderState.setEffect(graphics::EffectsBasic::textureColor());
 		graphics::UniformValues::projection()->setValue(ZomboEditorCamera::Default.skyboxMatrix);
@@ -324,7 +340,7 @@ namespace zombo
 				_backgroundIndices.push_back(k + 0);
 				_backgroundIndices.push_back(k + 2);
 				_backgroundIndices.push_back(k + 3);
-				uint c = graphics::Color::mulA(0xffffffff, _backgrounAlpha.getValue());;
+				uint c = graphics::Color::mulA(0xffffffff, _backgrounAlpha.get());;
 				_backgroundVertices.push_back(RenderVertex(p00, c, tx0, ty0));
 				_backgroundVertices.push_back(RenderVertex(p01, c, tx0, ty1));
 				_backgroundVertices.push_back(RenderVertex(p11, c, tx1, ty1));
@@ -338,7 +354,7 @@ namespace zombo
 			_backgroundIndices.push_back(k + 3);
 			_backgroundIndices.push_back(k + 4);
 			_backgroundIndices.push_back(k + 5);
-			uint c = graphics::Color::mulA(0xffffffff, _backgrounAlpha.getValue());;
+			uint c = graphics::Color::mulA(0xffffffff, _backgrounAlpha.get());;
 
 			core::Vector3 p00 = getPosFromAngles(a0, -hAngleOffset);
 			core::Vector3 p10 = getPosFromAngles(a1, -hAngleOffset);
@@ -390,6 +406,7 @@ namespace zombo
 
 	void ZomboEditor::contentLoaded()
 	{
+		ZomboEditorLoadingScreen::Default.load();
 		ZomboEditorLogDisplayer::Default.load();
 	}
 

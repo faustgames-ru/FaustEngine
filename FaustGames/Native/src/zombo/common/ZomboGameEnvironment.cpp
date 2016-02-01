@@ -20,7 +20,7 @@ namespace zombo
 	void ZomboGameEnvironment::update(float ellapsedTime)
 	{
 		ellapsedSeconds = ellapsedTime;
-		ZomboGameEnvironment::ellapsedTime = static_cast<ulong>(core::Math::round(static_cast<float>(ellapsedTime) * ZomboConstants::LongTimeScale));
+		ZomboGameEnvironment::ellapsedTime = static_cast<ulong>(core::Math::round(static_cast<float>(ellapsedSeconds) * ZomboConstants::LongTimeScale));
 		gameTime += ZomboGameEnvironment::ellapsedTime;
 	}
 }

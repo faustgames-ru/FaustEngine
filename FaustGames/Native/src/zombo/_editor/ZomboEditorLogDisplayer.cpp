@@ -12,9 +12,9 @@ namespace zombo
 
 	ZomboEditorLogDisplayer::ZomboEditorLogDisplayer(): _font(nullptr)
 	{
-		_xSize.setDuration(0.1f);
-		_alpha.setDuration(0.3f);
-		_yoffset.setDuration(0.3f);
+		_xSize.setConfig(&SConfig::Fast);
+		_alpha.setConfig(&SConfig::Default);
+		_yoffset.setConfig(&SConfig::Default);
 	}
 
 	void ZomboEditorLogDisplayer::load()
@@ -58,24 +58,24 @@ namespace zombo
 			core::Vector2 size = _font->font->getSize(1.0f, zomboString);
 			if (deltaSec < 2.0f)
 			{
-				_yoffset.setTargetValueIfNotEqual(10);
-				_alpha.setTargetValueIfNotEqual(1.0f);
-				_xSize.setTargetValueIfNotEqual(size.getX());
+				_yoffset.setTarget(10);
+				_alpha.setTarget(1.0f);
+				_xSize.setTarget(size.getX());
 			}
 			else
 			{
-				_yoffset.setTargetValueIfNotEqual(0);
-				_alpha.setTargetValueIfNotEqual(0);
-				_xSize.setTargetValueIfNotEqual(0);
+				_yoffset.setTarget(0);
+				_alpha.setTarget(0);
+				_xSize.setTarget(0);
 			}
 			
-			float yOffset = _yoffset.getValue();			
-			float sizeX = _xSize.getValue();
+			float yOffset = _yoffset.get();			
+			float sizeX = _xSize.get();
 
 			core::Vector2 center = core::Vector2(ZomboEditorViewport::Default.w * 0.5f, ZomboEditorViewport::Default.h * 0.5f);
 			float height = static_cast<float>(ZomboEditorViewport::Default.h);
-			textColor |= static_cast<uint>(core::Math::round(_alpha.getValue() * 255.0f)) << 24;
-			uint bgColor = static_cast<uint>(core::Math::round(_alpha.getValue() * 96.0f)) << 24;
+			textColor |= static_cast<uint>(core::Math::round(_alpha.get() * 255.0f)) << 24;
+			uint bgColor = static_cast<uint>(core::Math::round(_alpha.get() * 96.0f)) << 24;
 			uint trColor = 0x0;
 
 			ColorVertex textBg[] =

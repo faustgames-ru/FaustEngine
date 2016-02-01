@@ -42,9 +42,9 @@ namespace zombo
 
 	ZomboToolBoxItem::ZomboToolBoxItem(): render(&ZomboToolBoxBoxRender::Default), isSelected(false), isHovered(false), _scale(0.5f), _offset0(0.0f), _offset1(0.0f)
 	{
-		_scale.setDuration(0.15f);
-		_offset0.setDuration(0.15f);
-		_offset1.setDuration(0.3f);
+		_scale.setConfig(&SConfig::Fast);
+		_offset0.setConfig(&SConfig::Fast);
+		_offset1.setConfig(&SConfig::Default);
 	}
 
 	void ZomboToolBoxItem::updateInput(const core::Vector2& position, float scale)
@@ -52,8 +52,8 @@ namespace zombo
 		bool midOrRight = ZomboEditorInput::Default.mouse.isMiddlePressed() || ZomboEditorInput::Default.mouse.isRightPressed();
 		float mx = ZomboEditorInput::Default.mouse.position.getX();
 		float my = ZomboEditorViewport::Default.h - ZomboEditorInput::Default.mouse.position.getY();
-		float sx = getSizeX()*_scale.getValue()*scale * 0.5f;
-		float sy = getSizeY()*_scale.getValue()*scale * 0.5f;
+		float sx = getSizeX()*_scale.get()*scale * 0.5f;
+		float sy = getSizeY()*_scale.get()*scale * 0.5f;
 		float px = position.getX();
 		float py = position.getY();
 		isSelected = false;
@@ -65,20 +65,20 @@ namespace zombo
 			if (ZomboEditorInput::Default.mouse.isLeftPressed())
 			{
 				isSelected = true;
-				_scale.setTargetValueIfNotEqual(1.5f);
+				_scale.setTarget(1.5f);
 			}
 			else
 			{
-				_scale.setTargetValueIfNotEqual(1.2f);
+				_scale.setTarget(1.2f);
 			}
-			_offset0.setTargetValueIfNotEqual(5.0f);
-			_offset1.setTargetValueIfNotEqual(5.0f);
+			_offset0.setTarget(5.0f);
+			_offset1.setTarget(5.0f);
 		}
 		else
 		{
-			_scale.setTargetValueIfNotEqual(1.0f);
-			_offset0.setTargetValueIfNotEqual(0.0f);
-			_offset1.setTargetValueIfNotEqual(0.0f);
+			_scale.setTarget(1.0f);
+			_offset0.setTarget(0.0f);
+			_offset1.setTarget(0.0f);
 		}
 	}
 
@@ -88,8 +88,8 @@ namespace zombo
 		_offset0.update();
 		_offset1.update();
 		_alpha.update();
-		float s = _scale.getValue()*scale;
-		float offset = _offset0.getValue()+ _offset1.getValue();
+		float s = _scale.get()*scale;
+		float offset = _offset0.get()+ _offset1.get();
 		if (render != nullptr)
 		{
 			renderer.clear();
@@ -98,7 +98,7 @@ namespace zombo
 		renderer.apply(
 			core::Vector2(position.getX(), offset + position.getY()), 
 			core::Vector2(position.getX(), position.getY() - (getSizeY() + offset)*s), 
-			s, alpha*_alpha.getValue());
+			s, alpha*_alpha.get());
 	}
 
 	float ZomboToolBoxItem::getSizeX() const
@@ -113,7 +113,7 @@ namespace zombo
 
 	void ZomboToolBoxItem::setAlpha(float alpha)
 	{
-		_alpha.setTargetValueIfNotEqual(alpha);
+		_alpha.setTarget(alpha);
 	}
 
 	ZomboToolBox::ZomboToolBox(): whiteTexture(nullptr), autoHideMode(ZomboToolBoxAutoHideMode::None), _sizeX(0), _sizeY(0), _notPaddedSizeY(0), _hasSelection(false)
@@ -172,16 +172,16 @@ namespace zombo
 		_alpha.update();
 		if (_hasSelection)
 		{
-			_alpha.setTargetValueIfNotEqual(0.0f);
+			_alpha.setTarget(0.0f);
 		}
 		else
 		{			
-			_alpha.setTargetValueIfNotEqual(1.0f);
+			_alpha.setTarget(1.0f);
 		}
 
 		uint centerX = ZomboEditorViewport::Default.w / 2;
-		uint bgBotColor = graphics::Color::mulA(0x80000000, _alpha.getValue());
-		uint bgTopColor = graphics::Color::mulA(0x40000000, _alpha.getValue());
+		uint bgBotColor = graphics::Color::mulA(0x80000000, _alpha.get());
+		uint bgTopColor = graphics::Color::mulA(0x40000000, _alpha.get());
 
 		ColorVertex vertices[4] = 
 		{

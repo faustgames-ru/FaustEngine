@@ -81,7 +81,7 @@ namespace fonts
 		}
 	}
 
-	void BitmapFont::load(void* inBuffer, int bytesCount, float pixelSize, FontCharSet* charset)
+	void BitmapFont::load(const void* inBuffer, int bytesCount, float pixelSize, FontCharSet* charset)
 	{
 		fontPixelSize = pixelSize;
 		// allow use resources buffer for image allocations

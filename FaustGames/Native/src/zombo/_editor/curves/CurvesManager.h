@@ -52,16 +52,16 @@ namespace zombo
 	class CurvesPoint
 	{
 	public:
-		ZomboInterpolatedValue x;
-		ZomboInterpolatedValue y;
+		SVector2 xy;
 		std::vector<CurveSegment*> segments;
 		core::Vector2 getXY() const;
 		core::Vector2 getTargetXY() const;
 		CurvesPoint();
 		CurvesPoint(core::Vector2 p);
 		float getR() const;
-		bool isUnderMouse();
+		bool isUnderMouse() const;
 		float distanceToMouse() const;
+		void updateCoords();
 		void update();
 		void setScale(float scale);
 		void setScaleEx(float scale);
@@ -75,10 +75,10 @@ namespace zombo
 		geometry::Aabb2d getAabb();
 		float getScale() const;
 		float getScaleEx() const;
-		ZomboInterpolatedValue _scale;
-		ZomboInterpolatedValue _scaleEx;
-		ZomboInterpolatedValue _alpha;
-		ZomboInterpolatedValue _rot;
+		SFloat _scale;
+		SFloat _scaleEx;
+		SFloat _alpha;
+		SFloat _rot;
 	private:
 	};
 
@@ -102,7 +102,7 @@ namespace zombo
 		geometry::Aabb2d getAabb() const;
 		uint color;
 	private:
-		ZomboInterpolatedValue _scale;
+		SFloat _scale;
 	};
 
 	class CurvesVisibleItems
@@ -134,7 +134,7 @@ namespace zombo
 		CurvesSelection findSelection(CurvesVisibleItems &items);
 		CurvesVisibleItems& getVisibleItems();
 		void setState(ICurvesState* state);
-		ZomboInterpolatedValue scale;
+		SFloat scale;
 	private:
 		void queryVisibleItems(CurvesVisibleItems &items);
 		std::vector<CurvesPoint *> _points;

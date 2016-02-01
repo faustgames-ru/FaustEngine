@@ -18,6 +18,7 @@ namespace core
 		static int iY;
 
 		Vector2();
+		Vector2(float v);
 		Vector2(float x, float y);
 		Vector2& operator+=(const Vector2 &right);
 		Vector2& operator+=(float right);
@@ -51,6 +52,7 @@ namespace core
 		float lengthSqr() const;
 		Vector3 toVector3() const;
 		Vector3 toVector3(float z) const;
+		static Vector2 lerp(const Vector2 &from, const Vector2 &to, float u);
 		static Vector2 cubic(Vector2 p0, Vector2 p1, Vector2 p2, Vector2 p3, float u);
 		static float crossProduct(Vector2 v1, Vector2 v2);
 		static float dotProduct(Vector2 v1, Vector2 v2);
@@ -71,6 +73,7 @@ namespace core
 		static int iZ;
 		static Vector3 empty;
 		Vector3() {}
+		Vector3(float v);
 		Vector3(float x, float y, float z)
 		{
 			_values[0] = x;

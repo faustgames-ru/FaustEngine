@@ -18,9 +18,9 @@ namespace zombo
 		void update();
 	private:
 		ZomboBitmapFont *_font;
-		ZomboInterpolatedValue _yoffset;
-		ZomboInterpolatedValue _xSize;
-		ZomboInterpolatedValue _alpha;
+		SFloat _yoffset;
+		SFloat _xSize;
+		SFloat _alpha;
 	};
 }
 

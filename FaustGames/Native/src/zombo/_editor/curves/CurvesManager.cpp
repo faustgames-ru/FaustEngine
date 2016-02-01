@@ -47,36 +47,34 @@ namespace zombo
 	void ZomboCommandMoveCurvePoint::execute()
 	{
 		ZomboLog::Default.m("Do: Move point");
-		_point->x.setTargetValueIfNotEqual(_targetPosition.getX());
-		_point->y.setTargetValueIfNotEqual(_targetPosition.getY());
+		_point->xy.setTarget(_targetPosition);
 	}
 
 	void ZomboCommandMoveCurvePoint::undo()
 	{
 		ZomboLog::Default.m("Undo: Move point");
-		_point->x.setTargetValueIfNotEqual(_prevPosition.getX());
-		_point->y.setTargetValueIfNotEqual(_prevPosition.getY());
+		_point->xy.setTarget(_prevPosition);
 	}
 
 	core::Vector2 CurvesPoint::getXY() const
 	{
-		return core::Vector2(x.getValue(), y.getValue());
+		return xy.get();
 	}
 
 	core::Vector2 CurvesPoint::getTargetXY() const
 	{
-		return core::Vector2(x.getTargetValue(), y.getTargetValue());
+		return xy.getTarget();
 	}
 
-	CurvesPoint::CurvesPoint() : _scale(1.0f), _rot(0.0f)
+	CurvesPoint::CurvesPoint() : _scale(1.0f), _rot(core::Math::Pi * 0.25f)
 	{
 	}
 
-	CurvesPoint::CurvesPoint(core::Vector2 p): x(p.getX()), y(p.getY()), _scale(1.0f), _scaleEx(1.0f), _alpha(1.0f), _rot(0.0f)
+	CurvesPoint::CurvesPoint(core::Vector2 p): xy(p), _scale(1.0f), _scaleEx(1.0f), _alpha(1.0f), _rot(core::Math::Pi * 0.25f)
 	{
-		_scale.setDuration(0.1f);
-		_alpha.setDuration(0.3f);
-		_scaleEx.setDuration(0.5f);
+		_scale.setConfig(&SConfig::Fast);
+		_alpha.setConfig(&SConfig::Default);
+		_scaleEx.setConfig(&SConfig::Slow);
 	}
 
 	float CurvesPoint::getR() const
@@ -84,15 +82,16 @@ namespace zombo
 		return 0.1f;
 	}
 
-	bool CurvesPoint::isUnderMouse()
+	bool CurvesPoint::isUnderMouse() const
 	{
 		core::Vector2 m = CurvesManager::Default.mousePos;
 		float mx = m.getX();
 		float my = m.getY();
-		float sx = getR()*_scale.getValue();
-		float sy = getR()*_scale.getValue();
-		float px = x.getValue();
-		float py = y.getValue();
+		float sx = getR()*_scale.get();
+		float sy = getR()*_scale.get();
+		core::Vector2 p = xy.get();
+		float px = p.getX();
+		float py = p.getY();
 		return
 			px - sx <= mx && mx <= px + sx &&
 			py - sy <= my && my <= py + sy;
@@ -101,6 +100,11 @@ namespace zombo
 	float CurvesPoint::distanceToMouse() const
 	{
 		return (CurvesManager::Default.mousePos - getXY()).length();
+	}
+
+	void CurvesPoint::updateCoords()
+	{
+		xy.update();
 	}
 
 	void renderEdge(uint c, core::Vector2 p0, core::Vector2 p1, float r)
@@ -121,38 +125,36 @@ namespace zombo
 		
 	void CurvesPoint::update()
 	{
-		x.update();
-		y.update();
 		_scale.update();
 		_scaleEx.update();
 		_alpha.update();
 		_rot.update();
-		renderPoint(core::Vector2(x.getValue(), y.getValue()), getR() * _scale.getValue()*_scaleEx.getValue(), _alpha.getValue(), _rot.getValue());
+		renderPoint(xy.get(), getR() * _scale.get()*_scaleEx.get(), _alpha.get(), _rot.get());
 	}
 
 	void CurvesPoint::setScale(float scale)
 	{
-		_scale.setTargetValueIfNotEqual(scale);
+		_scale.setTarget(scale);
 	}
 
 	void CurvesPoint::setScaleEx(float scale)
 	{
-		_scaleEx.setTargetValueIfNotEqual(scale);
+		_scaleEx.setTarget(scale);
 	}
 
 	void CurvesPoint::setScaleFullEx(float scale)
 	{
-		_scaleEx.setAllValues(scale);
+		_scaleEx.setAll(scale);
 	}
 
 	void CurvesPoint::setAlpha(float a)
 	{
-		_alpha.setTargetValueIfNotEqual(a);
+		_alpha.setTarget(a);
 	}
 
 	void CurvesPoint::setRot(float rot)
 	{
-		_rot.setTargetValueIfNotEqual(rot);
+		_rot.setTarget(rot);
 	}
 
 	void CurvesPoint::updateSelectedState()
@@ -190,17 +192,17 @@ namespace zombo
 
 	float CurvesPoint::getScale() const
 	{
-		return _scale.getValue();
+		return _scale.get();
 	}
 
 	float CurvesPoint::getScaleEx() const
 	{
-		return _scaleEx.getValue();
+		return _scaleEx.get();
 	}
 
 	CurveSegment::CurveSegment(): p0(nullptr), p1(nullptr), color(0xffffffff), _scale(1.0f)
 	{
-		_scale.setDuration(0.1f);
+		_scale.setConfig(&SConfig::Fast);
 	}
 
 	void CurveSegment::updateInput()
@@ -222,7 +224,7 @@ namespace zombo
 		{
 			float u = static_cast<float>(i) / static_cast<float>(count - 1);
 			core::Vector2 pf = core::Vector2::cubic(p0->getXY(), p0->getXY() + d0, p1->getXY() + d1, p1->getXY(), u);
-			renderEdge(color, ps, pf, getR()*_scale.getValue());
+			renderEdge(color, ps, pf, getR()*_scale.get());
 			ps = pf;
 		}
 	}
@@ -291,12 +293,12 @@ namespace zombo
 	void CurveSegment::updateRegularState()
 	{
 		//color = 0xffffffff;
-		_scale.setTargetValueIfNotEqual(1.0f);
+		_scale.setTarget(1.0f);
 	}
 
 	void CurveSegment::updateHoverState()
 	{
-		_scale.setTargetValueIfNotEqual(2.0f);
+		_scale.setTarget(2.0f);
 		//color = 0xffff00ff;
 	}
 
@@ -331,7 +333,7 @@ namespace zombo
 
 	CurvesManager CurvesManager::Default;
 
-	CurvesManager::CurvesManager() : scale(1.0f), _snappingRange(0.1)
+	CurvesManager::CurvesManager() : scale(1.0f), _snappingRange(0.1f)
 	{
 		_actualState = &CurvesStateSelect::Default;
 	}
@@ -354,6 +356,11 @@ namespace zombo
 	void CurvesManager::update()
 	{
 		scale.update();
+		for (uint i = 0; i < _points.size(); i++)
+		{
+			_points[i]->updateCoords();
+		}
+
 		mousePos = ZomboEditorCamera::Default.getMouseProjection(0);
 		_visibleItems.clear();
 		queryVisibleItems(_visibleItems);

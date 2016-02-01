@@ -35,9 +35,9 @@ namespace zombo
 		core::Vector2 _lastMouse;
 		core::Matrix _rotation;
 		ZomboCameraVelocityStack velocityStack;
-		ZomboInterpolatedValue _pAngle;
-		ZomboInterpolatedValue _hAngle;
-		ZomboInterpolatedValue _bAngle;
+		SFloat _pAngle;
+		SFloat _hAngle;
+		SFloat _bAngle;
 		ZomboCommandCameraMoveXY * _actualCommand;
 		core::Vector2 _prevPosition;
 		bool _prevMidButtonState;

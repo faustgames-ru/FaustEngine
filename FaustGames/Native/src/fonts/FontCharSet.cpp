@@ -3,6 +3,7 @@
 namespace fonts
 {
 	FontCharSet FontCharSet::latin(" !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~");
+	FontCharSet FontCharSet::loading("Loading.");
 	FontCharSet FontCharSet::all(' ', 127);
 
 

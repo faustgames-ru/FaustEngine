@@ -13,6 +13,12 @@ namespace core
 	Vector2::Vector2()
 	{}
 
+	Vector2::Vector2(float v)
+	{
+		_values[0] = v;
+		_values[1] = v;
+	}
+
 	Vector2::Vector2(float x, float y)
 	{
 		_values[0] = x;
@@ -179,6 +185,13 @@ namespace core
 		return Vector3(getX(), getY(), z);
 	}
 
+	Vector2 Vector2::lerp(const Vector2& p1, const Vector2& p2, float u)
+	{
+		return Vector2(
+			Math::lerp(p1.getX(), p2.getX(), u),
+			Math::lerp(p1.getY(), p2.getY(), u));
+	}
+
 	Vector2 Vector2::cubic(Vector2 p0, Vector2 p1, Vector2 p2, Vector2 p3, float u)
 	{
 		return Vector2(
@@ -212,6 +225,13 @@ namespace core
 		if (t > 1.0) return (p - e1).length();
 		Vector2 projection = e0 + (e1 - e0)*t;
 		return (p - projection).length();
+	}
+
+	Vector3::Vector3(float v)
+	{
+		_values[0] = v;
+		_values[1] = v;
+		_values[2] = v;
 	}
 
 	Vector3 Vector3::eX(1.0f, 0.0f, 0.0f);

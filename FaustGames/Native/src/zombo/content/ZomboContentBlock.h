@@ -55,6 +55,7 @@ namespace zombo
 		bool _loaded;
 
 		std::string getBitmapFontFileName(const std::string& fileName);
+		void getBitmapFontConfig(const std::string& fileName, int &size, fonts::FontCharSet* &charset);
 		int getBitmapFontSize(const std::string& fileName);
 		static bool hasFormat(const std::string &fileName, const std::string& format);
 		static std::string format(const std::string& fileName, int number, int leadingZeros);
@@ -67,7 +68,7 @@ namespace zombo
 		ZomboContentImage* loadTexture(const std::string &fileName);
 		ZomboContentAtlasPage* loadAtlasPage(const std::string &fileName);
 		void loadAtlas(const std::string &fileName);
-		void loadBitmapFont(const std::string &fileName, int size);
+		void loadBitmapFont(const std::string &fileName, int size, fonts::FontCharSet* charset);
 	};
 
 	template <typename T>

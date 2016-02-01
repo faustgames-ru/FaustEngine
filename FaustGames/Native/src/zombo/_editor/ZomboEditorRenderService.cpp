@@ -5,8 +5,6 @@ namespace zombo
 	ZomboEditorRenderService ZomboEditorRenderService::Default;
 	ZomboEditorRenderService ZomboEditorRenderService::Gui;
 
-	ZomboEditorFontRenderer ZomboEditorFontRenderer::Default;
-
 	void ZomboEditorBitmapFontRenderer::drawQuad(uint color, graphics::Texture* texture, const fonts::BitmapFontVertex& min, const fonts::BitmapFontVertex& max, float z, bool rotate)
 	{
 		ushort t0 = 1;
@@ -76,7 +74,7 @@ namespace zombo
 
 		indices[0] = 0;
 		indices[1] = 1;
-		ZomboEditorRenderService::Default.drawLines(vertices, 2, indices, 1);
+		renderService->drawLines(vertices, 2, indices, 1);
 	}
 
 	void ZomboEditorFontRenderer::drawTriangle(uint color, core::Vector3 a, core::Vector3 b, core::Vector3 c)
@@ -91,7 +89,7 @@ namespace zombo
 		indices[0] = 0;
 		indices[1] = 1;
 		indices[2] = 2;
-		ZomboEditorRenderService::Default.drawTriangles(vertices, 3, indices, 1);
+		renderService->drawTriangles(vertices, 3, indices, 1);
 	}
 
 	void ZomboEditorFontRenderer::drawTriangle(uint ca, uint cb, uint cc, core::Vector3 a, core::Vector3 b, core::Vector3 c)
@@ -106,7 +104,7 @@ namespace zombo
 		indices[0] = 0;
 		indices[1] = 1;
 		indices[2] = 2;
-		ZomboEditorRenderService::Default.drawTriangles(vertices, 4, indices, 1);
+		renderService->drawTriangles(vertices, 4, indices, 1);
 	}
 
 	void ZomboEditorFontRenderer::drawQuad(uint ca, uint cb, uint cc, uint cd, core::Vector3 a, core::Vector3 b, core::Vector3 c, core::Vector3 d)
@@ -132,6 +130,7 @@ namespace zombo
 	ZomboEditorRenderService::ZomboEditorRenderService(): _entriesCount(0)
 	{
 		FontRenderer.renderService = this;
+		VectorFontRenderer.renderService = this;
 	}
 
 	ZomboEditorRenderService::~ZomboEditorRenderService()

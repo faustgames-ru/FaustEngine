@@ -8,7 +8,8 @@ namespace zombo
 
 	ZomboEditorCommands* ZomboEditorCommands::camera()
 	{
-		return &Camera;// &Default;
+		//return &Camera;
+		return &Default;
 	}
 
 	CommandExecutonStatus::e ZomboEditorCommands::doCommand(ZomboEditorCommand* command)

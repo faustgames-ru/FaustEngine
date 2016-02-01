@@ -31,13 +31,11 @@ namespace zombo
 			CurvesPoint *replacePoint = CurvesManager::Default.snap(sp, selectedPoint);
 			if (replacePoint != _replacePoint)
 			{
-				selectedPoint->x.setTargetValueIfNotEqual(sp.getX());
-				selectedPoint->y.setTargetValueIfNotEqual(sp.getY());
+				selectedPoint->xy.setTarget(sp);
 			}
 			else
 			{
-				selectedPoint->x.setAllValues(sp.getX());
-				selectedPoint->y.setAllValues(sp.getY());
+				selectedPoint->xy.setAll(sp);
 			}
 			_replacePoint = replacePoint;
 			selectedPoint->updateSelectedState();

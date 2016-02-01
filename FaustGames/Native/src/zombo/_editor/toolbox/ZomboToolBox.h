@@ -37,10 +37,10 @@ namespace zombo
 		float getSizeY() const;
 		void setAlpha(float alpha);
 	private:
-		ZomboInterpolatedValue _scale;
-		ZomboInterpolatedValue _offset0; 
-		ZomboInterpolatedValue _offset1;
-		ZomboInterpolatedValue _alpha;
+		SFloat _scale;
+		SFloat _offset0; 
+		SFloat _offset1;
+		SFloat _alpha;
 	};
 
 	struct ZomboToolBoxAutoHideMode
@@ -73,7 +73,7 @@ namespace zombo
 		float _sizeY;
 		float _notPaddedSizeY;
 		bool _hasSelection;
-		ZomboInterpolatedValue _alpha;
+		SFloat _alpha;
 	};
 }
 

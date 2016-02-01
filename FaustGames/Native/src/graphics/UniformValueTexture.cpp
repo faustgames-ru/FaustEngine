@@ -23,6 +23,7 @@ namespace graphics
 	void UniformValueTexture::apply(Uniform *uniform)
 	{
 		if (_equal) return; 
+
 		//glUniform1i(uniform->getHandle(), GraphicsConstants::Samplers2DStart + _samplerIndex);
 		//Errors::check(Errors::Uniform1f);
         GraphicsDevice::Default.setActiveTexture(_samplerIndex);

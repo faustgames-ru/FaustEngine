@@ -203,10 +203,10 @@ namespace fonts
 		}
 	}
 
-	void OutlineVectorFont::load(void* buffer, int bytesCount, FontCharSet* charset)
+	void OutlineVectorFont::load(const void* buffer, int bytesCount, FontCharSet* charset)
 	{
 		FT_Library library = static_cast<FT_Library>(FontsManager::Default.getFontLibraryInstance());
-		FT_Byte* byteBuffer = static_cast<FT_Byte*>(buffer);
+		const FT_Byte* byteBuffer = static_cast<const FT_Byte*>(buffer);
 		FT_Face face;
 		FT_Error error = FT_New_Memory_Face(library,
 			byteBuffer,    /* first byte in memory */
@@ -440,7 +440,7 @@ namespace fonts
 		}
 	}
 
-	void OutlineVectorFont::renderTringles(const core::Vector3& position, float scale, const char* text, IFontRenderer* renderer)
+	void OutlineVectorFont::renderTringles(uint color, const core::Vector3& position, float scale, const char* text, IFontRenderer* renderer)
 	{
 		if (text == nullptr) return;
 		core::Vector3 pen = position;
@@ -463,7 +463,7 @@ namespace fonts
 					core::Vector2 p1 = glyph->meshPoints[i1];
 					core::Vector2 p2 = glyph->meshPoints[i2];
 
-					renderer->drawTriangle(0xffffffff,
+					renderer->drawTriangle(color,
 						pen + p0.toVector3() * scale,
 						pen + p1.toVector3() * scale,
 						pen + p2.toVector3() * scale);			
@@ -522,6 +522,13 @@ namespace fonts
 				pen.setX(pen.getX() + glyph->advance.getX() * scale);
 			}
 		}
+	}
+
+	void OutlineVectorFont::renderAA(const core::Vector3& position, float scale, float smoothScale, const char* text, IFontRenderer* renderer)
+	{
+		//renderTringles(position, scale, text, renderer);
+		renderTringlesSmooth(position, scale, smoothScale, text, renderer);
+		renderTringlesSmooth(position, scale, -smoothScale, text, renderer);
 	}
 
 	void OutlineVectorFont::loadOutline(FT_GlyphSlot slot, char symbol)

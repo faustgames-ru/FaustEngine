@@ -13,9 +13,17 @@
 
 namespace zombo
 {
+	class ZomboEditorSharedData
+	{
+	public:
+		static ZomboEditorSharedData Default;
+		ZomboEditorSharedData();
+	};
 	class ZomboEditorConstants
 	{
 	public:
+		static const int BuildInFontSize = 64;
+		static std::string LoadingScreenFont;
 		static std::string LogDisplayerFont;
 		static std::string GameFile;
 	};
@@ -63,7 +71,7 @@ namespace zombo
 		std::vector<RenderVertex> _backgroundVertices;
 		std::vector<ushort> _backgroundIndices;
 		std::vector<ColorVertex> _backgroundEdgesVertices;
-		ZomboInterpolatedValue _backgrounAlpha;
+		SFloat _backgrounAlpha;
 		bool _renderBackgroundEdges;
 	};
 }

@@ -27,14 +27,14 @@ namespace fonts
 		return _ftLibrary;
 	}
 
-	OutlineVectorFont* FontsManager::createOutlineVectorFont(void* buffer, uint bytesCount, FontCharSet* charset) const
+	OutlineVectorFont* FontsManager::createOutlineVectorFont(const void* buffer, uint bytesCount, FontCharSet* charset) const
 	{
 		OutlineVectorFont* result = new OutlineVectorFont();
 		result->load(buffer, bytesCount, charset);
 		return result;
 	}
 
-	BitmapFont* FontsManager::createBitmapFont(void* buffer, uint bytesCount, float pixelSize, FontCharSet* charset) const
+	BitmapFont* FontsManager::createBitmapFont(const void* buffer, uint bytesCount, float pixelSize, FontCharSet* charset) const
 	{
 		BitmapFont* result = new BitmapFont();
 		result->load(buffer, bytesCount, pixelSize, charset);

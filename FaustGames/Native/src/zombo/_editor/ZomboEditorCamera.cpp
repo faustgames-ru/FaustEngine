@@ -190,7 +190,7 @@ namespace zombo
 	void ZomboEditorCameraRotator::ternimateInterpolator()
 	{
 		setRotation(actualRotation);
-		_angle.setAllValues(0);
+		_angle.setAll(0);
 	}
 
 	void ZomboEditorCameraRotator::rotate(core::Matrix originMatrix, core::Vector3 n, float a, core::Matrix targetMatrix)
@@ -200,8 +200,8 @@ namespace zombo
 		originRotation = originMatrix;
 		targetRotation = targetMatrix;
 		_normal = n;
-		_angle.setValue(0);
-		_angle.setTargetValue(a);
+		_angle.set(0);
+		_angle.setTarget(a);
 	}
 
 	void ZomboEditorCameraRotator::setRotationAnimated(const core::Matrix& matrix)
@@ -210,17 +210,17 @@ namespace zombo
 		matrix.getRotation(p, h, b);
 		originRotation = actualRotation;
 		targetRotation = matrix;
-		_pAngle.setTargetValue(p);
-		_hAngle.setTargetValue(h);
-		_bAngle.setTargetValue(b);
+		_pAngle.setTarget(p);
+		_hAngle.setTarget(h);
+		_bAngle.setTarget(b);
 	}
 	void ZomboEditorCameraRotator::updateEuler()
 	{		
 		float p, h, b;
 		actualRotation.getRotation(p, h, b);
-		_pAngle.setAllValues(p);
-		_hAngle.setAllValues(h);
-		_bAngle.setAllValues(b);
+		_pAngle.setAll(p);
+		_hAngle.setAll(h);
+		_bAngle.setAll(b);
 	}
 
 	void ZomboEditorCameraRotator::update()
@@ -231,12 +231,12 @@ namespace zombo
 		_bAngle.update();
 		if (_angle.isUpdating())
 		{
-			actualRotation = core::Matrix::mul(originRotation, core::Matrix::createRotation(_normal, _angle.getValue()));
+			actualRotation = core::Matrix::mul(originRotation, core::Matrix::createRotation(_normal, _angle.get()));
 			updateEuler();
 		}
 		else if (_pAngle.isUpdating() || _hAngle.isUpdating() || _bAngle.isUpdating())
 		{
-			actualRotation = core::Matrix::createEuler(_pAngle.getValue(), _hAngle.getValue(), _bAngle.getValue());
+			actualRotation = core::Matrix::createEuler(_pAngle.get(), _hAngle.get(), _bAngle.get());
 		}
 		else
 		{
@@ -283,15 +283,15 @@ namespace zombo
 		mode->updateInput();
 		rotator.update();
 		_fovValue.update();
-		_positionX.update();
-		_positionY.update();
+		_position.update();
 		updateInterpoaltedScale();
-		core::Matrix translate = core::Matrix::createTranslate(-_positionX.getValue(), -_positionY.getValue(), 0);
+		core::Vector2 pos = _position.get();
+		core::Matrix translate = core::Matrix::createTranslate(-pos.getX(), -pos.getY(), 0);
 		float minFov = core::Math::atan2(1.0f, depth*0.5f) * 2.0f;
-		float fov = _fovValue.getValue();
+		float fov = _fovValue.get();
 		if (fov < minFov)
 		{
-			core::Matrix ortho = core::Matrix::createOrtho(ZomboEditorViewport::Default.getAspect(), _scaleValue.getValue(), depth*0.5f);
+			core::Matrix ortho = core::Matrix::createOrtho(ZomboEditorViewport::Default.getAspect(), _scaleValue.get(), depth*0.5f);
 			core::Matrix orthoSkybox = core::Matrix::createOrtho(ZomboEditorViewport::Default.getAspect(), 1.0f, depth*0.5f);
 			skyboxMatrix.setValue(orthoSkybox);
 			transformToView = core::Matrix::mul(translate, rotator.actualRotation, ortho);
@@ -302,7 +302,7 @@ namespace zombo
 			core::Matrix proj = core::Matrix::createProjection(fov, ZomboEditorViewport::Default.getAspect(), 0.01f, depth);
 			float z = 1.0f / core::Math::tan(fov * 0.5f);
 			core::Matrix translateZ = core::Matrix::createTranslate(0, 0, z);
-			float scaleValue = _scaleValue.getValue();
+			float scaleValue = _scaleValue.get();
 			core::Matrix scale = core::Matrix::createScale(1.0f / scaleValue, 1.0f / scaleValue, 1.0f / scaleValue);
 			transformToView = core::Matrix::mul(translate, rotator.actualRotation, scale, translateZ, proj);
 			matrix.setValue(transformToView);
@@ -367,12 +367,12 @@ namespace zombo
 
 	float ZomboEditorCamera::getScale()
 	{
-		return _scaleValue.getTargetValue();
+		return _scaleValue.getTarget();
 	}
 
 	float ZomboEditorCamera::getFov()
 	{
-		return _fovValue.getTargetValue();
+		return _fovValue.getTarget();
 	}
 
 	bool ZomboEditorCamera::isUndoAvaliable()
@@ -418,48 +418,27 @@ namespace zombo
 
 	float ZomboEditorCamera::getInterpoaltedScale() const
 	{
-		return _scaleValue.getValue();
-	}
-
-	void ZomboEditorCamera::setPositionX(float x)
-	{
-		_positionX.setTargetValue(x);
-	}
-
-	void ZomboEditorCamera::setPositionY(float y)
-	{
-		_positionY.setTargetValue(y);
-	}
-
-	float ZomboEditorCamera::getPositionX() const
-	{
-		return _positionX.getTargetValue();
-	}
-
-	float ZomboEditorCamera::getPositionY() const
-	{
-		return _positionY.getTargetValue();
+		return _scaleValue.get();
 	}
 
 	void ZomboEditorCamera::setPositionXY(const core::Vector2 &v)
 	{
-		_positionX.setTargetValueIfNotEqual(v.getX());
-		_positionY.setTargetValueIfNotEqual(v.getY());
+		_position.setTarget(v);
 	}
 
 	core::Vector2 ZomboEditorCamera::getPositionXY() const
 	{
-		return core::Vector2(_positionX.getTargetValue(), _positionY.getTargetValue());
+		return _position.getTarget();
 	}
 
 	void ZomboEditorCamera::setFovInternal(float value)
 	{
-		_fovValue.setTargetValue(value);
+		_fovValue.setTarget(value);
 	}
 
 	void ZomboEditorCamera::setScaleInternal(float value)
 	{
-		_scaleValue.setTargetValue(value);
+		_scaleValue.setTarget(value);
 	}
 
 	std::string ZomboEditorCamera::getModeInternal()
@@ -469,8 +448,7 @@ namespace zombo
 
 	void ZomboEditorCamera::addPositionXY(const core::Vector2 &d)
 	{
-		_positionX.setAllValues(_positionX.getValue() + d.getX());
-		_positionY.setAllValues(_positionY.getValue() + d.getY());
+		_position.setAll(_position.get() + d);
 	}
 
 	extern "C" DLLEXPORT IZomboEditorCamera* API_CALL getZomboEditorCamera()

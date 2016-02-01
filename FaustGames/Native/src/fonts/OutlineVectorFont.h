@@ -59,7 +59,7 @@ namespace fonts
 	public:
 		OutlineVectorFont();
 		~OutlineVectorFont();
-		void load(void *buffer, int bytesCount, FontCharSet *charset);
+		void load(const void *buffer, int bytesCount, FontCharSet *charset);
 		static void renderConic(const core::Vector3 &p1, const core::Vector3 &p2, const core::Vector3 &p3, IFontRenderer* renderer);
 		static void renderCubic(const core::Vector3 &p1, const core::Vector3 &p2, const core::Vector3 &p3, const core::Vector3 &p4, IFontRenderer* renderer);
 		static void addConic(const core::Vector3& p1, const core::Vector3& p2, const core::Vector3& p3, std::vector<core::Vector3>& points);
@@ -67,8 +67,9 @@ namespace fonts
 		core::Vector2 getSize(float scale, const char *text);
 		void render(const core::Vector3 &position, float scale, const char *text, IFontRenderer* renderer);
 		void renderTringlesEdges(const core::Vector3 &position, float scale, const char *text, IFontRenderer* renderer);
-		void renderTringles(const core::Vector3 &position, float scale, const char *text, IFontRenderer* renderer);
+		void renderTringles(uint color, const core::Vector3 &position, float scale, const char *text, IFontRenderer* renderer);
 		void renderTringlesSmooth(const core::Vector3 &position, float scale, float smoothScale, const char *text, IFontRenderer* renderer);
+		void renderAA(const core::Vector3 &position, float scale, float smoothScale, const char *text, IFontRenderer* renderer);
 	private:
 		void loadOutline(FT_GlyphSlot slot, char symbol);
 		static const int GlyphsCount = 256;

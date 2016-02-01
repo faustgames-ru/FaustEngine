@@ -9,6 +9,7 @@ namespace fonts
 	{
 	public:
 		static FontCharSet latin;
+		static FontCharSet loading;
 		static FontCharSet all;
 		std::string charset;
 		FontCharSet(char from, char to);

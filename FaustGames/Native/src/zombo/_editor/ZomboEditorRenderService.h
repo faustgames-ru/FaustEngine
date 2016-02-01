@@ -37,7 +37,7 @@ namespace zombo
 	class ZomboEditorFontRenderer : public fonts::IFontRenderer
 	{
 	public:
-		static ZomboEditorFontRenderer Default;
+		ZomboEditorRenderService* renderService;
 		ushort indices[6];
 		ColorVertex vertices[4];
 		virtual void drawEdge(uint color, const core::Vector3 a, const core::Vector3 b) OVERRIDE;
@@ -49,6 +49,7 @@ namespace zombo
 	class ZomboEditorRenderService
 	{
 	public:
+		ZomboEditorFontRenderer VectorFontRenderer;
 		ZomboEditorBitmapFontRenderer FontRenderer;
 		ZomboEditorRenderService();
 		~ZomboEditorRenderService();

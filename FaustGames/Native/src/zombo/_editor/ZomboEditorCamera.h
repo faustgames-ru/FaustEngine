@@ -93,10 +93,10 @@ namespace zombo
 		void update();
 	private:
 		core::Vector3 _normal;
-		ZomboInterpolatedValue _angle;
-		ZomboInterpolatedValue _pAngle;
-		ZomboInterpolatedValue _hAngle;
-		ZomboInterpolatedValue _bAngle;
+		SFloat _angle;
+		SFloat _pAngle;
+		SFloat _hAngle;
+		SFloat _bAngle;
 	};
 
 	class ZomboEditorCamera : public IZomboEditorCamera
@@ -136,10 +136,6 @@ namespace zombo
 
 		void setModeInternal(String mode);
 		float getInterpoaltedScale() const;
-		void setPositionX(float x);
-		void setPositionY(float y);
-		float getPositionX() const;
-		float getPositionY() const;
 		void addPositionXY(const core::Vector2 &d);
 		void setPositionXY(const core::Vector2 &v);
 		core::Vector2 getPositionXY() const;
@@ -148,11 +144,9 @@ namespace zombo
 		std::string getModeInternal();
 	private:
 		std::string _actualModeName;
-		ZomboInterpolatedValue _scaleValue;
-		ZomboInterpolatedValue _fovValue;
-		ZomboInterpolatedValue _positionX;
-		ZomboInterpolatedValue _positionY;
-		ZomboInterpolatedValue _positionZ;
+		SFloat _scaleValue;
+		SFloat _fovValue;
+		SVector2 _position;
 		ZomboCommandCameraSetScale *_lastZoomCommand;
 	};
 }

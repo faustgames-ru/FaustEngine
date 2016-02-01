@@ -926,6 +926,26 @@ namespace llge
 		classInstance->dispose();
 	}
 	
+	extern "C" DLLEXPORT int API_CALL llge_PathMesh_getTriagnlesCount (IPathMesh * classInstance)
+	{
+		return classInstance->getTriagnlesCount();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_PathMesh_getTriagnles (IPathMesh * classInstance, IntPtr triangles3f)
+	{
+		classInstance->getTriagnles(triangles3f);
+	}
+	
+	extern "C" DLLEXPORT IntPtr API_CALL llge_PathMesh_getNativeInstance (IPathMesh * classInstance)
+	{
+		return classInstance->getNativeInstance();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_PathMesh_dispose (IPathMesh * classInstance)
+	{
+		classInstance->dispose();
+	}
+	
 	extern "C" DLLEXPORT void API_CALL llge_NavMesh_buildNavMesh (INavMesh * classInstance, INavMeshConfig * config)
 	{
 		classInstance->buildNavMesh(config);
@@ -939,6 +959,11 @@ namespace llge
 	extern "C" DLLEXPORT void API_CALL llge_NavMesh_getTriagnles (INavMesh * classInstance, IntPtr triangles3f)
 	{
 		classInstance->getTriagnles(triangles3f);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_NavMesh_fillPathMesh (INavMesh * classInstance, float x0, float y0, float x1, float y1, IPathMesh * mesh)
+	{
+		classInstance->fillPathMesh(x0, y0, x1, y1, mesh);
 	}
 	
 	extern "C" DLLEXPORT void API_CALL llge_NavMesh_dispose (INavMesh * classInstance)

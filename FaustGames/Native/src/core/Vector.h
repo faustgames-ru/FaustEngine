@@ -58,6 +58,7 @@ namespace core
 		static float dotProduct(Vector2 v1, Vector2 v2);
 		static bool equals(const Vector2& a, const Vector2& b);
 		static float distanceToEdge(const Vector2 &p, const Vector2 &e0, const Vector2 &e1);
+		bool isInsideTriangle(const Vector2& a, const Vector2& b, const Vector2& c) const;
 	};
 
 	class Vector3

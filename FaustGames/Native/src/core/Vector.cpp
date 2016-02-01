@@ -227,6 +227,27 @@ namespace core
 		return (p - projection).length();
 	}
 
+	float sign(const Vector2& p1, const Vector2& p2, const Vector2& p3)
+	{
+		return (p1.getX() - p3.getX()) * (p2.getY() - p3.getY()) - (p2.getX() - p3.getX()) * (p1.getY() - p3.getY());
+	}
+
+	bool PointInTriangle(const Vector2& pt, const Vector2& v1, const Vector2& v2, const Vector2& v3)
+	{
+		bool b1, b2, b3;
+
+		b1 = sign(pt, v1, v2) < Math::Epsilon;
+		b2 = sign(pt, v2, v3) < Math::Epsilon;
+		b3 = sign(pt, v3, v1) < Math::Epsilon;
+
+		return b1 == b2 && b2 == b3;
+	}
+
+	bool Vector2::isInsideTriangle(const Vector2& a, const Vector2& b, const Vector2& c) const
+	{
+		return PointInTriangle(*this, a, b, c);
+	}
+
 	Vector3::Vector3(float v)
 	{
 		_values[0] = v;

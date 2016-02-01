@@ -5,15 +5,20 @@
 #include <jni.h>
 #define API_CALL JNICALL
 #define DLLEXPORT JNIEXPORT
+#define OVERRIDE
 #else 
 #ifdef __APPLE__
 #define API_CALL
 #define DLLEXPORT
+#define OVERRIDE
 #else
 #define API_CALL __stdcall
 #define DLLEXPORT __declspec( dllexport )
+#define OVERRIDE override
 #endif
 #endif
+
+#include "BaseObjects.h"
 
 typedef unsigned short ushort;
 typedef unsigned int uint;
@@ -79,14 +84,14 @@ namespace llge
 	};
 
 	/// graphics
-	class ITexture
+	class ITexture : IBaseObject
 	{
 	public:
 		virtual uint API_CALL getId() = 0;
 		virtual IntPtr API_CALL getTextureInstance() = 0;
 	};
 
-	class ITextureImage2d
+	class ITextureImage2d : IBaseObject
 	{
 	public:
 		virtual IntPtr API_CALL getTextureImageInstance() = 0;
@@ -97,7 +102,7 @@ namespace llge
 		virtual void API_CALL dispose() = 0;
 	};
 
-	class IRenderTarget2d
+	class IRenderTarget2d : IBaseObject
 	{
 	public:
 		virtual IntPtr API_CALL getRenderTargetInstance() = 0;
@@ -107,7 +112,7 @@ namespace llge
 		virtual void API_CALL dispose() = 0;
 	};
 
-	class IRenderTargetDepth2d
+	class IRenderTargetDepth2d : IBaseObject
 	{
 	public:
 		virtual IntPtr API_CALL getRenderTargetInstance() = 0;
@@ -118,7 +123,7 @@ namespace llge
 		virtual void API_CALL dispose() = 0;
 	};
 
-	class IUniformsFacade
+	class IUniformsFacade : IBaseObject
 	{
 	public:
 		virtual void API_CALL resetSamplers() = 0;
@@ -131,7 +136,7 @@ namespace llge
 		virtual void API_CALL setProjection(void *floatMatrix) = 0;
 	};
 
-	class IVertexBuffer
+	class IVertexBuffer : IBaseObject
 	{
 	public:
 		virtual int API_CALL getId() = 0;
@@ -141,7 +146,7 @@ namespace llge
 		virtual void API_CALL dispose() = 0;
 	};
 
-	class IGraphicsFacade
+	class IGraphicsFacade : IBaseObject
 	{
 	public:
 		virtual IUniformsFacade * API_CALL getUniforms() = 0;
@@ -172,7 +177,7 @@ namespace llge
 		virtual void API_CALL dispose() = 0;
 	};
 
-	class IGraphicsFactory
+	class IGraphicsFactory : IBaseObject
 	{
 	public:
 		virtual IGraphicsFacade * API_CALL createGraphicsFacade() = 0;
@@ -186,7 +191,7 @@ namespace llge
 
 	/// geometry
 
-	class IQuadTree
+	class IQuadTree : IBaseObject
 	{
 	public:
 		virtual int API_CALL insert(float minX, float minY, float maxX, float maxY, int userData) = 0;
@@ -198,7 +203,7 @@ namespace llge
 		virtual void API_CALL dispose() = 0;
 	};
 
-	class IGeometryFactory
+	class IGeometryFactory : IBaseObject
 	{
 	public:
 		virtual IQuadTree * API_CALL createQuadTree() = 0;
@@ -207,26 +212,26 @@ namespace llge
 
 	/// entities
 
-	class IAabb2d
+	class IAabb2d : IBaseObject
 	{
 	public:
 		virtual void API_CALL update(float minX, float minY, float maxX, float maxY, float zOrder) = 0;
 	};
 
-	class IRender2d
+	class IRender2d : IBaseObject
 	{
 	public:
 		virtual void API_CALL setMeshesCount(int meshesCount) = 0;
 		virtual void API_CALL setMesh(int meshIndex, ITexture *texture, void* vertices, int verticesCount, void* indices, int indicesCount) = 0;
 	};
 
-	class IMatrixTransform
+	class IMatrixTransform : IBaseObject
 	{
 	public:
 		virtual void API_CALL setTransform(void *floatMatrix) = 0;
 	};
 
-	class ITransform2d
+	class ITransform2d : IBaseObject
 	{
 	public:
 		virtual void API_CALL setWorldPosition(float x, float y, float z) = 0;
@@ -238,7 +243,7 @@ namespace llge
 		virtual void API_CALL setLocalScale(float value) = 0;
 	};
 
-	class IEntity
+	class IEntity : IBaseObject
 	{
 	public:
 		virtual IntPtr getSelfInstance() = 0;		
@@ -250,7 +255,7 @@ namespace llge
 		virtual void API_CALL dispose() = 0;
 	};
 
-	class ICamera
+	class ICamera : IBaseObject
 	{
 	public:
 		virtual void API_CALL setPosition(float x, float y, float z) = 0;
@@ -260,7 +265,7 @@ namespace llge
 		virtual void API_CALL setPlanes(float zn, float zf) = 0;
 	};
 
-	class IEntitiesWorld
+	class IEntitiesWorld : IBaseObject
 	{
 	public:
 		virtual ICamera * API_CALL getCamera() = 0;
@@ -279,7 +284,7 @@ namespace llge
 		virtual void API_CALL clear() = 0;
 	};
 
-	class IEntitiesFactory
+	class IEntitiesFactory : IBaseObject
 	{
 	public:
 		virtual IEntitiesWorld * API_CALL createEntitiesWorld() = 0;
@@ -287,7 +292,7 @@ namespace llge
 	};
 
 	/// drawing
-	class IBatch2d
+	class IBatch2d : IBaseObject
 	{
 	public:
 		virtual IntPtr API_CALL getNativeInstance() = 0;
@@ -302,7 +307,7 @@ namespace llge
 
 	/// spine
 	
-	class ISpineSkeleton
+	class ISpineSkeleton : IBaseObject
 	{
 	public:
 		virtual void API_CALL setTransform(void *floatMatrix) = 0;
@@ -324,14 +329,14 @@ namespace llge
 	};
 
 
-	class ISpineSkin
+	class ISpineSkin : IBaseObject
 	{
 	public:
 		virtual IntPtr API_CALL getNativeInstance() = 0;
 		virtual IntPtr API_CALL getName() = 0;
 	};
 
-	class ISpineAnimation
+	class ISpineAnimation : IBaseObject
 	{
 	public:
 		virtual IntPtr API_CALL getNativeInstance() = 0;
@@ -339,7 +344,7 @@ namespace llge
 		virtual float API_CALL getDuration() = 0;
 	};
 
-	class ISpineAnimationState
+	class ISpineAnimationState : IBaseObject
 	{
 	public:
 		virtual void API_CALL update(float delta) = 0;
@@ -350,7 +355,7 @@ namespace llge
 		virtual void API_CALL dispose() = 0;
 	};
 
-	class ISpineAnimationStateData
+	class ISpineAnimationStateData : IBaseObject
 	{
 	public:
 		virtual void API_CALL setMix(ISpineAnimation *from, ISpineAnimation *to, float time) = 0;
@@ -358,13 +363,13 @@ namespace llge
 		virtual void API_CALL dispose() = 0;
 	};
 
-	class ISpineEvent
+	class ISpineEvent : IBaseObject
 	{
 	public:
 		virtual IntPtr API_CALL getName() = 0;
 	};
 
-	class ISpineResource
+	class ISpineResource : IBaseObject
 	{
 	public:
 		virtual void API_CALL load(String atlasText, String jsonText, String dir) = 0;
@@ -382,7 +387,7 @@ namespace llge
 
 	/// profile
 
-	class INativeMemoryProfiler
+	class INativeMemoryProfiler : IBaseObject
 	{
 	public:
 		virtual int API_CALL getTexturesSize() = 0;
@@ -391,7 +396,7 @@ namespace llge
 	};
 
 	/// content
-	class ITextureBuffer2d
+	class ITextureBuffer2d : IBaseObject
 	{
 	public:
 		virtual TextureImage2dFormat API_CALL getFormat() = 0;
@@ -400,7 +405,7 @@ namespace llge
 		virtual IntPtr API_CALL getPixels() = 0;
 	};
 
-	class IContentAtlasMap
+	class IContentAtlasMap : IBaseObject
 	{
 	public:
 		virtual void API_CALL resetMap() = 0;
@@ -408,7 +413,7 @@ namespace llge
 		virtual void API_CALL loadTextures() = 0;
 	};
 
-	class IContentManager
+	class IContentManager : IBaseObject
 	{
 	public:
 		virtual IContentAtlasMap * API_CALL getContentAtlasMap() = 0;
@@ -423,7 +428,7 @@ namespace llge
 		virtual void API_CALL dispose() = 0;
 	};
 		
-	class IObbContentProvider
+	class IObbContentProvider : IBaseObject
 	{
 	public:
 		virtual void API_CALL openObbFile(const char *obbFile) = 0;
@@ -435,7 +440,7 @@ namespace llge
 		virtual void API_CALL closeContent() = 0;
 	};
 
-	class INavMeshConfig
+	class INavMeshConfig : IBaseObject
 	{
 	public:
 		virtual void API_CALL clear() = 0;
@@ -444,12 +449,22 @@ namespace llge
 		virtual void API_CALL dispose() = 0;
 	};
 	
-	class INavMesh
+	class IPathMesh : IBaseObject
+	{
+	public:
+		virtual int API_CALL getTriagnlesCount() = 0;
+		virtual void API_CALL getTriagnles(IntPtr triangles3f) = 0;
+		virtual IntPtr API_CALL getNativeInstance() = 0;
+		virtual void API_CALL dispose() = 0;
+	};
+
+	class INavMesh : IBaseObject
 	{
 	public:
 		virtual void API_CALL buildNavMesh(INavMeshConfig* config) = 0;
 		virtual int API_CALL getTriagnlesCount() = 0;
 		virtual void API_CALL getTriagnles(IntPtr triangles3f) = 0;
+		virtual void API_CALL fillPathMesh(float x0, float y0, float x1, float y1, IPathMesh *mesh) = 0;
 		virtual void API_CALL dispose() = 0;
 	};
 	
@@ -466,6 +481,7 @@ namespace llge
 	extern "C" DLLEXPORT INativeMemoryProfiler * API_CALL createNativeMemoryProfiler();
 	extern "C" DLLEXPORT ISpineResource * API_CALL createSpineResource();
     
+	extern "C" DLLEXPORT IPathMesh * API_CALL createPathMesh();
 	extern "C" DLLEXPORT INavMesh * API_CALL createNavMesh();
 	extern "C" DLLEXPORT INavMeshConfig * API_CALL createNavMeshConfig();
 }

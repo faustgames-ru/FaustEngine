@@ -1516,6 +1516,39 @@ namespace llge
 		static extern private void llge_NavMeshConfig_dispose (IntPtr classInstance);
 	}
 	
+	public class PathMesh
+	{
+		public IntPtr ClassInstance;
+		public int GetTriagnlesCount ()
+		{
+			return llge_PathMesh_getTriagnlesCount(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private int llge_PathMesh_getTriagnlesCount (IntPtr classInstance);
+		public void GetTriagnles (IntPtr triangles3f)
+		{
+			llge_PathMesh_getTriagnles(ClassInstance, triangles3f);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_PathMesh_getTriagnles (IntPtr classInstance, IntPtr triangles3f);
+		public IntPtr GetNativeInstance ()
+		{
+			return llge_PathMesh_getNativeInstance(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_PathMesh_getNativeInstance (IntPtr classInstance);
+		public void Dispose ()
+		{
+			llge_PathMesh_dispose(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_PathMesh_dispose (IntPtr classInstance);
+	}
+	
 	public class NavMesh
 	{
 		public IntPtr ClassInstance;
@@ -1540,6 +1573,13 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private void llge_NavMesh_getTriagnles (IntPtr classInstance, IntPtr triangles3f);
+		public void FillPathMesh (float x0, float y0, float x1, float y1, PathMesh mesh)
+		{
+			llge_NavMesh_fillPathMesh(ClassInstance, x0, y0, x1, y1, mesh.ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_NavMesh_fillPathMesh (IntPtr classInstance, float x0, float y0, float x1, float y1, IntPtr mesh);
 		public void Dispose ()
 		{
 			llge_NavMesh_dispose(ClassInstance);
@@ -1621,6 +1661,13 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private IntPtr createSpineResource ();
+		static public PathMesh CreatePathMesh ()
+		{
+			return new PathMesh{ ClassInstance = createPathMesh() };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr createPathMesh ();
 		static public NavMesh CreateNavMesh ()
 		{
 			return new NavMesh{ ClassInstance = createNavMesh() };

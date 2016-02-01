@@ -1,4 +1,5 @@
 #include "NavMesh.h"
+#include "AStar.h"
 
 
 namespace navmesh
@@ -10,6 +11,10 @@ namespace navmesh
 	NavMeshPoint::NavMeshPoint(const core::Vector2& p)
 	{
 		position = p;
+	}
+
+	NavMeshTriangle::NavMeshTriangle(): aStarNode(nullptr)
+	{
 	}
 
 	NavMeshConfig::NavMeshConfig(): resolution(1)
@@ -44,6 +49,40 @@ namespace navmesh
 	}
 
 	void NavMeshConfig::dispose()
+	{
+		delete this;
+	}
+
+	void PathMesh::clear()
+	{
+		_triangles.clear();
+	}
+
+	int PathMesh::getTriagnlesCount()
+	{
+		return _triangles.size();
+	}
+
+	void PathMesh::getTriagnles(IntPtr triangles3f)
+	{
+		core::Vector2 *verts = static_cast<core::Vector2 *>(triangles3f);
+		for (uint i = 0; i < _triangles.size(); i++)
+		{
+
+			for (uint j = 0; j < 3; j++)
+			{
+				*verts = _triangles[i]->points[j]->position;
+				verts++;
+			}
+		}
+	}
+
+	IntPtr PathMesh::getNativeInstance()
+	{
+		return this;
+	}
+
+	void PathMesh::dispose()
 	{
 		delete this;
 	}
@@ -107,7 +146,7 @@ namespace navmesh
 			buildRoot(solution.Childs[i]);
 		}
 
-
+		buildLinks();
 	}
 
 	NavMeshPolygon* NavMesh::addPolygon(const std::vector<core::Vector2>& points)
@@ -148,6 +187,11 @@ namespace navmesh
 				verts++;
 			}
 		}
+	}
+
+	void NavMesh::fillPathMesh(float x0, float y0, float x1, float y1, llge::IPathMesh* mesh)
+	{
+		fillPath(core::Vector2(x0, y0), core::Vector2(x1, y1), static_cast<PathMesh *>(mesh->getNativeInstance()));
 	}
 
 	ClipperLib::IntPoint NavMesh::toClipper(const core::Vector2& v) const
@@ -420,20 +464,144 @@ namespace navmesh
 	{
 		for (uint i = 0; i < _points.size(); i++)
 			delete _points[i];
-
 		_points.clear();
+
 		for (uint i = 0; i < _edges.size(); i++)
 			delete _edges[i];
 		_edges.clear();
 
 		for (uint i = 0; i < _triangles.size(); i++)
+		{
+			delete _triangles[i]->aStarNode;
 			delete _triangles[i];
+		}
 		_triangles.clear();
+	}
+
+	NavMeshEdge* NavMesh::findEdge(NavMeshPoint* a, NavMeshPoint* b, bool &isInversed)
+	{
+		for (NavMeshEdgesList::iterator ia = a->edges.begin(); ia != a->edges.end(); ++ia)
+		{
+			for (NavMeshEdgesList::iterator ib = b->edges.begin(); ib != b->edges.end(); ++ib)
+			{
+				if (*ia == *ib)
+				{
+					isInversed = (*ia)->points[0] != a;
+					return *ia;
+				}
+			}
+
+		}
+		return nullptr;
+	}
+
+	NavMeshEdge* NavMesh::buildEdgeLinks(NavMeshPoint* a, NavMeshPoint* b, NavMeshTriangle* t)
+	{
+		bool isInversed = false;
+		NavMeshEdge* e = findEdge(a, b, isInversed);
+		if (e == nullptr)
+		{
+			e = new NavMeshEdge();
+			e->points[0] = a;
+			e->points[1] = b;
+			a->edges.push_back(e);
+			b->edges.push_back(e);	
+			_edges.push_back(e);
+		}
+		if (isInversed)
+		{
+			e->triangles[1] = t;
+		}
+		else
+		{
+			e->triangles[0] = t;
+		}
+		return e;
+	}
+
+	void NavMesh::buildLinks()
+	{
+		for (uint i = 0; i < _triangles.size(); i++)
+		{
+			NavMeshTriangle* t = _triangles[i];
+			t->edges[0] = buildEdgeLinks(t->points[0], t->points[1], t);
+			t->edges[1] = buildEdgeLinks(t->points[1], t->points[2], t);
+			t->edges[2] = buildEdgeLinks(t->points[2], t->points[0], t);
+			t->aStarNode = new AStarNode((t->points[0]->position + t->points[1]->position + t->points[2]->position) / 3);
+			t->aStarNode->userData = t;
+		}
+		for (uint i = 0; i < _edges.size(); i++)
+		{
+			NavMeshTriangle* t0 = _edges[i]->triangles[0];
+			NavMeshTriangle* t1 = _edges[i]->triangles[1];
+			if (t0 == nullptr || t1 == nullptr) 
+				continue;
+			t0->aStarNode->neigbours.push_back(t1->aStarNode);
+			t1->aStarNode->neigbours.push_back(t0->aStarNode);
+		}
+	}
+
+	NavMeshTriangle* NavMesh::findTriangle(const core::Vector2 &position)
+	{
+		for (uint i = 0; i < _triangles.size(); i++)
+		{
+			NavMeshTriangle* t = _triangles[i];
+			if (position.isInsideTriangle(t->points[0]->position, t->points[1]->position, t->points[2]->position))
+			{
+				return t;
+			}
+		}
+
+		return nullptr;
+	}
+
+	void NavMesh::fillPath(core::Vector2 start, core::Vector2 target, PathMesh* pathMesh)
+	{
+		pathMesh->_triangles.clear();
+		NavMeshTriangle* startTriangle = findTriangle(start);
+		NavMeshTriangle* targetTriangle = findTriangle(target);
+		if (startTriangle == nullptr || targetTriangle == nullptr)
+		{
+			return;
+		}
+		if (startTriangle == targetTriangle)
+		{
+			pathMesh->_triangles.push_back(startTriangle);
+			return;
+		}
+		// todo: implement astar path finding through navmesh
+		std::vector<AStarNode *> used;
+		AStarNode::aStar(startTriangle->aStarNode, targetTriangle->aStarNode, used);
+		if (targetTriangle->aStarNode->parent == nullptr)
+		{
+			return;
+		}
+		std::stack<NavMeshTriangle *> way;
+		AStarNode *parent = targetTriangle->aStarNode;
+		while (parent != nullptr)
+		{
+			way.push(static_cast<NavMeshTriangle *>(parent->userData));
+			parent = parent->parent;
+		}
+		while (!way.empty())
+		{
+			pathMesh->_triangles.push_back(way.top());
+			way.pop();
+		}
+		for (uint i = 0; i < used.size(); i++)
+		{
+			used[i]->reset();
+		}
 	}
 }
 
 namespace llge
 {
+	extern "C" DLLEXPORT IPathMesh * API_CALL createPathMesh()
+	{
+		return new navmesh::PathMesh();
+	}
+
 	extern "C" DLLEXPORT INavMesh * API_CALL createNavMesh()
 	{
 		return new navmesh::NavMesh();

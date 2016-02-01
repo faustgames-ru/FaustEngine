@@ -581,6 +581,9 @@
     <ClInclude Include="..\src\navmesh\navmesh_references.h">
       <Filter>navmesh</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\navmesh\AStar.h">
+      <Filter>navmesh</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\CommonSources\gen\llgePInvoke.cpp">
@@ -1037,6 +1040,9 @@
     </ClCompile>
     <ClCompile Include="..\src\core\Vector.cpp">
       <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\navmesh\AStar.cpp">
+      <Filter>navmesh</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

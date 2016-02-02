@@ -53,7 +53,10 @@ namespace graphics
             fprintf(stderr, "\n");
 
 #else
+#ifdef _DEBUG
 			throw std::exception();
+
+#endif
 #endif
 #endif
 			//throwException(getActionName(actionType));

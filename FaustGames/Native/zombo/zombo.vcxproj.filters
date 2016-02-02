@@ -677,6 +677,15 @@
     <ClInclude Include="..\resources_fonts\FontQuicksandRegular.h">
       <Filter>resources_fonts</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\navmesh\AStar.h">
+      <Filter>navmesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\navmesh\Funnel.h">
+      <Filter>navmesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\zombo\_editor\curves\CurvesStateMoveBinding.h">
+      <Filter>zombo\_editor\curves</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\CommonSources\gen\llgePInvoke.cpp">
@@ -1268,6 +1277,15 @@
     </ClCompile>
     <ClCompile Include="..\src\zombo\_editor\ZomboEditorLoadingScreen.cpp">
       <Filter>zombo\_editor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\navmesh\AStar.cpp">
+      <Filter>navmesh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\navmesh\Funnel.cpp">
+      <Filter>navmesh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\zombo\_editor\curves\CurvesStateMoveBinding.cpp">
+      <Filter>zombo\_editor\curves</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

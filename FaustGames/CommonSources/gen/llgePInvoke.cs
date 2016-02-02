@@ -1516,9 +1516,42 @@ namespace llge
 		static extern private void llge_NavMeshConfig_dispose (IntPtr classInstance);
 	}
 	
+	public class NavPath
+	{
+		public IntPtr ClassInstance;
+		public int GetVerticesCount ()
+		{
+			return llge_NavPath_getVerticesCount(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private int llge_NavPath_getVerticesCount (IntPtr classInstance);
+		public void GetVertices (IntPtr vertices2f)
+		{
+			llge_NavPath_getVertices(ClassInstance, vertices2f);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_NavPath_getVertices (IntPtr classInstance, IntPtr vertices2f);
+		public IntPtr GetNativeInstance ()
+		{
+			return llge_NavPath_getNativeInstance(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_NavPath_getNativeInstance (IntPtr classInstance);
+	}
+	
 	public class PathMesh
 	{
 		public IntPtr ClassInstance;
+		public void FillNavPath (NavPath path)
+		{
+			llge_PathMesh_fillNavPath(ClassInstance, path.ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_PathMesh_fillNavPath (IntPtr classInstance, IntPtr path);
 		public int GetTriagnlesCount ()
 		{
 			return llge_PathMesh_getTriagnlesCount(ClassInstance);
@@ -1682,6 +1715,13 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private IntPtr createNavMeshConfig ();
+		static public NavPath CreateNavPath ()
+		{
+			return new NavPath{ ClassInstance = createNavPath() };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr createNavPath ();
 	}
 	
 }

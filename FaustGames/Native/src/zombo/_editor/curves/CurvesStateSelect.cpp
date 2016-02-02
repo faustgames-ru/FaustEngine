@@ -2,6 +2,7 @@
 #include "../ZomboEditorInput.h"
 #include "CurvesStateMovePoint.h"
 #include "CurvesStateMoveSegment.h"
+#include "CurvesStateMoveBinding.h"
 
 namespace zombo
 {
@@ -31,6 +32,18 @@ namespace zombo
 		}
 	}
 
+	void CurvesStateSelect::updateBindingState(CurvePointBinding* binding, const CurvesSelection& selection)
+	{
+		if (binding != selection.binding)
+		{
+			binding->updateRegularState();
+		}
+		else
+		{
+			binding->updateHoverState();
+		}
+	}
+
 	void CurvesStateSelect::updatePoints(const std::vector<CurvesPoint*> &points, const CurvesSelection& selection)
 	{
 		for (uint i = 0; i < points.size(); i++)
@@ -47,11 +60,20 @@ namespace zombo
 		}
 	}
 
+	void CurvesStateSelect::updateBinding(const std::vector<CurvePointBinding*>& bindings, const CurvesSelection& selection)
+	{
+		for (uint i = 0; i < bindings.size(); i++)
+		{
+			updateBindingState(bindings[i], selection);
+		}
+	}
+
 	void CurvesStateSelect::update()
 	{
 		CurvesVisibleItems &visible = CurvesManager::Default.getVisibleItems();
-		CurvesSelection selection = CurvesManager::Default.findSelection(visible);
+		CurvesSelection selection = CurvesManager::Default.selection = CurvesManager::Default.findSelection(visible);
 		updatePoints(visible.points, selection);
+		updateBinding(visible.pointsBindings, selection);
 		updateSegments(visible.segments, selection);
 		bool isLeftPressed = ZomboEditorInput::Default.mouse.isLeftPressed();
 		if (isLeftPressed)
@@ -60,6 +82,11 @@ namespace zombo
 			{
 				CurvesStateMovePoint::Default.setSelection(selection.point);
 				CurvesManager::Default.setState(&CurvesStateMovePoint::Default);
+			}
+			else if (selection.binding != nullptr)
+			{
+				CurvesStateMoveBinding::Default.setSelection(selection.binding);
+				CurvesManager::Default.setState(&CurvesStateMoveBinding::Default);
 			}
 			else if (selection.segment != nullptr) 
 			{

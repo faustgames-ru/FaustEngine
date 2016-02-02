@@ -56,22 +56,31 @@ namespace navmesh
 		virtual void API_CALL addPolygon(IntPtr vertices2f, uint verticesCount) OVERRIDE;
 		virtual IntPtr API_CALL getNativeInstance() OVERRIDE;
 		virtual void API_CALL dispose() OVERRIDE;
-
 	};
 
+	class Path : public llge::INavPath
+	{
+	public:
+		virtual int API_CALL getVerticesCount() OVERRIDE;
+		virtual void API_CALL getVertices(IntPtr vertices2f) OVERRIDE;
+		virtual IntPtr API_CALL getNativeInstance() OVERRIDE;
+		std::vector<core::Vector2> vertices;
+	};
 	class PathMesh : public llge::IPathMesh
 	{
 	public:
 		void clear();
+		void fillPath(Path* path);
 
+		virtual void API_CALL fillNavPath(llge::INavPath *path) OVERRIDE;
 		virtual int API_CALL getTriagnlesCount() OVERRIDE;
 		virtual void API_CALL getTriagnles(IntPtr triangles3f) OVERRIDE;
 		virtual IntPtr API_CALL getNativeInstance() OVERRIDE;
 		virtual void API_CALL dispose() OVERRIDE;
 		std::vector<NavMeshTriangle* > _triangles;
-	private:
 		core::Vector2 _start;
-		core::Vector2 _finish;
+		core::Vector2 _target;
+	private:
 	};
 
 	class NavMesh : public llge::INavMesh

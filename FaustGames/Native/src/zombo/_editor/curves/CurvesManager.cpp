@@ -10,6 +10,11 @@
 
 namespace zombo
 {
+	float CurvesPoint::r(0.1f);
+	core::Vector2 CurvesPoint::size(0.2f, 0.2f);
+	float CurvePointBinding::r(0.05f);
+	core::Vector2 CurvePointBinding::size(0.1f, 0.1f);
+
 	void CurvesState::start()
 	{
 	}
@@ -77,9 +82,9 @@ namespace zombo
 		_scaleEx.setConfig(&SConfig::Slow);
 	}
 
-	float CurvesPoint::getR() const
+	float CurvesPoint::getR()
 	{
-		return 0.1f;
+		return r;
 	}
 
 	bool CurvesPoint::isUnderMouse() const
@@ -123,13 +128,20 @@ namespace zombo
 		ZomboDrawer::Default.fillRect(c1, xy.toVector3(), r*0.8f, rot);
 	}
 		
-	void CurvesPoint::update()
+	void renderExtraPoint(core::Vector2 xy, float r, float a, float rot)
+	{
+		uint c0 = graphics::Color::mulA(0xffffffff, a);
+		//ZomboDrawer::Default.fillRing(c0, xy.toVector3(), r, r*0.02f);
+		ZomboDrawer::Default.fillRect(c0, xy.toVector3(), r*0.8f, rot);
+	}
+
+	void CurvesPoint::update(float scale, float alpha)
 	{
 		_scale.update();
 		_scaleEx.update();
 		_alpha.update();
 		_rot.update();
-		renderPoint(xy.get(), getR() * _scale.get()*_scaleEx.get(), _alpha.get(), _rot.get());
+		renderPoint(xy.get(), getR() * _scale.get()*scale, alpha, _rot.get());
 	}
 
 	void CurvesPoint::setScale(float scale)
@@ -200,13 +212,131 @@ namespace zombo
 		return _scaleEx.get();
 	}
 
-	CurveSegment::CurveSegment(): p0(nullptr), p1(nullptr), color(0xffffffff), _scale(1.0f)
+	CurvePointBinding::CurvePointBinding(): p(nullptr), _scale(1.0f), _rot(core::Math::Pi * 0.25f)
 	{
+	}
+
+	CurvePointBinding::CurvePointBinding(CurvesPoint* point, const core::Vector2 &direction) : p(point), d(direction), _scale(1.0f), _rot(core::Math::Pi * 0.25f)
+	{
+	}
+
+	bool CurvePointBinding::isUnderMouse() const
+	{
+		core::Vector2 m = CurvesManager::Default.mousePos;
+		float mx = m.getX();
+		float my = m.getY();
+		float sx = getR();
+		float sy = getR();
+		core::Vector2 pos = p->xy.get()+d.get();
+		float px = pos.getX();
+		float py = pos.getY();
+		return
+			px - sx <= mx && mx <= px + sx &&
+			py - sy <= my && my <= py + sy;
+	}
+
+	float CurvePointBinding::distanceToMouse() const
+	{
+		return (CurvesManager::Default.mousePos - p->xy.get() - d.get()).length();
+	}
+
+	void CurvePointBinding::updateRegularState()
+	{
+		setScale(1.0f);
+		setRot(core::Math::Pi * 0.25f);
+	}
+
+	void CurvePointBinding::updateHoverState()
+	{
+		setScale(1.2f);
+		setRot(core::Math::Pi * 0.5f);
+	}
+
+	core::Vector2 CurvePointBinding::getXY() const
+	{
+		return p->getXY() + d.get();
+	}
+
+	void CurvePointBinding::setXY(const core::Vector2& pos)
+	{
+		d.setAll(pos - p->getXY());
+	}
+
+	void CurvePointBinding::updateSelectedState()
+	{
+		setScale(1.5f);
+		setRot(core::Math::Pi * 1.25f);
+	}
+
+	float CurvePointBinding::getR()
+	{
+		return 0.05f;
+	}
+
+	void CurvePointBinding::updateCoords()
+	{
+		d.update();
+	}
+
+	void CurvePointBinding::update(float scale, float alpha)
+	{
+		_scale.update();
+		_rot.update();
+		renderExtraPoint(p->getXY() + d.get(), getR()*scale*_scale.get(), alpha, _rot.get());
+		renderEdge(0x80ffffff, p->getXY(), p->getXY() + d.get(), getR()*scale*_scale.get()*0.1f);
+	}
+
+	void CurvePointBinding::setScale(float a)
+	{
+		_scale.setTarget(a);
+	}
+
+	void CurvePointBinding::setRot(float rot)
+	{
+		_rot.setTarget(rot);
+	}
+
+	geometry::Aabb2d CurvePointBinding::getAabb() const
+	{
+		core::Vector2 pos = p->getXY() + d.get();
+		return geometry::Aabb2d(pos - core::Vector2(getR(), getR()), pos + core::Vector2(getR(), getR()));
+	}
+
+	core::Vector2 CurveSegment::get0() const
+	{
+		return p0->p->getXY();
+	}
+
+	core::Vector2 CurveSegment::get1() const
+	{
+		return p0->p->getXY() + p0->d.get();
+	}
+
+	core::Vector2 CurveSegment::get2() const
+	{
+		return p1->p->getXY() + p1->d.get();
+	}
+
+	core::Vector2 CurveSegment::get3() const
+	{
+		return p1->p->getXY();
+	}
+
+	CurveSegment::CurveSegment(): color(0xffffffff), _scale(1.0f)
+	{
+		p0 = new CurvePointBinding();
+		p1 = new CurvePointBinding();
 		_scale.setConfig(&SConfig::Fast);
 	}
 
 	void CurveSegment::updateInput()
 	{
+	}
+
+	void CurveSegment::updateCoords()
+	{
+		p0->updateCoords();
+		p1->updateCoords();
 	}
 
 	uint segmentDetail = 16;
@@ -219,11 +349,11 @@ namespace zombo
 		_scale.update();
 		uint count = calcDetail();// segmentDetail;
 
-		core::Vector2 ps = core::Vector2::cubic(p0->getXY(), p0->getXY() + d0, p1->getXY() + d1, p1->getXY(), 0);
+		core::Vector2 ps = core::Vector2::cubic(get0(), get1(), get2(), get3(), 0);
 		for (uint i = 1; i < count; i++)
 		{
 			float u = static_cast<float>(i) / static_cast<float>(count - 1);
-			core::Vector2 pf = core::Vector2::cubic(p0->getXY(), p0->getXY() + d0, p1->getXY() + d1, p1->getXY(), u);
+			core::Vector2 pf = core::Vector2::cubic(get0(), get1(), get2(), get3(), u);
 			renderEdge(color, ps, pf, getR()*_scale.get());
 			ps = pf;
 		}
@@ -241,7 +371,7 @@ namespace zombo
 
 	float CurveSegment::getBaseLen() const
 	{
-		return d0.length() + (p0->getXY() + d0 - p1->getXY() - d1).length() + d1.length();
+		return p0->d.get().length() + (p0->p->getXY() + p0->d.get() - p1->p->getXY() - p1->d.get()).length() + p1->d.get().length();
 	}
 
 	float CurveSegment::getR() const
@@ -257,11 +387,11 @@ namespace zombo
 		if (!bounds.contains(m)) return false;
 
 		uint count = calcDetail();
-		core::Vector2 ps = core::Vector2::cubic(p0->getXY(), p0->getXY() + d0, p1->getXY() + d1, p1->getXY(), 0);
+		core::Vector2 ps = core::Vector2::cubic(get0(), get1(), get2(), get3(), 0);
 		for (uint i = 1; i < count; i++)
 		{
 			float u = static_cast<float>(i) / static_cast<float>(count - 1);
-			core::Vector2 pf = core::Vector2::cubic(p0->getXY(), p0->getXY() + d0, p1->getXY() + d1, p1->getXY(), u);
+			core::Vector2 pf = core::Vector2::cubic(get0(), get1(), get2(), get3(), u);
 			float l = core::Vector2::distanceToEdge(m, pf, ps);
 			ps = pf;
 			if (l < getR()*2.0f)
@@ -275,11 +405,11 @@ namespace zombo
 		core::Vector2 m = CurvesManager::Default.mousePos;
 		uint count = calcDetail();
 		float minL = core::Math::MaxValue;
-		core::Vector2 ps = core::Vector2::cubic(p0->getXY(), p0->getXY() + d0, p1->getXY() + d1, p1->getXY(), 0);
+		core::Vector2 ps = core::Vector2::cubic(get0(), get1(), get2(), get3(), 0);
 		for (uint i = 1; i < count; i++)
 		{
 			float u = static_cast<float>(i) / static_cast<float>(count - 1);
-			core::Vector2 pf = core::Vector2::cubic(p0->getXY(), p0->getXY() + d0, p1->getXY() + d1, p1->getXY(), u);
+			core::Vector2 pf = core::Vector2::cubic(get0(), get1(), get2(), get3(), u);
 			float l = core::Vector2::distanceToEdge(m, pf, ps);
 			ps = pf;
 			if (l < minL)
@@ -305,10 +435,10 @@ namespace zombo
 	geometry::Aabb2d CurveSegment::getAabb() const
 	{
 		geometry::Aabb2d bounds;
-		bounds.expand(p0->getXY());
-		bounds.expand(p0->getXY() + d0);
-		bounds.expand(p1->getXY());
-		bounds.expand(p1->getXY() + d1);
+		bounds.expand(get0());
+		bounds.expand(get1());
+		bounds.expand(get2());
+		bounds.expand(get3());
 		return bounds;
 	}
 
@@ -316,24 +446,34 @@ namespace zombo
 	{
 		points.clear();
 		segments.clear();
+		pointsBindings.clear();
 	}
 
 
-	CurvesSelection::CurvesSelection(): point(nullptr), segment(nullptr)
+	bool CurvesSelection::isEmpty() const
+	{
+		return point == nullptr && segment == nullptr && binding == nullptr;
+	}
+
+	CurvesSelection::CurvesSelection(): point(nullptr), segment(nullptr), binding(nullptr)
 	{
 	}
 
-	CurvesSelection::CurvesSelection(CurvesPoint* p) : point(p), segment(nullptr)
+	CurvesSelection::CurvesSelection(CurvesPoint* p) : point(p), segment(nullptr), binding(nullptr)
 	{
 	}
 
-	CurvesSelection::CurvesSelection(CurveSegment* s): point(nullptr), segment(s)
+	CurvesSelection::CurvesSelection(CurveSegment* s): point(nullptr), segment(s), binding(nullptr)
+	{
+	}
+
+	CurvesSelection::CurvesSelection(CurvePointBinding* b): point(nullptr), segment(nullptr), binding(b)
 	{
 	}
 
 	CurvesManager CurvesManager::Default;
 
-	CurvesManager::CurvesManager() : scale(1.0f), _snappingRange(0.1f)
+	CurvesManager::CurvesManager() : scale(1.0f), _snappingRange(0.1f), _pointsScale(1.0f), _extraPointsScale(1.0f)
 	{
 		_actualState = &CurvesStateSelect::Default;
 	}
@@ -355,10 +495,18 @@ namespace zombo
 
 	void CurvesManager::update()
 	{
+		_pointsAlpha.update();
+		_extraPointsAlpha.update();
+		_pointsScale.update();
+		_extraPointsScale.update();
 		scale.update();
 		for (uint i = 0; i < _points.size(); i++)
 		{
 			_points[i]->updateCoords();
+		}
+		for (uint i = 0; i < _segments.size(); i++)
+		{
+			_segments[i]->updateCoords();
 		}
 
 		mousePos = ZomboEditorCamera::Default.getMouseProjection(0);
@@ -368,14 +516,41 @@ namespace zombo
 		{
 			_actualState->update();
 		}
-		
+		if (selection.isEmpty())
+		{
+			_extraPointsAlpha.setTarget(1.0f);
+			_pointsAlpha.setTarget(1.0f);
+		}
+		else
+		{
+			_extraPointsAlpha.setTarget(0.0f);
+			_pointsAlpha.setTarget(0.0f);
+		}
 		for (uint i = 0; i < _visibleItems.points.size(); i++)
 		{
-			_visibleItems.points[i]->update();
+			if(_visibleItems.points[i] == selection.point)
+			{
+				_visibleItems.points[i]->update(_pointsScale.get(), 1.0f);
+			}
+			else
+			{
+				_visibleItems.points[i]->update(_pointsScale.get(), _pointsAlpha.get());
+			}
 		}
 		for (uint i = 0; i < _visibleItems.segments.size(); i++)
 		{
 			_visibleItems.segments[i]->update();
+		}
+		for (uint i = 0; i < _visibleItems.pointsBindings.size(); i++)
+		{
+			if (_visibleItems.pointsBindings[i] == selection.binding)
+			{
+				_visibleItems.pointsBindings[i]->update(_extraPointsScale.get(), 1.0f);
+			}
+			else
+			{				
+				_visibleItems.pointsBindings[i]->update(_extraPointsScale.get(), _pointsAlpha.get());
+			}
 		}
 	}
 	
@@ -386,10 +561,10 @@ namespace zombo
 		core::Vector2 d0 = p1 - p0;
 		core::Vector2 d1 = p2 - p3;
 		CurveSegment *seg = new CurveSegment();
-		seg->p0 = cp0;
-		seg->p1 = cp1;
-		seg->d0 = d0;
-		seg->d1 = d1;
+		seg->p0->p = cp0;
+		seg->p1->p = cp1;
+		seg->p0->d = d0;
+		seg->p1->d = d1;
 		_points.push_back(cp0);
 		_points.push_back(cp1);
 		_segments.push_back(seg);
@@ -414,6 +589,23 @@ namespace zombo
 		if (selectedPoint != nullptr)
 		{
 			return CurvesSelection(selectedPoint);
+		}
+		CurvePointBinding * selectedBinding = nullptr;
+		for (uint i = 0; i < items.pointsBindings.size(); i++)
+		{
+			if (items.pointsBindings[i]->isUnderMouse())
+			{
+				float ml = items.pointsBindings[i]->distanceToMouse();
+				if (ml < l)
+				{
+					selectedBinding = items.pointsBindings[i];
+					l = ml;
+				}
+			}
+		}
+		if (selectedBinding != nullptr)
+		{
+			return CurvesSelection(selectedBinding);
 		}
 		CurveSegment * selectedSegment= nullptr;
 		for (uint i = 0; i < items.segments.size(); i++)
@@ -442,31 +634,65 @@ namespace zombo
 		float scale = ZomboEditorViewport::Default.h * 0.5f / ZomboEditorCamera::Default.getInterpoaltedScale();
 		segnemtLen = 8 / scale;
 		// todo:: optimize;
-		for (uint i = 0; i < _points.size(); i++)
+		
+		float pxMin = 12;
+		core::Vector2 size = CurvesPoint::size*scale;
+		bool arePointsVisible = true;
+		if (size.getX() < pxMin && size.getY() < pxMin)
 		{
-			geometry::Aabb2d aabb = _points[i]->getAabb();
-			core::Vector2 size = (aabb.Max - aabb.Min)*scale;
-			float pxMin = 16;
-			if (size.getX() < pxMin && size.getY() < pxMin)
-			{
-				_points[i]->setScaleEx(0);
-				if (_points[i]->getScaleEx() < 0.001f)
-					continue;
-			}
-			else
-			{
-				_points[i]->setScaleEx(1);
-			}
-			if (!frustum.include(aabb, 0)) {
-				continue;
-			}
-			items.points.push_back(_points[i]);
+			_pointsScale.setTarget(0);
+			if (_pointsScale.get() < 0.001f)
+				arePointsVisible = false;
 		}
+		else
+		{
+			_pointsScale.setTarget(1);
+		}
+
+
+		if (arePointsVisible)
+		{
+			for (uint i = 0; i < _points.size(); i++)
+			{
+				geometry::Aabb2d aabb = _points[i]->getAabb();
+				if (!frustum.include(aabb, 0)) {
+					continue;
+				}
+				items.points.push_back(_points[i]);
+			}
+		}
+
 		for (uint i = 0; i < _segments.size(); i++)
 		{
 			if (frustum.include(_segments[i]->getAabb(), 0))
 			{
 				items.segments.push_back(_segments[i]);
+				
+				if (size.getX() < pxMin && size.getY() < pxMin)
+				{
+					continue;
+				}
+			}
+		}
+
+		size = CurvePointBinding::size*scale;
+		bool areExtraPointsVisible = true;
+		if (size.getX() < pxMin && size.getY() < pxMin)
+		{
+			_extraPointsScale.setTarget(0);
+			if (_extraPointsScale.get() < 0.001f)
+				areExtraPointsVisible = false;
+		}
+		else
+		{
+			_extraPointsScale.setTarget(1);
+		}
+		if (areExtraPointsVisible)
+		{
+			for (uint i = 0; i < items.segments.size(); i++)
+			{
+				items.pointsBindings.push_back(items.segments[i]->p0);
+				items.pointsBindings.push_back(items.segments[i]->p1);
 			}
 		}
 	}

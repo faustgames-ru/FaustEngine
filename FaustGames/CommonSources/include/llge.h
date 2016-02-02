@@ -449,9 +449,18 @@ namespace llge
 		virtual void API_CALL dispose() = 0;
 	};
 	
+	class INavPath : IBaseObject
+	{
+	public:
+		virtual int API_CALL getVerticesCount() = 0;
+		virtual void API_CALL getVertices(IntPtr vertices2f) = 0;
+		virtual IntPtr API_CALL getNativeInstance() = 0;
+	};
+
 	class IPathMesh : IBaseObject
 	{
 	public:
+		virtual void API_CALL fillNavPath(INavPath *path) = 0;
 		virtual int API_CALL getTriagnlesCount() = 0;
 		virtual void API_CALL getTriagnles(IntPtr triangles3f) = 0;
 		virtual IntPtr API_CALL getNativeInstance() = 0;
@@ -484,6 +493,7 @@ namespace llge
 	extern "C" DLLEXPORT IPathMesh * API_CALL createPathMesh();
 	extern "C" DLLEXPORT INavMesh * API_CALL createNavMesh();
 	extern "C" DLLEXPORT INavMeshConfig * API_CALL createNavMeshConfig();
+	extern "C" DLLEXPORT INavPath * API_CALL createNavPath();
 }
 
 #endif /*LLGE_H*/

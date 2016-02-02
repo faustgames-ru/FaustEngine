@@ -27,12 +27,11 @@ namespace navmesh
 	void AStarNode::aStar(AStarNode* start, AStarNode* target, std::vector<AStarNode *> &used)
 	{
 		std::vector<AStarNode *> open;
-		//std::priority_queue<AStarNode *, std::vector<AStarNode* >, AStartNodeComparer> open;
 		target->h = 0;
-		start->h = 0;// (start->p - target->h).length();
+		start->h = (start->p - target->h).length()*0.01f;
 		open.push_back(start);
-		//used.push_back(start);
-		//used.push_back(target);
+		used.push_back(start);
+		used.push_back(target);
 		while (!open.empty())
 		{
 			std::sort(open.begin(), open.end(), AStartNodeComparer());
@@ -51,9 +50,9 @@ namespace navmesh
 				if (n->closed) continue;
 				n->parent = x;
 				n->g = n->parent->g + (n->p - n->parent->p).length();
-				n->h = 0;// (target->p - n->p).length();
+				n->h = (target->p - n->p).length()*0.01f;
 				open.push_back(n);
-				//used.push_back(n);
+				used.push_back(n);
 			}
 		}
 	}

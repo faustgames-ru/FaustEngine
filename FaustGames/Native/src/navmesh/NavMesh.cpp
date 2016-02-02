@@ -1,5 +1,6 @@
 #include "NavMesh.h"
 #include "AStar.h"
+#include "Funnel.h"
 
 
 namespace navmesh
@@ -53,9 +54,111 @@ namespace navmesh
 		delete this;
 	}
 
+	int Path::getVerticesCount()
+	{
+		return vertices.size();
+	}
+
+	void Path::getVertices(IntPtr vertices2f)
+	{
+		core::Vector2 *v = static_cast<core::Vector2 *>(vertices2f);
+		for (uint i = 0; i < vertices.size(); i++)
+		{
+			v[i] = vertices[i];
+		}
+	}
+
+	IntPtr Path::getNativeInstance()
+	{
+		return this;
+	}
+
 	void PathMesh::clear()
 	{
 		_triangles.clear();
+	}
+
+	void PathMesh::fillPath(Path* path)
+	{
+		std::vector<core::Vector2> portals;
+		path->vertices.clear();
+		if (_triangles.size() == 0) return;
+		portals.push_back(_start);
+		portals.push_back(_start);
+		bool inv = true;
+		float size = 300;
+		bool hasTarget = true;
+		for (int i = 0; i < (int)_triangles.size() - 1; i++)
+		{
+			NavMeshTriangle *t0 = _triangles[i + 0];
+			NavMeshTriangle *t1 = _triangles[i + 1];
+
+			for (uint j = 0; j < 3; j++)
+			{
+				for (uint k = 0; k < 3; k++)
+				{
+					if (t0->edges[j] == t1->edges[k])
+					{
+						core::Vector2 e0;
+						core::Vector2 e1;
+						if (inv)
+						{
+							if (j == 2)
+							{
+								e0 = t0->points[0]->position;
+							}
+							else
+							{
+								e0 = t0->points[j + 1]->position;
+							}
+							e1 = t0->points[j]->position;
+						}
+						else
+						{
+							e0 = t0->points[j]->position;
+							if (j == 2)
+							{
+								e1 = t0->points[0]->position;
+							}
+							else
+							{
+								e1 = t0->points[j + 1]->position;
+							}
+						}
+
+						if ((e0 - e1).length() < size)
+						{
+							hasTarget = false;
+							break;
+						}
+
+						core::Vector2 c = (e0 + e1) * 0.5f;
+						core::Vector2 d0 = (e0 - c);
+						core::Vector2 d1 = (e1 - c);
+						float l0 = d0.length() - size*0.5f;
+						float l1 = d1.length() - size*0.5f;
+						d0 = d0.normalize() * l0;
+						d1 = d1.normalize() * l1;
+						//inv = !inv;
+						portals.push_back(c + d0);
+						portals.push_back(c + d1);
+					}
+				}
+			}
+		}		
+		if (portals.size() == 2)
+			return;
+		if (hasTarget)
+		{
+			portals.push_back(_target);
+			portals.push_back(_target);
+		}
+		Funnel::makeFunnel(portals, path->vertices);
+	}
+
+	void PathMesh::fillNavPath(llge::INavPath* path)
+	{
+		fillPath(static_cast<Path*>(path->getNativeInstance()));
 	}
 
 	int PathMesh::getTriagnlesCount()
@@ -558,6 +661,8 @@ namespace navmesh
 	void NavMesh::fillPath(core::Vector2 start, core::Vector2 target, PathMesh* pathMesh)
 	{
 		pathMesh->_triangles.clear();
+		pathMesh->_start = start;
+		pathMesh->_target = target;
 		NavMeshTriangle* startTriangle = findTriangle(start);
 		NavMeshTriangle* targetTriangle = findTriangle(target);
 		if (startTriangle == nullptr || targetTriangle == nullptr)
@@ -610,5 +715,10 @@ namespace llge
 	extern "C" DLLEXPORT INavMeshConfig * API_CALL createNavMeshConfig()
 	{
 		return new navmesh::NavMeshConfig();
+	}
+
+	extern "C" DLLEXPORT INavPath * API_CALL createNavPath()
+	{
+		return new navmesh::Path();
 	}
 }

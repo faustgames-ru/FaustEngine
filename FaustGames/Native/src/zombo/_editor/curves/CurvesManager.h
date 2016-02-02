@@ -58,11 +58,11 @@ namespace zombo
 		core::Vector2 getTargetXY() const;
 		CurvesPoint();
 		CurvesPoint(core::Vector2 p);
-		float getR() const;
+		static float getR();
 		bool isUnderMouse() const;
 		float distanceToMouse() const;
 		void updateCoords();
-		void update();
+		void update(float scale, float alpha);
 		void setScale(float scale);
 		void setScaleEx(float scale);
 		void setScaleFullEx(float scale);
@@ -79,21 +79,53 @@ namespace zombo
 		SFloat _scaleEx;
 		SFloat _alpha;
 		SFloat _rot;
+		static float r;
+		static core::Vector2 size;
 	private:
+	};
+
+	class CurvePointBinding
+	{
+	public:
+		static float r;
+		static core::Vector2 size;
+
+		CurvesPoint *p;
+		SVector2 d;
+		CurvePointBinding();
+		CurvePointBinding(CurvesPoint *point, const core::Vector2 &direction);
+		bool isUnderMouse() const;
+		float distanceToMouse() const;
+		void updateRegularState();
+		void updateHoverState();
+		core::Vector2 getXY() const;
+		void setXY(const core::Vector2 &p);
+		void updateSelectedState();
+		static float getR();
+		void updateCoords();
+		void update(float scale, float alpha);
+		void setScale(float a);
+		void setRot(float rot);
+		geometry::Aabb2d getAabb() const;
+		SFloat _scale;
+		SFloat _rot;
 	};
 
 	class CurveSegment
 	{
 	public:
-		CurvesPoint *p0;
-		core::Vector2 d0;
-		core::Vector2 d1;
-		CurvesPoint *p1;
+		CurvePointBinding *p0;
+		CurvePointBinding *p1;
+		core::Vector2 get0() const;
+		core::Vector2 get1() const;
+		core::Vector2 get2() const;
+		core::Vector2 get3() const;
 		CurveSegment();
 		void updateInput();
+		void updateCoords();
 		void update();
-		uint calcDetail()const;
-		float getBaseLen()const;
+		uint calcDetail() const;
+		float getBaseLen() const;
 		float getR() const;
 		bool isUnderMouse() const;
 		float distanceToMouse() const;
@@ -110,6 +142,7 @@ namespace zombo
 	public:
 		std::vector<CurvesPoint *> points;
 		std::vector<CurveSegment *> segments;
+		std::vector<CurvePointBinding  *> pointsBindings;
 		void clear();
 	};
 	class CurvesSelection
@@ -117,9 +150,12 @@ namespace zombo
 	public:
 		CurvesPoint* point;
 		CurveSegment* segment;
+		CurvePointBinding* binding;
+		bool isEmpty() const;
 		CurvesSelection();
 		CurvesSelection(CurvesPoint* p);
 		CurvesSelection(CurveSegment* s);
+		CurvesSelection(CurvePointBinding* b);
 	};
 
 	class CurvesManager
@@ -131,10 +167,11 @@ namespace zombo
 		CurvesPoint *snap(core::Vector2 &p, CurvesPoint *);
 		void update();
 		void addCurve(core::Vector2 p0, core::Vector2 p1, core::Vector2 p2, core::Vector2 p3);
-		CurvesSelection findSelection(CurvesVisibleItems &items);
+		static CurvesSelection findSelection(CurvesVisibleItems &items);
 		CurvesVisibleItems& getVisibleItems();
 		void setState(ICurvesState* state);
 		SFloat scale;
+		CurvesSelection selection;
 	private:
 		void queryVisibleItems(CurvesVisibleItems &items);
 		std::vector<CurvesPoint *> _points;
@@ -142,6 +179,10 @@ namespace zombo
 		float _snappingRange;
 		ICurvesState* _actualState;
 		CurvesVisibleItems _visibleItems;
+		SFloat _pointsAlpha;
+		SFloat _extraPointsAlpha;
+		SFloat _pointsScale;
+		SFloat _extraPointsScale;
 	};
 }
 

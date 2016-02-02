@@ -243,6 +243,8 @@
     <ClInclude Include="..\src\graphics\VertexFormatPositionColor.h" />
     <ClInclude Include="..\src\graphics\VertexFormatPositionTextureColor.h" />
     <ClInclude Include="..\src\graphics\VertexFormatsBasic.h" />
+    <ClInclude Include="..\src\navmesh\AStar.h" />
+    <ClInclude Include="..\src\navmesh\Funnel.h" />
     <ClInclude Include="..\src\navmesh\NavMesh.h" />
     <ClInclude Include="..\src\navmesh\navmesh_classes.h" />
     <ClInclude Include="..\src\navmesh\navmesh_platform.h" />
@@ -313,6 +315,7 @@
     <ClInclude Include="..\src\zombo\_editor\commands\ZomboEditorCommands.h" />
     <ClInclude Include="..\src\zombo\_editor\commands\ZomboSetEditorMode.h" />
     <ClInclude Include="..\src\zombo\_editor\curves\CurvesManager.h" />
+    <ClInclude Include="..\src\zombo\_editor\curves\CurvesStateMoveBinding.h" />
     <ClInclude Include="..\src\zombo\_editor\curves\CurvesStateMoveSegment.h" />
     <ClInclude Include="..\src\zombo\_editor\curves\CurvesStateMovePoint.h" />
     <ClInclude Include="..\src\zombo\_editor\curves\CurvesStateSelect.h" />
@@ -401,6 +404,8 @@
     <ClCompile Include="..\src\graphics\VertexBuffer.cpp" />
     <ClCompile Include="..\src\graphics\VertexFormat.cpp" />
     <ClCompile Include="..\src\graphics\VertexFormatsBasic.cpp" />
+    <ClCompile Include="..\src\navmesh\AStar.cpp" />
+    <ClCompile Include="..\src\navmesh\Funnel.cpp" />
     <ClCompile Include="..\src\navmesh\NavMesh.cpp" />
     <ClCompile Include="..\src\navmesh\navmesh_references.h" />
     <ClCompile Include="..\src\resources\ContentManager.cpp" />
@@ -477,6 +482,7 @@
     <ClCompile Include="..\src\zombo\_editor\commands\ZomboEditorCommands.cpp" />
     <ClCompile Include="..\src\zombo\_editor\commands\ZomboSetEditorMode.cpp" />
     <ClCompile Include="..\src\zombo\_editor\curves\CurvesManager.cpp" />
+    <ClCompile Include="..\src\zombo\_editor\curves\CurvesStateMoveBinding.cpp" />
     <ClCompile Include="..\src\zombo\_editor\curves\CurvesStateMoveSegment.cpp" />
     <ClCompile Include="..\src\zombo\_editor\curves\CurvesStateMovePoint.cpp" />
     <ClCompile Include="..\src\zombo\_editor\curves\CurvesStateSelect.cpp" />

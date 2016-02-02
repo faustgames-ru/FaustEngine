@@ -926,6 +926,26 @@ namespace llge
 		classInstance->dispose();
 	}
 	
+	extern "C" DLLEXPORT int API_CALL llge_NavPath_getVerticesCount (INavPath * classInstance)
+	{
+		return classInstance->getVerticesCount();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_NavPath_getVertices (INavPath * classInstance, IntPtr vertices2f)
+	{
+		classInstance->getVertices(vertices2f);
+	}
+	
+	extern "C" DLLEXPORT IntPtr API_CALL llge_NavPath_getNativeInstance (INavPath * classInstance)
+	{
+		return classInstance->getNativeInstance();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_PathMesh_fillNavPath (IPathMesh * classInstance, INavPath * path)
+	{
+		classInstance->fillNavPath(path);
+	}
+	
 	extern "C" DLLEXPORT int API_CALL llge_PathMesh_getTriagnlesCount (IPathMesh * classInstance)
 	{
 		return classInstance->getTriagnlesCount();

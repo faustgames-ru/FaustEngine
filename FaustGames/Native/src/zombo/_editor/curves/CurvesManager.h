@@ -9,6 +9,7 @@ namespace zombo
 {
 	class CurvesPoint;
 	class CurveSegment;
+	class CurvePointBinding;
 
 	class ICurvesState: public IBaseObject
 	{
@@ -48,6 +49,21 @@ namespace zombo
 		CurvesPoint* _point;
 	};
 
+	class ZomboCommandMoveCurveBinding : public ZomboEditorCommand
+	{
+	public:
+		ZomboCommandMoveCurveBinding(CurvePointBinding *binding, const core::Vector2 prevPosition, const core::Vector2 newPosition);
+		void invalidate(const core::Vector2 newPosition);
+
+		virtual bool isExecutionAvaliable() OVERRIDE;
+		virtual bool isUndoAvaliable() OVERRIDE;
+		virtual void execute() OVERRIDE;
+		virtual void undo() OVERRIDE;
+	private:
+		core::Vector2 _prevPosition;
+		core::Vector2 _targetPosition;
+		CurvePointBinding* _binding;
+	};
 
 	class CurvesPoint
 	{
@@ -62,7 +78,7 @@ namespace zombo
 		bool isUnderMouse() const;
 		float distanceToMouse() const;
 		void updateCoords();
-		void update(float scale, float alpha);
+		void update(float scale, float alpha, float snapAlpha);
 		void setScale(float scale);
 		void setScaleEx(float scale);
 		void setScaleFullEx(float scale);
@@ -72,7 +88,7 @@ namespace zombo
 		void updateHoverState();
 		void updateRegularState();
 		void updateHidenState();
-		geometry::Aabb2d getAabb();
+		geometry::Aabb2d getAabb() const;
 		float getScale() const;
 		float getScaleEx() const;
 		SFloat _scale;
@@ -89,6 +105,7 @@ namespace zombo
 	public:
 		static float r;
 		static core::Vector2 size;
+		static float trim;
 
 		CurvesPoint *p;
 		SVector2 d;
@@ -98,7 +115,10 @@ namespace zombo
 		float distanceToMouse() const;
 		void updateRegularState();
 		void updateHoverState();
+		core::Vector2 getTargetXY() const;
 		core::Vector2 getXY() const;
+		core::Vector2 calcD(const core::Vector2 &p) const;
+		void setTargetXY(const core::Vector2 &p);
 		void setXY(const core::Vector2 &p);
 		void updateSelectedState();
 		static float getR();
@@ -107,6 +127,8 @@ namespace zombo
 		void setScale(float a);
 		void setRot(float rot);
 		geometry::Aabb2d getAabb() const;
+		core::Vector2 getCurveP() const;
+		core::Vector2 getArrowP() const;
 		SFloat _scale;
 		SFloat _rot;
 	};
@@ -165,6 +187,7 @@ namespace zombo
 		core::Vector2 mousePos;
 		CurvesManager();
 		CurvesPoint *snap(core::Vector2 &p, CurvesPoint *);
+		static void snapBinding(const core::Vector2 &p0, core::Vector2 &p1);
 		void update();
 		void addCurve(core::Vector2 p0, core::Vector2 p1, core::Vector2 p2, core::Vector2 p3);
 		static CurvesSelection findSelection(CurvesVisibleItems &items);
@@ -172,6 +195,7 @@ namespace zombo
 		void setState(ICurvesState* state);
 		SFloat scale;
 		CurvesSelection selection;
+		CurvesSelection lastSelection;
 	private:
 		void queryVisibleItems(CurvesVisibleItems &items);
 		std::vector<CurvesPoint *> _points;
@@ -180,6 +204,7 @@ namespace zombo
 		ICurvesState* _actualState;
 		CurvesVisibleItems _visibleItems;
 		SFloat _pointsAlpha;
+		SFloat _pointsSnapAlpha;
 		SFloat _extraPointsAlpha;
 		SFloat _pointsScale;
 		SFloat _extraPointsScale;

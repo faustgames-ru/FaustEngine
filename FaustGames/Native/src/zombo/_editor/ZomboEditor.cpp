@@ -119,13 +119,11 @@ namespace zombo
 		_needCallContetnLoaded = true;
 
 		ZomboToolBox::Default.load();
-		for (int j = -20; j <= 20; j++)
+		for (int j = -5; j <= 5; j++)
 		{
-			for (int i = -12; i <= 12; i+=3)
+			for (int i = -4; i <= 4; i+=3)
 			{
 				CurvesManager::Default.addCurve(core::Vector2(i - 1, j - 0.5f), core::Vector2(i - 0.5f, j + 0.25f), core::Vector2(i + 0.5f, j + 0.25f), core::Vector2(i + 1, j - 0.5f));
-				//CurvesManager::Default.addCurve(core::Vector2(i - 1, -1.5f), core::Vector2(i - 0.5f, -0.75f), core::Vector2(i + 0.5f, -0.75f), core::Vector2(i + 1, -1.5f));
-				//CurvesManager::Default.addCurve(core::Vector2(i - 1, 0.5f), core::Vector2(i - 0.5f, 1.25f), core::Vector2(i + 0.5f, 1.25f), core::Vector2(i + 1, 0.5f));
 			}
 		}
 	}

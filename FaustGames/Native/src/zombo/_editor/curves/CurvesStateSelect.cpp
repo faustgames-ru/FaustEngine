@@ -71,13 +71,14 @@ namespace zombo
 	void CurvesStateSelect::update()
 	{
 		CurvesVisibleItems &visible = CurvesManager::Default.getVisibleItems();
-		CurvesSelection selection = CurvesManager::Default.selection = CurvesManager::Default.findSelection(visible);
+		CurvesSelection selection = CurvesManager::Default.findSelection(visible);
 		updatePoints(visible.points, selection);
 		updateBinding(visible.pointsBindings, selection);
 		updateSegments(visible.segments, selection);
 		bool isLeftPressed = ZomboEditorInput::Default.mouse.isLeftPressed();
 		if (isLeftPressed)
 		{
+			CurvesManager::Default.selection = CurvesManager::Default.lastSelection = selection;
 			if (selection.point != nullptr)
 			{
 				CurvesStateMovePoint::Default.setSelection(selection.point);
@@ -94,6 +95,10 @@ namespace zombo
 				CurvesManager::Default.setState(&CurvesStateMoveSegment::Default);
 				// set move segment state
 			}
+		}
+		else
+		{
+			CurvesManager::Default.selection = CurvesSelection();
 		}
 	}
 }

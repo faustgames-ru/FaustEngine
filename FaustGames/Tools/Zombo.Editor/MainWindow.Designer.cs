@@ -69,6 +69,7 @@
             this._toolbox.Size = new System.Drawing.Size(747, 25);
             this._toolbox.TabIndex = 1;
             this._toolbox.Text = "toolStrip1";
+            this._toolbox.Visible = false;
             // 
             // _editorModeSelect
             // 
@@ -192,13 +193,14 @@
             this.statusStrip1.Size = new System.Drawing.Size(747, 22);
             this.statusStrip1.TabIndex = 2;
             this.statusStrip1.Text = "statusStrip1";
+            this.statusStrip1.Visible = false;
             // 
             // _zomboEditScene
             // 
             this._zomboEditScene.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._zomboEditScene.Location = new System.Drawing.Point(0, 25);
+            this._zomboEditScene.Location = new System.Drawing.Point(0, 0);
             this._zomboEditScene.Name = "_zomboEditScene";
-            this._zomboEditScene.Size = new System.Drawing.Size(747, 387);
+            this._zomboEditScene.Size = new System.Drawing.Size(747, 412);
             this._zomboEditScene.TabIndex = 0;
             this._zomboEditScene.MouseDown += new System.Windows.Forms.MouseEventHandler(this._zomboEditScene_MouseDown);
             this._zomboEditScene.MouseUp += new System.Windows.Forms.MouseEventHandler(this._zomboEditScene_MouseUp);

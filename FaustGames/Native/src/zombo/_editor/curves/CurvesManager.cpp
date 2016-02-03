@@ -7,6 +7,8 @@
 #include "../../ZomboLog.h"
 #include "../commands/ZomboEditorCommands.h"
 #include "CurvesStateSelect.h"
+#include "CurvesStateMoveBinding.h"
+#include "CurvesStateMovePoint.h"
 
 namespace zombo
 {
@@ -14,6 +16,7 @@ namespace zombo
 	core::Vector2 CurvesPoint::size(0.2f, 0.2f);
 	float CurvePointBinding::r(0.05f);
 	core::Vector2 CurvePointBinding::size(0.1f, 0.1f);
+	float CurvePointBinding::trim(0.15f);
 
 	void CurvesState::start()
 	{
@@ -59,6 +62,41 @@ namespace zombo
 	{
 		ZomboLog::Default.m("Undo: Move point");
 		_point->xy.setTarget(_prevPosition);
+	}
+
+	ZomboCommandMoveCurveBinding::ZomboCommandMoveCurveBinding(CurvePointBinding* binding, const core::Vector2 prevPosition, const core::Vector2 newPosition)
+	{
+		_binding = binding;
+		_prevPosition = prevPosition;
+		_targetPosition = newPosition;
+
+	}
+
+	void ZomboCommandMoveCurveBinding::invalidate(const core::Vector2 newPosition)
+	{
+		_targetPosition = newPosition;
+	}
+
+	bool ZomboCommandMoveCurveBinding::isExecutionAvaliable()
+	{
+		return !core::Vector2::equals(_prevPosition, _targetPosition);
+	}
+
+	bool ZomboCommandMoveCurveBinding::isUndoAvaliable()
+	{
+		return !core::Vector2::equals(_prevPosition, _targetPosition);
+	}
+
+	void ZomboCommandMoveCurveBinding::execute()
+	{
+		ZomboLog::Default.m("Do: Move tangent");
+		_binding->setTargetXY(_targetPosition);
+	}
+
+	void ZomboCommandMoveCurveBinding::undo()
+	{
+		ZomboLog::Default.m("Undo: Move tangent");
+		_binding->setTargetXY(_prevPosition);
 	}
 
 	core::Vector2 CurvesPoint::getXY() const
@@ -119,29 +157,30 @@ namespace zombo
 		//ZomboDrawer::Default.fillCircle(c, p1.toVector3(), r);
 	}
 
-	void renderPoint(core::Vector2 xy, float r, float a, float rot)
+	void renderPoint(core::Vector2 xy, float r, float a, float a1, float rot)
 	{
-		uint c1 = 0xffffffff;
 		uint c0 = graphics::Color::mulA(0xffffffff, a);
-		
+		uint c1 = graphics::Color::mulA(0xffffffff, a1);
+
 		ZomboDrawer::Default.fillRing(c0, xy.toVector3(), r, r*0.02f);
 		ZomboDrawer::Default.fillRect(c1, xy.toVector3(), r*0.8f, rot);
 	}
 		
 	void renderExtraPoint(core::Vector2 xy, float r, float a, float rot)
 	{
+		//uint c1 = 0xffffffff;
 		uint c0 = graphics::Color::mulA(0xffffffff, a);
-		//ZomboDrawer::Default.fillRing(c0, xy.toVector3(), r, r*0.02f);
-		ZomboDrawer::Default.fillRect(c0, xy.toVector3(), r*0.8f, rot);
+		ZomboDrawer::Default.fillRing(c0, xy.toVector3(), r, r*0.02f);
+		ZomboDrawer::Default.fillRect(c0, xy.toVector3(), r*0.4f, rot);
 	}
 
-	void CurvesPoint::update(float scale, float alpha)
+	void CurvesPoint::update(float scale, float alpha, float snapAlpha)
 	{
 		_scale.update();
 		_scaleEx.update();
 		_alpha.update();
 		_rot.update();
-		renderPoint(xy.get(), getR() * _scale.get()*scale, alpha, _rot.get());
+		renderPoint(xy.get(), getR() * _scale.get()*scale, alpha, snapAlpha, _rot.get());
 	}
 
 	void CurvesPoint::setScale(float scale)
@@ -197,7 +236,7 @@ namespace zombo
 		setRot(core::Math::Pi * 0.25f);
 	}
 
-	geometry::Aabb2d CurvesPoint::getAabb()
+	geometry::Aabb2d CurvesPoint::getAabb() const
 	{
 		return geometry::Aabb2d(getXY() - core::Vector2(getR(), getR()), getXY() + core::Vector2(getR(), getR()));
 	}
@@ -252,14 +291,34 @@ namespace zombo
 		setRot(core::Math::Pi * 0.5f);
 	}
 
+	core::Vector2 CurvePointBinding::getTargetXY() const
+	{
+		return p->getTargetXY() + d.getTarget();
+	}
+
 	core::Vector2 CurvePointBinding::getXY() const
 	{
 		return p->getXY() + d.get();
 	}
 
+	core::Vector2 CurvePointBinding::calcD(const core::Vector2& pos) const
+	{
+		core::Vector2 newD = pos - p->getTargetXY();
+		if (newD.length() < trim)
+		{
+			newD = newD.normalize() * trim;
+		}
+		return newD;
+	}
+
+	void CurvePointBinding::setTargetXY(const core::Vector2& pos)
+	{
+		d.setTarget(calcD(pos));
+	}
+
 	void CurvePointBinding::setXY(const core::Vector2& pos)
 	{
-		d.setAll(pos - p->getXY());
+		d.setAll(calcD(pos));
 	}
 
 	void CurvePointBinding::updateSelectedState()
@@ -270,7 +329,7 @@ namespace zombo
 
 	float CurvePointBinding::getR()
 	{
-		return 0.05f;
+		return r;
 	}
 
 	void CurvePointBinding::updateCoords()
@@ -283,7 +342,11 @@ namespace zombo
 		_scale.update();
 		_rot.update();
 		renderExtraPoint(p->getXY() + d.get(), getR()*scale*_scale.get(), alpha, _rot.get());
-		renderEdge(0x80ffffff, p->getXY(), p->getXY() + d.get(), getR()*scale*_scale.get()*0.1f);
+		uint color = graphics::Color::mulA(0xffffffff, alpha * 0.5f);
+		renderEdge(color, p->getXY(), getCurveP(), getR()*scale*_scale.get()*0.1f);
+		core::Vector3 p0 = getCurveP().toVector3();
+		core::Vector3 p1 = getArrowP().toVector3();
+		ZomboDrawer::Default.fillArrow(color, p0, p1, r*scale*0.75f);
 	}
 
 	void CurvePointBinding::setScale(float a)
@@ -302,6 +365,20 @@ namespace zombo
 		return geometry::Aabb2d(pos - core::Vector2(getR(), getR()), pos + core::Vector2(getR(), getR()));
 	}
 
+	core::Vector2 CurvePointBinding::getCurveP() const
+	{
+		core::Vector2 dv = d.get();
+		core::Vector2 dl = dv.length();
+		return p->getXY() + dv.normalize() * (dl - trim);
+	}
+
+	core::Vector2 CurvePointBinding::getArrowP() const
+	{
+		core::Vector2 dv = d.get();
+		core::Vector2 dl = dv.length();
+		return p->getXY() + dv.normalize() * (dl - getR());
+	}
+
 	core::Vector2 CurveSegment::get0() const
 	{
 		return p0->p->getXY();
@@ -309,12 +386,12 @@ namespace zombo
 
 	core::Vector2 CurveSegment::get1() const
 	{
-		return p0->p->getXY() + p0->d.get();
+		return p0->getCurveP();
 	}
 
 	core::Vector2 CurveSegment::get2() const
 	{
-		return p1->p->getXY() + p1->d.get();
+		return p1->getCurveP();
 	}
 
 	core::Vector2 CurveSegment::get3() const
@@ -476,6 +553,9 @@ namespace zombo
 	CurvesManager::CurvesManager() : scale(1.0f), _snappingRange(0.1f), _pointsScale(1.0f), _extraPointsScale(1.0f)
 	{
 		_actualState = &CurvesStateSelect::Default;
+		_extraPointsAlpha.setConfig(&SConfig::VerySlow);
+		_pointsSnapAlpha.setConfig(&SConfig::VerySlow);
+		_pointsAlpha.setConfig(&SConfig::VerySlow);
 	}
 
 	CurvesPoint *CurvesManager::snap(core::Vector2& p, CurvesPoint *selection)
@@ -493,12 +573,22 @@ namespace zombo
 		return nullptr;
 	}
 
+	void CurvesManager::snapBinding(const core::Vector2& p0, core::Vector2& p1)
+	{
+		//core::Vector2 d = p1 - p0;
+		//float l = (p1 - p0).length() - CurvePointBinding::trim;
+		//l = core::Math::round(l *0.1) * 10;
+		//p1 = p0 + d.normalize() * (l + CurvePointBinding::trim);
+	}
+
 	void CurvesManager::update()
 	{
 		_pointsAlpha.update();
+		_pointsSnapAlpha.update();
 		_extraPointsAlpha.update();
 		_pointsScale.update();
 		_extraPointsScale.update();
+		_pointsSnapAlpha.update();
 		scale.update();
 		for (uint i = 0; i < _points.size(); i++)
 		{
@@ -512,29 +602,40 @@ namespace zombo
 		mousePos = ZomboEditorCamera::Default.getMouseProjection(0);
 		_visibleItems.clear();
 		queryVisibleItems(_visibleItems);
+		BindingSnapping::Default.update();
+		PointSnapping::Default.update();
 		if (_actualState != nullptr)
 		{
 			_actualState->update();
 		}
 		if (selection.isEmpty())
 		{
+			_pointsSnapAlpha.setTarget(1.0f);
 			_extraPointsAlpha.setTarget(1.0f);
 			_pointsAlpha.setTarget(1.0f);
 		}
 		else
 		{
+			if (selection.point != nullptr)
+			{
+				_pointsSnapAlpha.setTarget(1.0f);
+			}
+			else
+			{
+				_pointsSnapAlpha.setTarget(0.0f);
+			}
 			_extraPointsAlpha.setTarget(0.0f);
 			_pointsAlpha.setTarget(0.0f);
 		}
 		for (uint i = 0; i < _visibleItems.points.size(); i++)
 		{
-			if(_visibleItems.points[i] == selection.point)
+			if(_visibleItems.points[i] == lastSelection.point)
 			{
-				_visibleItems.points[i]->update(_pointsScale.get(), 1.0f);
+				_visibleItems.points[i]->update(_pointsScale.get(), 1.0f, 1.0f);
 			}
 			else
 			{
-				_visibleItems.points[i]->update(_pointsScale.get(), _pointsAlpha.get());
+				_visibleItems.points[i]->update(_pointsScale.get(), _pointsAlpha.get(), _pointsSnapAlpha.get());
 			}
 		}
 		for (uint i = 0; i < _visibleItems.segments.size(); i++)
@@ -543,7 +644,7 @@ namespace zombo
 		}
 		for (uint i = 0; i < _visibleItems.pointsBindings.size(); i++)
 		{
-			if (_visibleItems.pointsBindings[i] == selection.binding)
+			if (_visibleItems.pointsBindings[i] == lastSelection.binding)
 			{
 				_visibleItems.pointsBindings[i]->update(_extraPointsScale.get(), 1.0f);
 			}
@@ -635,7 +736,7 @@ namespace zombo
 		segnemtLen = 8 / scale;
 		// todo:: optimize;
 		
-		float pxMin = 12;
+		float pxMin = 6;
 		core::Vector2 size = CurvesPoint::size*scale;
 		bool arePointsVisible = true;
 		if (size.getX() < pxMin && size.getY() < pxMin)

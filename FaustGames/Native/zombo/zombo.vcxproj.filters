@@ -124,6 +124,9 @@
     <Filter Include="resources_fonts">
       <UniqueIdentifier>{be727489-7c22-448c-8a2e-91cd5ab3a440}</UniqueIdentifier>
     </Filter>
+    <Filter Include="zombo\_editor\grid">
+      <UniqueIdentifier>{c7d17550-fc82-489d-8254-d3b6ba27f584}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\CommonSources\include\llge.h">

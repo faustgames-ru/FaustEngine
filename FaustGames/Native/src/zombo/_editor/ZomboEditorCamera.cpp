@@ -315,8 +315,8 @@ namespace zombo
 	core::Vector2 ZomboEditorCamera::getMouseProjection(float z) const
 	{
 		core::Vector2 m;
-		m.setX(-1.0f + ZomboEditorInput::Default.mouse.position.getX() * 2.0f / ZomboEditorViewport::Default.w);
-		m.setY(1.0f - ZomboEditorInput::Default.mouse.position.getY() * 2.0f / ZomboEditorViewport::Default.h);
+		m.setX(-1.0f + ZomboEditorInput::Default.mouse()->position.getX() * 2.0f / ZomboEditorViewport::Default.w);
+		m.setY(1.0f - ZomboEditorInput::Default.mouse()->position.getY() * 2.0f / ZomboEditorViewport::Default.h);
 
 		core::Vector3 zero = core::Matrix::transform(transformToView, core::Vector3(0, 0, z));
 		return core::Matrix::transform(transformFromView, m.toVector3(zero.getZ())).toVector2();

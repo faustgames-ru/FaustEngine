@@ -270,4 +270,18 @@ namespace zombo
 
 		_renderService->drawTriangles(_colorVertices.data(), _colorVertices.size(), _indices.data(), _indices.size() / 3);
 	}
+
+	void ZomboDrawer::drawEdge(uint color, const core::Vector3& p0, const core::Vector3& p1)
+	{
+		_colorVertices.clear();
+		_indices.clear();
+
+		_colorVertices.push_back(ColorVertex(p0, color));//0
+		_colorVertices.push_back(ColorVertex(p1, color));//1
+
+
+		_indices.push_back(0);
+		_indices.push_back(1);
+		_renderService->drawLines(_colorVertices.data(), _colorVertices.size(), _indices.data(), _indices.size() / 2);
+	}
 }

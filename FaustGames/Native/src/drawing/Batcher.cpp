@@ -2,6 +2,11 @@
 
 namespace drawing
 {
+	bool BatcherState::isConfigEqual(void* otherConfig) const
+	{
+		return Effect->isConfigEqual(config, otherConfig);
+	}
+
 	Batcher::Batcher() : _batchBufferIndex(0), _format(graphics::VertexFormats::positionTextureColor())
 	{
 		_buffer = new RenderBuffer();
@@ -27,7 +32,9 @@ namespace drawing
 		_buffer->Entries.clear();
 		_buffer->Transforms.clear();
 		_batchBufferIndex = 0;
-		_textureId = 0;
+		for (uint i = 0; i < CONFIG_MAX_SIZE; i++)
+			_config[i] = 0;
+		//_textureId = 0;
 		_buffer->Buffers[_batchBufferIndex]->reset();
 		_currentEntry.IndicesCount = 0;
 		_blend = graphics::BlendState::None;
@@ -73,22 +80,78 @@ namespace drawing
 			needNewEntry = true;
 		}
 
-		if ((textureId != _textureId) || (lightmapId != _lightmapId) || (effect != _effect) || /*(blend != _blend) ||*/ needNewEntry)
+		_lightingConfig.lightmap = lightmapId;
+		_lightingConfig.texture = textureId;
+
+		if (effect != _effect || /*(mesh.State.Blend != _blend) ||*/ needNewEntry || !effect->isConfigEqual(_config, &_lightingConfig))
+		//if ((textureId != _textureId) || (lightmapId != _lightmapId) || (effect != _effect) || /*(blend != _blend) ||*/ needNewEntry)
 		{
 			if (_currentEntry.IndicesCount != 0)
 				_buffer->Entries.push_back(_currentEntry);
 			_currentEntry.IndicesStart = currentBuffer->getCurrentIndices();
 			_currentEntry.IndicesCount = 0;
 			_currentEntry.BatchBufferIndex = _batchBufferIndex;
-			_currentEntry.TextureId = _textureId = textureId;
-			_currentEntry.LightmapId = _lightmapId = lightmapId;
+			effect->configCopy(_currentEntry.Config, &_lightingConfig);
+			effect->configCopy(_config, &_lightingConfig);
+			//_currentEntry.TextureId = _textureId = textureId;
+			//_currentEntry.LightmapId = _lightmapId = lightmapId;
 			_currentEntry.Blend = _blend = blend;
 			_currentEntry.Effect = _effect = effect;
 			_currentEntry.TransformIndex = _buffer->Transforms.size() - 1;
 			_currentEntry.RenderTargetIndex = _buffer->RenderTargets.size() - 1;
 		}
 
-		_textureId = textureId;
+		//_textureId = textureId;
+		_currentEntry.IndicesCount += indicesCount;
+		currentBuffer->_x = _x;
+		currentBuffer->_y = _y;
+		currentBuffer->_w = _w;
+		currentBuffer->_h = _h;
+		currentBuffer->addMesh(vertices, verticesCount, indices, indicesCount, blend == graphics::BlendState::Additive);
+	}
+
+	void Batcher::drawMesh(graphics::EffectBase* effect, graphics::BlendState::e blend, void* config, TVertex* vertices, int verticesCount, ushort* indices, int indicesCount)
+	{
+		BatchBuffer * currentBuffer = _buffer->Buffers[_batchBufferIndex];
+		bool needNewEntry = false;
+		if (!currentBuffer->canAdd(verticesCount, indicesCount))
+		{
+			_batchBufferIndex++;
+			if (_buffer->Buffers.size() <= _batchBufferIndex)
+			{
+				_buffer->Buffers.push_back(new BatchBuffer());
+#ifdef __ANDROID__
+				__android_log_print(ANDROID_LOG_ERROR, "TRACKERS", "%s", "new render buffer allocated");
+#endif
+			}
+
+			currentBuffer = _buffer->Buffers[_batchBufferIndex];
+			currentBuffer->reset();
+			needNewEntry = true;
+		}
+
+		//_lightingConfig.lightmap = lightmapId;
+		//_lightingConfig.texture = textureId;
+
+		if (effect != _effect || /*(mesh.State.Blend != _blend) ||*/ needNewEntry || !effect->isConfigEqual(_config, config))
+			//if ((textureId != _textureId) || (lightmapId != _lightmapId) || (effect != _effect) || /*(blend != _blend) ||*/ needNewEntry)
+		{
+			if (_currentEntry.IndicesCount != 0)
+				_buffer->Entries.push_back(_currentEntry);
+			_currentEntry.IndicesStart = currentBuffer->getCurrentIndices();
+			_currentEntry.IndicesCount = 0;
+			_currentEntry.BatchBufferIndex = _batchBufferIndex;
+			effect->configCopy(_currentEntry.Config, config);
+			effect->configCopy(_config, config);
+			//_currentEntry.TextureId = _textureId = textureId;
+			//_currentEntry.LightmapId = _lightmapId = lightmapId;
+			_currentEntry.Blend = _blend = blend;
+			_currentEntry.Effect = _effect = effect;
+			_currentEntry.TransformIndex = _buffer->Transforms.size() - 1;
+			_currentEntry.RenderTargetIndex = _buffer->RenderTargets.size() - 1;
+		}
+
+		//_textureId = textureId;
 		_currentEntry.IndicesCount += indicesCount;
 		currentBuffer->_x = _x;
 		currentBuffer->_y = _y;
@@ -117,22 +180,26 @@ namespace drawing
 			needNewEntry = true;
 		}
 
-		if ((mesh.State.TextureId != _textureId) || (mesh.State.LightmapId != _lightmapId) || (mesh.State.Effect != _effect) || /*(mesh.State.Blend != _blend) ||*/ needNewEntry)
+		if (mesh.State.Effect != _effect || /*(mesh.State.Blend != _blend) ||*/ needNewEntry || !mesh.State.isConfigEqual(_config))
+		//if ((mesh.State.TextureId != _textureId) || (mesh.State.LightmapId != _lightmapId) || (mesh.State.Effect != _effect) || /*(mesh.State.Blend != _blend) ||*/ needNewEntry)
 		{
 			if (_currentEntry.IndicesCount != 0)
 				_buffer->Entries.push_back(_currentEntry);
 			_currentEntry.IndicesStart = currentBuffer->getCurrentIndices();
 			_currentEntry.IndicesCount = 0;
 			_currentEntry.BatchBufferIndex = _batchBufferIndex;
-			_currentEntry.TextureId = _textureId = mesh.State.TextureId;
-			_currentEntry.LightmapId = _lightmapId = mesh.State.LightmapId;
+			mesh.State.Effect->configCopy(_currentEntry.Config, mesh.State.config);
+			mesh.State.Effect->configCopy(_config, mesh.State.config);
+			
+			//_currentEntry.TextureId = _textureId = mesh.State.TextureId;
+			//_currentEntry.LightmapId = _lightmapId = mesh.State.LightmapId;
 			_currentEntry.Blend = _blend = mesh.State.Blend;
 			_currentEntry.Effect = _effect = mesh.State.Effect;
 			_currentEntry.TransformIndex = _buffer->Transforms.size() - 1;
 			_currentEntry.RenderTargetIndex = _buffer->RenderTargets.size() - 1;
 		}
 
-		_textureId = mesh.State.TextureId;
+		//_textureId = mesh.State.TextureId;
 		_currentEntry.IndicesCount += mesh.IndicesCount;
 		currentBuffer->_x = _x;
 		currentBuffer->_y = _y;
@@ -157,8 +224,9 @@ namespace drawing
 		for (TBatchEntries::iterator i = _backBuffer->Entries.begin(); i != _backBuffer->Entries.end(); i++)
 		{
 			BatchBuffer * currentBuffer = _backBuffer->Buffers[i->BatchBufferIndex];
-			graphics::UniformValues::texture()->setValue(i->TextureId);
-			graphics::UniformValues::lightmap()->setValue(i->LightmapId);
+			i->Effect->configApply(i->Config);
+			//graphics::UniformValues::texture()->setValue(i->TextureId);
+			//graphics::UniformValues::lightmap()->setValue(i->LightmapId);
 			graphics::UniformValues::projection()->setValue(_backBuffer->Transforms[i->TransformIndex]);
 
 			//_graphicsDevice->renderState.setBlend(i->Blend);

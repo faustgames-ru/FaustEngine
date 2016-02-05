@@ -152,7 +152,9 @@ namespace zombo
 
 	void renderEdge(uint c, core::Vector2 p0, core::Vector2 p1, float r)
 	{		
-		ZomboDrawer::Default.fillEdge(c, p0.toVector3(), p1.toVector3(), r);
+		ZomboDrawer::Default.drawEdge(c, p0.toVector3(), p1.toVector3());
+		//ZomboDrawer::Default.fillEdge(c, p0.toVector3(), p1.toVector3(), r);
+		
 		//ZomboDrawer::Default.fillCircle(c, p0.toVector3(), r);
 		//ZomboDrawer::Default.fillCircle(c, p1.toVector3(), r);
 	}
@@ -368,7 +370,18 @@ namespace zombo
 	core::Vector2 CurvePointBinding::getCurveP() const
 	{
 		core::Vector2 dv = d.get();
-		core::Vector2 dl = dv.length();
+		float dl = dv.length();
+		if (core::Math::abs(dl- trim) < 0.001f)
+			return p->getXY();
+		return p->getXY() + dv.normalize() * (dl - trim);
+	}
+
+	core::Vector2 CurvePointBinding::getCurveTargetP() const
+	{
+		core::Vector2 dv = d.getTarget();
+		float dl = dv.length();
+		if (core::Math::abs(dl - trim) < 0.001f)
+			return p->getXY();
 		return p->getXY() + dv.normalize() * (dl - trim);
 	}
 
@@ -399,7 +412,7 @@ namespace zombo
 		return p1->p->getXY();
 	}
 
-	CurveSegment::CurveSegment(): color(0xffffffff), _scale(1.0f)
+	CurveSegment::CurveSegment(): color(0xfffffffff), _scale(1.0f)
 	{
 		p0 = new CurvePointBinding();
 		p1 = new CurvePointBinding();
@@ -419,13 +432,174 @@ namespace zombo
 	uint segmentDetail = 16;
 	float segnemtLen = 0.1f;
 
+
+	void offset(core::Vector2 &p0, core::Vector2 &p1, core::Vector2 &p2, core::Vector2 &p3, float d)
+	{
+		core::Vector2 n0 = (p1 - p0).rotate90cw().normalize();
+		core::Vector2 n1 = (p2 - p1).rotate90cw().normalize();
+		core::Vector2 n2 = (p3 - p2).rotate90cw().normalize();
+		if (n0.isEmpty())
+			n0 = n1;
+		if (n2.isEmpty())
+			n2 = n1;
+		if (n1.isEmpty())
+			n1 = (n2 + n0).normalize();
+
+		float q0 = 1.0f / (1.0f + core::Vector2::dotProduct(n0, n1));
+		float q1 = 1.0f / (1.0f + core::Vector2::dotProduct(n1, n2));
+
+
+		core::Vector2 n01 = (n0 + n1) * q0;
+		core::Vector2 n12 = (n1 + n2) * q1;
+
+		p0 += n0 * d;
+		p1 += n01 * d;
+		p2 += n12 * d;
+		p3 += n2 * d;
+	}
+	
+	void offset(core::Vector2 d1, core::Vector2 d2, core::Vector2 &p0, core::Vector2 &p1, core::Vector2 &p2, core::Vector2 &p3, float d)
+	{
+		core::Vector2 n0 = d1/*(p1 - p0)*/.rotate90cw().normalize();
+		core::Vector2 n1 = (p2 - p1).rotate90cw().normalize();
+		core::Vector2 n2 = (d2 *-1.0f)/*(p3 - p2)*/.rotate90cw().normalize();
+		if (n0.isEmpty())
+			n0 = n1;
+		if (n2.isEmpty())
+			n2 = n1;
+		if (n1.isEmpty())
+			n1 = (n2 + n0).normalize();
+
+		float q0 = 1.0f / (1.0f + core::Vector2::dotProduct(n0, n1));
+		float q1 = 1.0f / (1.0f + core::Vector2::dotProduct(n1, n2));
+
+
+		core::Vector2 n01 = (n0 + n1) * q0;
+		core::Vector2 n12 = (n1 + n2) * q1;
+
+		p0 += n0 * d;
+		p1 += n01 * d;
+		p2 += n12 * d;
+		p3 += n2 * d;
+	}
+
 	void CurveSegment::update()
 	{
 		//renderPoint(p0->xy + d0, p0->_scale.getValue() * p0->getR() * 0.5f, p0->_alpha.getValue());
 		//renderPoint(p1->xy + d1, p1->_scale.getValue() * p1->getR() * 0.5f, p1->_alpha.getValue());
 		_scale.update();
 		uint count = calcDetail();// segmentDetail;
+		
+		core::Vector2 pp0 = get0();
+		core::Vector2 pp1 = get1();
+		core::Vector2 pp2 = get2();
+		core::Vector2 pp3 = get3();
+		
+		// todo: remove crutch
+		/*
+		if (core::Vector2::equals(pp0, p0->getCurveTargetP()))
+		{
+			p0->d.setTarget((pp2 - pp0).normalize()*CurvePointBinding::trim);
+		}
+		if (core::Vector2::equals(pp3, p1->getCurveTargetP()))
+		{
+			p1->d.setTarget((pp1 - pp3).normalize()*CurvePointBinding::trim);
+		}
+		*/
 
+		core::Vector2 ppt0 = pp0;
+		core::Vector2 ppt1 = pp1;
+		core::Vector2 ppt2 = pp2;
+		core::Vector2 ppt3 = pp3;
+
+		core::Vector2 ppb0 = pp0;
+		core::Vector2 ppb1 = pp1;
+		core::Vector2 ppb2 = pp2;
+		core::Vector2 ppb3 = pp3;
+
+		offset(p0->d.get(), p1->d.get(), ppt0, ppt1, ppt2, ppt3, 0.25f);
+		offset(p0->d.get(), p1->d.get(), ppb0, ppb1, ppb2, ppb3, -0.25f);
+		//offset(ppt0, ppt1, ppt2, ppt3, 0.25f);
+		//offset(ppb0, ppb1, ppb2, ppb3, -0.25f);
+
+		core::Vector2 pst = core::Vector2::cubic(ppt0, ppt1, ppt2, ppt3, 0);
+		core::Vector2 psb = core::Vector2::cubic(ppb0, ppb1, ppb2, ppb3, 0);
+		core::Vector2 ps = core::Vector2::cubic(pp0, pp1, pp2, pp3, 0);
+		/*
+		renderEdge(0xffffffff, ppt0, ppt1, 0);
+		renderEdge(0xffffffff, ppt1, ppt2, 0);
+		renderEdge(0xffffffff, ppt2, ppt3, 0);
+
+		renderEdge(0xffffffff, ppb0, ppb1, 0);
+		renderEdge(0xffffffff, ppb1, ppb2, 0);
+		renderEdge(0xffffffff, ppb2, ppb3, 0);
+
+		renderEdge(0xffffffff, pp0, pp1, 0);
+		renderEdge(0xffffffff, pp1, pp2, 0);
+		renderEdge(0xffffffff, pp2, pp3, 0);
+		*/
+
+		renderEdge(color, pst, psb, getR()*_scale.get());
+		for (uint i = 1; i < count; i++)
+		{
+			float u = static_cast<float>(i) / static_cast<float>(count - 1);
+			core::Vector2 pft = core::Vector2::cubic(ppt0, ppt1, ppt2, ppt3, u);
+			core::Vector2 pfb = core::Vector2::cubic(ppb0, ppb1, ppb2, ppb3, u);
+			core::Vector2 pf = core::Vector2::cubic(pp0, pp1, pp2, pp3, u);
+			//renderEdge(color, ps, pf, getR()*_scale.get());
+			renderEdge(color, pst, pft, getR()*_scale.get());
+			renderEdge(color, psb, pfb, getR()*_scale.get());
+			renderEdge(0xc0fffffff, pft, pfb, getR()*_scale.get());
+
+			pst = pft;
+			psb = pfb;
+			ps = pf;
+		}
+		renderEdge(color, pst, psb, getR()*_scale.get());
+
+		/*
+		core::Vector2 d0 = p0->d.get();
+		core::Vector2 d1 = p1->d.get();
+		core::Vector2 n0 = d0.rotate90cw().normalize();
+		core::Vector2 n1 = d1.rotate90cw().normalize();
+		float size = 0.01f;
+		core::Vector2 pt0 = p0->p->getXY() + n0*size;
+		core::Vector2 pb0 = p0->p->getXY() - n0*size;
+		
+		core::Vector2 pt1 = p1->p->getXY() - n1*size;
+		core::Vector2 pb1 = p1->p->getXY() + n1*size;
+
+		float tProp = 1.0f;// (pt0 - pt1).length() / (p0->getXY() - p1->p->getXY()).length();
+		float bProp = 1.0f;// (pb0 - pb1).length() / (p0->getXY() - p1->p->getXY()).length();
+		
+		core::Vector2 dt0 = d0 * tProp;
+		core::Vector2 dt1 = d1 * tProp;
+
+		core::Vector2 db0 = d0 * bProp;
+		core::Vector2 db1 = d1 * bProp;
+
+		core::Vector2 pst = core::Vector2::cubic(pt0, pt0 + dt0, pt1 + dt1, pt1, 0);
+		core::Vector2 psb = core::Vector2::cubic(pb0, pb0 + db0, pb1 + db1, pb1, 0);
+		core::Vector2 ps = core::Vector2::cubic(get0(), get1(), get2(), get3(), 0);
+		for (uint i = 1; i < count; i++)
+		{
+			float u = static_cast<float>(i) / static_cast<float>(count - 1);
+			core::Vector2 pft = core::Vector2::cubic(pt0, pt0 + dt0, pt1 + db1, pt1, u);
+			core::Vector2 pfb = core::Vector2::cubic(pb0, pb0 + db0, pb1 + db1, pb1, u);
+			core::Vector2 pf = core::Vector2::cubic(get0(), get1(), get2(), get3(), u);
+			//renderEdge(0xffffffff, ps, pf, getR()*_scale.get());
+			
+			renderEdge(color, pst, psb, getR()*_scale.get());
+			renderEdge(color, pft, pfb, getR()*_scale.get());
+			renderEdge(color, pst, pft, getR()*_scale.get());
+			renderEdge(color, psb, pfb, getR()*_scale.get());
+			
+			pst = pft;
+			psb = pfb;
+			ps = pf;
+		}
+		*/
+		/*
 		core::Vector2 ps = core::Vector2::cubic(get0(), get1(), get2(), get3(), 0);
 		for (uint i = 1; i < count; i++)
 		{
@@ -434,8 +608,9 @@ namespace zombo
 			renderEdge(color, ps, pf, getR()*_scale.get());
 			ps = pf;
 		}
+		*/
 	}
-
+	
 	uint CurveSegment::calcDetail() const
 	{
 		uint r = static_cast<uint>(core::Math::round(getBaseLen() / segnemtLen));
@@ -627,6 +802,11 @@ namespace zombo
 			_extraPointsAlpha.setTarget(0.0f);
 			_pointsAlpha.setTarget(0.0f);
 		}
+		for (uint i = 0; i < _visibleItems.segments.size(); i++)
+		{
+			_visibleItems.segments[i]->update();
+		}
+
 		for (uint i = 0; i < _visibleItems.points.size(); i++)
 		{
 			if(_visibleItems.points[i] == lastSelection.point)
@@ -637,10 +817,6 @@ namespace zombo
 			{
 				_visibleItems.points[i]->update(_pointsScale.get(), _pointsAlpha.get(), _pointsSnapAlpha.get());
 			}
-		}
-		for (uint i = 0; i < _visibleItems.segments.size(); i++)
-		{
-			_visibleItems.segments[i]->update();
 		}
 		for (uint i = 0; i < _visibleItems.pointsBindings.size(); i++)
 		{

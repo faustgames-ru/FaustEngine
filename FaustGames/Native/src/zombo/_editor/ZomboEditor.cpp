@@ -119,6 +119,11 @@ namespace zombo
 		_needCallContetnLoaded = true;
 
 		ZomboToolBox::Default.load();
+		
+		//int j = 0;
+		//int i = 0;
+		//CurvesManager::Default.addCurve(core::Vector2(i - 1, j - 0.5f), core::Vector2(i - 0.5f, j + 0.25f), core::Vector2(i + 0.5f, j + 0.25f), core::Vector2(i + 1, j - 0.5f));
+
 		for (int j = -5; j <= 5; j++)
 		{
 			for (int i = -4; i <= 4; i+=3)
@@ -126,12 +131,13 @@ namespace zombo
 				CurvesManager::Default.addCurve(core::Vector2(i - 1, j - 0.5f), core::Vector2(i - 0.5f, j + 0.25f), core::Vector2(i + 0.5f, j + 0.25f), core::Vector2(i + 1, j - 0.5f));
 			}
 		}
+
 	}
 
 	void ZomboEditor::update(float ellapsedTime)
 	{
 		ZomboGameEnvironment::update(ellapsedTime);
-		ZomboEditorInput::Default.mouse.internalUpdate();
+		ZomboEditorInput::Default.mouse()->internalUpdate();
 			
 		ZomboEditorRenderService::Default.resetBuffers();
 		ZomboEditorRenderService::Gui.resetBuffers();

@@ -69,8 +69,10 @@ namespace zombo
 		_bAngle.update();
 		ZomboEditorCamera::Default.rotator.setRotation(core::Matrix::createEuler(_pAngle.get(), _hAngle.get(), _bAngle.get()));
 
+		ZomboEditorMouse *mouse = ZomboEditorInput::Default.mouse();
+
 		float ellapsedTime = ZomboGameEnvironment::ellapsedSeconds;
-		bool isMiddlePressed = ZomboEditorInput::Default.mouse.isMiddlePressed();
+		bool isMiddlePressed = mouse->isMiddlePressed();
 		if (isMiddlePressed)
 		{
 			if (!_prevMidButtonState)
@@ -80,13 +82,13 @@ namespace zombo
 			}
 			if ((_lastMouse.getX() >= 0) && (_lastMouse.getY() >= 0))
 			{
-				float dx = 2.0f * (ZomboEditorInput::Default.mouse.position.getX() - _lastMouse.getX()) * ZomboEditorCamera::Default.getInterpoaltedScale() / ZomboEditorViewport::Default.h;
-				float dy = 2.0f * (ZomboEditorInput::Default.mouse.position.getY() - _lastMouse.getY()) * ZomboEditorCamera::Default.getInterpoaltedScale() / ZomboEditorViewport::Default.h;
+				float dx = 2.0f * (mouse->position.getX() - _lastMouse.getX()) * ZomboEditorCamera::Default.getInterpoaltedScale() / ZomboEditorViewport::Default.h;
+				float dy = 2.0f * (mouse->position.getY() - _lastMouse.getY()) * ZomboEditorCamera::Default.getInterpoaltedScale() / ZomboEditorViewport::Default.h;
 				
 				velocityStack.updateMove(core::Vector2(-dx, dy));
 				ZomboEditorCamera::Default.addPositionXY(core::Vector2(-dx, dy));							
 			}
-			_lastMouse = ZomboEditorInput::Default.mouse.position;
+			_lastMouse = mouse->position;
 		}
 		else
 		{

@@ -131,10 +131,14 @@ namespace zombo
 
 	void CurvesStateMovePoint::update()
 	{
-		bool isLeftPressed = ZomboEditorInput::Default.mouse.isLeftPressed();
+		ZomboEditorMouse *mouse = ZomboEditorInput::Default.queryMouse(this);
+		if (mouse == nullptr) return;
+
+		bool isLeftPressed = mouse->isLeftPressed();
 		core::Vector2 mousePos = CurvesManager::Default.mousePos;
 		if (isLeftPressed)
 		{
+			mouse->handle(this);
 			core::Vector2 md = mousePos - _downMousePos;
 			core::Vector2 sp = _prevSelectedPosition + md;
 
@@ -177,6 +181,7 @@ namespace zombo
 				delete actualMovePointCommand;
 			}
 			CurvesManager::Default.setState(&CurvesStateSelect::Default);
+			mouse->handle(nullptr);
 		}
 	}
 

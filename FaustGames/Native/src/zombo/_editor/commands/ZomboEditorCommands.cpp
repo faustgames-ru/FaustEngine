@@ -52,14 +52,14 @@ namespace zombo
 
 	bool ZomboEditorCommands::isUndoAvaliable() const
 	{
-		if (_undoList.empty() || ZomboEditorInput::Default.mouse.buttons != 0)
+		if (_undoList.empty() || ZomboEditorInput::Default.mouse()->buttons != 0)
 			return false;
 		return _undoList.top()->isUndoAvaliable();
 	}
 
 	bool ZomboEditorCommands::isRedoAvaliable() const
 	{
-		if (_redoList.empty() || ZomboEditorInput::Default.mouse.buttons != 0)
+		if (_redoList.empty() || ZomboEditorInput::Default.mouse()->buttons != 0)
 			return false;
 		return _redoList.top()->isExecutionAvaliable();
 	}

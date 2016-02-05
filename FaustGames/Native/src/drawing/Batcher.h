@@ -8,12 +8,12 @@
 namespace drawing
 {
 	class BatchBuffer;
-
 	struct BatchEntry
 	{
 		ushort * IndicesStart;
-		uint TextureId;
-		uint LightmapId;
+		uint Config[CONFIG_MAX_SIZE];
+		//uint TextureId;
+		//uint LightmapId;
 		int IndicesCount;
 		int BatchBufferIndex;
 		int TransformIndex;
@@ -141,8 +141,10 @@ namespace drawing
 	{
 		graphics::EffectBase *Effect;
 		graphics::BlendState::e Blend;
-		uint TextureId;
-		uint LightmapId;
+		void *config;
+		//uint TextureId;
+		//uint LightmapId;
+		bool isConfigEqual(void *otherConfig) const;
 	};
 
 	struct BatcherSpineMesh
@@ -180,7 +182,9 @@ namespace drawing
 		void finish();
 		void drawMesh(graphics::EffectBase *effect, graphics::BlendState::e blend, llge::ITexture * texture, uint lightmapId, TVertex *vertices, int verticesCount, ushort *indices, int indicesCount);
 		void drawMesh(graphics::EffectBase *effect, graphics::BlendState::e blend, uint textureId, uint lightmapId, TVertex *vertices, int verticesCount, ushort *indices, int indicesCount);
+		void drawMesh(graphics::EffectBase *effect, graphics::BlendState::e blend, void* config, TVertex *vertices, int verticesCount, ushort *indices, int indicesCount);
 		void drawSpineMesh(const BatcherSpineMesh &mesh);
+		/*
 		inline void drawMesh(const BatcherMesh &mesh)
 		{
 			drawMesh(
@@ -193,6 +197,7 @@ namespace drawing
 				mesh.Indices,
 				mesh.IndicesCount);
 		}
+		*/
 		void executeRenderCommands(bool usePostProcess);
 
 		virtual IntPtr API_CALL getNativeInstance()
@@ -230,6 +235,13 @@ namespace drawing
 		{
 			finish();
 		}
+
+		virtual void API_CALL drawEx(llge::GraphicsEffects effect, llge::BlendMode blendMode, IntPtr config, void *vertices, int verticesCount, void *indices, int indicesCount)
+		{
+			// todo: all
+			drawMesh(_converter.getEffect(effect), _converter.getBlend(blendMode), config, (TVertex *)vertices, verticesCount, (ushort *)indices, indicesCount);
+		}
+		
 		virtual void API_CALL draw(llge::GraphicsEffects effect, llge::BlendMode blendMode, llge::ITexture* texture, uint lightmapId, void *vertices, int verticesCount, void *indices, int indicesCount)
 		{
 			drawMesh(_converter.getEffect(effect), _converter.getBlend(blendMode), texture, lightmapId, (TVertex *)vertices, verticesCount, (ushort *)indices, indicesCount);
@@ -256,12 +268,13 @@ namespace drawing
 		BatchEntry _currentEntry;
 		int _batchBufferIndex;
 		
-		uint _textureId;
-		uint _lightmapId;
+		llge::LightingConfig _lightingConfig; // todo: remove
+		//uint _textureId;
+		//uint _lightmapId;
 		core::MatrixContainer _projection;
 		graphics::BlendState::e _blend;
 		graphics::EffectBase *_effect;
-
+		uint _config[CONFIG_MAX_SIZE];
 		graphics::GraphicsDevice * _graphicsDevice;
 		graphics::VertexFormat * _format;
 		graphics::RenderConverter _converter;

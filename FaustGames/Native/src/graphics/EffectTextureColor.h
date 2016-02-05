@@ -17,6 +17,7 @@ namespace graphics
 		EffectTexturePackedColor();
 		~EffectTexturePackedColor();
 		void create();
+		virtual void configApply(const void *config) OVERRIDE;
 	protected:
 	private:
 	};
@@ -26,6 +27,7 @@ namespace graphics
 		EffectTextureColor();
 		~EffectTextureColor();
 		void create();
+		virtual void configApply(const void *config) OVERRIDE;
 	protected:
 	private:
 	};

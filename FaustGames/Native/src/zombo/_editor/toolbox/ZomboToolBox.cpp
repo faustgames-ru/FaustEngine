@@ -49,9 +49,11 @@ namespace zombo
 
 	void ZomboToolBoxItem::updateInput(const core::Vector2& position, float scale)
 	{
-		bool midOrRight = ZomboEditorInput::Default.mouse.isMiddlePressed() || ZomboEditorInput::Default.mouse.isRightPressed();
-		float mx = ZomboEditorInput::Default.mouse.position.getX();
-		float my = ZomboEditorViewport::Default.h - ZomboEditorInput::Default.mouse.position.getY();
+		ZomboEditorMouse *mouse = ZomboEditorInput::Default.queryMouse(this);
+		if (mouse == nullptr) return;
+		bool midOrRight = mouse->isMiddlePressed() || mouse->isRightPressed();
+		float mx = mouse->position.getX();
+		float my = ZomboEditorViewport::Default.h - mouse->position.getY();
 		float sx = getSizeX()*_scale.get()*scale * 0.5f;
 		float sy = getSizeY()*_scale.get()*scale * 0.5f;
 		float px = position.getX();
@@ -62,8 +64,9 @@ namespace zombo
 			py - sy <= my && my <= py + sy && !midOrRight;
 		if (isHovered)
 		{
-			if (ZomboEditorInput::Default.mouse.isLeftPressed())
+			if (mouse->isLeftPressed())
 			{
+				mouse->handle(this);
 				isSelected = true;
 				_scale.setTarget(1.5f);
 			}
@@ -79,6 +82,10 @@ namespace zombo
 			_scale.setTarget(1.0f);
 			_offset0.setTarget(0.0f);
 			_offset1.setTarget(0.0f);
+		}
+		if (!mouse->isLeftPressed())
+		{
+			mouse->handle(nullptr);
 		}
 	}
 
@@ -170,7 +177,7 @@ namespace zombo
 	{
 		calcBounds();
 		_alpha.update();
-		if (_hasSelection)
+		if (_hasSelection || ZomboEditorInput::Default.queryMouse(this) == nullptr)
 		{
 			_alpha.setTarget(0.0f);
 		}
@@ -199,7 +206,7 @@ namespace zombo
 		ZomboEditorRenderService::Gui.drawTriangles(vertices, 4, indices, 2);
 		for (uint i = 0; i < _items.size(); i++)
 		{
-			if (_hasSelection)
+			if (_hasSelection || ZomboEditorInput::Default.queryMouse(this) == nullptr)
 			{
 				if (_items[i]->isSelected || _items[i]->isHovered)
 				{

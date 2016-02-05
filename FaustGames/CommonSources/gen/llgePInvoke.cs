@@ -68,6 +68,26 @@ namespace llge
 		MatrixTransform = 0x8,
 	}
 	
+	[StructLayout(LayoutKind.Sequential)]
+	public struct EffectConfig
+	{
+		public uint texture;
+	}
+	
+	[StructLayout(LayoutKind.Sequential)]
+	public struct LightingConfig
+	{
+		public uint texture;
+		public uint lightmap;
+	}
+	
+	[StructLayout(LayoutKind.Sequential)]
+	public struct HighlightConfig
+	{
+		public uint texture;
+		public uint highlightColor;
+	}
+	
 	public class Texture
 	{
 		public IntPtr ClassInstance;
@@ -931,6 +951,13 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private void llge_Batch2d_setToneMap (IntPtr classInstance, uint tonemapId);
+		public void DrawEx (GraphicsEffects effect, BlendMode blendMode, IntPtr config, IntPtr vertices, int verticesCount, IntPtr indices, int indicesCount)
+		{
+			llge_Batch2d_drawEx(ClassInstance, effect, blendMode, config, vertices, verticesCount, indices, indicesCount);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_Batch2d_drawEx (IntPtr classInstance, GraphicsEffects effect, BlendMode blendMode, IntPtr config, IntPtr vertices, int verticesCount, IntPtr indices, int indicesCount);
 		public void Draw (GraphicsEffects effect, BlendMode blendMode, Texture textureId, uint lightmapId, IntPtr vertices, int verticesCount, IntPtr indices, int indicesCount)
 		{
 			llge_Batch2d_draw(ClassInstance, effect, blendMode, textureId.ClassInstance, lightmapId, vertices, verticesCount, indices, indicesCount);
@@ -999,6 +1026,13 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private float llge_SpineSkeleton_getZ (IntPtr classInstance);
+		public void RenderEx (Batch2d batch, IntPtr effectConfig, GraphicsEffects effect)
+		{
+			llge_SpineSkeleton_renderEx(ClassInstance, batch.ClassInstance, effectConfig, effect);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_SpineSkeleton_renderEx (IntPtr classInstance, IntPtr batch, IntPtr effectConfig, GraphicsEffects effect);
 		public void Render (Batch2d batch, int lightmapId, GraphicsEffects effect)
 		{
 			llge_SpineSkeleton_render(ClassInstance, batch.ClassInstance, lightmapId, effect);

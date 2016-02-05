@@ -128,7 +128,10 @@ namespace zombo
 		void setRot(float rot);
 		geometry::Aabb2d getAabb() const;
 		core::Vector2 getCurveP() const;
+		core::Vector2 getCurveTargetP() const;
 		core::Vector2 getArrowP() const;
+		core::Vector2 getArrowP0() const;
+		core::Vector2 getArrowP1() const;
 		SFloat _scale;
 		SFloat _rot;
 	};

@@ -55,11 +55,34 @@ namespace zombo
 		internalButtons = 0;
 	}
 
+	void ZomboEditorMouse::handle(void* handler)
+	{
+		_handler = handler;
+	}
+
+	ZomboEditorMouse* ZomboEditorMouse::query(void* handler)
+	{
+		if (_handler == nullptr) return this;
+		if (handler == _handler) return this;
+		return nullptr;
+	}
+
 	ZomboEditorInput ZomboEditorInput::Default;
+
+
+	ZomboEditorMouse* ZomboEditorInput::queryMouse(void* handler)
+	{
+		return _mouse.query(handler);
+	}
+
+	ZomboEditorMouse* ZomboEditorInput::mouse()
+	{
+		return &_mouse;
+	}
 
 	IZomboEditorMouse* ZomboEditorInput::getEditorMouse()
 	{
-		return &mouse;
+		return &_mouse;
 	}
 
 	extern "C" DLLEXPORT IZomboEditorInput* API_CALL getZomboEditorInput()

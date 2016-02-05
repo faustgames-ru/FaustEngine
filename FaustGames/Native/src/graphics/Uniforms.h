@@ -23,6 +23,7 @@ namespace graphics
 		static UniformInfo *normalmap();
 		static UniformInfo *time();
 		static UniformInfo *pixelSize();
+		static UniformInfo *highlightColor();
 	private:
 		static UniformInfo _cameraPosition;
 		static UniformInfo _projection;
@@ -33,6 +34,7 @@ namespace graphics
 		static UniformInfo _normalmap;
 		static UniformInfo _time;
 		static UniformInfo _pixelSize;
+		static UniformInfo _highlightColor;
 	};
 
 	class UniformValues
@@ -47,6 +49,7 @@ namespace graphics
 		static inline UniformValueTexture *normalmap(){ return &_normalmap; }
 		static inline UniformValueFloat *time(){ return &_time; }
 		static inline UniformValueVector2 *pixelSize(){ return &_pixelSize; }
+		static inline UniformValueVector3 *highlightColor() { return &_highlightColor; }
 
 		static void initSamplers();
 		static void resetSamplers();
@@ -61,6 +64,7 @@ namespace graphics
 		static UniformValueTexture _normalmap;
 		static UniformValueFloat _time;
 		static UniformValueVector2 _pixelSize;
+		static UniformValueVector3 _highlightColor;
 		static UniformValueTexture* _samplers[GraphicsConstants::Samplers2DLimit];
 	};
 }

@@ -17,6 +17,7 @@ namespace graphics
 		EffectTextureAlphamaskColor();
 		~EffectTextureAlphamaskColor();
 		void create();
+		virtual void configApply(const void *config) OVERRIDE;
 	protected:
 	private:
 	};

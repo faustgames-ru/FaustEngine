@@ -7,7 +7,8 @@
 namespace graphics
 {
 	EffectTexturePackedColor::EffectTexturePackedColor()
-	{
+	{		
+		_configSize = sizeof(llge::EffectConfig);
 		_effect.addUniform(Uniforms::projection(), UniformValues::projection());
 		_effect.addUniform(Uniforms::texture(), UniformValues::texture());
 		_effect.addAttribute(Attributes::position());
@@ -24,8 +25,15 @@ namespace graphics
 		_effect.create((char *)shader_texture_color_vert, shader_texture_color_vert_size, (char *)shader_texture_color_frag, shader_texture_color_frag_size);
 	}
 
+	void EffectTexturePackedColor::configApply(const void* config)
+	{
+		const llge::EffectConfig* ec = static_cast<const llge::EffectConfig*>(config);
+		graphics::UniformValues::texture()->setValue(ec->texture);
+	}
+
 	EffectTextureColor::EffectTextureColor()
 	{
+		_configSize = sizeof(llge::EffectConfig);
 		_effect.addUniform(Uniforms::projection(), UniformValues::projection());
 		_effect.addUniform(Uniforms::texture(), UniformValues::texture());
 		_effect.addAttribute(Attributes::position());
@@ -39,5 +47,11 @@ namespace graphics
 	void EffectTextureColor::create()
 	{
 		_effect.create((char *)shader_texture_color_vert, shader_texture_color_vert_size, (char *)shader_texture_color_frag, shader_texture_color_frag_size);
+	}
+
+	void EffectTextureColor::configApply(const void* config)
+	{
+		const llge::EffectConfig* ec = static_cast<const llge::EffectConfig*>(config);
+		graphics::UniformValues::texture()->setValue(ec->texture);		
 	}
 }

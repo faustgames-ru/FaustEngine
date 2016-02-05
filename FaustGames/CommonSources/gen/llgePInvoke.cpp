@@ -556,6 +556,11 @@ namespace llge
 		classInstance->setToneMap(tonemapId);
 	}
 	
+	extern "C" DLLEXPORT void API_CALL llge_Batch2d_drawEx (IBatch2d * classInstance, GraphicsEffects effect, BlendMode blendMode, IntPtr config, void * vertices, int verticesCount, void * indices, int indicesCount)
+	{
+		classInstance->drawEx(effect, blendMode, config, vertices, verticesCount, indices, indicesCount);
+	}
+	
 	extern "C" DLLEXPORT void API_CALL llge_Batch2d_draw (IBatch2d * classInstance, GraphicsEffects effect, BlendMode blendMode, ITexture * textureId, uint lightmapId, void * vertices, int verticesCount, void * indices, int indicesCount)
 	{
 		classInstance->draw(effect, blendMode, textureId, lightmapId, vertices, verticesCount, indices, indicesCount);
@@ -599,6 +604,11 @@ namespace llge
 	extern "C" DLLEXPORT float API_CALL llge_SpineSkeleton_getZ (ISpineSkeleton * classInstance)
 	{
 		return classInstance->getZ();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_SpineSkeleton_renderEx (ISpineSkeleton * classInstance, IBatch2d * batch, IntPtr effectConfig, GraphicsEffects effect)
+	{
+		classInstance->renderEx(batch, effectConfig, effect);
 	}
 	
 	extern "C" DLLEXPORT void API_CALL llge_SpineSkeleton_render (ISpineSkeleton * classInstance, IBatch2d * batch, int lightmapId, GraphicsEffects effect)

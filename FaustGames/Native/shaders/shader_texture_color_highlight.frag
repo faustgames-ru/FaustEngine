@@ -5,6 +5,7 @@ precision mediump int;
 
 uniform sampler2D texture;
 uniform float time;
+uniform vec3 highlightColor;
 
 varying vec4 _color;
 varying vec2 _textureCoords;
@@ -13,6 +14,6 @@ void main()
 {
 	vec4 textureColor = texture2D(texture, _textureCoords)*_color;	
 	float level = abs(1.0 - mod(time, 2.0)) * textureColor.a;
-	vec4 highlightColor = vec4(1.0, 0.9, 0.3, 1.0);
-	gl_FragColor = mix(textureColor, highlightColor, level * 0.7);
+	vec4 highlightColor4 = vec4(highlightColor.x, highlightColor.y, highlightColor.z, 1.0);
+	gl_FragColor = mix(textureColor, highlightColor4, level * 0.7);
 }

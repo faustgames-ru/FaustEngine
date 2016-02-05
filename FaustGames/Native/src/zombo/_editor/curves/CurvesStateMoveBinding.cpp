@@ -32,7 +32,7 @@ namespace zombo
 		_center = p;
 	}
 
-	void BindingSnapping::snap(core::Vector2& p)
+	bool BindingSnapping::snap(core::Vector2& p)
 	{
 		// todo: all
 		core::Vector2 c = _center->getXY();
@@ -41,11 +41,23 @@ namespace zombo
 		core::Vector2 axis;
 		bool snap = false;
 		float scale = 0.0f;
+		float len = (p - c).length();
+		float sens = CurvePointBinding::r;
+		//if (core::Vector2::equals(origin, c))
+		{
+			if (len < CurvePointBinding::trim)
+			{
+				p = c + (p - c).normalize()*CurvePointBinding::trim;
+				return false;
+				//sens = sens*0.2f;
+			}
+		}
+
 		for (uint i = 0; i < ZOMBO_BINDING_SNAPPING_AXIS_COUNT; i++)
 		{
 			core::Vector2 a = _axis[i] * l;
 			float d = core::Vector2::distanceToEdge(p, c, c + a);
-			if (d < CurvePointBinding::r)
+			if (d < sens)
 			{
 				if (minD > d)
 				{
@@ -56,16 +68,15 @@ namespace zombo
 				}
 			}
 		}
+		
 		if (snap)
 		{
-			_snapScale.setTarget(1.0f);
 			minD = core::Math::MaxValue;
-			float len = (p - c).length();
 			float newLen = len;
 			for (float n = CurvePointBinding::trim; n < l; n += _step)
 			{
 				float d = core::Math::abs(n - len);
-				if (d < CurvePointBinding::r)
+				if (d < sens)
 				{
 					if (minD > d)
 					{
@@ -74,13 +85,21 @@ namespace zombo
 					}
 				}
 			}
-
+			if (newLen < core::Math::Epsilon)
+			{
+				_snapScale.setTarget(0.0f);
+			}
+			else
+			{
+				_snapScale.setTarget(1.0f);
+			}
 			p = c + axis * newLen;
 		}
 		else
 		{
 			_snapScale.setTarget(0.0f);
 		}
+		return snap;
 	}
 
 	void BindingSnapping::update()
@@ -141,21 +160,26 @@ namespace zombo
 		_downMousePos = CurvesManager::Default.mousePos;
 		_prevSelectedPosition = selectedBinding->getXY();
 		BindingSnapping::Default.setCenter(selectedBinding->p);
+		BindingSnapping::Default.origin = _prevSelectedPosition;
 		BindingSnapping::Default.show();
 	}
 
 	void CurvesStateMoveBinding::update()
 	{
-		bool isLeftPressed = ZomboEditorInput::Default.mouse.isLeftPressed();
+		ZomboEditorMouse *mouse = ZomboEditorInput::Default.queryMouse(this);
+		if (mouse == nullptr) return;
+
+		bool isLeftPressed = mouse->isLeftPressed();
 		core::Vector2 mousePos = CurvesManager::Default.mousePos;
 		if (isLeftPressed)
 		{
+			mouse->handle(this);
 			core::Vector2 md = mousePos - _downMousePos;
 			core::Vector2 sp = _prevSelectedPosition + md;
 			
 			// todo: snapping
 			BindingSnapping::Default.snap(sp);
-			selectedBinding->setXY(sp);			
+			selectedBinding->setXY(sp);
 			selectedBinding->updateSelectedState();
 		}
 		else
@@ -167,6 +191,7 @@ namespace zombo
 				delete actualMoveCommand;
 			}
 			CurvesManager::Default.setState(&CurvesStateSelect::Default);
+			mouse->handle(nullptr);
 		}
 	}
 

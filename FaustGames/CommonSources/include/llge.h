@@ -18,6 +18,8 @@
 #endif
 #endif
 
+#define CONFIG_MAX_SIZE 2
+
 #include "BaseObjects.h"
 
 typedef unsigned short ushort;
@@ -56,7 +58,7 @@ namespace llge
 		FormatPositionTexture = 0x2,
 		FormatPositionColor = 0x3,
 	};
-		
+
 	enum CubemapPlane
 	{
 		PositiveX = 0x0,
@@ -81,6 +83,23 @@ namespace llge
 		Transform2d = 0x2,
 		Render2d = 0x4,
 		MatrixTransform = 0x8,
+	};
+
+	struct EffectConfig
+	{
+		uint texture;
+	};
+			
+	struct LightingConfig
+	{
+		uint texture;
+		uint lightmap;
+	};
+
+	struct HighlightConfig
+	{
+		uint texture;
+		uint highlightColor;
 	};
 
 	/// graphics
@@ -301,6 +320,7 @@ namespace llge
 		virtual void API_CALL startBatch() = 0;
 		virtual void API_CALL finishBatch() = 0;
 		virtual void API_CALL setToneMap(uint tonemapId) = 0;
+		virtual void API_CALL drawEx(GraphicsEffects effect, BlendMode blendMode, IntPtr config, void *vertices, int verticesCount, void *indices, int indicesCount) = 0;
 		virtual void API_CALL draw(GraphicsEffects effect, BlendMode blendMode, ITexture* textureId, uint lightmapId, void *vertices, int verticesCount, void *indices, int indicesCount) = 0;
 		virtual void API_CALL execute(bool usePostProcess) = 0;
 	};
@@ -318,6 +338,7 @@ namespace llge
 		virtual float API_CALL getMaxY() = 0;
 		virtual float API_CALL getZ() = 0;
 
+		virtual void API_CALL renderEx(IBatch2d * batch, IntPtr effectConfig, GraphicsEffects effect) = 0;
 		virtual void API_CALL render(IBatch2d * batch, int lightmapId, GraphicsEffects effect) = 0;
 		virtual int API_CALL getGeometry(void *vertices, int verticeLimit, void *indices, int indicesLimit) = 0;
 		virtual IntPtr API_CALL getNativeInstance() = 0;

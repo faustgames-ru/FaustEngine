@@ -17,6 +17,7 @@ namespace graphics
 		EffectTextureColorHighlight();
 		~EffectTextureColorHighlight();
 		void create();
+		virtual void configApply(const void *config) OVERRIDE;
 	protected:
 	private:
 	};

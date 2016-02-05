@@ -23,18 +23,23 @@ namespace zombo
 		virtual void API_CALL update(int mouseX, int mouseY, uint mouseButtons) OVERRIDE;
 		void internalUpdate();
 		void reset();
+		void handle(void *handler);
+		ZomboEditorMouse *query(void *handler);
 	private:
 		core::Vector2 internalPosition;
 		uint internalButtons;
+		void* _handler;
 	};
 
 	class ZomboEditorInput : public IZomboEditorInput
 	{
 	public:
 		static ZomboEditorInput Default;
-		ZomboEditorMouse mouse;
-	private:
+		ZomboEditorMouse *queryMouse(void *handler);
+		ZomboEditorMouse *mouse();
 		virtual IZomboEditorMouse* API_CALL getEditorMouse() OVERRIDE;
+	private:
+		ZomboEditorMouse _mouse;
 	};
 }
 

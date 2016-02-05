@@ -6,12 +6,17 @@
 
 namespace graphics
 {
-	class EffectBase
+	class EffectBase: IBaseObject
 	{
 	public:
+		EffectBase();
 		Effect *getEffect();
+		bool isConfigEqual(const void *c0, const void *c1) const;
+		void configCopy(void *dst, const void *src) const;
+		virtual void configApply(const void *config) {}
 	protected:
 		Effect _effect;
+		int _configSize;
 	private:
 	};
 }

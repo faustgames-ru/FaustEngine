@@ -59,8 +59,9 @@ namespace zombo
 
 	void ZomboCameraRotate::updateInput()
 	{
-		core::Vector2 position = ZomboEditorInput::Default.mouse.position;
-		if (ZomboEditorInput::Default.mouse.isMiddlePressed())
+		ZomboEditorMouse *mouse = ZomboEditorInput::Default.mouse();
+		core::Vector2 position = mouse->position;
+		if (mouse->isMiddlePressed())
 		{
 			if (!_prevMidButtonState)
 			{
@@ -127,7 +128,7 @@ namespace zombo
 			}
 			_lastMouse = _mouseDownPosition = core::Vector2(-1.0f, -1.0f);
 		}
-		_prevMidButtonState = ZomboEditorInput::Default.mouse.isMiddlePressed();
+		_prevMidButtonState = mouse->isMiddlePressed();
 	}
 
 }

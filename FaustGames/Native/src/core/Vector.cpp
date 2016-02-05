@@ -162,6 +162,8 @@ namespace core
 	Vector2 Vector2::normalize() const
 	{
 		float l = length();
+		if (l < core::Math::Epsilon)
+			return *this;
 		return Vector2(getX() / l, getY() / l);
 	}
 
@@ -183,6 +185,11 @@ namespace core
 	Vector3 Vector2::toVector3(float z) const
 	{
 		return Vector3(getX(), getY(), z);
+	}
+
+	bool Vector2::isEmpty() const
+	{
+		return equals(*this, empty);
 	}
 
 	Vector2 Vector2::lerp(const Vector2& p1, const Vector2& p2, float u)

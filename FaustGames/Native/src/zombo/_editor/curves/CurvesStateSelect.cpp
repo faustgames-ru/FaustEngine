@@ -70,12 +70,14 @@ namespace zombo
 
 	void CurvesStateSelect::update()
 	{
+		ZomboEditorMouse *mouse = ZomboEditorInput::Default.queryMouse(this);
+		if (mouse == nullptr) return;
 		CurvesVisibleItems &visible = CurvesManager::Default.getVisibleItems();
 		CurvesSelection selection = CurvesManager::Default.findSelection(visible);
 		updatePoints(visible.points, selection);
 		updateBinding(visible.pointsBindings, selection);
 		updateSegments(visible.segments, selection);
-		bool isLeftPressed = ZomboEditorInput::Default.mouse.isLeftPressed();
+		bool isLeftPressed = mouse->isLeftPressed();
 		if (isLeftPressed)
 		{
 			CurvesManager::Default.selection = CurvesManager::Default.lastSelection = selection;

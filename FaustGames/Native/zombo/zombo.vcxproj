@@ -125,7 +125,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>EFFECTS_BASIC;WIN32;NDEBUG;_WINDOWS;_USRDLL;LLGE_EXPORTS;LIBPNG_EXPORTS;_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>EFFECTS_BASIC;WIN32;NDEBUG;_WINDOWS;_USRDLL;LLGE_EXPORTS;LIBPNG_EXPORTS;_CRT_SECURE_NO_WARNINGS;_LIB;FT_DEBUG_LEVEL_ERROR;FT_DEBUG_LEVEL_TRACE;FT2_BUILD_LIBRARY</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>..\include;..\..\CommonSources\include;..\src\spine\runtime;..\src\resources\zlib</AdditionalIncludeDirectories>
     </ClCompile>

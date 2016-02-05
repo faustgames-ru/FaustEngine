@@ -10,6 +10,7 @@ namespace spine
 	public:
 		SpineSkeleton(SpineSkeletonResource *resource, float* transform);
 		~SpineSkeleton();
+		virtual void API_CALL renderEx(llge::IBatch2d * batch, IntPtr effectConfig, llge::GraphicsEffects effect);
 		virtual void API_CALL render(llge::IBatch2d * batch, int lightmapId, llge::GraphicsEffects effect);
 		virtual int API_CALL getGeometry(void *vertices, int verticeLimit, void *indices, int indicesLimit);
 		void cleanup();
@@ -40,6 +41,7 @@ namespace spine
 		static drawing::BatcherSpineMesh _mesh;
 		static int _quadIndices[6];
 		static float _uvBuffer[4096];
+		llge::LightingConfig _lightingConfig; // todo: remove
 	};
 }
 

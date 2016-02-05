@@ -15,9 +15,10 @@ namespace zombo
 		BindingSnapping();
 		void show();
 		void setCenter(CurvesPoint *p);
-		void snap(core::Vector2 &p);
+		bool snap(core::Vector2 &p);
 		void update();
 		void hide();
+		core::Vector2 origin;
 	public:
 		SFloat _scale;
 		CurvesPoint *_center;

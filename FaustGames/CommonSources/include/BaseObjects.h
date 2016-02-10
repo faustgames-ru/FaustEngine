@@ -10,4 +10,4 @@ public:
 };
 
 
-#endif BASE_OBJECTS_H
+#endif /*BASE_OBJECTS_H*/

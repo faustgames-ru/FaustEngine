@@ -12,4 +12,4 @@ namespace navmesh
 	};
 }
 
-#endif FUNNEL_H
+#endif /*FUNNEL_H*/

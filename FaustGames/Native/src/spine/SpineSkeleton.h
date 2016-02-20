@@ -5,11 +5,24 @@
 
 namespace spine
 {
+	class SpineSkeletonBone : public llge::ISpineSkeletonBone
+	{
+	public:
+		SpineSkeletonBone(void *bone);
+		virtual IntPtr API_CALL getName() OVERRIDE;
+		virtual float API_CALL getX() OVERRIDE;
+		virtual float API_CALL getY() OVERRIDE;
+	private:
+		void *_spBone;
+	};
+
 	class SpineSkeleton : public llge::ISpineSkeleton
 	{
 	public:
 		SpineSkeleton(SpineSkeletonResource *resource, float* transform);
 		~SpineSkeleton();
+		virtual llge::ISpineSkeletonBone* API_CALL getBone(int index) OVERRIDE;
+		virtual int API_CALL getBonesCount() OVERRIDE;
 		virtual void API_CALL renderEx(llge::IBatch2d * batch, IntPtr effectConfig, llge::GraphicsEffects effect);
 		virtual void API_CALL render(llge::IBatch2d * batch, int lightmapId, llge::GraphicsEffects effect);
 		virtual int API_CALL getGeometry(void *vertices, int verticeLimit, void *indices, int indicesLimit);
@@ -17,7 +30,8 @@ namespace spine
 		void updateAabb();
 		void transform(float *x, float *y);
 		void API_CALL updateWorldTransform();
-		void *getSkeleton();
+		void *getSkeleton() const;
+		void findBone(const char *boneName);
 		virtual IntPtr API_CALL getNativeInstance();
 		virtual void API_CALL applySkin(IntPtr spineSkinNativeInstance);
 		virtual void API_CALL dispose();
@@ -42,6 +56,7 @@ namespace spine
 		static int _quadIndices[6];
 		static float _uvBuffer[4096];
 		llge::LightingConfig _lightingConfig; // todo: remove
+		std::vector<SpineSkeletonBone *> _bones;
 	};
 }
 

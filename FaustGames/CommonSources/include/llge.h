@@ -326,10 +326,19 @@ namespace llge
 	};
 
 	/// spine
-	
+	class ISpineSkeletonBone : IBaseObject
+	{
+	public:
+		virtual IntPtr API_CALL getName() = 0;
+		virtual float API_CALL getX() = 0;
+		virtual float API_CALL getY() = 0;
+	};
+
 	class ISpineSkeleton : IBaseObject
 	{
 	public:
+		virtual ISpineSkeletonBone* API_CALL getBone(int index) = 0;
+		virtual int API_CALL getBonesCount() = 0;
 		virtual void API_CALL setTransform(void *floatMatrix) = 0;
 		virtual void API_CALL setColor(uint color) = 0;
 		virtual float API_CALL getMinX() = 0;

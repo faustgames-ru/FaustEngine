@@ -571,6 +571,31 @@ namespace llge
 		classInstance->execute(usePostProcess);
 	}
 	
+	extern "C" DLLEXPORT IntPtr API_CALL llge_SpineSkeletonBone_getName (ISpineSkeletonBone * classInstance)
+	{
+		return classInstance->getName();
+	}
+	
+	extern "C" DLLEXPORT float API_CALL llge_SpineSkeletonBone_getX (ISpineSkeletonBone * classInstance)
+	{
+		return classInstance->getX();
+	}
+	
+	extern "C" DLLEXPORT float API_CALL llge_SpineSkeletonBone_getY (ISpineSkeletonBone * classInstance)
+	{
+		return classInstance->getY();
+	}
+	
+	extern "C" DLLEXPORT ISpineSkeletonBone * API_CALL llge_SpineSkeleton_getBone (ISpineSkeleton * classInstance, int index)
+	{
+		return classInstance->getBone(index);
+	}
+	
+	extern "C" DLLEXPORT int API_CALL llge_SpineSkeleton_getBonesCount (ISpineSkeleton * classInstance)
+	{
+		return classInstance->getBonesCount();
+	}
+	
 	extern "C" DLLEXPORT void API_CALL llge_SpineSkeleton_setTransform (ISpineSkeleton * classInstance, void * floatMatrix)
 	{
 		classInstance->setTransform(floatMatrix);

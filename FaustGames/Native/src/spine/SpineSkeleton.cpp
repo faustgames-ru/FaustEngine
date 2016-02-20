@@ -73,6 +73,26 @@ namespace spine
 		}
 	}
 
+	SpineSkeletonBone::SpineSkeletonBone(void* bone)
+	{
+		_spBone = bone;
+	}
+
+	IntPtr SpineSkeletonBone::getName()
+	{
+		return (IntPtr)static_cast<spBone *>(_spBone)->data->name;
+	}
+
+	float SpineSkeletonBone::getX()
+	{
+		return static_cast<spBone *>(_spBone)->worldX;
+	}
+
+	float SpineSkeletonBone::getY()
+	{
+		return static_cast<spBone *>(_spBone)->worldY;
+	}
+
 	SpineSkeleton::SpineSkeleton(SpineSkeletonResource *resource, float* transform) : _spSkeleton(0)
 	{
 		initFromResource(resource);
@@ -87,8 +107,19 @@ namespace spine
 		else
 			_transform = core::Matrix::identity;
 		spSkeleton_setToSetupPose(s);
-		updateWorldTransform();
+		SpineSkeleton::updateWorldTransform();
 		updateAabb();
+
+		int i;
+		for (i = 0; i < s->bonesCount; ++i)
+		{
+			_bones.push_back(new SpineSkeletonBone(s->bones[i]));
+		}
+	}
+
+	int SpineSkeleton::getBonesCount()
+	{
+		return _bones.size();
 	}
 
 	void SpineSkeleton::renderEx(llge::IBatch2d* batch, IntPtr effectConfig, llge::GraphicsEffects effect)
@@ -188,6 +219,11 @@ namespace spine
 	SpineSkeleton::~SpineSkeleton()
 	{
 		cleanup();
+	}
+
+	llge::ISpineSkeletonBone* SpineSkeleton::getBone(int index)
+	{
+		return _bones[index];
 	}
 
 	void API_CALL SpineSkeleton::applySkin(IntPtr spineSkinNativeInstance)
@@ -475,22 +511,33 @@ namespace spine
 	{
 		if (_spSkeleton)
 		{
-			spSkeleton_dispose((spSkeleton *)_spSkeleton);
+			for (uint i = 0; i < _bones.size(); i++)
+			{
+				delete _bones[i];
+			}
+			spSkeleton_dispose(static_cast<spSkeleton *>(_spSkeleton));
 			_spSkeleton = 0;
 		}
 	}
 
 	void API_CALL SpineSkeleton::updateWorldTransform()
 	{
-		spSkeleton_updateWorldTransform((spSkeleton *)_spSkeleton);
+		spSkeleton_updateWorldTransform(static_cast<spSkeleton *>(_spSkeleton));
 	}
 
 
-	void* SpineSkeleton::getSkeleton()
+	void* SpineSkeleton::getSkeleton() const
 	{
 		return _spSkeleton;
 	}
 
+	/*
+	void SpineSkeleton::findBone(const char* boneName)
+	{
+		spBone* bone = spSkeleton_findBone((spSkeleton *)_spSkeleton, boneName);
+		bone->
+	}
+	*/
 	IntPtr API_CALL SpineSkeleton::getNativeInstance()
 	{
 		return this;

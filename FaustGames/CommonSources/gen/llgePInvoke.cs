@@ -974,9 +974,49 @@ namespace llge
 		static extern private void llge_Batch2d_execute (IntPtr classInstance, bool usePostProcess);
 	}
 	
+	public class SpineSkeletonBone
+	{
+		public IntPtr ClassInstance;
+		public IntPtr GetName ()
+		{
+			return llge_SpineSkeletonBone_getName(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_SpineSkeletonBone_getName (IntPtr classInstance);
+		public float GetX ()
+		{
+			return llge_SpineSkeletonBone_getX(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private float llge_SpineSkeletonBone_getX (IntPtr classInstance);
+		public float GetY ()
+		{
+			return llge_SpineSkeletonBone_getY(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private float llge_SpineSkeletonBone_getY (IntPtr classInstance);
+	}
+	
 	public class SpineSkeleton
 	{
 		public IntPtr ClassInstance;
+		public SpineSkeletonBone GetBone (int index)
+		{
+			return new SpineSkeletonBone{ ClassInstance = llge_SpineSkeleton_getBone(ClassInstance, index) };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_SpineSkeleton_getBone (IntPtr classInstance, int index);
+		public int GetBonesCount ()
+		{
+			return llge_SpineSkeleton_getBonesCount(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private int llge_SpineSkeleton_getBonesCount (IntPtr classInstance);
 		public void SetTransform (IntPtr floatMatrix)
 		{
 			llge_SpineSkeleton_setTransform(ClassInstance, floatMatrix);

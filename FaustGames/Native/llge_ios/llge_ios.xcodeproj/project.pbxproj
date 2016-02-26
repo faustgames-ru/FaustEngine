@@ -133,8 +133,17 @@
 		440CBA011B1D8AF7009FDC49 /* SpineSkeletonResource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 440CB96E1B1D8AF7009FDC49 /* SpineSkeletonResource.cpp */; };
 		440CBA061B1D8B94009FDC49 /* llgePInvoke.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 440CBA051B1D8B94009FDC49 /* llgePInvoke.cpp */; };
 		44328EB41B1C4A3400CC67BE /* libllge_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 44328EA81B1C4A3400CC67BE /* libllge_ios.a */; };
-		448513231BCBF16B008F3079 /* EffectTextureAlphamaskColor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 448513211BCBF16B008F3079 /* EffectTextureAlphamaskColor.cpp */; settings = {ASSET_TAGS = (); }; };
-		448513241BCBF16B008F3079 /* EffectTextureColorHighlight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 448513221BCBF16B008F3079 /* EffectTextureColorHighlight.cpp */; settings = {ASSET_TAGS = (); }; };
+		448513231BCBF16B008F3079 /* EffectTextureAlphamaskColor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 448513211BCBF16B008F3079 /* EffectTextureAlphamaskColor.cpp */; };
+		448513241BCBF16B008F3079 /* EffectTextureColorHighlight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 448513221BCBF16B008F3079 /* EffectTextureColorHighlight.cpp */; };
+		44BD5D461C8057D900F6FAE7 /* BasicTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 44BD5D301C8057D900F6FAE7 /* BasicTest.cpp */; };
+		44BD5D471C8057D900F6FAE7 /* Convert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 44BD5D321C8057D900F6FAE7 /* Convert.cpp */; };
+		44BD5D481C8057D900F6FAE7 /* HollowsAllocationPolicy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 44BD5D371C8057D900F6FAE7 /* HollowsAllocationPolicy.cpp */; };
+		44BD5D491C8057D900F6FAE7 /* Lazy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 44BD5D391C8057D900F6FAE7 /* Lazy.cpp */; };
+		44BD5D4A1C8057D900F6FAE7 /* Math.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 44BD5D3B1C8057D900F6FAE7 /* Math.cpp */; };
+		44BD5D4B1C8057D900F6FAE7 /* Matrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 44BD5D3D1C8057D900F6FAE7 /* Matrix.cpp */; };
+		44BD5D4C1C8057D900F6FAE7 /* Path.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 44BD5D3F1C8057D900F6FAE7 /* Path.cpp */; };
+		44BD5D4D1C8057D900F6FAE7 /* SystemAllocationPolicy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 44BD5D421C8057D900F6FAE7 /* SystemAllocationPolicy.cpp */; };
+		44BD5D4E1C8057D900F6FAE7 /* Vector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 44BD5D441C8057D900F6FAE7 /* Vector.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -409,6 +418,38 @@
 		448513201BCBF16B008F3079 /* EffectTextureColorHighlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EffectTextureColorHighlight.h; sourceTree = "<group>"; };
 		448513211BCBF16B008F3079 /* EffectTextureAlphamaskColor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EffectTextureAlphamaskColor.cpp; sourceTree = "<group>"; };
 		448513221BCBF16B008F3079 /* EffectTextureColorHighlight.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EffectTextureColorHighlight.cpp; sourceTree = "<group>"; };
+		44AB0B9D1C8055FE009BF945 /* AStar.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AStar.cpp; sourceTree = "<group>"; };
+		44AB0B9E1C8055FE009BF945 /* AStar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AStar.h; sourceTree = "<group>"; };
+		44AB0B9F1C8055FE009BF945 /* Funnel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Funnel.cpp; sourceTree = "<group>"; };
+		44AB0BA01C8055FE009BF945 /* Funnel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Funnel.h; sourceTree = "<group>"; };
+		44AB0BA11C8055FE009BF945 /* NavMesh.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NavMesh.cpp; sourceTree = "<group>"; };
+		44AB0BA21C8055FE009BF945 /* NavMesh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NavMesh.h; sourceTree = "<group>"; };
+		44AB0BA31C8055FE009BF945 /* navmesh_classes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = navmesh_classes.h; sourceTree = "<group>"; };
+		44AB0BA41C8055FE009BF945 /* navmesh_platform.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = navmesh_platform.h; sourceTree = "<group>"; };
+		44AB0BA51C8055FE009BF945 /* navmesh_references.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = navmesh_references.h; sourceTree = "<group>"; };
+		44BD5D2F1C8057D900F6FAE7 /* Allocator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Allocator.h; sourceTree = "<group>"; };
+		44BD5D301C8057D900F6FAE7 /* BasicTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BasicTest.cpp; sourceTree = "<group>"; };
+		44BD5D311C8057D900F6FAE7 /* BasicTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasicTest.h; sourceTree = "<group>"; };
+		44BD5D321C8057D900F6FAE7 /* Convert.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Convert.cpp; sourceTree = "<group>"; };
+		44BD5D331C8057D900F6FAE7 /* Convert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Convert.h; sourceTree = "<group>"; };
+		44BD5D341C8057D900F6FAE7 /* core_classes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = core_classes.h; sourceTree = "<group>"; };
+		44BD5D351C8057D900F6FAE7 /* core_platform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = core_platform.h; sourceTree = "<group>"; };
+		44BD5D361C8057D900F6FAE7 /* core.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = core.h; sourceTree = "<group>"; };
+		44BD5D371C8057D900F6FAE7 /* HollowsAllocationPolicy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HollowsAllocationPolicy.cpp; sourceTree = "<group>"; };
+		44BD5D381C8057D900F6FAE7 /* HollowsAllocationPolicy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HollowsAllocationPolicy.h; sourceTree = "<group>"; };
+		44BD5D391C8057D900F6FAE7 /* Lazy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Lazy.cpp; sourceTree = "<group>"; };
+		44BD5D3A1C8057D900F6FAE7 /* Lazy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Lazy.h; sourceTree = "<group>"; };
+		44BD5D3B1C8057D900F6FAE7 /* Math.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Math.cpp; sourceTree = "<group>"; };
+		44BD5D3C1C8057D900F6FAE7 /* Math.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Math.h; sourceTree = "<group>"; };
+		44BD5D3D1C8057D900F6FAE7 /* Matrix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Matrix.cpp; sourceTree = "<group>"; };
+		44BD5D3E1C8057D900F6FAE7 /* Matrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Matrix.h; sourceTree = "<group>"; };
+		44BD5D3F1C8057D900F6FAE7 /* Path.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Path.cpp; sourceTree = "<group>"; };
+		44BD5D401C8057D900F6FAE7 /* Path.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Path.h; sourceTree = "<group>"; };
+		44BD5D411C8057D900F6FAE7 /* StaticArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StaticArray.h; sourceTree = "<group>"; };
+		44BD5D421C8057D900F6FAE7 /* SystemAllocationPolicy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SystemAllocationPolicy.cpp; sourceTree = "<group>"; };
+		44BD5D431C8057D900F6FAE7 /* SystemAllocationPolicy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SystemAllocationPolicy.h; sourceTree = "<group>"; };
+		44BD5D441C8057D900F6FAE7 /* Vector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Vector.cpp; sourceTree = "<group>"; };
+		44BD5D451C8057D900F6FAE7 /* Vector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vector.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -433,6 +474,7 @@
 		440CB8591B1D8AF7009FDC49 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				44AB0B9C1C8055FE009BF945 /* navmesh */,
 				440CB85A1B1D8AF7009FDC49 /* core */,
 				440CB86D1B1D8AF7009FDC49 /* drawing */,
 				440CB87F1B1D8AF7009FDC49 /* entities */,
@@ -449,6 +491,29 @@
 		440CB85A1B1D8AF7009FDC49 /* core */ = {
 			isa = PBXGroup;
 			children = (
+				44BD5D2F1C8057D900F6FAE7 /* Allocator.h */,
+				44BD5D301C8057D900F6FAE7 /* BasicTest.cpp */,
+				44BD5D311C8057D900F6FAE7 /* BasicTest.h */,
+				44BD5D321C8057D900F6FAE7 /* Convert.cpp */,
+				44BD5D331C8057D900F6FAE7 /* Convert.h */,
+				44BD5D341C8057D900F6FAE7 /* core_classes.h */,
+				44BD5D351C8057D900F6FAE7 /* core_platform.h */,
+				44BD5D361C8057D900F6FAE7 /* core.h */,
+				44BD5D371C8057D900F6FAE7 /* HollowsAllocationPolicy.cpp */,
+				44BD5D381C8057D900F6FAE7 /* HollowsAllocationPolicy.h */,
+				44BD5D391C8057D900F6FAE7 /* Lazy.cpp */,
+				44BD5D3A1C8057D900F6FAE7 /* Lazy.h */,
+				44BD5D3B1C8057D900F6FAE7 /* Math.cpp */,
+				44BD5D3C1C8057D900F6FAE7 /* Math.h */,
+				44BD5D3D1C8057D900F6FAE7 /* Matrix.cpp */,
+				44BD5D3E1C8057D900F6FAE7 /* Matrix.h */,
+				44BD5D3F1C8057D900F6FAE7 /* Path.cpp */,
+				44BD5D401C8057D900F6FAE7 /* Path.h */,
+				44BD5D411C8057D900F6FAE7 /* StaticArray.h */,
+				44BD5D421C8057D900F6FAE7 /* SystemAllocationPolicy.cpp */,
+				44BD5D431C8057D900F6FAE7 /* SystemAllocationPolicy.h */,
+				44BD5D441C8057D900F6FAE7 /* Vector.cpp */,
+				44BD5D451C8057D900F6FAE7 /* Vector.h */,
 				440CB85B1B1D8AF7009FDC49 /* Allocator.h */,
 				440CB85C1B1D8AF7009FDC49 /* BasicTest.cpp */,
 				440CB85D1B1D8AF7009FDC49 /* BasicTest.h */,
@@ -806,6 +871,22 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		44AB0B9C1C8055FE009BF945 /* navmesh */ = {
+			isa = PBXGroup;
+			children = (
+				44AB0B9D1C8055FE009BF945 /* AStar.cpp */,
+				44AB0B9E1C8055FE009BF945 /* AStar.h */,
+				44AB0B9F1C8055FE009BF945 /* Funnel.cpp */,
+				44AB0BA01C8055FE009BF945 /* Funnel.h */,
+				44AB0BA11C8055FE009BF945 /* NavMesh.cpp */,
+				44AB0BA21C8055FE009BF945 /* NavMesh.h */,
+				44AB0BA31C8055FE009BF945 /* navmesh_classes.h */,
+				44AB0BA41C8055FE009BF945 /* navmesh_platform.h */,
+				44AB0BA51C8055FE009BF945 /* navmesh_references.h */,
+			);
+			path = navmesh;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -894,6 +975,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				44BD5D461C8057D900F6FAE7 /* BasicTest.cpp in Sources */,
 				440CB9AC1B1D8AF7009FDC49 /* StaticBatch.cpp in Sources */,
 				440CB97A1B1D8AF7009FDC49 /* Matrix.cpp in Sources */,
 				440CB9C21B1D8AF7009FDC49 /* example.c in Sources */,
@@ -905,6 +987,7 @@
 				440CB9F61B1D8AF7009FDC49 /* SkeletonData.c in Sources */,
 				440CB9B31B1D8AF7009FDC49 /* Uniform.cpp in Sources */,
 				440CB9FF1B1D8AF7009FDC49 /* SpineSkeleton.cpp in Sources */,
+				44BD5D4C1C8057D900F6FAE7 /* Path.cpp in Sources */,
 				440CB98E1B1D8AF7009FDC49 /* Transform2dComponent.cpp in Sources */,
 				440CB9E81B1D8AF7009FDC49 /* AttachmentLoader.c in Sources */,
 				440CB9B41B1D8AF7009FDC49 /* UniformInfo.cpp in Sources */,
@@ -919,7 +1002,9 @@
 				440CBA011B1D8AF7009FDC49 /* SpineSkeletonResource.cpp in Sources */,
 				440CB9EF1B1D8AF7009FDC49 /* IkConstraint.c in Sources */,
 				440CB9821B1D8AF7009FDC49 /* WaterRenderer.cpp in Sources */,
+				44BD5D491C8057D900F6FAE7 /* Lazy.cpp in Sources */,
 				440CB9F91B1D8AF7009FDC49 /* SkinnedMeshAttachment.c in Sources */,
+				44BD5D4B1C8057D900F6FAE7 /* Matrix.cpp in Sources */,
 				440CB9E71B1D8AF7009FDC49 /* Attachment.c in Sources */,
 				440CB9801B1D8AF7009FDC49 /* RenderItem2d.cpp in Sources */,
 				440CB9E61B1D8AF7009FDC49 /* AtlasAttachmentLoader.c in Sources */,
@@ -932,6 +1017,7 @@
 				440CB9911B1D8AF7009FDC49 /* llgeDrawing.cpp in Sources */,
 				440CB9A21B1D8AF7009FDC49 /* EffectSolidColor.cpp in Sources */,
 				440CB9C61B1D8AF7009FDC49 /* pngmem.c in Sources */,
+				44BD5D471C8057D900F6FAE7 /* Convert.cpp in Sources */,
 				440CB9991B1D8AF7009FDC49 /* AttributeInfo.cpp in Sources */,
 				440CB97F1B1D8AF7009FDC49 /* Renderer2d.cpp in Sources */,
 				440CB9CF1B1D8AF7009FDC49 /* pngwio.c in Sources */,
@@ -954,10 +1040,12 @@
 				440CB9841B1D8AF7009FDC49 /* Component.cpp in Sources */,
 				440CB9971B1D8AF7009FDC49 /* Quadtree2d.cpp in Sources */,
 				440CB9FD1B1D8AF7009FDC49 /* SpineAnimationState.cpp in Sources */,
+				44BD5D4A1C8057D900F6FAE7 /* Math.cpp in Sources */,
 				440CB9A81B1D8AF7009FDC49 /* GraphicsDevice.cpp in Sources */,
 				440CB9791B1D8AF7009FDC49 /* Math.cpp in Sources */,
 				440CB9C01B1D8AF7009FDC49 /* ContentProviderObb.cpp in Sources */,
 				440CB9871B1D8AF7009FDC49 /* EntitiesWorld.cpp in Sources */,
+				44BD5D4E1C8057D900F6FAE7 /* Vector.cpp in Sources */,
 				440CB9B61B1D8AF7009FDC49 /* UniformValue.cpp in Sources */,
 				440CB9901B1D8AF7009FDC49 /* llge.cpp in Sources */,
 				440CB9C31B1D8AF7009FDC49 /* png.c in Sources */,
@@ -1006,6 +1094,7 @@
 				448513231BCBF16B008F3079 /* EffectTextureAlphamaskColor.cpp in Sources */,
 				440CB9C11B1D8AF7009FDC49 /* ContentProviderWindows.cpp in Sources */,
 				440CBA061B1D8B94009FDC49 /* llgePInvoke.cpp in Sources */,
+				44BD5D4D1C8057D900F6FAE7 /* SystemAllocationPolicy.cpp in Sources */,
 				440CB9B21B1D8AF7009FDC49 /* TextureRenderTargetDepth2d.cpp in Sources */,
 				440CB99E1B1D8AF7009FDC49 /* EffectConstant.cpp in Sources */,
 				448513241BCBF16B008F3079 /* EffectTextureColorHighlight.cpp in Sources */,
@@ -1018,6 +1107,7 @@
 				440CB9FA1B1D8AF7009FDC49 /* Slot.c in Sources */,
 				440CB98F1B1D8AF7009FDC49 /* TransformSystem2d.cpp in Sources */,
 				440CB9C51B1D8AF7009FDC49 /* pngget.c in Sources */,
+				44BD5D481C8057D900F6FAE7 /* HollowsAllocationPolicy.cpp in Sources */,
 				440CB9831B1D8AF7009FDC49 /* Aabb2dComponent.cpp in Sources */,
 				440CB9C81B1D8AF7009FDC49 /* pngread.c in Sources */,
 				440CB9781B1D8AF7009FDC49 /* Lazy.cpp in Sources */,

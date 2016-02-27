@@ -47,6 +47,8 @@ namespace core
 		void inverseX();
 		Vector2 rotate90cw() const;
 		Vector2 rotate90ccw() const;
+		Vector2 rotate(float a) const;
+		Vector2 rotate(float c, float s) const;
 		Vector2 normalize() const;
 		float length() const;
 		float lengthSqr() const;

@@ -90,6 +90,21 @@ namespace core
 		return v - trunc(v);
 	}
 
+	float Math::max(float v0, float v1)
+	{
+		return v0 > v1 ? v0 : v1;
+	}
+
+	float Math::max(float v0, float v1, float v2)
+	{
+		return max(max(v0, v1), v2);
+	}
+
+	float Math::min(float v0, float v1)
+	{
+		return v0 < v1 ? v0 : v1;
+	}
+
 	bool Math::equals(float a, float b, float epsilon)
 	{
 		float d = a - b;

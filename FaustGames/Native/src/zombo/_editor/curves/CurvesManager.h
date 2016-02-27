@@ -4,6 +4,7 @@
 #include "../../zombo_classes.h"
 #include "../../common/ZomboInterpolatedValue.h"
 #include "../commands/ZomboEditorCommand.h"
+#include "../../content/ZomboAtlas.h"
 
 namespace zombo
 {
@@ -190,7 +191,9 @@ namespace zombo
 		core::Vector2 mousePos;
 		CurvesManager();
 		CurvesPoint *snap(core::Vector2 &p, CurvesPoint *);
+		bool hasImages();
 		static void snapBinding(const core::Vector2 &p0, core::Vector2 &p1);
+		void load();
 		void update();
 		void addCurve(core::Vector2 p0, core::Vector2 p1, core::Vector2 p2, core::Vector2 p3);
 		static CurvesSelection findSelection(CurvesVisibleItems &items);
@@ -199,6 +202,8 @@ namespace zombo
 		SFloat scale;
 		CurvesSelection selection;
 		CurvesSelection lastSelection;
+		ZomboContentImage* getPointRingImage() const;
+		ZomboContentImage* getPointBoxImage() const;
 	private:
 		void queryVisibleItems(CurvesVisibleItems &items);
 		std::vector<CurvesPoint *> _points;
@@ -211,6 +216,8 @@ namespace zombo
 		SFloat _extraPointsAlpha;
 		SFloat _pointsScale;
 		SFloat _extraPointsScale;
+		ZomboContentImage* _pointBoxImage;
+		ZomboContentImage* _pointRingImage;
 	};
 }
 

@@ -158,7 +158,42 @@ namespace zombo
 
 	}
 
-	void ZomboDrawer::fillRect(uint color, const core::Vector3& p, float r, float angle)
+	void ZomboDrawer::drawRect(uint color, const core::Vector3& p, const core::Vector2& size)
+	{
+		_colorVertices.clear();
+		_indices.clear();
+		_colorVertices.push_back(ColorVertex(p, color));
+		_colorVertices.push_back(ColorVertex(p.getX() + size.getX(), p.getY(), p.getZ(), color));
+		_colorVertices.push_back(ColorVertex(p.getX() + size.getX(), p.getY() + size.getY(), p.getZ(), color));
+		_colorVertices.push_back(ColorVertex(p.getX(), p.getY() + size.getY(), p.getZ(), color));
+		_indices.push_back(0);
+		_indices.push_back(1);
+		_indices.push_back(1);
+		_indices.push_back(2);
+		_indices.push_back(2);
+		_indices.push_back(3);
+		_indices.push_back(3);
+		_indices.push_back(0);
+		_renderService->drawLines(_colorVertices.data(), _colorVertices.size(), _indices.data(), _indices.size() / 2);
+	}
+	void ZomboDrawer::fillRect(uint color, const core::Vector3& p, const core::Vector2& size)
+	{
+		_colorVertices.clear();
+		_indices.clear();
+		_colorVertices.push_back(ColorVertex(p, color));
+		_colorVertices.push_back(ColorVertex(p.getX() + size.getX(), p.getY(), p.getZ(), color));
+		_colorVertices.push_back(ColorVertex(p.getX() + size.getX(), p.getY() + size.getY(), p.getZ(), color));
+		_colorVertices.push_back(ColorVertex(p.getX(), p.getY() + size.getY(), p.getZ(), color));
+		_indices.push_back(0);
+		_indices.push_back(1);
+		_indices.push_back(2);
+		_indices.push_back(0);
+		_indices.push_back(2);
+		_indices.push_back(3);
+		_renderService->drawTriangles(_colorVertices.data(), _colorVertices.size(), _indices.data(), _indices.size() / 3);
+
+	}
+	void ZomboDrawer::fillQuad(uint color, const core::Vector3& p, float r, float angle)
 	{
 		uint count = 4;
 		float a = angle;
@@ -283,5 +318,20 @@ namespace zombo
 		_indices.push_back(0);
 		_indices.push_back(1);
 		_renderService->drawLines(_colorVertices.data(), _colorVertices.size(), _indices.data(), _indices.size() / 2);
+	}
+
+	void ZomboDrawer::drawSprite(uint color, float rotaion, float scale, const core::Vector3& p, ZomboContentImage* image)
+	{
+		_renderVertices.clear();
+		_indices.clear();
+
+		float c = core::Math::cos(rotaion);
+		float s = core::Math::sin(rotaion);
+		for (uint i = 0; i < image->vertices.size(); i++)
+		{
+			ZomboImageVertex v = image->vertices[i];			
+			_renderVertices.push_back(RenderVertex(p + v.xy.rotate(c, s)*scale, color, v.u, v.v));
+		}
+		_renderService->drawTrianglesTextured(image->texture, _renderVertices.data(), _renderVertices.size(), image->indices.data(), image->indices.size() / 3);
 	}
 }

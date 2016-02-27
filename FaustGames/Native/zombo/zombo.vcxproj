@@ -278,11 +278,15 @@
     <ClInclude Include="..\src\zombo\behaviors\ZomboBehaviorPlayer.h" />
     <ClInclude Include="..\src\zombo\cjson\cJSON.h" />
     <ClInclude Include="..\src\zombo\common\asyncs\ZomboAsyncState.h" />
+    <ClInclude Include="..\src\zombo\common\SConfig.h" />
+    <ClInclude Include="..\src\zombo\common\SEntry.h" />
+    <ClInclude Include="..\src\zombo\common\ValuesAnimator.h" />
     <ClInclude Include="..\src\zombo\common\ZomboGameEnvironment.h" />
     <ClInclude Include="..\src\zombo\common\states\ZomboStateController.h" />
     <ClInclude Include="..\src\zombo\common\ZomboBounds.h" />
     <ClInclude Include="..\src\zombo\common\ZomboCamera.h" />
     <ClInclude Include="..\src\zombo\common\ZomboInterpolatedValue.h" />
+    <ClInclude Include="..\src\zombo\common\ZomboStatistics.h" />
     <ClInclude Include="..\src\zombo\common\ZomboTimeLine.h" />
     <ClInclude Include="..\src\zombo\common\ZomboTransfom.h" />
     <ClInclude Include="..\src\zombo\content\loaders\LoaderJsonAtlas.h" />
@@ -329,6 +333,7 @@
     <ClInclude Include="..\src\zombo\_editor\ZomboEditorInput.h" />
     <ClInclude Include="..\src\zombo\_editor\ZomboEditorLoadingScreen.h" />
     <ClInclude Include="..\src\zombo\_editor\ZomboEditorRenderService.h" />
+    <ClInclude Include="..\src\zombo\_editor\ZomboEditorStatisticsDisplayer.h" />
     <ClInclude Include="..\src\zombo\_editor\ZomboEditorViewport.h" />
     <ClInclude Include="..\src\zombo\_editor\ZomboEditorLogDisplayer.h" />
     <ClInclude Include="..\src_clipper\clipper.hpp" />
@@ -448,11 +453,14 @@
     <ClCompile Include="..\src\zombo\behaviors\ZomboBehaviorPlayer.cpp" />
     <ClCompile Include="..\src\zombo\cjson\cJSON.c" />
     <ClCompile Include="..\src\zombo\common\asyncs\ZomboAsyncState.cpp" />
+    <ClCompile Include="..\src\zombo\common\SConfig.cpp" />
     <ClCompile Include="..\src\zombo\common\states\ZomboStateController.cpp" />
+    <ClCompile Include="..\src\zombo\common\ValuesAnimator.cpp" />
     <ClCompile Include="..\src\zombo\common\ZomboBounds.cpp" />
     <ClCompile Include="..\src\zombo\common\ZomboCamera.cpp" />
     <ClCompile Include="..\src\zombo\common\ZomboGameEnvironment.cpp" />
     <ClCompile Include="..\src\zombo\common\ZomboInterpolatedValue.cpp" />
+    <ClCompile Include="..\src\zombo\common\ZomboStatistics.cpp" />
     <ClCompile Include="..\src\zombo\common\ZomboTimeLine.cpp" />
     <ClCompile Include="..\src\zombo\common\ZomboTransfom.cpp" />
     <ClCompile Include="..\src\zombo\content\loaders\LoaderJsonAtlas.cpp" />
@@ -495,6 +503,7 @@
     <ClCompile Include="..\src\zombo\_editor\ZomboEditorInput.cpp" />
     <ClCompile Include="..\src\zombo\_editor\ZomboEditorLoadingScreen.cpp" />
     <ClCompile Include="..\src\zombo\_editor\ZomboEditorRenderService.cpp" />
+    <ClCompile Include="..\src\zombo\_editor\ZomboEditorStatisticsDisplayer.cpp" />
     <ClCompile Include="..\src\zombo\_editor\ZomboEditorViewport.cpp" />
     <ClCompile Include="..\src\zombo\_editor\ZomboEditorLogDisplayer.cpp" />
     <ClCompile Include="..\src_clipper\clipper.cpp" />

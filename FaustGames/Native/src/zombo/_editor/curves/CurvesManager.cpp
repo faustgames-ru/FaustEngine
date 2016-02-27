@@ -9,6 +9,7 @@
 #include "CurvesStateSelect.h"
 #include "CurvesStateMoveBinding.h"
 #include "CurvesStateMovePoint.h"
+#include "../ZomboEditor.h"
 
 namespace zombo
 {
@@ -161,19 +162,16 @@ namespace zombo
 
 	void renderPoint(core::Vector2 xy, float r, float a, float a1, float rot)
 	{
-		uint c0 = graphics::Color::mulA(0xffffffff, a);
-		uint c1 = graphics::Color::mulA(0xffffffff, a1);
-
-		ZomboDrawer::Default.fillRing(c0, xy.toVector3(), r, r*0.02f);
-		ZomboDrawer::Default.fillRect(c1, xy.toVector3(), r*0.8f, rot);
+		if (!CurvesManager::Default.hasImages()) return;
+		ZomboDrawer::Default.drawSprite(graphics::Color::mulA(0xffffffff, a), rot, r*2.0f, xy.toVector3(), CurvesManager::Default.getPointRingImage());
+		ZomboDrawer::Default.drawSprite(graphics::Color::mulA(0xffffffff, a1), rot, r*2.0f, xy.toVector3(), CurvesManager::Default.getPointBoxImage());
 	}
 		
 	void renderExtraPoint(core::Vector2 xy, float r, float a, float rot)
 	{
-		//uint c1 = 0xffffffff;
-		uint c0 = graphics::Color::mulA(0xffffffff, a);
-		ZomboDrawer::Default.fillRing(c0, xy.toVector3(), r, r*0.02f);
-		ZomboDrawer::Default.fillRect(c0, xy.toVector3(), r*0.4f, rot);
+		if (!CurvesManager::Default.hasImages()) return;
+		ZomboDrawer::Default.drawSprite(graphics::Color::mulA(0xffffffff, a), rot, r*2.0f, xy.toVector3(), CurvesManager::Default.getPointRingImage());
+		ZomboDrawer::Default.drawSprite(graphics::Color::mulA(0xffffffff, a), rot, r*2.0f, xy.toVector3(), CurvesManager::Default.getPointBoxImage());
 	}
 
 	void CurvesPoint::update(float scale, float alpha, float snapAlpha)
@@ -214,28 +212,28 @@ namespace zombo
 	{
 		setAlpha(1.0f);
 		setScale(1.5f);
-		setRot(core::Math::Pi * 1.25f);
+		setRot(core::Math::Pi);
 	}
 
 	void CurvesPoint::updateHoverState()
 	{
 		setAlpha(1.0f);
 		setScale(1.2f);
-		setRot(core::Math::Pi * 0.5f);
+		setRot(core::Math::Pi * 0.25f);
 	}
 
 	void CurvesPoint::updateRegularState()
 	{
 		setAlpha(1.0f);
 		setScale(1.0f);
-		setRot(core::Math::Pi * 0.25f);
+		setRot(0);
 	}
 
 	void CurvesPoint::updateHidenState()
 	{
 		setAlpha(0.0f);
 		setScale(1.0f);
-		setRot(core::Math::Pi * 0.25f);
+		setRot(0);
 	}
 
 	geometry::Aabb2d CurvesPoint::getAabb() const
@@ -284,13 +282,13 @@ namespace zombo
 	void CurvePointBinding::updateRegularState()
 	{
 		setScale(1.0f);
-		setRot(core::Math::Pi * 0.25f);
+		setRot(0);
 	}
 
 	void CurvePointBinding::updateHoverState()
 	{
 		setScale(1.2f);
-		setRot(core::Math::Pi * 0.5f);
+		setRot(core::Math::Pi * 0.25f);
 	}
 
 	core::Vector2 CurvePointBinding::getTargetXY() const
@@ -549,7 +547,7 @@ namespace zombo
 			//renderEdge(color, ps, pf, getR()*_scale.get());
 			renderEdge(color, pst, pft, getR()*_scale.get());
 			renderEdge(color, psb, pfb, getR()*_scale.get());
-			renderEdge(0xc0fffffff, pft, pfb, getR()*_scale.get());
+			renderEdge(0x80808080, pft, pfb, getR()*_scale.get());
 
 			pst = pft;
 			psb = pfb;
@@ -725,7 +723,7 @@ namespace zombo
 
 	CurvesManager CurvesManager::Default;
 
-	CurvesManager::CurvesManager() : scale(1.0f), _snappingRange(0.1f), _pointsScale(1.0f), _extraPointsScale(1.0f)
+	CurvesManager::CurvesManager() : scale(1.0f), _snappingRange(0.1f), _pointsScale(1.0f), _extraPointsScale(1.0f), _pointBoxImage(nullptr), _pointRingImage(nullptr)
 	{
 		_actualState = &CurvesStateSelect::Default;
 		_extraPointsAlpha.setConfig(&SConfig::VerySlow);
@@ -748,12 +746,23 @@ namespace zombo
 		return nullptr;
 	}
 
+	bool CurvesManager::hasImages()
+	{
+		return _pointBoxImage != nullptr && _pointRingImage != nullptr;
+	}
+
 	void CurvesManager::snapBinding(const core::Vector2& p0, core::Vector2& p1)
 	{
 		//core::Vector2 d = p1 - p0;
 		//float l = (p1 - p0).length() - CurvePointBinding::trim;
 		//l = core::Math::round(l *0.1) * 10;
 		//p1 = p0 + d.normalize() * (l + CurvePointBinding::trim);
+	}
+
+	void CurvesManager::load()
+	{
+		_pointBoxImage = ZomboEditor::Default.internalContent.getImage(ZomboEditorConstants::PointBoxImage.c_str());
+		_pointRingImage = ZomboEditor::Default.internalContent.getImage(ZomboEditorConstants::PointRingImage.c_str());
 	}
 
 	void CurvesManager::update()
@@ -764,7 +773,7 @@ namespace zombo
 		_pointsScale.update();
 		_extraPointsScale.update();
 		_pointsSnapAlpha.update();
-		scale.update();
+		scale.update();/*
 		for (uint i = 0; i < _points.size(); i++)
 		{
 			_points[i]->updateCoords();
@@ -772,7 +781,7 @@ namespace zombo
 		for (uint i = 0; i < _segments.size(); i++)
 		{
 			_segments[i]->updateCoords();
-		}
+		}*/
 
 		mousePos = ZomboEditorCamera::Default.getMouseProjection(0);
 		_visibleItems.clear();
@@ -905,8 +914,20 @@ namespace zombo
 		return _visibleItems;
 	}
 
+	ZomboContentImage* CurvesManager::getPointRingImage() const
+	{
+		return _pointRingImage;
+	}
+
+	ZomboContentImage* CurvesManager::getPointBoxImage() const
+	{
+		return _pointBoxImage;
+	}
+
 	void CurvesManager::queryVisibleItems(CurvesVisibleItems& items)
 	{
+		// todo: use geometry tree to optimise query
+
 		geometry::Frustum frustum = ZomboEditorCamera::Default.frustum;
 		float scale = ZomboEditorViewport::Default.h * 0.5f / ZomboEditorCamera::Default.getInterpoaltedScale();
 		segnemtLen = 8 / scale;

@@ -172,7 +172,8 @@ namespace fonts
 						{
 							for (uint x = 0; x < r.w; x++)
 							{
-								*(dstRow + x) = 0x00ffffff | *(srcRow+x) << 24;
+								uint a = *(srcRow + x);
+								*(dstRow + x) = a | a << 8 | a << 16 | a << 24;// 0x00ffffff | *(srcRow + x) << 24;
 							}
 							srcRow += slot->bitmap.pitch;
 							dstRow += w;
@@ -198,7 +199,8 @@ namespace fonts
 							for (uint x = 0; x < r.w; x++)
 							{
 								src = (srcRow + x*slot->bitmap.pitch) + y;
-								*(dstRow + x) = 0x00ffffff | *src << 24;
+								uint a = *src;
+								*(dstRow + x) = a | a << 8 | a << 16 | a << 24;// 0x00ffffff | *src << 24;
 							}
 							dstRow += w;
 						}

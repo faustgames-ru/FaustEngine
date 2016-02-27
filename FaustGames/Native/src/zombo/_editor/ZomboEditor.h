@@ -23,8 +23,15 @@ namespace zombo
 	{
 	public:
 		static const int BuildInFontSize = 64;
+		static std::string fpsPattern;
+		static std::string fpsAvrLabel;
+		static std::string fpsMinLabel;
+		static std::string fpsMaxLabel;
 		static std::string LoadingScreenFont;
 		static std::string LogDisplayerFont;
+		static std::string StatisticsDisplayerFont;
+		static std::string PointRingImage;
+		static std::string PointBoxImage;
 		static std::string GameFile;
 	};
 

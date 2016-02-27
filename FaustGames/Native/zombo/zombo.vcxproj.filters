@@ -689,6 +689,21 @@
     <ClInclude Include="..\src\zombo\_editor\curves\CurvesStateMoveBinding.h">
       <Filter>zombo\_editor\curves</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\zombo\common\ZomboStatistics.h">
+      <Filter>zombo\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\zombo\_editor\ZomboEditorStatisticsDisplayer.h">
+      <Filter>zombo\_editor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\zombo\common\ValuesAnimator.h">
+      <Filter>zombo\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\zombo\common\SConfig.h">
+      <Filter>zombo\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\zombo\common\SEntry.h">
+      <Filter>zombo\common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\CommonSources\gen\llgePInvoke.cpp">
@@ -1289,6 +1304,18 @@
     </ClCompile>
     <ClCompile Include="..\src\zombo\_editor\curves\CurvesStateMoveBinding.cpp">
       <Filter>zombo\_editor\curves</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\zombo\common\ZomboStatistics.cpp">
+      <Filter>zombo\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\zombo\_editor\ZomboEditorStatisticsDisplayer.cpp">
+      <Filter>zombo\_editor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\zombo\common\ValuesAnimator.cpp">
+      <Filter>zombo\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\zombo\common\SConfig.cpp">
+      <Filter>zombo\common</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

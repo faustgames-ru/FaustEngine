@@ -29,6 +29,9 @@ namespace core
 		static float cubic(float p0, float p1, float p2, float p3, float u);
 		static float asin(float v);
 		static float frac(float v);
+		static float max(float v0, float v1);
+		static float max(float v0, float v1, float v2);
+		static float min(float v0, float v1);
 	};
 }
 

@@ -159,6 +159,18 @@ namespace core
 		return Vector2(-getY(), getX());
 	}
 
+	Vector2 Vector2::rotate(float c, float s) const
+	{
+		return Vector2(
+			getX() * c - getY() * s,
+			getX() * s + getY() * c);
+	}
+
+	Vector2 Vector2::rotate(float a) const
+	{
+		return rotate(Math::cos(a), Math::sin(a));
+	}
+
 	Vector2 Vector2::normalize() const
 	{
 		float l = length();

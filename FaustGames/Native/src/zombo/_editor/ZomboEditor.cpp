@@ -15,20 +15,29 @@
 #include "ZomboEditorInput.h"
 #include "ZomboEditorLoadingScreen.h"
 #include "../resources_fonts/FontQuicksandRegular.h"
+#include "../common/ZomboStatistics.h"
+#include "ZomboEditorStatisticsDisplayer.h"
 
 namespace zombo
 {
 	ZomboEditorSharedData ZomboEditorSharedData::Default;
 
+	std::string ZomboEditorConstants::fpsPattern("Fps: 00");
+	std::string ZomboEditorConstants::fpsAvrLabel("Fps: ");
+	std::string ZomboEditorConstants::fpsMinLabel("Min: ");
+	std::string ZomboEditorConstants::fpsMaxLabel("Max: ");
 
 	std::string ZomboEditorConstants::LoadingScreenFont("InternalContent/Quicksand-Regular[loading:64px].otf");
 	std::string ZomboEditorConstants::LogDisplayerFont("InternalContent/Quicksand-Regular[latin:18px].otf");
+	std::string ZomboEditorConstants::StatisticsDisplayerFont("InternalContent/Quicksand-Regular[latin:12px].otf");
+	std::string ZomboEditorConstants::PointRingImage("InternalContent/ring.png");
+	std::string ZomboEditorConstants::PointBoxImage("InternalContent/box.png");
+
 	std::string ZomboEditorConstants::GameFile("Content/main.game");
 
 
 	ZomboEditor ZomboEditor::Default;
-
-
+	
 	ZomboEditorSharedData::ZomboEditorSharedData()
 	{
 	}
@@ -115,6 +124,9 @@ namespace zombo
 		resources::ContentManager::Default.open();
 		internalContent.enqueueResource(ZomboEditorConstants::LoadingScreenFont.c_str());
 		internalContent.enqueueResource(ZomboEditorConstants::LogDisplayerFont.c_str());
+		internalContent.enqueueResource(ZomboEditorConstants::StatisticsDisplayerFont.c_str());
+		internalContent.enqueueResource(ZomboEditorConstants::PointBoxImage.c_str());
+		internalContent.enqueueResource(ZomboEditorConstants::PointRingImage.c_str());
 		gameContent.enqueueResource(ZomboEditorConstants::GameFile.c_str());
 		_needCallContetnLoaded = true;
 
@@ -136,6 +148,7 @@ namespace zombo
 
 	void ZomboEditor::update(float ellapsedTime)
 	{
+		ZomboStatistics::Default.update(ellapsedTime);
 		ZomboGameEnvironment::update(ellapsedTime);
 		ZomboEditorInput::Default.mouse()->internalUpdate();
 			
@@ -207,6 +220,7 @@ namespace zombo
 		//graphics::GraphicsDevice::Default.setClearState(0x0, 1.0f);
 		graphics::GraphicsDevice::Default.setViewport(0, 0, ZomboEditorViewport::Default.w, ZomboEditorViewport::Default.h);
 		graphics::GraphicsDevice::Default.clear();
+		graphics::GraphicsDevice::Default.renderState.setBlend(graphics::BlendState::Alpha);
 		
 		//renderBackground();
 		renderBackgroundAsSkybox();
@@ -405,6 +419,7 @@ namespace zombo
 		_mode->update();
 		CurvesManager::Default.update();
 		ZomboEditorLogDisplayer::Default.update();
+		ZomboEditorStatisticsDisplayer::Default.update();
 		ZomboToolBox::Default.update();
 	}
 
@@ -412,6 +427,8 @@ namespace zombo
 	{
 		ZomboEditorLoadingScreen::Default.load();
 		ZomboEditorLogDisplayer::Default.load();
+		ZomboEditorStatisticsDisplayer::Default.load();
+		CurvesManager::Default.load();
 	}
 
 	void ZomboEditor::addBackgroundEdgeVertex(uint i)

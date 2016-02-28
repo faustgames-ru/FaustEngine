@@ -3,6 +3,7 @@
 #include "CurvesStateSelect.h"
 #include "../commands/ZomboEditorCommands.h"
 #include "../drawing/Drawer.h"
+#include "../../common/ValuesAnimator.h"
 
 namespace zombo
 {
@@ -124,7 +125,8 @@ namespace zombo
 	void CurvesStateMovePoint::start()
 	{
 		_downMousePos = CurvesManager::Default.mousePos;
-		_prevSelectedPosition = selectedPoint->getXY();
+		_prevSelectedPosition = selectedPoint->getXY(); 
+		_prevPosition = selectedPoint->getTargetXY();
 		_replacePoint = nullptr;
 		PointSnapping::Default.show();
 	}
@@ -146,7 +148,7 @@ namespace zombo
 			CurvesPoint *replacePoint = CurvesManager::Default.snap(sp, selectedPoint);
 			if (replacePoint != _replacePoint)
 			{
-				selectedPoint->xy.setTarget(sp);
+				Animators::Vector2.animate(&selectedPoint->xy, sp);
 			}
 			else
 			{
@@ -154,28 +156,33 @@ namespace zombo
 				{
 					PointSnapping::Default.snap(sp);
 				}
-				selectedPoint->xy.setAll(sp);
+				Animators::Vector2.terminate(&selectedPoint->xy);
+				selectedPoint->xy = sp;
 			}
 			_replacePoint = replacePoint;
-			selectedPoint->updateSelectedState();
-
+			CurvesManager::Default.animateToSelect(selectedPoint);
+			//selectedPoint->updateSelectedState();
+			/*
 			CurvesVisibleItems &visible = CurvesManager::Default.getVisibleItems();
 			for (uint i = 0; i < visible.points.size(); i++)
 			{
 				if (visible.points[i] != selectedPoint)
 				{
-					visible.points[i]->updateHidenState();
+					// todo: hidden state?
+					//visible.points[i]->updateHidenState();
 				}
 				else
 				{
-					visible.points[i]->updateSelectedState();
+					//CurvesManager::Default.animateToSelect(visible.points[i]);
+					//visible.points[i]->updateSelectedState();
 				}
 			}
+			*/
 		}
 		else
 		{
 			// todo: replace command support
-			ZomboCommandMoveCurvePoint *actualMovePointCommand = new ZomboCommandMoveCurvePoint(selectedPoint, _prevSelectedPosition, selectedPoint->getTargetXY());
+			ZomboCommandMoveCurvePoint *actualMovePointCommand = new ZomboCommandMoveCurvePoint(selectedPoint, _prevPosition, selectedPoint->getTargetXY());
 			if (ZomboEditorCommands::Default.doCommand(actualMovePointCommand) != CommandExecutonStatus::CommandExecuted)
 			{
 				delete actualMovePointCommand;

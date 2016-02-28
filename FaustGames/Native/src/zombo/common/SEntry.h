@@ -17,6 +17,8 @@ namespace zombo
 		void setTarget(T target);
 		void setConfig(SConfig* config);
 		bool isUpdating() const;
+		void terminate();
+		T getTarget();
 	private:
 		SConfig *_config;
 		T* _value;
@@ -32,8 +34,11 @@ namespace zombo
 	}
 
 	template<typename T>
-	SEntry<T>::SEntry(T *value) : _config(&SConfig::Default), _value(value), _source(value), _target(value), _startTime(0)
+	SEntry<T>::SEntry(T *value) : _config(&SConfig::Default), _startTime(0)
 	{
+		_value = value;
+		_source = *value;
+		_target = *value;
 	}
 
 	template<typename T>
@@ -60,9 +65,20 @@ namespace zombo
 	template<typename T>
 	bool SEntry<T>::isUpdating() const
 	{
-		return SConfig::equal(_value, _target);
+		return !SConfig::equal(*_value, _target);
 	}
 
+	template <typename T>
+	void SEntry<T>::terminate()
+	{
+		*_value = _target;
+	}
+
+	template <typename T>
+	T SEntry<T>::getTarget()
+	{
+		return _target;
+	}
 }
 
 #endif /*ZOMBO_SENTRY_H*/

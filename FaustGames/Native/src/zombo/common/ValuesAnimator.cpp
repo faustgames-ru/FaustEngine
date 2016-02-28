@@ -2,24 +2,12 @@
 
 namespace zombo
 {
-	ValuesAnimator ValuesAnimator::Default;
+	AnimatorFloat Animators::Float;
+	AnimatorVector2 Animators::Vector2;
 
-	ValuesAnimator::ValuesAnimator()
+	void Animators::update()
 	{
-	}
-
-	void ValuesAnimator::animate(float* value, float target)
-	{
-		typename MapFloat::iterator it = _valuesFloat.find(value);
-		SEntryFloat* entry;
-		if (it == _valuesFloat.end())
-		{
-			_valuesFloat[value] = entry = new SEntryFloat(value);
-		}
-		else
-		{
-			entry = _valuesFloat[value];
-		}
-		entry->setTarget(target);
+		Float.update();
+		Vector2.update();
 	}
 }

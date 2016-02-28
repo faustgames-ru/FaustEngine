@@ -6,6 +6,7 @@
 #include "camera/ZomboCameraRotate.h"
 #include "commands/ZomboEditorCommands.h"
 #include "../ZomboLog.h"
+#include "../common/ValuesAnimator.h"
 
 namespace zombo
 {
@@ -69,23 +70,23 @@ namespace zombo
 		ZomboEditorCamera::Default.setFovInternal(_prevFov);
 	}
 
-	ZomboCommandCameraSetScale::ZomboCommandCameraSetScale(float scale): _scale(scale), _prevscale(0)
+	ZomboCommandCameraSetScale::ZomboCommandCameraSetScale(float prevScale, float scale): _scale(scale), _prevscale(prevScale)
 	{		
 	}
 
 	bool ZomboCommandCameraSetScale::isExecutionAvaliable()
 	{
-		return !core::Math::equals(ZomboEditorCamera::Default.getScale(), _scale);
+		return !core::Math::equals(_prevscale, _scale);
 	}
 
 	bool ZomboCommandCameraSetScale::isUndoAvaliable()
 	{
-		return !core::Math::equals(ZomboEditorCamera::Default.getScale(), _prevscale);
+		return !core::Math::equals(_scale, _prevscale);
 	}
 
 	void ZomboCommandCameraSetScale::execute()
 	{
-		_prevscale = ZomboEditorCamera::Default.getScale();
+		//_prevscale = ZomboEditorCamera::Default.getScale();
 		if (_prevscale > _scale)
 		{
 			ZomboLog::Default.m("Do: Zoom in");
@@ -257,25 +258,7 @@ namespace zombo
 
 	void ZomboEditorCamera::updateInterpoaltedScale()
 	{	
-		/*
-		float x = (ZomboEditorInput::Default.mouse.position.getX() - ZomboEditorViewport::Default.w * 0.5f) * _scaleValue.getValue() / ZomboEditorViewport::Default.h;
-		float y = (-ZomboEditorInput::Default.mouse.position.getY() + ZomboEditorViewport::Default.h * 0.5f) * _scaleValue.getValue() / ZomboEditorViewport::Default.h;
-		*/
-
-		_scaleValue.update();
-		/*
-		float nx = (ZomboEditorInput::Default.mouse.position.getX() - ZomboEditorViewport::Default.w * 0.5f) * _scaleValue.getValue() / ZomboEditorViewport::Default.h;
-		float ny = (-ZomboEditorInput::Default.mouse.position.getY() + ZomboEditorViewport::Default.h * 0.5f) * _scaleValue.getValue() / ZomboEditorViewport::Default.h;
-		
-		float dx = nx - x;
-		float dy = ny - y;
-		
-		if (mode == &ZomboCameraMoveXY::Default)
-		{
-			_positionX.setAllValues(_positionX.getValue() - dx);
-			_positionY.setAllValues(_positionY.getValue() - dy);
-		}
-		*/
+		//_scaleValue.update();
 	}
 
 	void ZomboEditorCamera::update()
@@ -291,7 +274,7 @@ namespace zombo
 		float fov = _fovValue.get();
 		if (fov < minFov)
 		{
-			core::Matrix ortho = core::Matrix::createOrtho(ZomboEditorViewport::Default.getAspect(), _scaleValue.get(), depth*0.5f);
+			core::Matrix ortho = core::Matrix::createOrtho(ZomboEditorViewport::Default.getAspect(), _scaleValue, depth*0.5f);
 			core::Matrix orthoSkybox = core::Matrix::createOrtho(ZomboEditorViewport::Default.getAspect(), 1.0f, depth*0.5f);
 			skyboxMatrix.setValue(orthoSkybox);
 			transformToView = core::Matrix::mul(translate, rotator.actualRotation, ortho);
@@ -302,7 +285,7 @@ namespace zombo
 			core::Matrix proj = core::Matrix::createProjection(fov, ZomboEditorViewport::Default.getAspect(), 0.01f, depth);
 			float z = 1.0f / core::Math::tan(fov * 0.5f);
 			core::Matrix translateZ = core::Matrix::createTranslate(0, 0, z);
-			float scaleValue = _scaleValue.get();
+			float scaleValue = _scaleValue;// .get();
 			core::Matrix scale = core::Matrix::createScale(1.0f / scaleValue, 1.0f / scaleValue, 1.0f / scaleValue);
 			transformToView = core::Matrix::mul(translate, rotator.actualRotation, scale, translateZ, proj);
 			matrix.setValue(transformToView);
@@ -339,15 +322,15 @@ namespace zombo
 	}
 
 	void ZomboEditorCamera::setScale(float value)
-	{
-		if (_scaleValue.isUpdating() && (_lastZoomCommand != nullptr))
+	{		
+		if (Animators::Float.animating(&_scaleValue) && _lastZoomCommand != nullptr)
 		{
 			_lastZoomCommand->invalidate(value);
 			setScaleInternal(value);
 		}
 		else
 		{
-			_lastZoomCommand = new ZomboCommandCameraSetScale(value);
+			_lastZoomCommand = new ZomboCommandCameraSetScale(_scaleValue, value);
 			if (ZomboEditorCommands::camera()->doCommand(_lastZoomCommand) != CommandExecutonStatus::CommandExecuted)
 			{
 				delete _lastZoomCommand;
@@ -367,7 +350,7 @@ namespace zombo
 
 	float ZomboEditorCamera::getScale()
 	{
-		return _scaleValue.getTarget();
+		return Animators::Float.getTarget(&_scaleValue);
 	}
 
 	float ZomboEditorCamera::getFov()
@@ -418,7 +401,7 @@ namespace zombo
 
 	float ZomboEditorCamera::getInterpoaltedScale() const
 	{
-		return _scaleValue.get();
+		return _scaleValue;
 	}
 
 	void ZomboEditorCamera::setPositionXY(const core::Vector2 &v)
@@ -438,7 +421,7 @@ namespace zombo
 
 	void ZomboEditorCamera::setScaleInternal(float value)
 	{
-		_scaleValue.setTarget(value);
+		Animators::Float.animate(&_scaleValue, value);
 	}
 
 	std::string ZomboEditorCamera::getModeInternal()

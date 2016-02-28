@@ -88,7 +88,7 @@ namespace zombo
 	template<typename T>
 	bool SValue<T>::isUpdating() const
 	{
-		return SConfig::equal(_value, _target);
+		return !SConfig::equal(_value, _target);
 	}
 
 	typedef SValue<float> SFloat;

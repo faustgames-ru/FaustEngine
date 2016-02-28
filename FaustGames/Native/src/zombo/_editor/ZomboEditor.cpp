@@ -17,6 +17,7 @@
 #include "../resources_fonts/FontQuicksandRegular.h"
 #include "../common/ZomboStatistics.h"
 #include "ZomboEditorStatisticsDisplayer.h"
+#include "../common/ValuesAnimator.h"
 
 namespace zombo
 {
@@ -148,13 +149,13 @@ namespace zombo
 
 	void ZomboEditor::update(float ellapsedTime)
 	{
+		Animators::update();
 		ZomboStatistics::Default.update(ellapsedTime);
 		ZomboGameEnvironment::update(ellapsedTime);
 		ZomboEditorInput::Default.mouse()->internalUpdate();
 			
 		ZomboEditorRenderService::Default.resetBuffers();
 		ZomboEditorRenderService::Gui.resetBuffers();
-		
 		if (internalContent.isLoaded())
 		{
 			if (_needCallContetnLoaded)

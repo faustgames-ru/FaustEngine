@@ -12,11 +12,11 @@ namespace zombo
 	{
 		if (point != selection.point)
 		{
-			point->updateRegularState();
+			CurvesManager::Default.animateToRegular(point);
 		}
 		else
 		{
-			point->updateHoverState();
+			CurvesManager::Default.animateToHover(point);
 		}
 	}
 

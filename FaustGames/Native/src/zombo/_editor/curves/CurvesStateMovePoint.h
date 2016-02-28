@@ -40,6 +40,7 @@ namespace zombo
 	private:
 		core::Vector2 _downMousePos;
 		core::Vector2 _prevSelectedPosition;
+		core::Vector2 _prevPosition;
 		CurvesPoint* _replacePoint;
 	};
 }

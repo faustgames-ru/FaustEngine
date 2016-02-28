@@ -39,7 +39,7 @@ namespace zombo
 	class ZomboCommandCameraSetScale : public ZomboEditorCommand
 	{
 	public:
-		ZomboCommandCameraSetScale(float scale);
+		ZomboCommandCameraSetScale(float prevScale, float scale);
 		virtual bool isExecutionAvaliable() OVERRIDE;
 		virtual bool isUndoAvaliable() OVERRIDE;
 		virtual void execute() OVERRIDE;
@@ -144,7 +144,7 @@ namespace zombo
 		std::string getModeInternal();
 	private:
 		std::string _actualModeName;
-		SFloat _scaleValue;
+		float _scaleValue;
 		SFloat _fovValue;
 		SVector2 _position;
 		ZomboCommandCameraSetScale *_lastZoomCommand;

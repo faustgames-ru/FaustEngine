@@ -69,8 +69,7 @@ namespace zombo
 	class CurvesPoint
 	{
 	public:
-		SVector2 xy;
-		std::vector<CurveSegment*> segments;
+		core::Vector2 xy;
 		core::Vector2 getXY() const;
 		core::Vector2 getTargetXY() const;
 		CurvesPoint();
@@ -78,24 +77,7 @@ namespace zombo
 		static float getR();
 		bool isUnderMouse() const;
 		float distanceToMouse() const;
-		void updateCoords();
-		void update(float scale, float alpha, float snapAlpha);
-		void setScale(float scale);
-		void setScaleEx(float scale);
-		void setScaleFullEx(float scale);
-		void setAlpha(float a);
-		void setRot(float rot);
-		void updateSelectedState();
-		void updateHoverState();
-		void updateRegularState();
-		void updateHidenState();
 		geometry::Aabb2d getAabb() const;
-		float getScale() const;
-		float getScaleEx() const;
-		SFloat _scale;
-		SFloat _scaleEx;
-		SFloat _alpha;
-		SFloat _rot;
 		static float r;
 		static core::Vector2 size;
 	private:
@@ -184,6 +166,27 @@ namespace zombo
 		CurvesSelection(CurvePointBinding* b);
 	};
 
+	struct CurvesPointAnimator
+	{
+		CurvesPoint *point;
+		SFloat scale;
+		SFloat rotation;
+		CurvesPointAnimator(CurvesPoint *point);
+		bool isAnimating() const;
+		void update();
+	};
+
+	struct CurvesPointState
+	{
+		static CurvesPointState Regular;
+		static CurvesPointState Hovered;
+		static CurvesPointState Selected;
+		float scale;
+		float rotation;
+		CurvesPointState();
+		CurvesPointState(float scale, float rotation);
+	};
+
 	class CurvesManager
 	{
 	public:
@@ -194,6 +197,8 @@ namespace zombo
 		bool hasImages();
 		static void snapBinding(const core::Vector2 &p0, core::Vector2 &p1);
 		void load();
+		void regularPointRender(CurvesPoint* point) const;
+		void animatePointRender(CurvesPointAnimator* animator) const;
 		void update();
 		void addCurve(core::Vector2 p0, core::Vector2 p1, core::Vector2 p2, core::Vector2 p3);
 		static CurvesSelection findSelection(CurvesVisibleItems &items);
@@ -204,7 +209,15 @@ namespace zombo
 		CurvesSelection lastSelection;
 		ZomboContentImage* getPointRingImage() const;
 		ZomboContentImage* getPointBoxImage() const;
+		bool isRegular(CurvesPointAnimator* animator) const;
+		void animateToRegular(CurvesPoint* point);
+		void animateToHover(CurvesPoint* point);
+		void animateToSelect(CurvesPoint* point);
+		CurvesPointAnimator* findAnimator(CurvesPoint* point);
+		//void animateAlpha(CurvesPoint* point, float scale);
 	private:
+		void animateToState(CurvesPoint* point, CurvesPointState* state);
+		typedef std::map<CurvesPoint*, CurvesPointAnimator *> PointsAnimationMap;
 		void queryVisibleItems(CurvesVisibleItems &items);
 		std::vector<CurvesPoint *> _points;
 		std::vector<CurveSegment *> _segments;
@@ -218,6 +231,9 @@ namespace zombo
 		SFloat _extraPointsScale;
 		ZomboContentImage* _pointBoxImage;
 		ZomboContentImage* _pointRingImage;
+		PointsAnimationMap _pointsAnimationMap;
+		std::vector<CurvesPoint *> _removeAnimationList;
+		float _regularPointR;
 	};
 }
 

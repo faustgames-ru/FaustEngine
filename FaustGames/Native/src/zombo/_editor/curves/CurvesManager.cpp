@@ -10,6 +10,7 @@
 #include "CurvesStateMoveBinding.h"
 #include "CurvesStateMovePoint.h"
 #include "../ZomboEditor.h"
+#include "../../common/ValuesAnimator.h"
 
 namespace zombo
 {
@@ -56,13 +57,13 @@ namespace zombo
 	void ZomboCommandMoveCurvePoint::execute()
 	{
 		ZomboLog::Default.m("Do: Move point");
-		_point->xy.setTarget(_targetPosition);
+		Animators::Vector2.animate(&_point->xy, _targetPosition);
 	}
 
 	void ZomboCommandMoveCurvePoint::undo()
 	{
 		ZomboLog::Default.m("Undo: Move point");
-		_point->xy.setTarget(_prevPosition);
+		Animators::Vector2.animate(&_point->xy, _prevPosition);
 	}
 
 	ZomboCommandMoveCurveBinding::ZomboCommandMoveCurveBinding(CurvePointBinding* binding, const core::Vector2 prevPosition, const core::Vector2 newPosition)
@@ -102,23 +103,20 @@ namespace zombo
 
 	core::Vector2 CurvesPoint::getXY() const
 	{
-		return xy.get();
+		return xy;
 	}
 
 	core::Vector2 CurvesPoint::getTargetXY() const
 	{
-		return xy.getTarget();
+		return Animators::Vector2.getTarget(&xy);
 	}
 
-	CurvesPoint::CurvesPoint() : _scale(1.0f), _rot(core::Math::Pi * 0.25f)
+	CurvesPoint::CurvesPoint()
 	{
 	}
 
-	CurvesPoint::CurvesPoint(core::Vector2 p): xy(p), _scale(1.0f), _scaleEx(1.0f), _alpha(1.0f), _rot(core::Math::Pi * 0.25f)
+	CurvesPoint::CurvesPoint(core::Vector2 p): xy(p)
 	{
-		_scale.setConfig(&SConfig::Fast);
-		_alpha.setConfig(&SConfig::Default);
-		_scaleEx.setConfig(&SConfig::Slow);
 	}
 
 	float CurvesPoint::getR()
@@ -131,9 +129,9 @@ namespace zombo
 		core::Vector2 m = CurvesManager::Default.mousePos;
 		float mx = m.getX();
 		float my = m.getY();
-		float sx = getR()*_scale.get();
-		float sy = getR()*_scale.get();
-		core::Vector2 p = xy.get();
+		float sx = getR();
+		float sy = getR();
+		core::Vector2 p = xy;
 		float px = p.getX();
 		float py = p.getY();
 		return
@@ -144,11 +142,6 @@ namespace zombo
 	float CurvesPoint::distanceToMouse() const
 	{
 		return (CurvesManager::Default.mousePos - getXY()).length();
-	}
-
-	void CurvesPoint::updateCoords()
-	{
-		xy.update();
 	}
 
 	void renderEdge(uint c, core::Vector2 p0, core::Vector2 p1, float r)
@@ -174,81 +167,10 @@ namespace zombo
 		ZomboDrawer::Default.drawSprite(graphics::Color::mulA(0xffffffff, a), rot, r*2.0f, xy.toVector3(), CurvesManager::Default.getPointBoxImage());
 	}
 
-	void CurvesPoint::update(float scale, float alpha, float snapAlpha)
-	{
-		_scale.update();
-		_scaleEx.update();
-		_alpha.update();
-		_rot.update();
-		renderPoint(xy.get(), getR() * _scale.get()*scale, alpha, snapAlpha, _rot.get());
-	}
-
-	void CurvesPoint::setScale(float scale)
-	{
-		_scale.setTarget(scale);
-	}
-
-	void CurvesPoint::setScaleEx(float scale)
-	{
-		_scaleEx.setTarget(scale);
-	}
-
-	void CurvesPoint::setScaleFullEx(float scale)
-	{
-		_scaleEx.setAll(scale);
-	}
-
-	void CurvesPoint::setAlpha(float a)
-	{
-		_alpha.setTarget(a);
-	}
-
-	void CurvesPoint::setRot(float rot)
-	{
-		_rot.setTarget(rot);
-	}
-
-	void CurvesPoint::updateSelectedState()
-	{
-		setAlpha(1.0f);
-		setScale(1.5f);
-		setRot(core::Math::Pi);
-	}
-
-	void CurvesPoint::updateHoverState()
-	{
-		setAlpha(1.0f);
-		setScale(1.2f);
-		setRot(core::Math::Pi * 0.25f);
-	}
-
-	void CurvesPoint::updateRegularState()
-	{
-		setAlpha(1.0f);
-		setScale(1.0f);
-		setRot(0);
-	}
-
-	void CurvesPoint::updateHidenState()
-	{
-		setAlpha(0.0f);
-		setScale(1.0f);
-		setRot(0);
-	}
 
 	geometry::Aabb2d CurvesPoint::getAabb() const
 	{
 		return geometry::Aabb2d(getXY() - core::Vector2(getR(), getR()), getXY() + core::Vector2(getR(), getR()));
-	}
-
-	float CurvesPoint::getScale() const
-	{
-		return _scale.get();
-	}
-
-	float CurvesPoint::getScaleEx() const
-	{
-		return _scaleEx.get();
 	}
 
 	CurvePointBinding::CurvePointBinding(): p(nullptr), _scale(1.0f), _rot(core::Math::Pi * 0.25f)
@@ -266,7 +188,7 @@ namespace zombo
 		float my = m.getY();
 		float sx = getR();
 		float sy = getR();
-		core::Vector2 pos = p->xy.get()+d.get();
+		core::Vector2 pos = p->xy+d.get();
 		float px = pos.getX();
 		float py = pos.getY();
 		return
@@ -276,7 +198,7 @@ namespace zombo
 
 	float CurvePointBinding::distanceToMouse() const
 	{
-		return (CurvesManager::Default.mousePos - p->xy.get() - d.get()).length();
+		return (CurvesManager::Default.mousePos - p->xy - d.get()).length();
 	}
 
 	void CurvePointBinding::updateRegularState()
@@ -721,9 +643,37 @@ namespace zombo
 	{
 	}
 
+	CurvesPointAnimator::CurvesPointAnimator(CurvesPoint* p): point(p), scale(1.0f), rotation(0.0f)
+	{
+		scale.setConfig(&SConfig::Fast);
+	}
+
+	bool CurvesPointAnimator::isAnimating() const
+	{
+		return scale.isUpdating() || rotation.isUpdating();
+	}
+
+	void CurvesPointAnimator::update()
+	{
+		scale.update();
+		rotation.update();
+	}
+
+	CurvesPointState CurvesPointState::Regular(1.0f, 0.0f);
+	CurvesPointState CurvesPointState::Hovered(1.2f, core::Math::Pi * 0.25f);
+	CurvesPointState CurvesPointState::Selected(1.5f, core::Math::Pi);
+
+	CurvesPointState::CurvesPointState(): scale(1.0f), rotation(0.0f)
+	{
+	}
+
+	CurvesPointState::CurvesPointState(float s, float rot): scale(s), rotation(rot)
+	{
+	}
+
 	CurvesManager CurvesManager::Default;
 
-	CurvesManager::CurvesManager() : scale(1.0f), _snappingRange(0.1f), _pointsScale(1.0f), _extraPointsScale(1.0f), _pointBoxImage(nullptr), _pointRingImage(nullptr)
+	CurvesManager::CurvesManager() : scale(1.0f), _snappingRange(0.1f), _pointsScale(1.0f), _extraPointsScale(1.0f), _pointBoxImage(nullptr), _pointRingImage(nullptr), _regularPointR(1.0f)
 	{
 		_actualState = &CurvesStateSelect::Default;
 		_extraPointsAlpha.setConfig(&SConfig::VerySlow);
@@ -765,6 +715,16 @@ namespace zombo
 		_pointRingImage = ZomboEditor::Default.internalContent.getImage(ZomboEditorConstants::PointRingImage.c_str());
 	}
 
+	void CurvesManager::regularPointRender(CurvesPoint* point) const
+	{
+		renderPoint(point->xy, _regularPointR, _pointsAlpha.get(), _pointsSnapAlpha.get(), 0);
+	}
+
+	void CurvesManager::animatePointRender(CurvesPointAnimator* animator) const
+	{
+		renderPoint(animator->point->xy, _regularPointR * animator->scale.get(), 1.0f, 1.0f, animator->rotation.get());
+	}
+
 	void CurvesManager::update()
 	{
 		_pointsAlpha.update();
@@ -792,6 +752,8 @@ namespace zombo
 		{
 			_actualState->update();
 		}
+
+		
 		if (selection.isEmpty())
 		{
 			_pointsSnapAlpha.setTarget(1.0f);
@@ -811,11 +773,51 @@ namespace zombo
 			_extraPointsAlpha.setTarget(0.0f);
 			_pointsAlpha.setTarget(0.0f);
 		}
+
 		for (uint i = 0; i < _visibleItems.segments.size(); i++)
 		{
 			_visibleItems.segments[i]->update();
 		}
 
+		_regularPointR = CurvesPoint::getR() * _pointsScale.get();
+		if (_pointsAnimationMap.empty())
+		{
+			for (uint i = 0; i < _visibleItems.points.size(); i++)
+			{
+				regularPointRender(_visibleItems.points[i]);
+			}
+		}
+		else
+		{
+			for (uint i = 0; i < _visibleItems.points.size(); i++)
+			{
+				PointsAnimationMap::iterator it = _pointsAnimationMap.find(_visibleItems.points[i]);
+				if (it == _pointsAnimationMap.end())
+				{
+					regularPointRender(_visibleItems.points[i]);
+				}
+			}
+			for (PointsAnimationMap::iterator j = _pointsAnimationMap.begin(); j != _pointsAnimationMap.end(); ++j)
+			{
+				j->second->update();
+				if (isRegular(j->second))
+				{
+					_removeAnimationList.push_back(j->first);
+				}
+				animatePointRender(j->second);
+			}
+		}
+		for (uint i = 0; i < _removeAnimationList.size(); i++)
+		{
+			PointsAnimationMap::iterator it = _pointsAnimationMap.find(_removeAnimationList[i]);
+			if (it != _pointsAnimationMap.end())
+			{
+				delete it->second;
+				_pointsAnimationMap.erase(it);
+			}
+		}
+		_removeAnimationList.clear();
+		/*
 		for (uint i = 0; i < _visibleItems.points.size(); i++)
 		{
 			if(_visibleItems.points[i] == lastSelection.point)
@@ -827,6 +829,8 @@ namespace zombo
 				_visibleItems.points[i]->update(_pointsScale.get(), _pointsAlpha.get(), _pointsSnapAlpha.get());
 			}
 		}
+		*/
+
 		for (uint i = 0; i < _visibleItems.pointsBindings.size(); i++)
 		{
 			if (_visibleItems.pointsBindings[i] == lastSelection.binding)
@@ -922,6 +926,55 @@ namespace zombo
 	ZomboContentImage* CurvesManager::getPointBoxImage() const
 	{
 		return _pointBoxImage;
+	}
+
+	bool CurvesManager::isRegular(CurvesPointAnimator* animator) const
+	{
+		if (animator->isAnimating()) return false;
+		return
+			core::Math::equals(animator->scale.getTarget(), CurvesPointState::Regular.scale) &&
+			core::Math::equals(animator->rotation.getTarget(), CurvesPointState::Regular.rotation);
+	}
+
+	void CurvesManager::animateToState(CurvesPoint* point, CurvesPointState* state)
+	{
+		CurvesPointAnimator* animator = findAnimator(point);
+		animator->scale.setTarget(state->scale);
+		animator->rotation.setTarget(state->rotation);
+	}
+
+	void CurvesManager::animateToRegular(CurvesPoint* point)
+	{
+		PointsAnimationMap::iterator it = _pointsAnimationMap.find(point);
+		if (it == _pointsAnimationMap.end()) return;
+		CurvesPointAnimator *animator = it->second;
+		animator->scale.setTarget(CurvesPointState::Regular.scale);
+		animator->rotation.setTarget(CurvesPointState::Regular.rotation);
+	}
+
+	void CurvesManager::animateToHover(CurvesPoint* point)
+	{
+		animateToState(point, &CurvesPointState::Hovered);
+	}
+
+	void CurvesManager::animateToSelect(CurvesPoint* point)
+	{
+		animateToState(point, &CurvesPointState::Selected);
+	}
+
+	CurvesPointAnimator* CurvesManager::findAnimator(CurvesPoint* point)
+	{
+		PointsAnimationMap::iterator it = _pointsAnimationMap.find(point);
+		CurvesPointAnimator *animator;
+		if (it != _pointsAnimationMap.end())
+		{
+			animator = it->second;
+		}
+		else
+		{
+			_pointsAnimationMap[point] = animator = new CurvesPointAnimator(point);
+		}
+		return animator;
 	}
 
 	void CurvesManager::queryVisibleItems(CurvesVisibleItems& items)

@@ -3,6 +3,8 @@
 namespace core
 {
 	Vector2 Vector2::empty(0.0f, 0.0f);
+	Vector2 Vector2::axisX(1.0f, 0.0f);
+	Vector2 Vector2::axisY(0.0f, 1.0f);
 
 	Vector3 Vector3::empty(0.0f, 0.0f, 0.0f);
 
@@ -174,7 +176,15 @@ namespace core
 	Vector2 Vector2::normalize() const
 	{
 		float l = length();
-		if (l < core::Math::Epsilon)
+		if (l < Math::Epsilon)
+			return *this;
+		return Vector2(getX() / l, getY() / l);
+	}
+
+	Vector2 Vector2::normalize(float eps) const
+	{
+		float l = length();
+		if (l < eps)
 			return *this;
 		return Vector2(getX() / l, getY() / l);
 	}
@@ -202,6 +212,11 @@ namespace core
 	bool Vector2::isEmpty() const
 	{
 		return equals(*this, empty);
+	}
+
+	bool Vector2::isEmpty(float eps) const
+	{
+		return equals(*this, empty, eps);
 	}
 
 	Vector2 Vector2::lerp(const Vector2& p1, const Vector2& p2, float u)
@@ -233,6 +248,13 @@ namespace core
 		return
 			core::Math::equals(a.getX(), b.getX()) &&
 			core::Math::equals(a.getY(), b.getY());
+	}
+
+	bool Vector2::equals(const Vector2& a, const Vector2& b, float eps)
+	{
+		return
+			core::Math::equals(a.getX(), b.getX(), eps) &&
+			core::Math::equals(a.getY(), b.getY(), eps);
 	}
 
 	float Vector2::distanceToEdge(const Vector2& p, const Vector2& e0, const Vector2& e1)

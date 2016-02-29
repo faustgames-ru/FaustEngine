@@ -250,6 +250,8 @@ namespace zombo
 	{
 		mode = &ZomboCameraMoveXY::Default;
 		_actualModeName = ZomboCameraMoveXY::ModeName;
+		//mode = &ZomboCameraRotate::Default;
+		//_actualModeName = ZomboCameraRotate::ModeName;
 	}
 
 	ZomboEditorCamera::~ZomboEditorCamera()

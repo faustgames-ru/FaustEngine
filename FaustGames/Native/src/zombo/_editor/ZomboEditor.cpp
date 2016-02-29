@@ -136,15 +136,27 @@ namespace zombo
 		//int j = 0;
 		//int i = 0;
 		//CurvesManager::Default.addCurve(core::Vector2(i - 1, j - 0.5f), core::Vector2(i - 0.5f, j + 0.25f), core::Vector2(i + 0.5f, j + 0.25f), core::Vector2(i + 1, j - 0.5f));
-
+		/*
 		for (int j = -5; j <= 5; j++)
 		{
 			for (int i = -4; i <= 4; i+=3)
 			{
-				CurvesManager::Default.addCurve(core::Vector2(i - 1, j - 0.5f), core::Vector2(i - 0.5f, j + 0.25f), core::Vector2(i + 0.5f, j + 0.25f), core::Vector2(i + 1, j - 0.5f));
+				CurvesManager::Default.addCurve(core::Vector2(i - 1, j), core::Vector2(i + 1, j));
 			}
 		}
-
+		*/
+		
+		//CurvesManager::Default.addCurve(core::Vector2(-1, 0), core::Vector2(1, 0));
+		
+		std::vector<core::Vector2> points;
+		points.push_back(core::Vector2(-6, 0));
+		points.push_back(core::Vector2(-4, 0));
+		points.push_back(core::Vector2(-2, 0));
+		points.push_back(core::Vector2(0, 0));
+		points.push_back(core::Vector2(2, 0));
+		points.push_back(core::Vector2(3, 0));
+		points.push_back(core::Vector2(6, 0));
+		CurvesManager::Default.addCurve(points, false);
 	}
 
 	void ZomboEditor::update(float ellapsedTime)
@@ -201,9 +213,29 @@ namespace zombo
 							_platforms.push_back(gameContent.getPlatform((_scene->thisDir + _scene->platforms[i]).c_str()));
 							ZomboToolBox::Default.addItem(new ZomboToolBoxItem());
 						}
+						for (uint i = 0; i < _platforms.size(); i++)
+						{
+							if (_platforms[i]->middle.size() > 0)
+							{
+								gameContent.enqueueResource((_platforms[i]->thisDir + _platforms[i]->middle[0]).c_str());
+							}
+							
+						}
 						_background = gameContent.getImage((_scene->thisDir + _scene->background).c_str());
+					}
+					else
+					{
 						ZomboEditorLoadingScreen::Default.hide();
 						resources::ContentManager::Default.close();
+						for (uint i = 0; i < _platforms.size(); i++)
+						{
+							if (_platforms[i]->middle.size() > 0)
+							{
+								CurveSegmentRenderer::Default.image = gameContent.getImage((_platforms[i]->thisDir + _platforms[i]->middle[0]).c_str());
+								if (CurveSegmentRenderer::Default.image != nullptr)
+									break;
+							}
+						}
 					}
 				}
 			}

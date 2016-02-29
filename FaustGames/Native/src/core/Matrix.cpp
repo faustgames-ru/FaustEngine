@@ -91,6 +91,14 @@ namespace core
 	float Matrix2::getYx() const { return _values[2]; }
 	float Matrix2::getYy() const { return _values[3]; }
 
+	Matrix2 Matrix2::inverse() const
+	{
+		float d = getXx() * getYy() - getXy() * getYx();
+		if (d < Math::Epsilon)
+			return *this;
+		d = 1.0f / d;
+		return Matrix2(getYy() * d, -getXy() * d, -getYx() * d, getXx() * d);
+	}
 
 	Matrix2 Matrix2::mul(const Matrix2 &a, const Matrix2 &b)
 	{

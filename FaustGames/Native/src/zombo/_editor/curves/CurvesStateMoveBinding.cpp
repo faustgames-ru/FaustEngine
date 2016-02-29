@@ -6,6 +6,7 @@
 
 namespace zombo
 {
+	
 	BindingSnapping BindingSnapping::Default;
 	CurvesStateMoveBinding CurvesStateMoveBinding::Default;
 
@@ -32,14 +33,14 @@ namespace zombo
 		_center = p;
 	}
 
-	bool BindingSnapping::snap(core::Vector2& p)
+	BindingSnapType::e BindingSnapping::snap(core::Vector2& p)
 	{
 		// todo: all
 		core::Vector2 c = _center->getXY();
 		float l = 4.0f *_scale.get();
 		float minD = core::Math::MaxValue;
 		core::Vector2 axis;
-		bool snap = false;
+		BindingSnapType::e snap = BindingSnapType::None;
 		float scale = 0.0f;
 		float len = (p - c).length();
 		float sens = CurvePointBinding::r;
@@ -48,7 +49,7 @@ namespace zombo
 			if (len < CurvePointBinding::trim)
 			{
 				p = c + (p - c).normalize()*CurvePointBinding::trim;
-				return false;
+				return BindingSnapType::None;
 				//sens = sens*0.2f;
 			}
 		}
@@ -64,12 +65,12 @@ namespace zombo
 					minD = d;
 					axis = _axis[i];
 					_axisIndex = i;
-					snap = true;
+					snap = BindingSnapType::Line;
 				}
 			}
 		}
 		
-		if (snap)
+		if (snap != BindingSnapType::None)
 		{
 			minD = core::Math::MaxValue;
 			float newLen = len;
@@ -83,6 +84,7 @@ namespace zombo
 						newLen = n;
 						minD = d;
 					}
+					snap = BindingSnapType::Line;
 				}
 			}
 			if (newLen < core::Math::Epsilon)
@@ -151,14 +153,21 @@ namespace zombo
 		_scale.setTarget(0);
 	}
 
-	CurvesStateMoveBinding::CurvesStateMoveBinding(): selectedBinding(nullptr)
+	CurvesStateMoveBinding::CurvesStateMoveBinding(): selectedBinding(nullptr), _snap(BindingSnapType::None)
 	{
 	}
 
 	void CurvesStateMoveBinding::start()
 	{
 		_downMousePos = CurvesManager::Default.mousePos;
-		_prevSelectedPosition = selectedBinding->getXY();
+		_prevSelectedPosition = selectedBinding->getWorldP();// selectedBinding->getXY();
+		_prevPosition = selectedBinding->getWorldP();// getTargetXY();
+
+		selectedBinding->setWorldP(_prevPosition);
+		_prevPosition = selectedBinding->getWorldP();// getTargetXY();
+
+
+		_snap = BindingSnapType::None;
 		BindingSnapping::Default.setCenter(selectedBinding->p);
 		BindingSnapping::Default.origin = _prevSelectedPosition;
 		BindingSnapping::Default.show();
@@ -176,20 +185,43 @@ namespace zombo
 			mouse->handle(this);
 			core::Vector2 md = mousePos - _downMousePos;
 			core::Vector2 sp = _prevSelectedPosition + md;
-			
 			// todo: snapping
-			BindingSnapping::Default.snap(sp);
-			selectedBinding->setXY(sp);
-			selectedBinding->updateSelectedState();
+			
+			//BindingSnapType::e snap = BindingSnapping::Default.snap(sp);
+			float l = selectedBinding->getLocalP(sp).length();
+			selectedBinding->p->invalidateBindingsLen(l);
+			/*
+			if (snap != _snap)
+			{
+				//selectedBinding->setWorldP(sp);
+				//selectedBinding->p->invalidateBindings(selectedBinding);
+				
+				selectedBinding->p->invalidateBindingsLen(l);
+				//selectedBinding->setTargetXY(sp);
+			}
+			else
+			{
+				//selectedBinding->setWorldP(sp);
+				//selectedBinding->p->invalidateBindings(selectedBinding);
+
+				selectedBinding->p->invalidateBindingsLen(l);
+				//selectedBinding->setXY(sp);
+			}
+			_snap = snap;
+			*/
+			//selectedBinding->updateSelectedState();
+			
 		}
 		else
 		{
 			// todo: undo action
-			ZomboCommandMoveCurveBinding *actualMoveCommand = new ZomboCommandMoveCurveBinding(selectedBinding, _prevSelectedPosition, selectedBinding->getXY());
+			/*
+			ZomboCommandMoveCurveBinding *actualMoveCommand = new ZomboCommandMoveCurveBinding(selectedBinding, _prevPosition, selectedBinding->getWorldP());
 			if (ZomboEditorCommands::Default.doCommand(actualMoveCommand) != CommandExecutonStatus::CommandExecuted)
 			{
 				delete actualMoveCommand;
 			}
+			*/
 			CurvesManager::Default.setState(&CurvesStateSelect::Default);
 			mouse->handle(nullptr);
 		}
@@ -204,4 +236,5 @@ namespace zombo
 	{
 		selectedBinding = binding;
 	}
+	
 }

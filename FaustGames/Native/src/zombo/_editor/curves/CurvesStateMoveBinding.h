@@ -7,7 +7,18 @@
 #define ZOMBO_BINDING_SNAPPING_AXIS_COUNT 8
 
 namespace zombo
-{
+{	
+
+	struct BindingSnapType
+	{
+		enum e
+		{
+			None,
+			Point,
+			Line,
+		};
+	};
+
 	class BindingSnapping
 	{
 	public:
@@ -15,7 +26,7 @@ namespace zombo
 		BindingSnapping();
 		void show();
 		void setCenter(CurvesPoint *p);
-		bool snap(core::Vector2 &p);
+		BindingSnapType::e snap(core::Vector2 &p);
 		void update();
 		void hide();
 		core::Vector2 origin;
@@ -40,9 +51,12 @@ namespace zombo
 		virtual void finish() OVERRIDE;
 		void setSelection(CurvePointBinding* binding);
 	private:
+		BindingSnapType::e _snap;
 		core::Vector2 _downMousePos;
 		core::Vector2 _prevSelectedPosition;
+		core::Vector2 _prevPosition;
 	};
+	
 }
 
 #endif /*ZOMBO_EDITOR_CURVES_CURVES_STATE_MOVE_BINDING_H*/

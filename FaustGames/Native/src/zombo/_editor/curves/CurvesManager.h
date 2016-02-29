@@ -66,14 +66,29 @@ namespace zombo
 		CurvePointBinding* _binding;
 	};
 
+	struct CurvesPointLock
+	{
+		enum e
+		{
+			None,
+			Direction,
+			All
+		};
+	};
+
 	class CurvesPoint
 	{
 	public:
+		CurvesPointLock::e lock;
 		core::Vector2 xy;
+		std::vector<CurvePointBinding*> bindings;
 		core::Vector2 getXY() const;
 		core::Vector2 getTargetXY() const;
 		CurvesPoint();
 		CurvesPoint(core::Vector2 p);
+		void removeBinding(CurvePointBinding* b);
+		void invalidateBindings(CurvePointBinding* b);
+		void invalidateBindingsLen(float l);
 		static float getR();
 		bool isUnderMouse() const;
 		float distanceToMouse() const;
@@ -81,6 +96,15 @@ namespace zombo
 		static float r;
 		static core::Vector2 size;
 	private:
+	};
+
+	struct BindingSnap
+	{
+		enum e
+		{
+			None,
+			Edge,
+		};
 	};
 
 	class CurvePointBinding
@@ -91,11 +115,18 @@ namespace zombo
 		static float trim;
 
 		CurvesPoint *p;
-		SVector2 d;
+		core::Vector2 d;
+		CurveSegment *segment;
+		BindingSnap::e snap;
 		CurvePointBinding();
 		CurvePointBinding(CurvesPoint *point, const core::Vector2 &direction);
+		core::Vector2 getWorldP() const;
+		core::Vector2 getWorldD() const;
+		void setWorldP(core::Vector2 p);
+		core::Vector2 getLocalP(core::Vector2 p) const;
 		bool isUnderMouse() const;
 		float distanceToMouse() const;
+		/*
 		void updateRegularState();
 		void updateHoverState();
 		core::Vector2 getTargetXY() const;
@@ -105,18 +136,31 @@ namespace zombo
 		void setXY(const core::Vector2 &p);
 		void updateSelectedState();
 		static float getR();
-		void updateCoords();
+		*/
 		void update(float scale, float alpha);
-		void setScale(float a);
-		void setRot(float rot);
-		geometry::Aabb2d getAabb() const;
-		core::Vector2 getCurveP() const;
-		core::Vector2 getCurveTargetP() const;
-		core::Vector2 getArrowP() const;
-		core::Vector2 getArrowP0() const;
-		core::Vector2 getArrowP1() const;
-		SFloat _scale;
-		SFloat _rot;
+		core::Vector2 calcTangent() const;
+		core::Vector2 getTangent() const;
+		/*
+						void setScale(float a);
+						void setRot(float rot);
+						geometry::Aabb2d getAabb() const;
+						core::Vector2 getCurveP() const;
+						core::Vector2 getCurveTargetP() const;
+						core::Vector2 getArrowP() const;
+						SFloat _scale;
+						SFloat _rot;
+						*/
+	};
+	
+	class CurveSegment;
+
+	class CurveSegmentRenderer
+	{
+	public:
+		static CurveSegmentRenderer Default;
+		CurveSegmentRenderer();
+		ZomboContentImage* image;
+		void renderTile(CurveSegment *segment);
 	};
 
 	class CurveSegment
@@ -129,6 +173,7 @@ namespace zombo
 		core::Vector2 get2() const;
 		core::Vector2 get3() const;
 		CurveSegment();
+		~CurveSegment();
 		void updateInput();
 		void updateCoords();
 		void update();
@@ -200,7 +245,8 @@ namespace zombo
 		void regularPointRender(CurvesPoint* point) const;
 		void animatePointRender(CurvesPointAnimator* animator) const;
 		void update();
-		void addCurve(core::Vector2 p0, core::Vector2 p1, core::Vector2 p2, core::Vector2 p3);
+		void addCurve(core::Vector2 p0, core::Vector2 p3);
+		void addCurve(const std::vector<core::Vector2> &p, bool close);
 		static CurvesSelection findSelection(CurvesVisibleItems &items);
 		CurvesVisibleItems& getVisibleItems();
 		void setState(ICurvesState* state);

@@ -278,6 +278,7 @@
     <ClInclude Include="..\src\graphics\VertexFormats.h" />
     <ClInclude Include="..\src\navmesh\AStar.h" />
     <ClInclude Include="..\src\navmesh\Funnel.h" />
+    <ClInclude Include="..\src\navmesh\NavEdges.h" />
     <ClInclude Include="..\src\navmesh\NavMesh.h" />
     <ClInclude Include="..\src\navmesh\navmesh_classes.h" />
     <ClInclude Include="..\src\navmesh\navmesh_platform.h" />
@@ -412,6 +413,7 @@
     <ClCompile Include="..\src\graphics\VertexFormats.cpp" />
     <ClCompile Include="..\src\navmesh\AStar.cpp" />
     <ClCompile Include="..\src\navmesh\Funnel.cpp" />
+    <ClCompile Include="..\src\navmesh\NavEdges.cpp" />
     <ClCompile Include="..\src\navmesh\NavMesh.cpp" />
     <ClCompile Include="..\src\resources\ContentManager.cpp" />
     <ClCompile Include="..\src\resources\ContentProviderObb.cpp" />

@@ -19,6 +19,7 @@ namespace zombo
 	float CurvePointBinding::r(0.05f);
 	core::Vector2 CurvePointBinding::size(0.1f, 0.1f);
 	float CurvePointBinding::trim(0.15f);
+	//float CurvePointBinding::trim(0.0f);
 
 	void CurvesState::start()
 	{
@@ -92,13 +93,15 @@ namespace zombo
 	void ZomboCommandMoveCurveBinding::execute()
 	{
 		ZomboLog::Default.m("Do: Move tangent");
-		_binding->setTargetXY(_targetPosition);
+		_binding->setWorldP(_targetPosition);
+		//_binding->setTargetXY(_targetPosition);
 	}
 
 	void ZomboCommandMoveCurveBinding::undo()
 	{
 		ZomboLog::Default.m("Undo: Move tangent");
-		_binding->setTargetXY(_prevPosition);
+		_binding->setWorldP(_prevPosition);
+		//_binding->setTargetXY(_prevPosition);
 	}
 
 	core::Vector2 CurvesPoint::getXY() const
@@ -111,12 +114,54 @@ namespace zombo
 		return Animators::Vector2.getTarget(&xy);
 	}
 
-	CurvesPoint::CurvesPoint()
+	CurvesPoint::CurvesPoint(): lock(CurvesPointLock::Direction)
 	{
 	}
 
-	CurvesPoint::CurvesPoint(core::Vector2 p): xy(p)
+	CurvesPoint::CurvesPoint(core::Vector2 p): lock(CurvesPointLock::Direction), xy(p)
 	{
+	}
+
+	void CurvesPoint::removeBinding(CurvePointBinding* b)
+	{
+		for (uint i = bindings.size() - 1; i >= 0; i--)
+		{
+			if (bindings[i] == b)
+			{
+				for (uint j = i, size = bindings.size() - 1; j < size; j++)
+					bindings[j] = bindings[j + 1];
+				bindings.pop_back();
+			}
+		}
+	}
+
+	void CurvesPoint::invalidateBindings(CurvePointBinding* b)
+	{		
+		/*
+		if (lock == CurvesPointLock::None) return;
+		for (uint i = 0, size = bindings.size(); i < size; i++)
+		{
+			if (b == bindings[i]) continue;
+			if (lock == CurvesPointLock::Direction)
+			{
+				float l = bindings[i]->d.length();
+				bindings[i]->d = b->d.normalize() *-l;
+			}
+			else if (lock == CurvesPointLock::All)
+			{
+				bindings[i]->d = b->d *-1.0f;
+			}
+		}
+		*/
+	}
+
+	void CurvesPoint::invalidateBindingsLen(float l)
+	{
+		if (lock == CurvesPointLock::None) return;
+		for (uint i = 0, size = bindings.size(); i < size; i++)
+		{
+			bindings[i]->d = bindings[i]->d.normalize() *l;
+		}
 	}
 
 	float CurvesPoint::getR()
@@ -173,12 +218,46 @@ namespace zombo
 		return geometry::Aabb2d(getXY() - core::Vector2(getR(), getR()), getXY() + core::Vector2(getR(), getR()));
 	}
 
-	CurvePointBinding::CurvePointBinding(): p(nullptr), _scale(1.0f), _rot(core::Math::Pi * 0.25f)
+	CurvePointBinding::CurvePointBinding(): p(nullptr), segment(nullptr), snap(BindingSnap::None)
 	{
 	}
 
-	CurvePointBinding::CurvePointBinding(CurvesPoint* point, const core::Vector2 &direction) : p(point), d(direction), _scale(1.0f), _rot(core::Math::Pi * 0.25f)
+	CurvePointBinding::CurvePointBinding(CurvesPoint* point, const core::Vector2 &direction) : p(point), d(direction), segment(nullptr), snap(BindingSnap::None)
 	{
+	}
+
+	core::Vector2 CurvePointBinding::getWorldP() const
+	{
+		core::Vector2 ex = calcTangent();// pp3 - pp0;
+		core::Vector2 ey = ex.rotate90ccw();
+		core::Matrix2 transform(ex.getX(), ex.getY(), ey.getX(), ey.getY());
+		return p->xy + core::Matrix2::transform(transform, d);
+	}
+
+	core::Vector2 CurvePointBinding::getWorldD() const
+	{
+		core::Vector2 ex = calcTangent();// pp3 - pp0;
+		core::Vector2 ey = ex.rotate90ccw();
+		core::Matrix2 transform(ex.getX(), ex.getY(), ey.getX(), ey.getY());
+		return core::Matrix2::transform(transform, d);
+	}
+
+	void CurvePointBinding::setWorldP(core::Vector2 wp)
+	{
+		core::Vector2 ex = calcTangent();// pp3 - pp0;
+		core::Vector2 ey = ex.rotate90ccw();
+		core::Matrix2 transform(ex.getX(), ex.getY(), ey.getX(), ey.getY());
+		transform = transform.inverse();
+		d = core::Matrix2::transform(transform, wp - p->getTargetXY());
+	}
+
+	core::Vector2 CurvePointBinding::getLocalP(core::Vector2 wp) const
+	{
+		core::Vector2 ex = calcTangent();// pp3 - pp0;
+		core::Vector2 ey = ex.rotate90ccw();
+		core::Matrix2 transform(ex.getX(), ex.getY(), ey.getX(), ey.getY());
+		transform = transform.inverse();
+		return core::Matrix2::transform(transform, wp - p->getTargetXY());
 	}
 
 	bool CurvePointBinding::isUnderMouse() const
@@ -186,199 +265,122 @@ namespace zombo
 		core::Vector2 m = CurvesManager::Default.mousePos;
 		float mx = m.getX();
 		float my = m.getY();
-		float sx = getR();
-		float sy = getR();
-		core::Vector2 pos = p->xy+d.get();
+		float sx = r;
+		float sy = r;
+		core::Vector2 pos = getWorldP();
 		float px = pos.getX();
 		float py = pos.getY();
 		return
 			px - sx <= mx && mx <= px + sx &&
 			py - sy <= my && my <= py + sy;
 	}
-
+	
 	float CurvePointBinding::distanceToMouse() const
 	{
-		return (CurvesManager::Default.mousePos - p->xy - d.get()).length();
+		return (CurvesManager::Default.mousePos - p->xy - d).length();
 	}
-
-	void CurvePointBinding::updateRegularState()
-	{
-		setScale(1.0f);
-		setRot(0);
-	}
-
-	void CurvePointBinding::updateHoverState()
-	{
-		setScale(1.2f);
-		setRot(core::Math::Pi * 0.25f);
-	}
-
-	core::Vector2 CurvePointBinding::getTargetXY() const
-	{
-		return p->getTargetXY() + d.getTarget();
-	}
-
-	core::Vector2 CurvePointBinding::getXY() const
-	{
-		return p->getXY() + d.get();
-	}
-
-	core::Vector2 CurvePointBinding::calcD(const core::Vector2& pos) const
-	{
-		core::Vector2 newD = pos - p->getTargetXY();
-		if (newD.length() < trim)
+	/*
+		void CurvePointBinding::updateRegularState()
 		{
-			newD = newD.normalize() * trim;
+			setScale(1.0f);
+			setRot(0);
 		}
-		return newD;
-	}
-
-	void CurvePointBinding::setTargetXY(const core::Vector2& pos)
-	{
-		d.setTarget(calcD(pos));
-	}
-
-	void CurvePointBinding::setXY(const core::Vector2& pos)
-	{
-		d.setAll(calcD(pos));
-	}
-
-	void CurvePointBinding::updateSelectedState()
-	{
-		setScale(1.5f);
-		setRot(core::Math::Pi * 1.25f);
-	}
-
-	float CurvePointBinding::getR()
-	{
-		return r;
-	}
-
-	void CurvePointBinding::updateCoords()
-	{
-		d.update();
-	}
-
+	
+		void CurvePointBinding::updateHoverState()
+		{
+			setScale(1.2f);
+			setRot(core::Math::Pi * 0.25f);
+		}
+	
+		core::Vector2 CurvePointBinding::getTargetXY() const
+		{
+			return p->getTargetXY() + Animators::Vector2.getTarget(&d);
+		}
+	
+		core::Vector2 CurvePointBinding::getXY() const
+		{
+			return p->getXY() + d;
+		}
+	
+		core::Vector2 CurvePointBinding::calcD(const core::Vector2& pos) const
+		{
+			core::Vector2 newD = pos - p->getTargetXY();
+			if (newD.length() < trim)
+			{
+				newD = newD.normalize() * trim;
+			}
+			return newD;
+		}
+	
+		void CurvePointBinding::setTargetXY(const core::Vector2& pos)
+		{
+			Animators::Vector2.animate(&d, pos - p->getTargetXY());
+		}
+	
+		void CurvePointBinding::setXY(const core::Vector2& pos)
+		{
+			Animators::Vector2.terminate(&d);
+			d = pos - p->getTargetXY();
+		}
+	
+		void CurvePointBinding::updateSelectedState()
+		{
+			setScale(1.5f);
+			setRot(core::Math::Pi * 1.25f);
+		}
+	
+		float CurvePointBinding::getR()
+		{
+			return r;
+		}
+		*/
 	void CurvePointBinding::update(float scale, float alpha)
 	{
-		_scale.update();
-		_rot.update();
-		renderExtraPoint(p->getXY() + d.get(), getR()*scale*_scale.get(), alpha, _rot.get());
+		
+		//_scale.update();
+		//_rot.update();
+		core::Vector2 wp = getWorldP();
+		renderExtraPoint(wp, r*scale, alpha, 0);
 		uint color = graphics::Color::mulA(0xffffffff, alpha * 0.5f);
-		renderEdge(color, p->getXY(), getCurveP(), getR()*scale*_scale.get()*0.1f);
-		core::Vector3 p0 = getCurveP().toVector3();
-		core::Vector3 p1 = getArrowP().toVector3();
-		ZomboDrawer::Default.fillArrow(color, p0, p1, r*scale*0.75f);
+		renderEdge(color, p->getXY(), wp, r*scale*0.1f);
+		//core::Vector3 p0 = getCurveP().toVector3();
+		//core::Vector3 p1 = getArrowP().toVector3();
+		//ZomboDrawer::Default.fillArrow(color, p0, p1, r*scale*0.75f);
+		
 	}
 
-	void CurvePointBinding::setScale(float a)
+	core::Vector2 CurvePointBinding::calcTangent() const
 	{
-		_scale.setTarget(a);
+		//return core::Vector2::axisX;
+		//return getTangent();
+		core::Vector2 tangent = getTangent();
+		float l = tangent.length();
+		tangent = tangent.normalize();
+		core::Vector2 counterTangent = core::Vector2::empty;
+		for (uint i = 0; i < p->bindings.size(); i++)
+		{
+			if (p->bindings[i] == this) continue;
+			tangent -= p->bindings[i]->getTangent().normalize();
+		}
+		tangent = tangent.normalize();
+		return tangent*l;
 	}
 
-	void CurvePointBinding::setRot(float rot)
+	core::Vector2 CurvePointBinding::getTangent() const
 	{
-		_rot.setTarget(rot);
+		CurvePointBinding* other = segment->p0 == this ? segment->p1 : segment->p0;
+		return other->p->xy - p->xy;
 	}
 
-	geometry::Aabb2d CurvePointBinding::getAabb() const
+	CurveSegmentRenderer::CurveSegmentRenderer()
 	{
-		core::Vector2 pos = p->getXY() + d.get();
-		return geometry::Aabb2d(pos - core::Vector2(getR(), getR()), pos + core::Vector2(getR(), getR()));
+		image = nullptr;
 	}
 
-	core::Vector2 CurvePointBinding::getCurveP() const
-	{
-		core::Vector2 dv = d.get();
-		float dl = dv.length();
-		if (core::Math::abs(dl- trim) < 0.001f)
-			return p->getXY();
-		return p->getXY() + dv.normalize() * (dl - trim);
-	}
-
-	core::Vector2 CurvePointBinding::getCurveTargetP() const
-	{
-		core::Vector2 dv = d.getTarget();
-		float dl = dv.length();
-		if (core::Math::abs(dl - trim) < 0.001f)
-			return p->getXY();
-		return p->getXY() + dv.normalize() * (dl - trim);
-	}
-
-	core::Vector2 CurvePointBinding::getArrowP() const
-	{
-		core::Vector2 dv = d.get();
-		core::Vector2 dl = dv.length();
-		return p->getXY() + dv.normalize() * (dl - getR());
-	}
-
-	core::Vector2 CurveSegment::get0() const
-	{
-		return p0->p->getXY();
-	}
-
-	core::Vector2 CurveSegment::get1() const
-	{
-		return p0->getCurveP();
-	}
-
-	core::Vector2 CurveSegment::get2() const
-	{
-		return p1->getCurveP();
-	}
-
-	core::Vector2 CurveSegment::get3() const
-	{
-		return p1->p->getXY();
-	}
-
-	CurveSegment::CurveSegment(): color(0xfffffffff), _scale(1.0f)
-	{
-		p0 = new CurvePointBinding();
-		p1 = new CurvePointBinding();
-		_scale.setConfig(&SConfig::Fast);
-	}
-
-	void CurveSegment::updateInput()
-	{
-	}
-
-	void CurveSegment::updateCoords()
-	{
-		p0->updateCoords();
-		p1->updateCoords();
-	}
-
-	uint segmentDetail = 16;
-	float segnemtLen = 0.1f;
+	CurveSegmentRenderer CurveSegmentRenderer::Default;
 
 
-	void offset(core::Vector2 &p0, core::Vector2 &p1, core::Vector2 &p2, core::Vector2 &p3, float d)
-	{
-		core::Vector2 n0 = (p1 - p0).rotate90cw().normalize();
-		core::Vector2 n1 = (p2 - p1).rotate90cw().normalize();
-		core::Vector2 n2 = (p3 - p2).rotate90cw().normalize();
-		if (n0.isEmpty())
-			n0 = n1;
-		if (n2.isEmpty())
-			n2 = n1;
-		if (n1.isEmpty())
-			n1 = (n2 + n0).normalize();
-
-		float q0 = 1.0f / (1.0f + core::Vector2::dotProduct(n0, n1));
-		float q1 = 1.0f / (1.0f + core::Vector2::dotProduct(n1, n2));
-
-
-		core::Vector2 n01 = (n0 + n1) * q0;
-		core::Vector2 n12 = (n1 + n2) * q1;
-
-		p0 += n0 * d;
-		p1 += n01 * d;
-		p2 += n12 * d;
-		p3 += n2 * d;
-	}
-	
-	void offset(core::Vector2 d1, core::Vector2 d2, core::Vector2 &p0, core::Vector2 &p1, core::Vector2 &p2, core::Vector2 &p3, float d)
+	void offset(core::Vector2 d1, core::Vector2 d2, core::Vector2 &p0, core::Vector2 &p1, core::Vector2 &p2, core::Vector2 &p3, float w0, float w1)
 	{
 		core::Vector2 n0 = d1/*(p1 - p0)*/.rotate90cw().normalize();
 		core::Vector2 n1 = (p2 - p1).rotate90cw().normalize();
@@ -396,34 +398,275 @@ namespace zombo
 
 		core::Vector2 n01 = (n0 + n1) * q0;
 		core::Vector2 n12 = (n1 + n2) * q1;
+		float w = (w0 + w1) *0.5f;
+		p0 += n0 * w0;
+		p1 += n01 * w;
+		p2 += n12 * w;
+		p3 += n2 * w1;
+	}
+
+	struct curve
+	{
+		core::Vector2 p0;
+		core::Vector2 p1;
+		core::Vector2 p2;
+		core::Vector2 p3;
+	};
+
+	uint calcDetail(CurveSegment* s, float segnemtLen)
+	{
+		uint r = static_cast<uint>(core::Math::round(s->getBaseLen() / segnemtLen));
+		if (r < 2)
+			r = 2;
+		/*
+		if (r < 6)
+			r = 6;
+		if (r > 64)
+			r = 64;
+		*/
+		return r;
+		/*
+		uint r = static_cast<uint>(core::Math::round(getBaseLen() / segnemtLen));
+		if (r < 6)
+			r = 6;
+		if (r > 64)
+			r = 64;
+		return r;
+		*/
+	}
+
+
+	void CurveSegmentRenderer::renderTile(CurveSegment* s)
+	{
+		if (image == nullptr) return;
+		core::Vector2 pp0 = s->get0();
+		core::Vector2 pp3 = s->get3();
+		core::Vector2 pp1 = s->p0->getWorldP();
+		core::Vector2 pp2 = s->p1->getWorldP();;
+
+		curve t;
+		t.p0 = pp0;
+		t.p1 = pp1;
+		t.p2 = pp2;
+		t.p3 = pp3;
+
+		curve b;
+		b.p0 = pp0;
+		b.p1 = pp1;
+		b.p2 = pp2;
+		b.p3 = pp3;
+		
+		float l = 0.2f;
+
+		offset(s->p0->getWorldD(), s->p1->getWorldD(), t.p0, t.p1, t.p2, t.p3, l, l);
+		offset(s->p0->getWorldD(), s->p1->getWorldD(), b.p0, b.p1, b.p2, b.p3, -l, -l);
+
+		float count = calcDetail(s, l*2.0f);
+
+		core::Vector2 pst = core::Vector2::cubic(t.p0, t.p1, t.p2, t.p3, 0);
+		core::Vector2 psb = core::Vector2::cubic(b.p0, b.p1, b.p2, b.p3, 0);
+		core::Vector2 ps = core::Vector2::cubic(pp0, pp1, pp2, pp3, 0);
+		uint color = 0xffffffff;
+		float r = 1.0f;
+		//renderEdge(color, pst, psb, r);
+		RenderVertex quad[4];
+		ushort indices[6] = {0, 1, 2, 0, 2, 3};
+		for (uint i = 1; i < count; i++)
+		{
+			float u = static_cast<float>(i) / static_cast<float>(count - 1);
+			core::Vector2 pft = core::Vector2::cubic(t.p0, t.p1, t.p2, t.p3, u);
+			core::Vector2 pfb = core::Vector2::cubic(b.p0, b.p1, b.p2, b.p3, u);
+			core::Vector2 pf = core::Vector2::cubic(pp0, pp1, pp2, pp3, u);
+			//renderEdge(color, ps, pf, getR()*_scale.get());
+			//renderEdge(color, pst, pft, r);
+			//renderEdge(color, psb, pfb, r);
+			//renderEdge(0x80808080, pft, pfb, r);
+
+			quad[0] = RenderVertex(psb.toVector3(), color, 0, 0);
+			quad[1] = RenderVertex(pst.toVector3(), color, 0, ZomboConstants::t1);
+			quad[2] = RenderVertex(pft.toVector3(), color, ZomboConstants::t1, ZomboConstants::t1);
+			quad[3] = RenderVertex(pfb.toVector3(), color, ZomboConstants::t1, 0);
+
+			ZomboEditorRenderService::Default.drawTrianglesTextured(image->texture, quad, 4, indices, 2);
+
+			pst = pft;
+			psb = pfb;
+			ps = pf;
+		}
+		//renderEdge(color, pst, psb, 1.0f);
+	}
+
+	/*
+		void CurvePointBinding::setScale(float a)
+		{
+			_scale.setTarget(a);
+		}
+	
+		void CurvePointBinding::setRot(float rot)
+		{
+			_rot.setTarget(rot);
+		}
+	
+		geometry::Aabb2d CurvePointBinding::getAabb() const
+		{
+			core::Vector2 pos = p->getXY() + d;
+			return geometry::Aabb2d(pos - core::Vector2(getR(), getR()), pos + core::Vector2(getR(), getR()));
+		}
+	
+		core::Vector2 CurvePointBinding::getCurveP() const
+		{
+			core::Vector2 dv = d;
+			float dl = dv.length();
+			if (core::Math::abs(dl- trim) < 0.001f)
+				return p->getXY();
+			return p->getXY() + dv.normalize() * (dl - trim);
+		}
+	
+		core::Vector2 CurvePointBinding::getCurveTargetP() const
+		{
+			core::Vector2 dv = Animators::Vector2.getTarget(&d);
+			float dl = dv.length();
+			if (core::Math::abs(dl - trim) < 0.001f)
+				return p->getXY();
+			return p->getXY() + dv.normalize() * (dl - trim);
+		}
+	
+		core::Vector2 CurvePointBinding::getArrowP() const
+		{
+			core::Vector2 dv = d;
+			core::Vector2 dl = dv.length();
+			return p->getXY() + dv.normalize() * (dl - getR());
+		}
+		*/
+	core::Vector2 CurveSegment::get0() const
+	{
+		return p0->p->getXY();
+	}
+
+	core::Vector2 CurveSegment::get1() const
+	{
+		//return p0->getCurveP();
+		return get0() + p0->d;
+	}
+
+	core::Vector2 CurveSegment::get2() const
+	{
+		//return p1->getCurveP();
+		return get3() + p1->d;
+	}
+
+	core::Vector2 CurveSegment::get3() const
+	{
+		return p1->p->getXY();
+	}
+
+	CurveSegment::CurveSegment(): color(0xfffffffff), _scale(1.0f)
+	{
+		p0 = new CurvePointBinding();
+		p1 = new CurvePointBinding();
+		p0->segment = this;
+		p1->segment = this;
+		_scale.setConfig(&SConfig::Fast);
+	}
+
+	CurveSegment::~CurveSegment()
+	{
+		if (p0->p != nullptr)
+		{
+			p0->p->removeBinding(p0);
+		}
+		if (p1->p != nullptr)
+		{
+			p1->p->removeBinding(p1);
+		}
+		delete p0;
+		delete p1;
+	}
+
+	void CurveSegment::updateInput()
+	{
+	}
+
+	void CurveSegment::updateCoords()
+	{
+	}
+
+	uint segmentDetail = 16;
+	float segnemtLen = 0.1f;
+
+
+	void offset(core::Vector2 &p0, core::Vector2 &p1, core::Vector2 &p2, core::Vector2 &p3, float d)
+	{
+		core::Vector2 n0 = (p1 - p0).rotate90cw();
+		core::Vector2 n1 = (p2 - p1).rotate90cw();
+		core::Vector2 n2 = (p3 - p2).rotate90cw();
+		if (n0.isEmpty(1e-6))
+			n0 = n1;
+		if (n2.isEmpty(1e-6))
+			n2 = n1;
+		if (n1.isEmpty(1e-6))
+			n1 = (n2 + n0);
+
+		n0 = n0.normalize();
+		n1 = n1.normalize();
+		n2 = n2.normalize();
+
+		float dot0 = core::Vector2::dotProduct(n0, n1);
+		float dot1 = core::Vector2::dotProduct(n1, n2);
+
+		core::Vector2 n01;
+		if (core::Math::equals(dot0, -1))
+		{
+			n01 = n0;
+		}
+		else
+		{
+			float q0 = 1.0f / (1.0f + dot0);
+			n01 = (n0 + n1) * q0;
+		}
+
+		core::Vector2 n12;
+		if (core::Math::equals(dot0, -1))
+		{
+			n12 = n2;
+		}
+		else
+		{
+			float q1 = 1.0f / (1.0f + dot1);
+			n12 = (n1 + n2) * q1;
+		}
+			
 
 		p0 += n0 * d;
 		p1 += n01 * d;
 		p2 += n12 * d;
 		p3 += n2 * d;
 	}
-
+	
 	void CurveSegment::update()
 	{
+		CurveSegmentRenderer::Default.renderTile(this);
+		return;
 		//renderPoint(p0->xy + d0, p0->_scale.getValue() * p0->getR() * 0.5f, p0->_alpha.getValue());
 		//renderPoint(p1->xy + d1, p1->_scale.getValue() * p1->getR() * 0.5f, p1->_alpha.getValue());
 		_scale.update();
 		uint count = calcDetail();// segmentDetail;
 		
 		core::Vector2 pp0 = get0();
-		core::Vector2 pp1 = get1();
-		core::Vector2 pp2 = get2();
 		core::Vector2 pp3 = get3();
 		
+		core::Vector2 pp1 = p0->getWorldP();
+		core::Vector2 pp2 = p1->getWorldP();;
+
 		// todo: remove crutch
 		/*
 		if (core::Vector2::equals(pp0, p0->getCurveTargetP()))
 		{
-			p0->d.setTarget((pp2 - pp0).normalize()*CurvePointBinding::trim);
+			p0->setTargetXY(pp0 + (pp2 - pp0).normalize()*CurvePointBinding::trim);
 		}
 		if (core::Vector2::equals(pp3, p1->getCurveTargetP()))
 		{
-			p1->d.setTarget((pp1 - pp3).normalize()*CurvePointBinding::trim);
+			p1->setTargetXY(pp3 + (pp1 - pp3).normalize()*CurvePointBinding::trim);
 		}
 		*/
 
@@ -436,28 +679,16 @@ namespace zombo
 		core::Vector2 ppb1 = pp1;
 		core::Vector2 ppb2 = pp2;
 		core::Vector2 ppb3 = pp3;
-
-		offset(p0->d.get(), p1->d.get(), ppt0, ppt1, ppt2, ppt3, 0.25f);
-		offset(p0->d.get(), p1->d.get(), ppb0, ppb1, ppb2, ppb3, -0.25f);
-		//offset(ppt0, ppt1, ppt2, ppt3, 0.25f);
-		//offset(ppb0, ppb1, ppb2, ppb3, -0.25f);
-
+		
+		offset(p0->getWorldD(), p1->getWorldD(), ppt0, ppt1, ppt2, ppt3, p0->d.length(), p1->d.length());
+		offset(p0->getWorldD(), p1->getWorldD(), ppb0, ppb1, ppb2, ppb3, -p0->d.length(), -p1->d.length());
+		/*
+		offset(ppt0, ppt1, ppt2, ppt3, 0.25f);
+		offset(ppb0, ppb1, ppb2, ppb3, -0.25f);
+		*/
 		core::Vector2 pst = core::Vector2::cubic(ppt0, ppt1, ppt2, ppt3, 0);
 		core::Vector2 psb = core::Vector2::cubic(ppb0, ppb1, ppb2, ppb3, 0);
-		core::Vector2 ps = core::Vector2::cubic(pp0, pp1, pp2, pp3, 0);
-		/*
-		renderEdge(0xffffffff, ppt0, ppt1, 0);
-		renderEdge(0xffffffff, ppt1, ppt2, 0);
-		renderEdge(0xffffffff, ppt2, ppt3, 0);
-
-		renderEdge(0xffffffff, ppb0, ppb1, 0);
-		renderEdge(0xffffffff, ppb1, ppb2, 0);
-		renderEdge(0xffffffff, ppb2, ppb3, 0);
-
-		renderEdge(0xffffffff, pp0, pp1, 0);
-		renderEdge(0xffffffff, pp1, pp2, 0);
-		renderEdge(0xffffffff, pp2, pp3, 0);
-		*/
+		core::Vector2 ps = core::Vector2::cubic(pp0, pp1, pp2, pp3, 0);		
 
 		renderEdge(color, pst, psb, getR()*_scale.get());
 		for (uint i = 1; i < count; i++)
@@ -476,59 +707,6 @@ namespace zombo
 			ps = pf;
 		}
 		renderEdge(color, pst, psb, getR()*_scale.get());
-
-		/*
-		core::Vector2 d0 = p0->d.get();
-		core::Vector2 d1 = p1->d.get();
-		core::Vector2 n0 = d0.rotate90cw().normalize();
-		core::Vector2 n1 = d1.rotate90cw().normalize();
-		float size = 0.01f;
-		core::Vector2 pt0 = p0->p->getXY() + n0*size;
-		core::Vector2 pb0 = p0->p->getXY() - n0*size;
-		
-		core::Vector2 pt1 = p1->p->getXY() - n1*size;
-		core::Vector2 pb1 = p1->p->getXY() + n1*size;
-
-		float tProp = 1.0f;// (pt0 - pt1).length() / (p0->getXY() - p1->p->getXY()).length();
-		float bProp = 1.0f;// (pb0 - pb1).length() / (p0->getXY() - p1->p->getXY()).length();
-		
-		core::Vector2 dt0 = d0 * tProp;
-		core::Vector2 dt1 = d1 * tProp;
-
-		core::Vector2 db0 = d0 * bProp;
-		core::Vector2 db1 = d1 * bProp;
-
-		core::Vector2 pst = core::Vector2::cubic(pt0, pt0 + dt0, pt1 + dt1, pt1, 0);
-		core::Vector2 psb = core::Vector2::cubic(pb0, pb0 + db0, pb1 + db1, pb1, 0);
-		core::Vector2 ps = core::Vector2::cubic(get0(), get1(), get2(), get3(), 0);
-		for (uint i = 1; i < count; i++)
-		{
-			float u = static_cast<float>(i) / static_cast<float>(count - 1);
-			core::Vector2 pft = core::Vector2::cubic(pt0, pt0 + dt0, pt1 + db1, pt1, u);
-			core::Vector2 pfb = core::Vector2::cubic(pb0, pb0 + db0, pb1 + db1, pb1, u);
-			core::Vector2 pf = core::Vector2::cubic(get0(), get1(), get2(), get3(), u);
-			//renderEdge(0xffffffff, ps, pf, getR()*_scale.get());
-			
-			renderEdge(color, pst, psb, getR()*_scale.get());
-			renderEdge(color, pft, pfb, getR()*_scale.get());
-			renderEdge(color, pst, pft, getR()*_scale.get());
-			renderEdge(color, psb, pfb, getR()*_scale.get());
-			
-			pst = pft;
-			psb = pfb;
-			ps = pf;
-		}
-		*/
-		/*
-		core::Vector2 ps = core::Vector2::cubic(get0(), get1(), get2(), get3(), 0);
-		for (uint i = 1; i < count; i++)
-		{
-			float u = static_cast<float>(i) / static_cast<float>(count - 1);
-			core::Vector2 pf = core::Vector2::cubic(get0(), get1(), get2(), get3(), u);
-			renderEdge(color, ps, pf, getR()*_scale.get());
-			ps = pf;
-		}
-		*/
 	}
 	
 	uint CurveSegment::calcDetail() const
@@ -543,7 +721,7 @@ namespace zombo
 
 	float CurveSegment::getBaseLen() const
 	{
-		return p0->d.get().length() + (p0->p->getXY() + p0->d.get() - p1->p->getXY() - p1->d.get()).length() + p1->d.get().length();
+		return p0->d.length() + (p0->p->getXY() + p0->d - p1->p->getXY() - p1->d).length() + p1->d.length();
 	}
 
 	float CurveSegment::getR() const
@@ -676,9 +854,9 @@ namespace zombo
 	CurvesManager::CurvesManager() : scale(1.0f), _snappingRange(0.1f), _pointsScale(1.0f), _extraPointsScale(1.0f), _pointBoxImage(nullptr), _pointRingImage(nullptr), _regularPointR(1.0f)
 	{
 		_actualState = &CurvesStateSelect::Default;
-		_extraPointsAlpha.setConfig(&SConfig::VerySlow);
-		_pointsSnapAlpha.setConfig(&SConfig::VerySlow);
-		_pointsAlpha.setConfig(&SConfig::VerySlow);
+		_extraPointsAlpha.setConfig(&SConfig::Default);
+		_pointsSnapAlpha.setConfig(&SConfig::Default);
+		_pointsAlpha.setConfig(&SConfig::Default);
 	}
 
 	CurvesPoint *CurvesManager::snap(core::Vector2& p, CurvesPoint *selection)
@@ -830,9 +1008,11 @@ namespace zombo
 			}
 		}
 		*/
-
+		
 		for (uint i = 0; i < _visibleItems.pointsBindings.size(); i++)
 		{
+			_visibleItems.pointsBindings[i]->update(_extraPointsScale.get(), 1.0f);
+			/*
 			if (_visibleItems.pointsBindings[i] == lastSelection.binding)
 			{
 				_visibleItems.pointsBindings[i]->update(_extraPointsScale.get(), 1.0f);
@@ -841,23 +1021,70 @@ namespace zombo
 			{				
 				_visibleItems.pointsBindings[i]->update(_extraPointsScale.get(), _pointsAlpha.get());
 			}
+			*/
 		}
+		
 	}
-	
-	void CurvesManager::addCurve(core::Vector2 p0, core::Vector2 p1, core::Vector2 p2, core::Vector2 p3)
+
+	void CurvesManager::addCurve(core::Vector2 p0, core::Vector2 p3)
 	{
 		CurvesPoint *cp0 = new CurvesPoint(p0);
 		CurvesPoint *cp1 = new CurvesPoint(p3);
-		core::Vector2 d0 = p1 - p0;
-		core::Vector2 d1 = p2 - p3;
+		core::Vector2 d0 = core::Vector2::axisX*0.25f + core::Vector2::axisY*0.25f;
+		core::Vector2 d1 = core::Vector2::axisX*0.25f - core::Vector2::axisY*0.25f;
 		CurveSegment *seg = new CurveSegment();
 		seg->p0->p = cp0;
 		seg->p1->p = cp1;
 		seg->p0->d = d0;
 		seg->p1->d = d1;
+		cp0->bindings.push_back(seg->p0);
+		cp1->bindings.push_back(seg->p1);
 		_points.push_back(cp0);
 		_points.push_back(cp1);
 		_segments.push_back(seg);
+	}
+
+	void CurvesManager::addCurve(const std::vector<core::Vector2> &p, bool close)
+	{
+		if (p.size() == 0) return;
+		CurvesPoint *cp0;
+		int start;
+		CurvesPoint *last = new CurvesPoint(p.back());
+		if (close)
+		{
+			cp0 = last;
+			start = 0;
+		}
+		else
+		{
+			cp0 = new CurvesPoint(p.front());
+			start = 1;
+		}
+		for (int i = start; i < p.size(); i++)
+		{
+			CurvesPoint *cp1;
+			if (i == p.size() - 1)
+			{
+				cp1 = last;
+			}
+			else
+			{
+				cp1 = new CurvesPoint(p[i]);
+			}
+			core::Vector2 d0 = core::Vector2::axisX *0.25f;
+			core::Vector2 d1 = core::Vector2::axisX *0.25f;
+			CurveSegment *seg = new CurveSegment();
+			seg->p0->p = cp0;
+			seg->p1->p = cp1;
+			seg->p0->d = d0;
+			seg->p1->d = d1;
+			cp0->bindings.push_back(seg->p0);
+			cp1->bindings.push_back(seg->p1);
+			_points.push_back(cp0);
+			_points.push_back(cp1);
+			_segments.push_back(seg);
+			cp0 = cp1;
+		}
 	}
 
 	CurvesSelection CurvesManager::findSelection(CurvesVisibleItems& items)
@@ -881,6 +1108,7 @@ namespace zombo
 			return CurvesSelection(selectedPoint);
 		}
 		CurvePointBinding * selectedBinding = nullptr;
+		
 		for (uint i = 0; i < items.pointsBindings.size(); i++)
 		{
 			if (items.pointsBindings[i]->isUnderMouse())
@@ -893,6 +1121,7 @@ namespace zombo
 				}
 			}
 		}
+		
 		if (selectedBinding != nullptr)
 		{
 			return CurvesSelection(selectedBinding);
@@ -986,7 +1215,7 @@ namespace zombo
 		segnemtLen = 8 / scale;
 		// todo:: optimize;
 		
-		float pxMin = 6;
+		float pxMin = 12;
 		core::Vector2 size = CurvesPoint::size*scale;
 		bool arePointsVisible = true;
 		if (size.getX() < pxMin && size.getY() < pxMin)
@@ -1042,8 +1271,8 @@ namespace zombo
 		{
 			for (uint i = 0; i < items.segments.size(); i++)
 			{
-				items.pointsBindings.push_back(items.segments[i]->p0);
-				items.pointsBindings.push_back(items.segments[i]->p1);
+				//items.pointsBindings.push_back(items.segments[i]->p0);
+				//items.pointsBindings.push_back(items.segments[i]->p1);
 			}
 		}
 	}

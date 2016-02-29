@@ -160,24 +160,7 @@ namespace zombo
 				selectedPoint->xy = sp;
 			}
 			_replacePoint = replacePoint;
-			CurvesManager::Default.animateToSelect(selectedPoint);
-			//selectedPoint->updateSelectedState();
-			/*
-			CurvesVisibleItems &visible = CurvesManager::Default.getVisibleItems();
-			for (uint i = 0; i < visible.points.size(); i++)
-			{
-				if (visible.points[i] != selectedPoint)
-				{
-					// todo: hidden state?
-					//visible.points[i]->updateHidenState();
-				}
-				else
-				{
-					//CurvesManager::Default.animateToSelect(visible.points[i]);
-					//visible.points[i]->updateSelectedState();
-				}
-			}
-			*/
+			CurvesManager::Default.animateToSelect(selectedPoint);			
 		}
 		else
 		{

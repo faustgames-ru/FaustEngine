@@ -282,14 +282,22 @@ namespace core
 	{
 	public:
 		Matrix2(float m11, float m12, float m21, float m22);		
-		inline float getXx() const;
-		inline float getXy() const;
-		inline float getYx() const;
-		inline float getYy() const;
+		float getXx() const;
+		float getXy() const;
+		float getYx() const;
+		float getYy() const;
+		Matrix2 inverse() const;
 		static Matrix2 identity;		
-		inline static Matrix2 mul(const Matrix2 &a, const Matrix2 &b);
-		inline static Matrix2 createRotation(float angle);
-		inline static Matrix2 createScale(float scaleX, float scaleY);
+		static Matrix2 mul(const Matrix2 &a, const Matrix2 &b);
+		static Matrix2 createRotation(float angle);
+		static Matrix2 createScale(float scaleX, float scaleY);
+
+		static Vector2 transform(Matrix2 m, Vector2 v)
+		{
+			return Vector2(
+				v.getX() * m.getXx() + v.getY() * m.getYx(),
+				v.getX() * m.getXy() + v.getY() * m.getYy());
+		}	
 	private:
 		float _values[4];
 	};

@@ -14,6 +14,8 @@ namespace core
 		float _values[2];
 	public:
 		static Vector2 empty;
+		static Vector2 axisX;
+		static Vector2 axisY;
 		static int iX;
 		static int iY;
 
@@ -50,16 +52,19 @@ namespace core
 		Vector2 rotate(float a) const;
 		Vector2 rotate(float c, float s) const;
 		Vector2 normalize() const;
+		Vector2 normalize(float eps) const;
 		float length() const;
 		float lengthSqr() const;
 		Vector3 toVector3() const;
 		Vector3 toVector3(float z) const;
 		bool isEmpty() const;
+		bool isEmpty(float eps) const;
 		static Vector2 lerp(const Vector2 &from, const Vector2 &to, float u);
 		static Vector2 cubic(Vector2 p0, Vector2 p1, Vector2 p2, Vector2 p3, float u);
 		static float crossProduct(Vector2 v1, Vector2 v2);
 		static float dotProduct(Vector2 v1, Vector2 v2);
 		static bool equals(const Vector2& a, const Vector2& b);
+		static bool equals(const Vector2& a, const Vector2& b, float eps);
 		static float distanceToEdge(const Vector2 &p, const Vector2 &e0, const Vector2 &e1);
 		bool isInsideTriangle(const Vector2& a, const Vector2& b, const Vector2& c) const;
 	};

@@ -13,9 +13,6 @@
     <Filter Include="common">
       <UniqueIdentifier>{52296692-4906-4308-88b5-5d16497cca62}</UniqueIdentifier>
     </Filter>
-    <Filter Include="shaders">
-      <UniqueIdentifier>{f56f7ea8-0aaf-4aed-ab59-4898beff468c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="resources">
       <UniqueIdentifier>{bdb4f70e-f3cf-47b8-b7be-fe7a8f39cb1a}</UniqueIdentifier>
     </Filter>
@@ -126,6 +123,9 @@
     </Filter>
     <Filter Include="zombo\_editor\grid">
       <UniqueIdentifier>{c7d17550-fc82-489d-8254-d3b6ba27f584}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="shaders">
+      <UniqueIdentifier>{f56f7ea8-0aaf-4aed-ab59-4898beff468c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

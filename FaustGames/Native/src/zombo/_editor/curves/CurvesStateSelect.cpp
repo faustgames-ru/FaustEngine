@@ -34,6 +34,7 @@ namespace zombo
 
 	void CurvesStateSelect::updateBindingState(CurvePointBinding* binding, const CurvesSelection& selection)
 	{
+		/*
 		if (binding != selection.binding)
 		{
 			binding->updateRegularState();
@@ -42,6 +43,7 @@ namespace zombo
 		{
 			binding->updateHoverState();
 		}
+		*/
 	}
 
 	void CurvesStateSelect::updatePoints(const std::vector<CurvesPoint*> &points, const CurvesSelection& selection)

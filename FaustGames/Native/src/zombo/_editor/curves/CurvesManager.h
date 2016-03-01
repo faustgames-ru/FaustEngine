@@ -160,7 +160,10 @@ namespace zombo
 		static CurveSegmentRenderer Default;
 		CurveSegmentRenderer();
 		ZomboContentImage* image;
+		geometry::Aabb2d getBounds(const CurveSegment *segment) const;
 		void renderTile(CurveSegment *segment);
+	private:
+		std::vector<RenderVertex> _vertices;
 	};
 
 	class CurveSegment

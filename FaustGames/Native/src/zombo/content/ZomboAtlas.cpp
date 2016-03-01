@@ -2,11 +2,10 @@
 
 namespace zombo
 {
-	void ZomboContentImage::initWithQuad(float w, float h)
+	void ZomboContentImage::initWithQuad(float w, float h, uint detail)
 	{
 		w *= 0.5f;
 		h *= 0.5f;
-		uint detail = 8;
 
 		ZomboImageVertex vertex;
 		for (uint y = 0; y <= detail; y++)

@@ -16,8 +16,8 @@ namespace zombo
 {
 	float CurvesPoint::r(0.1f);
 	core::Vector2 CurvesPoint::size(0.2f, 0.2f);
-	float CurvePointBinding::r(0.05f);
-	core::Vector2 CurvePointBinding::size(0.1f, 0.1f);
+	float CurvePointBinding::r(0.1f);
+	core::Vector2 CurvePointBinding::size(0.2f, 0.2f);
 	float CurvePointBinding::trim(0.15f);
 	//float CurvePointBinding::trim(0.0f);
 
@@ -94,6 +94,7 @@ namespace zombo
 	{
 		ZomboLog::Default.m("Do: Move tangent");
 		_binding->setWorldP(_targetPosition);
+		_binding->p->invalidateBindings(_binding);
 		//_binding->setTargetXY(_targetPosition);
 	}
 
@@ -101,6 +102,7 @@ namespace zombo
 	{
 		ZomboLog::Default.m("Undo: Move tangent");
 		_binding->setWorldP(_prevPosition);
+		_binding->p->invalidateBindings(_binding);
 		//_binding->setTargetXY(_prevPosition);
 	}
 
@@ -114,11 +116,11 @@ namespace zombo
 		return Animators::Vector2.getTarget(&xy);
 	}
 
-	CurvesPoint::CurvesPoint(): lock(CurvesPointLock::Direction)
+	CurvesPoint::CurvesPoint(): lock(CurvesPointLock::All)
 	{
 	}
 
-	CurvesPoint::CurvesPoint(core::Vector2 p): lock(CurvesPointLock::Direction), xy(p)
+	CurvesPoint::CurvesPoint(core::Vector2 p): lock(CurvesPointLock::All), xy(p)
 	{
 	}
 
@@ -136,8 +138,8 @@ namespace zombo
 	}
 
 	void CurvesPoint::invalidateBindings(CurvePointBinding* b)
-	{		
-		/*
+	{	
+		
 		if (lock == CurvesPointLock::None) return;
 		for (uint i = 0, size = bindings.size(); i < size; i++)
 		{
@@ -151,8 +153,7 @@ namespace zombo
 			{
 				bindings[i]->d = b->d *-1.0f;
 			}
-		}
-		*/
+		}		
 	}
 
 	void CurvesPoint::invalidateBindingsLen(float l)
@@ -351,7 +352,7 @@ namespace zombo
 
 	core::Vector2 CurvePointBinding::calcTangent() const
 	{
-		//return core::Vector2::axisX;
+		return core::Vector2::axisX;
 		//return getTangent();
 		core::Vector2 tangent = getTangent();
 		float l = tangent.length();
@@ -392,6 +393,38 @@ namespace zombo
 		if (n1.isEmpty())
 			n1 = (n2 + n0).normalize();
 
+		float dot0 = core::Vector2::dotProduct(n0, n1);
+		float dot1 = core::Vector2::dotProduct(n1, n2);
+
+		core::Vector2 n01;
+		if (core::Math::equals(dot0, -1))
+		{
+			n01 = n0;
+		}
+		else
+		{
+			float q0 = 1.0f / (1.0f + dot0);
+			n01 = (n0 + n1) * q0;
+		}
+
+		core::Vector2 n12;
+		if (core::Math::equals(dot0, -1))
+		{
+			n12 = n2;
+		}
+		else
+		{
+			float q1 = 1.0f / (1.0f + dot1);
+			n12 = (n1 + n2) * q1;
+		}
+
+
+		float w = (w0 + w1) *0.5f;
+		p0 += n0 * w0;
+		p1 += n01 * w;
+		p2 += n12 * w;
+		p3 += n2 * w1;
+		/*
 		float q0 = 1.0f / (1.0f + core::Vector2::dotProduct(n0, n1));
 		float q1 = 1.0f / (1.0f + core::Vector2::dotProduct(n1, n2));
 
@@ -403,6 +436,7 @@ namespace zombo
 		p1 += n01 * w;
 		p2 += n12 * w;
 		p3 += n2 * w1;
+		*/
 	}
 
 	struct curve
@@ -435,6 +469,47 @@ namespace zombo
 		*/
 	}
 
+	geometry::Aabb2d CurveSegmentRenderer::getBounds(const CurveSegment* s) const
+	{
+		if (image == nullptr)
+		{
+			return geometry::Aabb2d(core::Vector2::empty, core::Vector2::empty);
+		}
+		core::Vector2 pp0 = s->get0();
+		core::Vector2 pp3 = s->get3();
+		core::Vector2 pp1 = s->p0->getWorldP();
+		core::Vector2 pp2 = s->p1->getWorldP();
+		
+		curve t;
+		t.p0 = pp0;
+		t.p1 = pp1;
+		t.p2 = pp2;
+		t.p3 = pp3;
+
+		curve b;
+		b.p0 = pp0;
+		b.p1 = pp1;
+		b.p2 = pp2;
+		b.p3 = pp3;
+
+		core::Vector2 size = image->bounds.Max - image->bounds.Min;
+		float w = size.getX();
+		float h = size.getY() * 0.5f;
+
+		offset(s->p0->getWorldD(), s->p1->getWorldD(), t.p0, t.p1, t.p2, t.p3, h, h);
+		offset(s->p0->getWorldD(), s->p1->getWorldD(), b.p0, b.p1, b.p2, b.p3, -h, -h);
+
+		geometry::Aabb2d result;
+		result.expand(t.p0);
+		result.expand(t.p1);
+		result.expand(t.p2);
+		result.expand(t.p3);
+		result.expand(b.p0);
+		result.expand(b.p1);
+		result.expand(b.p2);
+		result.expand(b.p3);
+		return result;
+	}
 
 	void CurveSegmentRenderer::renderTile(CurveSegment* s)
 	{
@@ -456,21 +531,42 @@ namespace zombo
 		b.p2 = pp2;
 		b.p3 = pp3;
 		
-		float l = 0.2f;
+		core::Vector2 size = image->bounds.Max - image->bounds.Min;
+		float w = size.getX();
+		float h = size.getY() * 0.5f;
 
-		offset(s->p0->getWorldD(), s->p1->getWorldD(), t.p0, t.p1, t.p2, t.p3, l, l);
-		offset(s->p0->getWorldD(), s->p1->getWorldD(), b.p0, b.p1, b.p2, b.p3, -l, -l);
+		offset(s->p0->getWorldD(), s->p1->getWorldD(), t.p0, t.p1, t.p2, t.p3, h, h);
+		offset(s->p0->getWorldD(), s->p1->getWorldD(), b.p0, b.p1, b.p2, b.p3, -h, -h);
 
-		float count = calcDetail(s, l*2.0f);
+		float count = calcDetail(s, w);
+		uint color = 0xffffffff;
+		for (uint i = 1; i < count; i++)
+		{
+			float u0 = static_cast<float>(i-1) / static_cast<float>(count - 1);;
+			float u1 = static_cast<float>(i) / static_cast<float>(count - 1);;
+			_vertices.clear();
+			for (uint j = 0; j < image->vertices.size(); j++)
+			{
+				core::Vector2 xy = image->vertices[j].xy;
+				float u = core::Math::lerp(u0, u1, (xy.getX() - image->bounds.Min.getX()) / size.getX());
+				core::Vector2 txy = core::Vector2::cubic(t.p0, t.p1, t.p2, t.p3, u);
+				core::Vector2 bxy = core::Vector2::cubic(b.p0, b.p1, b.p2, b.p3, u);
+				core::Vector2 pos = core::Vector2::lerp(bxy, txy, (xy.getY() - image->bounds.Min.getY()) / size.getY());
+				
+				_vertices.push_back(RenderVertex(pos.toVector3(), color, image->vertices[j].u, image->vertices[j].v));
+			}
+			if (_vertices.size() > 0)
+			{
+				ZomboEditorRenderService::Default.drawTrianglesTextured(image->texture,
+					_vertices.data(), _vertices.size(), image->indices.data(), image->indices.size() / 3);
+			}
+		}
 
 		core::Vector2 pst = core::Vector2::cubic(t.p0, t.p1, t.p2, t.p3, 0);
 		core::Vector2 psb = core::Vector2::cubic(b.p0, b.p1, b.p2, b.p3, 0);
 		core::Vector2 ps = core::Vector2::cubic(pp0, pp1, pp2, pp3, 0);
-		uint color = 0xffffffff;
-		float r = 1.0f;
-		//renderEdge(color, pst, psb, r);
-		RenderVertex quad[4];
-		ushort indices[6] = {0, 1, 2, 0, 2, 3};
+		/*
+		renderEdge(color, pst, psb, 1);
 		for (uint i = 1; i < count; i++)
 		{
 			float u = static_cast<float>(i) / static_cast<float>(count - 1);
@@ -478,22 +574,16 @@ namespace zombo
 			core::Vector2 pfb = core::Vector2::cubic(b.p0, b.p1, b.p2, b.p3, u);
 			core::Vector2 pf = core::Vector2::cubic(pp0, pp1, pp2, pp3, u);
 			//renderEdge(color, ps, pf, getR()*_scale.get());
-			//renderEdge(color, pst, pft, r);
-			//renderEdge(color, psb, pfb, r);
-			//renderEdge(0x80808080, pft, pfb, r);
-
-			quad[0] = RenderVertex(psb.toVector3(), color, 0, 0);
-			quad[1] = RenderVertex(pst.toVector3(), color, 0, ZomboConstants::t1);
-			quad[2] = RenderVertex(pft.toVector3(), color, ZomboConstants::t1, ZomboConstants::t1);
-			quad[3] = RenderVertex(pfb.toVector3(), color, ZomboConstants::t1, 0);
-
-			ZomboEditorRenderService::Default.drawTrianglesTextured(image->texture, quad, 4, indices, 2);
+			renderEdge(color, pst, pft, 1);
+			renderEdge(color, psb, pfb, 1);
+			renderEdge(0x80808080, pft, pfb, 1);
 
 			pst = pft;
 			psb = pfb;
 			ps = pf;
 		}
-		//renderEdge(color, pst, psb, 1.0f);
+		renderEdge(color, pst, psb, 1);
+		*/
 	}
 
 	/*
@@ -784,12 +874,15 @@ namespace zombo
 
 	geometry::Aabb2d CurveSegment::getAabb() const
 	{
+		return CurveSegmentRenderer::Default.getBounds(this);
+		/*
 		geometry::Aabb2d bounds;
 		bounds.expand(get0());
 		bounds.expand(get1());
 		bounds.expand(get2());
 		bounds.expand(get3());
 		return bounds;
+		*/
 	}
 
 	void CurvesVisibleItems::clear()
@@ -924,8 +1017,6 @@ namespace zombo
 		mousePos = ZomboEditorCamera::Default.getMouseProjection(0);
 		_visibleItems.clear();
 		queryVisibleItems(_visibleItems);
-		BindingSnapping::Default.update();
-		PointSnapping::Default.update();
 		if (_actualState != nullptr)
 		{
 			_actualState->update();
@@ -1023,7 +1114,8 @@ namespace zombo
 			}
 			*/
 		}
-		
+		BindingSnapping::Default.update();
+		PointSnapping::Default.update();
 	}
 
 	void CurvesManager::addCurve(core::Vector2 p0, core::Vector2 p3)
@@ -1072,7 +1164,7 @@ namespace zombo
 				cp1 = new CurvesPoint(p[i]);
 			}
 			core::Vector2 d0 = core::Vector2::axisX *0.25f;
-			core::Vector2 d1 = core::Vector2::axisX *0.25f;
+			core::Vector2 d1 = core::Vector2::axisX *-0.25f;
 			CurveSegment *seg = new CurveSegment();
 			seg->p0->p = cp0;
 			seg->p1->p = cp1;
@@ -1271,8 +1363,8 @@ namespace zombo
 		{
 			for (uint i = 0; i < items.segments.size(); i++)
 			{
-				//items.pointsBindings.push_back(items.segments[i]->p0);
-				//items.pointsBindings.push_back(items.segments[i]->p1);
+				items.pointsBindings.push_back(items.segments[i]->p0);
+				items.pointsBindings.push_back(items.segments[i]->p1);
 			}
 		}
 	}

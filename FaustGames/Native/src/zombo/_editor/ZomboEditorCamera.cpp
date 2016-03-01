@@ -245,7 +245,7 @@ namespace zombo
 			updateEuler();
 		}
 	}
-
+	
 	ZomboEditorCamera::ZomboEditorCamera() : depth(5000.0f), _scaleValue(1.0f), _fovValue(core::Math::Pi * 40.0f / 180.0f), _lastZoomCommand(nullptr)
 	{
 		mode = &ZomboCameraMoveXY::Default;

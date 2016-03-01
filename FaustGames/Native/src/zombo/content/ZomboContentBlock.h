@@ -55,7 +55,7 @@ namespace zombo
 		bool _loaded;
 
 		std::string getBitmapFontFileName(const std::string& fileName);
-		std::string getImageConfig(const std::string& fileName, int& scale, bool &mipmaps) const;
+		std::string getImageConfig(const std::string& fileName, int &detail) const;
 		void getBitmapFontConfig(const std::string& fileName, int &size, fonts::FontCharSet* &charset);
 		int getBitmapFontSize(const std::string& fileName);
 		static bool hasFormat(const std::string &fileName, const std::string& format);

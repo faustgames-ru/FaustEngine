@@ -142,13 +142,11 @@ namespace zombo
 		return result;
 	}
 
-	std::string ZomboContentBlock::getImageConfig(const std::string& fileName, int& scale, bool &mipmaps) const
+	std::string ZomboContentBlock::getImageConfig(const std::string& fileName, int& detail) const
 	{
 		std::string result;
 		std::string configStr;
 		bool listen = false;
-		bool hasPercent = false;
-		bool hasSeparetor= false;
 		for (uint i = 0; i < fileName.size(); i++)
 		{
 			if (fileName[i] == ']')
@@ -162,19 +160,8 @@ namespace zombo
 				continue;
 			}
 			if (listen)
-			{
-				if (fileName[i] == '%')
-				{
-					hasPercent = true;
-				}
-				else
-				{
-					if (fileName[i] == ':')
-					{
-						hasSeparetor = true;
-					}
-					configStr += fileName[i];
-				}
+			{				
+				configStr += fileName[i];
 			}
 			else
 			{
@@ -182,43 +169,10 @@ namespace zombo
 			}
 		}
 		if (!configStr.empty())
-		{
-			if(hasSeparetor)
-			{
-				std::string scaleStr;
-				std::string filterStr;
-				bool listenScale = false;
-				for (uint i = 0; i < configStr.size(); i++)
-				{
-					if (configStr[i] == ':')
-					{
-						listenScale = true;
-						continue;
-					}
-					if (listenScale)
-					{						
-						scaleStr += configStr[i];
-					}
-					else
-					{
-						filterStr += configStr[i];
-					}
-				}
-				if (!scaleStr.empty())
-				{
-					scale = core::Convert::toInt(scaleStr);
-					if (scale == 0)
-						scale = 100;
-				}
-				mipmaps = filterStr == "m";
-			}
-			else
-			{
-				scale = core::Convert::toInt(configStr);
-				if (scale == 0)
-					scale = 100;
-				mipmaps = false;
-			}
+		{			
+			detail = core::Convert::toInt(configStr);
+			if (detail == 0)
+				detail = 1;
 		}
 		return result;
 	}
@@ -462,10 +416,9 @@ namespace zombo
 
 	ZomboContentImage* ZomboContentBlock::loadTexture(const std::string& fileName)
 	{
-		int scale = 100;
+		int detail = 1;
 		bool mipmaps = false;
-		std::string fName = getImageConfig(fileName, scale, mipmaps);
-		float scaleImage = static_cast<float>(scale) / 100.0f;
+		std::string fName = getImageConfig(fileName, detail);
 		resources::ContentManager content = resources::ContentManager::Default;
 		std::string fullPath = _rootPath + fName;
 		if (!resources::ContentProvider::existContent(fullPath.c_str()))
@@ -484,8 +437,9 @@ namespace zombo
 			image->texture->setData(imageData);
 			image->name = fileName;
 			image->initWithQuad(
-				static_cast<float>(imageData->Width) * ZomboConstants::GameScale * scaleImage,
-				static_cast<float>(imageData->Height) * ZomboConstants::GameScale * scaleImage);
+				static_cast<float>(imageData->Width) * ZomboConstants::GameScale,
+				static_cast<float>(imageData->Height) * ZomboConstants::GameScale, 
+				detail);
 			_images[fileName] = image;
 			return image;
 		}

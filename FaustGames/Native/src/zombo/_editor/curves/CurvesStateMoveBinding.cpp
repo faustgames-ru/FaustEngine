@@ -187,9 +187,13 @@ namespace zombo
 			core::Vector2 sp = _prevSelectedPosition + md;
 			// todo: snapping
 			
+			BindingSnapType::e snap = BindingSnapping::Default.snap(sp);
+			selectedBinding->setWorldP(sp);
+			selectedBinding->p->invalidateBindings(selectedBinding);
+
 			//BindingSnapType::e snap = BindingSnapping::Default.snap(sp);
-			float l = selectedBinding->getLocalP(sp).length();
-			selectedBinding->p->invalidateBindingsLen(l);
+			//float l = selectedBinding->getLocalP(sp).length();
+			//selectedBinding->p->invalidateBindingsLen(l);
 			/*
 			if (snap != _snap)
 			{
@@ -215,13 +219,13 @@ namespace zombo
 		else
 		{
 			// todo: undo action
-			/*
+			
 			ZomboCommandMoveCurveBinding *actualMoveCommand = new ZomboCommandMoveCurveBinding(selectedBinding, _prevPosition, selectedBinding->getWorldP());
 			if (ZomboEditorCommands::Default.doCommand(actualMoveCommand) != CommandExecutonStatus::CommandExecuted)
 			{
 				delete actualMoveCommand;
 			}
-			*/
+			
 			CurvesManager::Default.setState(&CurvesStateSelect::Default);
 			mouse->handle(nullptr);
 		}

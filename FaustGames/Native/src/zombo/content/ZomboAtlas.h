@@ -20,7 +20,7 @@ namespace zombo
 		std::vector<ZomboImageVertex> vertices;
 		std::vector<ushort> indices;
 		geometry::Aabb2d bounds;
-		void initWithQuad(float w, float h);
+		void initWithQuad(float w, float h, uint detail);
 		static ZomboContentImage * create();
 		void dispose() const;
 	};

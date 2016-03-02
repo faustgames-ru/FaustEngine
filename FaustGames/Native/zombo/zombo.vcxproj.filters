@@ -127,6 +127,9 @@
     <Filter Include="shaders">
       <UniqueIdentifier>{f56f7ea8-0aaf-4aed-ab59-4898beff468c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="zombo\_editor\menu">
+      <UniqueIdentifier>{f931ef87-ee5a-44db-8190-099c71bf5138}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\CommonSources\include\llge.h">
@@ -703,6 +706,9 @@
     </ClInclude>
     <ClInclude Include="..\src\zombo\common\SEntry.h">
       <Filter>zombo\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\zombo\_editor\menu\ContextMenu.h">
+      <Filter>zombo\_editor\menu</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1316,6 +1322,9 @@
     </ClCompile>
     <ClCompile Include="..\src\zombo\common\SConfig.cpp">
       <Filter>zombo\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\zombo\_editor\menu\ContextMenu.cpp">
+      <Filter>zombo\_editor\menu</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

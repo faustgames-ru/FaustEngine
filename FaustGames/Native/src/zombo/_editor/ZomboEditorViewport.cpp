@@ -15,6 +15,16 @@ namespace zombo
 		h = height;
 	}
 
+	core::Vector2 ZomboEditorViewport::getCenter()
+	{
+		return core::Vector2(w*0.5f, h*0.5f);
+	}
+
+	core::Vector2 ZomboEditorViewport::getSize()
+	{
+		return core::Vector2(w, h);
+	}
+
 	extern "C" DLLEXPORT IZomboEditorViewport* API_CALL getZomboEditorViewport()
 	{
 		return &ZomboEditorViewport::Default;

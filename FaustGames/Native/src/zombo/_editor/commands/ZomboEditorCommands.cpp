@@ -1,5 +1,6 @@
 #include "ZomboEditorCommands.h"
 #include "../ZomboEditorInput.h"
+#include "../menu/ContextMenu.h"
 
 namespace zombo
 {
@@ -19,6 +20,7 @@ namespace zombo
 			command->status = CommandExecutonStatus::CommandExecutionNotAvaliable;
 			return command->status;
 		}
+		ContextMenu::Default.hide();
 		command->execute();
 		command->status = CommandExecutonStatus::CommandExecuted;
 		_undoList.push(command);
@@ -35,6 +37,7 @@ namespace zombo
 		if (!isUndoAvaliable()) return;
 		ZomboEditorCommand* command = _undoList.top();
 		_undoList.pop();
+		ContextMenu::Default.hide();
 		command->undo();
 		command->status = CommandExecutonStatus::CommandUndone;
 		_redoList.push(command);

@@ -297,6 +297,13 @@ namespace zombo
 		transformFromView = transformToView.inverse();
 	}
 
+	core::Vector3 ZomboEditorCamera::getViewPosition(core::Vector3 p) const
+	{
+		core::Vector3 vp = core::Matrix::transform(transformToView, p);
+		vp = (core::Vector3(1.0f, 1.0f, 0.0f) + vp) * core::Vector3(ZomboEditorViewport::Default.w*0.5f, ZomboEditorViewport::Default.h * 0.5f, 1.0f);
+		return vp;
+	}
+
 	core::Vector2 ZomboEditorCamera::getMouseProjection(float z) const
 	{
 		core::Vector2 m;

@@ -18,6 +18,7 @@
 #include "../common/ZomboStatistics.h"
 #include "ZomboEditorStatisticsDisplayer.h"
 #include "../common/ValuesAnimator.h"
+#include "menu/ContextMenu.h"
 
 namespace zombo
 {
@@ -451,9 +452,11 @@ namespace zombo
 
 		_mode->update();
 		CurvesManager::Default.update();
+		ZomboToolBox::Default.update();
+		ContextMenu::Default.update();
+
 		ZomboEditorLogDisplayer::Default.update();
 		ZomboEditorStatisticsDisplayer::Default.update();
-		ZomboToolBox::Default.update();
 	}
 
 	void ZomboEditor::contentLoaded()

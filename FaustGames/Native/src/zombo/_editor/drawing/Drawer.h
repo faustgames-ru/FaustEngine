@@ -15,6 +15,7 @@ namespace zombo
 		ZomboDrawer(ZomboEditorRenderService *renderService);
 		void setSmoothR(float smoothR);
 		void setScaleToPixels(float scale);
+		void vignetting(uint color, const core::Vector3& p, const core::Vector2& outSize, const core::Vector2& inSize);
 		void fillCircle(uint color, const core::Vector3 &p, float r);
 		void fillRing(uint color, const core::Vector3 &p, float r, float d);
 		void drawRect(uint color, const core::Vector3& p, const core::Vector2& size);

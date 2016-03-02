@@ -20,6 +20,95 @@ namespace zombo
 		_scaleToPixels = scale;
 	}
 
+	void ZomboDrawer::vignetting(uint color, const core::Vector3& p, const core::Vector2& outSize, const core::Vector2& inSize)
+	{
+		uint count = 64;
+		float a = 0;
+		float da = 2.0f * core::Math::Pi / count;
+		
+
+		float ow = outSize.getX() * 0.5f;
+		float oh = outSize.getY() * 0.5f;
+		float iw = inSize.getX() * 0.5f;
+		float ih = inSize.getY() * 0.5f;
+
+		_colorVertices.clear();
+		_indices.clear();
+		for (uint i = 0; i < count; i++)
+		{
+			core::Vector3 cp0 = p + core::Vector2(ow * core::Math::cos(a), oh * core::Math::sin(a));
+			core::Vector3 cp1 = p + core::Vector2(iw * core::Math::cos(a), ih * core::Math::sin(a));
+			a += da;
+			_colorVertices.push_back(ColorVertex(cp0, color));
+			_colorVertices.push_back(ColorVertex(cp1, 0));
+
+			uint i0 = i * 2 + 0;
+			uint i1 = i * 2 + 1;
+			uint i2 = ((i + 1) % count) * 2 + 1;
+			uint i3 = ((i + 1) % count) * 2 + 0;
+
+			_indices.push_back(i0);
+			_indices.push_back(i1);
+			_indices.push_back(i2);
+			_indices.push_back(i0);
+			_indices.push_back(i2);
+			_indices.push_back(i3);
+		}
+
+		_renderService->drawTriangles(_colorVertices.data(), _colorVertices.size(), _indices.data(), _indices.size() / 3);
+
+	}
+	/*
+	{
+		_colorVertices.clear();
+		_indices.clear();
+
+		float ow = outSize.getX() * 0.5f;
+		float oh = outSize.getY() * 0.5f;
+		float iw = inSize.getX() * 0.5f;
+		float ih = inSize.getY() * 0.5f;
+
+		_colorVertices.push_back(ColorVertex(p + core::Vector2(-ow, -oh), color));
+		_colorVertices.push_back(ColorVertex(p + core::Vector2(ow, -oh), color));
+		_colorVertices.push_back(ColorVertex(p + core::Vector2(ow, oh), color));
+		_colorVertices.push_back(ColorVertex(p + core::Vector2(-ow, oh), color));
+
+		_colorVertices.push_back(ColorVertex(p + core::Vector2(-iw, -ih), 0));
+		_colorVertices.push_back(ColorVertex(p + core::Vector2(iw, -ih), 0));
+		_colorVertices.push_back(ColorVertex(p + core::Vector2(iw, ih), 0));
+		_colorVertices.push_back(ColorVertex(p + core::Vector2(-iw, ih), 0));
+
+		_indices.push_back(0);
+		_indices.push_back(1);
+		_indices.push_back(5);
+		_indices.push_back(0);
+		_indices.push_back(5);
+		_indices.push_back(4);
+
+		_indices.push_back(1);
+		_indices.push_back(2);
+		_indices.push_back(6);
+		_indices.push_back(1);
+		_indices.push_back(6);
+		_indices.push_back(5);
+
+		_indices.push_back(2);
+		_indices.push_back(3);
+		_indices.push_back(7);
+		_indices.push_back(2);
+		_indices.push_back(7);
+		_indices.push_back(6);
+
+		_indices.push_back(3);
+		_indices.push_back(0);
+		_indices.push_back(4);
+		_indices.push_back(3);
+		_indices.push_back(4);
+		_indices.push_back(7);
+
+		_renderService->drawTriangles(_colorVertices.data(), _colorVertices.size(), _indices.data(), _indices.size() / 3);
+	}
+	*/
 	void ZomboDrawer::fillCircle(uint color, const core::Vector3 &p, float r)
 	{
 		float len = 2.0f * core::Math::Pi * r;

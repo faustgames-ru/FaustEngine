@@ -4,6 +4,7 @@
 #include "../ZomboEditorViewport.h"
 #include "../commands/ZomboEditorCommands.h"
 #include "../../ZomboLog.h"
+#include "../menu/ContextMenu.h"
 
 namespace zombo
 {
@@ -75,6 +76,7 @@ namespace zombo
 		bool isMiddlePressed = mouse->isMiddlePressed();
 		if (isMiddlePressed)
 		{
+			ContextMenu::Default.hide();
 			if (!_prevMidButtonState)
 			{
 				_prevPosition = ZomboEditorCamera::Default.getPositionXY();

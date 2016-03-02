@@ -10,6 +10,7 @@ namespace zombo
 	{
 	public:	
 		static CurvesStateSelect Default;
+		CurvesStateSelect();
 		static void updatePointState(CurvesPoint* point, const CurvesSelection &selection);
 		static void updateSegmentState(CurveSegment* segment, const CurvesSelection &selection);
 		static void updateBindingState(CurvePointBinding* binding, const CurvesSelection &selection);
@@ -17,6 +18,8 @@ namespace zombo
 		static void updateSegments(const std::vector<CurveSegment*> &segment, const CurvesSelection &selection);
 		static void updateBinding(const std::vector<CurvePointBinding*> &bindings, const CurvesSelection &selection);
 		virtual void update() OVERRIDE;
+	private:
+		bool _isRightPressed;
 	};
 }
 

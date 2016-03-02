@@ -3,10 +3,16 @@
 #include "CurvesStateMovePoint.h"
 #include "CurvesStateMoveSegment.h"
 #include "CurvesStateMoveBinding.h"
+#include "../menu/ContextMenu.h"
+#include "../ZomboEditorCamera.h"
 
 namespace zombo
 {
 	CurvesStateSelect CurvesStateSelect::Default;
+
+	CurvesStateSelect::CurvesStateSelect(): _isRightPressed(false)
+	{
+	}
 
 	void CurvesStateSelect::updatePointState(CurvesPoint *point, const CurvesSelection &selection)
 	{
@@ -80,29 +86,62 @@ namespace zombo
 		updateBinding(visible.pointsBindings, selection);
 		updateSegments(visible.segments, selection);
 		bool isLeftPressed = mouse->isLeftPressed();
-		if (isLeftPressed)
+		bool isRightPressed = mouse->isRightPressed();
+		/*
+		if (!isRightPressed)
 		{
-			CurvesManager::Default.selection = CurvesManager::Default.lastSelection = selection;
-			if (selection.point != nullptr)
+			ContextMenu::Default.hide();
+		}
+		*/
+		if (isRightPressed && !_isRightPressed)
+		{
+			if (ContextMenu::Default.isVisible())
 			{
-				CurvesStateMovePoint::Default.setSelection(selection.point);
-				CurvesManager::Default.setState(&CurvesStateMovePoint::Default);
+				ContextMenu::Default.hide();
 			}
-			else if (selection.binding != nullptr)
+			else
 			{
-				CurvesStateMoveBinding::Default.setSelection(selection.binding);
-				CurvesManager::Default.setState(&CurvesStateMoveBinding::Default);
+				if (selection.point != nullptr)
+				{
+					core::Vector3 v = ZomboEditorCamera::Default.getViewPosition(selection.point->getXY().toVector3());
+					ContextMenu::Default.show(v.toVector2());
+				}
 			}
-			else if (selection.segment != nullptr) 
+			/*
+			else
 			{
-				CurvesStateMoveSegment::Default.setSelection(selection.segment);
-				CurvesManager::Default.setState(&CurvesStateMoveSegment::Default);
-				// set move segment state
+				ContextMenu::Default.hide();
 			}
+			*/
 		}
 		else
 		{
-			CurvesManager::Default.selection = CurvesSelection();
+			if (isLeftPressed)
+			{
+				ContextMenu::Default.hide();
+				CurvesManager::Default.selection = CurvesManager::Default.lastSelection = selection;
+				if (selection.point != nullptr)
+				{
+					CurvesStateMovePoint::Default.setSelection(selection.point);
+					CurvesManager::Default.setState(&CurvesStateMovePoint::Default);
+				}
+				else if (selection.binding != nullptr)
+				{
+					CurvesStateMoveBinding::Default.setSelection(selection.binding);
+					CurvesManager::Default.setState(&CurvesStateMoveBinding::Default);
+				}
+				else if (selection.segment != nullptr)
+				{
+					CurvesStateMoveSegment::Default.setSelection(selection.segment);
+					CurvesManager::Default.setState(&CurvesStateMoveSegment::Default);
+					// set move segment state
+				}
+			}
+			else
+			{
+				CurvesManager::Default.selection = CurvesSelection();
+			}
 		}
+		_isRightPressed = isRightPressed;
 	}
 }

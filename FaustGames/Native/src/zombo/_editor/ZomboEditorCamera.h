@@ -121,6 +121,7 @@ namespace zombo
 		void updateInterpoaltedScale();
 		void update();
 
+		core::Vector3 getViewPosition(core::Vector3 p) const;
 		core::Vector2 getMouseProjection(float z) const;
 
 		virtual IntPtr API_CALL getMode() OVERRIDE;

@@ -42,13 +42,13 @@ namespace zombo
 			switch (ZomboLog::Default.entries.back().level)
 			{
 			case ZomboLogLevel::Message:
-				textColor = 0xffffff;
+				textColor = 0xffffffff;
 				break;
 			case ZomboLogLevel::Warning:
-				textColor = 0x00ff00;
+				textColor = 0xff00ff00;
 				break;
 			case ZomboLogLevel::Error:
-				textColor = 0x0000ff;
+				textColor = 0xff0000ff;
 				break;
 			default:
 				textColor = 0xffffffff;
@@ -74,7 +74,7 @@ namespace zombo
 
 			core::Vector2 center = core::Vector2(ZomboEditorViewport::Default.w * 0.5f, ZomboEditorViewport::Default.h * 0.5f);
 			float height = static_cast<float>(ZomboEditorViewport::Default.h);
-			textColor |= static_cast<uint>(core::Math::round(_alpha.get() * 255.0f)) << 24;
+			textColor = graphics::Color::mulA(textColor, _alpha.get());
 			uint bgColor = static_cast<uint>(core::Math::round(_alpha.get() * 96.0f)) << 24;
 			uint trColor = 0x0;
 

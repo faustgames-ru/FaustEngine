@@ -15,6 +15,8 @@ namespace zombo
 		int h;
 		float getAspect() const;
 		virtual void API_CALL update(int width, int height) OVERRIDE;
+		core::Vector2 getCenter();
+		core::Vector2 getSize();
 	};
 }
 

@@ -16,7 +16,7 @@
 #include "spine/RegionAttachment.h"
 #include "spine/BoundingBoxAttachment.h"
 #include "spine/MeshAttachment.h"
-#include "spine/SkinnedMeshAttachment.h"
+#include "spine/WeightedMeshAttachment.h"
 
 namespace spine
 {
@@ -24,7 +24,7 @@ namespace spine
 	int SpineSkeleton::_quadIndices[6] = { 0, 1, 2, 0, 2, 3 };
 	float SpineSkeleton::_uvBuffer[4096];
 
-	void spSkinnedMeshAttachment_updateUVs_fixed(spSkinnedMeshAttachment* self, float *uvs) {
+	void spSkinnedMeshAttachment_updateUVs_fixed(spWeightedMeshAttachment* self, float *uvs) {
 		int i;
 		float width = self->regionU2 - self->regionU, height = self->regionV2 - self->regionV;
 		if (self->regionRotate) {
@@ -136,7 +136,7 @@ namespace spine
 			spSlot* slot = s->drawOrder[i];
 			if (!slot->attachment) continue;
 			_mesh.Color = graphics::Color::fromRgba(slot->r*s->r, slot->g*s->g, slot->b*s->b, slot->a*s->a);
-			_mesh.State.Blend = slot->data->additiveBlending == 0
+			_mesh.State.Blend = slot->data->blendMode == SP_BLEND_MODE_NORMAL
 				? graphics::BlendState::Alpha
 				: graphics::BlendState::Additive;
 
@@ -187,12 +187,12 @@ namespace spine
 				batcher->drawSpineMesh(_mesh);
 				break;
 			}
-			case SP_ATTACHMENT_SKINNED_MESH:
+			case SP_ATTACHMENT_WEIGHTED_MESH:
 			{
 
-				spSkinnedMeshAttachment * skinnedMesh = SUB_CAST(spSkinnedMeshAttachment, slot->attachment);
+				spWeightedMeshAttachment * skinnedMesh = SUB_CAST(spWeightedMeshAttachment, slot->attachment);
 				spSkinnedMeshAttachment_updateUVs_fixed(skinnedMesh, _uvBuffer);
-				spSkinnedMeshAttachment_computeWorldVertices(skinnedMesh, slot, _mesh.Vertices);
+				spWeightedMeshAttachment_computeWorldVertices(skinnedMesh, slot, _mesh.Vertices);
 				for (int j = 0; j < skinnedMesh->uvsCount; j += 2)
 				{
 					transform(_mesh.Vertices + j, _mesh.Vertices + j + 1);
@@ -278,10 +278,10 @@ namespace spine
 					}
 					break;
 				}
-				case SP_ATTACHMENT_SKINNED_MESH:
+				case SP_ATTACHMENT_WEIGHTED_MESH:
 				{
-					spSkinnedMeshAttachment * skinnedMesh = SUB_CAST(spSkinnedMeshAttachment, slot->attachment);
-					spSkinnedMeshAttachment_computeWorldVertices(skinnedMesh, slot, _mesh.Vertices);
+					spWeightedMeshAttachment * skinnedMesh = SUB_CAST(spWeightedMeshAttachment, slot->attachment);
+					spWeightedMeshAttachment_computeWorldVertices(skinnedMesh, slot, _mesh.Vertices);
 					for (int j = 0; j < skinnedMesh->uvsCount; j += 2)
 					{
 						transform(_mesh.Vertices + j, _mesh.Vertices + j + 1);
@@ -387,12 +387,12 @@ namespace spine
 					buffer.Add(_mesh);
 					break;
 				}
-				case SP_ATTACHMENT_SKINNED_MESH:
+				case SP_ATTACHMENT_WEIGHTED_MESH:
 				{
 
-					spSkinnedMeshAttachment * skinnedMesh = SUB_CAST(spSkinnedMeshAttachment, slot->attachment);
+					spWeightedMeshAttachment * skinnedMesh = SUB_CAST(spWeightedMeshAttachment, slot->attachment);
 					spSkinnedMeshAttachment_updateUVs_fixed(skinnedMesh, _uvBuffer);
-					spSkinnedMeshAttachment_computeWorldVertices(skinnedMesh, slot, _mesh.Vertices);
+					spWeightedMeshAttachment_computeWorldVertices(skinnedMesh, slot, _mesh.Vertices);
 					for (int j = 0; j < skinnedMesh->uvsCount; j += 2)
 						transform(_mesh.Vertices + j, _mesh.Vertices + j + 1);
 					_mesh.Indices = skinnedMesh->triangles;
@@ -427,7 +427,7 @@ namespace spine
 			spSlot* slot = s->drawOrder[i];
 			if (!slot->attachment) continue;
 			_mesh.Color = graphics::Color::fromRgba(slot->r*s->r, slot->g*s->g, slot->b*s->b, slot->a*s->a);
-			_mesh.State.Blend = slot->data->additiveBlending == 0 
+			_mesh.State.Blend = slot->data->blendMode == SP_BLEND_MODE_NORMAL
 				? graphics::BlendState::Alpha 
 				: graphics::BlendState::Additive;
 
@@ -478,12 +478,12 @@ namespace spine
 					batcher->drawSpineMesh(_mesh);
 					break;
 				}
-				case SP_ATTACHMENT_SKINNED_MESH:
+				case SP_ATTACHMENT_WEIGHTED_MESH:
 				{			
 					
-					spSkinnedMeshAttachment * skinnedMesh = SUB_CAST(spSkinnedMeshAttachment, slot->attachment);
+					spWeightedMeshAttachment * skinnedMesh = SUB_CAST(spWeightedMeshAttachment, slot->attachment);
 					spSkinnedMeshAttachment_updateUVs_fixed(skinnedMesh, _uvBuffer);
-					spSkinnedMeshAttachment_computeWorldVertices(skinnedMesh, slot, _mesh.Vertices);
+					spWeightedMeshAttachment_computeWorldVertices(skinnedMesh, slot, _mesh.Vertices);
 					for (int j = 0; j < skinnedMesh->uvsCount; j += 2)
 					{
 						transform(_mesh.Vertices + j, _mesh.Vertices + j + 1);

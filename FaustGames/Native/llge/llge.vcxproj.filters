@@ -987,9 +987,6 @@
     <ClCompile Include="..\src\spine\runtime\Skin.c">
       <Filter>spine\runtime</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\spine\runtime\SkinnedMeshAttachment.c">
-      <Filter>spine\runtime</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\spine\runtime\Slot.c">
       <Filter>spine\runtime</Filter>
     </ClCompile>
@@ -1055,6 +1052,15 @@
     </ClCompile>
     <ClCompile Include="..\src\navmesh\NavEdges.cpp">
       <Filter>navmesh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\spine\runtime\WeightedMeshAttachment.c">
+      <Filter>spine\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\spine\runtime\TransformConstraint.c">
+      <Filter>spine\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\spine\runtime\TransformConstraintData.c">
+      <Filter>spine\runtime</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -450,6 +450,9 @@
     <ClCompile Include="..\src\resources\zlib\trees.c" />
     <ClCompile Include="..\src\resources\zlib\uncompr.c" />
     <ClCompile Include="..\src\resources\zlib\zutil.c" />
+    <ClCompile Include="..\src\spine\runtime\TransformConstraint.c" />
+    <ClCompile Include="..\src\spine\runtime\TransformConstraintData.c" />
+    <ClCompile Include="..\src\spine\runtime\WeightedMeshAttachment.c" />
     <ClCompile Include="..\src\spine\SpineAnimationState.cpp" />
     <ClCompile Include="..\src\spine\SpineAnimationStateData.cpp" />
     <ClCompile Include="..\src\spine\runtime\Animation.c" />
@@ -475,7 +478,6 @@
     <ClCompile Include="..\src\spine\runtime\SkeletonData.c" />
     <ClCompile Include="..\src\spine\runtime\SkeletonJson.c" />
     <ClCompile Include="..\src\spine\runtime\Skin.c" />
-    <ClCompile Include="..\src\spine\runtime\SkinnedMeshAttachment.c" />
     <ClCompile Include="..\src\spine\runtime\Slot.c" />
     <ClCompile Include="..\src\spine\runtime\SlotData.c" />
     <ClCompile Include="..\src\spine\SpineSkeleton.cpp" />

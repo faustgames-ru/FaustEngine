@@ -624,11 +624,13 @@ spSkeletonData* spSkeletonJson_readSkeletonData (spSkeletonJson* self, const cha
 
 					attachment = spAttachmentLoader_newAttachment(self->attachmentLoader, skin, type, attachmentName, path);
 					if (!attachment) {
+						/*
 						if (self->attachmentLoader->error1) {
 							spSkeletonData_dispose(skeletonData);
 							_spSkeletonJson_setError(self, root, self->attachmentLoader->error1, self->attachmentLoader->error2);
 							return 0;
 						}
+						*/
 						continue;
 					}
 

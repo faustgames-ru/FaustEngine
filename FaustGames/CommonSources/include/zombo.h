@@ -84,6 +84,7 @@ namespace zombo
 		virtual void API_CALL undo() = 0;
 		virtual void API_CALL redo() = 0;
 		virtual void API_CALL init() = 0;
+		virtual void API_CALL finish() = 0;
 		virtual void API_CALL update(float ellapsedTime) = 0;
 		virtual void API_CALL render() = 0;
 		virtual void API_CALL release() = 0;

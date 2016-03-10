@@ -130,6 +130,9 @@
     <Filter Include="zombo\_editor\menu">
       <UniqueIdentifier>{f931ef87-ee5a-44db-8190-099c71bf5138}</UniqueIdentifier>
     </Filter>
+    <Filter Include="zombo\content\savers">
+      <UniqueIdentifier>{23192bf3-fc26-4efe-ba22-4ba5b555d2c6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\CommonSources\include\llge.h">
@@ -709,6 +712,9 @@
     </ClInclude>
     <ClInclude Include="..\src\zombo\_editor\menu\ContextMenu.h">
       <Filter>zombo\_editor\menu</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\zombo\content\savers\ZomboContentSaver.h">
+      <Filter>zombo\content\savers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1325,6 +1331,9 @@
     </ClCompile>
     <ClCompile Include="..\src\zombo\_editor\menu\ContextMenu.cpp">
       <Filter>zombo\_editor\menu</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\zombo\content\savers\ZomboContentSaver.cpp">
+      <Filter>zombo\content\savers</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

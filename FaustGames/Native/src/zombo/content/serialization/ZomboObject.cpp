@@ -37,4 +37,9 @@ namespace zombo
 		result += "}";
 		return result;
 	}
+
+	ZomboObject::ValuesMap& ZomboObject::getValuesMap()
+	{
+		return _values;
+	}
 }

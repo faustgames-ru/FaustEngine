@@ -19,6 +19,9 @@
 #include "ZomboEditorStatisticsDisplayer.h"
 #include "../common/ValuesAnimator.h"
 #include "menu/ContextMenu.h"
+#include "../content/serialization/ZomboSerializer.h"
+#include "../content/savers/ZomboContentSaver.h"
+#include "../content/serialization/ZomboValue.h"
 
 namespace zombo
 {
@@ -68,6 +71,7 @@ namespace zombo
 	void ZomboEditor::setRootPath(String rootPath)
 	{
 		_rootPath = rootPath;
+		ZomboContentSaver::Default.setRoot(_rootPath);
 		internalContent.setRoot(_rootPath);
 		gameContent.setRoot(_rootPath);
 	}
@@ -267,6 +271,14 @@ namespace zombo
 	void ZomboEditor::release()
 	{
 		delete this;
+	}
+
+	void ZomboEditor::finish()
+	{
+		ZomboValue* curvesValue = CurvesManager::Default.serialize();
+		std::string jsonString = ZomboSerializer::serializeToJson(curvesValue);
+		curvesValue->dispose();
+		ZomboContentSaver::Default.rewrite("Content/curves.curves", jsonString.c_str(), jsonString.size());
 	}
 
 	void ZomboEditor::renderBackground()

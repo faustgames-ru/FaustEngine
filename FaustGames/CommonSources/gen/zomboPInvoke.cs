@@ -226,6 +226,13 @@ namespace zombo
 		
 		[DllImport(Version.Dll)]
 		static extern private void zombo_ZomboEditor_init (IntPtr classInstance);
+		public void Finish ()
+		{
+			zombo_ZomboEditor_finish(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void zombo_ZomboEditor_finish (IntPtr classInstance);
 		public void Update (float ellapsedTime)
 		{
 			zombo_ZomboEditor_update(ClassInstance, ellapsedTime);

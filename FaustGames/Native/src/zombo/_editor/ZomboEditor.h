@@ -56,6 +56,7 @@ namespace zombo
 		virtual void API_CALL update(float ellapsedTime) OVERRIDE;
 		virtual void API_CALL render() OVERRIDE;
 		virtual void API_CALL release() OVERRIDE;
+		virtual void API_CALL finish() OVERRIDE;
 	private:
 		void renderBackground();
 		void renderBackgroundAsSkybox();

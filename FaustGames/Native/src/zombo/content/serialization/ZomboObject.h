@@ -14,6 +14,7 @@ namespace zombo
 		ZomboValue* operator[](const char *fieldName);
 		std::string toString();
 		typedef std::map<std::string, ZomboValue *> ValuesMap;
+		ValuesMap& getValuesMap();
 	private:
 		ValuesMap _values;
 	};

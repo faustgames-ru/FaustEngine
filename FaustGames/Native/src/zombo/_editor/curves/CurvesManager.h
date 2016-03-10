@@ -264,6 +264,9 @@ namespace zombo
 		void animateToSelect(CurvesPoint* point);
 		CurvesPointAnimator* findAnimator(CurvesPoint* point);
 		//void animateAlpha(CurvesPoint* point, float scale);
+
+		ZomboValue* serialize() const;
+		void deserialize(ZomboValue* value);
 	private:
 		void animateToState(CurvesPoint* point, CurvesPointState* state);
 		typedef std::map<CurvesPoint*, CurvesPointAnimator *> PointsAnimationMap;

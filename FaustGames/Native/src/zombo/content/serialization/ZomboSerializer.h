@@ -9,6 +9,7 @@ namespace zombo
 	{
 	public:
 		static ZomboValue * deserializeFromJson(const char* jsonString);
+		static std::string serializeToJson(ZomboValue *value);
 	private:
 	};
 }

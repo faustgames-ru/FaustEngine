@@ -243,5 +243,10 @@ namespace Zombo.Editor
         private void _zomboEditScene_Move(object sender, EventArgs e)
         {
         }
+
+        private void MainWindow_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            _zomboEditScene.ZomboEditor.Finish();
+        }
     }
 }

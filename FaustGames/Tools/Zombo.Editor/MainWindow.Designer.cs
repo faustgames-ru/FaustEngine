@@ -200,7 +200,7 @@
             this._zomboEditScene.Dock = System.Windows.Forms.DockStyle.Fill;
             this._zomboEditScene.Location = new System.Drawing.Point(0, 0);
             this._zomboEditScene.Name = "_zomboEditScene";
-            this._zomboEditScene.Size = new System.Drawing.Size(747, 412);
+            this._zomboEditScene.Size = new System.Drawing.Size(747, 434);
             this._zomboEditScene.TabIndex = 0;
             this._zomboEditScene.MouseDown += new System.Windows.Forms.MouseEventHandler(this._zomboEditScene_MouseDown);
             this._zomboEditScene.MouseUp += new System.Windows.Forms.MouseEventHandler(this._zomboEditScene_MouseUp);
@@ -217,6 +217,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainWindow";
             this.Text = "Zombo Editor";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainWindow_FormClosed);
             this.Load += new System.EventHandler(this.MainWindow_Load);
             this._toolbox.ResumeLayout(false);
             this._toolbox.PerformLayout();

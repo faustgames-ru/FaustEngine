@@ -11,6 +11,9 @@
 #include "CurvesStateMovePoint.h"
 #include "../ZomboEditor.h"
 #include "../../common/ValuesAnimator.h"
+#include "../../content/serialization/ZomboValue.h"
+#include "../../content/serialization/ZomboObject.h"
+#include "../../content/serialization/ZomboArray.h"
 
 namespace zombo
 {
@@ -1296,6 +1299,35 @@ namespace zombo
 			_pointsAnimationMap[point] = animator = new CurvesPointAnimator(point);
 		}
 		return animator;
+	}
+
+	ZomboValue* CurvesManager::serialize() const
+	{
+		ZomboValue* result = new ZomboValue();
+		ZomboObject* obj = result->asObject();
+		ZomboArray* points = (*obj)["points"]->asArray();
+		ZomboArray* segments = (*obj)["segments"]->asArray();
+		
+		std::map<CurvesPoint*, uint> pointsMap;
+		points->resize(_points.size());
+		for (uint i = 0; i < _points.size(); i++)
+		{
+			ZomboObject* point = (*points)[i]->asObject();
+			(*point)["x"]->setAsFloat(_points[i]->xy.getX());
+			(*point)["y"]->setAsFloat(_points[i]->xy.getY());
+			pointsMap[_points[i]] = i;
+		}
+		
+		segments->resize(_segments.size());
+		for (uint i = 0; i < _segments.size(); i++)
+		{
+			ZomboObject* segment = (*segments)[i]->asObject();
+			CurvesPoint *p0 = _segments[i]->p0->p;
+			CurvesPoint *p1 = _segments[i]->p1->p;
+			(*segment)["a"]->setAsFloat(pointsMap[p0]);
+			(*segment)["b"]->setAsFloat(pointsMap[p1]);
+		}
+		return result;
 	}
 
 	void CurvesManager::queryVisibleItems(CurvesVisibleItems& items)

@@ -136,6 +136,8 @@ namespace zombo
 		gameContent.enqueueResource(ZomboEditorConstants::GameFile.c_str());
 		_needCallContetnLoaded = true;
 
+		ContextMenu::queryResources();
+
 		ZomboToolBox::Default.load();
 		
 		//int j = 0;
@@ -477,6 +479,7 @@ namespace zombo
 		ZomboEditorLogDisplayer::Default.load();
 		ZomboEditorStatisticsDisplayer::Default.load();
 		CurvesManager::Default.load();
+		ContextMenu::Default.load();
 	}
 
 	void ZomboEditor::addBackgroundEdgeVertex(uint i)

@@ -6,12 +6,16 @@
 
 namespace zombo
 {
+	class ZomboContentBlock;
+
 	class ContextMenu
 	{
 	public:
 		static ContextMenu Default;
 		ContextMenu();
 		bool isVisible() const;
+		static void queryResources();
+		void load();
 		void show(core::Vector2 guiPosition);
 		void hide();
 		void update();
@@ -21,6 +25,18 @@ namespace zombo
 		SFloat _vignettingAlpha;
 		SFloat _r;
 		core::Vector2 _position;
+		ZomboContentImage* _ringMenuImage;
+	};
+
+	class ContextMenuButton
+	{
+	public:
+		ContextMenuButton(float angle);
+		void update();
+	private:
+		float _angle;
+		RenderVertex _vertices[3];		
+		RenderVertex _verticesOrigin[3];
 	};
 }
 

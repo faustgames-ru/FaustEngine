@@ -5,7 +5,7 @@
 #include "SystemAllocationPolicy.h"
 
 namespace core
-{
+{/*
 	class HollowsAllocationBlock
 	{
 	public:
@@ -302,7 +302,7 @@ namespace core
 		static SmallBlocksContainer _smallBlocks;
 		static LargeBlocksContainer _largeBlocks;
 	};
-
+*/
 	//typedef HollowsAllocationPolicy Mem;
 	typedef StandartAllocationPolicy Mem;
 }

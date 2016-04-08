@@ -2,4 +2,5 @@
 
 namespace core
 {
+    int StandartAllocationPolicy::AllocatedSize(0);
 }

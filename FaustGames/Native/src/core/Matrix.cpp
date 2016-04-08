@@ -21,6 +21,26 @@ namespace core
 			getZx(), getZy(), getZz(), 0,
 			0, 0, 0, 1.0f);
 	}
+    
+    float Matrix::getXx() const { return _values[0]; }
+    float Matrix::getXy() const { return _values[1]; }
+    float Matrix::getXz() const { return _values[2]; }
+    float Matrix::getXw() const { return _values[3]; }
+    
+    float Matrix::getYx() const { return _values[4]; }
+    float Matrix::getYy() const { return _values[5]; }
+    float Matrix::getYz() const { return _values[6]; }
+    float Matrix::getYw() const { return _values[7]; }
+    
+    float Matrix::getZx() const { return _values[8]; }
+    float Matrix::getZy() const { return _values[9]; }
+    float Matrix::getZz() const { return _values[10]; }
+    float Matrix::getZw() const { return _values[11]; }
+    
+    float Matrix::getWx() const { return _values[12]; }
+    float Matrix::getWy() const { return _values[13]; }
+    float Matrix::getWz() const { return _values[14]; }
+    float Matrix::getWw() const { return _values[15]; }
 
 	bool Matrix::equals(const Matrix& a, const Matrix& b)
 	{

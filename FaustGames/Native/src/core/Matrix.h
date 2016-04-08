@@ -92,25 +92,25 @@ namespace core
 				DotProduct(a.getWx(), a.getWy(), a.getWz(), a.getWw(), b.getXw(), b.getYw(), b.getZw(), b.getWw()));
 		}
 
-		inline float getXx() const { return _values[0]; }
-		inline float getXy() const { return _values[1]; }
-		inline float getXz() const { return _values[2]; }
-		inline float getXw() const { return _values[3]; }
+        float getXx() const;
+        float getXy() const;
+        float getXz() const;
+        float getXw() const;
 
-		inline float getYx() const { return _values[4]; }
-		inline float getYy() const { return _values[5]; }
-		inline float getYz() const { return _values[6]; }
-		inline float getYw() const { return _values[7]; }
+        float getYx() const;
+        float getYy() const;
+        float getYz() const;
+        float getYw() const;
 
-		inline float getZx() const { return _values[8]; }
-		inline float getZy() const { return _values[9]; }
-		inline float getZz() const { return _values[10]; }
-		inline float getZw() const { return _values[11]; }
+        float getZx() const;
+        float getZy() const;
+        float getZz() const;
+        float getZw() const;
 
-		inline float getWx() const { return _values[12]; }
-		inline float getWy() const { return _values[13]; }
-		inline float getWz() const { return _values[14]; }
-		inline float getWw() const { return _values[15]; }
+        float getWx() const;
+        float getWy() const;
+        float getWz() const;
+        float getWw() const;
 
 		Matrix transpose() const
 		{
@@ -155,6 +155,8 @@ namespace core
 				xz*d, yz*d, zz*d, wz*d,
 				xw*d, yw*d, zw*d, ww*d);
 		}
+        
+        
 
 		inline void getRotation(float& p, float& h, float& b) const
 		{

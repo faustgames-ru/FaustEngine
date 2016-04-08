@@ -17,7 +17,7 @@ namespace llge
 	{
         return new spine::SpineSkeletonResource();
 	}
-    
+    /*
     
     extern "C" DLLEXPORT IPathMesh * API_CALL createPathMesh()
     {
@@ -37,5 +37,5 @@ namespace llge
     extern "C" DLLEXPORT INavPath * API_CALL createNavPath()
     {
         return new navmesh::Path();
-    }
+    }*/
 }

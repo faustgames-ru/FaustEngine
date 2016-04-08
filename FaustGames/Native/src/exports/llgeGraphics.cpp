@@ -290,7 +290,7 @@ namespace llge
 
 		virtual int API_CALL getHeapSize()
 		{
-			return HollowsAllocationBlock::AllocationBlocksSize;
+            return 0;//HollowsAllocationBlock::AllocationBlocksSize;
 		}
 	};
 

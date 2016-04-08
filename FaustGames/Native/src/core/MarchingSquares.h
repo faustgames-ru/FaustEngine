@@ -2,7 +2,7 @@
 #define MARCHING_SQUARES_H
 
 #include "core_classes.h"
-#include <llge.h>
+#include "llge.h"
 
 namespace core
 {

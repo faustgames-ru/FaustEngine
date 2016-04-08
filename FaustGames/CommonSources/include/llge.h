@@ -549,10 +549,10 @@ namespace llge
 	extern "C" DLLEXPORT INativeMemoryProfiler * API_CALL createNativeMemoryProfiler();
 	extern "C" DLLEXPORT ISpineResource * API_CALL createSpineResource();
     
-	extern "C" DLLEXPORT IPathMesh * API_CALL createPathMesh();
-	extern "C" DLLEXPORT INavMesh * API_CALL createNavMesh();
-	extern "C" DLLEXPORT INavMeshConfig * API_CALL createNavMeshConfig();
-	extern "C" DLLEXPORT INavPath * API_CALL createNavPath();
+	//extern "C" DLLEXPORT IPathMesh * API_CALL createPathMesh();
+	//extern "C" DLLEXPORT INavMesh * API_CALL createNavMesh();
+	//extern "C" DLLEXPORT INavMeshConfig * API_CALL createNavMeshConfig();
+	//extern "C" DLLEXPORT INavPath * API_CALL createNavPath();
 }
 
 #endif /*LLGE_H*/

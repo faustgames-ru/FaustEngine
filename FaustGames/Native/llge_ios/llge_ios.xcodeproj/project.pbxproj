@@ -134,6 +134,7 @@
 		445B87671CB7E4600071C0A7 /* TransformConstraint.c in Sources */ = {isa = PBXBuildFile; fileRef = 445B874B1CB7E4600071C0A7 /* TransformConstraint.c */; };
 		445B87681CB7E4600071C0A7 /* TransformConstraintData.c in Sources */ = {isa = PBXBuildFile; fileRef = 445B874C1CB7E4600071C0A7 /* TransformConstraintData.c */; };
 		445B87691CB7E4600071C0A7 /* WeightedMeshAttachment.c in Sources */ = {isa = PBXBuildFile; fileRef = 445B874D1CB7E4600071C0A7 /* WeightedMeshAttachment.c */; };
+		446C35881CB7E735003838A0 /* MarchingSquares.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 446C35861CB7E735003838A0 /* MarchingSquares.cpp */; };
 		448513231BCBF16B008F3079 /* EffectTextureAlphamaskColor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 448513211BCBF16B008F3079 /* EffectTextureAlphamaskColor.cpp */; };
 		448513241BCBF16B008F3079 /* EffectTextureColorHighlight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 448513221BCBF16B008F3079 /* EffectTextureColorHighlight.cpp */; };
 		44BD5D461C8057D900F6FAE7 /* BasicTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 44BD5D301C8057D900F6FAE7 /* BasicTest.cpp */; };
@@ -416,19 +417,12 @@
 		445B874B1CB7E4600071C0A7 /* TransformConstraint.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = TransformConstraint.c; sourceTree = "<group>"; };
 		445B874C1CB7E4600071C0A7 /* TransformConstraintData.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = TransformConstraintData.c; sourceTree = "<group>"; };
 		445B874D1CB7E4600071C0A7 /* WeightedMeshAttachment.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = WeightedMeshAttachment.c; sourceTree = "<group>"; };
+		446C35861CB7E735003838A0 /* MarchingSquares.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MarchingSquares.cpp; sourceTree = "<group>"; };
+		446C35871CB7E735003838A0 /* MarchingSquares.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarchingSquares.h; sourceTree = "<group>"; };
 		4485131F1BCBF16B008F3079 /* EffectTextureAlphamaskColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EffectTextureAlphamaskColor.h; sourceTree = "<group>"; };
 		448513201BCBF16B008F3079 /* EffectTextureColorHighlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EffectTextureColorHighlight.h; sourceTree = "<group>"; };
 		448513211BCBF16B008F3079 /* EffectTextureAlphamaskColor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EffectTextureAlphamaskColor.cpp; sourceTree = "<group>"; };
 		448513221BCBF16B008F3079 /* EffectTextureColorHighlight.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EffectTextureColorHighlight.cpp; sourceTree = "<group>"; };
-		44AB0B9D1C8055FE009BF945 /* AStar.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AStar.cpp; sourceTree = "<group>"; };
-		44AB0B9E1C8055FE009BF945 /* AStar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AStar.h; sourceTree = "<group>"; };
-		44AB0B9F1C8055FE009BF945 /* Funnel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Funnel.cpp; sourceTree = "<group>"; };
-		44AB0BA01C8055FE009BF945 /* Funnel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Funnel.h; sourceTree = "<group>"; };
-		44AB0BA11C8055FE009BF945 /* NavMesh.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NavMesh.cpp; sourceTree = "<group>"; };
-		44AB0BA21C8055FE009BF945 /* NavMesh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NavMesh.h; sourceTree = "<group>"; };
-		44AB0BA31C8055FE009BF945 /* navmesh_classes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = navmesh_classes.h; sourceTree = "<group>"; };
-		44AB0BA41C8055FE009BF945 /* navmesh_platform.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = navmesh_platform.h; sourceTree = "<group>"; };
-		44AB0BA51C8055FE009BF945 /* navmesh_references.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = navmesh_references.h; sourceTree = "<group>"; };
 		44BD5D2F1C8057D900F6FAE7 /* Allocator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Allocator.h; sourceTree = "<group>"; };
 		44BD5D301C8057D900F6FAE7 /* BasicTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BasicTest.cpp; sourceTree = "<group>"; };
 		44BD5D311C8057D900F6FAE7 /* BasicTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasicTest.h; sourceTree = "<group>"; };
@@ -476,7 +470,6 @@
 		440CB8591B1D8AF7009FDC49 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				44AB0B9C1C8055FE009BF945 /* navmesh */,
 				440CB85A1B1D8AF7009FDC49 /* core */,
 				440CB86D1B1D8AF7009FDC49 /* drawing */,
 				440CB87F1B1D8AF7009FDC49 /* entities */,
@@ -493,6 +486,8 @@
 		440CB85A1B1D8AF7009FDC49 /* core */ = {
 			isa = PBXGroup;
 			children = (
+				446C35861CB7E735003838A0 /* MarchingSquares.cpp */,
+				446C35871CB7E735003838A0 /* MarchingSquares.h */,
 				44BD5D2F1C8057D900F6FAE7 /* Allocator.h */,
 				44BD5D301C8057D900F6FAE7 /* BasicTest.cpp */,
 				44BD5D311C8057D900F6FAE7 /* BasicTest.h */,
@@ -874,22 +869,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		44AB0B9C1C8055FE009BF945 /* navmesh */ = {
-			isa = PBXGroup;
-			children = (
-				44AB0B9D1C8055FE009BF945 /* AStar.cpp */,
-				44AB0B9E1C8055FE009BF945 /* AStar.h */,
-				44AB0B9F1C8055FE009BF945 /* Funnel.cpp */,
-				44AB0BA01C8055FE009BF945 /* Funnel.h */,
-				44AB0BA11C8055FE009BF945 /* NavMesh.cpp */,
-				44AB0BA21C8055FE009BF945 /* NavMesh.h */,
-				44AB0BA31C8055FE009BF945 /* navmesh_classes.h */,
-				44AB0BA41C8055FE009BF945 /* navmesh_platform.h */,
-				44AB0BA51C8055FE009BF945 /* navmesh_references.h */,
-			);
-			path = navmesh;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1087,6 +1066,7 @@
 				440CB9BF1B1D8AF7009FDC49 /* ContentManager.cpp in Sources */,
 				445B87671CB7E4600071C0A7 /* TransformConstraint.c in Sources */,
 				440CB98D1B1D8AF7009FDC49 /* System.cpp in Sources */,
+				446C35881CB7E735003838A0 /* MarchingSquares.cpp in Sources */,
 				440CB9AF1B1D8AF7009FDC49 /* TextureImage2d.cpp in Sources */,
 				440CB9C71B1D8AF7009FDC49 /* pngpread.c in Sources */,
 				440CB9771B1D8AF7009FDC49 /* HollowsAllocationPolicy.cpp in Sources */,

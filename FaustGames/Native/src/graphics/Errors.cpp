@@ -54,7 +54,7 @@ namespace graphics
 
 #else
 #ifdef _DEBUG
-			throw std::exception();
+			//throw std::exception();
 
 #endif
 #endif

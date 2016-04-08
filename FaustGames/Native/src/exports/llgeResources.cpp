@@ -9,9 +9,33 @@ namespace llge
 	class ObbContentProvider : public IObbContentProvider
 	{
 	public:
+		resources::IAndroidContentProvider* _provider;
+		resources::IAndroidContentProvider* _obb;
+		resources::IAndroidContentProvider* _assets;
+
+		ObbContentProvider(): _provider(nullptr)
+		{
+			_obb = new resources::AndroidObbContentProvider();
+			_assets = new resources::AndroidAssetsContentProvider();
+		}
+
+		virtual void API_CALL refreshAssetsManager(void *jniEnv, void *assetsManager)
+		{			
+			resources::AssetsContentProvider::refresh(jniEnv, assetsManager);
+		}
+			
+
+		virtual void API_CALL openAssets(void *jniEnv, void *assetsManager)
+		{
+			resources::AssetsContentProvider::setup(jniEnv, assetsManager, "manifest.manifest");
+			resources::ContentProvider::AndroidContentProvider = _provider = _assets;
+		}
+
+
 		virtual void API_CALL openObbFile(const char *obbFile)
 		{
 			resources::ObbContentProvider::openObbFile(obbFile);
+			resources::ContentProvider::AndroidContentProvider = _provider = _obb;
 		}
 
 		virtual void API_CALL closeObbFile()
@@ -21,26 +45,26 @@ namespace llge
 
 		virtual bool API_CALL existsContent(const char *name)
 		{
-			return resources::ObbContentProvider::existsContent(name);
+			return _provider->existsContent(name);
 		}
 
 		virtual void API_CALL openContent(const char *name)
 		{
-			resources::ObbContentProvider::openContent(name);
+			_provider->openContent(name);
 		}
 		virtual int API_CALL read(void *buffer, int bytesLimit)
 		{
-			return resources::ObbContentProvider::read(buffer, bytesLimit);
+			return _provider->read(buffer, bytesLimit);
 		}
 		
 		virtual int API_CALL getContentSize()
 		{
-			return resources::ObbContentProvider::getContentSize();
+			return _provider->getContentSize();
 		}
 
 		virtual void API_CALL closeContent()
 		{
-			resources::ObbContentProvider::closeContent();
+			_provider->closeContent();
 		}
 	};
 

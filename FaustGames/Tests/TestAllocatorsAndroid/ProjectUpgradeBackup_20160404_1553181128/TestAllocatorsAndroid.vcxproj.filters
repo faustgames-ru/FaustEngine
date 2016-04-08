@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="res">
+      <UniqueIdentifier>7b4d6653-dd58-4a76-a3b5-7c31a85cb015</UniqueIdentifier>
+    </Filter>
+    <Filter Include="res\values">
+      <UniqueIdentifier>dd49b6ec-83ad-4fb4-a0a7-3e89fcc64ac8</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{fc8bb546-2383-4c7e-9bd5-98ecfcfe7006}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\test">
+      <UniqueIdentifier>{31f6d967-d86e-4457-a28b-3c17eb000987}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\test\allocators">
+      <UniqueIdentifier>{790dc46e-93dc-4e59-b5f2-88f72430f957}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\test\allocators\android">
+      <UniqueIdentifier>{455e9d8c-c592-4ec3-891a-16b26dd163fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="jni">
+      <UniqueIdentifier>{b67cba62-9678-4843-badb-b5fa8198746d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidBuild Include="AndroidManifest.xml" />
+    <AndroidBuild Include="res\values\strings.xml">
+      <Filter>res\values</Filter>
+    </AndroidBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <JCompile Include="src\test\allocators\android\TestAllocatorsAndroid.java">
+      <Filter>src\test\allocators\android</Filter>
+    </JCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="jni\TestAllocatorsAndroid.cpp">
+      <Filter>jni</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

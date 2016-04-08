@@ -1,0 +1,237 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="NsightTegraProject">
+    <NsightTegraProjectRevisionNumber>9</NsightTegraProjectRevisionNumber>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Tegra-Android">
+      <Configuration>Debug</Configuration>
+      <Platform>Tegra-Android</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Tegra-Android">
+      <Configuration>Release</Configuration>
+      <Platform>Tegra-Android</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\CommonSources\gen\llgePInvoke.cpp" />
+    <ClCompile Include="..\src\core\BasicTest.cpp" />
+    <ClCompile Include="..\src\core\HollowsAllocationPolicy.cpp" />
+    <ClCompile Include="..\src\core\Lazy.cpp" />
+    <ClCompile Include="..\src\core\Math.cpp" />
+    <ClCompile Include="..\src\core\Matrix.cpp" />
+    <ClCompile Include="..\src\core\SystemAllocationPolicy.cpp" />
+    <ClCompile Include="..\src\drawing\Camera.cpp" />
+    <ClCompile Include="..\src\drawing\Renderer2d.cpp" />
+    <ClCompile Include="..\src\drawing\RenderItem2d.cpp" />
+    <ClCompile Include="..\src\drawing\RenderMesh2d.cpp" />
+    <ClCompile Include="..\src\drawing\WaterRenderer.cpp" />
+    <ClCompile Include="..\src\entities\Aabb2dComponent.cpp" />
+    <ClCompile Include="..\src\entities\Component.cpp" />
+    <ClCompile Include="..\src\entities\DummyEntitiesFilter.cpp" />
+    <ClCompile Include="..\src\entities\EntitiesFilter.cpp" />
+    <ClCompile Include="..\src\entities\EntitiesWorld.cpp" />
+    <ClCompile Include="..\src\entities\Entity.cpp" />
+    <ClCompile Include="..\src\entities\MatrixTransformComponent.cpp" />
+    <ClCompile Include="..\src\entities\QuadtreeEntitiesFilter.cpp" />
+    <ClCompile Include="..\src\entities\Render2dComponent.cpp" />
+    <ClCompile Include="..\src\entities\RenderSystem2d.cpp" />
+    <ClCompile Include="..\src\entities\System.cpp" />
+    <ClCompile Include="..\src\entities\Transform2dComponent.cpp" />
+    <ClCompile Include="..\src\entities\TransformSystem2d.cpp" />
+    <ClCompile Include="..\src\exports\llge.cpp" />
+    <ClCompile Include="..\src\exports\llgeDrawing.cpp" />
+    <ClCompile Include="..\src\exports\llgeEntities.cpp" />
+    <ClCompile Include="..\src\exports\llgeGeometry.cpp" />
+    <ClCompile Include="..\src\exports\llgeGraphics.cpp" />
+    <ClCompile Include="..\src\exports\llgeResources.cpp" />
+    <ClCompile Include="..\src\geometry\Aabb2d.cpp" />
+    <ClCompile Include="..\src\geometry\Quadtree2d.cpp" />
+    <ClCompile Include="..\src\geometry\Quadtree2dNode.cpp" />
+    <ClCompile Include="..\src\graphics\AttributeInfo.cpp" />
+    <ClCompile Include="..\src\graphics\Attributes.cpp" />
+    <ClCompile Include="..\src\graphics\Color.cpp" />
+    <ClCompile Include="..\src\graphics\Effect.cpp" />
+    <ClCompile Include="..\src\graphics\EffectBase.cpp" />
+    <ClCompile Include="..\src\graphics\EffectConstant.cpp" />
+    <ClCompile Include="..\src\graphics\EffectRenderDepth.cpp" />
+    <ClCompile Include="..\src\graphics\Effects.cpp" />
+    <ClCompile Include="..\src\graphics\EffectSolid.cpp" />
+    <ClCompile Include="..\src\graphics\EffectSolidColor.cpp" />
+    <ClCompile Include="..\src\graphics\EffectTextureColor.cpp" />
+    <ClCompile Include="..\src\graphics\EffectTextureLightMapColor.cpp" />
+    <ClCompile Include="..\src\graphics\EffectWater.cpp" />
+    <ClCompile Include="..\src\graphics\Errors.cpp" />
+    <ClCompile Include="..\src\graphics\GraphicsDevice.cpp" />
+    <ClCompile Include="..\src\graphics\Image2dData.cpp" />
+    <ClCompile Include="..\src\graphics\RenderState.cpp" />
+    <ClCompile Include="..\src\graphics\StaticBatch.cpp" />
+    <ClCompile Include="..\src\graphics\Texture.cpp" />
+    <ClCompile Include="..\src\graphics\TextureCubemap.cpp" />
+    <ClCompile Include="..\src\graphics\TextureImage2d.cpp" />
+    <ClCompile Include="..\src\graphics\TextureLoader.cpp" />
+    <ClCompile Include="..\src\graphics\TextureRenderTarget2d.cpp" />
+    <ClCompile Include="..\src\graphics\TextureRenderTargetDepth2d.cpp" />
+    <ClCompile Include="..\src\graphics\Uniform.cpp" />
+    <ClCompile Include="..\src\graphics\UniformInfo.cpp" />
+    <ClCompile Include="..\src\graphics\Uniforms.cpp" />
+    <ClCompile Include="..\src\graphics\UniformValue.cpp" />
+    <ClCompile Include="..\src\graphics\UniformValueCubemap.cpp" />
+    <ClCompile Include="..\src\graphics\UniformValueFloat.cpp" />
+    <ClCompile Include="..\src\graphics\UniformValueMatrix.cpp" />
+    <ClCompile Include="..\src\graphics\UniformValueTexture.cpp" />
+    <ClCompile Include="..\src\graphics\UniformValueVector3.cpp" />
+    <ClCompile Include="..\src\graphics\VertexBuffer.cpp" />
+    <ClCompile Include="..\src\graphics\VertexFormat.cpp" />
+    <ClCompile Include="..\src\graphics\VertexFormats.cpp" />
+    <ClCompile Include="llge_android.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\CommonSources\include\llge.h" />
+    <ClInclude Include="..\src\core\Allocator.h" />
+    <ClInclude Include="..\src\core\BasicTest.h" />
+    <ClInclude Include="..\src\core\core.h" />
+    <ClInclude Include="..\src\core\core_classes.h" />
+    <ClInclude Include="..\src\core\core_platform.h" />
+    <ClInclude Include="..\src\core\HollowsAllocationPolicy.h" />
+    <ClInclude Include="..\src\core\Lazy.h" />
+    <ClInclude Include="..\src\core\Math.h" />
+    <ClInclude Include="..\src\core\Matrix.h" />
+    <ClInclude Include="..\src\core\StaticArray.h" />
+    <ClInclude Include="..\src\core\SystemAllocationPolicy.h" />
+    <ClInclude Include="..\src\core\Vector.h" />
+    <ClInclude Include="..\src\drawing\Camera.h" />
+    <ClInclude Include="..\src\drawing\drawing_classes.h" />
+    <ClInclude Include="..\src\drawing\drawing_platform.h" />
+    <ClInclude Include="..\src\drawing\drawing_references.h" />
+    <ClInclude Include="..\src\drawing\Renderer2d.h" />
+    <ClInclude Include="..\src\drawing\RenderItem2d.h" />
+    <ClInclude Include="..\src\drawing\RenderMesh2d.h" />
+    <ClInclude Include="..\src\drawing\WaterRenderer.h" />
+    <ClInclude Include="..\src\entities\Aabb2dComponent.h" />
+    <ClInclude Include="..\src\entities\Component.h" />
+    <ClInclude Include="..\src\entities\DummyEntitiesFilter.h" />
+    <ClInclude Include="..\src\entities\entities.h" />
+    <ClInclude Include="..\src\entities\EntitiesFilter.h" />
+    <ClInclude Include="..\src\entities\EntitiesWorld.h" />
+    <ClInclude Include="..\src\entities\entities_classes.h" />
+    <ClInclude Include="..\src\entities\entities_platform.h" />
+    <ClInclude Include="..\src\entities\entities_references.h" />
+    <ClInclude Include="..\src\entities\Entity.h" />
+    <ClInclude Include="..\src\entities\MatrixTransformComponent.h" />
+    <ClInclude Include="..\src\entities\QuadtreeEntitiesFilter.h" />
+    <ClInclude Include="..\src\entities\Render2dComponent.h" />
+    <ClInclude Include="..\src\entities\RenderSystem2d.h" />
+    <ClInclude Include="..\src\entities\System.h" />
+    <ClInclude Include="..\src\entities\Transform2dComponent.h" />
+    <ClInclude Include="..\src\entities\TransformSystem2d.h" />
+    <ClInclude Include="..\src\geometry\Aabb2d.h" />
+    <ClInclude Include="..\src\geometry\geometry.h" />
+    <ClInclude Include="..\src\geometry\geometry_classes.h" />
+    <ClInclude Include="..\src\geometry\geometry_platform.h" />
+    <ClInclude Include="..\src\geometry\geometry_references.h" />
+    <ClInclude Include="..\src\geometry\Quadtree2d.h" />
+    <ClInclude Include="..\src\geometry\Quadtree2dItem.h" />
+    <ClInclude Include="..\src\geometry\Quadtree2dNode.h" />
+    <ClInclude Include="..\src\graphics\AttributeInfo.h" />
+    <ClInclude Include="..\src\graphics\Attributes.h" />
+    <ClInclude Include="..\src\graphics\Batcher.h" />
+    <ClInclude Include="..\src\graphics\Color.h" />
+    <ClInclude Include="..\src\graphics\Effect.h" />
+    <ClInclude Include="..\src\graphics\EffectBase.h" />
+    <ClInclude Include="..\src\graphics\EffectConstant.h" />
+    <ClInclude Include="..\src\graphics\EffectRenderDepth.h" />
+    <ClInclude Include="..\src\graphics\Effects.h" />
+    <ClInclude Include="..\src\graphics\EffectSolid.h" />
+    <ClInclude Include="..\src\graphics\EffectSolidColor.h" />
+    <ClInclude Include="..\src\graphics\EffectTextureColor.h" />
+    <ClInclude Include="..\src\graphics\EffectTextureLightMapColor.h" />
+    <ClInclude Include="..\src\graphics\EffectWater.h" />
+    <ClInclude Include="..\src\graphics\Errors.h" />
+    <ClInclude Include="..\src\graphics\graphics.h" />
+    <ClInclude Include="..\src\graphics\GraphicsDevice.h" />
+    <ClInclude Include="..\src\graphics\graphics_classes.h" />
+    <ClInclude Include="..\src\graphics\graphics_platform.h" />
+    <ClInclude Include="..\src\graphics\graphics_references.h" />
+    <ClInclude Include="..\src\graphics\Image2dData.h" />
+    <ClInclude Include="..\src\graphics\RenderState.h" />
+    <ClInclude Include="..\src\graphics\State.h" />
+    <ClInclude Include="..\src\graphics\StateCompare.h" />
+    <ClInclude Include="..\src\graphics\StaticBatch.h" />
+    <ClInclude Include="..\src\graphics\Texture.h" />
+    <ClInclude Include="..\src\graphics\TextureCubemap.h" />
+    <ClInclude Include="..\src\graphics\TextureImage2d.h" />
+    <ClInclude Include="..\src\graphics\TextureLoader.h" />
+    <ClInclude Include="..\src\graphics\TextureRenderTarget2d.h" />
+    <ClInclude Include="..\src\graphics\TextureRenderTargetDepth2d.h" />
+    <ClInclude Include="..\src\graphics\Uniform.h" />
+    <ClInclude Include="..\src\graphics\UniformInfo.h" />
+    <ClInclude Include="..\src\graphics\Uniforms.h" />
+    <ClInclude Include="..\src\graphics\UniformValue.h" />
+    <ClInclude Include="..\src\graphics\UniformValueCubemap.h" />
+    <ClInclude Include="..\src\graphics\UniformValueFloat.h" />
+    <ClInclude Include="..\src\graphics\UniformValueMatrix.h" />
+    <ClInclude Include="..\src\graphics\UniformValueTexture.h" />
+    <ClInclude Include="..\src\graphics\UniformValueVector3.h" />
+    <ClInclude Include="..\src\graphics\VertexBuffer.h" />
+    <ClInclude Include="..\src\graphics\VertexFormat.h" />
+    <ClInclude Include="..\src\graphics\VertexFormatPosition.h" />
+    <ClInclude Include="..\src\graphics\VertexFormatPositionColor.h" />
+    <ClInclude Include="..\src\graphics\VertexFormatPositionTextureColor.h" />
+    <ClInclude Include="..\src\graphics\VertexFormats.h" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{1A8346D8-1ECA-45A9-8171-FFFE9D248ADC}</ProjectGuid>
+    <RootNamespace>llge_android</RootNamespace>
+    <ProjectName>llge</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|Tegra-Android'">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <AndroidTargetAPI>android-21</AndroidTargetAPI>
+    <NdkToolchainVersion>Default</NdkToolchainVersion>
+    <AndroidStlType>gnustl_shared</AndroidStlType>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|Tegra-Android'">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <AndroidTargetAPI>android-15</AndroidTargetAPI>
+    <AndroidStlType>gnustl_static</AndroidStlType>
+    <AndroidBuildSystem>AntBuild</AndroidBuildSystem>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros">
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Tegra-Android'">
+    <ClCompile>
+      <PreprocessorDefinitions>DISABLE_IMPORTGL;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <CppLanguageStandard>gnu++11</CppLanguageStandard>
+      <AdditionalIncludeDirectories>..\include;..\..\CommonSources\include</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
+      <AdditionalOptions>-lGLESv2 -ldl -llog %(AdditionalOptions)</AdditionalOptions>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Tegra-Android'">
+    <ClCompile>
+      <CppLanguageStandard>gnu++11</CppLanguageStandard>
+      <AdditionalIncludeDirectories>..\include;..\..\CommonSources\include</AdditionalIncludeDirectories>
+      <AdditionalOptions>-std=gnu++11 %(AdditionalOptions)</AdditionalOptions>
+      <CLanguageStandard>gnu11</CLanguageStandard>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalOptions>-lGLESv2 -ldl -llog %(AdditionalOptions)</AdditionalOptions>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy $(SolutionDir)\Tegra-Android\Release\libllge.so $(SolutionDir)\Game.Android\libs\armeabi\libllge.so
+copy $(SolutionDir)\Tegra-Android\Release\libllge.so $(SolutionDir)\Game.Android\libs\armeabi-v7a\libllge.so</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

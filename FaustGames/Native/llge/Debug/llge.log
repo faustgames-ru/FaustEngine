@@ -25,10 +25,10 @@ c:\_faust\faustengine\faustgames\native\src\spine\spineanimationstate.cpp(46): w
   ContentProviderObb.cpp
   ContentManager.cpp
   NavMesh.cpp
-c:\_faust\faustengine\faustgames\native\src\navmesh\navmesh.cpp(370): warning C4018: '<' : signed/unsigned mismatch
-c:\_faust\faustengine\faustgames\native\src\navmesh\navmesh.cpp(402): warning C4018: '<' : signed/unsigned mismatch
-c:\_faust\faustengine\faustgames\native\src\navmesh\navmesh.cpp(482): warning C4018: '<' : signed/unsigned mismatch
-c:\_faust\faustengine\faustgames\native\src\navmesh\navmesh.cpp(515): warning C4018: '<' : signed/unsigned mismatch
+c:\_faust\faustengine\faustgames\native\src\navmesh\navmesh.cpp(369): warning C4018: '<' : signed/unsigned mismatch
+c:\_faust\faustengine\faustgames\native\src\navmesh\navmesh.cpp(401): warning C4018: '<' : signed/unsigned mismatch
+c:\_faust\faustengine\faustgames\native\src\navmesh\navmesh.cpp(481): warning C4018: '<' : signed/unsigned mismatch
+c:\_faust\faustengine\faustgames\native\src\navmesh\navmesh.cpp(514): warning C4018: '<' : signed/unsigned mismatch
   NavEdges.cpp
   Generating Code...
   Compiling...
@@ -50,6 +50,17 @@ c:\_faust\faustengine\faustgames\native\src\navmesh\navmesh.cpp(515): warning C4
   TextureRenderTarget2d.cpp
   TextureLoader.cpp
   TextureImage2d.cpp
+c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(61): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(61): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(62): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(62): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(63): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(63): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(64): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(64): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(86): warning C4018: '<' : signed/unsigned mismatch
+c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(88): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(90): warning C4018: '<' : signed/unsigned mismatch
   TextureCubemap.cpp
   Texture.cpp
   Generating Code...
@@ -117,6 +128,10 @@ c:\_faust\faustengine\faustgames\native\src\drawing\batcher.cpp(218): warning C4
   SystemAllocationPolicy.cpp
   Matrix.cpp
   Math.cpp
+  MarchingSquares.cpp
+c:\_faust\faustengine\faustgames\native\src\core\marchingsquares.cpp(229): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\core\marchingsquares.cpp(237): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\core\marchingsquares.cpp(237): warning C4244: 'return' : conversion from 'float' to 'int', possible loss of data
   HollowsAllocationPolicy.cpp
   BasicTest.cpp
   llgePInvoke.cpp

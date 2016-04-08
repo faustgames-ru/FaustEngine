@@ -46,6 +46,26 @@ namespace llge
 		classInstance->dispose();
 	}
 	
+	extern "C" DLLEXPORT int API_CALL llge_TextureImage2d_getVerticesCount (ITextureImage2d * classInstance)
+	{
+		return classInstance->getVerticesCount();
+	}
+	
+	extern "C" DLLEXPORT IntPtr API_CALL llge_TextureImage2d_getVertices (ITextureImage2d * classInstance)
+	{
+		return classInstance->getVertices();
+	}
+	
+	extern "C" DLLEXPORT int API_CALL llge_TextureImage2d_getIndicesCount (ITextureImage2d * classInstance)
+	{
+		return classInstance->getIndicesCount();
+	}
+	
+	extern "C" DLLEXPORT IntPtr API_CALL llge_TextureImage2d_getIndices (ITextureImage2d * classInstance)
+	{
+		return classInstance->getIndices();
+	}
+	
 	extern "C" DLLEXPORT IntPtr API_CALL llge_RenderTarget2d_getRenderTargetInstance (IRenderTarget2d * classInstance)
 	{
 		return classInstance->getRenderTargetInstance();
@@ -306,6 +326,76 @@ namespace llge
 		classInstance->dispose();
 	}
 	
+	extern "C" DLLEXPORT void API_CALL llge_MarchingSquares_build (IMarchingSquares * classInstance, IntPtr boolPoints, int w, int h)
+	{
+		classInstance->build(boolPoints, w, h);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_MarchingSquares_collectEdges (IMarchingSquares * classInstance)
+	{
+		classInstance->collectEdges();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_MarchingSquares_simplifyPathes (IMarchingSquares * classInstance)
+	{
+		classInstance->simplifyPathes();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_MarchingSquares_triangulatePathes (IMarchingSquares * classInstance)
+	{
+		classInstance->triangulatePathes();
+	}
+	
+	extern "C" DLLEXPORT IntPtr API_CALL llge_MarchingSquares_getEdges (IMarchingSquares * classInstance)
+	{
+		return classInstance->getEdges();
+	}
+	
+	extern "C" DLLEXPORT int API_CALL llge_MarchingSquares_getEdgesCount (IMarchingSquares * classInstance)
+	{
+		return classInstance->getEdgesCount();
+	}
+	
+	extern "C" DLLEXPORT int API_CALL llge_MarchingSquares_getPathesCount (IMarchingSquares * classInstance)
+	{
+		return classInstance->getPathesCount();
+	}
+	
+	extern "C" DLLEXPORT int API_CALL llge_MarchingSquares_getPathCount (IMarchingSquares * classInstance, int pathIndex)
+	{
+		return classInstance->getPathCount(pathIndex);
+	}
+	
+	extern "C" DLLEXPORT IntPtr API_CALL llge_MarchingSquares_getPath (IMarchingSquares * classInstance, int pathIndex)
+	{
+		return classInstance->getPath(pathIndex);
+	}
+	
+	extern "C" DLLEXPORT int API_CALL llge_MarchingSquares_getVerticesCount (IMarchingSquares * classInstance)
+	{
+		return classInstance->getVerticesCount();
+	}
+	
+	extern "C" DLLEXPORT IntPtr API_CALL llge_MarchingSquares_getVertices (IMarchingSquares * classInstance)
+	{
+		return classInstance->getVertices();
+	}
+	
+	extern "C" DLLEXPORT int API_CALL llge_MarchingSquares_getIndicesCount (IMarchingSquares * classInstance)
+	{
+		return classInstance->getIndicesCount();
+	}
+	
+	extern "C" DLLEXPORT IntPtr API_CALL llge_MarchingSquares_getIndices (IMarchingSquares * classInstance)
+	{
+		return classInstance->getIndices();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_MarchingSquares_dispose (IMarchingSquares * classInstance)
+	{
+		classInstance->dispose();
+	}
+	
 	extern "C" DLLEXPORT int API_CALL llge_QuadTree_insert (IQuadTree * classInstance, float minX, float minY, float maxX, float maxY, int userData)
 	{
 		return classInstance->insert(minX, minY, maxX, maxY, userData);
@@ -344,6 +434,11 @@ namespace llge
 	extern "C" DLLEXPORT IQuadTree * API_CALL llge_GeometryFactory_createQuadTree (IGeometryFactory * classInstance)
 	{
 		return classInstance->createQuadTree();
+	}
+	
+	extern "C" DLLEXPORT IMarchingSquares * API_CALL llge_GeometryFactory_createMarchingSquares (IGeometryFactory * classInstance)
+	{
+		return classInstance->createMarchingSquares();
 	}
 	
 	extern "C" DLLEXPORT void API_CALL llge_GeometryFactory_dispose (IGeometryFactory * classInstance)
@@ -904,6 +999,16 @@ namespace llge
 	extern "C" DLLEXPORT void API_CALL llge_ContentManager_dispose (IContentManager * classInstance)
 	{
 		classInstance->dispose();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_ObbContentProvider_refreshAssetsManager (IObbContentProvider * classInstance, void * jniEnv, void * assetsManager)
+	{
+		classInstance->refreshAssetsManager(jniEnv, assetsManager);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_ObbContentProvider_openAssets (IObbContentProvider * classInstance, void * jniEnv, void * assetsManager)
+	{
+		classInstance->openAssets(jniEnv, assetsManager);
 	}
 	
 	extern "C" DLLEXPORT void API_CALL llge_ObbContentProvider_openObbFile (IObbContentProvider * classInstance, const char * obbFile)

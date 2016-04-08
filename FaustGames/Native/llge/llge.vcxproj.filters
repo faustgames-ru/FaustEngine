@@ -590,6 +590,9 @@
     <ClInclude Include="..\src\navmesh\NavEdges.h">
       <Filter>navmesh</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\core\MarchingSquares.h">
+      <Filter>core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\CommonSources\gen\llgePInvoke.cpp">
@@ -1061,6 +1064,9 @@
     </ClCompile>
     <ClCompile Include="..\src\spine\runtime\TransformConstraintData.c">
       <Filter>spine\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\MarchingSquares.cpp">
+      <Filter>core</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

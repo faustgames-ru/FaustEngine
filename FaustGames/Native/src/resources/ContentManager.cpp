@@ -137,7 +137,12 @@ namespace resources
 
 
 		const unsigned int stride = png_get_rowbytes(m_PngPtr, m_InfoPtr);
-
+		if ((m_Height > 2048) || (m_Width > 2048))
+		{
+			png_destroy_read_struct(&m_PngPtr, &m_InfoPtr, 0);
+			//throw ref new Exception(-1, "Error during init_io");
+			return 0;
+		}
 		if (_useLoadRegion)
 		{
 			int offset = _loadRegion.Y * _pageWidth + _loadRegion.X;
@@ -217,12 +222,6 @@ namespace resources
 	void API_CALL ContentManager::replaceSeparator(bool value)
 	{
 		_replaceSeparator = value;
-	}
-
-
-	void API_CALL ContentManager::setObbFile(char * obbFile)
-	{
-		ObbContentProvider::openObbFile(obbFile);
 	}
 
 	int API_CALL ContentManager::registerImage(char * name)

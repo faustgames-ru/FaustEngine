@@ -3,6 +3,7 @@
 #include "../geometry/geometry.h"
 
 #include <limits>
+#include "../core/MarchingSquares.h"
 
 using namespace geometry;
 using namespace core;
@@ -66,6 +67,11 @@ namespace llge
 		virtual IQuadTree * API_CALL createQuadTree()
 		{
 			return new QuadTree();
+		}
+
+		virtual IMarchingSquares* API_CALL createMarchingSquares()
+		{
+			return new MarchingSquares();
 		}
 
 		virtual void API_CALL dispose()

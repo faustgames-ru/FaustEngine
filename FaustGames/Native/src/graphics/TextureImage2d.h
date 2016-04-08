@@ -26,11 +26,21 @@ namespace graphics
 		virtual void API_CALL create();
 		virtual void API_CALL cleanup();
 		virtual void API_CALL dispose(){ delete this; }
+
+		virtual int API_CALL getVerticesCount() OVERRIDE;
+		virtual IntPtr API_CALL getVertices() OVERRIDE;
+		virtual int API_CALL getIndicesCount() OVERRIDE;
+		virtual IntPtr API_CALL getIndices() OVERRIDE;
+
         static TextureImage2d _empty;
-    protected:
+		static bool TraceTriangles;
+	protected:
 	private:
 		TextureImage2d();
+		void traceTriangles(int width, int height, Image2dFormat::e format, void *pixels);
 		static GLenum getFormat(Image2dFormat::e format);
+		std::vector<core::Vector2> _tracedVertices;
+		std::vector<ushort> _tracedIndices;
 		bool _createMipmaps;
 		bool _wrap;
 		bool _filter;

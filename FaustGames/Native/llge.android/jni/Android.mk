@@ -21,7 +21,7 @@ FILE_LIST += $(wildcard $(LOCAL_PATH)/../../../Native/src_poly2tri/*.c*)
 FILE_LIST += $(wildcard $(LOCAL_PATH)/../../../Native/src_poly2tri/common/*.c*)
 FILE_LIST += $(wildcard $(LOCAL_PATH)/../../../Native/src_poly2tri/sweep/*.c*)
 LOCAL_SRC_FILES :=$(FILE_LIST:$(LOCAL_PATH)/%=%)
-LOCAL_LDLIBS := -lGLESv2 -lz -llog
+LOCAL_LDLIBS := -lGLESv2 -lz -llog -landroid
 LOCAL_CPP_FEATURES += exceptions
 LOCAL_CPPFLAGS += -fexceptions
 include $(BUILD_SHARED_LIBRARY)

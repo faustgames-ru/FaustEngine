@@ -152,6 +152,34 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private void llge_TextureImage2d_dispose (IntPtr classInstance);
+		public int GetVerticesCount ()
+		{
+			return llge_TextureImage2d_getVerticesCount(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private int llge_TextureImage2d_getVerticesCount (IntPtr classInstance);
+		public IntPtr GetVertices ()
+		{
+			return llge_TextureImage2d_getVertices(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_TextureImage2d_getVertices (IntPtr classInstance);
+		public int GetIndicesCount ()
+		{
+			return llge_TextureImage2d_getIndicesCount(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private int llge_TextureImage2d_getIndicesCount (IntPtr classInstance);
+		public IntPtr GetIndices ()
+		{
+			return llge_TextureImage2d_getIndices(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_TextureImage2d_getIndices (IntPtr classInstance);
 	}
 	
 	public class RenderTarget2d
@@ -548,6 +576,109 @@ namespace llge
 		static extern private void llge_GraphicsFactory_dispose (IntPtr classInstance);
 	}
 	
+	public class MarchingSquares
+	{
+		public IntPtr ClassInstance;
+		public void Build (IntPtr boolPoints, int w, int h)
+		{
+			llge_MarchingSquares_build(ClassInstance, boolPoints, w, h);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_MarchingSquares_build (IntPtr classInstance, IntPtr boolPoints, int w, int h);
+		public void CollectEdges ()
+		{
+			llge_MarchingSquares_collectEdges(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_MarchingSquares_collectEdges (IntPtr classInstance);
+		public void SimplifyPathes ()
+		{
+			llge_MarchingSquares_simplifyPathes(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_MarchingSquares_simplifyPathes (IntPtr classInstance);
+		public void TriangulatePathes ()
+		{
+			llge_MarchingSquares_triangulatePathes(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_MarchingSquares_triangulatePathes (IntPtr classInstance);
+		public IntPtr GetEdges ()
+		{
+			return llge_MarchingSquares_getEdges(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_MarchingSquares_getEdges (IntPtr classInstance);
+		public int GetEdgesCount ()
+		{
+			return llge_MarchingSquares_getEdgesCount(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private int llge_MarchingSquares_getEdgesCount (IntPtr classInstance);
+		public int GetPathesCount ()
+		{
+			return llge_MarchingSquares_getPathesCount(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private int llge_MarchingSquares_getPathesCount (IntPtr classInstance);
+		public int GetPathCount (int pathIndex)
+		{
+			return llge_MarchingSquares_getPathCount(ClassInstance, pathIndex);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private int llge_MarchingSquares_getPathCount (IntPtr classInstance, int pathIndex);
+		public IntPtr GetPath (int pathIndex)
+		{
+			return llge_MarchingSquares_getPath(ClassInstance, pathIndex);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_MarchingSquares_getPath (IntPtr classInstance, int pathIndex);
+		public int GetVerticesCount ()
+		{
+			return llge_MarchingSquares_getVerticesCount(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private int llge_MarchingSquares_getVerticesCount (IntPtr classInstance);
+		public IntPtr GetVertices ()
+		{
+			return llge_MarchingSquares_getVertices(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_MarchingSquares_getVertices (IntPtr classInstance);
+		public int GetIndicesCount ()
+		{
+			return llge_MarchingSquares_getIndicesCount(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private int llge_MarchingSquares_getIndicesCount (IntPtr classInstance);
+		public IntPtr GetIndices ()
+		{
+			return llge_MarchingSquares_getIndices(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_MarchingSquares_getIndices (IntPtr classInstance);
+		public void Dispose ()
+		{
+			llge_MarchingSquares_dispose(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_MarchingSquares_dispose (IntPtr classInstance);
+	}
+	
 	public class QuadTree
 	{
 		public IntPtr ClassInstance;
@@ -612,6 +743,13 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private IntPtr llge_GeometryFactory_createQuadTree (IntPtr classInstance);
+		public MarchingSquares CreateMarchingSquares ()
+		{
+			return new MarchingSquares{ ClassInstance = llge_GeometryFactory_createMarchingSquares(ClassInstance) };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_GeometryFactory_createMarchingSquares (IntPtr classInstance);
 		public void Dispose ()
 		{
 			llge_GeometryFactory_dispose(ClassInstance);
@@ -1506,6 +1644,20 @@ namespace llge
 	public class ObbContentProvider
 	{
 		public IntPtr ClassInstance;
+		public void RefreshAssetsManager (IntPtr jniEnv, IntPtr assetsManager)
+		{
+			llge_ObbContentProvider_refreshAssetsManager(ClassInstance, jniEnv, assetsManager);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_ObbContentProvider_refreshAssetsManager (IntPtr classInstance, IntPtr jniEnv, IntPtr assetsManager);
+		public void OpenAssets (IntPtr jniEnv, IntPtr assetsManager)
+		{
+			llge_ObbContentProvider_openAssets(ClassInstance, jniEnv, assetsManager);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_ObbContentProvider_openAssets (IntPtr classInstance, IntPtr jniEnv, IntPtr assetsManager);
 		public void OpenObbFile (string obbFile)
 		{
 			llge_ObbContentProvider_openObbFile(ClassInstance, obbFile);

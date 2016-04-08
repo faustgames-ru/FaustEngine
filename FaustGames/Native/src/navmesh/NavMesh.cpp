@@ -211,7 +211,6 @@ namespace navmesh
 
 		std::vector<std::vector<core::Vector2>> &staticPolygons = config->staticPolygons;
 		clear();
-
 		ClipperLib::Clipper clipper;
 		ClipperLib::Path pRoot;
 		pRoot.push_back(toClipper(core::Vector2(_minX, _minY)));

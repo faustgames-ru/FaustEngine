@@ -1,5 +1,6 @@
 #include "ContentProvider.h"
 #include <stdio.h>
+#include <string>
 #include <stdlib.h>
 #include <map>
 
@@ -12,17 +13,17 @@ namespace resources
 	FILE * _obbFile;
 	struct ObbEntry
 	{
-		long Position;
-		long Size;
+		int64_t Position;
+		int64_t Size;
 		ObbEntry(){}
-		ObbEntry(long position, long size)
+		ObbEntry(int64_t position, int64_t size)
 		{
 			Position = position;
 			Size = size;
 		}
 	};
 
-    
+    /*
     template <typename T>
     std::string to_string(T value)
     {
@@ -30,14 +31,14 @@ namespace resources
         os << value;
         return os.str();
     }
-    
+    */
 	std::map<std::string, ObbEntry> _entries;
     std::string _obbPath;
 	void ObbContentProvider::openObbFile(const char *obbFile)
 	{
         _obbPath = obbFile;
 		_obbFile = fopen(obbFile, "rb");
-		int count;
+		int32_t count;
         
         fread(&count, 1, 4, _obbFile);
 		if (count > 0)
@@ -51,9 +52,9 @@ namespace resources
 				data++;
 				char * name = (char *)(data);
 				data += 239;
-				long position = *(long *)data;
+				int64_t  position = *(int64_t *)data;
                 data += 8;
-				long size = *(long *)data;
+				int64_t size = *(int64_t *)data;
 				data += 8;
 				_entries[name] = ObbEntry(position, size);
 			}
@@ -123,29 +124,28 @@ namespace resources
 	}
 
 
+	IAndroidContentProvider* ContentProvider::AndroidContentProvider(nullptr);
+
 #ifdef __ANDROID__
 
-	bool ContentProvider::existContent(const char *name)
+	bool ContentProvider::existContent(const char *name)	
 	{
-		return ObbContentProvider::existsContent(name);
+		return AndroidContentProvider->existsContent(name);
 	}
 
 	void ContentProvider::openContent(const char *name)
 	{
-		ObbContentProvider::openContent(name);
-
+		AndroidContentProvider->openContent(name);
 	}
 
 	int ContentProvider::read(void *buffer, int bytesLimit)
 	{
-		ObbContentProvider::read(buffer, bytesLimit);
-        
+		return AndroidContentProvider->read(buffer, bytesLimit);
 	}
 
 	void ContentProvider::closeContent()
 	{
-		ObbContentProvider::closeContent();
-        
+		AndroidContentProvider->closeContent();
 	}
 #endif /*__ANDROID__*/
     

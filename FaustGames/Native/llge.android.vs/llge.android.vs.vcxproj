@@ -1,0 +1,526 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|ARM">
+      <Configuration>Debug</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|ARM">
+      <Configuration>Release</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|ARM64">
+      <Configuration>Debug</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|ARM64">
+      <Configuration>Release</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x86">
+      <Configuration>Debug</Configuration>
+      <Platform>x86</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x86">
+      <Configuration>Release</Configuration>
+      <Platform>x86</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{7502b3ba-f54d-48f2-9278-9eff94df387b}</ProjectGuid>
+    <Keyword>Android</Keyword>
+    <RootNamespace>llge_android_vs</RootNamespace>
+    <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
+    <ApplicationType>Android</ApplicationType>
+    <ApplicationTypeRevision>1.0</ApplicationTypeRevision>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>Clang_3_6</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>Clang_3_6</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>Clang_3_6</PlatformToolset>
+    <AndroidAPILevel>android-21</AndroidAPILevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>Clang_3_6</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>Clang_3_6</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>Clang_3_6</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>Clang_3_6</PlatformToolset>
+    <AndroidAPILevel>android-21</AndroidAPILevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>Clang_3_6</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings" />
+  <ImportGroup Label="Shared" />
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <TargetName>libllge</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
+    <TargetName>libllge</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
+    <TargetName>libllge</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
+    <TargetName>libllge</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>..\include;..\..\CommonSources\include;..\src\resources\zlib;$(StlIncludeDirectories);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>LLGE_EXPORTS;LIBPNG_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <CppLanguageStandard>c++11</CppLanguageStandard>
+      <ExceptionHandling>Enabled</ExceptionHandling>
+    </ClCompile>
+    <Link>
+      <AdditionalOptions>-lm -lGLESv2 -lz -llog</AdditionalOptions>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>..\include;..\..\CommonSources\include;..\src\resources\zlib;$(StlIncludeDirectories);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>LLGE_EXPORTS;LIBPNG_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <CppLanguageStandard>c++11</CppLanguageStandard>
+      <ExceptionHandling>Enabled</ExceptionHandling>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>..\include;..\..\CommonSources\include;..\src\resources\zlib;$(StlIncludeDirectories);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>LLGE_EXPORTS;LIBPNG_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <CppLanguageStandard>c++11</CppLanguageStandard>
+      <ExceptionHandling>Enabled</ExceptionHandling>
+    </ClCompile>
+    <Link>
+      <AdditionalOptions>-lm -lGLESv2 -lz -llog</AdditionalOptions>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>..\include;..\..\CommonSources\include;..\src\resources\zlib;$(StlIncludeDirectories);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>LLGE_EXPORTS;LIBPNG_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <CppLanguageStandard>c++11</CppLanguageStandard>
+      <ExceptionHandling>Enabled</ExceptionHandling>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>..\include;..\..\CommonSources\include;..\src\resources\zlib;$(StlIncludeDirectories)%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>LLGE_EXPORTS;LIBPNG_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <CppLanguageStandard>c++11</CppLanguageStandard>
+      <ExceptionHandling>Enabled</ExceptionHandling>
+    </ClCompile>
+    <Link>
+      <AdditionalOptions>-lm -lGLESv2 -lz -llog</AdditionalOptions>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>..\include;..\..\CommonSources\include;..\src\resources\zlib;$(StlIncludeDirectories)%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>LLGE_EXPORTS;LIBPNG_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <CppLanguageStandard>c++11</CppLanguageStandard>
+      <ExceptionHandling>Enabled</ExceptionHandling>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>..\include;..\..\CommonSources\include;..\src\resources\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>LLGE_EXPORTS;LIBPNG_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <CppLanguageStandard>c++11</CppLanguageStandard>
+      <ExceptionHandling>Enabled</ExceptionHandling>
+    </ClCompile>
+    <Link>
+      <AdditionalOptions>-lm -lGLESv2 -lz -llog</AdditionalOptions>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>..\include;..\..\CommonSources\include;..\src\resources\zlib;$(StlIncludeDirectories)%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>LLGE_EXPORTS;LIBPNG_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <CppLanguageStandard>c++11</CppLanguageStandard>
+      <ExceptionHandling>Enabled</ExceptionHandling>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\CommonSources\include\llge.h" />
+    <ClInclude Include="..\shaders\post_process_bloom_add_filter_frag.h" />
+    <ClInclude Include="..\shaders\post_process_bloom_filter_frag.h" />
+    <ClInclude Include="..\shaders\post_process_blur_frag.h" />
+    <ClInclude Include="..\shaders\post_process_hblur_vert.h" />
+    <ClInclude Include="..\shaders\post_process_tonemapping.h" />
+    <ClInclude Include="..\shaders\post_process_vblur_vert.h" />
+    <ClInclude Include="..\shaders\post_process_vert.h" />
+    <ClInclude Include="..\shaders\shader_render_depth_frag.h" />
+    <ClInclude Include="..\shaders\shader_render_depth_vert.h" />
+    <ClInclude Include="..\shaders\solid_color_frag.h" />
+    <ClInclude Include="..\shaders\solid_color_vert.h" />
+    <ClInclude Include="..\shaders\solid_frag.h" />
+    <ClInclude Include="..\shaders\solid_vert.h" />
+    <ClInclude Include="..\shaders\texture_alphamask_color_frag.h" />
+    <ClInclude Include="..\shaders\texture_alphamask_color_vert.h" />
+    <ClInclude Include="..\shaders\texture_color_frag.h" />
+    <ClInclude Include="..\shaders\texture_color_highlight_frag.h" />
+    <ClInclude Include="..\shaders\texture_color_highlight_vert.h" />
+    <ClInclude Include="..\shaders\texture_color_vert.h" />
+    <ClInclude Include="..\shaders\texture_lightmap_color_frag.h" />
+    <ClInclude Include="..\shaders\texture_lightmap_color_vert.h" />
+    <ClInclude Include="..\shaders\water_frag.h" />
+    <ClInclude Include="..\shaders\water_vert.h" />
+    <ClInclude Include="..\src\core\Allocator.h" />
+    <ClInclude Include="..\src\core\BasicTest.h" />
+    <ClInclude Include="..\src\core\Convert.h" />
+    <ClInclude Include="..\src\core\core.h" />
+    <ClInclude Include="..\src\core\core_classes.h" />
+    <ClInclude Include="..\src\core\core_platform.h" />
+    <ClInclude Include="..\src\core\HollowsAllocationPolicy.h" />
+    <ClInclude Include="..\src\core\Lazy.h" />
+    <ClInclude Include="..\src\core\MarchingSquares.h" />
+    <ClInclude Include="..\src\core\Math.h" />
+    <ClInclude Include="..\src\core\Matrix.h" />
+    <ClInclude Include="..\src\core\Path.h" />
+    <ClInclude Include="..\src\core\StaticArray.h" />
+    <ClInclude Include="..\src\core\SystemAllocationPolicy.h" />
+    <ClInclude Include="..\src\core\Vector.h" />
+    <ClInclude Include="..\src\drawing\Batcher.h" />
+    <ClInclude Include="..\src\drawing\Camera.h" />
+    <ClInclude Include="..\src\drawing\drawing_classes.h" />
+    <ClInclude Include="..\src\drawing\drawing_platform.h" />
+    <ClInclude Include="..\src\drawing\drawing_references.h" />
+    <ClInclude Include="..\src\drawing\PostProcess.h" />
+    <ClInclude Include="..\src\drawing\Renderer2d.h" />
+    <ClInclude Include="..\src\drawing\RenderItem2d.h" />
+    <ClInclude Include="..\src\drawing\RenderMesh2d.h" />
+    <ClInclude Include="..\src\drawing\WaterRenderer.h" />
+    <ClInclude Include="..\src\entities\Aabb2dComponent.h" />
+    <ClInclude Include="..\src\entities\Component.h" />
+    <ClInclude Include="..\src\entities\DummyEntitiesFilter.h" />
+    <ClInclude Include="..\src\entities\entities.h" />
+    <ClInclude Include="..\src\entities\EntitiesFilter.h" />
+    <ClInclude Include="..\src\entities\EntitiesWorld.h" />
+    <ClInclude Include="..\src\entities\entities_classes.h" />
+    <ClInclude Include="..\src\entities\entities_platform.h" />
+    <ClInclude Include="..\src\entities\entities_references.h" />
+    <ClInclude Include="..\src\entities\Entity.h" />
+    <ClInclude Include="..\src\entities\MatrixTransformComponent.h" />
+    <ClInclude Include="..\src\entities\QuadtreeEntitiesFilter.h" />
+    <ClInclude Include="..\src\entities\Render2dComponent.h" />
+    <ClInclude Include="..\src\entities\RenderSystem2d.h" />
+    <ClInclude Include="..\src\entities\System.h" />
+    <ClInclude Include="..\src\entities\Transform2dComponent.h" />
+    <ClInclude Include="..\src\entities\TransformSystem2d.h" />
+    <ClInclude Include="..\src\geometry\Aabb2d.h" />
+    <ClInclude Include="..\src\geometry\Frustum.h" />
+    <ClInclude Include="..\src\geometry\geometry.h" />
+    <ClInclude Include="..\src\geometry\geometry_classes.h" />
+    <ClInclude Include="..\src\geometry\geometry_platform.h" />
+    <ClInclude Include="..\src\geometry\geometry_references.h" />
+    <ClInclude Include="..\src\geometry\Quadtree2d.h" />
+    <ClInclude Include="..\src\geometry\Quadtree2dItem.h" />
+    <ClInclude Include="..\src\geometry\Quadtree2dNode.h" />
+    <ClInclude Include="..\src\graphics\AttributeInfo.h" />
+    <ClInclude Include="..\src\graphics\Attributes.h" />
+    <ClInclude Include="..\src\graphics\Batcher.h" />
+    <ClInclude Include="..\src\graphics\Color.h" />
+    <ClInclude Include="..\src\graphics\config_defines.h" />
+    <ClInclude Include="..\src\graphics\Effect.h" />
+    <ClInclude Include="..\src\graphics\EffectBase.h" />
+    <ClInclude Include="..\src\graphics\EffectConstant.h" />
+    <ClInclude Include="..\src\graphics\EffectRenderDepth.h" />
+    <ClInclude Include="..\src\graphics\Effects.h" />
+    <ClInclude Include="..\src\graphics\EffectsBasic.h" />
+    <ClInclude Include="..\src\graphics\EffectSolid.h" />
+    <ClInclude Include="..\src\graphics\EffectSolidColor.h" />
+    <ClInclude Include="..\src\graphics\EffectsPostProcess.h" />
+    <ClInclude Include="..\src\graphics\EffectTextureAlphamaskColor.h" />
+    <ClInclude Include="..\src\graphics\EffectTextureColor.h" />
+    <ClInclude Include="..\src\graphics\EffectTextureColorHighlight.h" />
+    <ClInclude Include="..\src\graphics\EffectTextureLightMapColor.h" />
+    <ClInclude Include="..\src\graphics\EffectWater.h" />
+    <ClInclude Include="..\src\graphics\Errors.h" />
+    <ClInclude Include="..\src\graphics\graphics.h" />
+    <ClInclude Include="..\src\graphics\GraphicsDevice.h" />
+    <ClInclude Include="..\src\graphics\graphics_classes.h" />
+    <ClInclude Include="..\src\graphics\graphics_platform.h" />
+    <ClInclude Include="..\src\graphics\graphics_references.h" />
+    <ClInclude Include="..\src\graphics\Image2dData.h" />
+    <ClInclude Include="..\src\graphics\RenderConverter.h" />
+    <ClInclude Include="..\src\graphics\RenderConverterBasic.h" />
+    <ClInclude Include="..\src\graphics\RenderState.h" />
+    <ClInclude Include="..\src\graphics\State.h" />
+    <ClInclude Include="..\src\graphics\StateCompare.h" />
+    <ClInclude Include="..\src\graphics\StaticBatch.h" />
+    <ClInclude Include="..\src\graphics\Texture.h" />
+    <ClInclude Include="..\src\graphics\TextureCubemap.h" />
+    <ClInclude Include="..\src\graphics\TextureImage2d.h" />
+    <ClInclude Include="..\src\graphics\TextureLoader.h" />
+    <ClInclude Include="..\src\graphics\TextureRenderTarget2d.h" />
+    <ClInclude Include="..\src\graphics\TextureRenderTargetDepth2d.h" />
+    <ClInclude Include="..\src\graphics\Uniform.h" />
+    <ClInclude Include="..\src\graphics\UniformInfo.h" />
+    <ClInclude Include="..\src\graphics\Uniforms.h" />
+    <ClInclude Include="..\src\graphics\UniformValue.h" />
+    <ClInclude Include="..\src\graphics\UniformValueCubemap.h" />
+    <ClInclude Include="..\src\graphics\UniformValueFloat.h" />
+    <ClInclude Include="..\src\graphics\UniformValueMatrix.h" />
+    <ClInclude Include="..\src\graphics\UniformValueTexture.h" />
+    <ClInclude Include="..\src\graphics\UniformValueVector3.h" />
+    <ClInclude Include="..\src\graphics\VertexBuffer.h" />
+    <ClInclude Include="..\src\graphics\VertexFormat.h" />
+    <ClInclude Include="..\src\graphics\VertexFormatPosition.h" />
+    <ClInclude Include="..\src\graphics\VertexFormatPositionColor.h" />
+    <ClInclude Include="..\src\graphics\VertexFormatPositionTextureColor.h" />
+    <ClInclude Include="..\src\graphics\VertexFormats.h" />
+    <ClInclude Include="..\src\graphics\VertexFormatsBasic.h" />
+    <ClInclude Include="..\src\navmesh\AStar.h" />
+    <ClInclude Include="..\src\navmesh\Funnel.h" />
+    <ClInclude Include="..\src\navmesh\NavEdges.h" />
+    <ClInclude Include="..\src\navmesh\NavMesh.h" />
+    <ClInclude Include="..\src\navmesh\navmesh_classes.h" />
+    <ClInclude Include="..\src\navmesh\navmesh_platform.h" />
+    <ClInclude Include="..\src\navmesh\navmesh_references.h" />
+    <ClInclude Include="..\src\resources\ContentManager.h" />
+    <ClInclude Include="..\src\resources\ContentProvider.h" />
+    <ClInclude Include="..\src\resources\lpng\png.h" />
+    <ClInclude Include="..\src\resources\lpng\pngconf.h" />
+    <ClInclude Include="..\src\resources\lpng\pngdebug.h" />
+    <ClInclude Include="..\src\resources\lpng\pnginfo.h" />
+    <ClInclude Include="..\src\resources\lpng\pnglibconf.h" />
+    <ClInclude Include="..\src\resources\lpng\pngpriv.h" />
+    <ClInclude Include="..\src\resources\lpng\pngstruct.h" />
+    <ClInclude Include="..\src\resources\resources.h" />
+    <ClInclude Include="..\src\resources\resources_classes.h" />
+    <ClInclude Include="..\src\resources\resources_platform.h" />
+    <ClInclude Include="..\src\resources\resources_references.h" />
+    <ClInclude Include="..\src\spine\runtime\Json.h" />
+    <ClInclude Include="..\src\spine\SpineAnimationState.h" />
+    <ClInclude Include="..\src\spine\SpineAnimationStateData.h" />
+    <ClInclude Include="..\src\spine\SpineSkeleton.h" />
+    <ClInclude Include="..\src\spine\SpineSkeletonAnimation.h" />
+    <ClInclude Include="..\src\spine\SpineSkeletonResource.h" />
+    <ClInclude Include="..\src\spine\spine_classes.h" />
+    <ClInclude Include="..\src\spine\spine_references.h" />
+    <ClInclude Include="..\src_clipper\clipper.hpp" />
+    <ClInclude Include="..\src_poly2tri\common\shapes.h" />
+    <ClInclude Include="..\src_poly2tri\common\utils.h" />
+    <ClInclude Include="..\src_poly2tri\poly2tri.h" />
+    <ClInclude Include="..\src_poly2tri\sweep\advancing_front.h" />
+    <ClInclude Include="..\src_poly2tri\sweep\cdt.h" />
+    <ClInclude Include="..\src_poly2tri\sweep\sweep.h" />
+    <ClInclude Include="..\src_poly2tri\sweep\sweep_context.h" />
+    <ClInclude Include="pch.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\CommonSources\gen\llgePInvoke.cpp" />
+    <ClCompile Include="..\src\core\BasicTest.cpp" />
+    <ClCompile Include="..\src\core\Convert.cpp" />
+    <ClCompile Include="..\src\core\HollowsAllocationPolicy.cpp" />
+    <ClCompile Include="..\src\core\Lazy.cpp" />
+    <ClCompile Include="..\src\core\MarchingSquares.cpp" />
+    <ClCompile Include="..\src\core\Math.cpp" />
+    <ClCompile Include="..\src\core\Matrix.cpp" />
+    <ClCompile Include="..\src\core\Path.cpp" />
+    <ClCompile Include="..\src\core\SystemAllocationPolicy.cpp" />
+    <ClCompile Include="..\src\core\Vector.cpp" />
+    <ClCompile Include="..\src\drawing\Batcher.cpp" />
+    <ClCompile Include="..\src\drawing\Camera.cpp" />
+    <ClCompile Include="..\src\drawing\PostProcess.cpp" />
+    <ClCompile Include="..\src\drawing\Renderer2d.cpp" />
+    <ClCompile Include="..\src\drawing\RenderItem2d.cpp" />
+    <ClCompile Include="..\src\drawing\RenderMesh2d.cpp" />
+    <ClCompile Include="..\src\drawing\WaterRenderer.cpp" />
+    <ClCompile Include="..\src\entities\Aabb2dComponent.cpp" />
+    <ClCompile Include="..\src\entities\Component.cpp" />
+    <ClCompile Include="..\src\entities\DummyEntitiesFilter.cpp" />
+    <ClCompile Include="..\src\entities\EntitiesFilter.cpp" />
+    <ClCompile Include="..\src\entities\EntitiesWorld.cpp" />
+    <ClCompile Include="..\src\entities\Entity.cpp" />
+    <ClCompile Include="..\src\entities\MatrixTransformComponent.cpp" />
+    <ClCompile Include="..\src\entities\QuadtreeEntitiesFilter.cpp" />
+    <ClCompile Include="..\src\entities\Render2dComponent.cpp" />
+    <ClCompile Include="..\src\entities\RenderSystem2d.cpp" />
+    <ClCompile Include="..\src\entities\System.cpp" />
+    <ClCompile Include="..\src\entities\Transform2dComponent.cpp" />
+    <ClCompile Include="..\src\entities\TransformSystem2d.cpp" />
+    <ClCompile Include="..\src\exports\llge.cpp" />
+    <ClCompile Include="..\src\exports\llgeDrawing.cpp" />
+    <ClCompile Include="..\src\exports\llgeEntities.cpp" />
+    <ClCompile Include="..\src\exports\llgeGeometry.cpp" />
+    <ClCompile Include="..\src\exports\llgeGraphics.cpp" />
+    <ClCompile Include="..\src\exports\llgeResources.cpp" />
+    <ClCompile Include="..\src\geometry\Aabb2d.cpp" />
+    <ClCompile Include="..\src\geometry\Frustum.cpp" />
+    <ClCompile Include="..\src\geometry\Quadtree2d.cpp" />
+    <ClCompile Include="..\src\geometry\Quadtree2dNode.cpp" />
+    <ClCompile Include="..\src\graphics\AttributeInfo.cpp" />
+    <ClCompile Include="..\src\graphics\Attributes.cpp" />
+    <ClCompile Include="..\src\graphics\Color.cpp" />
+    <ClCompile Include="..\src\graphics\Effect.cpp" />
+    <ClCompile Include="..\src\graphics\EffectBase.cpp" />
+    <ClCompile Include="..\src\graphics\EffectConstant.cpp" />
+    <ClCompile Include="..\src\graphics\EffectRenderDepth.cpp" />
+    <ClCompile Include="..\src\graphics\Effects.cpp" />
+    <ClCompile Include="..\src\graphics\EffectsBasic.cpp" />
+    <ClCompile Include="..\src\graphics\EffectSolid.cpp" />
+    <ClCompile Include="..\src\graphics\EffectSolidColor.cpp" />
+    <ClCompile Include="..\src\graphics\EffectsPostProcess.cpp" />
+    <ClCompile Include="..\src\graphics\EffectTextureAlphamaskColor.cpp" />
+    <ClCompile Include="..\src\graphics\EffectTextureColor.cpp" />
+    <ClCompile Include="..\src\graphics\EffectTextureColorHighlight.cpp" />
+    <ClCompile Include="..\src\graphics\EffectTextureLightMapColor.cpp" />
+    <ClCompile Include="..\src\graphics\EffectWater.cpp" />
+    <ClCompile Include="..\src\graphics\Errors.cpp" />
+    <ClCompile Include="..\src\graphics\GraphicsDevice.cpp" />
+    <ClCompile Include="..\src\graphics\Image2dData.cpp" />
+    <ClCompile Include="..\src\graphics\RenderConverter.cpp" />
+    <ClCompile Include="..\src\graphics\RenderConverterBasic.cpp" />
+    <ClCompile Include="..\src\graphics\RenderState.cpp" />
+    <ClCompile Include="..\src\graphics\StaticBatch.cpp" />
+    <ClCompile Include="..\src\graphics\Texture.cpp" />
+    <ClCompile Include="..\src\graphics\TextureCubemap.cpp" />
+    <ClCompile Include="..\src\graphics\TextureImage2d.cpp" />
+    <ClCompile Include="..\src\graphics\TextureLoader.cpp" />
+    <ClCompile Include="..\src\graphics\TextureRenderTarget2d.cpp" />
+    <ClCompile Include="..\src\graphics\TextureRenderTargetDepth2d.cpp" />
+    <ClCompile Include="..\src\graphics\Uniform.cpp" />
+    <ClCompile Include="..\src\graphics\UniformInfo.cpp" />
+    <ClCompile Include="..\src\graphics\Uniforms.cpp" />
+    <ClCompile Include="..\src\graphics\UniformValue.cpp" />
+    <ClCompile Include="..\src\graphics\UniformValueCubemap.cpp" />
+    <ClCompile Include="..\src\graphics\UniformValueFloat.cpp" />
+    <ClCompile Include="..\src\graphics\UniformValueMatrix.cpp" />
+    <ClCompile Include="..\src\graphics\UniformValueTexture.cpp" />
+    <ClCompile Include="..\src\graphics\UniformValueVector3.cpp" />
+    <ClCompile Include="..\src\graphics\VertexBuffer.cpp" />
+    <ClCompile Include="..\src\graphics\VertexFormat.cpp" />
+    <ClCompile Include="..\src\graphics\VertexFormats.cpp" />
+    <ClCompile Include="..\src\graphics\VertexFormatsBasic.cpp" />
+    <ClCompile Include="..\src\navmesh\AStar.cpp" />
+    <ClCompile Include="..\src\navmesh\Funnel.cpp" />
+    <ClCompile Include="..\src\navmesh\NavEdges.cpp" />
+    <ClCompile Include="..\src\navmesh\NavMesh.cpp" />
+    <ClCompile Include="..\src\resources\ContentManager.cpp" />
+    <ClCompile Include="..\src\resources\ContentProviderAndroidAssets.cpp" />
+    <ClCompile Include="..\src\resources\ContentProviderObb.cpp" />
+    <ClCompile Include="..\src\resources\ContentProviderWindows.cpp" />
+    <ClCompile Include="..\src\resources\lpng\example.c" />
+    <ClCompile Include="..\src\resources\lpng\png.c" />
+    <ClCompile Include="..\src\resources\lpng\pngerror.c" />
+    <ClCompile Include="..\src\resources\lpng\pngget.c" />
+    <ClCompile Include="..\src\resources\lpng\pngmem.c" />
+    <ClCompile Include="..\src\resources\lpng\pngpread.c" />
+    <ClCompile Include="..\src\resources\lpng\pngread.c" />
+    <ClCompile Include="..\src\resources\lpng\pngrio.c" />
+    <ClCompile Include="..\src\resources\lpng\pngrtran.c" />
+    <ClCompile Include="..\src\resources\lpng\pngrutil.c" />
+    <ClCompile Include="..\src\resources\lpng\pngset.c" />
+    <ClCompile Include="..\src\resources\lpng\pngtest.c" />
+    <ClCompile Include="..\src\resources\lpng\pngtrans.c" />
+    <ClCompile Include="..\src\resources\lpng\pngwio.c" />
+    <ClCompile Include="..\src\resources\lpng\pngwrite.c" />
+    <ClCompile Include="..\src\resources\lpng\pngwtran.c" />
+    <ClCompile Include="..\src\resources\lpng\pngwutil.c" />
+    <ClCompile Include="..\src\spine\runtime\Animation.c" />
+    <ClCompile Include="..\src\spine\runtime\AnimationState.c" />
+    <ClCompile Include="..\src\spine\runtime\AnimationStateData.c" />
+    <ClCompile Include="..\src\spine\runtime\Atlas.c" />
+    <ClCompile Include="..\src\spine\runtime\AtlasAttachmentLoader.c" />
+    <ClCompile Include="..\src\spine\runtime\Attachment.c" />
+    <ClCompile Include="..\src\spine\runtime\AttachmentLoader.c" />
+    <ClCompile Include="..\src\spine\runtime\Bone.c" />
+    <ClCompile Include="..\src\spine\runtime\BoneData.c" />
+    <ClCompile Include="..\src\spine\runtime\BoundingBoxAttachment.c" />
+    <ClCompile Include="..\src\spine\runtime\Event.c" />
+    <ClCompile Include="..\src\spine\runtime\EventData.c" />
+    <ClCompile Include="..\src\spine\runtime\extension.c" />
+    <ClCompile Include="..\src\spine\runtime\IkConstraint.c" />
+    <ClCompile Include="..\src\spine\runtime\IkConstraintData.c" />
+    <ClCompile Include="..\src\spine\runtime\Json.c" />
+    <ClCompile Include="..\src\spine\runtime\MeshAttachment.c" />
+    <ClCompile Include="..\src\spine\runtime\RegionAttachment.c" />
+    <ClCompile Include="..\src\spine\runtime\Skeleton.c" />
+    <ClCompile Include="..\src\spine\runtime\SkeletonBounds.c" />
+    <ClCompile Include="..\src\spine\runtime\SkeletonData.c" />
+    <ClCompile Include="..\src\spine\runtime\SkeletonJson.c" />
+    <ClCompile Include="..\src\spine\runtime\Skin.c" />
+    <ClCompile Include="..\src\spine\runtime\Slot.c" />
+    <ClCompile Include="..\src\spine\runtime\SlotData.c" />
+    <ClCompile Include="..\src\spine\runtime\TransformConstraint.c" />
+    <ClCompile Include="..\src\spine\runtime\TransformConstraintData.c" />
+    <ClCompile Include="..\src\spine\runtime\WeightedMeshAttachment.c" />
+    <ClCompile Include="..\src\spine\spine.cpp" />
+    <ClCompile Include="..\src\spine\SpineAnimationState.cpp" />
+    <ClCompile Include="..\src\spine\SpineAnimationStateData.cpp" />
+    <ClCompile Include="..\src\spine\SpineSkeleton.cpp" />
+    <ClCompile Include="..\src\spine\SpineSkeletonAnimation.cpp" />
+    <ClCompile Include="..\src\spine\SpineSkeletonResource.cpp" />
+    <ClCompile Include="..\src_clipper\clipper.cpp" />
+    <ClCompile Include="..\src_poly2tri\common\shapes.cc" />
+    <ClCompile Include="..\src_poly2tri\sweep\advancing_front.cc" />
+    <ClCompile Include="..\src_poly2tri\sweep\cdt.cc" />
+    <ClCompile Include="..\src_poly2tri\sweep\sweep.cc" />
+    <ClCompile Include="..\src_poly2tri\sweep\sweep_context.cc" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets" />
+</Project>

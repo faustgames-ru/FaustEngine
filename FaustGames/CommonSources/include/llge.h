@@ -3,9 +3,11 @@
 
 #ifdef __ANDROID__
 #include <jni.h>
+#include <math.h>
 #define API_CALL JNICALL
 #define DLLEXPORT JNIEXPORT
-#define OVERRIDE
+#define OVERRIDE override
+#define nullptr 0
 #else 
 #ifdef __APPLE__
 #define API_CALL
@@ -119,6 +121,11 @@ namespace llge
 		virtual void API_CALL create() = 0;
 		virtual void API_CALL cleanup() = 0;
 		virtual void API_CALL dispose() = 0;
+
+		virtual int API_CALL getVerticesCount() = 0;
+		virtual IntPtr API_CALL getVertices() = 0;
+		virtual int API_CALL getIndicesCount() = 0;
+		virtual IntPtr API_CALL getIndices() = 0;
 	};
 
 	class IRenderTarget2d : IBaseObject
@@ -210,6 +217,25 @@ namespace llge
 
 	/// geometry
 
+	class IMarchingSquares : IBaseObject
+	{
+	public:
+		virtual void API_CALL build(IntPtr boolPoints, int w, int h) = 0;
+		virtual void API_CALL collectEdges() = 0;
+		virtual void API_CALL simplifyPathes() = 0;
+		virtual void API_CALL triangulatePathes() = 0;
+		virtual IntPtr API_CALL getEdges() = 0;
+		virtual int API_CALL getEdgesCount() = 0;
+		virtual int API_CALL getPathesCount() = 0;
+		virtual int API_CALL getPathCount(int pathIndex) = 0;
+		virtual IntPtr API_CALL getPath(int pathIndex) = 0;
+		virtual int API_CALL getVerticesCount() = 0;
+		virtual IntPtr API_CALL getVertices() = 0;
+		virtual int API_CALL getIndicesCount() = 0;
+		virtual IntPtr API_CALL getIndices() = 0;
+		virtual void API_CALL dispose() = 0;
+	};
+
 	class IQuadTree : IBaseObject
 	{
 	public:
@@ -226,6 +252,7 @@ namespace llge
 	{
 	public:
 		virtual IQuadTree * API_CALL createQuadTree() = 0;
+		virtual IMarchingSquares * API_CALL createMarchingSquares() = 0;
 		virtual void API_CALL dispose() = 0;
 	};
 
@@ -461,6 +488,8 @@ namespace llge
 	class IObbContentProvider : IBaseObject
 	{
 	public:
+		virtual void API_CALL refreshAssetsManager(void *jniEnv, void *assetsManager) = 0;
+		virtual void API_CALL openAssets(void *jniEnv, void *assetsManager) = 0;
 		virtual void API_CALL openObbFile(const char *obbFile) = 0;
 		virtual void API_CALL closeObbFile() = 0;
 		virtual bool API_CALL existsContent(const char *name) = 0;

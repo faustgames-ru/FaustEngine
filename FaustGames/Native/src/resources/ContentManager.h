@@ -64,7 +64,7 @@ namespace resources
 		
 		virtual llge::IContentAtlasMap * API_CALL getContentAtlasMap();
 		virtual void API_CALL replaceSeparator(bool value);
-		virtual void API_CALL setObbFile(char * obbFile);
+		//virtual void API_CALL setObbFile(char * obbFile);
 		virtual int API_CALL registerImage(char * name);
 		virtual void API_CALL reloadImages();
 		virtual void API_CALL startLoad();

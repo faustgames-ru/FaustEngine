@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="res">
+      <UniqueIdentifier>e7749cda-245c-4063-89f7-6f8eebd49268</UniqueIdentifier>
+    </Filter>
+    <Filter Include="res\values">
+      <UniqueIdentifier>2a530e7f-55fa-4d7c-bd46-c9c501a0aa8b</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{e44f9dff-d0aa-45cb-b8b2-7bb6a32fd7f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\com">
+      <UniqueIdentifier>{3111f08b-04d9-430a-963c-387353ae6b13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\com\faustgames">
+      <UniqueIdentifier>{8baec67e-a154-43a7-9be4-e56d9c186c2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\com\faustgames\test_assets_resources">
+      <UniqueIdentifier>{f52a813d-17e9-4cf7-8283-32d50493decf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="jni">
+      <UniqueIdentifier>{25c422fa-2707-4fca-9f8d-8a7eb22b3679}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="jni\resources">
+      <UniqueIdentifier>{46b5cf54-49ea-4bb2-b396-f5bb10421c26}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidBuild Include="AndroidManifest.xml" />
+    <AndroidBuild Include="res\values\strings.xml">
+      <Filter>res\values</Filter>
+    </AndroidBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <JCompile Include="src\com\faustgames\test_assets_resources\test_assets_resources.java">
+      <Filter>src\com\faustgames\test_assets_resources</Filter>
+    </JCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="jni\test_assets_resources.cpp">
+      <Filter>jni</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Native\src\resources\ContentProviderObb.cpp">
+      <Filter>jni\resources</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Native\src\resources\ContentProvider.h">
+      <Filter>jni\resources</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

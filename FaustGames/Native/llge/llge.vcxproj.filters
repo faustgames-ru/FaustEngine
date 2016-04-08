@@ -413,27 +413,6 @@
     <ClInclude Include="..\src\resources\zlib\zutil.h">
       <Filter>resources\zlib</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\resources\lpng\png.h">
-      <Filter>resources\lpng</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\resources\lpng\pngconf.h">
-      <Filter>resources\lpng</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\resources\lpng\pngdebug.h">
-      <Filter>resources\lpng</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\resources\lpng\pnginfo.h">
-      <Filter>resources\lpng</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\resources\lpng\pnglibconf.h">
-      <Filter>resources\lpng</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\resources\lpng\pngpriv.h">
-      <Filter>resources\lpng</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\resources\lpng\pngstruct.h">
-      <Filter>resources\lpng</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\resources\ContentManager.h">
       <Filter>resources</Filter>
     </ClInclude>
@@ -833,9 +812,6 @@
     </ClCompile>
     <ClCompile Include="..\src\resources\zlib\zutil.c">
       <Filter>resources\zlib</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\resources\lpng\example.c">
-      <Filter>resources\lpng</Filter>
     </ClCompile>
     <ClCompile Include="..\src\resources\lpng\png.c">
       <Filter>resources\lpng</Filter>

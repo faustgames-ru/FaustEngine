@@ -123,7 +123,6 @@ namespace resources
         fclose(_obbFile);
 	}
 
-
 	IAndroidContentProvider* ContentProvider::AndroidContentProvider(nullptr);
 
 #ifdef __ANDROID__

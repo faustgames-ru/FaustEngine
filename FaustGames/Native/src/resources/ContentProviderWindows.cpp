@@ -28,5 +28,37 @@ namespace resources
 		fclose(_file);
 	}
 
+
+	void AssetsContentProvider::setup(void* env, void* assetsManager, const char* manifestFile)
+	{
+	}
+
+	void AssetsContentProvider::refresh(void* env, void* assetsManager)
+	{
+	}
+
+	bool AssetsContentProvider::existContent(const char* name)
+	{
+		return false;
+	}
+
+	void AssetsContentProvider::openContent(const char* name)
+	{
+	}
+
+	int AssetsContentProvider::read(void* buffer, int bytesLimit)
+	{
+		return 0;
+	}
+
+	int AssetsContentProvider::getContentSize()
+	{
+		return 0;
+	}
+
+	void AssetsContentProvider::closeContent()
+	{
+	}
+
 #endif /*WIN32*/
 }

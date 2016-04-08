@@ -4,6 +4,7 @@
 #include "psimpl.h"
 #include "Math.h"
 #include "../../src_poly2tri/sweep/cdt.h"
+#include <iterator>
 
 namespace core
 {

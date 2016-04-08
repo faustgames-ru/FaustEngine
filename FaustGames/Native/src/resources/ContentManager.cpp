@@ -137,7 +137,7 @@ namespace resources
 
 
 		const unsigned int stride = png_get_rowbytes(m_PngPtr, m_InfoPtr);
-		if ((m_Height > 2048) || (m_Width > 2048))
+		if (m_Height > ImageMaxHeight || m_Width > ImageMaxWidth)
 		{
 			png_destroy_read_struct(&m_PngPtr, &m_InfoPtr, 0);
 			//throw ref new Exception(-1, "Error during init_io");
@@ -151,8 +151,14 @@ namespace resources
 		}
 		else
 		{
+			int step = m_Width * m_Channels;
+			int newStep = (step / 4) * 4;
+			if (newStep < step)
+			{
+				step = newStep + 4;
+			}
 			for (size_t i = 0; i < (size_t)m_Height; i++)
-				m_RowPtrs[i] = (png_byte*)_image->Pixels + i*m_Width*m_Channels;
+				m_RowPtrs[i] = (png_byte*)_image->Pixels + i*step;
 		}
 
 		png_read_image(m_PngPtr, m_RowPtrs);

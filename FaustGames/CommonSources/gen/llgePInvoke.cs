@@ -1920,34 +1920,6 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private IntPtr createSpineResource ();
-		static public PathMesh CreatePathMesh ()
-		{
-			return new PathMesh{ ClassInstance = createPathMesh() };
-		}
-		
-		[DllImport(Version.Dll)]
-		static extern private IntPtr createPathMesh ();
-		static public NavMesh CreateNavMesh ()
-		{
-			return new NavMesh{ ClassInstance = createNavMesh() };
-		}
-		
-		[DllImport(Version.Dll)]
-		static extern private IntPtr createNavMesh ();
-		static public NavMeshConfig CreateNavMeshConfig ()
-		{
-			return new NavMeshConfig{ ClassInstance = createNavMeshConfig() };
-		}
-		
-		[DllImport(Version.Dll)]
-		static extern private IntPtr createNavMeshConfig ();
-		static public NavPath CreateNavPath ()
-		{
-			return new NavPath{ ClassInstance = createNavPath() };
-		}
-		
-		[DllImport(Version.Dll)]
-		static extern private IntPtr createNavPath ();
 	}
 	
 }

@@ -9,6 +9,7 @@ uniform sampler2D lightmap;
 varying vec4 _color;
 varying vec2 _textureCoords;
 varying vec2 _lightmapCoords;
+varying float fogFactor;
 
 void main()
 {
@@ -17,5 +18,6 @@ void main()
 	lightColor.rgb *= 2.0;
 	lightColor.a = 1.0;
 	textureColor = textureColor*lightColor*_color;
+	//textureColor.xyz = mix(textureColor.xyz, vec3(1.0,1.0,1.0), fogFactor);
 	gl_FragColor = textureColor;
 }

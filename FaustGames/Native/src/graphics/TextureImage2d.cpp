@@ -270,7 +270,7 @@ namespace graphics
 
 		if (TraceTriangles)
 		{
-			traceTriangles(width, height, format, pixels);
+			//traceTriangles(width, height, format, pixels);
 		}
 	}
 

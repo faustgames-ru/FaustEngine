@@ -105,6 +105,11 @@ namespace core
 		return v0 < v1 ? v0 : v1;
 	}
 
+	float Math::exp(float v)
+	{
+		return ::exp(v);
+	}
+
 	bool Math::equals(float a, float b, float epsilon)
 	{
 		float d = a - b;

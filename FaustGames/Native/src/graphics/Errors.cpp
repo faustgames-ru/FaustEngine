@@ -1,5 +1,7 @@
 #include "Errors.h"
 
+//#define OGL_ERRORS_CHECK
+
 namespace graphics
 {
 	const char * Errors::getActionName(Errors::e actionType)
@@ -17,6 +19,7 @@ namespace graphics
 
 	void Errors::check(const char* errorText)
 	{
+#ifdef OGL_ERRORS_CHECK
 		GLenum error(GL_NO_ERROR);
 		while ((error = glGetError()) != GL_NO_ERROR)
 		{
@@ -31,12 +34,14 @@ namespace graphics
 
 			//throw std::exception();
 		}
+#endif
 	}
 	
 	void Errors::check(Errors::e actionType)
 	{
 		
-//#ifdef _DEBUG
+#ifdef OGL_ERRORS_CHECK
+
 		GLenum error(GL_NO_ERROR);
 		if ((error = glGetError()) != GL_NO_ERROR) 
 		{
@@ -63,7 +68,7 @@ namespace graphics
 			
 			//throw std::exception();
 		}
-//#endif
+#endif
 		
 	}
 

@@ -20,6 +20,7 @@ namespace graphics
 		static float getGf(unsigned int value);
 		static float getBf(unsigned int value);
 		static float getAf(unsigned int value);
+		static unsigned int lerp(unsigned int from, unsigned int to, float u);
 	protected:
 	private:
 	};

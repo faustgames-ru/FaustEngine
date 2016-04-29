@@ -681,6 +681,26 @@ namespace llge
 		return classInstance->getY();
 	}
 	
+	extern "C" DLLEXPORT float API_CALL llge_SpineSkeleton_getBoundsVertexX (ISpineSkeleton * classInstance, int boundsIndex, int vertexIndex)
+	{
+		return classInstance->getBoundsVertexX(boundsIndex, vertexIndex);
+	}
+	
+	extern "C" DLLEXPORT float API_CALL llge_SpineSkeleton_getBoundsVertexY (ISpineSkeleton * classInstance, int boundsIndex, int vertexIndex)
+	{
+		return classInstance->getBoundsVertexY(boundsIndex, vertexIndex);
+	}
+	
+	extern "C" DLLEXPORT int API_CALL llge_SpineSkeleton_getBoundsVerticesCount (ISpineSkeleton * classInstance, int boundsIndex)
+	{
+		return classInstance->getBoundsVerticesCount(boundsIndex);
+	}
+	
+	extern "C" DLLEXPORT int API_CALL llge_SpineSkeleton_getBoundsCount (ISpineSkeleton * classInstance)
+	{
+		return classInstance->getBoundsCount();
+	}
+	
 	extern "C" DLLEXPORT ISpineSkeletonBone * API_CALL llge_SpineSkeleton_getBone (ISpineSkeleton * classInstance, int index)
 	{
 		return classInstance->getBone(index);

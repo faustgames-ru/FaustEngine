@@ -1141,6 +1141,34 @@ namespace llge
 	public class SpineSkeleton
 	{
 		public IntPtr ClassInstance;
+		public float GetBoundsVertexX (int boundsIndex, int vertexIndex)
+		{
+			return llge_SpineSkeleton_getBoundsVertexX(ClassInstance, boundsIndex, vertexIndex);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private float llge_SpineSkeleton_getBoundsVertexX (IntPtr classInstance, int boundsIndex, int vertexIndex);
+		public float GetBoundsVertexY (int boundsIndex, int vertexIndex)
+		{
+			return llge_SpineSkeleton_getBoundsVertexY(ClassInstance, boundsIndex, vertexIndex);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private float llge_SpineSkeleton_getBoundsVertexY (IntPtr classInstance, int boundsIndex, int vertexIndex);
+		public int GetBoundsVerticesCount (int boundsIndex)
+		{
+			return llge_SpineSkeleton_getBoundsVerticesCount(ClassInstance, boundsIndex);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private int llge_SpineSkeleton_getBoundsVerticesCount (IntPtr classInstance, int boundsIndex);
+		public int GetBoundsCount ()
+		{
+			return llge_SpineSkeleton_getBoundsCount(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private int llge_SpineSkeleton_getBoundsCount (IntPtr classInstance);
 		public SpineSkeletonBone GetBone (int index)
 		{
 			return new SpineSkeletonBone{ ClassInstance = llge_SpineSkeleton_getBone(ClassInstance, index) };

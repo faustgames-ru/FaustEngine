@@ -364,6 +364,10 @@ namespace llge
 	class ISpineSkeleton : IBaseObject
 	{
 	public:
+		virtual float API_CALL getBoundsVertexX(int boundsIndex, int vertexIndex) = 0;
+		virtual float API_CALL getBoundsVertexY(int boundsIndex, int vertexIndex) = 0;
+		virtual int API_CALL getBoundsVerticesCount(int boundsIndex) = 0;
+		virtual int API_CALL getBoundsCount() = 0;
 		virtual ISpineSkeletonBone* API_CALL getBone(int index) = 0;
 		virtual int API_CALL getBonesCount() = 0;
 		virtual void API_CALL setTransform(void *floatMatrix) = 0;

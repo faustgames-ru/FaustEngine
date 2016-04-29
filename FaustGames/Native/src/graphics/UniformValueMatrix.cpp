@@ -11,7 +11,7 @@ namespace graphics
 	void UniformValueMatrix::setValue(const core::MatrixContainer &value)
 	{
 		_equal = _value.id == value.id;
-		if (_equal) return;
+		//if (_equal) return;
 		_value.Value = value.Value;
 		_value.id = value.id;
 		_applyMask = 0;
@@ -19,8 +19,8 @@ namespace graphics
 	void UniformValueMatrix::apply(Uniform *uniform)
 	{
 		//if (_equal) return;
-		unsigned int shaderMask = uniform->getShaderMask();
-		if ((_applyMask & shaderMask) != 0) return;
+		unsigned int shaderMask = uniform->getShaderMask();		
+		if ((_applyMask & shaderMask) != 0) return;		
 		_applyMask |= shaderMask;
 		const float * data = _value.Value.getData();
 		glUniformMatrix4fv(uniform->getHandle(), 1, false, data);

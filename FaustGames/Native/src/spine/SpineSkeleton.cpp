@@ -124,6 +124,7 @@ namespace spine
 
 	void SpineSkeleton::renderEx(llge::IBatch2d* batch, IntPtr effectConfig, llge::GraphicsEffects effect)
 	{
+		_bounds.clear();
 		drawing::Batcher* batcher = (drawing::Batcher*)batch->getNativeInstance();
 		spSkeleton *s = (spSkeleton *)_spSkeleton;
 		geometry::Aabb2d aabb;
@@ -164,8 +165,11 @@ namespace spine
 			}
 			case SP_ATTACHMENT_BOUNDING_BOX:
 			{
-				//spBoundingBoxAttachment * boundingBox = SUB_CAST(spBoundingBoxAttachment, slot->attachment);
-				//spBoundingBoxAttachment_computeWorldVertices(boundingBox, slot->bone, _mesh.Vertices);
+				spBoundingBoxAttachment * boundingBox = SUB_CAST(spBoundingBoxAttachment, slot->attachment);
+				_bounds.push_back(SpineSkeletonBounds());
+				SpineSkeletonBounds& bounds = _bounds.back();
+				spBoundingBoxAttachment_computeWorldVertices(boundingBox, slot->bone, bounds.vertices);
+				bounds.count = boundingBox->verticesCount;
 				break;
 			}
 			case SP_ATTACHMENT_MESH:
@@ -221,6 +225,26 @@ namespace spine
 		cleanup();
 	}
 
+	float SpineSkeleton::getBoundsVertexX(int boundsIndex, int vertexIndex)
+	{
+		return _bounds[boundsIndex].vertices[vertexIndex*2+0];
+	}
+
+	float SpineSkeleton::getBoundsVertexY(int boundsIndex, int vertexIndex)
+	{
+		return _bounds[boundsIndex].vertices[vertexIndex*2 + 1];
+	}
+
+	int SpineSkeleton::getBoundsVerticesCount(int boundsIndex)
+	{
+		return _bounds[boundsIndex].count / 2;
+	}
+
+	int SpineSkeleton::getBoundsCount()
+	{
+		return _bounds.size();
+	}
+
 	llge::ISpineSkeletonBone* SpineSkeleton::getBone(int index)
 	{
 		return _bones[index];
@@ -242,6 +266,7 @@ namespace spine
 
 	void SpineSkeleton::updateAabb()
 	{		
+		_bounds.clear();
 		spSkeleton *s = (spSkeleton *)_spSkeleton;
 		geometry::Aabb2d aabb;
 		for (int i = 0; i < s->slotsCount; i++)
@@ -263,8 +288,11 @@ namespace spine
 				}
 				case SP_ATTACHMENT_BOUNDING_BOX:
 				{
-					//spBoundingBoxAttachment * boundingBox = SUB_CAST(spBoundingBoxAttachment, slot->attachment);
-					//spBoundingBoxAttachment_computeWorldVertices(boundingBox, slot->bone, _mesh.Vertices);
+					spBoundingBoxAttachment * boundingBox = SUB_CAST(spBoundingBoxAttachment, slot->attachment);
+					_bounds.push_back(SpineSkeletonBounds());
+					SpineSkeletonBounds& bounds = _bounds.back();
+					spBoundingBoxAttachment_computeWorldVertices(boundingBox, slot->bone, bounds.vertices);
+					bounds.count = boundingBox->verticesCount;
 					break;
 				}
 				case SP_ATTACHMENT_MESH:

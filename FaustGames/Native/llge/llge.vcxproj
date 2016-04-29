@@ -126,6 +126,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;LLGE_EXPORTS;LIBPNG_EXPORTS;_CRT_SECURE_NO_WARNINGS;D_SCL_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>..\include;..\..\CommonSources\include;..\src\spine\runtime;..\src\resources\zlib</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

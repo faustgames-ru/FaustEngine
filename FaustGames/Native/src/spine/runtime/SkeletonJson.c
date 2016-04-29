@@ -204,7 +204,8 @@ static spAnimation* _spSkeletonJson_readAnimation (spSkeletonJson* self, Json* r
 
 			} else {
 				int isScale = strcmp(timelineArray->name, "scale") == 0;
-				if (isScale || strcmp(timelineArray->name, "translate") == 0) {
+				int isShear = strcmp(timelineArray->name, "shear") == 0;
+				if (isScale || isShear || strcmp(timelineArray->name, "translate") == 0 ) {
 					float scale = isScale ? 1 : self->scale;
 					spTranslateTimeline *timeline =
 							isScale ? spScaleTimeline_create(timelineArray->size) : spTranslateTimeline_create(timelineArray->size);

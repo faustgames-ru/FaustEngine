@@ -16,11 +16,22 @@ namespace spine
 		void *_spBone;
 	};
 
+	class SpineSkeletonBounds
+	{
+	public:
+		float vertices[128];
+		int count;
+	};
+
 	class SpineSkeleton : public llge::ISpineSkeleton
 	{
 	public:
 		SpineSkeleton(SpineSkeletonResource *resource, float* transform);
 		~SpineSkeleton();
+		virtual float API_CALL getBoundsVertexX(int boundsIndex, int vertexIndex);
+		virtual float API_CALL getBoundsVertexY(int boundsIndex, int vertexIndex);
+		virtual int API_CALL getBoundsVerticesCount(int boundsIndex);
+		virtual int API_CALL getBoundsCount();
 		virtual llge::ISpineSkeletonBone* API_CALL getBone(int index) OVERRIDE;
 		virtual int API_CALL getBonesCount() OVERRIDE;
 		virtual void API_CALL renderEx(llge::IBatch2d * batch, IntPtr effectConfig, llge::GraphicsEffects effect);
@@ -56,7 +67,8 @@ namespace spine
 		static int _quadIndices[6];
 		static float _uvBuffer[4096];
 		llge::LightingConfig _lightingConfig; // todo: remove
-		std::vector<SpineSkeletonBone *> _bones;
+		std::vector<SpineSkeletonBone *> _bones;		
+		std::vector<SpineSkeletonBounds> _bounds;
 	};
 }
 

@@ -39,7 +39,7 @@ namespace core
 	class MarchingSquaresCases
 	{
 	public:
-		MarchingSquaresEdgeCase Cases[15];
+		MarchingSquaresEdgeCase Cases[16];
 		MarchingSquaresCases();
 	};
 
@@ -50,7 +50,7 @@ namespace core
 		MarchingSquares();
 		virtual void API_CALL build(IntPtr boolPoints, int w, int h) OVERRIDE;
 		virtual void API_CALL collectEdges() OVERRIDE;
-		virtual void API_CALL simplifyPathes() OVERRIDE;
+		virtual void API_CALL simplifyPathes(int tolerance) OVERRIDE;
 		virtual void API_CALL triangulatePathes() OVERRIDE;
 		virtual IntPtr API_CALL getEdges() OVERRIDE;
 		virtual int API_CALL getEdgesCount() OVERRIDE;
@@ -70,8 +70,8 @@ namespace core
 	private:
 		static bool getValue(bool *points, int w, int h, int x, int y);
 		static char getValue(bool l00, bool l01, bool l10, bool l11);
-		void simplifyPath(std::vector<MarchingSquaresPoint> &path) const;
-		void simplifyClosedPath(std::vector<MarchingSquaresPoint> &path) const;
+		void simplifyPath(std::vector<MarchingSquaresPoint> &path, int tolerance) const;
+		void simplifyClosedPath(std::vector<MarchingSquaresPoint> &path, int tolerance) const;
 		int _w;
 		int _h;
 		std::vector<MarchingSquaresEdge> _edges;
@@ -94,6 +94,7 @@ namespace core
 	{
 		MarchingSquaresPoint point;
 		bool parsed;
+		MarchingSquaresNode();
 		std::vector<MarchingSquaresSegment*> segments;
 		std::vector<MarchingSquaresNode*> neighbours;
 	};

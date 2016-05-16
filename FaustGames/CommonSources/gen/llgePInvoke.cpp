@@ -336,9 +336,9 @@ namespace llge
 		classInstance->collectEdges();
 	}
 	
-	extern "C" DLLEXPORT void API_CALL llge_MarchingSquares_simplifyPathes (IMarchingSquares * classInstance)
+	extern "C" DLLEXPORT void API_CALL llge_MarchingSquares_simplifyPathes (IMarchingSquares * classInstance, int tolerance)
 	{
-		classInstance->simplifyPathes();
+		classInstance->simplifyPathes(tolerance);
 	}
 	
 	extern "C" DLLEXPORT void API_CALL llge_MarchingSquares_triangulatePathes (IMarchingSquares * classInstance)

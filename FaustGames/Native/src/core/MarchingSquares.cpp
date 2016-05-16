@@ -238,7 +238,7 @@ namespace core
 		return core::Math::abs(area*0.5);
 	}
 
-	void MarchingSquares::simplifyPathes()
+	void MarchingSquares::simplifyPathes(int tolerance)
 	{
 		/*
 		int maxArea = 0;
@@ -263,7 +263,7 @@ namespace core
 		*/
 		for (uint i = 0; i < _points.size(); i++)
 		{
-			simplifyClosedPath(_points[i]);
+			simplifyClosedPath(_points[i], tolerance);
 		}		
 	}
 
@@ -415,12 +415,11 @@ namespace core
 		return bit0 + (bit1 << 1) + (bit2 << 2) + (bit3 << 3);
 	}
 
-	void MarchingSquares::simplifyPath(std::vector<MarchingSquaresPoint>& path) const
+	void MarchingSquares::simplifyPath(std::vector<MarchingSquaresPoint>& path, int tolerance) const
 	{
-		int tolerance = 8;          // point count tolerance
-		std::vector<int> polyline;   // original polyline, assume not empty 
-		std::vector<int> result0;      // resulting simplified polyline
-		std::vector<int> result1;      // resulting simplified polyline
+		std::vector<int> polyline;  
+		std::vector<int> result0;
+		std::vector<int> result1;
 
 		for (uint i = 0; i < path.size(); i++)
 		{
@@ -441,7 +440,7 @@ namespace core
 		}
 	}
 
-	void MarchingSquares::simplifyClosedPath(std::vector<MarchingSquaresPoint>& path) const
+	void MarchingSquares::simplifyClosedPath(std::vector<MarchingSquaresPoint>& path, int tolerance) const
 	{
 		
 		if (polygonArea(path) < 32 * 32)
@@ -476,8 +475,8 @@ namespace core
 			finish.push_back(path[j]);
 		}
 		finish.push_back(path[0]);
-		simplifyPath(start);
-		simplifyPath(finish);
+		simplifyPath(start, tolerance);
+		simplifyPath(finish, tolerance);
 
 		path.clear();
 		for (j = 0; j < static_cast<int>(start.size()); j++)
@@ -503,5 +502,9 @@ namespace core
 		if (n == n1)
 			return n0;
 		return nullptr;
+	}
+
+	MarchingSquaresNode::MarchingSquaresNode() : parsed(false)
+	{
 	}
 }

@@ -10,7 +10,7 @@ namespace graphics
 	{
 		return &_effect;
 	}
-
+		
 	bool EffectBase::isConfigEqual(const void* c0, const void* c1) const
 	{
 		const char *p0 = static_cast<const char *>(c0);

@@ -593,13 +593,13 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private void llge_MarchingSquares_collectEdges (IntPtr classInstance);
-		public void SimplifyPathes ()
+		public void SimplifyPathes (int tolerance)
 		{
-			llge_MarchingSquares_simplifyPathes(ClassInstance);
+			llge_MarchingSquares_simplifyPathes(ClassInstance, tolerance);
 		}
 		
 		[DllImport(Version.Dll)]
-		static extern private void llge_MarchingSquares_simplifyPathes (IntPtr classInstance);
+		static extern private void llge_MarchingSquares_simplifyPathes (IntPtr classInstance, int tolerance);
 		public void TriangulatePathes ()
 		{
 			llge_MarchingSquares_triangulatePathes(ClassInstance);

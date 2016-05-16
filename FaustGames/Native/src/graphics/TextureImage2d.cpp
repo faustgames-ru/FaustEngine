@@ -75,7 +75,7 @@ namespace graphics
 		core::MarchingSquares marchingSquares;
 		marchingSquares.build(boolPixels, width, height);
 		marchingSquares.collectEdges();
-		marchingSquares.simplifyPathes();
+		marchingSquares.simplifyPathes(8);
 		marchingSquares.triangulatePathes();
 
 		// todo: get triangles

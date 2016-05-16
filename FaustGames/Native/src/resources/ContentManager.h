@@ -34,7 +34,34 @@ namespace resources
 		int Height;
 	};
 
-	typedef std::map<std::string, ContentAtlasRect> ContentAtlasRects;
+	typedef std::map<std::string, ContentAtlasRect> ContentAtlasRects;	
+
+	struct TexturesAtlasRegion
+	{
+		bool Rotated;
+		int X;
+		int Y;
+		int Width;
+		int Height;
+		int PageWidth;
+		int PageHeight;
+		core::Vector2 transform(core::Vector2 origin);
+	};
+
+	class TexturesAtlasPage
+	{
+	public:
+		graphics::TextureImage2d * TextureInstance;
+		int Width;
+		int Height;
+	};
+	
+	class TexturesAtlas
+	{
+	public:
+		std::vector<TexturesAtlasPage *> Pages;
+		graphics::Image2dData * ImageBuffer;
+	};
 
 	class ContentAtlasMap : public llge::IContentAtlasMap
 	{

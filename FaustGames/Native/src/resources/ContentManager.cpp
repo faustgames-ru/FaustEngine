@@ -198,6 +198,9 @@ namespace resources
 				}
 			}
 		}
+
+		/// todo: online pack to atlas
+
 		return _image;
 	}
 
@@ -272,8 +275,10 @@ namespace resources
 			*/
 			graphics::Image2dData * image = loadUnregisteredTexture(_loadEntries[i].fileName.c_str());
 			_loadEntries[i].textureImage->create();
-			if (image)
+			if (image != nullptr)
+			{
 				_loadEntries[i].textureImage->LoadPixels(image->Width, image->Height, (llge::TextureImage2dFormat)image->Format, image->Pixels);
+			}
 		}
 		_loadEntries.clear();
 		for (uint i = 0; i < _disposeEntries.size(); i++)

@@ -1,2 +1,5 @@
-﻿  SkeletonJson.c
+﻿  MarchingSquares.cpp
+c:\_faust\faustengine\faustgames\native\src\core\marchingsquares.cpp(230): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\core\marchingsquares.cpp(238): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\core\marchingsquares.cpp(238): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
   llge.vcxproj -> C:\work\sources\github\moon\Solutions\Debug\llge.dll

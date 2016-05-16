@@ -23,7 +23,7 @@ namespace graphics
         virtual IntPtr API_CALL getTextureImageInstance(){ return this; }
 		virtual ITexture* API_CALL getTexture(){ return this; }
 		virtual void API_CALL LoadPixels(int width, int height, llge::TextureImage2dFormat format, void *pixels);
-		virtual void API_CALL create();
+		virtual void API_CALL create() override;
 		virtual void API_CALL cleanup();
 		virtual void API_CALL dispose(){ delete this; }
 

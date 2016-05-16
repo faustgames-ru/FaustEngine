@@ -222,7 +222,7 @@ namespace llge
 	public:
 		virtual void API_CALL build(IntPtr boolPoints, int w, int h) = 0;
 		virtual void API_CALL collectEdges() = 0;
-		virtual void API_CALL simplifyPathes() = 0;
+		virtual void API_CALL simplifyPathes(int tolerance) = 0;
 		virtual void API_CALL triangulatePathes() = 0;
 		virtual IntPtr API_CALL getEdges() = 0;
 		virtual int API_CALL getEdgesCount() = 0;

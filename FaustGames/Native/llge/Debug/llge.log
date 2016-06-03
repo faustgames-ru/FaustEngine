@@ -1,5 +1,13 @@
-﻿  MarchingSquares.cpp
-c:\_faust\faustengine\faustgames\native\src\core\marchingsquares.cpp(230): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-c:\_faust\faustengine\faustgames\native\src\core\marchingsquares.cpp(238): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-c:\_faust\faustengine\faustgames\native\src\core\marchingsquares.cpp(238): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+﻿  PhysicalShape.cpp
+  Generating Code...
+  Compiling...
+  PhysicalWorld.cpp
+c:\_faust\faustengine\faustgames\native\src\physics\physicalworld.cpp(14): warning C4018: '<': signed/unsigned mismatch
+  PhysicalFixture.cpp
+  PhysicalFactory.cpp
+  PhysicalConverter.cpp
+  PhysicalBody.cpp
+  Generating Code...
+  LINK : C:\work\sources\github\moon\Solutions\Debug\llge.dll not found or not built by the last incremental link; performing full link
+     Creating library C:\work\sources\github\moon\Solutions\Debug\llge.lib and object C:\work\sources\github\moon\Solutions\Debug\llge.exp
   llge.vcxproj -> C:\work\sources\github\moon\Solutions\Debug\llge.dll

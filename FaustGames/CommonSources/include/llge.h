@@ -87,6 +87,26 @@ namespace llge
 		MatrixTransform = 0x8,
 	};
 
+	/// physics enums
+	enum PhysicalBodyType
+	{
+		Static = 0x1,
+		Dynamic = 0x2,
+		Kinematic = 0x3,
+	};
+
+	/// physics structs
+	struct PhysicsFixtureConfig
+	{
+		float density;
+		float friction;
+		float bonce;
+		bool isSensor;
+		uint collidesWith;
+		uint collisionGroup;
+	};
+
+
 	struct EffectConfig
 	{
 		uint texture;
@@ -539,7 +559,60 @@ namespace llge
 		virtual void API_CALL fillPathMesh(float x0, float y0, float x1, float y1, IPathMesh *mesh) = 0;
 		virtual void API_CALL dispose() = 0;
 	};
-	
+
+
+	/// physics
+	class IPhysicalShapePolygon : IBaseObject
+	{
+	public:
+		virtual void API_CALL dispose() = 0;
+	};
+
+	class IPhysicalShapeCircle : IBaseObject
+	{
+	public:
+		virtual void API_CALL dispose() = 0;
+	};
+
+	class IPhysicalFixture : IBaseObject
+	{
+	public:
+	};
+
+	class IPhysicalBody : IBaseObject
+	{
+	public:
+		//virtual float API_CALL getX() = 0;
+		//virtual float API_CALL getY() = 0;
+		//virtual float API_CALL getRotation() = 0;
+		//virtual IPhysicalFixture* API_CALL createCircleFixture(float x, float y, float r, PhysicsFixtureConfig config, IntPtr userData) = 0;
+		//virtual IPhysicalFixture* API_CALL createPolygonFixture(IntPtr vertices2f, int count, PhysicsFixtureConfig config, IntPtr userData) = 0;
+	};
+
+	class IPhysicalFixedJoint : IBaseObject
+	{		
+	};
+
+	class IPhysicalWorld : IBaseObject
+	{
+	public:
+		//virtual IPhysicalFixedJoint* API_CALL createFixedJoint(IPhysicalBody* a, IPhysicalBody* b, float x, float y, float maxForce) = 0;
+		//virtual void API_CALL disposeJoint(IPhysicsFixedJoint* joint) = 0;
+		//virtual IPhysicalBody* API_CALL createBody(PhysicsBodyType type, float x, float y, float rotation, IntPtr userData) = 0;
+		//virtual void API_CALL disposeBody(IPhysicalBody* body) = 0;
+		virtual void API_CALL dispose() = 0;
+	};
+
+	class IPhysicalFactory : IBaseObject
+	{
+	public:
+		//virtual IPhysicalWorld* API_CALL createWorld() = 0;
+		//virtual IPhysicsCircleShape* API_CALL createCircle(float x, float y, float r) = 0;
+		//virtual IPhysicsPolygonShape* API_CALL createPolygon(IntPtr vertices2f, int count) = 0;
+		//virtual void API_CALL dispose() = 0;
+	};
+
+
 	extern "C" DLLEXPORT IBatch2d * API_CALL createBatch2d();
     
 	extern "C" DLLEXPORT ITexture * API_CALL createTextureByID(uint id);

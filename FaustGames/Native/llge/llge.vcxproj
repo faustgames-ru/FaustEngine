@@ -289,6 +289,7 @@
     <ClInclude Include="..\src\physics\PhysicalConverter.h" />
     <ClInclude Include="..\src\physics\PhysicalFactory.h" />
     <ClInclude Include="..\src\physics\PhysicalFixture.h" />
+    <ClInclude Include="..\src\physics\PhysicalJoint.h" />
     <ClInclude Include="..\src\physics\PhysicalShape.h" />
     <ClInclude Include="..\src\physics\PhysicalWorld.h" />
     <ClInclude Include="..\src\physics\physics_classes.h" />
@@ -471,6 +472,7 @@
     <ClCompile Include="..\src\physics\PhysicalConverter.cpp" />
     <ClCompile Include="..\src\physics\PhysicalFactory.cpp" />
     <ClCompile Include="..\src\physics\PhysicalFixture.cpp" />
+    <ClCompile Include="..\src\physics\PhysicalJoint.cpp" />
     <ClCompile Include="..\src\physics\PhysicalShape.cpp" />
     <ClCompile Include="..\src\physics\PhysicalWorld.cpp" />
     <ClCompile Include="..\src\resources\ContentManager.cpp" />

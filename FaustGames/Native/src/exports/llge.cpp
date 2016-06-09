@@ -6,6 +6,7 @@
 #include "../graphics/graphics.h"
 #include "../spine/SpineSkeletonResource.h"
 #include "../navmesh/NavMesh.h"
+#include "../physics/PhysicalFactory.h"
 
 #include <limits>
 
@@ -17,6 +18,12 @@ namespace llge
 	{
         return new spine::SpineSkeletonResource();
 	}
+
+	extern "C" DLLEXPORT IPhysicalFactory * API_CALL createPhysicalFactory(float scaleDimensions, float scaleVelocity)
+	{
+		return new physics::PhysicalFactory(scaleDimensions, scaleVelocity);
+	}
+
     /*
     
     extern "C" DLLEXPORT IPathMesh * API_CALL createPathMesh()

@@ -10,12 +10,32 @@ namespace physics
 	{
 	}
 
+	IntPtr PhysicalShape::getNativeInstance()
+	{
+		return this;
+	}
+
+	void PhysicalShape::dispose()
+	{
+		delete this;
+	}
+
 	b2Shape* PhysicalCircle::getShape()
 	{
 		return &_shape;
 	}
 
+	PhysicalCircle::PhysicalCircle()
+	{
+	}
+
 	PhysicalCircle::PhysicalCircle(float worldX, float worldY, float wolrdR)
+	{
+		_shape.m_p = b2Vec2(worldX, worldY);
+		_shape.m_radius = wolrdR;
+	}
+
+	void PhysicalCircle::setCircle(float worldX, float worldY, float wolrdR)
 	{
 		_shape.m_p = b2Vec2(worldX, worldY);
 		_shape.m_radius = wolrdR;

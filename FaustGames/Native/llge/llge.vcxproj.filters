@@ -767,6 +767,9 @@
     <ClInclude Include="..\src\physics\PhysicalShape.h">
       <Filter>physics</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\physics\PhysicalJoint.h">
+      <Filter>physics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\CommonSources\gen\llgePInvoke.cpp">
@@ -1393,6 +1396,9 @@
       <Filter>physics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\physics\PhysicalShape.cpp">
+      <Filter>physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\physics\PhysicalJoint.cpp">
       <Filter>physics</Filter>
     </ClCompile>
   </ItemGroup>

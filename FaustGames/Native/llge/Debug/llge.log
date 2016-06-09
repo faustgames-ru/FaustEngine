@@ -1,12 +1,135 @@
-﻿  PhysicalShape.cpp
+﻿  PhysicalFixture.cpp
+  PhysicalBody.cpp
+c:\_faust\faustengine\faustgames\native\src\physics\physicalbody.cpp(17): warning C4018: '<': signed/unsigned mismatch
+  llge.cpp
+  llgePInvoke.cpp
   Generating Code...
   Compiling...
+  spine.cpp
+c:\_faust\faustengine\faustgames\native\src\spine\spine.cpp(11): warning C4018: '<': signed/unsigned mismatch
+  SpineSkeletonResource.cpp
+c:\_faust\faustengine\faustgames\native\src\spine\spineskeletonresource.cpp(55): warning C4018: '<': signed/unsigned mismatch
+c:\_faust\faustengine\faustgames\native\src\spine\spineskeletonresource.cpp(61): warning C4018: '<': signed/unsigned mismatch
+c:\_faust\faustengine\faustgames\native\src\spine\spineskeletonresource.cpp(68): warning C4018: '<': signed/unsigned mismatch
+c:\_faust\faustengine\faustgames\native\src\spine\spineskeletonresource.cpp(86): warning C4018: '<': signed/unsigned mismatch
+c:\_faust\faustengine\faustgames\native\src\spine\spineskeletonresource.cpp(91): warning C4018: '<': signed/unsigned mismatch
+c:\_faust\faustengine\faustgames\native\src\spine\spineskeletonresource.cpp(96): warning C4018: '<': signed/unsigned mismatch
+  SpineSkeletonAnimation.cpp
+  SpineSkeleton.cpp
+  SpineAnimationStateData.cpp
+  SpineAnimationState.cpp
+c:\_faust\faustengine\faustgames\native\src\spine\spineanimationstate.cpp(46): warning C4101: 'previousDelta': unreferenced local variable
+  ContentProviderWindows.cpp
+  ContentProviderObb.cpp
+c:\_faust\faustengine\faustgames\native\src\resources\contentproviderobb.cpp(108): warning C4244: 'argument': conversion from 'int64_t' to 'long', possible loss of data
+  ContentManager.cpp
   PhysicalWorld.cpp
 c:\_faust\faustengine\faustgames\native\src\physics\physicalworld.cpp(14): warning C4018: '<': signed/unsigned mismatch
-  PhysicalFixture.cpp
+c:\_faust\faustengine\faustgames\native\src\physics\physicalworld.cpp(21): warning C4018: '<': signed/unsigned mismatch
+  PhysicalShape.cpp
+  PhysicalJoint.cpp
   PhysicalFactory.cpp
+c:\_faust\faustengine\faustgames\native\src\physics\physicalfactory.cpp(80): warning C4018: '<': signed/unsigned mismatch
   PhysicalConverter.cpp
-  PhysicalBody.cpp
+  NavMesh.cpp
+c:\_faust\faustengine\faustgames\native\src\navmesh\navmesh.cpp(369): warning C4018: '<': signed/unsigned mismatch
+c:\_faust\faustengine\faustgames\native\src\navmesh\navmesh.cpp(401): warning C4018: '<': signed/unsigned mismatch
+c:\_faust\faustengine\faustgames\native\src\navmesh\navmesh.cpp(481): warning C4018: '<': signed/unsigned mismatch
+c:\_faust\faustengine\faustgames\native\src\navmesh\navmesh.cpp(514): warning C4018: '<': signed/unsigned mismatch
+  Funnel.cpp
+  AStar.cpp
+  VertexFormats.cpp
+  VertexFormat.cpp
+  VertexBuffer.cpp
+  Generating Code...
+  Compiling...
+  Uniforms.cpp
+  UniformValueVector3.cpp
+  UniformValueTexture.cpp
+  UniformValueMatrix.cpp
+  UniformValueFloat.cpp
+  UniformValueCubemap.cpp
+  UniformValue.cpp
+  UniformInfo.cpp
+  Uniform.cpp
+  TextureRenderTargetDepth2d.cpp
+  TextureRenderTarget2d.cpp
+  TextureLoader.cpp
+  TextureImage2d.cpp
+c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(61): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(61): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(62): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(62): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(63): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(63): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(64): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(64): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(86): warning C4018: '<': signed/unsigned mismatch
+c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(88): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(90): warning C4018: '<': signed/unsigned mismatch
+  TextureCubemap.cpp
+  Texture.cpp
+  StaticBatch.cpp
+  RenderState.cpp
+  RenderConverter.cpp
+  Image2dData.cpp
+  GraphicsDevice.cpp
+  Generating Code...
+  Compiling...
+  Errors.cpp
+  EffectsPostProcess.cpp
+  Effects.cpp
+  EffectWater.cpp
+  EffectTextureLightMapColor.cpp
+  EffectTextureColorHighlight.cpp
+  EffectTextureColor.cpp
+  EffectTextureAlphamaskColor.cpp
+  EffectSolidColor.cpp
+  EffectSolid.cpp
+  EffectRenderDepth.cpp
+  EffectConstant.cpp
+  EffectBase.cpp
+  Effect.cpp
+  Color.cpp
+  Attributes.cpp
+  AttributeInfo.cpp
+  llgeResources.cpp
+  llgeGraphics.cpp
+  llgeGeometry.cpp
+  Generating Code...
+  Compiling...
+  llgeEntities.cpp
+  llgeDrawing.cpp
+  TransformSystem2d.cpp
+  Transform2dComponent.cpp
+  System.cpp
+  RenderSystem2d.cpp
+  Render2dComponent.cpp
+  QuadtreeEntitiesFilter.cpp
+  MatrixTransformComponent.cpp
+  Entity.cpp
+  EntitiesWorld.cpp
+  EntitiesFilter.cpp
+  DummyEntitiesFilter.cpp
+  Component.cpp
+  Aabb2dComponent.cpp
+  WaterRenderer.cpp
+  Renderer2d.cpp
+  RenderMesh2d.cpp
+  RenderItem2d.cpp
+  PostProcess.cpp
+  Generating Code...
+  Compiling...
+  Camera.cpp
+  Batcher.cpp
+c:\_faust\faustengine\faustgames\native\src\drawing\batcher.cpp(70): warning C4018: '<=': signed/unsigned mismatch
+c:\_faust\faustengine\faustgames\native\src\drawing\batcher.cpp(120): warning C4018: '<=': signed/unsigned mismatch
+c:\_faust\faustengine\faustgames\native\src\drawing\batcher.cpp(170): warning C4018: '<=': signed/unsigned mismatch
+c:\_faust\faustengine\faustgames\native\src\drawing\batcher.cpp(218): warning C4101: 'target': unreferenced local variable
+  MarchingSquares.cpp
+c:\_faust\faustengine\faustgames\native\src\core\marchingsquares.cpp(230): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\core\marchingsquares.cpp(238): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\core\marchingsquares.cpp(238): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
   Generating Code...
   LINK : C:\work\sources\github\moon\Solutions\Debug\llge.dll not found or not built by the last incremental link; performing full link
      Creating library C:\work\sources\github\moon\Solutions\Debug\llge.lib and object C:\work\sources\github\moon\Solutions\Debug\llge.exp

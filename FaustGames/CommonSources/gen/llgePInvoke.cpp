@@ -1151,5 +1151,205 @@ namespace llge
 		classInstance->dispose();
 	}
 	
+	extern "C" DLLEXPORT IntPtr API_CALL llge_PhysicalShape_getNativeInstance (IPhysicalShape * classInstance)
+	{
+		return classInstance->getNativeInstance();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_PhysicalShape_dispose (IPhysicalShape * classInstance)
+	{
+		classInstance->dispose();
+	}
+	
+	extern "C" DLLEXPORT IntPtr API_CALL llge_PhysicalFixture_getNativeInstance (IPhysicalFixture * classInstance)
+	{
+		return classInstance->getNativeInstance();
+	}
+	
+	extern "C" DLLEXPORT float API_CALL llge_PhysicalFixture_getDensity (IPhysicalFixture * classInstance)
+	{
+		return classInstance->getDensity();
+	}
+	
+	extern "C" DLLEXPORT float API_CALL llge_PhysicalFixture_getFriction (IPhysicalFixture * classInstance)
+	{
+		return classInstance->getFriction();
+	}
+	
+	extern "C" DLLEXPORT float API_CALL llge_PhysicalFixture_getBonce (IPhysicalFixture * classInstance)
+	{
+		return classInstance->getBonce();
+	}
+	
+	extern "C" DLLEXPORT bool API_CALL llge_PhysicalFixture_isSensor (IPhysicalFixture * classInstance)
+	{
+		return classInstance->isSensor();
+	}
+	
+	extern "C" DLLEXPORT uint API_CALL llge_PhysicalFixture_getCollidesWith (IPhysicalFixture * classInstance)
+	{
+		return classInstance->getCollidesWith();
+	}
+	
+	extern "C" DLLEXPORT uint API_CALL llge_PhysicalFixture_getCollisionGroup (IPhysicalFixture * classInstance)
+	{
+		return classInstance->getCollisionGroup();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_PhysicalFixture_setDensity (IPhysicalFixture * classInstance, float value)
+	{
+		classInstance->setDensity(value);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_PhysicalFixture_setFriction (IPhysicalFixture * classInstance, float value)
+	{
+		classInstance->setFriction(value);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_PhysicalFixture_setBonce (IPhysicalFixture * classInstance, float value)
+	{
+		classInstance->setBonce(value);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_PhysicalFixture_setSensor (IPhysicalFixture * classInstance, bool value)
+	{
+		classInstance->setSensor(value);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_PhysicalFixture_setCollidesWith (IPhysicalFixture * classInstance, uint value)
+	{
+		classInstance->setCollidesWith(value);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_PhysicalFixture_setCollisionGroup (IPhysicalFixture * classInstance, uint value)
+	{
+		classInstance->setCollisionGroup(value);
+	}
+	
+	extern "C" DLLEXPORT IntPtr API_CALL llge_PhysicalBody_getNativeInstance (IPhysicalBody * classInstance)
+	{
+		return classInstance->getNativeInstance();
+	}
+	
+	extern "C" DLLEXPORT float API_CALL llge_PhysicalBody_getVelocityX (IPhysicalBody * classInstance)
+	{
+		return classInstance->getVelocityX();
+	}
+	
+	extern "C" DLLEXPORT float API_CALL llge_PhysicalBody_getVelocityY (IPhysicalBody * classInstance)
+	{
+		return classInstance->getVelocityY();
+	}
+	
+	extern "C" DLLEXPORT float API_CALL llge_PhysicalBody_getX (IPhysicalBody * classInstance)
+	{
+		return classInstance->getX();
+	}
+	
+	extern "C" DLLEXPORT float API_CALL llge_PhysicalBody_getY (IPhysicalBody * classInstance)
+	{
+		return classInstance->getY();
+	}
+	
+	extern "C" DLLEXPORT float API_CALL llge_PhysicalBody_getRotation (IPhysicalBody * classInstance)
+	{
+		return classInstance->getRotation();
+	}
+	
+	extern "C" DLLEXPORT IPhysicalFixture * API_CALL llge_PhysicalBody_createCircleFixture (IPhysicalBody * classInstance, float x, float y, float r, PhysicsFixtureConfig config, IntPtr userData)
+	{
+		return classInstance->createCircleFixture(x, y, r, config, userData);
+	}
+	
+	extern "C" DLLEXPORT IPhysicalFixture * API_CALL llge_PhysicalBody_createBoxFixture (IPhysicalBody * classInstance, float x, float y, float rx, float ry, float rotation, PhysicsFixtureConfig config, IntPtr userData)
+	{
+		return classInstance->createBoxFixture(x, y, rx, ry, rotation, config, userData);
+	}
+	
+	extern "C" DLLEXPORT IPhysicalFixture * API_CALL llge_PhysicalBody_createPolygonFixture (IPhysicalBody * classInstance, IntPtr vertices2f, int count, PhysicsFixtureConfig config, IntPtr userData)
+	{
+		return classInstance->createPolygonFixture(vertices2f, count, config, userData);
+	}
+	
+	extern "C" DLLEXPORT IntPtr API_CALL llge_PhysicalFixedJoint_getNativeInstance (IPhysicalFixedJoint * classInstance)
+	{
+		return classInstance->getNativeInstance();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_PhysicalFixedJoint_setJointTarget (IPhysicalFixedJoint * classInstance, float x, float y)
+	{
+		classInstance->setJointTarget(x, y);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_PhysicalFixedJoint_setJointMaxForce (IPhysicalFixedJoint * classInstance, float value)
+	{
+		classInstance->setJointMaxForce(value);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_PhysicalFixedJoint_setJointFrequency (IPhysicalFixedJoint * classInstance, float value)
+	{
+		classInstance->setJointFrequency(value);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_PhysicalFixedJoint_setJointDampingRatio (IPhysicalFixedJoint * classInstance, float value)
+	{
+		classInstance->setJointDampingRatio(value);
+	}
+	
+	extern "C" DLLEXPORT IPhysicalBody * API_CALL llge_PhysicalWorld_createPhysicalBody (IPhysicalWorld * classInstance, PhysicalBodyType type, float x, float y, float rotation, bool fixedRotation, IntPtr userData)
+	{
+		return classInstance->createPhysicalBody(type, x, y, rotation, fixedRotation, userData);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_PhysicalWorld_disposePhysicalBody (IPhysicalWorld * classInstance, IPhysicalBody * body)
+	{
+		classInstance->disposePhysicalBody(body);
+	}
+	
+	extern "C" DLLEXPORT IPhysicalFixedJoint * API_CALL llge_PhysicalWorld_createPhysicalFixedJoint (IPhysicalWorld * classInstance, IPhysicalBody * body, float x, float y, float maxForce)
+	{
+		return classInstance->createPhysicalFixedJoint(body, x, y, maxForce);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_PhysicalWorld_disposePhysicalJoint (IPhysicalWorld * classInstance, IPhysicalFixedJoint * joint)
+	{
+		classInstance->disposePhysicalJoint(joint);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_PhysicalWorld_step (IPhysicalWorld * classInstance, float dt, int velocityIterations, int positionIterations)
+	{
+		classInstance->step(dt, velocityIterations, positionIterations);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_PhysicalWorld_dispose (IPhysicalWorld * classInstance)
+	{
+		classInstance->dispose();
+	}
+	
+	extern "C" DLLEXPORT IPhysicalWorld * API_CALL llge_PhysicalFactory_createPhysicalWorld (IPhysicalFactory * classInstance)
+	{
+		return classInstance->createPhysicalWorld();
+	}
+	
+	extern "C" DLLEXPORT IPhysicalShape * API_CALL llge_PhysicalFactory_createCircleShape (IPhysicalFactory * classInstance, float x, float y, float r)
+	{
+		return classInstance->createCircleShape(x, y, r);
+	}
+	
+	extern "C" DLLEXPORT IPhysicalShape * API_CALL llge_PhysicalFactory_createBoxShape (IPhysicalFactory * classInstance, float x, float y, float rx, float ry, float rotation)
+	{
+		return classInstance->createBoxShape(x, y, rx, ry, rotation);
+	}
+	
+	extern "C" DLLEXPORT IPhysicalShape * API_CALL llge_PhysicalFactory_createPolygonShape (IPhysicalFactory * classInstance, IntPtr vertices2f, int count)
+	{
+		return classInstance->createPolygonShape(vertices2f, count);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_PhysicalFactory_dispose (IPhysicalFactory * classInstance)
+	{
+		classInstance->dispose();
+	}
+	
 }
 

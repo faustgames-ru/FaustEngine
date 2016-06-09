@@ -101,9 +101,9 @@ namespace llge
 		float density;
 		float friction;
 		float bonce;
-		bool isSensor;
 		uint collidesWith;
 		uint collisionGroup;
+		uint isSensor;
 	};
 
 
@@ -562,54 +562,77 @@ namespace llge
 
 
 	/// physics
-	class IPhysicalShapePolygon : IBaseObject
+	class IPhysicalShape : IBaseObject
 	{
 	public:
-		virtual void API_CALL dispose() = 0;
-	};
-
-	class IPhysicalShapeCircle : IBaseObject
-	{
-	public:
+		virtual IntPtr API_CALL getNativeInstance() = 0;
 		virtual void API_CALL dispose() = 0;
 	};
 
 	class IPhysicalFixture : IBaseObject
 	{
 	public:
+		virtual IntPtr API_CALL getNativeInstance() = 0;
+
+		virtual float API_CALL getDensity() = 0;
+		virtual float API_CALL getFriction() = 0;
+		virtual float API_CALL getBonce() = 0;
+		virtual bool API_CALL isSensor() = 0;
+		virtual uint API_CALL getCollidesWith() = 0;
+		virtual uint API_CALL getCollisionGroup() = 0;
+		virtual void API_CALL setDensity(float value) = 0;
+		virtual void API_CALL setFriction(float value) = 0;
+		virtual void API_CALL setBonce(float value) = 0;
+		virtual void API_CALL setSensor(bool value) = 0;
+		virtual void API_CALL setCollidesWith(uint value) = 0;
+		virtual void API_CALL setCollisionGroup(uint value) = 0;
 	};
 
 	class IPhysicalBody : IBaseObject
 	{
 	public:
-		//virtual float API_CALL getX() = 0;
-		//virtual float API_CALL getY() = 0;
-		//virtual float API_CALL getRotation() = 0;
-		//virtual IPhysicalFixture* API_CALL createCircleFixture(float x, float y, float r, PhysicsFixtureConfig config, IntPtr userData) = 0;
-		//virtual IPhysicalFixture* API_CALL createPolygonFixture(IntPtr vertices2f, int count, PhysicsFixtureConfig config, IntPtr userData) = 0;
+		virtual IntPtr API_CALL getNativeInstance() = 0;
+		virtual float API_CALL getVelocityX() = 0;
+		virtual float API_CALL getVelocityY() = 0;
+		virtual float API_CALL getX() = 0;
+		virtual float API_CALL getY() = 0;
+		virtual float API_CALL getRotation() = 0;
+
+		virtual IPhysicalFixture* API_CALL createCircleFixture(float x, float y, float r, PhysicsFixtureConfig config, IntPtr userData) = 0;
+		virtual IPhysicalFixture* API_CALL createBoxFixture(float x, float y, float rx, float ry, float rotation, PhysicsFixtureConfig config, IntPtr userData) = 0;
+		virtual IPhysicalFixture* API_CALL createPolygonFixture(IntPtr vertices2f, int count, PhysicsFixtureConfig config, IntPtr userData) = 0;
 	};
 
 	class IPhysicalFixedJoint : IBaseObject
 	{		
+	public:
+		virtual IntPtr API_CALL getNativeInstance() = 0;
+
+		virtual void API_CALL setJointTarget(float x, float y) = 0;
+		virtual void API_CALL setJointMaxForce(float value) = 0;
+		virtual void API_CALL setJointFrequency(float value) = 0;
+		virtual void API_CALL setJointDampingRatio(float value) = 0;
 	};
 
 	class IPhysicalWorld : IBaseObject
 	{
 	public:
-		//virtual IPhysicalFixedJoint* API_CALL createFixedJoint(IPhysicalBody* a, IPhysicalBody* b, float x, float y, float maxForce) = 0;
-		//virtual void API_CALL disposeJoint(IPhysicsFixedJoint* joint) = 0;
-		//virtual IPhysicalBody* API_CALL createBody(PhysicsBodyType type, float x, float y, float rotation, IntPtr userData) = 0;
-		//virtual void API_CALL disposeBody(IPhysicalBody* body) = 0;
+		virtual IPhysicalBody* API_CALL createPhysicalBody(PhysicalBodyType type, float x, float y, float rotation, bool fixedRotation, IntPtr userData) = 0;
+		virtual void API_CALL disposePhysicalBody(IPhysicalBody* body) = 0;
+		virtual IPhysicalFixedJoint* API_CALL createPhysicalFixedJoint(IPhysicalBody* body, float x, float y, float maxForce) = 0;
+		virtual void API_CALL disposePhysicalJoint(IPhysicalFixedJoint* joint) = 0;
+		virtual void API_CALL step(float dt, int velocityIterations, int positionIterations) = 0;
 		virtual void API_CALL dispose() = 0;
 	};
 
 	class IPhysicalFactory : IBaseObject
 	{
 	public:
-		//virtual IPhysicalWorld* API_CALL createWorld() = 0;
-		//virtual IPhysicsCircleShape* API_CALL createCircle(float x, float y, float r) = 0;
-		//virtual IPhysicsPolygonShape* API_CALL createPolygon(IntPtr vertices2f, int count) = 0;
-		//virtual void API_CALL dispose() = 0;
+		virtual IPhysicalWorld* API_CALL createPhysicalWorld() = 0;
+		virtual IPhysicalShape* API_CALL createCircleShape(float x, float y, float r) = 0;
+		virtual IPhysicalShape* API_CALL createBoxShape(float x, float y, float rx, float ry, float rotation) = 0;
+		virtual IPhysicalShape* API_CALL createPolygonShape(IntPtr vertices2f, int count) = 0;
+		virtual void API_CALL dispose() = 0;
 	};
 
 
@@ -625,7 +648,8 @@ namespace llge
 	extern "C" DLLEXPORT void API_CALL initRenderContext();
 	extern "C" DLLEXPORT INativeMemoryProfiler * API_CALL createNativeMemoryProfiler();
 	extern "C" DLLEXPORT ISpineResource * API_CALL createSpineResource();
-    
+	extern "C" DLLEXPORT IPhysicalFactory * API_CALL createPhysicalFactory(float scaleDimensions, float scaleVelocity);
+
 	//extern "C" DLLEXPORT IPathMesh * API_CALL createPathMesh();
 	//extern "C" DLLEXPORT INavMesh * API_CALL createNavMesh();
 	//extern "C" DLLEXPORT INavMeshConfig * API_CALL createNavMeshConfig();

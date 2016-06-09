@@ -5,25 +5,30 @@
 
 namespace physics
 {
-	class PhysicalShape
+	class PhysicalShape: public llge::IPhysicalShape
 	{
 	public:
 		PhysicalShape();
 		virtual ~PhysicalShape();
 		virtual b2Shape* getShape() = 0;
+
+		virtual IntPtr API_CALL getNativeInstance() OVERRIDE;
+		virtual void API_CALL dispose() OVERRIDE;
 	private:
 	};
 
-	class PhysicalCircle: PhysicalShape
+	class PhysicalCircle: public PhysicalShape
 	{
 	public:
 		b2Shape* getShape() OVERRIDE;
+		PhysicalCircle();
 		PhysicalCircle(float worldX, float worldY, float wolrdR);
+		void setCircle(float worldX, float worldY, float wolrdR);
 	private:
 		b2CircleShape _shape;
 	};
 
-	class PhysicalPolygon : PhysicalShape
+	class PhysicalPolygon : public PhysicalShape
 	{
 	public:
 		PhysicalPolygon();
@@ -37,4 +42,4 @@ namespace physics
 	};
 }
 
-#endif /*PHYSICAL_FIXTURE_H*/
+#endif /*PHYSICAL_SHAPE_H*/

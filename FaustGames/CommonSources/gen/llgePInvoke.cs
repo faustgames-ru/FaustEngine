@@ -68,6 +68,24 @@ namespace llge
 		MatrixTransform = 0x8,
 	}
 	
+	public enum PhysicalBodyType
+	{
+		Static = 0x1,
+		Dynamic = 0x2,
+		Kinematic = 0x3,
+	}
+	
+	[StructLayout(LayoutKind.Sequential)]
+	public struct PhysicsFixtureConfig
+	{
+		public float density;
+		public float friction;
+		public float bonce;
+		public uint collidesWith;
+		public uint collisionGroup;
+		public uint isSensor;
+	}
+	
 	[StructLayout(LayoutKind.Sequential)]
 	public struct EffectConfig
 	{
@@ -1876,6 +1894,316 @@ namespace llge
 		static extern private void llge_NavMesh_dispose (IntPtr classInstance);
 	}
 	
+	public class PhysicalShape
+	{
+		public IntPtr ClassInstance;
+		public IntPtr GetNativeInstance ()
+		{
+			return llge_PhysicalShape_getNativeInstance(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_PhysicalShape_getNativeInstance (IntPtr classInstance);
+		public void Dispose ()
+		{
+			llge_PhysicalShape_dispose(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_PhysicalShape_dispose (IntPtr classInstance);
+	}
+	
+	public class PhysicalFixture
+	{
+		public IntPtr ClassInstance;
+		public IntPtr GetNativeInstance ()
+		{
+			return llge_PhysicalFixture_getNativeInstance(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_PhysicalFixture_getNativeInstance (IntPtr classInstance);
+		public float GetDensity ()
+		{
+			return llge_PhysicalFixture_getDensity(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private float llge_PhysicalFixture_getDensity (IntPtr classInstance);
+		public float GetFriction ()
+		{
+			return llge_PhysicalFixture_getFriction(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private float llge_PhysicalFixture_getFriction (IntPtr classInstance);
+		public float GetBonce ()
+		{
+			return llge_PhysicalFixture_getBonce(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private float llge_PhysicalFixture_getBonce (IntPtr classInstance);
+		public bool IsSensor ()
+		{
+			return llge_PhysicalFixture_isSensor(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private bool llge_PhysicalFixture_isSensor (IntPtr classInstance);
+		public uint GetCollidesWith ()
+		{
+			return llge_PhysicalFixture_getCollidesWith(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private uint llge_PhysicalFixture_getCollidesWith (IntPtr classInstance);
+		public uint GetCollisionGroup ()
+		{
+			return llge_PhysicalFixture_getCollisionGroup(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private uint llge_PhysicalFixture_getCollisionGroup (IntPtr classInstance);
+		public void SetDensity (float value)
+		{
+			llge_PhysicalFixture_setDensity(ClassInstance, value);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_PhysicalFixture_setDensity (IntPtr classInstance, float value);
+		public void SetFriction (float value)
+		{
+			llge_PhysicalFixture_setFriction(ClassInstance, value);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_PhysicalFixture_setFriction (IntPtr classInstance, float value);
+		public void SetBonce (float value)
+		{
+			llge_PhysicalFixture_setBonce(ClassInstance, value);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_PhysicalFixture_setBonce (IntPtr classInstance, float value);
+		public void SetSensor (bool value)
+		{
+			llge_PhysicalFixture_setSensor(ClassInstance, value);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_PhysicalFixture_setSensor (IntPtr classInstance, bool value);
+		public void SetCollidesWith (uint value)
+		{
+			llge_PhysicalFixture_setCollidesWith(ClassInstance, value);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_PhysicalFixture_setCollidesWith (IntPtr classInstance, uint value);
+		public void SetCollisionGroup (uint value)
+		{
+			llge_PhysicalFixture_setCollisionGroup(ClassInstance, value);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_PhysicalFixture_setCollisionGroup (IntPtr classInstance, uint value);
+	}
+	
+	public class PhysicalBody
+	{
+		public IntPtr ClassInstance;
+		public IntPtr GetNativeInstance ()
+		{
+			return llge_PhysicalBody_getNativeInstance(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_PhysicalBody_getNativeInstance (IntPtr classInstance);
+		public float GetVelocityX ()
+		{
+			return llge_PhysicalBody_getVelocityX(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private float llge_PhysicalBody_getVelocityX (IntPtr classInstance);
+		public float GetVelocityY ()
+		{
+			return llge_PhysicalBody_getVelocityY(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private float llge_PhysicalBody_getVelocityY (IntPtr classInstance);
+		public float GetX ()
+		{
+			return llge_PhysicalBody_getX(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private float llge_PhysicalBody_getX (IntPtr classInstance);
+		public float GetY ()
+		{
+			return llge_PhysicalBody_getY(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private float llge_PhysicalBody_getY (IntPtr classInstance);
+		public float GetRotation ()
+		{
+			return llge_PhysicalBody_getRotation(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private float llge_PhysicalBody_getRotation (IntPtr classInstance);
+		public PhysicalFixture CreateCircleFixture (float x, float y, float r, PhysicsFixtureConfig config, IntPtr userData)
+		{
+			return new PhysicalFixture{ ClassInstance = llge_PhysicalBody_createCircleFixture(ClassInstance, x, y, r, config, userData) };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_PhysicalBody_createCircleFixture (IntPtr classInstance, float x, float y, float r, PhysicsFixtureConfig config, IntPtr userData);
+		public PhysicalFixture CreateBoxFixture (float x, float y, float rx, float ry, float rotation, PhysicsFixtureConfig config, IntPtr userData)
+		{
+			return new PhysicalFixture{ ClassInstance = llge_PhysicalBody_createBoxFixture(ClassInstance, x, y, rx, ry, rotation, config, userData) };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_PhysicalBody_createBoxFixture (IntPtr classInstance, float x, float y, float rx, float ry, float rotation, PhysicsFixtureConfig config, IntPtr userData);
+		public PhysicalFixture CreatePolygonFixture (IntPtr vertices2f, int count, PhysicsFixtureConfig config, IntPtr userData)
+		{
+			return new PhysicalFixture{ ClassInstance = llge_PhysicalBody_createPolygonFixture(ClassInstance, vertices2f, count, config, userData) };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_PhysicalBody_createPolygonFixture (IntPtr classInstance, IntPtr vertices2f, int count, PhysicsFixtureConfig config, IntPtr userData);
+	}
+	
+	public class PhysicalFixedJoint
+	{
+		public IntPtr ClassInstance;
+		public IntPtr GetNativeInstance ()
+		{
+			return llge_PhysicalFixedJoint_getNativeInstance(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_PhysicalFixedJoint_getNativeInstance (IntPtr classInstance);
+		public void SetJointTarget (float x, float y)
+		{
+			llge_PhysicalFixedJoint_setJointTarget(ClassInstance, x, y);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_PhysicalFixedJoint_setJointTarget (IntPtr classInstance, float x, float y);
+		public void SetJointMaxForce (float value)
+		{
+			llge_PhysicalFixedJoint_setJointMaxForce(ClassInstance, value);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_PhysicalFixedJoint_setJointMaxForce (IntPtr classInstance, float value);
+		public void SetJointFrequency (float value)
+		{
+			llge_PhysicalFixedJoint_setJointFrequency(ClassInstance, value);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_PhysicalFixedJoint_setJointFrequency (IntPtr classInstance, float value);
+		public void SetJointDampingRatio (float value)
+		{
+			llge_PhysicalFixedJoint_setJointDampingRatio(ClassInstance, value);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_PhysicalFixedJoint_setJointDampingRatio (IntPtr classInstance, float value);
+	}
+	
+	public class PhysicalWorld
+	{
+		public IntPtr ClassInstance;
+		public PhysicalBody CreatePhysicalBody (PhysicalBodyType type, float x, float y, float rotation, bool fixedRotation, IntPtr userData)
+		{
+			return new PhysicalBody{ ClassInstance = llge_PhysicalWorld_createPhysicalBody(ClassInstance, type, x, y, rotation, fixedRotation, userData) };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_PhysicalWorld_createPhysicalBody (IntPtr classInstance, PhysicalBodyType type, float x, float y, float rotation, bool fixedRotation, IntPtr userData);
+		public void DisposePhysicalBody (PhysicalBody body)
+		{
+			llge_PhysicalWorld_disposePhysicalBody(ClassInstance, body.ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_PhysicalWorld_disposePhysicalBody (IntPtr classInstance, IntPtr body);
+		public PhysicalFixedJoint CreatePhysicalFixedJoint (PhysicalBody body, float x, float y, float maxForce)
+		{
+			return new PhysicalFixedJoint{ ClassInstance = llge_PhysicalWorld_createPhysicalFixedJoint(ClassInstance, body.ClassInstance, x, y, maxForce) };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_PhysicalWorld_createPhysicalFixedJoint (IntPtr classInstance, IntPtr body, float x, float y, float maxForce);
+		public void DisposePhysicalJoint (PhysicalFixedJoint joint)
+		{
+			llge_PhysicalWorld_disposePhysicalJoint(ClassInstance, joint.ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_PhysicalWorld_disposePhysicalJoint (IntPtr classInstance, IntPtr joint);
+		public void Step (float dt, int velocityIterations, int positionIterations)
+		{
+			llge_PhysicalWorld_step(ClassInstance, dt, velocityIterations, positionIterations);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_PhysicalWorld_step (IntPtr classInstance, float dt, int velocityIterations, int positionIterations);
+		public void Dispose ()
+		{
+			llge_PhysicalWorld_dispose(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_PhysicalWorld_dispose (IntPtr classInstance);
+	}
+	
+	public class PhysicalFactory
+	{
+		public IntPtr ClassInstance;
+		public PhysicalWorld CreatePhysicalWorld ()
+		{
+			return new PhysicalWorld{ ClassInstance = llge_PhysicalFactory_createPhysicalWorld(ClassInstance) };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_PhysicalFactory_createPhysicalWorld (IntPtr classInstance);
+		public PhysicalShape CreateCircleShape (float x, float y, float r)
+		{
+			return new PhysicalShape{ ClassInstance = llge_PhysicalFactory_createCircleShape(ClassInstance, x, y, r) };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_PhysicalFactory_createCircleShape (IntPtr classInstance, float x, float y, float r);
+		public PhysicalShape CreateBoxShape (float x, float y, float rx, float ry, float rotation)
+		{
+			return new PhysicalShape{ ClassInstance = llge_PhysicalFactory_createBoxShape(ClassInstance, x, y, rx, ry, rotation) };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_PhysicalFactory_createBoxShape (IntPtr classInstance, float x, float y, float rx, float ry, float rotation);
+		public PhysicalShape CreatePolygonShape (IntPtr vertices2f, int count)
+		{
+			return new PhysicalShape{ ClassInstance = llge_PhysicalFactory_createPolygonShape(ClassInstance, vertices2f, count) };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_PhysicalFactory_createPolygonShape (IntPtr classInstance, IntPtr vertices2f, int count);
+		public void Dispose ()
+		{
+			llge_PhysicalFactory_dispose(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_PhysicalFactory_dispose (IntPtr classInstance);
+	}
+	
 	public class llge
 	{
 		static public Batch2d CreateBatch2d ()
@@ -1948,6 +2276,13 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private IntPtr createSpineResource ();
+		static public PhysicalFactory CreatePhysicalFactory (float scaleDimensions, float scaleVelocity)
+		{
+			return new PhysicalFactory{ ClassInstance = createPhysicalFactory(scaleDimensions, scaleVelocity) };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr createPhysicalFactory (float scaleDimensions, float scaleVelocity);
 	}
 	
 }

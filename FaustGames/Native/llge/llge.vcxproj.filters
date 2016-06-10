@@ -770,6 +770,9 @@
     <ClInclude Include="..\src\physics\PhysicalJoint.h">
       <Filter>physics</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\core\DebugRender.h">
+      <Filter>core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\CommonSources\gen\llgePInvoke.cpp">
@@ -1400,6 +1403,9 @@
     </ClCompile>
     <ClCompile Include="..\src\physics\PhysicalJoint.cpp">
       <Filter>physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\DebugRender.cpp">
+      <Filter>core</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

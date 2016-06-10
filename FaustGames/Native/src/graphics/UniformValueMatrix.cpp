@@ -11,7 +11,7 @@ namespace graphics
 	void UniformValueMatrix::setValue(const core::MatrixContainer &value)
 	{
 		_equal = _value.id == value.id;
-		//if (_equal) return;
+		if (_equal) return;
 		_value.Value = value.Value;
 		_value.id = value.id;
 		_applyMask = 0;

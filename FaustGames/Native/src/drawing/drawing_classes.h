@@ -6,6 +6,35 @@
 
 namespace drawing
 {
+	struct SolidVertex
+	{
+		float x;
+		float y;
+		float z;
+		unsigned int color;
+		SolidVertex()
+		{
+			x = 0.0f;
+			y = 0.0f;
+			z = 0.0f;
+			color = 0;
+		}
+		SolidVertex(const core::Vector3 &v, uint c)
+		{
+			x = v.getX();
+			y = v.getY();
+			z = v.getZ();
+			color = c;
+		}
+
+		inline float getX() const { return x; }
+		inline float getY() const { return y; }
+		inline float getZ() const { return z; }
+		inline void setX(float value) { x = value; }
+		inline void setY(float value) { y = value; }
+		inline void setZ(float value) { z = value; }
+	};
+
 	struct Mesh2dVertex
 	{
 		float x;

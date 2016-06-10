@@ -363,7 +363,7 @@ namespace llge
 	public:
 		virtual IntPtr API_CALL getNativeInstance() = 0;
 		virtual void API_CALL addProjection(void *floatMatrix) = 0;
-		virtual void API_CALL addRenderTarget(IntPtr *renderTargetInstance) = 0;
+		virtual void API_CALL addRenderTarget(IntPtr renderTargetInstance) = 0;
 		virtual void API_CALL startBatch() = 0;
 		virtual void API_CALL finishBatch() = 0;
 		virtual void API_CALL setToneMap(uint tonemapId) = 0;
@@ -617,9 +617,10 @@ namespace llge
 	class IPhysicalWorld : IBaseObject
 	{
 	public:
+		virtual void API_CALL debugRender(float x, float y, float rx, float ry) = 0;
 		virtual IPhysicalBody* API_CALL createPhysicalBody(PhysicalBodyType type, float x, float y, float rotation, bool fixedRotation, IntPtr userData) = 0;
 		virtual void API_CALL disposePhysicalBody(IPhysicalBody* body) = 0;
-		virtual IPhysicalFixedJoint* API_CALL createPhysicalFixedJoint(IPhysicalBody* body, float x, float y, float maxForce) = 0;
+		virtual IPhysicalFixedJoint* API_CALL createPhysicalFixedJoint(IPhysicalBody* ground, IPhysicalBody* body, float x, float y, float maxForce) = 0;
 		virtual void API_CALL disposePhysicalJoint(IPhysicalFixedJoint* joint) = 0;
 		virtual void API_CALL step(float dt, int velocityIterations, int positionIterations) = 0;
 		virtual void API_CALL dispose() = 0;

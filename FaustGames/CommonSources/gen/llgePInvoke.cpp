@@ -631,7 +631,7 @@ namespace llge
 		classInstance->addProjection(floatMatrix);
 	}
 	
-	extern "C" DLLEXPORT void API_CALL llge_Batch2d_addRenderTarget (IBatch2d * classInstance, IntPtr * renderTargetInstance)
+	extern "C" DLLEXPORT void API_CALL llge_Batch2d_addRenderTarget (IBatch2d * classInstance, IntPtr renderTargetInstance)
 	{
 		classInstance->addRenderTarget(renderTargetInstance);
 	}
@@ -1296,6 +1296,11 @@ namespace llge
 		classInstance->setJointDampingRatio(value);
 	}
 	
+	extern "C" DLLEXPORT void API_CALL llge_PhysicalWorld_debugRender (IPhysicalWorld * classInstance, float x, float y, float rx, float ry)
+	{
+		classInstance->debugRender(x, y, rx, ry);
+	}
+	
 	extern "C" DLLEXPORT IPhysicalBody * API_CALL llge_PhysicalWorld_createPhysicalBody (IPhysicalWorld * classInstance, PhysicalBodyType type, float x, float y, float rotation, bool fixedRotation, IntPtr userData)
 	{
 		return classInstance->createPhysicalBody(type, x, y, rotation, fixedRotation, userData);
@@ -1306,9 +1311,9 @@ namespace llge
 		classInstance->disposePhysicalBody(body);
 	}
 	
-	extern "C" DLLEXPORT IPhysicalFixedJoint * API_CALL llge_PhysicalWorld_createPhysicalFixedJoint (IPhysicalWorld * classInstance, IPhysicalBody * body, float x, float y, float maxForce)
+	extern "C" DLLEXPORT IPhysicalFixedJoint * API_CALL llge_PhysicalWorld_createPhysicalFixedJoint (IPhysicalWorld * classInstance, IPhysicalBody * ground, IPhysicalBody * body, float x, float y, float maxForce)
 	{
-		return classInstance->createPhysicalFixedJoint(body, x, y, maxForce);
+		return classInstance->createPhysicalFixedJoint(ground, body, x, y, maxForce);
 	}
 	
 	extern "C" DLLEXPORT void API_CALL llge_PhysicalWorld_disposePhysicalJoint (IPhysicalWorld * classInstance, IPhysicalFixedJoint * joint)

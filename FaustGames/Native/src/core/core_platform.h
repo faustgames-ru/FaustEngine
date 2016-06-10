@@ -16,6 +16,7 @@
 #endif
 #endif
 
+#include "llge.h"
 #include <new>
 #include <map>
 #include <string>

@@ -1,4 +1,5 @@
 #include "PhysicalWorld.h"
+#include "../core/DebugRender.h"
 
 namespace physics
 {
@@ -7,6 +8,7 @@ namespace physics
 		_world = new b2World(b2Vec2(0, -10.0f));
 		_dimensions = dimensions;
 		_velocity = velocity;
+		_debugRenderCallback = new DebugRenderCallback(this, dimensions);
 	}
 
 	PhysicalWorld::~PhysicalWorld()
@@ -25,7 +27,7 @@ namespace physics
 		}
 		_bodies.clear();
 
-
+		delete _debugRenderCallback;
 		delete _world;
 	}
 
@@ -74,12 +76,12 @@ namespace physics
 		delete body;
 	}
 
-	PhysicalFixedJoint* PhysicalWorld::createFixedJoint(PhysicalBody* body, float x, float y, float maxForce)
+	PhysicalFixedJoint* PhysicalWorld::createFixedJoint(PhysicalBody* groundBody, PhysicalBody* body, float x, float y, float maxForce)
 	{
 		b2MouseJointDef jointDef;
 		jointDef.maxForce = maxForce;
-		jointDef.target = b2Vec2(x, y);
-		jointDef.bodyA = body->body;
+		jointDef.target = b2Vec2(_dimensions.toWorld(x), _dimensions.toWorld(y));
+		jointDef.bodyA = groundBody->body;
 		jointDef.bodyB = body->body;
 		b2MouseJoint* joint = static_cast<b2MouseJoint*>(_world->CreateJoint(&jointDef));
 
@@ -99,6 +101,83 @@ namespace physics
 		delete joint;
 	}
 
+	uint PhysicalWorld::getDebugFixtureColor(b2Fixture* fixture)
+	{
+		if (fixture->IsSensor())
+			return 0xffff00ff;
+		return 0xffffffff;
+	}
+
+	void PhysicalWorld::debugRender(float x, float y, float rx, float ry)
+	{
+		b2AABB aabb;
+		aabb.lowerBound = b2Vec2(_dimensions.toWorld(x-rx), _dimensions.toWorld(y-ry));
+		aabb.upperBound = b2Vec2(_dimensions.toWorld(x+rx), _dimensions.toWorld(y+ry));
+		_world->QueryAABB(_debugRenderCallback, aabb);
+	}
+
+	void PhysicalWorld::debugRender()
+	{
+		b2Body* b = _world->GetBodyList();
+		for (; b != nullptr;)
+		{
+			debugRenderBody(b);
+			b = b->GetNext();
+		}
+	}
+
+	void PhysicalWorld::debugRenderBody(b2Body* body)
+	{
+		b2Fixture* f = body->GetFixtureList();
+		core::Vector2 center;
+		for (; f != nullptr;)
+		{
+			center.setX(_dimensions.fromWorld(body->GetPosition().x));
+			center.setY(_dimensions.fromWorld(body->GetPosition().y));
+			debugRenderFixture(center, f);
+			f = f->GetNext();
+		}
+	}
+
+	void PhysicalWorld::debugRenderFixture(core::Vector2 center, b2Fixture* fixture)
+	{
+		core::DebugDraw *draw = &core::DebugDraw::Default;
+		b2Shape* shape = fixture->GetShape();
+		uint color = getDebugFixtureColor(fixture);
+
+		b2CircleShape *circle;
+		b2PolygonShape *polygon;
+		core::Vector3 a, b;
+		uint count;
+		switch (shape->GetType())
+		{
+		case b2Shape::e_circle: 
+			circle = dynamic_cast<b2CircleShape *>(shape);
+			a.setX(center.getX() + _dimensions.fromWorld(circle->m_p.x));
+			a.setY(center.getY() + _dimensions.fromWorld(circle->m_p.y));
+			a.setZ(0);
+			draw->circle(color, a, _dimensions.fromWorld(circle->m_radius));
+			break;
+		case b2Shape::e_polygon: 
+			polygon = dynamic_cast<b2PolygonShape *>(shape);			
+			count = polygon->GetVertexCount();
+			for (uint i = 0, j = count-1; i< count; ++i)
+			{
+				a.setX(center.getX() + _dimensions.fromWorld(polygon->GetVertex(j).x));
+				a.setY(center.getY() + _dimensions.fromWorld(polygon->GetVertex(j).y));
+				a.setZ(0);				
+				b.setX(center.getX() + _dimensions.fromWorld(polygon->GetVertex(i).x));
+				b.setY(center.getY() + _dimensions.fromWorld(polygon->GetVertex(i).y));
+				b.setZ(0);
+				draw->edge(color, a, b);
+				j = i;
+			}
+			break;
+		default: 
+			break;
+		}
+	}
+
 	llge::IPhysicalBody* PhysicalWorld::createPhysicalBody(llge::PhysicalBodyType type, float x, float y, float rotation, bool fixedRotation, IntPtr userData)
 	{
 		PhysicalBody* body = createBody(type, x, y, rotation, fixedRotation);
@@ -111,9 +190,9 @@ namespace physics
 		destroyBody(static_cast<PhysicalBody *>(body->getNativeInstance()));
 	}
 
-	llge::IPhysicalFixedJoint* PhysicalWorld::createPhysicalFixedJoint(llge::IPhysicalBody* body, float x, float y, float maxForce)
+	llge::IPhysicalFixedJoint* PhysicalWorld::createPhysicalFixedJoint(llge::IPhysicalBody* ground, llge::IPhysicalBody* body, float x, float y, float maxForce)
 	{
-		return createFixedJoint(static_cast<PhysicalBody *>(body->getNativeInstance()), x, y, maxForce);
+		return createFixedJoint(static_cast<PhysicalBody *>(ground->getNativeInstance()), static_cast<PhysicalBody *>(body->getNativeInstance()), x, y, maxForce);
 	}
 
 	void PhysicalWorld::disposePhysicalJoint(llge::IPhysicalFixedJoint* joint)
@@ -129,5 +208,21 @@ namespace physics
 	void PhysicalWorld::dispose()
 	{
 		delete this;
+	}
+
+	DebugRenderCallback::DebugRenderCallback(PhysicalWorld* world, PhysicalConverter dimensions)
+	{
+		_world = world;
+		_dimensions = dimensions;
+	}
+
+	bool DebugRenderCallback::ReportFixture(b2Fixture* fixture)
+	{
+		core::Vector2 center;
+		b2Body* body = fixture->GetBody();
+		center.setX(_dimensions.fromWorld(body->GetPosition().x));
+		center.setY(_dimensions.fromWorld(body->GetPosition().y));
+		_world->debugRenderFixture(center, fixture);
+		return true;
 	}
 }

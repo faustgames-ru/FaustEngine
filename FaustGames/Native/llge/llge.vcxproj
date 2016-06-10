@@ -83,7 +83,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;LLGE_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;LLGE_EXPORTS;_CRT_SECURE_NO_WARNINGS;OGL_ERRORS_CHECK;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <AdditionalIncludeDirectories>..\include;..\..\CommonSources\include;..\src\resources\zlib;..\src_box2d</AdditionalIncludeDirectories>
@@ -100,7 +100,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;LLGE_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;LLGE_EXPORTS;_CRT_SECURE_NO_WARNINGS;OGL_ERRORS_CHECK;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <AdditionalIncludeDirectories>..\include;..\..\CommonSources\include;..\src\resources\zlib;..\src_box2d</AdditionalIncludeDirectories>
@@ -183,6 +183,7 @@
     <ClInclude Include="..\shaders\water_frag.h" />
     <ClInclude Include="..\shaders\water_vert.h" />
     <ClInclude Include="..\src\core\HollowsAllocationPolicy.h" />
+    <ClInclude Include="..\src\core\DebugRender.h" />
     <ClInclude Include="..\src\core\MarchingSquares.h" />
     <ClInclude Include="..\src\core\SystemAllocationPolicy.h" />
     <ClInclude Include="..\src\core\Allocator.h" />
@@ -385,6 +386,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\CommonSources\gen\llgePInvoke.cpp" />
     <ClCompile Include="..\src\core\BasicTest.cpp" />
+    <ClCompile Include="..\src\core\DebugRender.cpp" />
     <ClCompile Include="..\src\core\HollowsAllocationPolicy.cpp" />
     <ClCompile Include="..\src\core\MarchingSquares.cpp" />
     <ClCompile Include="..\src\core\Math.cpp" />

@@ -2120,6 +2120,13 @@ namespace llge
 	public class PhysicalWorld
 	{
 		public IntPtr ClassInstance;
+		public void DebugRender (float x, float y, float rx, float ry)
+		{
+			llge_PhysicalWorld_debugRender(ClassInstance, x, y, rx, ry);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_PhysicalWorld_debugRender (IntPtr classInstance, float x, float y, float rx, float ry);
 		public PhysicalBody CreatePhysicalBody (PhysicalBodyType type, float x, float y, float rotation, bool fixedRotation, IntPtr userData)
 		{
 			return new PhysicalBody{ ClassInstance = llge_PhysicalWorld_createPhysicalBody(ClassInstance, type, x, y, rotation, fixedRotation, userData) };
@@ -2134,13 +2141,13 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private void llge_PhysicalWorld_disposePhysicalBody (IntPtr classInstance, IntPtr body);
-		public PhysicalFixedJoint CreatePhysicalFixedJoint (PhysicalBody body, float x, float y, float maxForce)
+		public PhysicalFixedJoint CreatePhysicalFixedJoint (PhysicalBody ground, PhysicalBody body, float x, float y, float maxForce)
 		{
-			return new PhysicalFixedJoint{ ClassInstance = llge_PhysicalWorld_createPhysicalFixedJoint(ClassInstance, body.ClassInstance, x, y, maxForce) };
+			return new PhysicalFixedJoint{ ClassInstance = llge_PhysicalWorld_createPhysicalFixedJoint(ClassInstance, ground.ClassInstance, body.ClassInstance, x, y, maxForce) };
 		}
 		
 		[DllImport(Version.Dll)]
-		static extern private IntPtr llge_PhysicalWorld_createPhysicalFixedJoint (IntPtr classInstance, IntPtr body, float x, float y, float maxForce);
+		static extern private IntPtr llge_PhysicalWorld_createPhysicalFixedJoint (IntPtr classInstance, IntPtr ground, IntPtr body, float x, float y, float maxForce);
 		public void DisposePhysicalJoint (PhysicalFixedJoint joint)
 		{
 			llge_PhysicalWorld_disposePhysicalJoint(ClassInstance, joint.ClassInstance);

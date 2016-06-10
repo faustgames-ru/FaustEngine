@@ -2,8 +2,8 @@
 #define BATCHER_H
 
 #include "drawing_classes.h"
-#include "Camera.h"
 #include "PostProcess.h"
+#include "../core/DebugRender.h"
 
 namespace drawing
 {
@@ -12,8 +12,6 @@ namespace drawing
 	{
 		ushort * IndicesStart;
 		uint Config[CONFIG_MAX_SIZE];
-		//uint TextureId;
-		//uint LightmapId;
 		int IndicesCount;
 		int BatchBufferIndex;
 		int TransformIndex;
@@ -33,75 +31,19 @@ namespace drawing
 		float _y;
 		float _w;
 		float _h;
-		BatchBuffer()
-		{
-			_vertices = (TVertex *)malloc(VerticesLimit * sizeof(TVertex));
-			_indices = (ushort *)malloc(IndicesLimit * sizeof(unsigned short));
-		}
-		~BatchBuffer()
-		{
-			free(_vertices);
-			free(_indices);
-		}
-		void reset()
-		{
-			_indicesCount = 0;
-			_verticesCount = 0;
-		}
-		bool canAdd(int verticesCount, int indicesCount)
-		{
-			return ((_indicesCount + indicesCount) < IndicesLimit) && ((_verticesCount + verticesCount) < VerticesLimit);
-		}
-		void addMesh(uint color, float z, float *vertices, float *uvs, int verticesCount, int *indices, int indicesCount, bool additive)
-		{
-			for (int i = 0; i < indicesCount; i++)
-			{
-				_indices[_indicesCount + i] = (unsigned short)(_verticesCount + indices[i]);
-			}
+		BatchBuffer();
 
-			TVertex* target = _vertices + _verticesCount;
-			float* source = vertices;
-			float* uvsource = uvs;
-			for (int i = 0; i < verticesCount; i++, target++)
-			{
-				target->x = *source; ++source;
-				target->y = *source; ++source;
-				target->z = z;
-				target->color = graphics::Color::premul(color, additive);
-				target->u = _x + *uvsource *_w; ++uvsource;
-				target->v = _y + *uvsource *_h; ++uvsource;
-			}
+		~BatchBuffer();
 
-			_verticesCount += verticesCount;
-			_indicesCount += indicesCount;
-		}
+		void reset();
 
-		void addMesh(TVertex *vertices, int verticesCount, ushort *indices, int indicesCount, bool additive)
-		{
-			for (int i = 0; i < indicesCount; i++)
-			{
-				_indices[_indicesCount + i] = (unsigned short)(_verticesCount + indices[i]);
-			}
-
-			TVertex* target = _vertices + _verticesCount;
-			TVertex* source = vertices;
-			for (int i = 0; i < verticesCount; i++, target++, source++)
-			{
-                target->x = source->x;
-                target->y = source->y;
-                target->z = source->z;
-                target->u = _x + source->u *_w;
-				target->v = _y + source->v *_h;
-				target->color = graphics::Color::premul(source->color, additive);
-			}
-
-			_verticesCount += verticesCount;
-			_indicesCount += indicesCount;
-		}
-		inline TVertex *getVertices(){ return _vertices; }
-		inline int getVerticesCount(){ return _verticesCount; }
-		inline ushort * getCurrentIndices(){ return _indices + _indicesCount; }
-		inline int getIndicesCount(){ return _indicesCount; }
+		bool canAdd(int verticesCount, int indicesCount) const;
+		void addMesh(uint color, float z, float* vertices, float* uvs, int verticesCount, int* indices, int indicesCount, bool additive);
+		void addMesh(TVertex* vertices, int verticesCount, ushort* indices, int indicesCount, bool additive);
+		TVertex* getVertices();
+		int getVerticesCount() const;
+		ushort* getCurrentIndices() const;
+		int getIndicesCount();
 	private:
 		TVertex *_vertices;
 		ushort *_indices;
@@ -121,20 +63,8 @@ namespace drawing
 		TBatchEntries Entries;
 		TBatchTransforms Transforms;
 		TBatchRenderTargets RenderTargets;
-		RenderBuffer()
-		{
-			Entries.reserve(128);
-			Transforms.reserve(128);
-			Buffers.push_back(new BatchBuffer());
-		}
-		~RenderBuffer()
-		{
-			for (TBatchBuffers::iterator i = Buffers.begin(); i != Buffers.end(); i++)
-			{
-				BatchBuffer *buffer = *i;
-				delete buffer;
-			}
-		}
+		RenderBuffer();
+		~RenderBuffer();
 	};
 
 	struct BatcherState
@@ -142,8 +72,6 @@ namespace drawing
 		graphics::EffectBase *Effect;
 		graphics::BlendState::e Blend;
 		void *config;
-		//uint TextureId;
-		//uint LightmapId;
 		bool isConfigEqual(void *otherConfig) const;
 	};
 
@@ -157,11 +85,8 @@ namespace drawing
 		int VerticesCount;
 		int *Indices;
 		int IndicesCount;
-		BatcherSpineMesh(){}
-		BatcherSpineMesh(int verticesLimit)
-		{
-			Vertices = (float *)core::Mem::allocate(verticesLimit * sizeof(float) * 2);
-		}
+		BatcherSpineMesh();
+		BatcherSpineMesh(int verticesLimit);
 	};
 
 	struct BatcherMesh
@@ -173,7 +98,16 @@ namespace drawing
 		int IndicesCount;
 	};
 
-	class Batcher : public llge::IBatch2d
+	class BatcherDebugRender : public core::IDebugRender
+	{
+	public:
+		virtual void drawEdge(uint color, const core::Vector3 &a, const core::Vector3 &b) OVERRIDE;
+		void apply(graphics::GraphicsDevice *graphicsDevice, core::MatrixContainer transform);
+	private:
+		std::vector<SolidVertex> _edges;
+	};
+	
+	class Batcher : public llge::IBatch2d, public core::IDebugRender
 	{
 	public:
 		Batcher();
@@ -184,93 +118,29 @@ namespace drawing
 		void drawMesh(graphics::EffectBase *effect, graphics::BlendState::e blend, uint textureId, uint lightmapId, TVertex *vertices, int verticesCount, ushort *indices, int indicesCount);
 		void drawMesh(graphics::EffectBase *effect, graphics::BlendState::e blend, void* config, TVertex *vertices, int verticesCount, ushort *indices, int indicesCount);
 		void drawSpineMesh(const BatcherSpineMesh &mesh);
-		/*
-		inline void drawMesh(const BatcherMesh &mesh)
-		{
-			drawMesh(
-				mesh.State.Effect,
-				mesh.State.Blend,
-				mesh.State.TextureId,
-				mesh.State.LightmapId,
-				mesh.Vertices,
-				mesh.VerticesCount,
-				mesh.Indices,
-				mesh.IndicesCount);
-		}
-		*/
+		
 		void executeRenderCommands(bool usePostProcess);
 
-		virtual IntPtr API_CALL getNativeInstance()
-		{
-			return this;
-		}
+		virtual IntPtr API_CALL getNativeInstance() OVERRIDE;
+		void applyEntry();
+		virtual void API_CALL addProjection(void* floatMatrix) OVERRIDE;
+		virtual void API_CALL addRenderTarget(IntPtr renderTargetInstance) OVERRIDE;
+		virtual void API_CALL startBatch() OVERRIDE;
+		virtual void API_CALL finishBatch() OVERRIDE;
+		virtual void API_CALL drawEx(llge::GraphicsEffects effect, llge::BlendMode blendMode, IntPtr config, void* vertices, int verticesCount, void* indices, int indicesCount) OVERRIDE;
+		virtual void API_CALL draw(llge::GraphicsEffects effect, llge::BlendMode blendMode, llge::ITexture* texture, uint lightmapId, void* vertices, int verticesCount, void* indices, int indicesCount) OVERRIDE;
+		virtual void API_CALL execute(bool usePostProcess) OVERRIDE;
+		virtual void API_CALL setToneMap(uint tonemapId) OVERRIDE;
 
-		inline void applyEntry()
-		{
-			if (_currentEntry.IndicesCount != 0)
-			{
-				_buffer->Entries.push_back(_currentEntry);
-				_currentEntry.IndicesCount = 0;
-			}
-		}
-
-		virtual void API_CALL addProjection(void *floatMatrix) 
-		{
-			_projection.setValue((float *)floatMatrix);
-			_buffer->Transforms.push_back(_projection);
-			applyEntry();
-		}
-
-		virtual void API_CALL addRenderTarget(IntPtr *renderTargetInstance)
-		{
-			_buffer->RenderTargets.push_back((graphics::IRenderTarget *)renderTargetInstance);
-			applyEntry();
-		}
-
-		virtual void API_CALL startBatch()
-		{
-			start();
-		}
-		virtual void API_CALL finishBatch()
-		{
-			finish();
-		}
-
-		virtual void API_CALL drawEx(llge::GraphicsEffects effect, llge::BlendMode blendMode, IntPtr config, void *vertices, int verticesCount, void *indices, int indicesCount)
-		{
-			// todo: all
-			drawMesh(_converter.getEffect(effect), _converter.getBlend(blendMode), config, (TVertex *)vertices, verticesCount, (ushort *)indices, indicesCount);
-		}
-		
-		virtual void API_CALL draw(llge::GraphicsEffects effect, llge::BlendMode blendMode, llge::ITexture* texture, uint lightmapId, void *vertices, int verticesCount, void *indices, int indicesCount)
-		{
-			drawMesh(_converter.getEffect(effect), _converter.getBlend(blendMode), texture, lightmapId, (TVertex *)vertices, verticesCount, (ushort *)indices, indicesCount);
-		}
-
-		virtual void API_CALL execute(bool usePostProcess)
-		{
-			executeRenderCommands(usePostProcess);
-		}
-
-		virtual void API_CALL setToneMap(uint tonemapId)
-		{
-			_tonemapId = tonemapId;
-		}
-
+		virtual void drawEdge(uint color, const core::Vector3 &a, const core::Vector3 &b) OVERRIDE;
 	private:
-		/*
-		TBatchBuffers _buffers;
-		TBatchEntries _entries;
-		*/
+		BatcherDebugRender _debugRender;
 		RenderBuffer *_buffer;
-		//RenderBuffer *_backBuffer;
 		uint _tonemapId;
 		BatchEntry _currentEntry;
 		int _batchBufferIndex;
 		
 		llge::LightingConfig _lightingConfig; // todo: remove
-		//uint _textureId;
-		//uint _lightmapId;
 		core::MatrixContainer _projection;
 		graphics::BlendState::e _blend;
 		graphics::EffectBase *_effect;

@@ -2,19 +2,28 @@
 #define PHYSICAL_FIXTURE_H
 
 #include "physics_classes.h"
+#include "PhysicalConverter.h"
 
 namespace physics
 {
+
 	class PhysicalFixture : public llge::IPhysicalFixture
 	{
 	public:
+		int contactsCounter;
 		int index;
 		b2Fixture* fixture;
-		PhysicalFixture(b2Fixture* fixtureInstance);
+		PhysicalFixture(b2Fixture* fixtureInstance, PhysicalConverter dimensions);
 		~PhysicalFixture();
+		
+		bool polygonOverlap(float x, float y, const core::Vector2* points, uint count);
+		virtual bool API_CALL testPolygonOverlap(float x, float y, IntPtr polygon2f, uint count) OVERRIDE;
+
+		virtual void API_CALL pauseCollisions(uint leaveGroup) OVERRIDE;
+		virtual void API_CALL resumeCollisions() OVERRIDE;
 
 		virtual IntPtr API_CALL getNativeInstance() OVERRIDE;
-
+		virtual int API_CALL getContactsCounter() OVERRIDE;
 		virtual float API_CALL getDensity() OVERRIDE;
 		virtual float API_CALL getFriction() OVERRIDE;
 		virtual float API_CALL getBonce() OVERRIDE;
@@ -28,6 +37,8 @@ namespace physics
 		virtual void API_CALL setCollidesWith(uint value) OVERRIDE;
 		virtual void API_CALL setCollisionGroup(uint value) OVERRIDE;
 	private:
+		ushort _collisionGroup;
+		PhysicalConverter _dimensions;
 	};
 }
 

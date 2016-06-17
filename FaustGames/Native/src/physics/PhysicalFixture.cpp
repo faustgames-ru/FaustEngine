@@ -1,9 +1,10 @@
 #include "PhysicalFixture.h"
+#include "PhysicalFactory.h"
 
 namespace physics
 {
-	PhysicalFixture::PhysicalFixture(b2Fixture* fixtureInstance)
-		: index(-1), fixture(fixtureInstance)
+	PhysicalFixture::PhysicalFixture(b2Fixture* fixtureInstance, PhysicalConverter dimensions)
+		: contactsCounter(0), index(-1), fixture(fixtureInstance), _collisionGroup(fixture->GetFilterData().maskBits), _dimensions(dimensions)
 	{
 	}
 
@@ -11,9 +12,39 @@ namespace physics
 	{
 	}
 
+	bool PhysicalFixture::polygonOverlap(float x, float y, const core::Vector2* points, uint count)
+	{
+		b2PolygonShape poly;
+		PhysicalFactory::initPolygon(points, count, _dimensions, &poly);
+		b2Transform transform;
+		transform.Set(b2Vec2(_dimensions.toWorld(x), _dimensions.toWorld(y)), 0.0f);
+		return b2TestOverlap(&poly, 0, fixture->GetShape(), 0, transform, fixture->GetBody()->GetTransform());
+	}
+
+	bool PhysicalFixture::testPolygonOverlap(float x, float y, IntPtr polygon2f, uint count)
+	{
+		return polygonOverlap(x, y, static_cast<const core::Vector2*>(polygon2f), count);
+	}
+
+	void PhysicalFixture::pauseCollisions(uint group)
+	{
+		_collisionGroup = fixture->GetFilterData().maskBits;
+		setCollidesWith(_collisionGroup & ~group);
+	}
+
+	void PhysicalFixture::resumeCollisions()
+	{
+		setCollidesWith(_collisionGroup);
+	}
+
 	IntPtr PhysicalFixture::getNativeInstance()
 	{
 		return this;
+	}
+
+	int PhysicalFixture::getContactsCounter()
+	{
+		return contactsCounter;
 	}
 
 	float PhysicalFixture::getDensity()

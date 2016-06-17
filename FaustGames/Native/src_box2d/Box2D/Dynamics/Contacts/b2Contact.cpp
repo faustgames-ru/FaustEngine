@@ -163,8 +163,10 @@ void b2Contact::Update(b2ContactListener* listener)
 	b2Manifold oldManifold = m_manifold;
 
 	// Re-enable this contact.
-	m_flags |= e_enabledFlag;
-
+	if (b2_ReEnableContact)
+	{
+		m_flags |= e_enabledFlag;
+	}
 	bool touching = false;
 	bool wasTouching = (m_flags & e_touchingFlag) == e_touchingFlag;
 

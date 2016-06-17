@@ -143,6 +143,7 @@ namespace zombo
 		}
 		
 		[DllImport(Version.Dll)]
+		[return: MarshalAs(UnmanagedType.I1)]
 		static extern private bool zombo_ZomboEditorCamera_isUndoAvaliable (IntPtr classInstance);
 		public bool IsRedoAvaliable ()
 		{
@@ -150,6 +151,7 @@ namespace zombo
 		}
 		
 		[DllImport(Version.Dll)]
+		[return: MarshalAs(UnmanagedType.I1)]
 		static extern private bool zombo_ZomboEditorCamera_isRedoAvaliable (IntPtr classInstance);
 		public void Undo ()
 		{
@@ -197,6 +199,7 @@ namespace zombo
 		}
 		
 		[DllImport(Version.Dll)]
+		[return: MarshalAs(UnmanagedType.I1)]
 		static extern private bool zombo_ZomboEditor_isUndoAvaliable (IntPtr classInstance);
 		public bool IsRedoAvaliable ()
 		{
@@ -204,6 +207,7 @@ namespace zombo
 		}
 		
 		[DllImport(Version.Dll)]
+		[return: MarshalAs(UnmanagedType.I1)]
 		static extern private bool zombo_ZomboEditor_isRedoAvaliable (IntPtr classInstance);
 		public void Undo ()
 		{

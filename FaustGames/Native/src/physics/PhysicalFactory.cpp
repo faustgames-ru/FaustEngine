@@ -47,6 +47,11 @@ namespace physics
 		return p;
 	}
 
+	void PhysicalFactory::initEdge(float x1, float y1, float x2, float y2, PhysicalConverter dimensions, PhysicalEdge* edge)
+	{
+		edge->setEdge(dimensions.toWorld(x1), dimensions.toWorld(y1), dimensions.toWorld(x2), dimensions.toWorld(y2));
+	}
+
 	void PhysicalFactory::initCircle(float x, float y, float r, PhysicalConverter dimensions, PhysicalCircle* circle)
 	{
 		circle->setCircle(dimensions.toWorld(x), dimensions.toWorld(y), dimensions.toWorld(r));
@@ -77,12 +82,25 @@ namespace physics
 	{
 		if (count > b2_maxPolygonVertices)
 			count = b2_maxPolygonVertices;
-		for (uint i = 0; i < count; i++)
+		for (int i = 0; i < count; i++)
 		{
 			_verticesScaleBuffer[i].setX(dimensions.toWorld(points[i].getX()));
 			_verticesScaleBuffer[i].setY(dimensions.toWorld(points[i].getY()));
 		}
 		polygon->setPolygon(_verticesScaleBuffer, count);
+	}
+
+	void PhysicalFactory::initPolygon(const core::Vector2* points, int count, PhysicalConverter dimensions, b2PolygonShape* polygon)
+	{
+		if (count > b2_maxPolygonVertices)
+			count = b2_maxPolygonVertices;
+		for (int i = 0; i < count; i++)
+		{
+			_verticesScaleBuffer[i].setX(dimensions.toWorld(points[i].getX()));
+			_verticesScaleBuffer[i].setY(dimensions.toWorld(points[i].getY()));
+		}
+		const void* ptr = _verticesScaleBuffer;
+		polygon->Set(static_cast<const b2Vec2*>(ptr), count);
 	}
 
 	PhysicalFactory::PhysicalFactory(float scaleDimensions, float scaleVelocity)

@@ -1,4 +1,2 @@
 ﻿  PhysicalWorld.cpp
-c:\_faust\faustengine\faustgames\native\src\physics\physicalworld.cpp(16): warning C4018: '<': signed/unsigned mismatch
-c:\_faust\faustengine\faustgames\native\src\physics\physicalworld.cpp(23): warning C4018: '<': signed/unsigned mismatch
   llge.vcxproj -> C:\work\sources\github\moon\Solutions\Debug\llge.dll

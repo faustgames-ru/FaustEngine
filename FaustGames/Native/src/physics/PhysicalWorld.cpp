@@ -1,4 +1,5 @@
 #include "PhysicalWorld.h"
+#include "PhysicalFixture.h"
 #include "../core/DebugRender.h"
 
 namespace physics
@@ -9,18 +10,19 @@ namespace physics
 		_dimensions = dimensions;
 		_velocity = velocity;
 		_debugRenderCallback = new DebugRenderCallback(this, dimensions);
+		_world->SetContactListener(&_platformsContactListener);
 	}
 
 	PhysicalWorld::~PhysicalWorld()
 	{
-		for (int i = 0; i < _joints.size(); i++)
+		for (uint i = 0; i < _joints.size(); i++)
 		{
 			_world->DestroyJoint(_joints[i]->joint);
 			delete _joints[i];
 		}
 		_joints.clear();
 
-		for (int i = 0; i < _bodies.size(); i++)
+		for (uint i = 0; i < _bodies.size(); i++)
 		{
 			_world->DestroyBody(_bodies[i]->body);
 			delete _bodies[i];
@@ -116,6 +118,12 @@ namespace physics
 		_world->QueryAABB(_debugRenderCallback, aabb);
 	}
 
+	bool PhysicalWorld::makeRayCastFirst(float x0, float y0, float x1, float y1, uint mask, IntPtr resultPoint, IntPtr resultNormal)
+	{
+		bool result = rayCastFirst(x0, y0, x1, y1, mask, *static_cast<core::Vector2 *>(resultPoint), *static_cast<core::Vector2 *>(resultNormal));
+		return result;
+	}
+
 	void PhysicalWorld::debugRender()
 	{
 		b2Body* b = _world->GetBodyList();
@@ -144,28 +152,67 @@ namespace physics
 		core::DebugDraw *draw = &core::DebugDraw::Default;
 		b2Shape* shape = fixture->GetShape();
 		uint color = getDebugFixtureColor(fixture);
+		debugRenderShape(color, center, shape);	
+	}
+
+	void PhysicalWorld::debugRenderShape(uint color, core::Vector2 center, b2Shape* shape)
+	{
+		core::DebugDraw *draw = &core::DebugDraw::Default;
 
 		b2CircleShape *circle;
+		b2EdgeShape *edge;
 		b2PolygonShape *polygon;
 		core::Vector3 a, b;
 		uint count;
 		switch (shape->GetType())
 		{
-		case b2Shape::e_circle: 
+		case b2Shape::e_edge:
+			edge = dynamic_cast<b2EdgeShape*>(shape);
+			a.setX(center.getX() + _dimensions.fromWorld(edge->m_vertex1.x));
+			a.setY(center.getY() + _dimensions.fromWorld(edge->m_vertex1.y));
+			a.setZ(0);
+			b.setX(center.getX() + _dimensions.fromWorld(edge->m_vertex2.x));
+			b.setY(center.getY() + _dimensions.fromWorld(edge->m_vertex2.y));
+			b.setZ(0);
+			draw->edge(color, a, b);
+			if (!edge->m_hasVertex0)
+			{
+				core::Vector2 n = (core::Vector2(edge->m_vertex1.x - edge->m_vertex2.x, edge->m_vertex1.y - edge->m_vertex2.y)).normalize().rotate90cw();
+				a.setX(center.getX() + _dimensions.fromWorld(edge->m_vertex1.x) + n.getX() * 5.0f);
+				a.setY(center.getY() + _dimensions.fromWorld(edge->m_vertex1.y) + n.getY() * 5.0f);
+				a.setZ(0);
+				b.setX(center.getX() + _dimensions.fromWorld(edge->m_vertex1.x) - n.getX() * 5.0f);
+				b.setY(center.getY() + _dimensions.fromWorld(edge->m_vertex1.y) - n.getY() * 5.0f);
+				b.setZ(0);
+				draw->edge(color, a, b);
+			}
+			if (!edge->m_hasVertex3)
+			{
+				core::Vector2 n = (core::Vector2(edge->m_vertex1.x - edge->m_vertex2.x, edge->m_vertex1.y - edge->m_vertex2.y)).normalize().rotate90cw();
+				a.setX(center.getX() + _dimensions.fromWorld(edge->m_vertex2.x) + n.getX() * 5.0f);
+				a.setY(center.getY() + _dimensions.fromWorld(edge->m_vertex2.y) + n.getY() * 5.0f);
+				a.setZ(0);
+				b.setX(center.getX() + _dimensions.fromWorld(edge->m_vertex2.x) - n.getX() * 5.0f);
+				b.setY(center.getY() + _dimensions.fromWorld(edge->m_vertex2.y) - n.getY() * 5.0f);
+				b.setZ(0);
+				draw->edge(color, a, b);
+			}
+			break;
+		case b2Shape::e_circle:
 			circle = dynamic_cast<b2CircleShape *>(shape);
 			a.setX(center.getX() + _dimensions.fromWorld(circle->m_p.x));
 			a.setY(center.getY() + _dimensions.fromWorld(circle->m_p.y));
 			a.setZ(0);
 			draw->circle(color, a, _dimensions.fromWorld(circle->m_radius));
 			break;
-		case b2Shape::e_polygon: 
-			polygon = dynamic_cast<b2PolygonShape *>(shape);			
+		case b2Shape::e_polygon:
+			polygon = dynamic_cast<b2PolygonShape *>(shape);
 			count = polygon->GetVertexCount();
-			for (uint i = 0, j = count-1; i< count; ++i)
+			for (uint i = 0, j = count - 1; i< count; ++i)
 			{
 				a.setX(center.getX() + _dimensions.fromWorld(polygon->GetVertex(j).x));
 				a.setY(center.getY() + _dimensions.fromWorld(polygon->GetVertex(j).y));
-				a.setZ(0);				
+				a.setZ(0);
 				b.setX(center.getX() + _dimensions.fromWorld(polygon->GetVertex(i).x));
 				b.setY(center.getY() + _dimensions.fromWorld(polygon->GetVertex(i).y));
 				b.setZ(0);
@@ -173,15 +220,25 @@ namespace physics
 				j = i;
 			}
 			break;
-		default: 
+		default:
 			break;
 		}
 	}
 
-	llge::IPhysicalBody* PhysicalWorld::createPhysicalBody(llge::PhysicalBodyType type, float x, float y, float rotation, bool fixedRotation, IntPtr userData)
+	bool PhysicalWorld::rayCastFirst(float x0, float y0, float x1, float y1, uint mask, core::Vector2& result, core::Vector2 &resultNormal)
+	{
+		_raycastFirst.init(mask);
+		_world->RayCast(&_raycastFirst, b2Vec2(_dimensions.toWorld(x0), _dimensions.toWorld(y0)), b2Vec2(_dimensions.toWorld(x1), _dimensions.toWorld(y1)));
+		result = core::Vector2(_dimensions.fromWorld(_raycastFirst.bestPoint.getX()), _dimensions.fromWorld(_raycastFirst.bestPoint.getY()));
+		resultNormal = _raycastFirst.bestNormal;
+		bool hasRaycast = _raycastFirst.best != nullptr;
+		return hasRaycast;
+	}
+
+	llge::IPhysicalBody* PhysicalWorld::createPhysicalBody(llge::PhysicalBodyType type, float x, float y, float rotation, bool fixedRotation)
 	{
 		PhysicalBody* body = createBody(type, x, y, rotation, fixedRotation);
-		body->body->SetUserData(userData);
+		body->body->SetUserData(body);
 		return body;
 	}
 
@@ -224,5 +281,99 @@ namespace physics
 		center.setY(_dimensions.fromWorld(body->GetPosition().y));
 		_world->debugRenderFixture(center, fixture);
 		return true;
+	}
+
+	RayCastFirstCallback::RayCastFirstCallback(): mask(0xffffffff), best(nullptr), bestFraction(1.0f)
+	{
+	}
+
+	void RayCastFirstCallback::init(uint maskBits)
+	{
+		bestFraction = 1.0f;
+		best = nullptr;
+		mask = maskBits;
+	}
+
+	float RayCastFirstCallback::ReportFixture(b2Fixture* fixture, const b2Vec2& point, const b2Vec2& normal, float32 fraction)
+	{
+		if ((fixture->GetFilterData().categoryBits & mask) == 0)
+			return 1.0f;
+		if (fraction <= bestFraction)
+		{
+			best = fixture;
+			bestFraction = fraction;
+			bestPoint = core::Vector2(point.x, point.y);
+			bestNormal = core::Vector2(normal.x, normal.y);
+		}
+		return 1.0f;
+	}
+
+	PlatformsContactListener::PlatformsContactListener(): platformsCategory(0x40)
+	{
+	}
+
+	void PlatformsContactListener::BeginContact(b2Contact* contact)
+	{		
+
+		b2Fixture* fixtureA = contact->GetFixtureA();
+		b2Fixture* fixtureB = contact->GetFixtureB();
+
+		PhysicalFixture *physicalFixtureA = static_cast<PhysicalFixture *>(fixtureA->GetUserData());
+		PhysicalFixture *physicalFixtureB = static_cast<PhysicalFixture *>(fixtureB->GetUserData());
+
+		physicalFixtureA->contactsCounter++;
+		physicalFixtureB->contactsCounter++;
+
+		//check if one of the fixtures is the platform
+		b2Fixture* platformFixture = nullptr;
+		b2Fixture* otherFixture = nullptr;
+
+		if (fixtureA->GetFilterData().categoryBits == platformsCategory) {
+			platformFixture = fixtureA;
+			otherFixture = fixtureB;
+		}
+		else if (fixtureB->GetFilterData().categoryBits == platformsCategory) {
+			platformFixture = fixtureB;
+			otherFixture = fixtureA;
+		}
+
+		if (!platformFixture)
+			return;
+
+		b2Body* platformBody = platformFixture->GetBody();
+		b2Body* otherBody = otherFixture->GetBody();
+
+		int numPoints = contact->GetManifold()->pointCount;
+		b2WorldManifold worldManifold;
+		contact->GetWorldManifold(&worldManifold);		
+		
+		/*
+		if (core::Math::abs(worldManifold.normal.x * 2.0f) > core::Math::abs(worldManifold.normal.y))
+			return;
+		*/
+
+		//check if contact points are moving downward
+		for (int i = 0; i < numPoints; i++) {
+			b2Vec2 pointVel =
+				otherBody->GetLinearVelocityFromWorldPoint(worldManifold.points[i]);
+			if (pointVel.y < 0)
+				return;//point is moving down, leave contact solid and exit
+		}
+
+		//no points are moving downward, contact should not be solid
+		contact->SetEnabled(false);		
+	}
+
+	void PlatformsContactListener::EndContact(b2Contact* contact)
+	{
+		b2Fixture* fixtureA = contact->GetFixtureA();
+		b2Fixture* fixtureB = contact->GetFixtureB();
+
+		PhysicalFixture *physicalFixtureA = static_cast<PhysicalFixture *>(fixtureA->GetUserData());
+		PhysicalFixture *physicalFixtureB = static_cast<PhysicalFixture *>(fixtureB->GetUserData());
+		physicalFixtureA->contactsCounter--;
+		physicalFixtureB->contactsCounter--;
+
+		contact->SetEnabled(true);
 	}
 }

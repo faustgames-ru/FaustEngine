@@ -5,7 +5,7 @@
 
 namespace physics
 {
-	class PhysicalShape: public llge::IPhysicalShape
+	class PhysicalShape : public llge::IPhysicalShape
 	{
 	public:
 		PhysicalShape();
@@ -17,6 +17,18 @@ namespace physics
 	private:
 	};
 
+	class PhysicalEdge : public PhysicalShape
+	{
+	public:
+		b2Shape* getShape() OVERRIDE;
+		PhysicalEdge();
+		void setEdge(float worldX1, float worldY1, float worldX2, float worldY2);
+		void setV0(float worldX0, float worldY0);
+		void setV3(float worldX0, float worldY0);
+	private:
+		b2EdgeShape _shape;
+	};
+	
 	class PhysicalCircle: public PhysicalShape
 	{
 	public:

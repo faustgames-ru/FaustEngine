@@ -573,7 +573,10 @@ namespace llge
 	{
 	public:
 		virtual IntPtr API_CALL getNativeInstance() = 0;
-
+		virtual bool API_CALL testPolygonOverlap(float x, float y, IntPtr polygon2f, uint count) = 0;
+		virtual void API_CALL pauseCollisions(uint group) = 0;
+		virtual void API_CALL resumeCollisions() = 0;
+		virtual int API_CALL getContactsCounter() = 0;
 		virtual float API_CALL getDensity() = 0;
 		virtual float API_CALL getFriction() = 0;
 		virtual float API_CALL getBonce() = 0;
@@ -587,20 +590,47 @@ namespace llge
 		virtual void API_CALL setCollidesWith(uint value) = 0;
 		virtual void API_CALL setCollisionGroup(uint value) = 0;
 	};
+	
+	class IPhysicalContactIterator : IBaseObject
+	{
+	public:
+		virtual void API_CALL CalcWorldManifold() = 0;
+		virtual float API_CALL getWorldNormalX() = 0;
+		virtual float API_CALL getWorldNormalY() = 0;
+
+		virtual bool API_CALL isEnabled() = 0;
+		virtual bool API_CALL isSensorA() = 0;
+		virtual uint API_CALL getCollisionGroupA() = 0;
+		virtual IntPtr API_CALL getNativeBodyA() = 0;
+		virtual float API_CALL getNativeBodyAPositionX() = 0;
+		virtual float API_CALL getNativeBodyAPositionY() = 0;
+		virtual IntPtr API_CALL getNativeFixtureA() = 0;
+		virtual bool API_CALL isSensorB() = 0;
+		virtual uint API_CALL getCollisionGroupB() = 0;
+		virtual IntPtr API_CALL getNativeBodyB() = 0;
+		virtual float API_CALL getNativeBodyBPositionX() = 0;
+		virtual float API_CALL getNativeBodyBPositionY() = 0;
+		virtual IntPtr API_CALL getNativeFixtureB() = 0;
+		virtual void API_CALL reset() = 0;
+		virtual bool API_CALL isEnd() = 0;
+		virtual void API_CALL next() = 0;
+	};
 
 	class IPhysicalBody : IBaseObject
 	{
 	public:
 		virtual IntPtr API_CALL getNativeInstance() = 0;
+
 		virtual float API_CALL getVelocityX() = 0;
 		virtual float API_CALL getVelocityY() = 0;
 		virtual float API_CALL getX() = 0;
 		virtual float API_CALL getY() = 0;
 		virtual float API_CALL getRotation() = 0;
-
-		virtual IPhysicalFixture* API_CALL createCircleFixture(float x, float y, float r, PhysicsFixtureConfig config, IntPtr userData) = 0;
-		virtual IPhysicalFixture* API_CALL createBoxFixture(float x, float y, float rx, float ry, float rotation, PhysicsFixtureConfig config, IntPtr userData) = 0;
-		virtual IPhysicalFixture* API_CALL createPolygonFixture(IntPtr vertices2f, int count, PhysicsFixtureConfig config, IntPtr userData) = 0;
+		virtual IPhysicalContactIterator* API_CALL getContactIterator() = 0;
+		virtual IPhysicalFixture* API_CALL createEdgeFixture(float x0, float y0, float x1, float y1, PhysicsFixtureConfig config) = 0;
+		virtual IPhysicalFixture* API_CALL createCircleFixture(float x, float y, float r, PhysicsFixtureConfig config) = 0;
+		virtual IPhysicalFixture* API_CALL createBoxFixture(float x, float y, float rx, float ry, float rotation, PhysicsFixtureConfig config) = 0;
+		virtual IPhysicalFixture* API_CALL createPolygonFixture(IntPtr vertices2f, int count, PhysicsFixtureConfig config) = 0;
 	};
 
 	class IPhysicalFixedJoint : IBaseObject
@@ -618,7 +648,8 @@ namespace llge
 	{
 	public:
 		virtual void API_CALL debugRender(float x, float y, float rx, float ry) = 0;
-		virtual IPhysicalBody* API_CALL createPhysicalBody(PhysicalBodyType type, float x, float y, float rotation, bool fixedRotation, IntPtr userData) = 0;
+		virtual bool API_CALL makeRayCastFirst(float x0, float y0, float x1, float y1, uint mask, IntPtr resultPoint, IntPtr resultNormal) = 0;
+		virtual IPhysicalBody* API_CALL createPhysicalBody(PhysicalBodyType type, float x, float y, float rotation, bool fixedRotation) = 0;
 		virtual void API_CALL disposePhysicalBody(IPhysicalBody* body) = 0;
 		virtual IPhysicalFixedJoint* API_CALL createPhysicalFixedJoint(IPhysicalBody* ground, IPhysicalBody* body, float x, float y, float maxForce) = 0;
 		virtual void API_CALL disposePhysicalJoint(IPhysicalFixedJoint* joint) = 0;

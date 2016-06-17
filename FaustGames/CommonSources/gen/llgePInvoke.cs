@@ -1677,6 +1677,7 @@ namespace llge
 		}
 		
 		[DllImport(Version.Dll)]
+		[return: MarshalAs(UnmanagedType.I1)]
 		static extern private bool llge_ContentManager_update (IntPtr classInstance);
 		public void Dispose ()
 		{
@@ -1724,6 +1725,7 @@ namespace llge
 		}
 		
 		[DllImport(Version.Dll)]
+		[return: MarshalAs(UnmanagedType.I1)]
 		static extern private bool llge_ObbContentProvider_existsContent (IntPtr classInstance, string name);
 		public void OpenContent (string name)
 		{
@@ -1923,6 +1925,35 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private IntPtr llge_PhysicalFixture_getNativeInstance (IntPtr classInstance);
+		public bool TestPolygonOverlap (float x, float y, IntPtr polygon2f, uint count)
+		{
+			return llge_PhysicalFixture_testPolygonOverlap(ClassInstance, x, y, polygon2f, count);
+		}
+		
+		[DllImport(Version.Dll)]
+		[return: MarshalAs(UnmanagedType.I1)]
+		static extern private bool llge_PhysicalFixture_testPolygonOverlap (IntPtr classInstance, float x, float y, IntPtr polygon2f, uint count);
+		public void PauseCollisions (uint group)
+		{
+			llge_PhysicalFixture_pauseCollisions(ClassInstance, group);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_PhysicalFixture_pauseCollisions (IntPtr classInstance, uint group);
+		public void ResumeCollisions ()
+		{
+			llge_PhysicalFixture_resumeCollisions(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_PhysicalFixture_resumeCollisions (IntPtr classInstance);
+		public int GetContactsCounter ()
+		{
+			return llge_PhysicalFixture_getContactsCounter(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private int llge_PhysicalFixture_getContactsCounter (IntPtr classInstance);
 		public float GetDensity ()
 		{
 			return llge_PhysicalFixture_getDensity(ClassInstance);
@@ -1950,6 +1981,7 @@ namespace llge
 		}
 		
 		[DllImport(Version.Dll)]
+		[return: MarshalAs(UnmanagedType.I1)]
 		static extern private bool llge_PhysicalFixture_isSensor (IntPtr classInstance);
 		public uint GetCollidesWith ()
 		{
@@ -2009,6 +2041,148 @@ namespace llge
 		static extern private void llge_PhysicalFixture_setCollisionGroup (IntPtr classInstance, uint value);
 	}
 	
+	public class PhysicalContactIterator
+	{
+		public IntPtr ClassInstance;
+		public void CalcWorldManifold ()
+		{
+			llge_PhysicalContactIterator_CalcWorldManifold(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_PhysicalContactIterator_CalcWorldManifold (IntPtr classInstance);
+		public float GetWorldNormalX ()
+		{
+			return llge_PhysicalContactIterator_getWorldNormalX(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private float llge_PhysicalContactIterator_getWorldNormalX (IntPtr classInstance);
+		public float GetWorldNormalY ()
+		{
+			return llge_PhysicalContactIterator_getWorldNormalY(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private float llge_PhysicalContactIterator_getWorldNormalY (IntPtr classInstance);
+		public bool IsEnabled ()
+		{
+			return llge_PhysicalContactIterator_isEnabled(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		[return: MarshalAs(UnmanagedType.I1)]
+		static extern private bool llge_PhysicalContactIterator_isEnabled (IntPtr classInstance);
+		public bool IsSensorA ()
+		{
+			return llge_PhysicalContactIterator_isSensorA(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		[return: MarshalAs(UnmanagedType.I1)]
+		static extern private bool llge_PhysicalContactIterator_isSensorA (IntPtr classInstance);
+		public uint GetCollisionGroupA ()
+		{
+			return llge_PhysicalContactIterator_getCollisionGroupA(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private uint llge_PhysicalContactIterator_getCollisionGroupA (IntPtr classInstance);
+		public IntPtr GetNativeBodyA ()
+		{
+			return llge_PhysicalContactIterator_getNativeBodyA(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_PhysicalContactIterator_getNativeBodyA (IntPtr classInstance);
+		public float GetNativeBodyAPositionX ()
+		{
+			return llge_PhysicalContactIterator_getNativeBodyAPositionX(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private float llge_PhysicalContactIterator_getNativeBodyAPositionX (IntPtr classInstance);
+		public float GetNativeBodyAPositionY ()
+		{
+			return llge_PhysicalContactIterator_getNativeBodyAPositionY(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private float llge_PhysicalContactIterator_getNativeBodyAPositionY (IntPtr classInstance);
+		public IntPtr GetNativeFixtureA ()
+		{
+			return llge_PhysicalContactIterator_getNativeFixtureA(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_PhysicalContactIterator_getNativeFixtureA (IntPtr classInstance);
+		public bool IsSensorB ()
+		{
+			return llge_PhysicalContactIterator_isSensorB(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		[return: MarshalAs(UnmanagedType.I1)]
+		static extern private bool llge_PhysicalContactIterator_isSensorB (IntPtr classInstance);
+		public uint GetCollisionGroupB ()
+		{
+			return llge_PhysicalContactIterator_getCollisionGroupB(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private uint llge_PhysicalContactIterator_getCollisionGroupB (IntPtr classInstance);
+		public IntPtr GetNativeBodyB ()
+		{
+			return llge_PhysicalContactIterator_getNativeBodyB(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_PhysicalContactIterator_getNativeBodyB (IntPtr classInstance);
+		public float GetNativeBodyBPositionX ()
+		{
+			return llge_PhysicalContactIterator_getNativeBodyBPositionX(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private float llge_PhysicalContactIterator_getNativeBodyBPositionX (IntPtr classInstance);
+		public float GetNativeBodyBPositionY ()
+		{
+			return llge_PhysicalContactIterator_getNativeBodyBPositionY(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private float llge_PhysicalContactIterator_getNativeBodyBPositionY (IntPtr classInstance);
+		public IntPtr GetNativeFixtureB ()
+		{
+			return llge_PhysicalContactIterator_getNativeFixtureB(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_PhysicalContactIterator_getNativeFixtureB (IntPtr classInstance);
+		public void Reset ()
+		{
+			llge_PhysicalContactIterator_reset(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_PhysicalContactIterator_reset (IntPtr classInstance);
+		public bool IsEnd ()
+		{
+			return llge_PhysicalContactIterator_isEnd(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		[return: MarshalAs(UnmanagedType.I1)]
+		static extern private bool llge_PhysicalContactIterator_isEnd (IntPtr classInstance);
+		public void Next ()
+		{
+			llge_PhysicalContactIterator_next(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_PhysicalContactIterator_next (IntPtr classInstance);
+	}
+	
 	public class PhysicalBody
 	{
 		public IntPtr ClassInstance;
@@ -2054,27 +2228,41 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private float llge_PhysicalBody_getRotation (IntPtr classInstance);
-		public PhysicalFixture CreateCircleFixture (float x, float y, float r, PhysicsFixtureConfig config, IntPtr userData)
+		public PhysicalContactIterator GetContactIterator ()
 		{
-			return new PhysicalFixture{ ClassInstance = llge_PhysicalBody_createCircleFixture(ClassInstance, x, y, r, config, userData) };
+			return new PhysicalContactIterator{ ClassInstance = llge_PhysicalBody_getContactIterator(ClassInstance) };
 		}
 		
 		[DllImport(Version.Dll)]
-		static extern private IntPtr llge_PhysicalBody_createCircleFixture (IntPtr classInstance, float x, float y, float r, PhysicsFixtureConfig config, IntPtr userData);
-		public PhysicalFixture CreateBoxFixture (float x, float y, float rx, float ry, float rotation, PhysicsFixtureConfig config, IntPtr userData)
+		static extern private IntPtr llge_PhysicalBody_getContactIterator (IntPtr classInstance);
+		public PhysicalFixture CreateEdgeFixture (float x0, float y0, float x1, float y1, PhysicsFixtureConfig config)
 		{
-			return new PhysicalFixture{ ClassInstance = llge_PhysicalBody_createBoxFixture(ClassInstance, x, y, rx, ry, rotation, config, userData) };
+			return new PhysicalFixture{ ClassInstance = llge_PhysicalBody_createEdgeFixture(ClassInstance, x0, y0, x1, y1, config) };
 		}
 		
 		[DllImport(Version.Dll)]
-		static extern private IntPtr llge_PhysicalBody_createBoxFixture (IntPtr classInstance, float x, float y, float rx, float ry, float rotation, PhysicsFixtureConfig config, IntPtr userData);
-		public PhysicalFixture CreatePolygonFixture (IntPtr vertices2f, int count, PhysicsFixtureConfig config, IntPtr userData)
+		static extern private IntPtr llge_PhysicalBody_createEdgeFixture (IntPtr classInstance, float x0, float y0, float x1, float y1, PhysicsFixtureConfig config);
+		public PhysicalFixture CreateCircleFixture (float x, float y, float r, PhysicsFixtureConfig config)
 		{
-			return new PhysicalFixture{ ClassInstance = llge_PhysicalBody_createPolygonFixture(ClassInstance, vertices2f, count, config, userData) };
+			return new PhysicalFixture{ ClassInstance = llge_PhysicalBody_createCircleFixture(ClassInstance, x, y, r, config) };
 		}
 		
 		[DllImport(Version.Dll)]
-		static extern private IntPtr llge_PhysicalBody_createPolygonFixture (IntPtr classInstance, IntPtr vertices2f, int count, PhysicsFixtureConfig config, IntPtr userData);
+		static extern private IntPtr llge_PhysicalBody_createCircleFixture (IntPtr classInstance, float x, float y, float r, PhysicsFixtureConfig config);
+		public PhysicalFixture CreateBoxFixture (float x, float y, float rx, float ry, float rotation, PhysicsFixtureConfig config)
+		{
+			return new PhysicalFixture{ ClassInstance = llge_PhysicalBody_createBoxFixture(ClassInstance, x, y, rx, ry, rotation, config) };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_PhysicalBody_createBoxFixture (IntPtr classInstance, float x, float y, float rx, float ry, float rotation, PhysicsFixtureConfig config);
+		public PhysicalFixture CreatePolygonFixture (IntPtr vertices2f, int count, PhysicsFixtureConfig config)
+		{
+			return new PhysicalFixture{ ClassInstance = llge_PhysicalBody_createPolygonFixture(ClassInstance, vertices2f, count, config) };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_PhysicalBody_createPolygonFixture (IntPtr classInstance, IntPtr vertices2f, int count, PhysicsFixtureConfig config);
 	}
 	
 	public class PhysicalFixedJoint
@@ -2127,13 +2315,21 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private void llge_PhysicalWorld_debugRender (IntPtr classInstance, float x, float y, float rx, float ry);
-		public PhysicalBody CreatePhysicalBody (PhysicalBodyType type, float x, float y, float rotation, bool fixedRotation, IntPtr userData)
+		public bool MakeRayCastFirst (float x0, float y0, float x1, float y1, uint mask, IntPtr resultPoint, IntPtr resultNormal)
 		{
-			return new PhysicalBody{ ClassInstance = llge_PhysicalWorld_createPhysicalBody(ClassInstance, type, x, y, rotation, fixedRotation, userData) };
+			return llge_PhysicalWorld_makeRayCastFirst(ClassInstance, x0, y0, x1, y1, mask, resultPoint, resultNormal);
 		}
 		
 		[DllImport(Version.Dll)]
-		static extern private IntPtr llge_PhysicalWorld_createPhysicalBody (IntPtr classInstance, PhysicalBodyType type, float x, float y, float rotation, bool fixedRotation, IntPtr userData);
+		[return: MarshalAs(UnmanagedType.I1)]
+		static extern private bool llge_PhysicalWorld_makeRayCastFirst (IntPtr classInstance, float x0, float y0, float x1, float y1, uint mask, IntPtr resultPoint, IntPtr resultNormal);
+		public PhysicalBody CreatePhysicalBody (PhysicalBodyType type, float x, float y, float rotation, bool fixedRotation)
+		{
+			return new PhysicalBody{ ClassInstance = llge_PhysicalWorld_createPhysicalBody(ClassInstance, type, x, y, rotation, fixedRotation) };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_PhysicalWorld_createPhysicalBody (IntPtr classInstance, PhysicalBodyType type, float x, float y, float rotation, bool fixedRotation);
 		public void DisposePhysicalBody (PhysicalBody body)
 		{
 			llge_PhysicalWorld_disposePhysicalBody(ClassInstance, body.ClassInstance);

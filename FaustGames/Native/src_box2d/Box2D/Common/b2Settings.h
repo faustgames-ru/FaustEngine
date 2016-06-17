@@ -49,6 +49,10 @@ typedef double float64;
 
 // Collision
 
+/// The maximum number of vertices on a convex polygon. You cannot increase
+/// this too much because b2BlockAllocator has a maximum object size.
+#define b2_ReEnableContact	false
+
 /// The maximum number of contact points between two convex shapes. Do
 /// not change this value.
 #define b2_maxManifoldPoints	2

@@ -20,6 +20,32 @@ namespace physics
 		delete this;
 	}
 
+	b2Shape* PhysicalEdge::getShape()
+	{
+		return &_shape;
+	}
+
+	PhysicalEdge::PhysicalEdge()
+	{
+	}
+
+	void PhysicalEdge::setEdge(float worldX1, float worldY1, float worldX2, float worldY2)
+	{
+		_shape.Set(b2Vec2(worldX1, worldY1), b2Vec2(worldX2, worldY2));
+	}
+
+	void PhysicalEdge::setV0(float worldX0, float worldY0)
+	{
+		_shape.m_vertex0.Set(worldX0, worldY0);
+		_shape.m_hasVertex0 = true;
+	}
+
+	void PhysicalEdge::setV3(float worldX0, float worldY0)
+	{
+		_shape.m_vertex3.Set(worldX0, worldY0);
+		_shape.m_hasVertex3 = true;
+	}
+
 	b2Shape* PhysicalCircle::getShape()
 	{
 		return &_shape;

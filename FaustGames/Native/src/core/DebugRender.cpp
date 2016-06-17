@@ -64,13 +64,13 @@ namespace core
 		uint s;
 		if (closed)
 		{
-			j = 0;
-			s = 1;
+			j = count - 1;
+			s = 0;
 		}
 		else
 		{
-			j = count - 1;
-			s = 0;
+			j = 0;
+			s = 1;
 		}
 		for (uint i = s; i < count; i++)
 		{
@@ -90,13 +90,13 @@ namespace core
 		uint s;
 		if (closed)
 		{
-			j = 0;
-			s = 1;
+			j = count - 1;
+			s = 0;
 		}
 		else
 		{
-			j = count - 1;
-			s = 0;
+			j = 0;
+			s = 1;
 		}
 		for (uint i = s; i < count; i++)
 		{
@@ -111,13 +111,13 @@ namespace core
 		uint s;
 		if (closed)
 		{
-			j = 0;
-			s = 1;
+			j = count - 1;
+			s = 0;
 		}
 		else
 		{
-			j = count - 1;
-			s = 0;
+			j = 0;
+			s = 1;
 		}
 		for (uint i = s; i < count; i++)
 		{

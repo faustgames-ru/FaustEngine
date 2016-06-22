@@ -1933,6 +1933,14 @@ namespace llge
 		[DllImport(Version.Dll)]
 		[return: MarshalAs(UnmanagedType.I1)]
 		static extern private bool llge_PhysicalFixture_testPolygonOverlap (IntPtr classInstance, float x, float y, IntPtr polygon2f, uint count);
+		public bool TestOverlap (PhysicalFixture fixture)
+		{
+			return llge_PhysicalFixture_testOverlap(ClassInstance, fixture.ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		[return: MarshalAs(UnmanagedType.I1)]
+		static extern private bool llge_PhysicalFixture_testOverlap (IntPtr classInstance, IntPtr fixture);
 		public void PauseCollisions (uint group)
 		{
 			llge_PhysicalFixture_pauseCollisions(ClassInstance, group);
@@ -2207,6 +2215,20 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private float llge_PhysicalBody_getVelocityY (IntPtr classInstance);
+		public void SetVelocityX (float x)
+		{
+			llge_PhysicalBody_setVelocityX(ClassInstance, x);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_PhysicalBody_setVelocityX (IntPtr classInstance, float x);
+		public void SetVelocityY (float y)
+		{
+			llge_PhysicalBody_setVelocityY(ClassInstance, y);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_PhysicalBody_setVelocityY (IntPtr classInstance, float y);
 		public float GetX ()
 		{
 			return llge_PhysicalBody_getX(ClassInstance);
@@ -2221,6 +2243,20 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private float llge_PhysicalBody_getY (IntPtr classInstance);
+		public void SetX (float x)
+		{
+			llge_PhysicalBody_setX(ClassInstance, x);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_PhysicalBody_setX (IntPtr classInstance, float x);
+		public void SetY (float y)
+		{
+			llge_PhysicalBody_setY(ClassInstance, y);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_PhysicalBody_setY (IntPtr classInstance, float y);
 		public float GetRotation ()
 		{
 			return llge_PhysicalBody_getRotation(ClassInstance);
@@ -2228,6 +2264,13 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private float llge_PhysicalBody_getRotation (IntPtr classInstance);
+		public void SetRotation (float value)
+		{
+			llge_PhysicalBody_setRotation(ClassInstance, value);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_PhysicalBody_setRotation (IntPtr classInstance, float value);
 		public PhysicalContactIterator GetContactIterator ()
 		{
 			return new PhysicalContactIterator{ ClassInstance = llge_PhysicalBody_getContactIterator(ClassInstance) };

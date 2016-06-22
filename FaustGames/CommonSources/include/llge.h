@@ -574,6 +574,7 @@ namespace llge
 	public:
 		virtual IntPtr API_CALL getNativeInstance() = 0;
 		virtual bool API_CALL testPolygonOverlap(float x, float y, IntPtr polygon2f, uint count) = 0;
+		virtual bool API_CALL testOverlap(IPhysicalFixture* fixture) = 0;
 		virtual void API_CALL pauseCollisions(uint group) = 0;
 		virtual void API_CALL resumeCollisions() = 0;
 		virtual int API_CALL getContactsCounter() = 0;
@@ -623,9 +624,14 @@ namespace llge
 
 		virtual float API_CALL getVelocityX() = 0;
 		virtual float API_CALL getVelocityY() = 0;
+		virtual void API_CALL setVelocityX(float x) = 0;
+		virtual void API_CALL setVelocityY(float y) = 0;
 		virtual float API_CALL getX() = 0;
 		virtual float API_CALL getY() = 0;
+		virtual void API_CALL setX(float x) = 0;
+		virtual void API_CALL setY(float y) = 0;
 		virtual float API_CALL getRotation() = 0;
+		virtual void API_CALL setRotation(float value) = 0;
 		virtual IPhysicalContactIterator* API_CALL getContactIterator() = 0;
 		virtual IPhysicalFixture* API_CALL createEdgeFixture(float x0, float y0, float x1, float y1, PhysicsFixtureConfig config) = 0;
 		virtual IPhysicalFixture* API_CALL createCircleFixture(float x, float y, float r, PhysicsFixtureConfig config) = 0;

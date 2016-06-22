@@ -56,8 +56,8 @@ namespace physics
 		uint getDebugFixtureColor(b2Fixture * fixture);
 		void debugRender();
 		void debugRenderBody(b2Body * body);
-		void debugRenderFixture(core::Vector2 center, b2Fixture * fixture);
-		void debugRenderShape(uint color, core::Vector2 center, b2Shape * shape);
+		void debugRenderFixture(core::Vector2 center, float sin, float cos, b2Fixture * fixture);
+		void debugRenderShape(uint color, core::Vector2 center, float sin, float cos, b2Shape * shape);
 
 		bool rayCastFirst(float x0, float y0, float x1, float y1, uint mask, core::Vector2 &result, core::Vector2 &resultNormal);
 

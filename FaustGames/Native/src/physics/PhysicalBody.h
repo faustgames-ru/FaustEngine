@@ -48,9 +48,14 @@ namespace physics
 		virtual IntPtr API_CALL getNativeInstance() OVERRIDE;
 		virtual float API_CALL getVelocityX() OVERRIDE;
 		virtual float API_CALL getVelocityY() OVERRIDE;
+		virtual void API_CALL setVelocityX(float x) OVERRIDE;
+		virtual void API_CALL setVelocityY(float y) OVERRIDE;
 		virtual float API_CALL getX() OVERRIDE;
 		virtual float API_CALL getY() OVERRIDE;
+		virtual void API_CALL setX(float x) OVERRIDE;
+		virtual void API_CALL setY(float y) OVERRIDE;
 		virtual float API_CALL getRotation() OVERRIDE;
+		virtual void API_CALL setRotation(float value) OVERRIDE;
 		virtual llge::IPhysicalContactIterator* API_CALL getContactIterator() OVERRIDE;
 		virtual llge::IPhysicalFixture* API_CALL createEdgeFixture(float x0, float y0, float x1, float y1, llge::PhysicsFixtureConfig config) OVERRIDE;
 		virtual llge::IPhysicalFixture* API_CALL createCircleFixture(float x, float y, float r, llge::PhysicsFixtureConfig config) OVERRIDE;

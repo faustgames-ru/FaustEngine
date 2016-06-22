@@ -26,6 +26,13 @@ namespace physics
 		return polygonOverlap(x, y, static_cast<const core::Vector2*>(polygon2f), count);
 	}
 
+	bool PhysicalFixture::testOverlap(llge::IPhysicalFixture* f)
+	{
+		PhysicalFixture* other = static_cast<PhysicalFixture*>(f->getNativeInstance());
+		b2Fixture* otherF = other->fixture;
+		return b2TestOverlap(otherF->GetShape(), 0, fixture->GetShape(), 0, otherF->GetBody()->GetTransform(), fixture->GetBody()->GetTransform());
+	}
+
 	void PhysicalFixture::pauseCollisions(uint group)
 	{
 		_collisionGroup = fixture->GetFilterData().maskBits;

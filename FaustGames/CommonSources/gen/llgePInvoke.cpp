@@ -1171,6 +1171,11 @@ namespace llge
 		return classInstance->testPolygonOverlap(x, y, polygon2f, count);
 	}
 	
+	extern "C" DLLEXPORT bool API_CALL llge_PhysicalFixture_testOverlap (IPhysicalFixture * classInstance, IPhysicalFixture * fixture)
+	{
+		return classInstance->testOverlap(fixture);
+	}
+	
 	extern "C" DLLEXPORT void API_CALL llge_PhysicalFixture_pauseCollisions (IPhysicalFixture * classInstance, uint group)
 	{
 		classInstance->pauseCollisions(group);
@@ -1356,6 +1361,16 @@ namespace llge
 		return classInstance->getVelocityY();
 	}
 	
+	extern "C" DLLEXPORT void API_CALL llge_PhysicalBody_setVelocityX (IPhysicalBody * classInstance, float x)
+	{
+		classInstance->setVelocityX(x);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_PhysicalBody_setVelocityY (IPhysicalBody * classInstance, float y)
+	{
+		classInstance->setVelocityY(y);
+	}
+	
 	extern "C" DLLEXPORT float API_CALL llge_PhysicalBody_getX (IPhysicalBody * classInstance)
 	{
 		return classInstance->getX();
@@ -1366,9 +1381,24 @@ namespace llge
 		return classInstance->getY();
 	}
 	
+	extern "C" DLLEXPORT void API_CALL llge_PhysicalBody_setX (IPhysicalBody * classInstance, float x)
+	{
+		classInstance->setX(x);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_PhysicalBody_setY (IPhysicalBody * classInstance, float y)
+	{
+		classInstance->setY(y);
+	}
+	
 	extern "C" DLLEXPORT float API_CALL llge_PhysicalBody_getRotation (IPhysicalBody * classInstance)
 	{
 		return classInstance->getRotation();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_PhysicalBody_setRotation (IPhysicalBody * classInstance, float value)
+	{
+		classInstance->setRotation(value);
 	}
 	
 	extern "C" DLLEXPORT IPhysicalContactIterator * API_CALL llge_PhysicalBody_getContactIterator (IPhysicalBody * classInstance)

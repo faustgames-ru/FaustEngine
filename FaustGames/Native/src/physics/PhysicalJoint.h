@@ -14,6 +14,10 @@ namespace physics
 		PhysicalConverter dimensions;
 		b2Joint * joint;
 		PhysicalJoint(b2Joint * jointInstance, PhysicalConverter dimensionsValue);
+		virtual ~PhysicalJoint()
+		{
+			
+		}
 	};
 	
 	class PhysicalFixedJoint: public PhysicalJoint, public llge::IPhysicalFixedJoint
@@ -34,7 +38,6 @@ namespace physics
 	private:
 		b2MouseJoint * _joint;
 	};
-
 }
 
 #endif /*PHYSICAL_JOINT_H*/

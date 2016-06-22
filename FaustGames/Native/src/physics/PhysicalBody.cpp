@@ -117,7 +117,6 @@ namespace physics
 	{
 		for (uint i = 0; i < _fistures.size(); i++)
 		{
-			body->DestroyFixture(_fistures[i]->fixture);
 			delete _fistures[i];
 		}
 	}
@@ -164,6 +163,22 @@ namespace physics
 		return _velocity.fromWorld(body->GetLinearVelocity().y);
 	}
 
+	void PhysicalBody::setVelocityX(float x)
+	{
+		b2Vec2 v = body->GetLinearVelocity();
+		v.x = _velocity.toWorld(x);
+		body->SetLinearVelocity(v);
+		body->SetAwake(true);
+	}
+
+	void PhysicalBody::setVelocityY(float y)
+	{
+		b2Vec2 v = body->GetLinearVelocity();
+		v.y = _velocity.toWorld(y);
+		body->SetLinearVelocity(v);
+		body->SetAwake(true);
+	}
+
 	float PhysicalBody::getX()
 	{
 		return _dimensions.fromWorld(body->GetPosition().x);
@@ -174,9 +189,33 @@ namespace physics
 		return _dimensions.fromWorld(body->GetPosition().y);
 	}
 
+	void PhysicalBody::setX(float x)
+	{
+		b2Vec2 pos = body->GetPosition();
+		pos.x = _dimensions.toWorld(x);
+		body->SetTransform(pos, body->GetAngle());
+		body->SetLinearVelocity(b2Vec2(0.0f, 0.0f));
+		body->SetAwake(true);
+	}
+
+	void PhysicalBody::setY(float y)
+	{
+		b2Vec2 pos = body->GetPosition();
+		pos.y = _dimensions.toWorld(y);
+		body->SetTransform(pos, body->GetAngle());
+		body->SetAngularVelocity(0.0f);
+		body->SetLinearVelocity(b2Vec2(0.0f, 0.0f));
+		body->SetAwake(true);
+	}
+
 	float PhysicalBody::getRotation()
 	{
 		return body->GetAngle();
+	}
+
+	void PhysicalBody::setRotation(float value)
+	{
+		body->SetTransform(body->GetPosition(), value);
 	}
 
 	llge::IPhysicalContactIterator* PhysicalBody::getContactIterator()

@@ -142,20 +142,22 @@ namespace physics
 		{
 			center.setX(_dimensions.fromWorld(body->GetPosition().x));
 			center.setY(_dimensions.fromWorld(body->GetPosition().y));
-			debugRenderFixture(center, f);
+			float sin = core::Math::sin(body->GetAngle());
+			float cos = core::Math::cos(body->GetAngle());
+			debugRenderFixture(center, sin, cos, f);
 			f = f->GetNext();
 		}
 	}
 
-	void PhysicalWorld::debugRenderFixture(core::Vector2 center, b2Fixture* fixture)
+	void PhysicalWorld::debugRenderFixture(core::Vector2 center, float sin, float cos, b2Fixture* fixture)
 	{
 		core::DebugDraw *draw = &core::DebugDraw::Default;
 		b2Shape* shape = fixture->GetShape();
 		uint color = getDebugFixtureColor(fixture);
-		debugRenderShape(color, center, shape);	
+		debugRenderShape(color, center, sin, cos, shape);
 	}
 
-	void PhysicalWorld::debugRenderShape(uint color, core::Vector2 center, b2Shape* shape)
+	void PhysicalWorld::debugRenderShape(uint color, core::Vector2 center, float sin, float cos, b2Shape* shape)
 	{
 		core::DebugDraw *draw = &core::DebugDraw::Default;
 
@@ -163,11 +165,14 @@ namespace physics
 		b2EdgeShape *edge;
 		b2PolygonShape *polygon;
 		core::Vector3 a, b;
+		core::Vector2 v0;
+		core::Vector2 v1;
 		uint count;
 		switch (shape->GetType())
 		{
 		case b2Shape::e_edge:
-			edge = dynamic_cast<b2EdgeShape*>(shape);
+			// todo: rotation support
+			edge = static_cast<b2EdgeShape*>(shape);
 			a.setX(center.getX() + _dimensions.fromWorld(edge->m_vertex1.x));
 			a.setY(center.getY() + _dimensions.fromWorld(edge->m_vertex1.y));
 			a.setZ(0);
@@ -188,7 +193,7 @@ namespace physics
 			}
 			if (!edge->m_hasVertex3)
 			{
-				core::Vector2 n = (core::Vector2(edge->m_vertex1.x - edge->m_vertex2.x, edge->m_vertex1.y - edge->m_vertex2.y)).normalize().rotate90cw();
+				core::Vector2 n = (core::Vector2(edge->m_vertex1.x - edge->m_vertex2.x, edge->m_vertex1.y - edge->m_vertex2.y)).normalize().rotate90cw();				
 				a.setX(center.getX() + _dimensions.fromWorld(edge->m_vertex2.x) + n.getX() * 5.0f);
 				a.setY(center.getY() + _dimensions.fromWorld(edge->m_vertex2.y) + n.getY() * 5.0f);
 				a.setZ(0);
@@ -199,22 +204,29 @@ namespace physics
 			}
 			break;
 		case b2Shape::e_circle:
-			circle = dynamic_cast<b2CircleShape *>(shape);
-			a.setX(center.getX() + _dimensions.fromWorld(circle->m_p.x));
-			a.setY(center.getY() + _dimensions.fromWorld(circle->m_p.y));
+			circle = static_cast<b2CircleShape *>(shape);
+			v0 = core::Vector2(_dimensions.fromWorld(circle->m_p.x), _dimensions.fromWorld(circle->m_p.y));
+			v0 = v0.rotate(cos, sin);
+
+			a.setX(center.getX() + v0.getX());
+			a.setY(center.getY() + v0.getY());
 			a.setZ(0);
 			draw->circle(color, a, _dimensions.fromWorld(circle->m_radius));
 			break;
 		case b2Shape::e_polygon:
-			polygon = dynamic_cast<b2PolygonShape *>(shape);
+			polygon = static_cast<b2PolygonShape *>(shape);
 			count = polygon->GetVertexCount();
 			for (uint i = 0, j = count - 1; i< count; ++i)
 			{
-				a.setX(center.getX() + _dimensions.fromWorld(polygon->GetVertex(j).x));
-				a.setY(center.getY() + _dimensions.fromWorld(polygon->GetVertex(j).y));
+				v0 = core::Vector2(_dimensions.fromWorld(polygon->GetVertex(j).x), _dimensions.fromWorld(polygon->GetVertex(j).y));
+				v1 = core::Vector2(_dimensions.fromWorld(polygon->GetVertex(i).x), _dimensions.fromWorld(polygon->GetVertex(i).y));				
+				v0 = v0.rotate(cos, sin);
+				v1 = v1.rotate(cos, sin);
+				a.setX(center.getX() + v0.getX());
+				a.setY(center.getY() + v0.getY());
 				a.setZ(0);
-				b.setX(center.getX() + _dimensions.fromWorld(polygon->GetVertex(i).x));
-				b.setY(center.getY() + _dimensions.fromWorld(polygon->GetVertex(i).y));
+				b.setX(center.getX() + v1.getX());
+				b.setY(center.getY() + v1.getY());
 				b.setZ(0);
 				draw->edge(color, a, b);
 				j = i;
@@ -279,7 +291,9 @@ namespace physics
 		b2Body* body = fixture->GetBody();
 		center.setX(_dimensions.fromWorld(body->GetPosition().x));
 		center.setY(_dimensions.fromWorld(body->GetPosition().y));
-		_world->debugRenderFixture(center, fixture);
+		float sin = core::Math::sin(body->GetAngle());
+		float cos = core::Math::cos(body->GetAngle());
+		_world->debugRenderFixture(center, sin, cos, fixture);
 		return true;
 	}
 

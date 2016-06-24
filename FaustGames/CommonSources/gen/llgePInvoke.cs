@@ -751,6 +751,93 @@ namespace llge
 		static extern private void llge_QuadTree_dispose (IntPtr classInstance);
 	}
 	
+	public class TerrainClipperResult
+	{
+		public IntPtr ClassInstance;
+		public int GetMeshesCount ()
+		{
+			return llge_TerrainClipperResult_getMeshesCount(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private int llge_TerrainClipperResult_getMeshesCount (IntPtr classInstance);
+		public int GetVerticesCount (int meshIndex)
+		{
+			return llge_TerrainClipperResult_getVerticesCount(ClassInstance, meshIndex);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private int llge_TerrainClipperResult_getVerticesCount (IntPtr classInstance, int meshIndex);
+		public int GetIndicesCount (int meshIndex)
+		{
+			return llge_TerrainClipperResult_getIndicesCount(ClassInstance, meshIndex);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private int llge_TerrainClipperResult_getIndicesCount (IntPtr classInstance, int meshIndex);
+		public void GetVertices (int meshIndex, IntPtr vertices)
+		{
+			llge_TerrainClipperResult_getVertices(ClassInstance, meshIndex, vertices);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_TerrainClipperResult_getVertices (IntPtr classInstance, int meshIndex, IntPtr vertices);
+		public void GetIndices (int meshIndex, IntPtr indices)
+		{
+			llge_TerrainClipperResult_getIndices(ClassInstance, meshIndex, indices);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_TerrainClipperResult_getIndices (IntPtr classInstance, int meshIndex, IntPtr indices);
+	}
+	
+	public class TerrainClipper
+	{
+		public IntPtr ClassInstance;
+		public void ClearClipper ()
+		{
+			llge_TerrainClipper_clearClipper(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_TerrainClipper_clearClipper (IntPtr classInstance);
+		public void AddClipperContour (IntPtr vertices2f, uint count)
+		{
+			llge_TerrainClipper_addClipperContour(ClassInstance, vertices2f, count);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_TerrainClipper_addClipperContour (IntPtr classInstance, IntPtr vertices2f, uint count);
+		public void BuildClipper (int sizeX, int sizeY)
+		{
+			llge_TerrainClipper_buildClipper(ClassInstance, sizeX, sizeY);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_TerrainClipper_buildClipper (IntPtr classInstance, int sizeX, int sizeY);
+		public TerrainClipperResult GetIntersectionResult ()
+		{
+			return new TerrainClipperResult{ ClassInstance = llge_TerrainClipper_getIntersectionResult(ClassInstance) };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_TerrainClipper_getIntersectionResult (IntPtr classInstance);
+		public TerrainClipperResult GetDifferenceResult ()
+		{
+			return new TerrainClipperResult{ ClassInstance = llge_TerrainClipper_getDifferenceResult(ClassInstance) };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_TerrainClipper_getDifferenceResult (IntPtr classInstance);
+		public void Dispose ()
+		{
+			llge_TerrainClipper_dispose(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_TerrainClipper_dispose (IntPtr classInstance);
+	}
+	
 	public class GeometryFactory
 	{
 		public IntPtr ClassInstance;
@@ -768,6 +855,13 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private IntPtr llge_GeometryFactory_createMarchingSquares (IntPtr classInstance);
+		public TerrainClipper CreateTerrainClipper ()
+		{
+			return new TerrainClipper{ ClassInstance = llge_GeometryFactory_createTerrainClipper(ClassInstance) };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_GeometryFactory_createTerrainClipper (IntPtr classInstance);
 		public void Dispose ()
 		{
 			llge_GeometryFactory_dispose(ClassInstance);

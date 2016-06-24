@@ -431,6 +431,61 @@ namespace llge
 		classInstance->dispose();
 	}
 	
+	extern "C" DLLEXPORT int API_CALL llge_TerrainClipperResult_getMeshesCount (ITerrainClipperResult * classInstance)
+	{
+		return classInstance->getMeshesCount();
+	}
+	
+	extern "C" DLLEXPORT int API_CALL llge_TerrainClipperResult_getVerticesCount (ITerrainClipperResult * classInstance, int meshIndex)
+	{
+		return classInstance->getVerticesCount(meshIndex);
+	}
+	
+	extern "C" DLLEXPORT int API_CALL llge_TerrainClipperResult_getIndicesCount (ITerrainClipperResult * classInstance, int meshIndex)
+	{
+		return classInstance->getIndicesCount(meshIndex);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_TerrainClipperResult_getVertices (ITerrainClipperResult * classInstance, int meshIndex, IntPtr vertices)
+	{
+		classInstance->getVertices(meshIndex, vertices);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_TerrainClipperResult_getIndices (ITerrainClipperResult * classInstance, int meshIndex, IntPtr indices)
+	{
+		classInstance->getIndices(meshIndex, indices);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_TerrainClipper_clearClipper (ITerrainClipper * classInstance)
+	{
+		classInstance->clearClipper();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_TerrainClipper_addClipperContour (ITerrainClipper * classInstance, IntPtr vertices2f, uint count)
+	{
+		classInstance->addClipperContour(vertices2f, count);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_TerrainClipper_buildClipper (ITerrainClipper * classInstance, int sizeX, int sizeY)
+	{
+		classInstance->buildClipper(sizeX, sizeY);
+	}
+	
+	extern "C" DLLEXPORT ITerrainClipperResult * API_CALL llge_TerrainClipper_getIntersectionResult (ITerrainClipper * classInstance)
+	{
+		return classInstance->getIntersectionResult();
+	}
+	
+	extern "C" DLLEXPORT ITerrainClipperResult * API_CALL llge_TerrainClipper_getDifferenceResult (ITerrainClipper * classInstance)
+	{
+		return classInstance->getDifferenceResult();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_TerrainClipper_dispose (ITerrainClipper * classInstance)
+	{
+		classInstance->dispose();
+	}
+	
 	extern "C" DLLEXPORT IQuadTree * API_CALL llge_GeometryFactory_createQuadTree (IGeometryFactory * classInstance)
 	{
 		return classInstance->createQuadTree();
@@ -439,6 +494,11 @@ namespace llge
 	extern "C" DLLEXPORT IMarchingSquares * API_CALL llge_GeometryFactory_createMarchingSquares (IGeometryFactory * classInstance)
 	{
 		return classInstance->createMarchingSquares();
+	}
+	
+	extern "C" DLLEXPORT ITerrainClipper * API_CALL llge_GeometryFactory_createTerrainClipper (IGeometryFactory * classInstance)
+	{
+		return classInstance->createTerrainClipper();
 	}
 	
 	extern "C" DLLEXPORT void API_CALL llge_GeometryFactory_dispose (IGeometryFactory * classInstance)

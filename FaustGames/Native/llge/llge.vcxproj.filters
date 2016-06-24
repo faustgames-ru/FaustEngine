@@ -773,6 +773,9 @@
     <ClInclude Include="..\src\core\DebugRender.h">
       <Filter>core</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\geometry\TerrainClipper.h">
+      <Filter>geometry</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\CommonSources\gen\llgePInvoke.cpp">
@@ -1406,6 +1409,9 @@
     </ClCompile>
     <ClCompile Include="..\src\core\DebugRender.cpp">
       <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\geometry\TerrainClipper.cpp">
+      <Filter>geometry</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

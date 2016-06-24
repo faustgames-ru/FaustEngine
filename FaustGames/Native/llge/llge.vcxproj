@@ -229,6 +229,7 @@
     <ClInclude Include="..\src\geometry\Quadtree2d.h" />
     <ClInclude Include="..\src\geometry\Quadtree2dItem.h" />
     <ClInclude Include="..\src\geometry\Quadtree2dNode.h" />
+    <ClInclude Include="..\src\geometry\TerrainClipper.h" />
     <ClInclude Include="..\src\graphics\AttributeInfo.h" />
     <ClInclude Include="..\src\graphics\Attributes.h" />
     <ClInclude Include="..\src\graphics\Batcher.h" />
@@ -426,6 +427,7 @@
     <ClCompile Include="..\src\geometry\Aabb2d.cpp" />
     <ClCompile Include="..\src\geometry\Quadtree2d.cpp" />
     <ClCompile Include="..\src\geometry\Quadtree2dNode.cpp" />
+    <ClCompile Include="..\src\geometry\TerrainClipper.cpp" />
     <ClCompile Include="..\src\graphics\AttributeInfo.cpp" />
     <ClCompile Include="..\src\graphics\Attributes.cpp" />
     <ClCompile Include="..\src\graphics\Color.cpp" />

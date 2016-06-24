@@ -4,6 +4,7 @@
 
 #include <limits>
 #include "../core/MarchingSquares.h"
+#include "../geometry/TerrainClipper.h"
 
 using namespace geometry;
 using namespace core;
@@ -72,6 +73,11 @@ namespace llge
 		virtual IMarchingSquares* API_CALL createMarchingSquares()
 		{
 			return new MarchingSquares();
+		}
+
+		virtual ITerrainClipper* API_CALL createTerrainClipper()
+		{
+			return new TerrainClipper();
 		}
 
 		virtual void API_CALL dispose()

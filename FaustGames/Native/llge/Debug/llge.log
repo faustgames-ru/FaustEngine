@@ -1,7 +1,16 @@
-﻿  PhysicalFactory.cpp
-  Generating Code...
-  Compiling...
-  PhysicalWorld.cpp
-  PhysicalJoint.cpp
-  Generating Code...
+﻿  TerrainClipper.cpp
+c:\_faust\faustengine\faustgames\native\src\geometry\terrainclipper.cpp(27): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\geometry\terrainclipper.cpp(28): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\geometry\terrainclipper.cpp(33): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\geometry\terrainclipper.cpp(36): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\geometry\terrainclipper.cpp(46): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\geometry\terrainclipper.cpp(49): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\geometry\terrainclipper.cpp(76): warning C4244: '+=': conversion from 'ClipperLib::cInt' to 'int', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\geometry\terrainclipper.cpp(84): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\geometry\terrainclipper.cpp(268): warning C4244: 'argument': conversion from 'const ClipperLib::cInt' to 'double', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\geometry\terrainclipper.cpp(271): warning C4244: 'argument': conversion from 'const ClipperLib::cInt' to 'float', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\geometry\terrainclipper.cpp(330): warning C4244: 'argument': conversion from 'const int' to 'float', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\geometry\terrainclipper.cpp(331): warning C4244: 'argument': conversion from 'const int' to 'float', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\geometry\terrainclipper.cpp(332): warning C4244: 'argument': conversion from 'const int' to 'float', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\geometry\terrainclipper.cpp(333): warning C4244: 'argument': conversion from 'const int' to 'float', possible loss of data
   llge.vcxproj -> C:\work\sources\github\moon\Solutions\Debug\llge.dll

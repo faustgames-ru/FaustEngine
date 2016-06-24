@@ -268,11 +268,34 @@ namespace llge
 		virtual void API_CALL dispose() = 0;
 	};
 
+	class ITerrainClipperResult : IBaseObject
+	{
+	public:
+		virtual int API_CALL getMeshesCount() = 0;
+		virtual int API_CALL getVerticesCount(int meshIndex) = 0;
+		virtual int API_CALL getIndicesCount(int meshIndex) = 0;
+		virtual void API_CALL getVertices(int meshIndex, IntPtr vertices) = 0;
+		virtual void API_CALL getIndices(int meshIndex, IntPtr indices) = 0;
+	};
+
+	class ITerrainClipper : IBaseObject
+	{
+	public:
+		virtual void API_CALL clearClipper() = 0;
+		virtual void API_CALL addClipperContour(IntPtr vertices2f, uint count) = 0;
+		virtual void API_CALL buildClipper(int sizeX, int sizeY) = 0;
+		virtual ITerrainClipperResult* API_CALL getIntersectionResult() = 0;
+		virtual ITerrainClipperResult* API_CALL getDifferenceResult() = 0;
+		virtual void API_CALL dispose() = 0;
+	};
+
+
 	class IGeometryFactory : IBaseObject
 	{
 	public:
 		virtual IQuadTree * API_CALL createQuadTree() = 0;
 		virtual IMarchingSquares * API_CALL createMarchingSquares() = 0;
+		virtual ITerrainClipper * API_CALL createTerrainClipper() = 0;
 		virtual void API_CALL dispose() = 0;
 	};
 
@@ -672,7 +695,6 @@ namespace llge
 		virtual IPhysicalShape* API_CALL createPolygonShape(IntPtr vertices2f, int count) = 0;
 		virtual void API_CALL dispose() = 0;
 	};
-
 
 	extern "C" DLLEXPORT IBatch2d * API_CALL createBatch2d();
     

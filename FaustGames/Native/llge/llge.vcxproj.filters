@@ -97,6 +97,9 @@
     <Filter Include="physics">
       <UniqueIdentifier>{cc788a5a-54fb-49f4-8cb8-11c7309fa7b4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="terrain">
+      <UniqueIdentifier>{1a154dfa-bf68-4259-acc5-0391e0180bf0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\CommonSources\include\llge.h">
@@ -776,6 +779,24 @@
     <ClInclude Include="..\src\geometry\TerrainClipper.h">
       <Filter>geometry</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\terrain\terrain_classes.h">
+      <Filter>terrain</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\terrain\terrain_platform.h">
+      <Filter>terrain</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\terrain\terrain_references.h">
+      <Filter>terrain</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\terrain\StripeBuilder.h">
+      <Filter>terrain</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\terrain\TerrainFactory.h">
+      <Filter>terrain</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Spline.h">
+      <Filter>core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\CommonSources\gen\llgePInvoke.cpp">
@@ -1412,6 +1433,15 @@
     </ClCompile>
     <ClCompile Include="..\src\geometry\TerrainClipper.cpp">
       <Filter>geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\terrain\StripeBuilder.cpp">
+      <Filter>terrain</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\terrain\TerrainFactory.cpp">
+      <Filter>terrain</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\Spline.cpp">
+      <Filter>core</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

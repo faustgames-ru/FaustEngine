@@ -1576,5 +1576,35 @@ namespace llge
 		classInstance->dispose();
 	}
 	
+	extern "C" DLLEXPORT void API_CALL llge_TerrainStripeBuilder_buildStripe (ITerrainStripeBuilder * classInstance, IntPtr terrainStripePoints, int count, bool closed)
+	{
+		classInstance->buildStripe(terrainStripePoints, count, closed);
+	}
+	
+	extern "C" DLLEXPORT int API_CALL llge_TerrainStripeBuilder_getDebugRenderVerticesCount (ITerrainStripeBuilder * classInstance)
+	{
+		return classInstance->getDebugRenderVerticesCount();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_TerrainStripeBuilder_getDebugRenderVertices (ITerrainStripeBuilder * classInstance, IntPtr vertices2f)
+	{
+		classInstance->getDebugRenderVertices(vertices2f);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_TerrainStripeBuilder_dispose (ITerrainStripeBuilder * classInstance)
+	{
+		classInstance->dispose();
+	}
+	
+	extern "C" DLLEXPORT ITerrainStripeBuilder * API_CALL llge_TerrainFactory_createStripeBuilder (ITerrainFactory * classInstance)
+	{
+		return classInstance->createStripeBuilder();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_TerrainFactory_dispose (ITerrainFactory * classInstance)
+	{
+		classInstance->dispose();
+	}
+	
 }
 

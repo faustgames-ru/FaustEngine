@@ -9,6 +9,7 @@
 #include "../physics/PhysicalFactory.h"
 
 #include <limits>
+#include "../terrain/TerrainFactory.h"
 
 using namespace graphics;
 
@@ -24,6 +25,10 @@ namespace llge
 		return new physics::PhysicalFactory(scaleDimensions, scaleVelocity);
 	}
 
+	extern "C" DLLEXPORT ITerrainFactory * API_CALL createTerrainFactory()
+	{
+		return new terrain::TerrainFactory();
+	}
     /*
     
     extern "C" DLLEXPORT IPathMesh * API_CALL createPathMesh()

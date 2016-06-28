@@ -87,6 +87,15 @@ namespace llge
 	}
 	
 	[StructLayout(LayoutKind.Sequential)]
+	public struct TerrainStripePoint
+	{
+		public float x;
+		public float y;
+		public float tension;
+		public float width;
+	}
+	
+	[StructLayout(LayoutKind.Sequential)]
 	public struct EffectConfig
 	{
 		public uint texture;
@@ -2544,6 +2553,58 @@ namespace llge
 		static extern private void llge_PhysicalFactory_dispose (IntPtr classInstance);
 	}
 	
+	public class TerrainStripeBuilder
+	{
+		public IntPtr ClassInstance;
+		public void BuildStripe (IntPtr terrainStripePoints, int count, bool closed)
+		{
+			llge_TerrainStripeBuilder_buildStripe(ClassInstance, terrainStripePoints, count, closed);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_TerrainStripeBuilder_buildStripe (IntPtr classInstance, IntPtr terrainStripePoints, int count, bool closed);
+		public int GetDebugRenderVerticesCount ()
+		{
+			return llge_TerrainStripeBuilder_getDebugRenderVerticesCount(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private int llge_TerrainStripeBuilder_getDebugRenderVerticesCount (IntPtr classInstance);
+		public void GetDebugRenderVertices (IntPtr vertices2f)
+		{
+			llge_TerrainStripeBuilder_getDebugRenderVertices(ClassInstance, vertices2f);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_TerrainStripeBuilder_getDebugRenderVertices (IntPtr classInstance, IntPtr vertices2f);
+		public void Dispose ()
+		{
+			llge_TerrainStripeBuilder_dispose(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_TerrainStripeBuilder_dispose (IntPtr classInstance);
+	}
+	
+	public class TerrainFactory
+	{
+		public IntPtr ClassInstance;
+		public TerrainStripeBuilder CreateStripeBuilder ()
+		{
+			return new TerrainStripeBuilder{ ClassInstance = llge_TerrainFactory_createStripeBuilder(ClassInstance) };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_TerrainFactory_createStripeBuilder (IntPtr classInstance);
+		public void Dispose ()
+		{
+			llge_TerrainFactory_dispose(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_TerrainFactory_dispose (IntPtr classInstance);
+	}
+	
 	public class llge
 	{
 		static public Batch2d CreateBatch2d ()
@@ -2623,6 +2684,13 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private IntPtr createPhysicalFactory (float scaleDimensions, float scaleVelocity);
+		static public TerrainFactory CreateTerrainFactory ()
+		{
+			return new TerrainFactory{ ClassInstance = createTerrainFactory() };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr createTerrainFactory ();
 	}
 	
 }

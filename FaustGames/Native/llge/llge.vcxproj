@@ -185,6 +185,7 @@
     <ClInclude Include="..\src\core\HollowsAllocationPolicy.h" />
     <ClInclude Include="..\src\core\DebugRender.h" />
     <ClInclude Include="..\src\core\MarchingSquares.h" />
+    <ClInclude Include="..\src\core\Spline.h" />
     <ClInclude Include="..\src\core\SystemAllocationPolicy.h" />
     <ClInclude Include="..\src\core\Allocator.h" />
     <ClInclude Include="..\src\core\BasicTest.h" />
@@ -322,6 +323,11 @@
     <ClInclude Include="..\src\spine\SpineSkeletonResource.h" />
     <ClInclude Include="..\src\spine\spine_classes.h" />
     <ClInclude Include="..\src\spine\spine_references.h" />
+    <ClInclude Include="..\src\terrain\StripeBuilder.h" />
+    <ClInclude Include="..\src\terrain\TerrainFactory.h" />
+    <ClInclude Include="..\src\terrain\terrain_classes.h" />
+    <ClInclude Include="..\src\terrain\terrain_platform.h" />
+    <ClInclude Include="..\src\terrain\terrain_references.h" />
     <ClInclude Include="..\src\tests\TestStandartAllocations.h" />
     <ClInclude Include="..\src\tests\tests_classes.h" />
     <ClInclude Include="..\src\tests\tests_platform.h" />
@@ -392,6 +398,7 @@
     <ClCompile Include="..\src\core\MarchingSquares.cpp" />
     <ClCompile Include="..\src\core\Math.cpp" />
     <ClCompile Include="..\src\core\Matrix.cpp" />
+    <ClCompile Include="..\src\core\Spline.cpp" />
     <ClCompile Include="..\src\core\SystemAllocationPolicy.cpp" />
     <ClInclude Include="..\src\drawing\drawing_classes.h" />
     <ClInclude Include="..\src\drawing\drawing_references.h">
@@ -547,6 +554,8 @@
     <ClCompile Include="..\src\spine\SpineSkeletonAnimation.cpp" />
     <ClCompile Include="..\src\spine\SpineSkeletonResource.cpp" />
     <ClCompile Include="..\src\spine\spine.cpp" />
+    <ClCompile Include="..\src\terrain\StripeBuilder.cpp" />
+    <ClCompile Include="..\src\terrain\TerrainFactory.cpp" />
     <ClCompile Include="..\src\tests\TestStandartAllocations.cpp" />
     <ClCompile Include="..\src_box2d\Box2D\Collision\b2BroadPhase.cpp" />
     <ClCompile Include="..\src_box2d\Box2D\Collision\b2CollideCircle.cpp" />

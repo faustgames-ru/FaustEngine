@@ -80,6 +80,15 @@ namespace core
 		return conic(lerp(p0, p1, u), lerp(p1, p2, u), lerp(p2, p3, u), u);
 	}
 
+	float Math::spline(float p1, float p2, float p3, float p4, float u, float s)
+	{
+		return
+			p1*(-s*u*u*u + 2 * s*u*u - s*u) +
+			p2*((2 - s)*u*u*u + (s - 3)*u*u + 1) +
+			p3*((s - 2)*u*u*u + (3 - 2 * s)*u*u + s*u) +
+			p4*(s*u*u*u - s*u*u);
+	}
+
 	float Math::asin(float v)
 	{
 		return ::asin(v);

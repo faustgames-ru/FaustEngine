@@ -105,7 +105,14 @@ namespace llge
 		uint collisionGroup;
 		uint isSensor;
 	};
-
+	/// terrain structs
+	struct TerrainStripePoint
+	{
+		float x;
+		float y;
+		float tension;
+		float width;
+	};
 
 	struct EffectConfig
 	{
@@ -696,6 +703,23 @@ namespace llge
 		virtual void API_CALL dispose() = 0;
 	};
 
+	// terrain
+	class ITerrainStripeBuilder : IBaseObject
+	{
+	public:
+		virtual void API_CALL buildStripe(IntPtr terrainStripePoints, int count, bool closed) = 0;
+		virtual int API_CALL getDebugRenderVerticesCount() = 0;
+		virtual void API_CALL getDebugRenderVertices(IntPtr vertices2f) = 0;
+		virtual void API_CALL dispose() = 0;
+	};
+
+	class ITerrainFactory : IBaseObject
+	{
+	public:
+		virtual ITerrainStripeBuilder * API_CALL createStripeBuilder() = 0;
+		virtual void API_CALL dispose() = 0;
+	};
+		
 	extern "C" DLLEXPORT IBatch2d * API_CALL createBatch2d();
     
 	extern "C" DLLEXPORT ITexture * API_CALL createTextureByID(uint id);
@@ -709,6 +733,7 @@ namespace llge
 	extern "C" DLLEXPORT INativeMemoryProfiler * API_CALL createNativeMemoryProfiler();
 	extern "C" DLLEXPORT ISpineResource * API_CALL createSpineResource();
 	extern "C" DLLEXPORT IPhysicalFactory * API_CALL createPhysicalFactory(float scaleDimensions, float scaleVelocity);
+	extern "C" DLLEXPORT ITerrainFactory * API_CALL createTerrainFactory();
 
 	//extern "C" DLLEXPORT IPathMesh * API_CALL createPathMesh();
 	//extern "C" DLLEXPORT INavMesh * API_CALL createNavMesh();

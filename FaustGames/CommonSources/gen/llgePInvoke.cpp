@@ -431,27 +431,32 @@ namespace llge
 		classInstance->dispose();
 	}
 	
-	extern "C" DLLEXPORT int API_CALL llge_TerrainClipperResult_getMeshesCount (ITerrainClipperResult * classInstance)
+	extern "C" DLLEXPORT int API_CALL llge_MeshesResult_getMeshesCount (IMeshesResult * classInstance)
 	{
 		return classInstance->getMeshesCount();
 	}
 	
-	extern "C" DLLEXPORT int API_CALL llge_TerrainClipperResult_getVerticesCount (ITerrainClipperResult * classInstance, int meshIndex)
+	extern "C" DLLEXPORT int API_CALL llge_MeshesResult_getMeshType (IMeshesResult * classInstance, int meshIndex)
+	{
+		return classInstance->getMeshType(meshIndex);
+	}
+	
+	extern "C" DLLEXPORT int API_CALL llge_MeshesResult_getVerticesCount (IMeshesResult * classInstance, int meshIndex)
 	{
 		return classInstance->getVerticesCount(meshIndex);
 	}
 	
-	extern "C" DLLEXPORT int API_CALL llge_TerrainClipperResult_getIndicesCount (ITerrainClipperResult * classInstance, int meshIndex)
+	extern "C" DLLEXPORT int API_CALL llge_MeshesResult_getIndicesCount (IMeshesResult * classInstance, int meshIndex)
 	{
 		return classInstance->getIndicesCount(meshIndex);
 	}
 	
-	extern "C" DLLEXPORT void API_CALL llge_TerrainClipperResult_getVertices (ITerrainClipperResult * classInstance, int meshIndex, IntPtr vertices)
+	extern "C" DLLEXPORT void API_CALL llge_MeshesResult_getVertices (IMeshesResult * classInstance, int meshIndex, IntPtr vertices)
 	{
 		classInstance->getVertices(meshIndex, vertices);
 	}
 	
-	extern "C" DLLEXPORT void API_CALL llge_TerrainClipperResult_getIndices (ITerrainClipperResult * classInstance, int meshIndex, IntPtr indices)
+	extern "C" DLLEXPORT void API_CALL llge_MeshesResult_getIndices (IMeshesResult * classInstance, int meshIndex, IntPtr indices)
 	{
 		classInstance->getIndices(meshIndex, indices);
 	}
@@ -466,17 +471,17 @@ namespace llge
 		classInstance->addClipperContour(vertices2f, count);
 	}
 	
-	extern "C" DLLEXPORT void API_CALL llge_TerrainClipper_buildClipper (ITerrainClipper * classInstance, int sizeX, int sizeY)
+	extern "C" DLLEXPORT void API_CALL llge_TerrainClipper_buildClipper (ITerrainClipper * classInstance, int sizeX, int sizeY, bool createDifference)
 	{
-		classInstance->buildClipper(sizeX, sizeY);
+		classInstance->buildClipper(sizeX, sizeY, createDifference);
 	}
 	
-	extern "C" DLLEXPORT ITerrainClipperResult * API_CALL llge_TerrainClipper_getIntersectionResult (ITerrainClipper * classInstance)
+	extern "C" DLLEXPORT IMeshesResult * API_CALL llge_TerrainClipper_getIntersectionResult (ITerrainClipper * classInstance)
 	{
 		return classInstance->getIntersectionResult();
 	}
 	
-	extern "C" DLLEXPORT ITerrainClipperResult * API_CALL llge_TerrainClipper_getDifferenceResult (ITerrainClipper * classInstance)
+	extern "C" DLLEXPORT IMeshesResult * API_CALL llge_TerrainClipper_getDifferenceResult (ITerrainClipper * classInstance)
 	{
 		return classInstance->getDifferenceResult();
 	}
@@ -1576,9 +1581,34 @@ namespace llge
 		classInstance->dispose();
 	}
 	
-	extern "C" DLLEXPORT void API_CALL llge_TerrainStripeBuilder_buildStripe (ITerrainStripeBuilder * classInstance, IntPtr terrainStripePoints, int count, bool closed)
+	extern "C" DLLEXPORT void API_CALL llge_TerrainConfig_set (ITerrainConfig * classInstance, TerrainStripeConfigType type, float inWidth, float outWidth, float width)
 	{
-		classInstance->buildStripe(terrainStripePoints, count, closed);
+		classInstance->set(type, inWidth, outWidth, width);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_TerrainConfig_setPhysicsMode (ITerrainConfig * classInstance, TerrainStripePhysicsType mode)
+	{
+		classInstance->setPhysicsMode(mode);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_TerrainConfig_setFlipReversed (ITerrainConfig * classInstance, bool value)
+	{
+		classInstance->setFlipReversed(value);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_TerrainConfig_setTilesConfig (ITerrainConfig * classInstance, uint value)
+	{
+		classInstance->setTilesConfig(value);
+	}
+	
+	extern "C" DLLEXPORT ITerrainConfig * API_CALL llge_TerrainStripeBuilder_getConfig (ITerrainStripeBuilder * classInstance)
+	{
+		return classInstance->getConfig();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_TerrainStripeBuilder_buildStripe (ITerrainStripeBuilder * classInstance, IntPtr terrainStripePoints, float tension, int count, bool closed)
+	{
+		classInstance->buildStripe(terrainStripePoints, tension, count, closed);
 	}
 	
 	extern "C" DLLEXPORT int API_CALL llge_TerrainStripeBuilder_getDebugRenderVerticesCount (ITerrainStripeBuilder * classInstance)
@@ -1589,6 +1619,21 @@ namespace llge
 	extern "C" DLLEXPORT void API_CALL llge_TerrainStripeBuilder_getDebugRenderVertices (ITerrainStripeBuilder * classInstance, IntPtr vertices2f)
 	{
 		classInstance->getDebugRenderVertices(vertices2f);
+	}
+	
+	extern "C" DLLEXPORT IMeshesResult * API_CALL llge_TerrainStripeBuilder_getResult (ITerrainStripeBuilder * classInstance)
+	{
+		return classInstance->getResult();
+	}
+	
+	extern "C" DLLEXPORT int API_CALL llge_TerrainStripeBuilder_getEdgesCount (ITerrainStripeBuilder * classInstance)
+	{
+		return classInstance->getEdgesCount();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_TerrainStripeBuilder_getEdge (ITerrainStripeBuilder * classInstance, int i, IntPtr vertices2f)
+	{
+		classInstance->getEdge(i, vertices2f);
 	}
 	
 	extern "C" DLLEXPORT void API_CALL llge_TerrainStripeBuilder_dispose (ITerrainStripeBuilder * classInstance)

@@ -95,6 +95,22 @@ namespace llge
 		Kinematic = 0x3,
 	};
 
+	/// terrain enums
+	enum TerrainStripeConfigType
+	{
+		Left = 0x1,
+		Right = 0x2,
+		Top = 0x3,
+		Bottom = 0x4,
+	};
+
+	enum TerrainStripePhysicsType
+	{
+		PhysicsNone = 0x0,
+		PhysicsTop = 0x1,
+		PhysicsAll = 0x2,
+	};
+
 	/// physics structs
 	struct PhysicsFixtureConfig
 	{
@@ -104,14 +120,6 @@ namespace llge
 		uint collidesWith;
 		uint collisionGroup;
 		uint isSensor;
-	};
-	/// terrain structs
-	struct TerrainStripePoint
-	{
-		float x;
-		float y;
-		float tension;
-		float width;
 	};
 
 	struct EffectConfig
@@ -275,10 +283,11 @@ namespace llge
 		virtual void API_CALL dispose() = 0;
 	};
 
-	class ITerrainClipperResult : IBaseObject
+	class IMeshesResult : IBaseObject
 	{
 	public:
 		virtual int API_CALL getMeshesCount() = 0;
+		virtual int API_CALL getMeshType(int meshIndex) = 0;
 		virtual int API_CALL getVerticesCount(int meshIndex) = 0;
 		virtual int API_CALL getIndicesCount(int meshIndex) = 0;
 		virtual void API_CALL getVertices(int meshIndex, IntPtr vertices) = 0;
@@ -290,9 +299,9 @@ namespace llge
 	public:
 		virtual void API_CALL clearClipper() = 0;
 		virtual void API_CALL addClipperContour(IntPtr vertices2f, uint count) = 0;
-		virtual void API_CALL buildClipper(int sizeX, int sizeY) = 0;
-		virtual ITerrainClipperResult* API_CALL getIntersectionResult() = 0;
-		virtual ITerrainClipperResult* API_CALL getDifferenceResult() = 0;
+		virtual void API_CALL buildClipper(int sizeX, int sizeY, bool createDifference) = 0;
+		virtual IMeshesResult* API_CALL getIntersectionResult() = 0;
+		virtual IMeshesResult* API_CALL getDifferenceResult() = 0;
 		virtual void API_CALL dispose() = 0;
 	};
 
@@ -704,12 +713,25 @@ namespace llge
 	};
 
 	// terrain
+	class ITerrainConfig : IBaseObject
+	{
+	public:
+		virtual void API_CALL set(TerrainStripeConfigType type, float inWidth, float outWidth, float width) = 0;
+		virtual void API_CALL setPhysicsMode(TerrainStripePhysicsType mode) = 0;
+		virtual void API_CALL setFlipReversed(bool value) = 0;
+		virtual void API_CALL setTilesConfig(uint value) = 0;
+	};
+	
 	class ITerrainStripeBuilder : IBaseObject
 	{
 	public:
-		virtual void API_CALL buildStripe(IntPtr terrainStripePoints, int count, bool closed) = 0;
+		virtual ITerrainConfig* API_CALL getConfig() = 0;
+		virtual void API_CALL buildStripe(IntPtr terrainStripePoints, float tension, int count, bool closed) = 0;
 		virtual int API_CALL getDebugRenderVerticesCount() = 0;
 		virtual void API_CALL getDebugRenderVertices(IntPtr vertices2f) = 0;
+		virtual IMeshesResult* API_CALL getResult() = 0;
+		virtual int API_CALL getEdgesCount() = 0;
+		virtual void API_CALL getEdge(int i, IntPtr vertices2f) = 0;
 		virtual void API_CALL dispose() = 0;
 	};
 

@@ -214,6 +214,37 @@ namespace core
 		return equals(*this, empty);
 	}
 
+	bool Vector2::isDirectionX() const
+	{
+		return Math::abs(getX()) > Math::abs(getY());
+	}
+
+	Direction2::e Vector2::direction() const
+	{
+		if (Math::abs(getX()) > Math::abs(getY()))
+		{			
+			if (getX() > 0)
+			{
+				return Direction2::Right;
+			}
+			else
+			{
+				return Direction2::Left;
+			}
+		}
+		else
+		{
+			if (getY() > 0)
+			{
+				return Direction2::Top;
+			}
+			else
+			{
+				return Direction2::Bottom;
+			}
+		}
+	}
+
 	bool Vector2::isEmpty(float eps) const
 	{
 		return equals(*this, empty, eps);
@@ -457,5 +488,45 @@ namespace core
 	float Vector3::dotProduct(Vector3 v1, Vector3 v2)
 	{
 		return v1.getX()*v2.getX() + v1.getY()*v2.getY() + v1.getZ()*v2.getZ();
+	}
+
+	MeshVertex::MeshVertex(): color(0xffffffff)
+	{
+	}
+
+	MeshVertex::MeshVertex(Vector2 ixy): xyz(ixy.getX(), ixy.getY(), 0), color(0xffffffff), uv(0, 0)
+	{
+	}
+
+	MeshVertex::MeshVertex(Vector3 ixyz) : xyz(ixyz), color(0xffffffff), uv(0, 0)
+	{
+	}
+
+	MeshVertex::MeshVertex(Vector2 ixy, Vector2 iuv) : xyz(ixy.getX(), ixy.getY(), 0), color(0xffffffff), uv(iuv)
+	{
+	}
+
+	MeshVertex::MeshVertex(Vector2 ixy, float u, float v) : xyz(ixy.getX(), ixy.getY(), 0), color(0xffffffff), uv(u, v)
+	{
+	}
+
+	MeshVertex::MeshVertex(Vector3 ixyz, Vector2 iuv) : xyz(ixyz), color(0xffffffff), uv(iuv)
+	{
+	}
+
+	MeshVertex::MeshVertex(Vector2 ixy, Vector2 iuv, uint icolor) : xyz(ixy.getX(), ixy.getY(), 0), color(icolor), uv(iuv)
+	{
+	}
+
+	MeshVertex::MeshVertex(Vector3 ixyz, Vector2 iuv, uint icolor) : xyz(ixyz), color(icolor), uv(iuv)
+	{
+	}
+
+	MeshVertex::MeshVertex(float x, float y, float z, float u, float v, uint icolor) : xyz(x, y, z), color(icolor), uv(u, v)
+	{
+	}
+
+	MeshVertex::MeshVertex(float x, float y, float u, float v, uint icolor) : xyz(x, y, 0), color(icolor), uv(u, v)
+	{
 	}
 }

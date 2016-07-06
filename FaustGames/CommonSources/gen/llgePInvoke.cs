@@ -75,6 +75,21 @@ namespace llge
 		Kinematic = 0x3,
 	}
 	
+	public enum TerrainStripeConfigType
+	{
+		Left = 0x1,
+		Right = 0x2,
+		Top = 0x3,
+		Bottom = 0x4,
+	}
+	
+	public enum TerrainStripePhysicsType
+	{
+		PhysicsNone = 0x0,
+		PhysicsTop = 0x1,
+		PhysicsAll = 0x2,
+	}
+	
 	[StructLayout(LayoutKind.Sequential)]
 	public struct PhysicsFixtureConfig
 	{
@@ -84,15 +99,6 @@ namespace llge
 		public uint collidesWith;
 		public uint collisionGroup;
 		public uint isSensor;
-	}
-	
-	[StructLayout(LayoutKind.Sequential)]
-	public struct TerrainStripePoint
-	{
-		public float x;
-		public float y;
-		public float tension;
-		public float width;
 	}
 	
 	[StructLayout(LayoutKind.Sequential)]
@@ -760,44 +766,51 @@ namespace llge
 		static extern private void llge_QuadTree_dispose (IntPtr classInstance);
 	}
 	
-	public class TerrainClipperResult
+	public class MeshesResult
 	{
 		public IntPtr ClassInstance;
 		public int GetMeshesCount ()
 		{
-			return llge_TerrainClipperResult_getMeshesCount(ClassInstance);
+			return llge_MeshesResult_getMeshesCount(ClassInstance);
 		}
 		
 		[DllImport(Version.Dll)]
-		static extern private int llge_TerrainClipperResult_getMeshesCount (IntPtr classInstance);
+		static extern private int llge_MeshesResult_getMeshesCount (IntPtr classInstance);
+		public int GetMeshType (int meshIndex)
+		{
+			return llge_MeshesResult_getMeshType(ClassInstance, meshIndex);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private int llge_MeshesResult_getMeshType (IntPtr classInstance, int meshIndex);
 		public int GetVerticesCount (int meshIndex)
 		{
-			return llge_TerrainClipperResult_getVerticesCount(ClassInstance, meshIndex);
+			return llge_MeshesResult_getVerticesCount(ClassInstance, meshIndex);
 		}
 		
 		[DllImport(Version.Dll)]
-		static extern private int llge_TerrainClipperResult_getVerticesCount (IntPtr classInstance, int meshIndex);
+		static extern private int llge_MeshesResult_getVerticesCount (IntPtr classInstance, int meshIndex);
 		public int GetIndicesCount (int meshIndex)
 		{
-			return llge_TerrainClipperResult_getIndicesCount(ClassInstance, meshIndex);
+			return llge_MeshesResult_getIndicesCount(ClassInstance, meshIndex);
 		}
 		
 		[DllImport(Version.Dll)]
-		static extern private int llge_TerrainClipperResult_getIndicesCount (IntPtr classInstance, int meshIndex);
+		static extern private int llge_MeshesResult_getIndicesCount (IntPtr classInstance, int meshIndex);
 		public void GetVertices (int meshIndex, IntPtr vertices)
 		{
-			llge_TerrainClipperResult_getVertices(ClassInstance, meshIndex, vertices);
+			llge_MeshesResult_getVertices(ClassInstance, meshIndex, vertices);
 		}
 		
 		[DllImport(Version.Dll)]
-		static extern private void llge_TerrainClipperResult_getVertices (IntPtr classInstance, int meshIndex, IntPtr vertices);
+		static extern private void llge_MeshesResult_getVertices (IntPtr classInstance, int meshIndex, IntPtr vertices);
 		public void GetIndices (int meshIndex, IntPtr indices)
 		{
-			llge_TerrainClipperResult_getIndices(ClassInstance, meshIndex, indices);
+			llge_MeshesResult_getIndices(ClassInstance, meshIndex, indices);
 		}
 		
 		[DllImport(Version.Dll)]
-		static extern private void llge_TerrainClipperResult_getIndices (IntPtr classInstance, int meshIndex, IntPtr indices);
+		static extern private void llge_MeshesResult_getIndices (IntPtr classInstance, int meshIndex, IntPtr indices);
 	}
 	
 	public class TerrainClipper
@@ -817,23 +830,23 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private void llge_TerrainClipper_addClipperContour (IntPtr classInstance, IntPtr vertices2f, uint count);
-		public void BuildClipper (int sizeX, int sizeY)
+		public void BuildClipper (int sizeX, int sizeY, bool createDifference)
 		{
-			llge_TerrainClipper_buildClipper(ClassInstance, sizeX, sizeY);
+			llge_TerrainClipper_buildClipper(ClassInstance, sizeX, sizeY, createDifference);
 		}
 		
 		[DllImport(Version.Dll)]
-		static extern private void llge_TerrainClipper_buildClipper (IntPtr classInstance, int sizeX, int sizeY);
-		public TerrainClipperResult GetIntersectionResult ()
+		static extern private void llge_TerrainClipper_buildClipper (IntPtr classInstance, int sizeX, int sizeY, bool createDifference);
+		public MeshesResult GetIntersectionResult ()
 		{
-			return new TerrainClipperResult{ ClassInstance = llge_TerrainClipper_getIntersectionResult(ClassInstance) };
+			return new MeshesResult{ ClassInstance = llge_TerrainClipper_getIntersectionResult(ClassInstance) };
 		}
 		
 		[DllImport(Version.Dll)]
 		static extern private IntPtr llge_TerrainClipper_getIntersectionResult (IntPtr classInstance);
-		public TerrainClipperResult GetDifferenceResult ()
+		public MeshesResult GetDifferenceResult ()
 		{
-			return new TerrainClipperResult{ ClassInstance = llge_TerrainClipper_getDifferenceResult(ClassInstance) };
+			return new MeshesResult{ ClassInstance = llge_TerrainClipper_getDifferenceResult(ClassInstance) };
 		}
 		
 		[DllImport(Version.Dll)]
@@ -2553,16 +2566,56 @@ namespace llge
 		static extern private void llge_PhysicalFactory_dispose (IntPtr classInstance);
 	}
 	
-	public class TerrainStripeBuilder
+	public class TerrainConfig
 	{
 		public IntPtr ClassInstance;
-		public void BuildStripe (IntPtr terrainStripePoints, int count, bool closed)
+		public void Set (TerrainStripeConfigType type, float inWidth, float outWidth, float width)
 		{
-			llge_TerrainStripeBuilder_buildStripe(ClassInstance, terrainStripePoints, count, closed);
+			llge_TerrainConfig_set(ClassInstance, type, inWidth, outWidth, width);
 		}
 		
 		[DllImport(Version.Dll)]
-		static extern private void llge_TerrainStripeBuilder_buildStripe (IntPtr classInstance, IntPtr terrainStripePoints, int count, bool closed);
+		static extern private void llge_TerrainConfig_set (IntPtr classInstance, TerrainStripeConfigType type, float inWidth, float outWidth, float width);
+		public void SetPhysicsMode (TerrainStripePhysicsType mode)
+		{
+			llge_TerrainConfig_setPhysicsMode(ClassInstance, mode);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_TerrainConfig_setPhysicsMode (IntPtr classInstance, TerrainStripePhysicsType mode);
+		public void SetFlipReversed (bool value)
+		{
+			llge_TerrainConfig_setFlipReversed(ClassInstance, value);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_TerrainConfig_setFlipReversed (IntPtr classInstance, bool value);
+		public void SetTilesConfig (uint value)
+		{
+			llge_TerrainConfig_setTilesConfig(ClassInstance, value);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_TerrainConfig_setTilesConfig (IntPtr classInstance, uint value);
+	}
+	
+	public class TerrainStripeBuilder
+	{
+		public IntPtr ClassInstance;
+		public TerrainConfig GetConfig ()
+		{
+			return new TerrainConfig{ ClassInstance = llge_TerrainStripeBuilder_getConfig(ClassInstance) };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_TerrainStripeBuilder_getConfig (IntPtr classInstance);
+		public void BuildStripe (IntPtr terrainStripePoints, float tension, int count, bool closed)
+		{
+			llge_TerrainStripeBuilder_buildStripe(ClassInstance, terrainStripePoints, tension, count, closed);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_TerrainStripeBuilder_buildStripe (IntPtr classInstance, IntPtr terrainStripePoints, float tension, int count, bool closed);
 		public int GetDebugRenderVerticesCount ()
 		{
 			return llge_TerrainStripeBuilder_getDebugRenderVerticesCount(ClassInstance);
@@ -2577,6 +2630,27 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private void llge_TerrainStripeBuilder_getDebugRenderVertices (IntPtr classInstance, IntPtr vertices2f);
+		public MeshesResult GetResult ()
+		{
+			return new MeshesResult{ ClassInstance = llge_TerrainStripeBuilder_getResult(ClassInstance) };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_TerrainStripeBuilder_getResult (IntPtr classInstance);
+		public int GetEdgesCount ()
+		{
+			return llge_TerrainStripeBuilder_getEdgesCount(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private int llge_TerrainStripeBuilder_getEdgesCount (IntPtr classInstance);
+		public void GetEdge (int i, IntPtr vertices2f)
+		{
+			llge_TerrainStripeBuilder_getEdge(ClassInstance, i, vertices2f);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_TerrainStripeBuilder_getEdge (IntPtr classInstance, int i, IntPtr vertices2f);
 		public void Dispose ()
 		{
 			llge_TerrainStripeBuilder_dispose(ClassInstance);

@@ -40,26 +40,25 @@ namespace geometry
 	{
 	public:
 		TerrainClipperAabb aabb;
-		int VerticesFirst;
-		int VerticesCount;
-		int IndicesFirst;
-		int IndicesCount;
+		core::MeshIndexer Indexer;
 	};
 
-	class TerrainClipperResult: public llge::ITerrainClipperResult
+	class MeshesResult : public llge::IMeshesResult
 	{
 	public:
-		TerrainClipperResult();
-		void init(std::vector<TerrainMesh2dVertex>* vertices, std::vector<ushort>* indices, std::vector<TerrainClipperMesh>* meshes);
+		MeshesResult();
+		void init(std::vector<core::MeshVertex>* vertices, std::vector<ushort>* indices);
+		void addMesh(core::MeshIndexer mesh);
+		int API_CALL getMeshType(int meshIndex) OVERRIDE;
 		virtual int API_CALL getMeshesCount() OVERRIDE;
 		virtual int API_CALL getVerticesCount(int meshIndex) OVERRIDE;
 		virtual int API_CALL getIndicesCount(int meshIndex) OVERRIDE;
 		virtual void API_CALL getVertices(int meshIndex, IntPtr vertices) OVERRIDE;
 		virtual void API_CALL getIndices(int meshIndex, IntPtr indices) OVERRIDE;
 	private:
-		std::vector<TerrainMesh2dVertex>* _vertices;
+		std::vector<core::MeshVertex>* _vertices;
 		std::vector<ushort>* _indices;
-		std::vector<TerrainClipperMesh>* _meshes;
+		std::vector<core::MeshIndexer> _meshes;
 	};
 
 	class TerrainClipper : public llge::ITerrainClipper
@@ -68,13 +67,13 @@ namespace geometry
 		TerrainClipper();
 		void clear();
 		void addContour(const core::Vector2* countour, uint count);
-		void build(int sizeX, int sizeY);
+		void build(int sizeX, int sizeY, bool createDifference);
 
 		virtual void API_CALL clearClipper() OVERRIDE;
 		virtual void API_CALL addClipperContour(IntPtr vertices2f, uint count) OVERRIDE;
-		virtual void API_CALL buildClipper(int sizeX, int sizeY) OVERRIDE;
-		virtual llge::ITerrainClipperResult* API_CALL getIntersectionResult() OVERRIDE;
-		virtual llge::ITerrainClipperResult* API_CALL getDifferenceResult() OVERRIDE;
+		virtual void API_CALL buildClipper(int sizeX, int sizeY, bool createDifference) OVERRIDE;
+		virtual llge::IMeshesResult* API_CALL getIntersectionResult() OVERRIDE;
+		virtual llge::IMeshesResult* API_CALL getDifferenceResult() OVERRIDE;
 		virtual void API_CALL dispose() OVERRIDE;
 	private:
 		void createTile(const TerrainClipperAabb &aabb, const ClipperLib::Paths paths, std::vector<TerrainClipperMesh> &meshes);
@@ -86,12 +85,13 @@ namespace geometry
 		TerrainClipperAabb _aabb;
 		int _sizeX;
 		int _sizeY;
-		std::vector<TerrainMesh2dVertex> _vertices;
+		std::vector<core::MeshVertex> _vertices;
 		std::vector<ushort> _indices;
 		std::vector<TerrainClipperMesh> _meshesIntersection;
 		std::vector<TerrainClipperMesh> _meshesDifference;
-		TerrainClipperResult _intersectionResult;
-		TerrainClipperResult _differenceResult;
+		MeshesResult _intersectionResult;
+		MeshesResult _differenceResult;
+		bool _createDifference;
 	};
 }
 

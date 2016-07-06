@@ -370,7 +370,7 @@ namespace physics
 		for (int i = 0; i < numPoints; i++) {
 			b2Vec2 pointVel =
 				otherBody->GetLinearVelocityFromWorldPoint(worldManifold.points[i]);
-			if (pointVel.y < 0)
+			if (pointVel.y < -0.5f)
 				return;//point is moving down, leave contact solid and exit
 		}
 

@@ -97,52 +97,60 @@ namespace geometry
 	{
 	}
 
-	TerrainClipperResult::TerrainClipperResult(): 
-		_vertices(nullptr),
-		_indices(nullptr),
-		_meshes(nullptr)
+	MeshesResult::MeshesResult(): _vertices(nullptr), _indices(nullptr)
 	{
 	}
 
-	void TerrainClipperResult::init(std::vector<TerrainMesh2dVertex>* vertices, std::vector<ushort>* indices, std::vector<TerrainClipperMesh>* meshes)
+	void MeshesResult::init(std::vector<core::MeshVertex>* vertices, std::vector<ushort>* indices)
 	{
-		_vertices = vertices;
+		_meshes.clear();
 		_indices = indices;
-		_meshes = meshes;
+		_vertices = vertices;
 	}
 
-	int TerrainClipperResult::getMeshesCount()
+	void MeshesResult::addMesh(core::MeshIndexer mesh)
 	{
-		return _meshes->size();
+		_meshes.push_back(mesh);
 	}
 
-	int TerrainClipperResult::getVerticesCount(int meshIndex)
+	int API_CALL MeshesResult::getMeshType(int meshIndex)
 	{
-		return (*_meshes)[meshIndex].VerticesCount;
+		return _meshes[meshIndex].Type;
 	}
 
-	int TerrainClipperResult::getIndicesCount(int meshIndex)
+
+	int MeshesResult::getMeshesCount()
 	{
-		return (*_meshes)[meshIndex].IndicesCount;
+		return _meshes.size();
 	}
 
-	void TerrainClipperResult::getVertices(int meshIndex, IntPtr vertices)
+	int MeshesResult::getVerticesCount(int meshIndex)
 	{
-		TerrainMesh2dVertex* ptr = static_cast<TerrainMesh2dVertex*>(vertices);
-		TerrainClipperMesh mesh = (*_meshes)[meshIndex];
+		return _meshes[meshIndex].VerticesCount;
+	}
+
+	int MeshesResult::getIndicesCount(int meshIndex)
+	{
+		return _meshes[meshIndex].IndicesCount;
+	}
+
+	void MeshesResult::getVertices(int meshIndex, IntPtr vertices)
+	{
+		core::MeshVertex* ptr = static_cast<core::MeshVertex*>(vertices);
+		core::MeshIndexer mesh = _meshes[meshIndex];
 		for (uint i= 0, count = mesh.VerticesCount; i < count; i++)
 		{
-			ptr[i] = (*_vertices)[(*_meshes)[meshIndex].VerticesFirst + i];
+			ptr[i] = (*_vertices)[mesh.VerticesFirst + i];
 		}
 	}
 
-	void TerrainClipperResult::getIndices(int meshIndex, IntPtr indices)
+	void MeshesResult::getIndices(int meshIndex, IntPtr indices)
 	{
 		ushort* ptr = static_cast<ushort*>(indices);
-		TerrainClipperMesh mesh = (*_meshes)[meshIndex];
+		core::MeshIndexer mesh = _meshes[meshIndex];
 		for (uint i = 0, count = mesh.IndicesCount; i < count; i++)
 		{
-			ptr[i] = (*_indices)[(*_meshes)[meshIndex].IndicesFirst + i];
+			ptr[i] = (*_indices)[mesh.IndicesFirst + i];
 		}
 	}
 
@@ -183,8 +191,9 @@ namespace geometry
 		}
 	}
 
-	void TerrainClipper::build(int sizeX, int sizeY)
+	void TerrainClipper::build(int sizeX, int sizeY, bool createDifference)
 	{
+		_createDifference = createDifference;
 		core::Vector2 center = (_contoursBounds.Max + _contoursBounds.Min)*0.5f;
 		core::Vector2 size = _contoursBounds.Max - _contoursBounds.Min;
 		int boundsX = static_cast<int>(core::Math::round(size.getX())) + 1;
@@ -218,8 +227,16 @@ namespace geometry
 		ClipperLib::SimplifyPolygons(_pathes);
 		divide(_aabb, _pathes);
 
-		_intersectionResult.init(&_vertices, &_indices, &_meshesIntersection);
-		_differenceResult.init(&_vertices, &_indices, &_meshesDifference);
+		_intersectionResult.init(&_vertices, &_indices);
+		for (uint i = 0; i < _meshesIntersection.size(); i++)
+		{
+			_intersectionResult.addMesh(_meshesIntersection[i].Indexer);
+		}
+		_differenceResult.init(&_vertices, &_indices);
+		for (uint i = 0; i < _meshesDifference.size(); i++)
+		{
+			_differenceResult.addMesh(_meshesDifference[i].Indexer);
+		}
 	}
 
 	void TerrainClipper::clearClipper()
@@ -232,17 +249,17 @@ namespace geometry
 		addContour(static_cast<core::Vector2*>(vertices2f), count);
 	}
 
-	void TerrainClipper::buildClipper(int sizeX, int sizeY)
+	void TerrainClipper::buildClipper(int sizeX, int sizeY, bool createDifference)
 	{
-		build(sizeX, sizeY);
+		build(sizeX, sizeY, createDifference);
 	}
 
-	llge::ITerrainClipperResult* TerrainClipper::getIntersectionResult()
+	llge::IMeshesResult* TerrainClipper::getIntersectionResult()
 	{
 		return &_intersectionResult;
 	}
 
-	llge::ITerrainClipperResult* TerrainClipper::getDifferenceResult()
+	llge::IMeshesResult* TerrainClipper::getDifferenceResult()
 	{
 		return &_differenceResult;
 	}
@@ -260,7 +277,8 @@ namespace geometry
 
 			TerrainClipperMesh mesh;
 			mesh.aabb = aabb;
-			mesh.VerticesFirst = _vertices.size();
+			mesh.Indexer.Type = 0;
+			mesh.Indexer.VerticesFirst = _vertices.size();
 
 			std::vector<p2t::Point> allPoints;
 			for (uint i= 0; i < paths[j].size(); i++)
@@ -268,9 +286,9 @@ namespace geometry
 				allPoints.push_back(p2t::Point(paths[j][i].X, paths[j][i].Y));
 				float u = static_cast<float>(paths[j][i].X - aabb.minX) / static_cast<float>(aabb.maxX - aabb.minX);
 				float v = static_cast<float>(paths[j][i].Y - aabb.minY) / static_cast<float>(aabb.maxY - aabb.minY);
-				_vertices.push_back(TerrainMesh2dVertex(paths[j][i].X, paths[j][i].Y, 0, u, v, 0xffffffff));
+				_vertices.push_back(core::MeshVertex(paths[j][i].X, paths[j][i].Y, 0, u, v, 0xffffffff));
 			}
-			mesh.VerticesCount = allPoints.size();
+			mesh.Indexer.VerticesCount = allPoints.size();
 
 			std::vector<p2t::Point *> contour;
 			for (uint i = 0; i < paths[j].size(); i++)
@@ -285,8 +303,8 @@ namespace geometry
 			p2t::Point *baseArd = allPoints.data();
 			int count = 0;
 
-			mesh.IndicesFirst = _indices.size();
-
+			mesh.Indexer.IndicesFirst = _indices.size();
+			
 			for (uint i = 0; i < triangles.size(); i++)
 			{
 				p2t::Triangle *st = triangles[i];
@@ -295,10 +313,10 @@ namespace geometry
 				for (uint k = 0; k < 3; k++)
 				{
 					p2t::Point *p = st->GetPoint(k);
-					uint n = p - baseArd;
-					if (n < allPoints.size())
+					int n = p - baseArd;
+					if (n < allPoints.size() && n >= 0)
 					{
-						t[k] = st->GetPoint(k) - baseArd;
+						t[k] = n;
 					}
 					else
 					{
@@ -313,7 +331,8 @@ namespace geometry
 					count += 3;
 				}
 			}
-			mesh.IndicesCount = count;
+			
+			mesh.Indexer.IndicesCount = count;
 			meshes.push_back(mesh);
 		}
 	}
@@ -322,15 +341,16 @@ namespace geometry
 	{
 		TerrainClipperMesh mesh;
 		mesh.aabb = aabb;
-		mesh.VerticesFirst = _vertices.size();
-		mesh.VerticesCount = 4;
-		mesh.IndicesFirst = 0;
-		mesh.IndicesCount = 6;
+		mesh.Indexer.Type = 0;
+		mesh.Indexer.VerticesFirst = _vertices.size();
+		mesh.Indexer.VerticesCount = 4;
+		mesh.Indexer.IndicesFirst = 0;
+		mesh.Indexer.IndicesCount = 6;
 
-		_vertices.push_back(TerrainMesh2dVertex(aabb.minX, aabb.minY, 0, 0, 0));
-		_vertices.push_back(TerrainMesh2dVertex(aabb.minX, aabb.maxY, 0, 0, 1));
-		_vertices.push_back(TerrainMesh2dVertex(aabb.maxX, aabb.maxY, 0, 1, 1));
-		_vertices.push_back(TerrainMesh2dVertex(aabb.maxX, aabb.minY, 0, 1, 0));
+		_vertices.push_back(core::MeshVertex(aabb.minX, aabb.minY, 0.0f, 0.0f, 0.0f, 0xffffffff));
+		_vertices.push_back(core::MeshVertex(aabb.minX, aabb.maxY, 0.0f, 0.0f, 1.0f, 0xffffffff));
+		_vertices.push_back(core::MeshVertex(aabb.maxX, aabb.maxY, 0.0f, 1.0f, 1.0f, 0xffffffff));
+		_vertices.push_back(core::MeshVertex(aabb.maxX, aabb.minY, 0.0f, 1.0f, 0.0f, 0xffffffff));
 		meshes.push_back(mesh);
 	}
 
@@ -362,7 +382,10 @@ namespace geometry
 		ClipperLib::Paths intersection;
 		ClipperLib::Paths difference;
 		clipper.Execute(ClipperLib::ctIntersection, intersection);
-		clipper.Execute(ClipperLib::ctDifference, difference);
+		if (_createDifference)
+		{
+			clipper.Execute(ClipperLib::ctDifference, difference);
+		}
 
 		if (aabb.hasSize(_sizeX, _sizeX))
 		{
@@ -370,9 +393,12 @@ namespace geometry
 			{
 				createTile(aabb, intersection, _meshesIntersection);
 			}
-			if (!difference.empty())
+			if (_createDifference)
 			{
-				createTile(aabb, difference, _meshesDifference);
+				if (!difference.empty())
+				{
+					createTile(aabb, difference, _meshesDifference);
+				}
 			}
 			return;
 		}
@@ -382,13 +408,14 @@ namespace geometry
 			createTiles(aabb, _meshesIntersection);
 			return;
 		}
-		
-		if (aabb.equalArea(difference))
+		if (_createDifference)
 		{
-			createTiles(aabb, _meshesDifference);
-			return;
+			if (aabb.equalArea(difference))
+			{
+				createTiles(aabb, _meshesDifference);
+				return;
+			}
 		}
-		
 		if (!intersection.empty())
 		{
 			TerrainClipperAabb aabb0;

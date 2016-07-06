@@ -8,6 +8,20 @@ namespace core
 {
 	class Vector3;
 
+	struct Direction2
+	{
+		enum e
+		{
+			None = 0x0,
+			X = 0x1,
+			Y = 0x2,
+			Left = 0x4 | X,
+			Right = 0x8 | X,
+			Top = 0x10 | Y,
+			Bottom = 0x20 | Y,
+		};
+	};
+	
 	class Vector2
 	{
 	private:
@@ -58,6 +72,8 @@ namespace core
 		Vector3 toVector3() const;
 		Vector3 toVector3(float z) const;
 		bool isEmpty() const;
+		bool isDirectionX() const;
+		Direction2::e direction() const;
 		bool isEmpty(float eps) const;
 		static Vector2 lerp(const Vector2 &from, const Vector2 &to, float u);
 		static Vector2 cubic(Vector2 p0, Vector2 p1, Vector2 p2, Vector2 p3, float u);
@@ -146,6 +162,35 @@ namespace core
 		inline const float getZ(){ return _values[2]; }
 		inline const float getW(){ return _values[3]; }
 	};
+
+	struct MeshVertex
+	{
+		Vector3 xyz;
+		uint color;
+		Vector2 uv;
+		MeshVertex();
+		MeshVertex(Vector2 xy);
+		MeshVertex(Vector3 xyz);
+		MeshVertex(Vector2 xy, Vector2 uv);
+		MeshVertex(Vector2 xy, float u, float v);
+		MeshVertex(Vector3 xyz, Vector2 uv);
+		MeshVertex(Vector2 xyz, Vector2 uv, uint color);
+		MeshVertex(Vector3 xyz, Vector2 uv, uint color);
+		MeshVertex(float x, float y, float z, float u, float v, uint color);
+		MeshVertex(float x, float y, float u, float v, uint color);
+	};
+
+	class MeshIndexer
+	{
+	public:
+		int Type;
+		int VerticesFirst;
+		int VerticesCount;
+		int IndicesFirst;
+		int IndicesCount;
+	};
+
+
 }
 
 #endif /*VECTOR_H*/

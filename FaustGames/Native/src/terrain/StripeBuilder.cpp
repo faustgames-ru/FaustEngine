@@ -314,7 +314,7 @@ namespace terrain
 						seg.centerTexture = core::Vector2(0.0f, 1.0f);
 						seg.startTexture = core::Vector2(1.0f, 0.0f);
 						seg.finishTexture = core::Vector2(1.0f, 1.0f);
-						buildSegment(seg, false);
+						pt0 = buildSegment(seg, false);
 					}
 					else if (s->type == TileStripeType::TileBottom)
 					{
@@ -328,7 +328,7 @@ namespace terrain
 						seg.finishTexture = core::Vector2(0.0f, 1.0f);
 						seg.statLen = seg.finishLen;
 						seg.finishLen += len*0.5f;
-						buildSegment(seg, false);
+						pt0 = buildSegment(seg, false);
 					}
 				}
 				else if (s->prevType == TileStripeType::TileLeft)
@@ -339,7 +339,7 @@ namespace terrain
 						seg.centerTexture = core::Vector2(1.0f, 1.0f);
 						seg.startTexture = core::Vector2(0.0f, 0.0f);
 						seg.finishTexture = core::Vector2(1.0f, 0.0f);
-						buildSegment(seg, false);
+						pt0 = buildSegment(seg, false);
 					}
 					else if (s->type == TileStripeType::TileRight)
 					{
@@ -353,7 +353,7 @@ namespace terrain
 						seg.finishTexture = core::Vector2(1.0f, 1.0f);
 						seg.statLen = seg.finishLen;
 						seg.finishLen += len*0.5f;
-						buildSegment(seg, false);
+						pt0 = buildSegment(seg, false);
 					}
 				}
 				else if (s->prevType == TileStripeType::TileRight)
@@ -364,7 +364,7 @@ namespace terrain
 						seg.centerTexture = core::Vector2(0.0f, 0.0f);
 						seg.startTexture = core::Vector2(1.0f, 1.0f);
 						seg.finishTexture = core::Vector2(0.0f, 1.0f);
-						buildSegment(seg, false);
+						pt0 = buildSegment(seg, false);
 					}
 					else if (s->type == TileStripeType::TileLeft)
 					{
@@ -378,7 +378,7 @@ namespace terrain
 						seg.finishTexture = core::Vector2(0.0f, 0.0f);
 						seg.statLen = seg.finishLen;
 						seg.finishLen += len*0.5f;
-						buildSegment(seg, false);
+						pt0 = buildSegment(seg, false);
 					}
 				}
 				else if (s->prevType == TileStripeType::TileBottom)
@@ -389,7 +389,7 @@ namespace terrain
 						seg.centerTexture = core::Vector2(1.0f, 0.0f);
 						seg.startTexture = core::Vector2(0.0f, 1.0f);
 						seg.finishTexture = core::Vector2(0.0f, 0.0f);
-						buildSegment(seg, false);
+						pt0 = buildSegment(seg, false);
 					}
 					else if (s->type == TileStripeType::TileTop)
 					{
@@ -403,7 +403,7 @@ namespace terrain
 						seg.finishTexture = core::Vector2(1.0f, 0.0f);
 						seg.statLen = seg.finishLen;
 						seg.finishLen += len*0.5f;
-						buildSegment(seg, false);
+						pt0 = buildSegment(seg, false);
 					}
 				}
 				//pt0 = buildSegment(t, 0, lp1->tl, pt0, pb0, lp1->large, false);
@@ -425,7 +425,7 @@ namespace terrain
 						seg.centerTexture = core::Vector2(0.0f, 0.0f);
 						seg.startTexture = core::Vector2(1.0f, 1.0f);
 						seg.finishTexture = core::Vector2(1.0f, 0.0f);
-						buildSegment(seg, true);
+						pb0 = buildSegment(seg, true);
 					}
 					else if (s->type == TileStripeType::TileBottom)
 					{
@@ -439,7 +439,7 @@ namespace terrain
 						seg.finishTexture = core::Vector2(0.0f, 0.0f);
 						seg.statLen = seg.finishLen;
 						seg.finishLen += len*0.5f;
-						buildSegment(seg, true);
+						pb0 = buildSegment(seg, true);
 					}
 				}
 				else if (s->prevType == TileStripeType::TileRight)
@@ -450,7 +450,7 @@ namespace terrain
 						seg.centerTexture = core::Vector2(1.0f, 0.0f);
 						seg.startTexture = core::Vector2(0.0f, 1.0f);
 						seg.finishTexture = core::Vector2(1.0f, 1.0f);
-						buildSegment(seg, true);
+						pb0 = buildSegment(seg, true);
 					}
 					else if (s->type == TileStripeType::TileLeft)
 					{
@@ -464,7 +464,7 @@ namespace terrain
 						seg.finishTexture = core::Vector2(1.0f, 0.0f);
 						seg.statLen = seg.finishLen;
 						seg.finishLen += len*0.5f;
-						buildSegment(seg, true);
+						pb0 = buildSegment(seg, true);
 					}
 				}
 				else if (s->prevType == TileStripeType::TileBottom)
@@ -475,7 +475,7 @@ namespace terrain
 						seg.centerTexture = core::Vector2(1.0f, 1.0f);
 						seg.startTexture = core::Vector2(0.0f, 0.0f);
 						seg.finishTexture = core::Vector2(0.0f, 1.0f);
-						buildSegment(seg, true);
+						pb0 = buildSegment(seg, true);
 					}
 					else if (s->type == TileStripeType::TileTop)
 					{						
@@ -489,7 +489,7 @@ namespace terrain
 						seg.finishTexture = core::Vector2(1.0f, 1.0f);
 						seg.statLen = seg.finishLen;
 						seg.finishLen += len*0.5f;
-						buildSegment(seg, true);						
+						pb0 = buildSegment(seg, true);
 					}
 				}
 				else if (s->prevType == TileStripeType::TileLeft)
@@ -500,7 +500,7 @@ namespace terrain
 						seg.centerTexture = core::Vector2(0.0f, 1.0f);
 						seg.startTexture = core::Vector2(1.0f, 0.0f);
 						seg.finishTexture = core::Vector2(0.0f, 0.0f);
-						buildSegment(seg, true);
+						pb0 = buildSegment(seg, true);
 					}
 					else if (s->type == TileStripeType::TileRight)
 					{
@@ -514,7 +514,7 @@ namespace terrain
 						seg.finishTexture = core::Vector2(0.0f, 1.0f);
 						seg.statLen = seg.finishLen;
 						seg.finishLen += len*0.5f;
-						buildSegment(seg, true);
+						pb0 = buildSegment(seg, true);
 					}
 				}
 				

@@ -38,8 +38,8 @@ namespace drawing
 		void reset();
 
 		bool canAdd(int verticesCount, int indicesCount) const;
-		void addMesh(uint color, float z, float* vertices, float* uvs, int verticesCount, int* indices, int indicesCount, bool additive);
-		void addMesh(TVertex* vertices, int verticesCount, ushort* indices, int indicesCount, bool additive);
+		void addMesh(uint color, float z, float* vertices, float* uvs, int verticesCount, int* indices, int indicesCount, bool additive, byte colorScale);
+		void addMesh(TVertex* vertices, int verticesCount, ushort* indices, int indicesCount, bool additive, unsigned char colorScale);
 		TVertex* getVertices();
 		int getVerticesCount() const;
 		ushort* getCurrentIndices() const;
@@ -114,10 +114,10 @@ namespace drawing
 		~Batcher();
 		void start();
 		void finish();
-		void drawMesh(graphics::EffectBase *effect, graphics::BlendState::e blend, llge::ITexture * texture, uint lightmapId, TVertex *vertices, int verticesCount, ushort *indices, int indicesCount);
-		void drawMesh(graphics::EffectBase *effect, graphics::BlendState::e blend, uint textureId, uint lightmapId, TVertex *vertices, int verticesCount, ushort *indices, int indicesCount);
-		void drawMesh(graphics::EffectBase *effect, graphics::BlendState::e blend, void* config, TVertex *vertices, int verticesCount, ushort *indices, int indicesCount);
-		void drawSpineMesh(const BatcherSpineMesh &mesh);
+		void drawMesh(graphics::EffectBase *effect, graphics::BlendState::e blend, llge::ITexture * texture, uint lightmapId, TVertex *vertices, int verticesCount, ushort *indices, int indicesCount, float colorScale);
+		void drawMesh(graphics::EffectBase *effect, graphics::BlendState::e blend, uint textureId, uint lightmapId, TVertex *vertices, int verticesCount, ushort *indices, int indicesCount, unsigned char colorScale);
+		void drawMesh(graphics::EffectBase *effect, graphics::BlendState::e blend, void* config, TVertex *vertices, int verticesCount, ushort *indices, int indicesCount, unsigned char colorScale);
+		void drawSpineMesh(const BatcherSpineMesh &mesh, byte colorScale);
 		
 		void executeRenderCommands(bool usePostProcess);
 
@@ -127,8 +127,8 @@ namespace drawing
 		virtual void API_CALL addRenderTarget(IntPtr renderTargetInstance) OVERRIDE;
 		virtual void API_CALL startBatch() OVERRIDE;
 		virtual void API_CALL finishBatch() OVERRIDE;
-		virtual void API_CALL drawEx(llge::GraphicsEffects effect, llge::BlendMode blendMode, IntPtr config, void* vertices, int verticesCount, void* indices, int indicesCount) OVERRIDE;
-		virtual void API_CALL draw(llge::GraphicsEffects effect, llge::BlendMode blendMode, llge::ITexture* texture, uint lightmapId, void* vertices, int verticesCount, void* indices, int indicesCount) OVERRIDE;
+		virtual void API_CALL drawEx(llge::GraphicsEffects effect, llge::BlendMode blendMode, IntPtr config, void* vertices, int verticesCount, void* indices, int indicesCount, unsigned char colorScale) OVERRIDE;
+		virtual void API_CALL draw(llge::GraphicsEffects effect, llge::BlendMode blendMode, llge::ITexture* texture, uint lightmapId, void* vertices, int verticesCount, void* indices, int indicesCount, unsigned char colorScale) OVERRIDE;
 		virtual void API_CALL execute(bool usePostProcess) OVERRIDE;
 		virtual void API_CALL setToneMap(uint tonemapId) OVERRIDE;
 

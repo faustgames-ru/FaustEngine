@@ -716,14 +716,14 @@ namespace llge
 		classInstance->setToneMap(tonemapId);
 	}
 	
-	extern "C" DLLEXPORT void API_CALL llge_Batch2d_drawEx (IBatch2d * classInstance, GraphicsEffects effect, BlendMode blendMode, IntPtr config, void * vertices, int verticesCount, void * indices, int indicesCount)
+	extern "C" DLLEXPORT void API_CALL llge_Batch2d_drawEx (IBatch2d * classInstance, GraphicsEffects effect, BlendMode blendMode, IntPtr config, void * vertices, int verticesCount, void * indices, int indicesCount, byte colorScale)
 	{
-		classInstance->drawEx(effect, blendMode, config, vertices, verticesCount, indices, indicesCount);
+		classInstance->drawEx(effect, blendMode, config, vertices, verticesCount, indices, indicesCount, colorScale);
 	}
 	
-	extern "C" DLLEXPORT void API_CALL llge_Batch2d_draw (IBatch2d * classInstance, GraphicsEffects effect, BlendMode blendMode, ITexture * textureId, uint lightmapId, void * vertices, int verticesCount, void * indices, int indicesCount)
+	extern "C" DLLEXPORT void API_CALL llge_Batch2d_draw (IBatch2d * classInstance, GraphicsEffects effect, BlendMode blendMode, ITexture * textureId, uint lightmapId, void * vertices, int verticesCount, void * indices, int indicesCount, byte colorScale)
 	{
-		classInstance->draw(effect, blendMode, textureId, lightmapId, vertices, verticesCount, indices, indicesCount);
+		classInstance->draw(effect, blendMode, textureId, lightmapId, vertices, verticesCount, indices, indicesCount, colorScale);
 	}
 	
 	extern "C" DLLEXPORT void API_CALL llge_Batch2d_execute (IBatch2d * classInstance, bool usePostProcess)
@@ -811,14 +811,14 @@ namespace llge
 		return classInstance->getZ();
 	}
 	
-	extern "C" DLLEXPORT void API_CALL llge_SpineSkeleton_renderEx (ISpineSkeleton * classInstance, IBatch2d * batch, IntPtr effectConfig, GraphicsEffects effect)
+	extern "C" DLLEXPORT void API_CALL llge_SpineSkeleton_renderEx (ISpineSkeleton * classInstance, IBatch2d * batch, IntPtr effectConfig, GraphicsEffects effect, byte colorScale)
 	{
-		classInstance->renderEx(batch, effectConfig, effect);
+		classInstance->renderEx(batch, effectConfig, effect, colorScale);
 	}
 	
-	extern "C" DLLEXPORT void API_CALL llge_SpineSkeleton_render (ISpineSkeleton * classInstance, IBatch2d * batch, int lightmapId, GraphicsEffects effect)
+	extern "C" DLLEXPORT void API_CALL llge_SpineSkeleton_render (ISpineSkeleton * classInstance, IBatch2d * batch, int lightmapId, GraphicsEffects effect, byte colorScale)
 	{
-		classInstance->render(batch, lightmapId, effect);
+		classInstance->render(batch, lightmapId, effect, colorScale);
 	}
 	
 	extern "C" DLLEXPORT int API_CALL llge_SpineSkeleton_getGeometry (ISpineSkeleton * classInstance, void * vertices, int verticeLimit, void * indices, int indicesLimit)

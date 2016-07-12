@@ -31,7 +31,7 @@ namespace drawing
 		return _indicesCount + indicesCount < IndicesLimit && _verticesCount + verticesCount < VerticesLimit;
 	}
 
-	void BatchBuffer::addMesh(uint color, float z, float* vertices, float* uvs, int verticesCount, int* indices, int indicesCount, bool additive)
+	void BatchBuffer::addMesh(uint color, float z, float* vertices, float* uvs, int verticesCount, int* indices, int indicesCount, bool additive, byte colorScale)
 	{
 		for (int i = 0; i < indicesCount; i++)
 		{
@@ -46,7 +46,7 @@ namespace drawing
 			target->x = *source; ++source;
 			target->y = *source; ++source;
 			target->z = z;
-			target->color = graphics::Color::premul(color, additive);
+			target->color = graphics::Color::premul(color, colorScale, additive);
 			target->u = _x + *uvsource *_w; ++uvsource;
 			target->v = _y + *uvsource *_h; ++uvsource;
 		}
@@ -55,7 +55,7 @@ namespace drawing
 		_indicesCount += indicesCount;
 	}
 
-	void BatchBuffer::addMesh(TVertex* vertices, int verticesCount, ushort* indices, int indicesCount, bool additive)
+	void BatchBuffer::addMesh(TVertex* vertices, int verticesCount, ushort* indices, int indicesCount, bool additive, unsigned char colorScale)
 	{
 		for (int i = 0; i < indicesCount; i++)
 		{
@@ -71,7 +71,7 @@ namespace drawing
 			target->z = source->z;
 			target->u = _x + source->u *_w;
 			target->v = _y + source->v *_h;
-			target->color = graphics::Color::premul(source->color, additive);
+			target->color = graphics::Color::premul(source->color, colorScale, additive);
 		}
 
 		_verticesCount += verticesCount;
@@ -202,21 +202,21 @@ namespace drawing
 		applyEntry();
 	}
 	
-	void Batcher::drawMesh(graphics::EffectBase *effect, graphics::BlendState::e blend, llge::ITexture * texture, uint lightmapId, TVertex *vertices, int verticesCount, ushort *indices, int indicesCount)
+	void Batcher::drawMesh(graphics::EffectBase *effect, graphics::BlendState::e blend, llge::ITexture * texture, uint lightmapId, TVertex *vertices, int verticesCount, ushort *indices, int indicesCount, float colorScale)
 	{
 		graphics::Texture * textureInstance = static_cast<graphics::Texture *>(texture->getTextureInstance());
 		_x = textureInstance->X;
 		_y = textureInstance->Y;
 		_w = textureInstance->W;
 		_h = textureInstance->H;
-		drawMesh(effect, blend, textureInstance->getHandle(), lightmapId, vertices, verticesCount, indices, indicesCount);
+		drawMesh(effect, blend, textureInstance->getHandle(), lightmapId, vertices, verticesCount, indices, indicesCount, colorScale);
 		_x = 0;
 		_y = 0;
 		_w = 1;
 		_h = 1;
 	}
 	
-	void Batcher::drawMesh(graphics::EffectBase *effect, graphics::BlendState::e blend, uint textureId, uint lightmapId, TVertex *vertices, int verticesCount, ushort *indices, int indicesCount)
+	void Batcher::drawMesh(graphics::EffectBase *effect, graphics::BlendState::e blend, uint textureId, uint lightmapId, TVertex *vertices, int verticesCount, ushort *indices, int indicesCount, unsigned char colorScale)
 	{
 		BatchBuffer * currentBuffer = _buffer->Buffers[_batchBufferIndex];
 		bool needNewEntry = false;
@@ -262,10 +262,10 @@ namespace drawing
 		currentBuffer->_y = _y;
 		currentBuffer->_w = _w;
 		currentBuffer->_h = _h;
-		currentBuffer->addMesh(vertices, verticesCount, indices, indicesCount, blend == graphics::BlendState::Additive);
+		currentBuffer->addMesh(vertices, verticesCount, indices, indicesCount, blend == graphics::BlendState::Additive, colorScale);
 	}
 
-	void Batcher::drawMesh(graphics::EffectBase* effect, graphics::BlendState::e blend, void* config, TVertex* vertices, int verticesCount, ushort* indices, int indicesCount)
+	void Batcher::drawMesh(graphics::EffectBase* effect, graphics::BlendState::e blend, void* config, TVertex* vertices, int verticesCount, ushort* indices, int indicesCount, unsigned char colorScale)
 	{
 		BatchBuffer * currentBuffer = _buffer->Buffers[_batchBufferIndex];
 		bool needNewEntry = false;
@@ -305,10 +305,10 @@ namespace drawing
 		currentBuffer->_y = _y;
 		currentBuffer->_w = _w;
 		currentBuffer->_h = _h;
-		currentBuffer->addMesh(vertices, verticesCount, indices, indicesCount, blend == graphics::BlendState::Additive);
+		currentBuffer->addMesh(vertices, verticesCount, indices, indicesCount, blend == graphics::BlendState::Additive, colorScale);
 	}
 
-	void Batcher::drawSpineMesh(const BatcherSpineMesh &mesh)
+	void Batcher::drawSpineMesh(const BatcherSpineMesh &mesh, byte colorScale)
 	{
 		BatchBuffer * currentBuffer = _buffer->Buffers[_batchBufferIndex];
 		bool needNewEntry = false;
@@ -349,7 +349,7 @@ namespace drawing
 		currentBuffer->_y = _y;
 		currentBuffer->_w = _w;
 		currentBuffer->_h = _h;
-		currentBuffer->addMesh(mesh.Color, mesh.Z, mesh.Vertices, mesh.Uvs, mesh.VerticesCount, mesh.Indices, mesh.IndicesCount, mesh.State.Blend == graphics::BlendState::Additive);
+		currentBuffer->addMesh(mesh.Color, mesh.Z, mesh.Vertices, mesh.Uvs, mesh.VerticesCount, mesh.Indices, mesh.IndicesCount, mesh.State.Blend == graphics::BlendState::Additive, colorScale);
 	}
 
 
@@ -425,14 +425,14 @@ namespace drawing
 		finish();
 	}
 
-	void Batcher::drawEx(llge::GraphicsEffects effect, llge::BlendMode blendMode, IntPtr config, void* vertices, int verticesCount, void* indices, int indicesCount)
+	void Batcher::drawEx(llge::GraphicsEffects effect, llge::BlendMode blendMode, IntPtr config, void* vertices, int verticesCount, void* indices, int indicesCount, unsigned char colorScale)
 	{
-		drawMesh(_converter.getEffect(effect), _converter.getBlend(blendMode), config, static_cast<TVertex *>(vertices), verticesCount, static_cast<ushort *>(indices), indicesCount);
+		drawMesh(_converter.getEffect(effect), _converter.getBlend(blendMode), config, static_cast<TVertex *>(vertices), verticesCount, static_cast<ushort *>(indices), indicesCount, colorScale);
 	}
 
-	void Batcher::draw(llge::GraphicsEffects effect, llge::BlendMode blendMode, llge::ITexture* texture, uint lightmapId, void* vertices, int verticesCount, void* indices, int indicesCount)
+	void Batcher::draw(llge::GraphicsEffects effect, llge::BlendMode blendMode, llge::ITexture* texture, uint lightmapId, void* vertices, int verticesCount, void* indices, int indicesCount, unsigned char colorScale)
 	{
-		drawMesh(_converter.getEffect(effect), _converter.getBlend(blendMode), texture, lightmapId, static_cast<TVertex *>(vertices), verticesCount, static_cast<ushort *>(indices), indicesCount);
+		drawMesh(_converter.getEffect(effect), _converter.getBlend(blendMode), texture, lightmapId, static_cast<TVertex *>(vertices), verticesCount, static_cast<ushort *>(indices), indicesCount, colorScale);
 	}
 
 	void Batcher::execute(bool usePostProcess)

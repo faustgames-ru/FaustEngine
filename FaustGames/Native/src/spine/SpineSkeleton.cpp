@@ -122,7 +122,7 @@ namespace spine
 		return _bones.size();
 	}
 
-	void SpineSkeleton::renderEx(llge::IBatch2d* batch, IntPtr effectConfig, llge::GraphicsEffects effect)
+	void SpineSkeleton::renderEx(llge::IBatch2d* batch, IntPtr effectConfig, llge::GraphicsEffects effect, byte colorScale)
 	{
 		_bounds.clear();
 		drawing::Batcher* batcher = (drawing::Batcher*)batch->getNativeInstance();
@@ -160,7 +160,7 @@ namespace spine
 				_mesh.VerticesCount = 4;
 				//_mesh.State.TextureId = getTextureId(region->rendererObject);
 				_lightingConfig.texture = getTextureId(region->rendererObject);
-				batcher->drawSpineMesh(_mesh);
+				batcher->drawSpineMesh(_mesh, colorScale);
 				break;
 			}
 			case SP_ATTACHMENT_BOUNDING_BOX:
@@ -188,7 +188,7 @@ namespace spine
 				_mesh.VerticesCount = mesh->verticesCount / 2;
 				//_mesh.State.TextureId = getTextureId(mesh->rendererObject);
 				_lightingConfig.texture = getTextureId(mesh->rendererObject);
-				batcher->drawSpineMesh(_mesh);
+				batcher->drawSpineMesh(_mesh, colorScale);
 				break;
 			}
 			case SP_ATTACHMENT_WEIGHTED_MESH:
@@ -208,7 +208,7 @@ namespace spine
 				_mesh.VerticesCount = skinnedMesh->uvsCount / 2;
 				_lightingConfig.texture = getTextureId(skinnedMesh->rendererObject);
 				//_mesh.State.TextureId = getTextureId(skinnedMesh->rendererObject);
-				batcher->drawSpineMesh(_mesh);
+				batcher->drawSpineMesh(_mesh, colorScale);
 				break;
 			}
 			default:
@@ -440,7 +440,7 @@ namespace spine
 
 
 
-	void API_CALL SpineSkeleton::render(llge::IBatch2d * batch, int lightmapId, llge::GraphicsEffects effect)
+	void API_CALL SpineSkeleton::render(llge::IBatch2d * batch, int lightmapId, llge::GraphicsEffects effect, byte colorScale)
 	{
 		drawing::Batcher* batcher = (drawing::Batcher*)batch->getNativeInstance();
 		spSkeleton *s = (spSkeleton *)_spSkeleton;
@@ -478,7 +478,7 @@ namespace spine
 					_mesh.VerticesCount = 4;
 					//_mesh.State.TextureId = getTextureId(region->rendererObject);
 					_lightingConfig.texture = getTextureId(region->rendererObject);
-					batcher->drawSpineMesh(_mesh);				
+					batcher->drawSpineMesh(_mesh, colorScale);
 					break;
 				}
 				case SP_ATTACHMENT_BOUNDING_BOX:
@@ -503,7 +503,7 @@ namespace spine
 					_mesh.VerticesCount = mesh->verticesCount / 2;
 					//_mesh.State.TextureId = getTextureId(mesh->rendererObject);
 					_lightingConfig.texture = getTextureId(mesh->rendererObject);
-					batcher->drawSpineMesh(_mesh);
+					batcher->drawSpineMesh(_mesh, colorScale);
 					break;
 				}
 				case SP_ATTACHMENT_WEIGHTED_MESH:
@@ -523,7 +523,7 @@ namespace spine
 					_mesh.VerticesCount = skinnedMesh->uvsCount / 2;
 					_lightingConfig.texture = getTextureId(skinnedMesh->rendererObject);
 					//_mesh.State.TextureId = getTextureId(skinnedMesh->rendererObject);
-					batcher->drawSpineMesh(_mesh);
+					batcher->drawSpineMesh(_mesh, colorScale);
 					break;
 				}
 				default:

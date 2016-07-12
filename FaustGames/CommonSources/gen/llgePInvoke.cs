@@ -1223,20 +1223,20 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private void llge_Batch2d_setToneMap (IntPtr classInstance, uint tonemapId);
-		public void DrawEx (GraphicsEffects effect, BlendMode blendMode, IntPtr config, IntPtr vertices, int verticesCount, IntPtr indices, int indicesCount)
+		public void DrawEx (GraphicsEffects effect, BlendMode blendMode, IntPtr config, IntPtr vertices, int verticesCount, IntPtr indices, int indicesCount, byte colorScale)
 		{
-			llge_Batch2d_drawEx(ClassInstance, effect, blendMode, config, vertices, verticesCount, indices, indicesCount);
+			llge_Batch2d_drawEx(ClassInstance, effect, blendMode, config, vertices, verticesCount, indices, indicesCount, colorScale);
 		}
 		
 		[DllImport(Version.Dll)]
-		static extern private void llge_Batch2d_drawEx (IntPtr classInstance, GraphicsEffects effect, BlendMode blendMode, IntPtr config, IntPtr vertices, int verticesCount, IntPtr indices, int indicesCount);
-		public void Draw (GraphicsEffects effect, BlendMode blendMode, Texture textureId, uint lightmapId, IntPtr vertices, int verticesCount, IntPtr indices, int indicesCount)
+		static extern private void llge_Batch2d_drawEx (IntPtr classInstance, GraphicsEffects effect, BlendMode blendMode, IntPtr config, IntPtr vertices, int verticesCount, IntPtr indices, int indicesCount, byte colorScale);
+		public void Draw (GraphicsEffects effect, BlendMode blendMode, Texture textureId, uint lightmapId, IntPtr vertices, int verticesCount, IntPtr indices, int indicesCount, byte colorScale)
 		{
-			llge_Batch2d_draw(ClassInstance, effect, blendMode, textureId.ClassInstance, lightmapId, vertices, verticesCount, indices, indicesCount);
+			llge_Batch2d_draw(ClassInstance, effect, blendMode, textureId.ClassInstance, lightmapId, vertices, verticesCount, indices, indicesCount, colorScale);
 		}
 		
 		[DllImport(Version.Dll)]
-		static extern private void llge_Batch2d_draw (IntPtr classInstance, GraphicsEffects effect, BlendMode blendMode, IntPtr textureId, uint lightmapId, IntPtr vertices, int verticesCount, IntPtr indices, int indicesCount);
+		static extern private void llge_Batch2d_draw (IntPtr classInstance, GraphicsEffects effect, BlendMode blendMode, IntPtr textureId, uint lightmapId, IntPtr vertices, int verticesCount, IntPtr indices, int indicesCount, byte colorScale);
 		public void Execute (bool usePostProcess)
 		{
 			llge_Batch2d_execute(ClassInstance, usePostProcess);
@@ -1366,20 +1366,20 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private float llge_SpineSkeleton_getZ (IntPtr classInstance);
-		public void RenderEx (Batch2d batch, IntPtr effectConfig, GraphicsEffects effect)
+		public void RenderEx (Batch2d batch, IntPtr effectConfig, GraphicsEffects effect, byte colorScale)
 		{
-			llge_SpineSkeleton_renderEx(ClassInstance, batch.ClassInstance, effectConfig, effect);
+			llge_SpineSkeleton_renderEx(ClassInstance, batch.ClassInstance, effectConfig, effect, colorScale);
 		}
 		
 		[DllImport(Version.Dll)]
-		static extern private void llge_SpineSkeleton_renderEx (IntPtr classInstance, IntPtr batch, IntPtr effectConfig, GraphicsEffects effect);
-		public void Render (Batch2d batch, int lightmapId, GraphicsEffects effect)
+		static extern private void llge_SpineSkeleton_renderEx (IntPtr classInstance, IntPtr batch, IntPtr effectConfig, GraphicsEffects effect, byte colorScale);
+		public void Render (Batch2d batch, int lightmapId, GraphicsEffects effect, byte colorScale)
 		{
-			llge_SpineSkeleton_render(ClassInstance, batch.ClassInstance, lightmapId, effect);
+			llge_SpineSkeleton_render(ClassInstance, batch.ClassInstance, lightmapId, effect, colorScale);
 		}
 		
 		[DllImport(Version.Dll)]
-		static extern private void llge_SpineSkeleton_render (IntPtr classInstance, IntPtr batch, int lightmapId, GraphicsEffects effect);
+		static extern private void llge_SpineSkeleton_render (IntPtr classInstance, IntPtr batch, int lightmapId, GraphicsEffects effect, byte colorScale);
 		public int GetGeometry (IntPtr vertices, int verticeLimit, IntPtr indices, int indicesLimit)
 		{
 			return llge_SpineSkeleton_getGeometry(ClassInstance, vertices, verticeLimit, indices, indicesLimit);

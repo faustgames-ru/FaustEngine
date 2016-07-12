@@ -382,9 +382,11 @@ namespace geometry
 		ClipperLib::Paths intersection;
 		ClipperLib::Paths difference;
 		clipper.Execute(ClipperLib::ctIntersection, intersection);
+		ClipperLib::SimplifyPolygons(intersection);
 		if (_createDifference)
 		{
 			clipper.Execute(ClipperLib::ctDifference, difference);
+			ClipperLib::SimplifyPolygons(difference);
 		}
 
 		if (aabb.hasSize(_sizeX, _sizeX))

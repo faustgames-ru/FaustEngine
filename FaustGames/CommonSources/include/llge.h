@@ -26,6 +26,7 @@
 
 typedef unsigned short ushort;
 typedef unsigned int uint;
+typedef unsigned char byte;
 typedef const char * String;
 typedef void * IntPtr;
 
@@ -406,8 +407,8 @@ namespace llge
 		virtual void API_CALL startBatch() = 0;
 		virtual void API_CALL finishBatch() = 0;
 		virtual void API_CALL setToneMap(uint tonemapId) = 0;
-		virtual void API_CALL drawEx(GraphicsEffects effect, BlendMode blendMode, IntPtr config, void *vertices, int verticesCount, void *indices, int indicesCount) = 0;
-		virtual void API_CALL draw(GraphicsEffects effect, BlendMode blendMode, ITexture* textureId, uint lightmapId, void *vertices, int verticesCount, void *indices, int indicesCount) = 0;
+		virtual void API_CALL drawEx(GraphicsEffects effect, BlendMode blendMode, IntPtr config, void *vertices, int verticesCount, void *indices, int indicesCount, byte colorScale) = 0;
+		virtual void API_CALL draw(GraphicsEffects effect, BlendMode blendMode, ITexture* textureId, uint lightmapId, void *vertices, int verticesCount, void *indices, int indicesCount, byte colorScale) = 0;
 		virtual void API_CALL execute(bool usePostProcess) = 0;
 	};
 
@@ -437,8 +438,8 @@ namespace llge
 		virtual float API_CALL getMaxY() = 0;
 		virtual float API_CALL getZ() = 0;
 
-		virtual void API_CALL renderEx(IBatch2d * batch, IntPtr effectConfig, GraphicsEffects effect) = 0;
-		virtual void API_CALL render(IBatch2d * batch, int lightmapId, GraphicsEffects effect) = 0;
+		virtual void API_CALL renderEx(IBatch2d * batch, IntPtr effectConfig, GraphicsEffects effect, byte colorScale) = 0;
+		virtual void API_CALL render(IBatch2d * batch, int lightmapId, GraphicsEffects effect, byte colorScale) = 0;
 		virtual int API_CALL getGeometry(void *vertices, int verticeLimit, void *indices, int indicesLimit) = 0;
 		virtual IntPtr API_CALL getNativeInstance() = 0;
 		virtual void API_CALL updateWorldTransform() = 0;

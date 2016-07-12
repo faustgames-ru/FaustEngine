@@ -21,6 +21,26 @@ namespace graphics
 		return fromRgba((unsigned char)r, (unsigned char)g, (unsigned char)b, (unsigned char)a);
 	}
 
+	unsigned Color::premul(unsigned value, unsigned char colorScale, bool additive)
+	{
+		int r = getR(value);
+		int g = getG(value);
+		int b = getB(value);
+		int a = getA(value);
+		int scale = static_cast<int>(a)*static_cast<int>(colorScale);
+		r *= scale;
+		g *= scale;
+		b *= scale;
+		r = r >> 16;
+		g = g >> 16;
+		b = b >> 16;
+		if (additive)
+		{
+			a = 0;
+		}
+		return fromRgba((unsigned char)r, (unsigned char)g, (unsigned char)b, (unsigned char)a);
+	}
+
 	unsigned int Color::mulA(unsigned int value, float a)
 	{
 		int r = (int)core::Math::round(getR(value)*a);

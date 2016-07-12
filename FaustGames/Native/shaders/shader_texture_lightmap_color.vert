@@ -25,7 +25,7 @@ float calcFogFactor(float distance)
 void main()
 {
 	gl_Position = projection * vec4(position, 1.0);
-	_color = color;
+	_color = vec4(color.rgb*2.0, color.a);
 	_textureCoords = textureCoords;
 	_lightmapCoords = (gl_Position.xy / gl_Position.w) * vec2(0.5, 0.5) + 0.5;
 	fogFactor = calcFogFactor(position.z);

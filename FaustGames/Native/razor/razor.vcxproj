@@ -1,0 +1,470 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{B411510B-2A1A-46C0-9C25-4EBB054F7486}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>razor</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>EFFECTS_BASIC;FT_DEBUG_LEVEL_ERROR;FT_DEBUG_LEVEL_TRACE;FT2_BUILD_LIBRARY;WIN32;_DEBUG;_WINDOWS;_USRDLL;RAZOR_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\include;..\..\CommonSources\include;..\src\resources\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <CompileAsManaged>false</CompileAsManaged>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>..\lib\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>EFFECTS_BASIC;FT_DEBUG_LEVEL_ERROR;FT_DEBUG_LEVEL_TRACE;FT2_BUILD_LIBRARY;_DEBUG;_WINDOWS;_USRDLL;RAZOR_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\include;..\..\CommonSources\include;..\src\resources\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>..\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>EFFECTS_BASIC;FT_DEBUG_LEVEL_ERROR;FT_DEBUG_LEVEL_TRACE;FT2_BUILD_LIBRARY;WIN32;NDEBUG;_WINDOWS;_USRDLL;RAZOR_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\include;..\..\CommonSources\include;..\src\resources\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <CompileAsManaged>false</CompileAsManaged>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>..\lib\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>EFFECTS_BASIC;FT_DEBUG_LEVEL_ERROR;FT_DEBUG_LEVEL_TRACE;FT2_BUILD_LIBRARY;NDEBUG;_WINDOWS;_USRDLL;RAZOR_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\include;..\..\CommonSources\include;..\src\resources\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>..\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\CommonSources\include\BaseObjects.h" />
+    <ClInclude Include="..\..\CommonSources\include\razor.h" />
+    <ClInclude Include="..\resources_fonts\FontQuicksandRegular.h" />
+    <ClInclude Include="..\shaders\solid_color_frag.h" />
+    <ClInclude Include="..\shaders\solid_color_vert.h" />
+    <ClInclude Include="..\shaders\texture_color_frag.h" />
+    <ClInclude Include="..\shaders\texture_color_vert.h" />
+    <ClInclude Include="..\src\core\Allocator.h" />
+    <ClInclude Include="..\src\core\Convert.h" />
+    <ClInclude Include="..\src\core\core.h" />
+    <ClInclude Include="..\src\core\core_classes.h" />
+    <ClInclude Include="..\src\core\core_platform.h" />
+    <ClInclude Include="..\src\core\DebugRender.h" />
+    <ClInclude Include="..\src\core\HollowsAllocationPolicy.h" />
+    <ClInclude Include="..\src\core\Lazy.h" />
+    <ClInclude Include="..\src\core\MarchingSquares.h" />
+    <ClInclude Include="..\src\core\Math.h" />
+    <ClInclude Include="..\src\core\Matrix.h" />
+    <ClInclude Include="..\src\core\Path.h" />
+    <ClInclude Include="..\src\core\Spline.h" />
+    <ClInclude Include="..\src\core\StaticArray.h" />
+    <ClInclude Include="..\src\core\SystemAllocationPolicy.h" />
+    <ClInclude Include="..\src\core\Vector.h" />
+    <ClInclude Include="..\src\fonts\BitmapFont.h" />
+    <ClInclude Include="..\src\fonts\Font.h" />
+    <ClInclude Include="..\src\fonts\FontCharSet.h" />
+    <ClInclude Include="..\src\fonts\FontRects.h" />
+    <ClInclude Include="..\src\fonts\FontsManager.h" />
+    <ClInclude Include="..\src\fonts\fonts_classes.h" />
+    <ClInclude Include="..\src\fonts\fonts_platform.h" />
+    <ClInclude Include="..\src\fonts\fonts_references.h" />
+    <ClInclude Include="..\src\fonts\IFontRenderer.h" />
+    <ClInclude Include="..\src\fonts\OutlineVectorFont.h" />
+    <ClInclude Include="..\src\geometry\Aabb2d.h" />
+    <ClInclude Include="..\src\geometry\Frustum.h" />
+    <ClInclude Include="..\src\geometry\geometry.h" />
+    <ClInclude Include="..\src\geometry\geometry_classes.h" />
+    <ClInclude Include="..\src\geometry\geometry_platform.h" />
+    <ClInclude Include="..\src\geometry\geometry_references.h" />
+    <ClInclude Include="..\src\geometry\Quadtree2d.h" />
+    <ClInclude Include="..\src\geometry\Quadtree2dItem.h" />
+    <ClInclude Include="..\src\geometry\Quadtree2dNode.h" />
+    <ClInclude Include="..\src\geometry\TerrainClipper.h" />
+    <ClInclude Include="..\src\graphics\AttributeInfo.h" />
+    <ClInclude Include="..\src\graphics\Attributes.h" />
+    <ClInclude Include="..\src\graphics\Batcher.h" />
+    <ClInclude Include="..\src\graphics\Color.h" />
+    <ClInclude Include="..\src\graphics\config_defines.h" />
+    <ClInclude Include="..\src\graphics\Effect.h" />
+    <ClInclude Include="..\src\graphics\EffectBase.h" />
+    <ClInclude Include="..\src\graphics\EffectConstant.h" />
+    <ClInclude Include="..\src\graphics\EffectRenderDepth.h" />
+    <ClInclude Include="..\src\graphics\EffectsBasic.h" />
+    <ClInclude Include="..\src\graphics\EffectSolid.h" />
+    <ClInclude Include="..\src\graphics\EffectSolidColor.h" />
+    <ClInclude Include="..\src\graphics\EffectsPostProcess.h" />
+    <ClInclude Include="..\src\graphics\EffectTextureAlphamaskColor.h" />
+    <ClInclude Include="..\src\graphics\EffectTextureColor.h" />
+    <ClInclude Include="..\src\graphics\EffectTextureColorHighlight.h" />
+    <ClInclude Include="..\src\graphics\EffectTextureLightMapColor.h" />
+    <ClInclude Include="..\src\graphics\EffectWater.h" />
+    <ClInclude Include="..\src\graphics\Errors.h" />
+    <ClInclude Include="..\src\graphics\graphics.h" />
+    <ClInclude Include="..\src\graphics\GraphicsDevice.h" />
+    <ClInclude Include="..\src\graphics\graphics_classes.h" />
+    <ClInclude Include="..\src\graphics\graphics_platform.h" />
+    <ClInclude Include="..\src\graphics\graphics_references.h" />
+    <ClInclude Include="..\src\graphics\Image2dData.h" />
+    <ClInclude Include="..\src\graphics\RenderConverter.h" />
+    <ClInclude Include="..\src\graphics\RenderConverterBasic.h" />
+    <ClInclude Include="..\src\graphics\RenderState.h" />
+    <ClInclude Include="..\src\graphics\State.h" />
+    <ClInclude Include="..\src\graphics\StateCompare.h" />
+    <ClInclude Include="..\src\graphics\StaticBatch.h" />
+    <ClInclude Include="..\src\graphics\Texture.h" />
+    <ClInclude Include="..\src\graphics\TextureCubemap.h" />
+    <ClInclude Include="..\src\graphics\TextureImage2d.h" />
+    <ClInclude Include="..\src\graphics\TextureLoader.h" />
+    <ClInclude Include="..\src\graphics\TextureRenderTarget2d.h" />
+    <ClInclude Include="..\src\graphics\TextureRenderTargetDepth2d.h" />
+    <ClInclude Include="..\src\graphics\Uniform.h" />
+    <ClInclude Include="..\src\graphics\UniformInfo.h" />
+    <ClInclude Include="..\src\graphics\Uniforms.h" />
+    <ClInclude Include="..\src\graphics\UniformValue.h" />
+    <ClInclude Include="..\src\graphics\UniformValueCubemap.h" />
+    <ClInclude Include="..\src\graphics\UniformValueFloat.h" />
+    <ClInclude Include="..\src\graphics\UniformValueMatrix.h" />
+    <ClInclude Include="..\src\graphics\UniformValueTexture.h" />
+    <ClInclude Include="..\src\graphics\UniformValueVector3.h" />
+    <ClInclude Include="..\src\graphics\VertexBuffer.h" />
+    <ClInclude Include="..\src\graphics\VertexFormat.h" />
+    <ClInclude Include="..\src\graphics\VertexFormatPosition.h" />
+    <ClInclude Include="..\src\graphics\VertexFormatPositionColor.h" />
+    <ClInclude Include="..\src\graphics\VertexFormatPositionTextureColor.h" />
+    <ClInclude Include="..\src\graphics\VertexFormatsBasic.h" />
+    <ClInclude Include="..\src\razor\RazorGame.h" />
+    <ClInclude Include="..\src\resources\ContentManager.h" />
+    <ClInclude Include="..\src\resources\ContentProvider.h" />
+    <ClInclude Include="..\src\resources\lpng\png.h" />
+    <ClInclude Include="..\src\resources\lpng\pngconf.h" />
+    <ClInclude Include="..\src\resources\lpng\pngdebug.h" />
+    <ClInclude Include="..\src\resources\lpng\pnginfo.h" />
+    <ClInclude Include="..\src\resources\lpng\pnglibconf.h" />
+    <ClInclude Include="..\src\resources\lpng\pngpriv.h" />
+    <ClInclude Include="..\src\resources\lpng\pngstruct.h" />
+    <ClInclude Include="..\src\resources\resources.h" />
+    <ClInclude Include="..\src\resources\resources_classes.h" />
+    <ClInclude Include="..\src\resources\resources_platform.h" />
+    <ClInclude Include="..\src\resources\resources_references.h" />
+    <ClInclude Include="..\src\resources\zlib\crc32.h" />
+    <ClInclude Include="..\src\resources\zlib\deflate.h" />
+    <ClInclude Include="..\src\resources\zlib\gzguts.h" />
+    <ClInclude Include="..\src\resources\zlib\inffast.h" />
+    <ClInclude Include="..\src\resources\zlib\inffixed.h" />
+    <ClInclude Include="..\src\resources\zlib\inflate.h" />
+    <ClInclude Include="..\src\resources\zlib\inftrees.h" />
+    <ClInclude Include="..\src\resources\zlib\trees.h" />
+    <ClInclude Include="..\src\resources\zlib\zconf.h" />
+    <ClInclude Include="..\src\resources\zlib\zlib.h" />
+    <ClInclude Include="..\src\resources\zlib\zutil.h" />
+    <ClInclude Include="..\src_clipper\clipper.hpp" />
+    <ClInclude Include="..\src_poly2tri\common\shapes.h" />
+    <ClInclude Include="..\src_poly2tri\common\utils.h" />
+    <ClInclude Include="..\src_poly2tri\poly2tri.h" />
+    <ClInclude Include="..\src_poly2tri\sweep\advancing_front.h" />
+    <ClInclude Include="..\src_poly2tri\sweep\cdt.h" />
+    <ClInclude Include="..\src_poly2tri\sweep\sweep.h" />
+    <ClInclude Include="..\src_poly2tri\sweep\sweep_context.h" />
+    <ClInclude Include="..\src_rectanglebinpack\GuillotineBinPack.h" />
+    <ClInclude Include="..\src_rectanglebinpack\MaxRectsBinPack.h" />
+    <ClInclude Include="..\src_rectanglebinpack\Rect.h" />
+    <ClInclude Include="..\src_rectanglebinpack\ShelfBinPack.h" />
+    <ClInclude Include="..\src_rectanglebinpack\ShelfNextFitBinPack.h" />
+    <ClInclude Include="..\src_rectanglebinpack\SkylineBinPack.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="targetver.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\CommonSources\gen\razorPInvoke.cpp" />
+    <ClCompile Include="..\src\core\Convert.cpp" />
+    <ClCompile Include="..\src\core\DebugRender.cpp" />
+    <ClCompile Include="..\src\core\HollowsAllocationPolicy.cpp" />
+    <ClCompile Include="..\src\core\Lazy.cpp" />
+    <ClCompile Include="..\src\core\MarchingSquares.cpp" />
+    <ClCompile Include="..\src\core\Math.cpp" />
+    <ClCompile Include="..\src\core\Matrix.cpp" />
+    <ClCompile Include="..\src\core\Path.cpp" />
+    <ClCompile Include="..\src\core\Spline.cpp" />
+    <ClCompile Include="..\src\core\SystemAllocationPolicy.cpp" />
+    <ClCompile Include="..\src\core\Vector.cpp" />
+    <ClCompile Include="..\src\fonts\BitmapFont.cpp" />
+    <ClCompile Include="..\src\fonts\Font.cpp" />
+    <ClCompile Include="..\src\fonts\FontCharSet.cpp" />
+    <ClCompile Include="..\src\fonts\FontRects.cpp" />
+    <ClCompile Include="..\src\fonts\FontsManager.cpp" />
+    <ClCompile Include="..\src\fonts\OutlineVectorFont.cpp" />
+    <ClCompile Include="..\src\geometry\Aabb2d.cpp" />
+    <ClCompile Include="..\src\geometry\Frustum.cpp" />
+    <ClCompile Include="..\src\geometry\Quadtree2d.cpp" />
+    <ClCompile Include="..\src\geometry\Quadtree2dNode.cpp" />
+    <ClCompile Include="..\src\geometry\TerrainClipper.cpp" />
+    <ClCompile Include="..\src\graphics\AttributeInfo.cpp" />
+    <ClCompile Include="..\src\graphics\Attributes.cpp" />
+    <ClCompile Include="..\src\graphics\Color.cpp" />
+    <ClCompile Include="..\src\graphics\Effect.cpp" />
+    <ClCompile Include="..\src\graphics\EffectBase.cpp" />
+    <ClCompile Include="..\src\graphics\EffectConstant.cpp" />
+    <ClCompile Include="..\src\graphics\EffectRenderDepth.cpp" />
+    <ClCompile Include="..\src\graphics\EffectsBasic.cpp" />
+    <ClCompile Include="..\src\graphics\EffectSolid.cpp" />
+    <ClCompile Include="..\src\graphics\EffectSolidColor.cpp" />
+    <ClCompile Include="..\src\graphics\EffectsPostProcess.cpp" />
+    <ClCompile Include="..\src\graphics\EffectTextureAlphamaskColor.cpp" />
+    <ClCompile Include="..\src\graphics\EffectTextureColor.cpp" />
+    <ClCompile Include="..\src\graphics\EffectTextureColorHighlight.cpp" />
+    <ClCompile Include="..\src\graphics\EffectTextureLightMapColor.cpp" />
+    <ClCompile Include="..\src\graphics\EffectWater.cpp" />
+    <ClCompile Include="..\src\graphics\Errors.cpp" />
+    <ClCompile Include="..\src\graphics\GraphicsDevice.cpp" />
+    <ClCompile Include="..\src\graphics\Image2dData.cpp" />
+    <ClCompile Include="..\src\graphics\RenderConverter.cpp" />
+    <ClCompile Include="..\src\graphics\RenderConverterBasic.cpp" />
+    <ClCompile Include="..\src\graphics\RenderState.cpp" />
+    <ClCompile Include="..\src\graphics\StaticBatch.cpp" />
+    <ClCompile Include="..\src\graphics\Texture.cpp" />
+    <ClCompile Include="..\src\graphics\TextureCubemap.cpp" />
+    <ClCompile Include="..\src\graphics\TextureImage2d.cpp" />
+    <ClCompile Include="..\src\graphics\TextureLoader.cpp" />
+    <ClCompile Include="..\src\graphics\TextureRenderTarget2d.cpp" />
+    <ClCompile Include="..\src\graphics\TextureRenderTargetDepth2d.cpp" />
+    <ClCompile Include="..\src\graphics\Uniform.cpp" />
+    <ClCompile Include="..\src\graphics\UniformInfo.cpp" />
+    <ClCompile Include="..\src\graphics\Uniforms.cpp" />
+    <ClCompile Include="..\src\graphics\UniformValue.cpp" />
+    <ClCompile Include="..\src\graphics\UniformValueCubemap.cpp" />
+    <ClCompile Include="..\src\graphics\UniformValueFloat.cpp" />
+    <ClCompile Include="..\src\graphics\UniformValueMatrix.cpp" />
+    <ClCompile Include="..\src\graphics\UniformValueTexture.cpp" />
+    <ClCompile Include="..\src\graphics\UniformValueVector3.cpp" />
+    <ClCompile Include="..\src\graphics\VertexBuffer.cpp" />
+    <ClCompile Include="..\src\graphics\VertexFormat.cpp" />
+    <ClCompile Include="..\src\graphics\VertexFormatsBasic.cpp" />
+    <ClCompile Include="..\src\razor\RazorGame.cpp" />
+    <ClCompile Include="..\src\resources\ContentManager.cpp" />
+    <ClCompile Include="..\src\resources\ContentProviderObb.cpp" />
+    <ClCompile Include="..\src\resources\ContentProviderWindows.cpp" />
+    <ClCompile Include="..\src\resources\lpng\png.c" />
+    <ClCompile Include="..\src\resources\lpng\pngerror.c" />
+    <ClCompile Include="..\src\resources\lpng\pngget.c" />
+    <ClCompile Include="..\src\resources\lpng\pngmem.c" />
+    <ClCompile Include="..\src\resources\lpng\pngpread.c" />
+    <ClCompile Include="..\src\resources\lpng\pngread.c" />
+    <ClCompile Include="..\src\resources\lpng\pngrio.c" />
+    <ClCompile Include="..\src\resources\lpng\pngrtran.c" />
+    <ClCompile Include="..\src\resources\lpng\pngrutil.c" />
+    <ClCompile Include="..\src\resources\lpng\pngset.c" />
+    <ClCompile Include="..\src\resources\lpng\pngtest.c" />
+    <ClCompile Include="..\src\resources\lpng\pngtrans.c" />
+    <ClCompile Include="..\src\resources\lpng\pngwio.c" />
+    <ClCompile Include="..\src\resources\lpng\pngwrite.c" />
+    <ClCompile Include="..\src\resources\lpng\pngwtran.c" />
+    <ClCompile Include="..\src\resources\lpng\pngwutil.c" />
+    <ClCompile Include="..\src\resources\zlib\adler32.c" />
+    <ClCompile Include="..\src\resources\zlib\compress.c" />
+    <ClCompile Include="..\src\resources\zlib\crc32.c" />
+    <ClCompile Include="..\src\resources\zlib\deflate.c" />
+    <ClCompile Include="..\src\resources\zlib\gzclose.c" />
+    <ClCompile Include="..\src\resources\zlib\gzlib.c" />
+    <ClCompile Include="..\src\resources\zlib\gzread.c" />
+    <ClCompile Include="..\src\resources\zlib\gzwrite.c" />
+    <ClCompile Include="..\src\resources\zlib\infback.c" />
+    <ClCompile Include="..\src\resources\zlib\inffast.c" />
+    <ClCompile Include="..\src\resources\zlib\inflate.c" />
+    <ClCompile Include="..\src\resources\zlib\inftrees.c" />
+    <ClCompile Include="..\src\resources\zlib\trees.c" />
+    <ClCompile Include="..\src\resources\zlib\uncompr.c" />
+    <ClCompile Include="..\src\resources\zlib\zutil.c" />
+    <ClCompile Include="..\src_clipper\clipper.cpp" />
+    <ClCompile Include="..\src_freetype\autofit\autofit.c" />
+    <ClCompile Include="..\src_freetype\base\ftbase.c" />
+    <ClCompile Include="..\src_freetype\base\ftbbox.c" />
+    <ClCompile Include="..\src_freetype\base\ftbitmap.c" />
+    <ClCompile Include="..\src_freetype\base\ftfntfmt.c" />
+    <ClCompile Include="..\src_freetype\base\ftfstype.c" />
+    <ClCompile Include="..\src_freetype\base\ftgasp.c" />
+    <ClCompile Include="..\src_freetype\base\ftglyph.c" />
+    <ClCompile Include="..\src_freetype\base\ftgxval.c" />
+    <ClCompile Include="..\src_freetype\base\ftinit.c" />
+    <ClCompile Include="..\src_freetype\base\ftlcdfil.c" />
+    <ClCompile Include="..\src_freetype\base\ftmm.c" />
+    <ClCompile Include="..\src_freetype\base\ftotval.c" />
+    <ClCompile Include="..\src_freetype\base\ftpatent.c" />
+    <ClCompile Include="..\src_freetype\base\ftpfr.c" />
+    <ClCompile Include="..\src_freetype\base\ftstroke.c" />
+    <ClCompile Include="..\src_freetype\base\ftsynth.c" />
+    <ClCompile Include="..\src_freetype\base\ftsystem.c" />
+    <ClCompile Include="..\src_freetype\base\fttype1.c" />
+    <ClCompile Include="..\src_freetype\base\ftwinfnt.c" />
+    <ClCompile Include="..\src_freetype\bdf\bdf.c" />
+    <ClCompile Include="..\src_freetype\cache\ftcache.c" />
+    <ClCompile Include="..\src_freetype\cff\cff.c" />
+    <ClCompile Include="..\src_freetype\cid\type1cid.c" />
+    <ClCompile Include="..\src_freetype\gzip\ftgzip.c" />
+    <ClCompile Include="..\src_freetype\lzw\ftlzw.c" />
+    <ClCompile Include="..\src_freetype\pcf\pcf.c" />
+    <ClCompile Include="..\src_freetype\pfr\pfr.c" />
+    <ClCompile Include="..\src_freetype\psaux\psaux.c" />
+    <ClCompile Include="..\src_freetype\pshinter\pshinter.c" />
+    <ClCompile Include="..\src_freetype\psnames\psmodule.c" />
+    <ClCompile Include="..\src_freetype\raster\raster.c" />
+    <ClCompile Include="..\src_freetype\sfnt\sfnt.c" />
+    <ClCompile Include="..\src_freetype\smooth\smooth.c" />
+    <ClCompile Include="..\src_freetype\truetype\truetype.c" />
+    <ClCompile Include="..\src_freetype\type1\type1.c" />
+    <ClCompile Include="..\src_freetype\type42\type42.c" />
+    <ClCompile Include="..\src_freetype\winfonts\winfnt.c" />
+    <ClCompile Include="..\src_poly2tri\common\shapes.cc" />
+    <ClCompile Include="..\src_poly2tri\sweep\advancing_front.cc" />
+    <ClCompile Include="..\src_poly2tri\sweep\cdt.cc" />
+    <ClCompile Include="..\src_poly2tri\sweep\sweep.cc" />
+    <ClCompile Include="..\src_poly2tri\sweep\sweep_context.cc" />
+    <ClCompile Include="..\src_rectanglebinpack\GuillotineBinPack.cpp" />
+    <ClCompile Include="..\src_rectanglebinpack\MaxRectsBinPack.cpp" />
+    <ClCompile Include="..\src_rectanglebinpack\Rect.cpp" />
+    <ClCompile Include="..\src_rectanglebinpack\ShelfBinPack.cpp" />
+    <ClCompile Include="..\src_rectanglebinpack\ShelfNextFitBinPack.cpp" />
+    <ClCompile Include="..\src_rectanglebinpack\SkylineBinPack.cpp" />
+    <ClCompile Include="..\zombo\ftdebug.c" />
+    <ClCompile Include="dllmain.cpp">
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</CompileAsManaged>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </PrecompiledHeader>
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsManaged>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</CompileAsManaged>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="razor.cpp" />
+    <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

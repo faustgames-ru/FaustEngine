@@ -11,19 +11,24 @@ namespace razor
 		classInstance->setRootPath(rootPath);
 	}
 	
-	extern "C" DLLEXPORT void API_CALL razor_RazorGame_load (IRazorGame * classInstance, int w, int h)
+	extern "C" DLLEXPORT void API_CALL razor_RazorGame_updateEnvironment (IRazorGame * classInstance, int w, int h, float ellapsedTime)
 	{
-		classInstance->load(w, h);
+		classInstance->updateEnvironment(w, h, ellapsedTime);
 	}
 	
-	extern "C" DLLEXPORT void API_CALL razor_RazorGame_update (IRazorGame * classInstance, int w, int h, float ellapsedTime)
+	extern "C" DLLEXPORT void API_CALL razor_RazorGame_load (IRazorGame * classInstance)
 	{
-		classInstance->update(w, h, ellapsedTime);
+		classInstance->load();
 	}
 	
-	extern "C" DLLEXPORT void API_CALL razor_RazorGame_render (IRazorGame * classInstance, int w, int h, float ellapsedTime)
+	extern "C" DLLEXPORT void API_CALL razor_RazorGame_update (IRazorGame * classInstance)
 	{
-		classInstance->render(w, h, ellapsedTime);
+		classInstance->update();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL razor_RazorGame_render (IRazorGame * classInstance)
+	{
+		classInstance->render();
 	}
 	
 	extern "C" DLLEXPORT void API_CALL razor_RazorGame_release (IRazorGame * classInstance)

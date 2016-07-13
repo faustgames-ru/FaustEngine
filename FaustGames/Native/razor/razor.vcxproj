@@ -161,6 +161,19 @@
     <ClInclude Include="..\shaders\solid_color_vert.h" />
     <ClInclude Include="..\shaders\texture_color_frag.h" />
     <ClInclude Include="..\shaders\texture_color_vert.h" />
+    <ClInclude Include="..\src\content\content.h" />
+    <ClInclude Include="..\src\content\ContentBitmapFont.h" />
+    <ClInclude Include="..\src\content\ContentBlock.h" />
+    <ClInclude Include="..\src\content\ContentFrameAnimation.h" />
+    <ClInclude Include="..\src\content\ContentImage.h" />
+    <ClInclude Include="..\src\content\ContentStatus.h" />
+    <ClInclude Include="..\src\content\content_classes.h" />
+    <ClInclude Include="..\src\content\content_platform.h" />
+    <ClInclude Include="..\src\content\content_references.h" />
+    <ClInclude Include="..\src\content\serialization\ContentArray.h" />
+    <ClInclude Include="..\src\content\serialization\ContentObject.h" />
+    <ClInclude Include="..\src\content\serialization\ContentSerializer.h" />
+    <ClInclude Include="..\src\content\serialization\ContentValue.h" />
     <ClInclude Include="..\src\core\Allocator.h" />
     <ClInclude Include="..\src\core\Convert.h" />
     <ClInclude Include="..\src\core\core.h" />
@@ -222,6 +235,10 @@
     <ClInclude Include="..\src\graphics\graphics_platform.h" />
     <ClInclude Include="..\src\graphics\graphics_references.h" />
     <ClInclude Include="..\src\graphics\Image2dData.h" />
+    <ClInclude Include="..\src\graphics\pipelines\RenderPipeline.h" />
+    <ClInclude Include="..\src\graphics\pipelines\RenderService.h" />
+    <ClInclude Include="..\src\graphics\pipelines\RenderVertex.h" />
+    <ClInclude Include="..\src\graphics\pipelines\UniformsConfig.h" />
     <ClInclude Include="..\src\graphics\RenderConverter.h" />
     <ClInclude Include="..\src\graphics\RenderConverterBasic.h" />
     <ClInclude Include="..\src\graphics\RenderState.h" />
@@ -249,7 +266,11 @@
     <ClInclude Include="..\src\graphics\VertexFormatPositionColor.h" />
     <ClInclude Include="..\src\graphics\VertexFormatPositionTextureColor.h" />
     <ClInclude Include="..\src\graphics\VertexFormatsBasic.h" />
+    <ClInclude Include="..\src\razor\drawing\Drawing.h" />
     <ClInclude Include="..\src\razor\RazorGame.h" />
+    <ClInclude Include="..\src\razor\razor_classes.h" />
+    <ClInclude Include="..\src\razor\razor_platform.h" />
+    <ClInclude Include="..\src\razor\razor_references.h" />
     <ClInclude Include="..\src\resources\ContentManager.h" />
     <ClInclude Include="..\src\resources\ContentProvider.h" />
     <ClInclude Include="..\src\resources\lpng\png.h" />
@@ -274,6 +295,7 @@
     <ClInclude Include="..\src\resources\zlib\zconf.h" />
     <ClInclude Include="..\src\resources\zlib\zlib.h" />
     <ClInclude Include="..\src\resources\zlib\zutil.h" />
+    <ClInclude Include="..\src_cjson\cJSON.h" />
     <ClInclude Include="..\src_clipper\clipper.hpp" />
     <ClInclude Include="..\src_poly2tri\common\shapes.h" />
     <ClInclude Include="..\src_poly2tri\common\utils.h" />
@@ -293,6 +315,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\CommonSources\gen\razorPInvoke.cpp" />
+    <ClCompile Include="..\src\content\ContentBitmapFont.cpp" />
+    <ClCompile Include="..\src\content\ContentBlock.cpp" />
+    <ClCompile Include="..\src\content\ContentImage.cpp" />
+    <ClCompile Include="..\src\content\ContentFrameAnimation.cpp" />
+    <ClCompile Include="..\src\content\ContentStatus.cpp" />
+    <ClCompile Include="..\src\content\serialization\ContentArray.cpp" />
+    <ClCompile Include="..\src\content\serialization\ContentObject.cpp" />
+    <ClCompile Include="..\src\content\serialization\ContentSerializer.cpp" />
+    <ClCompile Include="..\src\content\serialization\ContentValue.cpp" />
     <ClCompile Include="..\src\core\Convert.cpp" />
     <ClCompile Include="..\src\core\DebugRender.cpp" />
     <ClCompile Include="..\src\core\HollowsAllocationPolicy.cpp" />
@@ -334,6 +365,10 @@
     <ClCompile Include="..\src\graphics\Errors.cpp" />
     <ClCompile Include="..\src\graphics\GraphicsDevice.cpp" />
     <ClCompile Include="..\src\graphics\Image2dData.cpp" />
+    <ClCompile Include="..\src\graphics\pipelines\RenderPipeline.cpp" />
+    <ClCompile Include="..\src\graphics\pipelines\RenderService.cpp" />
+    <ClCompile Include="..\src\graphics\pipelines\RenderVertex.cpp" />
+    <ClCompile Include="..\src\graphics\pipelines\UniformsConfig.cpp" />
     <ClCompile Include="..\src\graphics\RenderConverter.cpp" />
     <ClCompile Include="..\src\graphics\RenderConverterBasic.cpp" />
     <ClCompile Include="..\src\graphics\RenderState.cpp" />
@@ -356,6 +391,8 @@
     <ClCompile Include="..\src\graphics\VertexBuffer.cpp" />
     <ClCompile Include="..\src\graphics\VertexFormat.cpp" />
     <ClCompile Include="..\src\graphics\VertexFormatsBasic.cpp" />
+    <ClCompile Include="..\src\razor\drawing\Drawing.cpp" />
+    <ClCompile Include="..\src\razor\InitRazorRenderContext.cpp" />
     <ClCompile Include="..\src\razor\RazorGame.cpp" />
     <ClCompile Include="..\src\resources\ContentManager.cpp" />
     <ClCompile Include="..\src\resources\ContentProviderObb.cpp" />
@@ -391,6 +428,7 @@
     <ClCompile Include="..\src\resources\zlib\trees.c" />
     <ClCompile Include="..\src\resources\zlib\uncompr.c" />
     <ClCompile Include="..\src\resources\zlib\zutil.c" />
+    <ClCompile Include="..\src_cjson\cJSON.c" />
     <ClCompile Include="..\src_clipper\clipper.cpp" />
     <ClCompile Include="..\src_freetype\autofit\autofit.c" />
     <ClCompile Include="..\src_freetype\base\ftbase.c" />

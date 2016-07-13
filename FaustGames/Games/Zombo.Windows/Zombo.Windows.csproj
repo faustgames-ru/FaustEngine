@@ -84,15 +84,15 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Framework\Zombo.GraphicsBinding\Zombo.GraphicsBinding.csproj">
-      <Project>{67c64342-a1a8-4eca-bb99-d22934f256a7}</Project>
-      <Name>Zombo.GraphicsBinding</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="glew32.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Framework\GraphicsBinding\GraphicsBinding.csproj">
+      <Project>{67C64342-A1A8-4ECA-BB99-D22934F256A7}</Project>
+      <Name>GraphicsBinding</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

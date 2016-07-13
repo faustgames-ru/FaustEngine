@@ -83,6 +83,7 @@ namespace resources
 		void cleanup();
 		unsigned int registerTexture(const char *name);
 		graphics::Image2dData * loadUnregisteredTexture(const char *name);
+		char* loadString(const char *name);
 		graphics::TextureImage2d * addLoadTexture(const char *name);
 		void addDisposeTexture(graphics::TextureImage2d *image);
 		graphics::Image2dData * loadTexture(int id);

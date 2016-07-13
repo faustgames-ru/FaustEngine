@@ -8,6 +8,7 @@
 #define EFFECTS_CALL_CREATE graphics::EffectsBasic::create();
 #define EFFECTS_CALL_CLEANUP graphics::EffectsBasic::cleanup();
 #define FORMATS_CALL_CREATE graphics::VertexFormatsBasic::create();
+#define VERTEX_FORMATS graphics::VertexFormatsBasic
 #define RENDER_CONVERTER_CLASS graphics::RenderConverterBasic
 #else
 #define INCLUDE_EFFECTS "Effects.h"
@@ -16,6 +17,7 @@
 #define EFFECTS_CALL_CREATE graphics::Effects::create();
 #define EFFECTS_CALL_CLEANUP graphics::Effects::cleanup();
 #define FORMATS_CALL_CREATE graphics::VertexFormats::create();
+#define VERTEX_FORMATS graphics::VertexFormats
 #define RENDER_CONVERTER_CLASS graphics::RenderConverter
 #endif
 

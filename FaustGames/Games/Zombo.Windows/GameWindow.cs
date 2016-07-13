@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Forms;
+using GraphicsBinding;
 using zombo;
-using Zombo.GraphicsBinding;
 using Zombo.Windows.Properties;
 
 namespace Zombo.Windows

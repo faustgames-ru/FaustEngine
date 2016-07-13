@@ -7,8 +7,8 @@
     <ProjectGuid>{67C64342-A1A8-4ECA-BB99-D22934F256A7}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Zombo.GraphicsBinding</RootNamespace>
-    <AssemblyName>Zombo.GraphicsBinding</AssemblyName>
+    <RootNamespace>GraphicsBinding</RootNamespace>
+    <AssemblyName>GraphicsBinding</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

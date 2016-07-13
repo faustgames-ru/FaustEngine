@@ -405,6 +405,72 @@
     <ClInclude Include="..\src\razor\RazorGame.h">
       <Filter>razor</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\content\content_classes.h">
+      <Filter>engine\content</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\content\content_platform.h">
+      <Filter>engine\content</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\content\content_references.h">
+      <Filter>engine\content</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\content\serialization\ContentValue.h">
+      <Filter>engine\content\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\content\serialization\ContentSerializer.h">
+      <Filter>engine\content\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\content\serialization\ContentObject.h">
+      <Filter>engine\content\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\content\serialization\ContentArray.h">
+      <Filter>engine\content\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_cjson\cJSON.h">
+      <Filter>third_party\cjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\content\ContentFrameAnimation.h">
+      <Filter>engine\content</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\content\ContentImage.h">
+      <Filter>engine\content</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\content\ContentBlock.h">
+      <Filter>engine\content</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\content\ContentStatus.h">
+      <Filter>engine\content</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\content\ContentBitmapFont.h">
+      <Filter>engine\content</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\razor\razor_classes.h">
+      <Filter>razor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\razor\razor_platform.h">
+      <Filter>razor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\razor\razor_references.h">
+      <Filter>razor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\content\content.h">
+      <Filter>engine\content</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\pipelines\RenderService.h">
+      <Filter>engine\graphics\pipelines</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\pipelines\RenderPipeline.h">
+      <Filter>engine\graphics\pipelines</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\pipelines\RenderVertex.h">
+      <Filter>engine\graphics\pipelines</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\pipelines\UniformsConfig.h">
+      <Filter>engine\graphics\pipelines</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\razor\drawing\Drawing.h">
+      <Filter>razor\drawing</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
@@ -860,6 +926,54 @@
     <ClCompile Include="..\src\razor\RazorGame.cpp">
       <Filter>razor</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\razor\InitRazorRenderContext.cpp">
+      <Filter>razor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\content\serialization\ContentValue.cpp">
+      <Filter>engine\content\serialization</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\content\serialization\ContentSerializer.cpp">
+      <Filter>engine\content\serialization</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\content\serialization\ContentObject.cpp">
+      <Filter>engine\content\serialization</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\content\serialization\ContentArray.cpp">
+      <Filter>engine\content\serialization</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_cjson\cJSON.c">
+      <Filter>third_party\cjson</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\content\ContentFrameAnimation.cpp">
+      <Filter>engine\content</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\content\ContentImage.cpp">
+      <Filter>engine\content</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\content\ContentBlock.cpp">
+      <Filter>engine\content</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\content\ContentStatus.cpp">
+      <Filter>engine\content</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\content\ContentBitmapFont.cpp">
+      <Filter>engine\content</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\pipelines\RenderService.cpp">
+      <Filter>engine\graphics\pipelines</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\pipelines\RenderPipeline.cpp">
+      <Filter>engine\graphics\pipelines</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\pipelines\RenderVertex.cpp">
+      <Filter>engine\graphics\pipelines</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\pipelines\UniformsConfig.cpp">
+      <Filter>engine\graphics\pipelines</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\razor\drawing\Drawing.cpp">
+      <Filter>razor\drawing</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="common">
@@ -921,6 +1035,21 @@
     </Filter>
     <Filter Include="third_party\freetype\FT_MODULES">
       <UniqueIdentifier>{dd6f5ea1-c3e5-430a-837a-2257c3055960}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\content">
+      <UniqueIdentifier>{773316b7-c047-49a5-b654-7c29029addc7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\content\serialization">
+      <UniqueIdentifier>{b8cdd3ec-5c68-4ef7-91e1-6ec273af612f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="third_party\cjson">
+      <UniqueIdentifier>{dbef5fc2-5c55-46a8-8128-2a50093f859b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\graphics\pipelines">
+      <UniqueIdentifier>{b23e369b-7636-456c-b4aa-d0a31b459583}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="razor\drawing">
+      <UniqueIdentifier>{a4e32d74-b687-4b0e-a883-ddd9c5c47a90}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

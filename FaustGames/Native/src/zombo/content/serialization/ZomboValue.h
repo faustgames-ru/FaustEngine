@@ -1,5 +1,5 @@
-#ifndef ZOMBO_VALUE_H
-#define ZOMBO_VALUE_H
+#ifndef CONTENT_VALUE_H
+#define CONTENT_VALUE_H
 
 #include "../../zombo_classes.h"
 

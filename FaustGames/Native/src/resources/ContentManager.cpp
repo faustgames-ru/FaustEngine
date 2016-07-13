@@ -204,6 +204,21 @@ namespace resources
 		return _image;
 	}
 
+	char* ContentManager::loadString(const char* name)
+	{
+		ContentProvider::openContent(name);
+		char * string = static_cast<char *>(getBuffer());
+		int len = 0;
+		const int pageSize = 256 * 1024;
+		int count = 0;
+		while ((count = resources::ContentProvider::read(string + len, pageSize)) > 0)
+		{
+			len += count;
+		}
+		ContentProvider::closeContent();
+		return string;
+	}
+
 	void ContentManager::open()
 	{
 		if (_isOpened)

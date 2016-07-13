@@ -26,27 +26,34 @@ namespace razor
 		
 		[DllImport(Version.Dll)]
 		static extern private void razor_RazorGame_setRootPath (IntPtr classInstance, String rootPath);
-		public void Load (int w, int h)
+		public void UpdateEnvironment (int w, int h, float ellapsedTime)
 		{
-			razor_RazorGame_load(ClassInstance, w, h);
+			razor_RazorGame_updateEnvironment(ClassInstance, w, h, ellapsedTime);
 		}
 		
 		[DllImport(Version.Dll)]
-		static extern private void razor_RazorGame_load (IntPtr classInstance, int w, int h);
-		public void Update (int w, int h, float ellapsedTime)
+		static extern private void razor_RazorGame_updateEnvironment (IntPtr classInstance, int w, int h, float ellapsedTime);
+		public void Load ()
 		{
-			razor_RazorGame_update(ClassInstance, w, h, ellapsedTime);
+			razor_RazorGame_load(ClassInstance);
 		}
 		
 		[DllImport(Version.Dll)]
-		static extern private void razor_RazorGame_update (IntPtr classInstance, int w, int h, float ellapsedTime);
-		public void Render (int w, int h, float ellapsedTime)
+		static extern private void razor_RazorGame_load (IntPtr classInstance);
+		public void Update ()
 		{
-			razor_RazorGame_render(ClassInstance, w, h, ellapsedTime);
+			razor_RazorGame_update(ClassInstance);
 		}
 		
 		[DllImport(Version.Dll)]
-		static extern private void razor_RazorGame_render (IntPtr classInstance, int w, int h, float ellapsedTime);
+		static extern private void razor_RazorGame_update (IntPtr classInstance);
+		public void Render ()
+		{
+			razor_RazorGame_render(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void razor_RazorGame_render (IntPtr classInstance);
 		public void Release ()
 		{
 			razor_RazorGame_release(ClassInstance);
@@ -58,6 +65,20 @@ namespace razor
 	
 	public class razor
 	{
+		static public void InitRazorRenderContext ()
+		{
+			initRazorRenderContext();
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void initRazorRenderContext ();
+		static public RazorGame CreateRazorGame ()
+		{
+			return new RazorGame{ ClassInstance = createRazorGame() };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr createRazorGame ();
 	}
 	
 }

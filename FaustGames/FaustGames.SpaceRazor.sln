@@ -6,6 +6,13 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "razor", "Native\razor\razor.vcxproj", "{B411510B-2A1A-46C0-9C25-4EBB054F7486}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpaceRazor", "Games\SpaceRazor\SpaceRazor.csproj", "{7B2416F1-A1EA-41D5-AB13-2AF7AA7A9A6E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B411510B-2A1A-46C0-9C25-4EBB054F7486} = {B411510B-2A1A-46C0-9C25-4EBB054F7486}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Framework", "Framework", "{8D3F850F-886F-4D44-836D-D211B258084D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphicsBinding", "Framework\GraphicsBinding\GraphicsBinding.csproj", "{67C64342-A1A8-4ECA-BB99-D22934F256A7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,6 +25,7 @@ Global
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{B411510B-2A1A-46C0-9C25-4EBB054F7486}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{B411510B-2A1A-46C0-9C25-4EBB054F7486}.Debug|Any CPU.Build.0 = Debug|Win32
 		{B411510B-2A1A-46C0-9C25-4EBB054F7486}.Debug|x64.ActiveCfg = Debug|x64
 		{B411510B-2A1A-46C0-9C25-4EBB054F7486}.Debug|x64.Build.0 = Debug|x64
 		{B411510B-2A1A-46C0-9C25-4EBB054F7486}.Debug|x86.ActiveCfg = Debug|Win32
@@ -39,8 +47,23 @@ Global
 		{7B2416F1-A1EA-41D5-AB13-2AF7AA7A9A6E}.Release|x64.Build.0 = Release|Any CPU
 		{7B2416F1-A1EA-41D5-AB13-2AF7AA7A9A6E}.Release|x86.ActiveCfg = Release|Any CPU
 		{7B2416F1-A1EA-41D5-AB13-2AF7AA7A9A6E}.Release|x86.Build.0 = Release|Any CPU
+		{67C64342-A1A8-4ECA-BB99-D22934F256A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67C64342-A1A8-4ECA-BB99-D22934F256A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67C64342-A1A8-4ECA-BB99-D22934F256A7}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{67C64342-A1A8-4ECA-BB99-D22934F256A7}.Debug|x64.Build.0 = Debug|Any CPU
+		{67C64342-A1A8-4ECA-BB99-D22934F256A7}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{67C64342-A1A8-4ECA-BB99-D22934F256A7}.Debug|x86.Build.0 = Debug|Any CPU
+		{67C64342-A1A8-4ECA-BB99-D22934F256A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67C64342-A1A8-4ECA-BB99-D22934F256A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67C64342-A1A8-4ECA-BB99-D22934F256A7}.Release|x64.ActiveCfg = Release|Any CPU
+		{67C64342-A1A8-4ECA-BB99-D22934F256A7}.Release|x64.Build.0 = Release|Any CPU
+		{67C64342-A1A8-4ECA-BB99-D22934F256A7}.Release|x86.ActiveCfg = Release|Any CPU
+		{67C64342-A1A8-4ECA-BB99-D22934F256A7}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{67C64342-A1A8-4ECA-BB99-D22934F256A7} = {8D3F850F-886F-4D44-836D-D211B258084D}
 	EndGlobalSection
 EndGlobal

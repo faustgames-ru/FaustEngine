@@ -25,6 +25,7 @@ namespace content
 		std::string _rootPath;
 		std::queue<ContentStatus*> _loadingQueue;
 		LoadArgs _loadArgs;
+		int _skipUpdate;
 	};
 
 	template <typename T>

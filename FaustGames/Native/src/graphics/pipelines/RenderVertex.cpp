@@ -7,4 +7,9 @@ namespace graphics
 	{
 		return VERTEX_FORMATS::positionColorTexture();
 	}
+
+	VertexFormat* ColorVertex::format()
+	{
+		return VERTEX_FORMATS::positionColor();
+	}
 }

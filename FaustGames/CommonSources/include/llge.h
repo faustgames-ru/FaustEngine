@@ -24,6 +24,7 @@
 
 #include "BaseObjects.h"
 
+typedef unsigned long long ulong;
 typedef unsigned short ushort;
 typedef unsigned int uint;
 typedef unsigned char byte;

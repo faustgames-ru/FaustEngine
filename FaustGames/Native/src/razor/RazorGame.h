@@ -4,6 +4,7 @@
 #include "razor.h"
 
 #include "razor_classes.h"
+#include "../geometry/Quadtree.h"
 
 namespace razor
 {
@@ -21,13 +22,16 @@ namespace razor
 
 		void spaceShipSpriteLoaded(content::ContentStatus* status);
 		void spaceShipAnimationLoaded(content::ContentStatus* status);
+		void drawQuadTreeNode(geometry::QuadTreeNode* node);
+		void drawQuadTreeLeaf(geometry::QuadTreeLeaf* leaf);
 
-		int _w;
-		int _h;
-		float _ellapsedTime;		
 		content::ContentImage* _spaceShipSprite;
 		content::ContentFrameAnimation* _spaceShipAnimation;
 		content::ContentBlock* _content;
+
+		graphics::Camera2d _camera;
+		graphics::Viewport _viewport;
+		geometry::QuadTree _tree;
 	};
 }
 

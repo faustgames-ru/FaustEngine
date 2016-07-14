@@ -1,4 +1,5 @@
 #include "Frustum.h"
+#include "Aabb.h"
 
 namespace geometry
 {
@@ -43,6 +44,25 @@ namespace geometry
 			if (_planes[p].a*b.Min.getX() + _planes[p].b*b.Max.getY() + _planes[p].c*z + _planes[p].d > 0) continue;
 			if (_planes[p].a*b.Max.getX() + _planes[p].b*b.Max.getY() + _planes[p].c*z + _planes[p].d > 0) continue;							
 						
+			return false;
+		}
+		return true;
+	}
+
+	bool Frustum::include(const Aabb& b)
+	{
+		for (int p = 0; p < 4; p++)
+		{
+			if (_planes[p].a*b.Min.getX() + _planes[p].b*b.Min.getY() + _planes[p].c*b.Min.getZ() + _planes[p].d > 0) continue;
+			if (_planes[p].a*b.Max.getX() + _planes[p].b*b.Min.getY() + _planes[p].c*b.Min.getZ() + _planes[p].d > 0) continue;
+			if (_planes[p].a*b.Min.getX() + _planes[p].b*b.Max.getY() + _planes[p].c*b.Min.getZ() + _planes[p].d > 0) continue;
+			if (_planes[p].a*b.Max.getX() + _planes[p].b*b.Max.getY() + _planes[p].c*b.Min.getZ() + _planes[p].d > 0) continue;
+							
+			if (_planes[p].a*b.Min.getX() + _planes[p].b*b.Min.getY() + _planes[p].c*b.Max.getZ() + _planes[p].d > 0) continue;
+			if (_planes[p].a*b.Max.getX() + _planes[p].b*b.Min.getY() + _planes[p].c*b.Max.getZ() + _planes[p].d > 0) continue;
+			if (_planes[p].a*b.Min.getX() + _planes[p].b*b.Max.getY() + _planes[p].c*b.Max.getZ() + _planes[p].d > 0) continue;
+			if (_planes[p].a*b.Max.getX() + _planes[p].b*b.Max.getY() + _planes[p].c*b.Max.getZ() + _planes[p].d > 0) continue;
+
 			return false;
 		}
 		return true;

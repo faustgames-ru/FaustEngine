@@ -106,6 +106,7 @@ namespace core
 			_values[2] = z;
 		}
 		inline float *getData(){ return _values; }
+		inline const float *getData() const { return _values; }
 		inline void setData(float x, float y, float z)
 		{
 			_values[0] = x;

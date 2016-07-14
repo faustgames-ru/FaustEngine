@@ -3,6 +3,7 @@
 
 #include "geometry_classes.h"
 #include "Aabb2d.h"
+#include "Aabb.h"
 
 namespace geometry
 {
@@ -23,6 +24,7 @@ namespace geometry
 		Frustum();
 		Frustum(const core::Matrix &m);
 		bool include(const Aabb2d &aabb, float z) const;
+		bool include(const Aabb& b);
 	private:
 		FrustumPlane _planes[4];
 		

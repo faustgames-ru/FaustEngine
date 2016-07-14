@@ -2,7 +2,7 @@
 
 namespace content
 {
-	ContentBlock::ContentBlock(): ContentScale(0.01f)
+	ContentBlock::ContentBlock(): ContentScale(0.01f), _skipUpdate(2)
 	{
 	}
 
@@ -25,6 +25,11 @@ namespace content
 
 	void ContentBlock::update()
 	{
+		if (_skipUpdate > 0)
+		{
+			_skipUpdate--;
+			return;
+		}
 		if (_loadingQueue.empty())
 		{
 			return;

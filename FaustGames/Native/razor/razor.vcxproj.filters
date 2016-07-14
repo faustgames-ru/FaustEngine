@@ -471,6 +471,30 @@
     <ClInclude Include="..\src\razor\drawing\Drawing.h">
       <Filter>razor\drawing</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\core\Log.h">
+      <Filter>engine\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Delegate.h">
+      <Filter>engine\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Environment.h">
+      <Filter>engine\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\utilities\Camera.h">
+      <Filter>engine\graphics\utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\utilities\Viewport.h">
+      <Filter>engine\graphics\utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\geometry\Aabb.h">
+      <Filter>engine\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\geometry\Quadtree.h">
+      <Filter>engine\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\razor\scenes\GameScene.h">
+      <Filter>razor\scenes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
@@ -974,6 +998,30 @@
     <ClCompile Include="..\src\razor\drawing\Drawing.cpp">
       <Filter>razor\drawing</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\core\Log.cpp">
+      <Filter>engine\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\Delegate.cpp">
+      <Filter>engine\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\Environment.cpp">
+      <Filter>engine\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\utilities\Camera.cpp">
+      <Filter>engine\graphics\utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\utilities\Viewport.cpp">
+      <Filter>engine\graphics\utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\geometry\Aabb.cpp">
+      <Filter>engine\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\geometry\Quadtree.cpp">
+      <Filter>engine\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\razor\scenes\GameScene.cpp">
+      <Filter>razor\scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="common">
@@ -1050,6 +1098,12 @@
     </Filter>
     <Filter Include="razor\drawing">
       <UniqueIdentifier>{a4e32d74-b687-4b0e-a883-ddd9c5c47a90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\graphics\utilities">
+      <UniqueIdentifier>{f89fd81b-257a-4930-ab88-f8f3076b78a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="razor\scenes">
+      <UniqueIdentifier>{4a792d7c-f1f0-4b29-bcf4-1184ef95801f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

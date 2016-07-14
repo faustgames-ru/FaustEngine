@@ -5,14 +5,13 @@
 #include "../graphics/pipelines/RenderVertex.h"
 #include "../graphics/pipelines/UniformsConfig.h"
 #include "drawing/Drawing.h"
+#include "../core/Environment.h"
 
 namespace razor
 {
-	RazorGame::RazorGame() :
-		_w(0),
-		_h(0),
-		_ellapsedTime(0)
+	RazorGame::RazorGame(): _tree(geometry::Aabb(-1000, -1000, -10, 1000, 1000, 20), 0)
 	{
+		_spaceShipAnimation = nullptr;
 		_spaceShipSprite = nullptr;
 		_content = new content::ContentBlock();
 	}
@@ -24,9 +23,8 @@ namespace razor
 
 	void RazorGame::updateEnvironment(int w, int h, float ellapsedTime)
 	{
-		_w = w;
-		_h = h;
-		_ellapsedTime = ellapsedTime;
+		_viewport.update(w, h);
+		core::Environment::update(ellapsedTime);
 	}
 
 	void RazorGame::load()
@@ -35,46 +33,44 @@ namespace razor
 		_content->enqueueResource("spaceship/blueship.frame_animation")->setLoadedCallback(this, &RazorGame::spaceShipAnimationLoaded);
 
 		EFFECTS_CALL_CREATE
-		FORMATS_CALL_CREATE;
+		FORMATS_CALL_CREATE
 	}
 
 	void RazorGame::update()
 	{
+		_camera.scale = 4.0f;
+		_camera.aspect = _viewport.getAspect();
+		_camera.update();
 	}
 
-	float _time;
-	core::MatrixContainer _projectionContainer;
+	float _time = 0;
 
 	void RazorGame::render()
 	{		
-		_time += _ellapsedTime;
-
 		_content->update();
 
 		graphics::GraphicsDevice::Default.setClearState(0x805050, 1.0f);
-		graphics::GraphicsDevice::Default.setViewport(0, 0, _w, _h);
+		graphics::GraphicsDevice::Default.setViewport(0, 0, _viewport.w, _viewport.h);
 		graphics::GraphicsDevice::Default.clear();
 		graphics::GraphicsDevice::Default.renderState.setBlend(graphics::BlendState::Alpha);
 	
 		graphics::RenderPipeline* pipeline = graphics::RenderService::Default.pipeline;
-
+		
 		if (_spaceShipAnimation != nullptr)
 		{
 			for (int j = -1; j <= 1; j++) 
 			{
-				float percent = (core::Math::sin(core::Math::Pi*0.25f*j + _time * core::Math::Pi*0.5f) + 1.0f)*0.5f;
+				float percent = (core::Math::sin(core::Math::Pi*0.25f*j + _time * core::Math::Pi*2.0f) + 1.0f)*0.5f;
 				_spaceShipSprite = _spaceShipAnimation->frameFromPercent(percent);
 
 				SpriteTransform transform(core::Vector3(j*6.0f, 0.0f, 0.0f), 0.5f, core::Math::Pi*0.25f*j);
 				Drawing::Default.drawSprite(transform, _spaceShipSprite);
 			}
+		}		
 
-		}
-
-		_projectionContainer.setValue(core::Matrix::createScale(
-			1.0f / (_content->ContentScale*_w),
-			1.0f / (_content->ContentScale*_h), 1.0f));
-		graphics::UniformValues::projection()->setValue(_projectionContainer);
+		geometry::Frustum frustum(_camera.projection.Value);
+		_tree.foreachLeaf(&frustum, this, &RazorGame::drawQuadTreeLeaf);
+		graphics::UniformValues::projection()->setValue(_camera.projection);
 		graphics::RenderService::Default.applyPipelines();
 	}
 
@@ -91,6 +87,16 @@ namespace razor
 	void RazorGame::spaceShipAnimationLoaded(content::ContentStatus* status)
 	{
 		_spaceShipAnimation = status->asFrameAnimation();
+	}
+
+	void RazorGame::drawQuadTreeNode(geometry::QuadTreeNode* node)
+	{
+		Drawing::Default.drawAabb(node->getAabb());
+	}
+
+	void RazorGame::drawQuadTreeLeaf(geometry::QuadTreeLeaf* leaf)
+	{
+		Drawing::Default.drawAabb(leaf->aabb);
 	}
 
 	extern "C" DLLEXPORT IRazorGame* API_CALL createRazorGame()

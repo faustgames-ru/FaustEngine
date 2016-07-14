@@ -13,6 +13,11 @@ namespace graphics
 	};
 
 
+	struct UniformConfigNone : IUniformConfig
+	{
+		virtual void apply() OVERRIDE;
+	};
+	
 	struct UniformConfigTexture: IUniformConfig
 	{
 		uint testureId;

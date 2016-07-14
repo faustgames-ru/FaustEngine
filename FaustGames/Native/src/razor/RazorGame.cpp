@@ -62,7 +62,7 @@ namespace razor
 		{
 			for (int j = -1; j <= 1; j++) 
 			{
-				float percent = (core::Math::sin(core::Math::Pi*0.25f*j + _time * core::Math::Pi) + 1.0f)*0.5f;
+				float percent = (core::Math::sin(core::Math::Pi*0.25f*j + _time * core::Math::Pi*0.5f) + 1.0f)*0.5f;
 				_spaceShipSprite = _spaceShipAnimation->frameFromPercent(percent);
 
 				SpriteTransform transform(core::Vector3(j*6.0f, 0.0f, 0.0f), 0.5f, core::Math::Pi*0.25f*j);

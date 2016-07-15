@@ -203,6 +203,12 @@
     <ClInclude Include="..\src\fonts\fonts_references.h" />
     <ClInclude Include="..\src\fonts\IFontRenderer.h" />
     <ClInclude Include="..\src\fonts\OutlineVectorFont.h" />
+    <ClInclude Include="..\src\game\Component.h" />
+    <ClInclude Include="..\src\game\Entity.h" />
+    <ClInclude Include="..\src\game\game_classes.h" />
+    <ClInclude Include="..\src\game\game_platform.h" />
+    <ClInclude Include="..\src\game\game_references.h" />
+    <ClInclude Include="..\src\game\Scene.h" />
     <ClInclude Include="..\src\geometry\Aabb.h" />
     <ClInclude Include="..\src\geometry\Aabb2d.h" />
     <ClInclude Include="..\src\geometry\Frustum.h" />
@@ -352,6 +358,9 @@
     <ClCompile Include="..\src\fonts\FontRects.cpp" />
     <ClCompile Include="..\src\fonts\FontsManager.cpp" />
     <ClCompile Include="..\src\fonts\OutlineVectorFont.cpp" />
+    <ClCompile Include="..\src\game\Component.cpp" />
+    <ClCompile Include="..\src\game\Entity.cpp" />
+    <ClCompile Include="..\src\game\Scene.cpp" />
     <ClCompile Include="..\src\geometry\Aabb.cpp" />
     <ClCompile Include="..\src\geometry\Aabb2d.cpp" />
     <ClCompile Include="..\src\geometry\Frustum.cpp" />

@@ -495,6 +495,24 @@
     <ClInclude Include="..\src\razor\scenes\GameScene.h">
       <Filter>razor\scenes</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\game\Scene.h">
+      <Filter>engine\game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\game\game_classes.h">
+      <Filter>engine\game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\game\game_platform.h">
+      <Filter>engine\game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\game\game_references.h">
+      <Filter>engine\game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\game\Entity.h">
+      <Filter>engine\game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\game\Component.h">
+      <Filter>engine\game</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
@@ -1022,6 +1040,15 @@
     <ClCompile Include="..\src\razor\scenes\GameScene.cpp">
       <Filter>razor\scenes</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\game\Scene.cpp">
+      <Filter>engine\game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\game\Entity.cpp">
+      <Filter>engine\game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\game\Component.cpp">
+      <Filter>engine\game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="common">
@@ -1104,6 +1131,12 @@
     </Filter>
     <Filter Include="razor\scenes">
       <UniqueIdentifier>{4a792d7c-f1f0-4b29-bcf4-1184ef95801f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\game">
+      <UniqueIdentifier>{515d4c02-a9a4-4c4b-9d36-b42314582789}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\game\components">
+      <UniqueIdentifier>{33d2cb77-c314-461c-84f5-4f6210533387}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

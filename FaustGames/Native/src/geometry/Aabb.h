@@ -8,6 +8,7 @@ namespace geometry
 	class Aabb
 	{
 	public:
+		static Aabb infinity;
 		core::Vector3 Min;
 		core::Vector3 Max;
 		Aabb();

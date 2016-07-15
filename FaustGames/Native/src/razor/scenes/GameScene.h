@@ -7,6 +7,7 @@
 
 namespace razor
 {
+	
 }
 
 #endif /*RAZOR_GAME_SCENE_H*/

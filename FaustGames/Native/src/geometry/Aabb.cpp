@@ -2,6 +2,9 @@
 
 namespace geometry
 {
+	Aabb Aabb::infinity(-core::Math::MaxValue, -core::Math::MaxValue, -core::Math::MaxValue, core::Math::MaxValue, core::Math::MaxValue, core::Math::MaxValue);
+
+
 	Aabb::Aabb():
 		Min(core::Math::MaxValue, core::Math::MaxValue, core::Math::MaxValue),
 		Max(-core::Math::MaxValue, -core::Math::MaxValue, -core::Math::MaxValue)

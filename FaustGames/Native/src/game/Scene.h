@@ -2,16 +2,20 @@
 #define GAME_SCENE_H
 
 #include "game_classes.h"
-#include "Entity.h"
 #include "../graphics/utilities/Camera.h"
+#include "../geometry/QuadTree.h"
+#include "../core/AsyncState.h"
+#include "../content/serialization/ContentObject.h"
 
 namespace game
 {
 	class Scene
 	{
 	public:
+		Scene();
+		core::AsyncState<void> load(content::ContentObject* value);
 		void update();
-		void invalidate(Entity *);
+		void invalidate(Component *);
 	private:
 		static const int ComponentsUpdateOrderSize = 256;
 		void addLeaf(geometry::QuadTreeLeaf* leaf);

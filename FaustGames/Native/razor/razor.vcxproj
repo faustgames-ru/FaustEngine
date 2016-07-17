@@ -175,6 +175,7 @@
     <ClInclude Include="..\src\content\serialization\ContentSerializer.h" />
     <ClInclude Include="..\src\content\serialization\ContentValue.h" />
     <ClInclude Include="..\src\core\Allocator.h" />
+    <ClInclude Include="..\src\core\AsyncState.h" />
     <ClInclude Include="..\src\core\Convert.h" />
     <ClInclude Include="..\src\core\core.h" />
     <ClInclude Include="..\src\core\core_classes.h" />
@@ -204,6 +205,7 @@
     <ClInclude Include="..\src\fonts\IFontRenderer.h" />
     <ClInclude Include="..\src\fonts\OutlineVectorFont.h" />
     <ClInclude Include="..\src\game\Component.h" />
+    <ClInclude Include="..\src\game\ComponentsFactory.h" />
     <ClInclude Include="..\src\game\Entity.h" />
     <ClInclude Include="..\src\game\game_classes.h" />
     <ClInclude Include="..\src\game\game_platform.h" />
@@ -338,6 +340,7 @@
     <ClCompile Include="..\src\content\serialization\ContentObject.cpp" />
     <ClCompile Include="..\src\content\serialization\ContentSerializer.cpp" />
     <ClCompile Include="..\src\content\serialization\ContentValue.cpp" />
+    <ClCompile Include="..\src\core\AsyncState.cpp" />
     <ClCompile Include="..\src\core\Convert.cpp" />
     <ClCompile Include="..\src\core\DebugRender.cpp" />
     <ClCompile Include="..\src\core\Delegate.cpp" />
@@ -359,6 +362,7 @@
     <ClCompile Include="..\src\fonts\FontsManager.cpp" />
     <ClCompile Include="..\src\fonts\OutlineVectorFont.cpp" />
     <ClCompile Include="..\src\game\Component.cpp" />
+    <ClCompile Include="..\src\game\ComponentsFactory.cpp" />
     <ClCompile Include="..\src\game\Entity.cpp" />
     <ClCompile Include="..\src\game\Scene.cpp" />
     <ClCompile Include="..\src\geometry\Aabb.cpp" />

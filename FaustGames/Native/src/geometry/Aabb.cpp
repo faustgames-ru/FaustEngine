@@ -23,6 +23,11 @@ namespace geometry
 	{
 	}
 
+	Aabb Aabb::fromCenter(core::Vector3 center, core::Vector3 halfSize)
+	{
+		return Aabb(center - halfSize, center + halfSize);
+	}
+
 	void Aabb::divide(Aabb& left, Aabb& right, int axis) const
 	{
 		for (uint i = 0; i < 3; i++)

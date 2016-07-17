@@ -1,6 +1,7 @@
 #ifndef GAME_CLASSES_H
 #define GAME_CLASSES_H
 
+#include "llge.h"
 #include "game_platform.h"
 #include "game_references.h"
 

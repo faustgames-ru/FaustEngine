@@ -1,0 +1,20 @@
+{
+  "aabb": [ -1000.0, -1000.0, -100.0, 1000.0, 1000.0, 100.0 ],
+  "camera": {
+    "target": [ 0.0, 0.0, 0.0 ],
+    "fov": 90,
+    "scale": 1.0,
+    "depth": 1000
+  },
+  "entities": [
+    {
+      "position": [ 0.0, 0.0, 0.0 ],
+      "frame_animation": "spaceship/blueship.frame_animation",
+      "spaceship": { }
+    },
+    {
+      "position": [ 0.0, 0.0, 0.0 ],
+      "grid": { }    
+    }
+  ]
+}

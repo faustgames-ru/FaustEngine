@@ -1,8 +1,13 @@
 #include "Scene.h"
 #include "Component.h"
+#include "Entity.h"
 
 namespace game
 {
+	Scene::Scene(): _tree(nullptr)
+	{
+	}
+
 	void Scene::update()
 	{
 		for (uint i = 0; i < ComponentsUpdateOrderSize; i++)
@@ -23,18 +28,15 @@ namespace game
 		}
 	}
 
-	void Scene::invalidate(Entity* entity)
+	void Scene::invalidate(Component* component)
 	{
-		_tree->place(entity->treeLeaf);
+		_tree->place(component->getAabb(), component->leaf);
 	}
+
 
 	void Scene::addLeaf(geometry::QuadTreeLeaf* leaf)
 	{
-		Entity* entity = static_cast<Entity*>(leaf->userData);
-		for (uint i = 0; i < entity->components.size(); i++)
-		{
-			Component* component = entity->components[i];
-			_updateList[component->updateOrder].push_back(component);
-		}
+		Component* component = static_cast<Component*>(leaf->userData);
+		_updateList[component->updateOrder].push_back(component);
 	}
 }

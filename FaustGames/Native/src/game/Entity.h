@@ -10,7 +10,7 @@ namespace game
 	{
 	public:
 		std::vector<Component* > components;
-		geometry::QuadTreeLeaf* treeLeaf;
+		core::Vector3 position;
 	private:
 	};
 }

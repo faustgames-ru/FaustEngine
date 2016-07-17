@@ -16,7 +16,6 @@ namespace geometry
 	{
 		friend QuadTreeNode;
 	public:
-		Aabb aabb;
 		void *userData;
 		QuadTreeLeaf* create();
 		void dispose();
@@ -46,7 +45,7 @@ namespace geometry
 	public:
 		QuadTreeNode();
 		~QuadTreeNode();
-		void place(QuadTreeLeaf* leaf);
+		void place(const Aabb& aaddb, QuadTreeLeaf* leaf);
 		template<typename T>
 		void foreachNode(T* delegateInstance, void (T::*delegateMethod)(QuadTreeNode *));
 		template<typename T>
@@ -70,7 +69,7 @@ namespace geometry
 	public:
 		QuadTree(const Aabb &aabb, int depth);
 		~QuadTree();
-		void place(QuadTreeLeaf* leaf);
+		void place(const Aabb &aabb, QuadTreeLeaf* leaf);
 		
 		template<typename T>
 		void foreachNode(T* delegateInstance, void (T::*delegateMethod)(QuadTreeNode *));

@@ -68,8 +68,6 @@ namespace razor
 			}
 		}		
 
-		geometry::Frustum frustum(_camera.projection.Value);
-		_tree.foreachLeaf(&frustum, this, &RazorGame::drawQuadTreeLeaf);
 		graphics::UniformValues::projection()->setValue(_camera.projection);
 		graphics::RenderService::Default.applyPipelines();
 	}
@@ -87,16 +85,6 @@ namespace razor
 	void RazorGame::spaceShipAnimationLoaded(content::ContentStatus* status)
 	{
 		_spaceShipAnimation = status->asFrameAnimation();
-	}
-
-	void RazorGame::drawQuadTreeNode(geometry::QuadTreeNode* node)
-	{
-		Drawing::Default.drawAabb(node->getAabb());
-	}
-
-	void RazorGame::drawQuadTreeLeaf(geometry::QuadTreeLeaf* leaf)
-	{
-		Drawing::Default.drawAabb(leaf->aabb);
 	}
 
 	extern "C" DLLEXPORT IRazorGame* API_CALL createRazorGame()

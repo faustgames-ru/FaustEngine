@@ -14,6 +14,7 @@ namespace geometry
 		Aabb();
 		Aabb(core::Vector3 min, core::Vector3 max);
 		Aabb(float minX, float minY, float minZ, float maxX, float maxY, float maxZ);
+		static Aabb fromCenter(core::Vector3 center, core::Vector3 halfSize);
 		void divide(Aabb& left, Aabb& right, int axis) const;
 		void divide(Aabb& left, Aabb& right) const;
 		void expand(float scale);

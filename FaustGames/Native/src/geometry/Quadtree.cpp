@@ -69,20 +69,20 @@ namespace geometry
 		delete _leafs;
 	}
 
-	void QuadTreeNode::place(QuadTreeLeaf* leaf)
+	void QuadTreeNode::place(const Aabb& aabb, QuadTreeLeaf* leaf)
 	{
 		_totalLeafs++;
 		if (_childs == nullptr)
 		{
 			insertLeaf(leaf);
 		}
-		if (_childs[0]._aabb.contains(leaf->aabb))
+		if (_childs[0]._aabb.contains(aabb))
 		{
-			_childs[0].place(leaf);
+			_childs[0].place(aabb, leaf);
 		}
-		else if (_childs[1]._aabb.contains(leaf->aabb))
+		else if (_childs[1]._aabb.contains(aabb))
 		{
-			_childs[1].place(leaf);
+			_childs[1].place(aabb, leaf);
 		}
 		else
 		{
@@ -150,8 +150,8 @@ namespace geometry
 	{
 	}
 
-	void QuadTree::place(QuadTreeLeaf* leaf)
+	void QuadTree::place(const Aabb &aabb, QuadTreeLeaf* leaf)
 	{
-		_root->place(leaf);
+		_root->place(aabb, leaf);
 	}
 }

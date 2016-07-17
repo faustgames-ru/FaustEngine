@@ -2,14 +2,22 @@
 #define GAME_COMPONENT_H
 
 #include "game_classes.h"
+#include "../geometry/Aabb.h"
+#include "../geometry/Quadtree.h"
 
 namespace game
 {
 	class Component: IBaseObject
 	{
 	public:
-		Entity* owner;
+		Component();
 		byte updateOrder;
+		Entity* owner;
+		core::Vector3 position;
+		core::Vector3 halfSize;
+
+		geometry::QuadTreeLeaf* leaf;
+		geometry::Aabb getAabb() const;
 		virtual void load() = 0;
 		virtual void update(const UpdateArgs& e) = 0;
 	private:

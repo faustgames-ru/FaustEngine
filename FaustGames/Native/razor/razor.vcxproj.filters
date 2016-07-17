@@ -513,6 +513,12 @@
     <ClInclude Include="..\src\game\Component.h">
       <Filter>engine\game</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\game\ComponentsFactory.h">
+      <Filter>engine\game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\AsyncState.h">
+      <Filter>engine\core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
@@ -1048,6 +1054,12 @@
     </ClCompile>
     <ClCompile Include="..\src\game\Component.cpp">
       <Filter>engine\game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\game\ComponentsFactory.cpp">
+      <Filter>engine\game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\AsyncState.cpp">
+      <Filter>engine\core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

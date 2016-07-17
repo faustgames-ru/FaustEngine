@@ -22,8 +22,6 @@ namespace razor
 
 		void spaceShipSpriteLoaded(content::ContentStatus* status);
 		void spaceShipAnimationLoaded(content::ContentStatus* status);
-		void drawQuadTreeNode(geometry::QuadTreeNode* node);
-		void drawQuadTreeLeaf(geometry::QuadTreeLeaf* leaf);
 
 		content::ContentImage* _spaceShipSprite;
 		content::ContentFrameAnimation* _spaceShipAnimation;

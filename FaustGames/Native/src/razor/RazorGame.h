@@ -5,6 +5,7 @@
 
 #include "razor_classes.h"
 #include "../geometry/Quadtree.h"
+#include "../game/Scene.h"
 
 namespace razor
 {
@@ -19,17 +20,13 @@ namespace razor
 		virtual void API_CALL render() OVERRIDE;
 		virtual void API_CALL release() OVERRIDE;
 	private:
-
-		void spaceShipSpriteLoaded(content::ContentStatus* status);
-		void spaceShipAnimationLoaded(content::ContentStatus* status);
-
-		content::ContentImage* _spaceShipSprite;
-		content::ContentFrameAnimation* _spaceShipAnimation;
+		void gameLoaded(content::ContentStatus* status);
+		void sceneFileLoaded(content::ContentStatus* status);
+		void sceneLoaded(core::AsyncStatus::e e);
 		content::ContentBlock* _content;
-
-		graphics::Camera2d _camera;
+		game::Scene* _loadedScene;
+		game::Scene* _updateScene;
 		graphics::Viewport _viewport;
-		geometry::QuadTree _tree;
 	};
 }
 

@@ -47,6 +47,7 @@ namespace content
 		enum e
 		{
 			None,
+			Json,
 			Image,
 			FrameAnimation,
 			BitmapFont
@@ -71,6 +72,7 @@ namespace content
 		virtual void load(const LoadArgs& e) = 0;
 	};
 
+	class ContentJson;
 	class ContentImage;
 	class ContentFrameAnimation;
 	class ContentBitmapFont;

@@ -1116,6 +1116,11 @@ namespace terrain
 					StripeWidth w0 = config.getWidth(dir0);
 					StripeWidth w1 = config.getWidth(dir1);
 
+					w0.out *= current->point.wt;
+					w0.in *= current->point.wb;
+					w1.out *= current->point.wt;
+					w1.in *= current->point.wb;
+
 					core::Vector2 pt;
 					core::Vector2 pb;
 
@@ -1159,6 +1164,8 @@ namespace terrain
 				else
 				{
 					w = config.getWidth(dir0);
+					w.out *= current->point.wt;
+					w.in *= current->point.wb;
 					current->pt = current->point.offset(current->n * w.out*current->scale);
 					current->pb = current->point.offset(current->n * -w.in *current->scale);
 				}
@@ -1168,6 +1175,8 @@ namespace terrain
 				if ((config.AllowedTiles & StripeType::TileAngular) == 0)
 				{
 					w = config.top;
+					w.out *= current->point.wt;
+					w.in *= current->point.wb;
 					if (!closed)
 					{
 						if (i == 0)
@@ -1193,10 +1202,14 @@ namespace terrain
 					if (!d0.isEmpty())
 					{
 						w = config.getWidth(dir0);
+						w.out *= current->point.wt;
+						w.in *= current->point.wb;
 					}
 					else if (!d1.isEmpty())
 					{
 						w = config.getWidth(dir1);
+						w.out *= current->point.wt;
+						w.in *= current->point.wb;
 					}
 				}
 				

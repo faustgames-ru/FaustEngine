@@ -12,6 +12,13 @@ namespace core
 		virtual void invoke(TArgs e) = 0;
 		virtual void dispose() = 0;
 	};
+	
+	class IDelegateVoidCallback : public IBaseObject
+	{
+	public:
+		virtual void invoke() = 0;
+		virtual void dispose() = 0;
+	};
 
 	template <typename TDelegate, typename TArgs>
 	class DelegateCallback: public IDelegateCallback<TArgs>
@@ -22,6 +29,18 @@ namespace core
 		Callback delegateMethod;
 		DelegateCallback(TDelegate* delegateInstance, Callback delegateMethod);
 		virtual void invoke(TArgs e) OVERRIDE;
+		virtual void dispose() OVERRIDE;
+	};
+
+	template <typename TDelegate>
+	class DelegateVoidCallback : public IDelegateVoidCallback
+	{
+	public:
+		typedef void(TDelegate::*Callback)();
+		TDelegate* delegateInstance;
+		Callback delegateMethod;
+		DelegateVoidCallback(TDelegate* delegateInstance, Callback delegateMethod);
+		virtual void invoke() OVERRIDE;
 		virtual void dispose() OVERRIDE;
 	};
 
@@ -37,6 +56,16 @@ namespace core
 		std::vector<IDelegateCallback<TArgs>*> _callbacks;
 	};
 
+	class DelegateVoid
+	{
+	public:
+		template <typename TDelegate>
+		void add(TDelegate* delegateInstance, typename DelegateVoidCallback<TDelegate>::Callback delegateMethod);
+		void clear();
+		void invoke();
+	private:
+		std::vector<IDelegateVoidCallback*> _callbacks;
+	};
 	template <typename TDelegate, typename TArgs>
 	DelegateCallback<TDelegate, TArgs>::DelegateCallback(TDelegate* instance, Callback method): delegateInstance(instance), delegateMethod(method)
 	{		
@@ -50,6 +79,23 @@ namespace core
 
 	template <typename TDelegate, typename TArgs>
 	void DelegateCallback<TDelegate, TArgs>::dispose()
+	{
+		delete this;
+	}
+
+	template <typename TDelegate>
+	DelegateVoidCallback<TDelegate>::DelegateVoidCallback(TDelegate* instance, Callback method) : delegateInstance(instance), delegateMethod(method)
+	{
+	}
+
+	template <typename TDelegate>
+	void DelegateVoidCallback<TDelegate>::invoke()
+	{
+		(delegateInstance->*delegateMethod)();
+	}
+
+	template <typename TDelegate>
+	void DelegateVoidCallback<TDelegate>::dispose()
 	{
 		delete this;
 	}
@@ -74,6 +120,12 @@ namespace core
 	{
 		for (uint i = 0; i < _callbacks.size(); i++)
 			_callbacks[i]->invoke(e);
+	}
+
+	template <typename TDelegate>
+	void DelegateVoid::add(TDelegate* delegateInstance, typename DelegateVoidCallback<TDelegate>::Callback delegateMethod)
+	{
+		_callbacks.push_back(new DelegateCallback<TDelegate, TArgs>(delegateInstance, delegateMethod));
 	}
 }
 

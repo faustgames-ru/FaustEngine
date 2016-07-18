@@ -3,6 +3,7 @@
 #include "ContentFrameAnimation.h"
 #include "ContentBitmapFont.h"
 #include "../core/Path.h"
+#include "ContentJson.h"
 
 namespace content
 {
@@ -39,7 +40,12 @@ namespace content
 	{
 		return static_cast<ContentBitmapFont*>(_castInstance);
 	}
-	
+
+	ContentJson* ContentStatus::asJson() const
+	{
+		return static_cast<ContentJson*>(_castInstance);
+	}
+
 	void ContentStatus::invokeCallback()
 	{
 		if (_callback != nullptr)
@@ -63,10 +69,15 @@ namespace content
 		{
 			type = ContentType::BitmapFont;
 		}
+		else
+		{
+			type = ContentType::Json;
+		}
 	}
 
 	void ContentStatus::createContentInstance()
 	{
+		ContentJson* json;
 		ContentImage* image;
 		ContentBitmapFont* font;
 		ContentFrameAnimation* frameAnimation;
@@ -87,6 +98,11 @@ namespace content
 			font = ContentBitmapFont::create();
 			_instance = font;
 			_castInstance = font;
+			break;
+		case ContentType::Json:
+			json = ContentJson::create();
+			_instance = json;
+			_castInstance = json;
 			break;
 		default: break;
 		}

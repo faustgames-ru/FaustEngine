@@ -2,6 +2,7 @@
 #define GAME_COMPONENT_H
 
 #include "game_classes.h"
+#include "../core/AsyncState.h"
 #include "../geometry/Aabb.h"
 #include "../geometry/Quadtree.h"
 
@@ -18,7 +19,8 @@ namespace game
 
 		geometry::QuadTreeLeaf* leaf;
 		geometry::Aabb getAabb() const;
-		virtual void load() = 0;
+		virtual core::AsyncChain* load() = 0;
+		virtual void loaded() = 0;
 		virtual void update(const UpdateArgs& e) = 0;
 	private:
 	};

@@ -519,6 +519,9 @@
     <ClInclude Include="..\src\core\AsyncState.h">
       <Filter>engine\core</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\content\ContentJson.h">
+      <Filter>engine\content</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
@@ -1060,6 +1063,9 @@
     </ClCompile>
     <ClCompile Include="..\src\core\AsyncState.cpp">
       <Filter>engine\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\content\ContentJson.cpp">
+      <Filter>engine\content</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

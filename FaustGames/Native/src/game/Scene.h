@@ -13,10 +13,14 @@ namespace game
 	{
 	public:
 		Scene();
-		core::AsyncState<void> load(content::ContentObject* value);
+		~Scene();
+		core::AsyncChain* load(content::ContentObject* value);
 		void update();
 		void invalidate(Component *);
 	private:
+		core::AsyncChain* loadEntity(content::ContentObject* value);
+		geometry::Aabb loadAabb(content::ContentObject* value);
+		void loadCamera(content::ContentObject* value);
 		static const int ComponentsUpdateOrderSize = 256;
 		void addLeaf(geometry::QuadTreeLeaf* leaf);
 		graphics::Camera2d _camera;

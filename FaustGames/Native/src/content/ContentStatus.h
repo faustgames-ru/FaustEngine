@@ -53,6 +53,7 @@ namespace content
 		ContentImage* asImage() const;
 		ContentFrameAnimation* asFrameAnimation() const;
 		ContentBitmapFont* asBitmapFont() const;
+		ContentJson* asJson() const;
 		void invokeCallback();
 	private:
 		void detectType();

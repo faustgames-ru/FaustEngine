@@ -4,15 +4,14 @@
 #include "../graphics/pipelines/RenderService.h"
 #include "../graphics/pipelines/RenderVertex.h"
 #include "../graphics/pipelines/UniformsConfig.h"
-#include "drawing/Drawing.h"
 #include "../core/Environment.h"
+#include "../content/content.h"
+
 
 namespace razor
 {
-	RazorGame::RazorGame(): _tree(geometry::Aabb(-1000, -1000, -10, 1000, 1000, 20), 0)
+	RazorGame::RazorGame(): _loadedScene(nullptr), _updateScene(nullptr)
 	{
-		_spaceShipAnimation = nullptr;
-		_spaceShipSprite = nullptr;
 		_content = new content::ContentBlock();
 	}
 
@@ -30,7 +29,7 @@ namespace razor
 	void RazorGame::load()
 	{
 		resources::ContentManager::Default.startLoad();
-		_content->enqueueResource("spaceship/blueship.frame_animation")->setLoadedCallback(this, &RazorGame::spaceShipAnimationLoaded);
+		_content->enqueueResource("razor.game")->setLoadedCallback(this, &RazorGame::gameLoaded);
 
 		EFFECTS_CALL_CREATE
 		FORMATS_CALL_CREATE
@@ -38,9 +37,11 @@ namespace razor
 
 	void RazorGame::update()
 	{
-		_camera.scale = 4.0f;
-		_camera.aspect = _viewport.getAspect();
-		_camera.update();
+		if (_updateScene == nullptr)
+		{
+			return;
+		}
+		_updateScene->update();
 	}
 
 	float _time = 0;
@@ -56,19 +57,6 @@ namespace razor
 	
 		graphics::RenderPipeline* pipeline = graphics::RenderService::Default.pipeline;
 		
-		if (_spaceShipAnimation != nullptr)
-		{
-			for (int j = -1; j <= 1; j++) 
-			{
-				float percent = (core::Math::sin(core::Math::Pi*0.25f*j + _time * core::Math::Pi*2.0f) + 1.0f)*0.5f;
-				_spaceShipSprite = _spaceShipAnimation->frameFromPercent(percent);
-
-				SpriteTransform transform(core::Vector3(j*6.0f, 0.0f, 0.0f), 0.5f, core::Math::Pi*0.25f*j);
-				Drawing::Default.drawSprite(transform, _spaceShipSprite);
-			}
-		}		
-
-		graphics::UniformValues::projection()->setValue(_camera.projection);
 		graphics::RenderService::Default.applyPipelines();
 	}
 
@@ -77,14 +65,22 @@ namespace razor
 		delete this;
 	}
 
-	void RazorGame::spaceShipSpriteLoaded(content::ContentStatus* status)
+	void RazorGame::gameLoaded(content::ContentStatus* status)
 	{
-		_spaceShipSprite = status->asImage();
+		content::ContentJson* game = status->asJson();		
+		const char* startupScene = (*game->value->asObject())["startup_scene"]->asString();
+		_content->enqueueResource(startupScene)->setLoadedCallback(this, &RazorGame::sceneFileLoaded);
 	}
 
-	void RazorGame::spaceShipAnimationLoaded(content::ContentStatus* status)
+	void RazorGame::sceneFileLoaded(content::ContentStatus* status)
 	{
-		_spaceShipAnimation = status->asFrameAnimation();
+		_loadedScene = new game::Scene();
+		_loadedScene->load(status->asJson()->value->asObject())->addCallback(this, &RazorGame::sceneLoaded);
+	}
+
+	void RazorGame::sceneLoaded(core::AsyncStatus::e e)
+	{
+		_updateScene = _loadedScene;
 	}
 
 	extern "C" DLLEXPORT IRazorGame* API_CALL createRazorGame()

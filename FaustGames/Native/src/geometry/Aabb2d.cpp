@@ -99,6 +99,11 @@ namespace geometry
 			Min.getY() <= v.getY() && v.getY() <= Max.getY();
 	}
 
+	core::Vector2 Aabb2d::size() const
+	{
+		return Max - Min;
+	}
+
 	float Aabb2d::squareProportion(const Aabb2d& aabb1, const Aabb2d& aabb2)
 	{
 		float s1 = (aabb1.Max.getX() - aabb1.Min.getX()) * (aabb1.Max.getY() - aabb1.Min.getY());

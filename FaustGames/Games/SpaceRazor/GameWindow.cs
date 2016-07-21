@@ -12,7 +12,6 @@ namespace SpaceRazor
         {
             InitializeComponent();
             _glWindow = new GLWindow(this, OpenGLGlobals.OpenGLContext);
-
             try
             {
                 OpenGLGlobals.InitializeGLFunctionsEntires(_glWindow);
@@ -37,6 +36,7 @@ namespace SpaceRazor
         {
             var seconds = (float)_stopwatch.Elapsed.TotalSeconds;
             _stopwatch.Restart();
+            Text = $"{(1.0f / seconds):000.0}";
             _game.UpdateEnvironment(ClientSize.Width, ClientSize.Height, seconds);
             if (!_initialized)
             {

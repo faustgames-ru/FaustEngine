@@ -25,8 +25,9 @@ namespace graphics
 		}
 	};
 
-	TextureImage2d::TextureImage2d() : _wrap(false), _filter(true), _createMipmaps(false)
+	TextureImage2d::TextureImage2d() : _createMipmaps(false), _wrap(false), _filter(true)
 	{
+		_createMipmaps = true;
 		_size = 0;
 		_handle = 0;
 		X = 0;
@@ -97,6 +98,8 @@ namespace graphics
 
 	TextureImage2d::TextureImage2d(bool generateMipmaps, bool useFilter) : _createMipmaps(generateMipmaps), _wrap(false), _filter(useFilter)
 	{
+		_createMipmaps = true;
+
 		_size = 0;
 		_handle = 0;
 		_handleDefault = _empty.getHandle();
@@ -192,7 +195,7 @@ namespace graphics
 	{
 		return _tracedIndices.data();
 	}
-
+	
 	void TextureImage2d::setData(int width, int height, Image2dFormat::e format, unsigned int *pixels)
 	{
 		Size -= _size;
@@ -228,36 +231,96 @@ namespace graphics
 			{
 				glTexImage2D(GL_TEXTURE_2D, mip, getFormat(format), w == 0 ? 1 : w, h == 0 ? 1 : h, 0, getFormat(format), GL_UNSIGNED_BYTE, pixels);
 				Errors::check(Errors::TexImage2D);
+				int pw = w;
 				w /= 2;
 				h /= 2;
-				int i = 0;
-				for (int y = 0; y < h; y++)
+
+				int i0 = 0;
+				int i1 = 0;
+				int i2 = 0;
+				int i3 = 0;
+				ImageColor c0(0);
+				ImageColor c1(0);
+				ImageColor c2(0);
+				ImageColor c3(0);
+				ImageColor c(0);
+
+				unsigned int r;
+				unsigned int g;
+				unsigned int b;
+				unsigned int a;
+
+				if (format == Image2dFormat::Rgba)
 				{
-					for (int x = 0; x < w; x++)
+					for (int y = 0; y < h; y++)
 					{
-						int i0 = (y * 2 + 0) * w * 2 + x * 2 + 0;
-						int i1 = (y * 2 + 1) * w * 2 + x * 2 + 0;
-						int i2 = (y * 2 + 0) * w * 2 + x * 2 + 1;
-						int i3 = (y * 2 + 1) * w * 2 + x * 2 + 1;
-						
-						ImageColor c0 = ImageColor(pixels[i0]);
-						ImageColor c1 = ImageColor(pixels[i1]);
-						ImageColor c2 = ImageColor(pixels[i2]);
-						ImageColor c3 = ImageColor(pixels[i3]);
-						ImageColor c(0);
-						unsigned int r = (c0.getComponent(0) + c1.getComponent(0) + c2.getComponent(0) + c3.getComponent(0)) / 4;
-						unsigned int g = (c0.getComponent(1) + c1.getComponent(1) + c2.getComponent(1) + c3.getComponent(1)) / 4;
-						unsigned int b = (c0.getComponent(2) + c1.getComponent(2) + c2.getComponent(2) + c3.getComponent(2)) / 4;
-						unsigned int a = (c0.getComponent(3) + c1.getComponent(3) + c2.getComponent(3) + c3.getComponent(3)) / 4;
-						c.setComponent(0, r);
-						c.setComponent(1, g);
-						c.setComponent(2, b);
-						c.setComponent(3, a);
-						pixels[y * w + x] = c0.value;
-						i++;
+						i0 = (y * 2 + 0) * pw + 0 + 0;
+						i1 = (y * 2 + 1) * pw + 0 + 0;
+						i2 = (y * 2 + 0) * pw + 0 + 1;
+						i3 = (y * 2 + 1) * pw + 0 + 1;
+
+						for (int x = 0; x < w; x++)
+						{
+							//i0 = (y * 2 + 0) * w * 2 + x * 2 + 0;
+							//i1 = (y * 2 + 1) * w * 2 + x * 2 + 0;
+							//i2 = (y * 2 + 0) * w * 2 + x * 2 + 1;
+							//i3 = (y * 2 + 1) * w * 2 + x * 2 + 1;
+
+
+
+							c0 = ImageColor(pixels[i0]);
+							c1 = ImageColor(pixels[i1]);
+							c2 = ImageColor(pixels[i2]);
+							c3 = ImageColor(pixels[i3]);
+
+
+							r = (c0.getComponent(0) + c1.getComponent(0) + c2.getComponent(0) + c3.getComponent(0)) >> 2;
+							g = (c0.getComponent(1) + c1.getComponent(1) + c2.getComponent(1) + c3.getComponent(1)) >> 2;
+							b = (c0.getComponent(2) + c1.getComponent(2) + c2.getComponent(2) + c3.getComponent(2)) >> 2;
+							a = (c0.getComponent(3) + c1.getComponent(3) + c2.getComponent(3) + c3.getComponent(3)) >> 2;
+							c.setComponent(0, r);
+							c.setComponent(1, g);
+							c.setComponent(2, b);
+							c.setComponent(3, a);
+
+							pixels[y * w + x] = c0.value;
+
+							i0 += 2;
+							i1 += 2;
+							i2 += 2;
+							i3 += 2;
+						}
 					}
+					mip++;
 				}
-				mip++;
+				else
+				{
+					byte* pixels3 = static_cast<byte*>(static_cast<void *>(pixels));
+					for (int y = 0; y < h; y++)
+					{
+						i0 = ((y * 2 + 0) * pw + 0 + 0)*3;
+						i1 = ((y * 2 + 1) * pw + 0 + 0)*3;
+						i2 = ((y * 2 + 0) * pw + 0 + 1)*3;
+						i3 = ((y * 2 + 1) * pw + 0 + 1)*3;
+
+						for (int x = 0; x < w; x++)
+						{
+							r = (pixels3[i0 + 0] + pixels3[i1 + 0] + pixels3[i2 + 0] + pixels3[i3 + 0]) >> 2;
+							g = (pixels3[i0 + 1] + pixels3[i1 + 1] + pixels3[i2 + 1] + pixels3[i3 + 1]) >> 2;
+							b = (pixels3[i0 + 2] + pixels3[i1 + 2] + pixels3[i2 + 2] + pixels3[i3 + 2]) >> 2;
+
+							pixels3[(y * w + x) * 3 + 0] = r;
+							pixels3[(y * w + x) * 3 + 1] = g;
+							pixels3[(y * w + x) * 3 + 2] = b;
+
+							i0 += 2*3;
+							i1 += 2*3;
+							i2 += 2*3;
+							i3 += 2*3;
+						}
+					}
+					mip++;
+				}
 			}
 		}
 		else

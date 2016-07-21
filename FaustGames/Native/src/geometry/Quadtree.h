@@ -16,8 +16,9 @@ namespace geometry
 	{
 		friend QuadTreeNode;
 	public:
+		Aabb aabb;
 		void *userData;
-		QuadTreeLeaf* create();
+		static QuadTreeLeaf* create();
 		void dispose();
 	private:
 		QuadTreeLeaf();
@@ -106,9 +107,15 @@ namespace geometry
 	{
 		if (_totalLeafs == 0) return;
 		if (!frustum->include(_aabb)) return;
-		for (uint i = 0; i < _leafs->size(); i++)
+		if (_leafs != nullptr)
 		{
-			(delegateInstance->*delegateMethod)((*_leafs)[i]);
+			QuadTreeLeaf* leaf;
+			for (uint i = 0; i < _leafs->size(); i++)
+			{
+				leaf = (*_leafs)[i];
+				if (!frustum->include(leaf->aabb)) continue;
+				(delegateInstance->*delegateMethod)(leaf);
+			}
 		}
 		if (_childs == nullptr) return;
 		_childs[0].foreachLeaf(frustum, delegateInstance, delegateMethod);

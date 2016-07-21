@@ -42,7 +42,7 @@ namespace content
 		resources::ContentManager* content = &resources::ContentManager::Default;
 		ContentValue* rootValue = ContentSerializer::deserializeFromJson(content->loadString(e.fullPath.c_str()));
 		ContentObject* root = rootValue->asObject();
-		float frameRate = (*root)["frames_rate"]->asFloat();
+		_frameRate = (*root)["frames_rate"]->asFloat();
 		ContentArray* framesArray = (*root)["frames"]->asArray();
 		frames.resize(framesArray->size());
 		std::string thisDir = core::Path::getFilePath(e.path);
@@ -61,5 +61,10 @@ namespace content
 		}
 		rootValue->dispose();
 		e.status->invokeCallback();
+	}
+
+	float ContentFrameAnimation::getFrameRate()
+	{
+		return _frameRate;
 	}
 }

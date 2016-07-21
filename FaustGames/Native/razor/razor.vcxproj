@@ -132,6 +132,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>..\lib\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -151,6 +152,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>..\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -176,7 +178,6 @@
     <ClInclude Include="..\src\content\serialization\ContentSerializer.h" />
     <ClInclude Include="..\src\content\serialization\ContentValue.h" />
     <ClInclude Include="..\src\core\Allocator.h" />
-    <ClInclude Include="..\src\core\AsyncState.h" />
     <ClInclude Include="..\src\core\Convert.h" />
     <ClInclude Include="..\src\core\core.h" />
     <ClInclude Include="..\src\core\core_classes.h" />
@@ -207,11 +208,13 @@
     <ClInclude Include="..\src\fonts\OutlineVectorFont.h" />
     <ClInclude Include="..\src\game\Component.h" />
     <ClInclude Include="..\src\game\ComponentsFactory.h" />
+    <ClInclude Include="..\src\game\components\FrameAnimation.h" />
     <ClInclude Include="..\src\game\Entity.h" />
     <ClInclude Include="..\src\game\game_classes.h" />
     <ClInclude Include="..\src\game\game_platform.h" />
     <ClInclude Include="..\src\game\game_references.h" />
     <ClInclude Include="..\src\game\Scene.h" />
+    <ClInclude Include="..\src\game\services\Drawing.h" />
     <ClInclude Include="..\src\geometry\Aabb.h" />
     <ClInclude Include="..\src\geometry\Aabb2d.h" />
     <ClInclude Include="..\src\geometry\Frustum.h" />
@@ -282,7 +285,8 @@
     <ClInclude Include="..\src\graphics\VertexFormatPositionColor.h" />
     <ClInclude Include="..\src\graphics\VertexFormatPositionTextureColor.h" />
     <ClInclude Include="..\src\graphics\VertexFormatsBasic.h" />
-    <ClInclude Include="..\src\razor\drawing\Drawing.h" />
+    <ClInclude Include="..\src\razor\components\Grid.h" />
+    <ClInclude Include="..\src\razor\components\Spaceship.h" />
     <ClInclude Include="..\src\razor\RazorGame.h" />
     <ClInclude Include="..\src\razor\razor_classes.h" />
     <ClInclude Include="..\src\razor\razor_platform.h" />
@@ -342,7 +346,6 @@
     <ClCompile Include="..\src\content\serialization\ContentObject.cpp" />
     <ClCompile Include="..\src\content\serialization\ContentSerializer.cpp" />
     <ClCompile Include="..\src\content\serialization\ContentValue.cpp" />
-    <ClCompile Include="..\src\core\AsyncState.cpp" />
     <ClCompile Include="..\src\core\Convert.cpp" />
     <ClCompile Include="..\src\core\DebugRender.cpp" />
     <ClCompile Include="..\src\core\Delegate.cpp" />
@@ -365,8 +368,10 @@
     <ClCompile Include="..\src\fonts\OutlineVectorFont.cpp" />
     <ClCompile Include="..\src\game\Component.cpp" />
     <ClCompile Include="..\src\game\ComponentsFactory.cpp" />
+    <ClCompile Include="..\src\game\components\FrameAnimation.cpp" />
     <ClCompile Include="..\src\game\Entity.cpp" />
     <ClCompile Include="..\src\game\Scene.cpp" />
+    <ClCompile Include="..\src\game\services\Drawing.cpp" />
     <ClCompile Include="..\src\geometry\Aabb.cpp" />
     <ClCompile Include="..\src\geometry\Aabb2d.cpp" />
     <ClCompile Include="..\src\geometry\Frustum.cpp" />
@@ -421,7 +426,8 @@
     <ClCompile Include="..\src\graphics\VertexBuffer.cpp" />
     <ClCompile Include="..\src\graphics\VertexFormat.cpp" />
     <ClCompile Include="..\src\graphics\VertexFormatsBasic.cpp" />
-    <ClCompile Include="..\src\razor\drawing\Drawing.cpp" />
+    <ClCompile Include="..\src\razor\components\Grid.cpp" />
+    <ClCompile Include="..\src\razor\components\Spaceship.cpp" />
     <ClCompile Include="..\src\razor\InitRazorRenderContext.cpp" />
     <ClCompile Include="..\src\razor\RazorGame.cpp" />
     <ClCompile Include="..\src\razor\scenes\GameScene.cpp" />

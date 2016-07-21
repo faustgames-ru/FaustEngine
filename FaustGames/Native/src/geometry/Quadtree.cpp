@@ -71,12 +71,13 @@ namespace geometry
 
 	void QuadTreeNode::place(const Aabb& aabb, QuadTreeLeaf* leaf)
 	{
+		leaf->aabb = aabb;
 		_totalLeafs++;
 		if (_childs == nullptr)
 		{
 			insertLeaf(leaf);
 		}
-		if (_childs[0]._aabb.contains(aabb))
+		else if (_childs[0]._aabb.contains(aabb))
 		{
 			_childs[0].place(aabb, leaf);
 		}
@@ -123,7 +124,8 @@ namespace geometry
 		}
 		
 		leaf->remove();
-		leaf->_nodeIndex = _leafs->size() - 1;
+		leaf->_nodeIndex = _leafs->size();
+		leaf->_node = this;
 		_leafs->push_back(leaf);		
 	}
 

@@ -20,7 +20,7 @@ namespace graphics
 		RenderConverter()
 		{
 			lastCreatedInstance = this;
-			_effects[llge::EffectTextureColor] = Effects::textureColor();
+			_effects[llge::EffectTextureColor] = Effects::textureColorFog();
 			_effects[llge::EffectTextureColorHighlight] = Effects::textureColorHighlight();
 			_effects[llge::EffectTextureAlphamaskColor] = Effects::textureAlphamaskColor();			
 			_effects[llge::EffectTextureLightmapColor] = Effects::textureLightmapColor();

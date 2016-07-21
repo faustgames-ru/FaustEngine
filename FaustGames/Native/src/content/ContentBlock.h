@@ -16,6 +16,7 @@ namespace content
 		void setRoot(const std::string &rootPath);
 		ContentStatus* enqueueResource(const char * fileName);
 		void update();
+		bool isLoading();
 		typedef std::map<std::string, ContentStatus *> ResourcesMap;
 		typedef std::queue<ContentStatus *> LoadingQueue;
 	private:

@@ -59,6 +59,27 @@ namespace llge
 			Projection.setValue((float *)floatMatrix);
 			UniformValues::projection()->setValue(Projection);
 		}
+
+		virtual void API_CALL setFogStart(float value)
+		{
+			UniformValues::fogStart()->setValue(value);
+		}
+		
+		virtual void API_CALL setFogDensity(float value)
+		{
+			UniformValues::fogDensity()->setValue(value);
+		}
+		
+		virtual void API_CALL setFogScale(float value)
+		{
+			UniformValues::fogScale()->setValue(value);
+		}
+
+		virtual void API_CALL setFogColor(float r, float g, float b)
+		{
+			UniformValues::fogColor()->setValue(core::Vector3(r, g, b));
+		}
+
 	};
 
 	class VBuffer : public IVertexBuffer

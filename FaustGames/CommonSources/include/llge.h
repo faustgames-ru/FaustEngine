@@ -197,6 +197,10 @@ namespace llge
 		virtual void API_CALL setTexture(ITexture *texture) = 0;
 		virtual void API_CALL setLightMap(ITexture *texture) = 0;
 		virtual void API_CALL setProjection(void *floatMatrix) = 0;
+		virtual void API_CALL setFogStart(float value) = 0;
+		virtual void API_CALL setFogDensity(float value) = 0;
+		virtual void API_CALL setFogScale(float value) = 0;
+		virtual void API_CALL setFogColor(float r, float g, float b) = 0;
 	};
 
 	class IVertexBuffer : IBaseObject
@@ -301,7 +305,7 @@ namespace llge
 	public:
 		virtual void API_CALL clearClipper() = 0;
 		virtual void API_CALL addClipperContour(IntPtr vertices2f, uint count) = 0;
-		virtual void API_CALL buildClipper(int sizeX, int sizeY, bool createDifference) = 0;
+		virtual void API_CALL buildClipper(int sizeX, int sizeY, int detailX, int detailY, bool createDifference) = 0;
 		virtual IMeshesResult* API_CALL getIntersectionResult() = 0;
 		virtual IMeshesResult* API_CALL getDifferenceResult() = 0;
 		virtual void API_CALL dispose() = 0;
@@ -410,7 +414,11 @@ namespace llge
 		virtual void API_CALL setToneMap(uint tonemapId) = 0;
 		virtual void API_CALL drawEx(GraphicsEffects effect, BlendMode blendMode, IntPtr config, void *vertices, int verticesCount, void *indices, int indicesCount, byte colorScale) = 0;
 		virtual void API_CALL draw(GraphicsEffects effect, BlendMode blendMode, ITexture* textureId, uint lightmapId, void *vertices, int verticesCount, void *indices, int indicesCount, byte colorScale) = 0;
+		virtual void API_CALL drawSolid(int z, ITexture* textureId, uint lightmapId, void *vertices, int verticesCount, void *indices, int indicesCount, byte colorScale) = 0;
 		virtual void API_CALL execute(bool usePostProcess) = 0;
+
+		virtual int API_CALL getRenderedVerticesCount() = 0;
+		virtual int API_CALL getRenderedPrimitivesCount() = 0;
 	};
 
 	/// spine

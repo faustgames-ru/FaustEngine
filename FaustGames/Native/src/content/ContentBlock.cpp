@@ -42,4 +42,9 @@ namespace content
 		_loadArgs.owner = status->owner;
 		status->asContent()->load(_loadArgs);
 	}
+
+	bool ContentBlock::isLoading()
+	{
+		return !_loadingQueue.empty();
+	}
 }

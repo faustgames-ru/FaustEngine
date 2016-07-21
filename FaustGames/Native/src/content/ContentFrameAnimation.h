@@ -13,7 +13,9 @@ namespace content
 		ContentImage *frameFromPercent(float percent);
 		virtual void dispose() OVERRIDE;
 		virtual void load(const LoadArgs& e) OVERRIDE;
+		float getFrameRate();
 	private:
+		float _frameRate;
 	};
 }
 

@@ -159,6 +159,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\CommonSources\include\llge.h" />
+    <ClInclude Include="..\shaders\module_fog_vert.h" />
     <ClInclude Include="..\shaders\post_process_bloom_add_filter_frag.h" />
     <ClInclude Include="..\shaders\post_process_bloom_filter_frag.h" />
     <ClInclude Include="..\shaders\post_process_blur_frag.h" />
@@ -174,6 +175,8 @@
     <ClInclude Include="..\shaders\solid_vert.h" />
     <ClInclude Include="..\shaders\texture_alphamask_color_frag.h" />
     <ClInclude Include="..\shaders\texture_alphamask_color_vert.h" />
+    <ClInclude Include="..\shaders\texture_color_fog_frag.h" />
+    <ClInclude Include="..\shaders\texture_color_fog_vert.h" />
     <ClInclude Include="..\shaders\texture_color_frag.h" />
     <ClInclude Include="..\shaders\texture_color_highlight_frag.h" />
     <ClInclude Include="..\shaders\texture_color_highlight_vert.h" />

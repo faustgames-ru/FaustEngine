@@ -67,11 +67,11 @@ namespace geometry
 		TerrainClipper();
 		void clear();
 		void addContour(const core::Vector2* countour, uint count);
-		void build(int sizeX, int sizeY, bool createDifference);
+		void build(int sizeX, int sizeY, int detailX, int detailY, bool createDifference);
 
 		virtual void API_CALL clearClipper() OVERRIDE;
 		virtual void API_CALL addClipperContour(IntPtr vertices2f, uint count) OVERRIDE;
-		virtual void API_CALL buildClipper(int sizeX, int sizeY, bool createDifference) OVERRIDE;
+		virtual void API_CALL buildClipper(int sizeX, int sizeY, int detailX, int detailY, bool createDifference) OVERRIDE;
 		virtual llge::IMeshesResult* API_CALL getIntersectionResult() OVERRIDE;
 		virtual llge::IMeshesResult* API_CALL getDifferenceResult() OVERRIDE;
 		virtual void API_CALL dispose() OVERRIDE;
@@ -85,6 +85,8 @@ namespace geometry
 		TerrainClipperAabb _aabb;
 		int _sizeX;
 		int _sizeY;
+		int _tileSizeX;
+		int _tileSizeY;
 		std::vector<core::MeshVertex> _vertices;
 		std::vector<ushort> _indices;
 		std::vector<TerrainClipperMesh> _meshesIntersection;

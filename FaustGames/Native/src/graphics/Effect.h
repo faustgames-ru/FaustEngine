@@ -21,6 +21,8 @@ namespace graphics
 		unsigned int getAttributesMask();
 		unsigned int getAttributesMax();
 		int generateSamplerIndex();
+		void replace(std::string &shader, const std::string &origin, const std::string &value);
+		void preprocessShaderCode(std::string &shader);
 		void create(const char *vertexShaderCode, int vertexShaderSize, const char *pixelShaderCode, int pixelShaderSize);
 		void applyShader();
 		void applyUniforms();

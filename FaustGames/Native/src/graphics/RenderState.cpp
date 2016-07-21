@@ -47,7 +47,27 @@ namespace graphics
 
 		if (!_depthState.isEqual())
 		{
-			/// apply depth			
+			glDepthFunc(GL_LESS);
+			switch (_depthState.getValue())
+			{
+			case DepthState::None: 
+				glDepthMask(GL_FALSE);
+				glDisable(GL_DEPTH_TEST);
+				break;
+			case DepthState::Read: 
+				glDepthMask(GL_FALSE);
+				glEnable(GL_DEPTH_TEST);
+				break;
+			case DepthState::Write: 
+				glDepthMask(GL_TRUE);
+				glDisable(GL_DEPTH_TEST);
+				break;
+			case DepthState::ReadWrite: 
+				glDepthMask(GL_TRUE);
+				glEnable(GL_DEPTH_TEST);
+				break;
+			default: break;
+			}			
 		}
 		
 		if (!_blendState.isEqual())

@@ -797,6 +797,15 @@
     <ClInclude Include="..\src\core\Spline.h">
       <Filter>core</Filter>
     </ClInclude>
+    <ClInclude Include="..\shaders\module_fog_vert.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shaders\texture_color_fog_vert.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shaders\texture_color_fog_frag.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\CommonSources\gen\llgePInvoke.cpp">

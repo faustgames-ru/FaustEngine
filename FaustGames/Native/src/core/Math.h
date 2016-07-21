@@ -34,6 +34,7 @@ namespace core
 		static float max(float v0, float v1, float v2);
 		static float min(float v0, float v1);
 		static float exp(float v);
+		static float fmod(float x, float d);
 	};
 }
 

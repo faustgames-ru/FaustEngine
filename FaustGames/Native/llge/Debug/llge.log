@@ -1,11 +1,2 @@
-﻿  StripeBuilder.cpp
-c:\_faust\faustengine\faustgames\native\src\terrain\stripebuilder.cpp(226): warning C4018: '<': signed/unsigned mismatch
-c:\_faust\faustengine\faustgames\native\src\terrain\stripebuilder.cpp(532): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-c:\_faust\faustengine\faustgames\native\src\terrain\stripebuilder.cpp(783): warning C4018: '<': signed/unsigned mismatch
-c:\_faust\faustengine\faustgames\native\src\terrain\stripebuilder.cpp(801): warning C4018: '<': signed/unsigned mismatch
-c:\_faust\faustengine\faustgames\native\src\terrain\stripebuilder.cpp(820): warning C4018: '<': signed/unsigned mismatch
-c:\_faust\faustengine\faustgames\native\src\terrain\stripebuilder.cpp(914): warning C4018: '<': signed/unsigned mismatch
-c:\_faust\faustengine\faustgames\native\src\terrain\stripebuilder.cpp(930): warning C4018: '<': signed/unsigned mismatch
-c:\_faust\faustengine\faustgames\native\src\terrain\stripebuilder.cpp(938): warning C4018: '<': signed/unsigned mismatch
-c:\_faust\faustengine\faustgames\native\src\terrain\stripebuilder.cpp(950): warning C4018: '<': signed/unsigned mismatch
+﻿  EffectTextureColor.cpp
   llge.vcxproj -> C:\work\sources\github\moon\Solutions\Debug\llge.dll

@@ -191,8 +191,30 @@ namespace geometry
 		}
 	}
 
-	void TerrainClipper::build(int sizeX, int sizeY, bool createDifference)
+	const int MaxTileDetail = 64;
+	float _txCoords[MaxTileDetail+1];
+	float _tyCoords[MaxTileDetail+1];
+
+	void TerrainClipper::build(int sizeX, int sizeY, int detailX, int detailY, bool createDifference)
 	{
+		if (detailX <= 0)
+		{
+			detailX = 1;
+		}
+		if (detailX > MaxTileDetail)
+		{
+			detailX = MaxTileDetail;
+		}
+		for (int i = 0; i <= detailX; i++)
+		{
+			_txCoords[i] = static_cast<float>(i) / static_cast<float>(detailX);
+			_tyCoords[i] = 1.0f - static_cast<float>(i) / static_cast<float>(detailX);
+		}
+
+		sizeX /= detailX;
+		sizeY /= detailX;
+		_tileSizeX = sizeX*detailX;
+		_tileSizeY = sizeY*detailX;
 		_createDifference = createDifference;
 		core::Vector2 center = (_contoursBounds.Max + _contoursBounds.Min)*0.5f;
 		core::Vector2 size = _contoursBounds.Max - _contoursBounds.Min;
@@ -249,9 +271,9 @@ namespace geometry
 		addContour(static_cast<core::Vector2*>(vertices2f), count);
 	}
 
-	void TerrainClipper::buildClipper(int sizeX, int sizeY, bool createDifference)
+	void TerrainClipper::buildClipper(int sizeX, int sizeY, int detailX, int detailY, bool createDifference)
 	{
-		build(sizeX, sizeY, createDifference);
+		build(sizeX, sizeY, detailX, detailY, createDifference);
 	}
 
 	llge::IMeshesResult* TerrainClipper::getIntersectionResult()
@@ -280,12 +302,21 @@ namespace geometry
 			mesh.Indexer.Type = 0;
 			mesh.Indexer.VerticesFirst = _vertices.size();
 
+			int ix = ((aabb.minX - _aabb.minX) / _sizeX) % (_tileSizeX / _sizeX);
+			int iy = ((aabb.minY - _aabb.minY) / _sizeY) % (_tileSizeY / _sizeY);
+			float u0 = _txCoords[ix];
+			float v0 = _tyCoords[iy];
+			float u1 = _txCoords[ix + 1];
+			float v1 = _tyCoords[iy + 1];
+
 			std::vector<p2t::Point> allPoints;
 			for (uint i= 0; i < paths[j].size(); i++)
 			{
 				allPoints.push_back(p2t::Point(paths[j][i].X, paths[j][i].Y));
-				float u = static_cast<float>(paths[j][i].X - aabb.minX) / static_cast<float>(aabb.maxX - aabb.minX);
-				float v = static_cast<float>(paths[j][i].Y - aabb.minY) / static_cast<float>(aabb.maxY - aabb.minY);
+				float ut = static_cast<float>(paths[j][i].X - aabb.minX) / static_cast<float>(aabb.maxX - aabb.minX);
+				float vt = static_cast<float>(paths[j][i].Y - aabb.minY) / static_cast<float>(aabb.maxY - aabb.minY);
+				float u = core::Math::lerp(u0, u1, ut);
+				float v = core::Math::lerp(v0, v1, vt);
 				_vertices.push_back(core::MeshVertex(paths[j][i].X, paths[j][i].Y, 0, u, v, 0xffffffff));
 			}
 			mesh.Indexer.VerticesCount = allPoints.size();
@@ -347,10 +378,17 @@ namespace geometry
 		mesh.Indexer.IndicesFirst = 0;
 		mesh.Indexer.IndicesCount = 6;
 
-		_vertices.push_back(core::MeshVertex(aabb.minX, aabb.minY, 0.0f, 0.0f, 0.0f, 0xffffffff));
-		_vertices.push_back(core::MeshVertex(aabb.minX, aabb.maxY, 0.0f, 0.0f, 1.0f, 0xffffffff));
-		_vertices.push_back(core::MeshVertex(aabb.maxX, aabb.maxY, 0.0f, 1.0f, 1.0f, 0xffffffff));
-		_vertices.push_back(core::MeshVertex(aabb.maxX, aabb.minY, 0.0f, 1.0f, 0.0f, 0xffffffff));
+		int ix = ((aabb.minX - _aabb.minX) / _sizeX) % (_tileSizeX / _sizeX);
+		int iy = ((aabb.minY - _aabb.minY) / _sizeY) % (_tileSizeY / _sizeY);
+		float u0 = _txCoords[ix];
+		float v0 = _tyCoords[iy];
+		float u1 = _txCoords[ix+1];
+		float v1 = _tyCoords[iy+1];
+
+		_vertices.push_back(core::MeshVertex(aabb.minX, aabb.minY, 0.0f, u0, v0, 0xffffffff));
+		_vertices.push_back(core::MeshVertex(aabb.minX, aabb.maxY, 0.0f, u0, v1, 0xffffffff));
+		_vertices.push_back(core::MeshVertex(aabb.maxX, aabb.maxY, 0.0f, u1, v1, 0xffffffff));
+		_vertices.push_back(core::MeshVertex(aabb.maxX, aabb.minY, 0.0f, u1, v0, 0xffffffff));
 		meshes.push_back(mesh);
 	}
 

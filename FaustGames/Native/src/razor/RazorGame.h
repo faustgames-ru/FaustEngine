@@ -22,7 +22,6 @@ namespace razor
 	private:
 		void gameLoaded(content::ContentStatus* status);
 		void sceneFileLoaded(content::ContentStatus* status);
-		void sceneLoaded(core::AsyncStatus::e e);
 		content::ContentBlock* _content;
 		game::Scene* _loadedScene;
 		game::Scene* _updateScene;

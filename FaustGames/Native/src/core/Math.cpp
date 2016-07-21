@@ -119,6 +119,12 @@ namespace core
 		return ::exp(v);
 	}
 
+	float Math::fmod(float x, float d)
+	{
+		return ::fmod(x, d);
+	}
+
+
 	bool Math::equals(float a, float b, float epsilon)
 	{
 		float d = a - b;

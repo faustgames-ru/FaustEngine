@@ -4,12 +4,12 @@
   {
     "target": [ 0.0, 0.0, 0.0 ],
     "fov": 90,
-    "scale": 1.0,
+    "scale": 16.0,
     "depth": 1000
   },
   "entities": [
     {
-      "position": [ 0.0, 0.0, 0.0 ],
+      "position": [ 0.0, 0.0, -0.1 ],
       "frame_animation": "spaceship/blueship.frame_animation",
       "spaceship": { }
     },

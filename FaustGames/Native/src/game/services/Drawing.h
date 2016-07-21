@@ -1,19 +1,24 @@
-#ifndef RAZOR_DRAWING_H
-#define RAZOR_DRAWING_H
+#ifndef GAME_SERVICES_DRAWING_H
+#define GAME_SERVICES_DRAWING_H
 
-#include "razor.h"
-
-#include "../razor_classes.h"
+#include "../game_classes.h"
 #include "../../graphics/pipelines/RenderVertex.h"
 #include "../../geometry/Aabb.h"
 
-namespace razor
+namespace game
 {
+	struct Rotation
+	{
+		float s;
+		float c;
+		Rotation();
+		Rotation(float scale);
+		Rotation(float scale, float rotation);
+	};
 	struct SpriteTransform
 	{
 		core::Vector3 position;
-		float s;
-		float c;
+		Rotation rotation;
 		SpriteTransform();
 		SpriteTransform(core::Vector3 position);
 		SpriteTransform(core::Vector3 position, float scale);
@@ -28,7 +33,7 @@ namespace razor
 		float width;
 		Pen();
 	};
-	
+
 	class Drawing
 	{
 	public:
@@ -40,6 +45,7 @@ namespace razor
 		void drawAabb(const geometry::Aabb& aabb);
 		void drawLine(const core::Vector3& a, const core::Vector3& b);
 		void drawLine(float x1, float y1, float z1, float x2, float y2, float z2);
+		void fillRect(const core::Vector3& center, const core::Vector2& size);
 	private:
 		std::vector<graphics::SpriteVertex> _spriteVertices;
 		std::vector<graphics::ColorVertex> _solidVertices;
@@ -47,4 +53,4 @@ namespace razor
 	};
 }
 
-#endif
+#endif /*GAME_SERVICES_DRAWING_H*/

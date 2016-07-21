@@ -26,12 +26,12 @@ namespace graphics
             glClearColor((float)Color::getR(color) / 255.0f, (float)Color::getG(color) / 255.0f, (float)Color::getB(color) / 255.0f, (float)Color::getA(color) / 255.0f);
 			_colorState = color;
         }
-        if (core::Math::abs(depth - _depthState) < 0.0001f)
+        if (core::Math::abs(depth - _depthState) > 0.0001f)
         {
             glClearDepthf(depth);
 			_depthState = depth;
         }
-    }
+	}
 
 
 	void GraphicsDevice::setViewport(int x, int y, int width, int height)
@@ -124,6 +124,8 @@ namespace graphics
 
 	void GraphicsDevice::clear()
 	{
+		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		glDepthMask(GL_TRUE);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		Errors::check(Errors::Clear);
 	}

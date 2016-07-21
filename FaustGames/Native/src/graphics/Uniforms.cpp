@@ -12,6 +12,12 @@ namespace graphics
 	UniformInfo Uniforms::_time("time", UniformType::Float);	
 	UniformInfo Uniforms::_pixelSize("pixelSize", UniformType::Vector2);
 	UniformInfo Uniforms::_highlightColor("highlightColor", UniformType::Vector3);
+	
+	UniformInfo Uniforms::_fogStart("fogStart", UniformType::Float);
+	UniformInfo Uniforms::_fogDensity("fogDensity", UniformType::Float);
+	UniformInfo Uniforms::_fogScale("fogScale", UniformType::Float);
+	UniformInfo Uniforms::_fogColor("fogColor", UniformType::Vector3);
+
 
 	
 	UniformInfo *Uniforms::cameraPosition()
@@ -62,6 +68,26 @@ namespace graphics
 		return &_highlightColor;
 	}
 
+	UniformInfo* Uniforms::fogStart()
+	{
+		return &_fogStart;
+	}
+
+	UniformInfo* Uniforms::fogDensity()
+	{
+		return &_fogDensity;
+	}
+
+	UniformInfo* Uniforms::fogColor()
+	{
+		return &_fogColor;
+	}
+
+	UniformInfo* Uniforms::fogScale()
+	{
+		return &_fogScale;
+	}
+
 	UniformValueVector3 UniformValues::_cameraPosition;
 	UniformValueMatrix UniformValues::_projection;
 	UniformValueTexture UniformValues::_texture;
@@ -72,6 +98,10 @@ namespace graphics
 	UniformValueFloat UniformValues::_time;
 	UniformValueVector2 UniformValues::_pixelSize;
 	UniformValueVector3 UniformValues::_highlightColor;
+	UniformValueFloat UniformValues::_fogStart;
+	UniformValueFloat UniformValues::_fogDensity;
+	UniformValueFloat UniformValues::_fogScale;
+	UniformValueVector3 UniformValues::_fogColor;
 
 
 	void UniformValues::initSamplers()

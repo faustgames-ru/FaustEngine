@@ -159,33 +159,36 @@ namespace drawing
 		_edges.clear();
 	}
 
-	Batcher::Batcher() : 
-		_tonemapId(0), 
-		_batchBufferIndex(0), 
-		_blend(graphics::BlendState::e::Alpha), 
-		_effect(nullptr), 
-		_format(graphics::VertexFormats::positionTextureColor())
+	Batcher::Batcher() :
+		_tonemapId(0),
+		_batchBufferIndex(0),
+		_blend(graphics::BlendState::e::Alpha),
+		_effect(nullptr),
+		_format(graphics::VertexFormats::positionTextureColor()),
+		_verticesCounter(0)
 	{
 		core::DebugDraw::Default.Render = this;
 		_buffer = new RenderBuffer();
-		_localBuffer = static_cast<TVertex *>(malloc(graphics::GraphicsConstants::LocalBufferSize * sizeof(TVertex)));
+		//_localBuffer = static_cast<TVertex *>(malloc(graphics::GraphicsConstants::LocalBufferSize * sizeof(TVertex)));
 		_graphicsDevice = &graphics::GraphicsDevice::Default;
 		_x = 0;
 		_y = 0;
 		_w = 1;
 		_h = 1;
-
+		_zButcher = new ZBatcher();
 	}
 	
 	Batcher::~Batcher()
 	{
 		core::DebugDraw::Default.Render = &core::DebugRenderDummy::Default;
 		delete _buffer;
-		free(_localBuffer);
+		delete _zButcher;
+		//free(_localBuffer);
 	}
 	
 	void Batcher::start()
 	{
+		_verticesCounter = 0;
 		_buffer->Entries.clear();
 		_buffer->Transforms.clear();
 		_batchBufferIndex = 0;
@@ -195,6 +198,7 @@ namespace drawing
 		_currentEntry.IndicesCount = 0;
 		_blend = graphics::BlendState::None;
 		_effect = nullptr;
+		_zButcher->reset();
 	}
 	
 	void Batcher::finish()
@@ -204,6 +208,7 @@ namespace drawing
 	
 	void Batcher::drawMesh(graphics::EffectBase *effect, graphics::BlendState::e blend, llge::ITexture * texture, uint lightmapId, TVertex *vertices, int verticesCount, ushort *indices, int indicesCount, float colorScale)
 	{
+		_verticesCounter += verticesCount;
 		graphics::Texture * textureInstance = static_cast<graphics::Texture *>(texture->getTextureInstance());
 		_x = textureInstance->X;
 		_y = textureInstance->Y;
@@ -218,6 +223,7 @@ namespace drawing
 	
 	void Batcher::drawMesh(graphics::EffectBase *effect, graphics::BlendState::e blend, uint textureId, uint lightmapId, TVertex *vertices, int verticesCount, ushort *indices, int indicesCount, unsigned char colorScale)
 	{
+		_verticesCounter += verticesCount;
 		BatchBuffer * currentBuffer = _buffer->Buffers[_batchBufferIndex];
 		bool needNewEntry = false;
 		if (!currentBuffer->canAdd(verticesCount, indicesCount))
@@ -267,6 +273,7 @@ namespace drawing
 
 	void Batcher::drawMesh(graphics::EffectBase* effect, graphics::BlendState::e blend, void* config, TVertex* vertices, int verticesCount, ushort* indices, int indicesCount, unsigned char colorScale)
 	{
+		_verticesCounter += verticesCount;
 		BatchBuffer * currentBuffer = _buffer->Buffers[_batchBufferIndex];
 		bool needNewEntry = false;
 		if (!currentBuffer->canAdd(verticesCount, indicesCount))
@@ -310,6 +317,7 @@ namespace drawing
 
 	void Batcher::drawSpineMesh(const BatcherSpineMesh &mesh, byte colorScale)
 	{
+		_verticesCounter += mesh.VerticesCount;
 		BatchBuffer * currentBuffer = _buffer->Buffers[_batchBufferIndex];
 		bool needNewEntry = false;
 		if (!currentBuffer->canAdd(mesh.VerticesCount, mesh.IndicesCount))
@@ -355,6 +363,11 @@ namespace drawing
 
 	void Batcher::executeRenderCommands(bool usePostProcess)
 	{
+		_primitivesCount = 0;
+		_verticesCount = 0;
+		int verticesCount;
+		int primitivesCount;
+
 		RenderBuffer * _backBuffer = _buffer;
 		
 		if (usePostProcess)
@@ -363,20 +376,34 @@ namespace drawing
 		}
 		
 		_graphicsDevice->clear();
-		
+
+		if (_buffer->Transforms.size() > 0)
+		{
+			_graphicsDevice->renderState.setDepth(graphics::DepthState::ReadWrite);
+			_zButcher->configure(graphics::BlendState::Alpha, graphics::Effects::textureColorFog(), _buffer->Transforms[0]);
+			_zButcher->applyRender();
+		}
+		_graphicsDevice->renderState.setDepth(graphics::DepthState::Read);
+
 		for (TBatchEntries::iterator i = _backBuffer->Entries.begin(); i != _backBuffer->Entries.end(); ++i)
 		{
 			BatchBuffer * currentBuffer = _backBuffer->Buffers[i->BatchBufferIndex];
 			i->Effect->configApply(i->Config);
 			graphics::UniformValues::projection()->setValue(_backBuffer->Transforms[i->TransformIndex]);
+			//graphics::UniformValues::fogStart()->setValue(50.0f);
+			//graphics::UniformValues::fogDensity()->setValue(0.00005f);
+			//graphics::UniformValues::fogColor()->setValue(core::Vector3(0.1, 0.6, 0.7));
 
-			_graphicsDevice->renderState.setBlend(graphics::BlendState::Alpha);
 			_graphicsDevice->renderState.setEffect(i->Effect);
-			memcpy(_localBuffer, currentBuffer->getVertices(), currentBuffer->getVerticesCount() * sizeof(TVertex));
-			_graphicsDevice->drawPrimitives(_format, _localBuffer, i->IndicesStart, i->IndicesCount / 3);
+			primitivesCount = i->IndicesCount / 3;
+			verticesCount = currentBuffer->getVerticesCount();
+			
+			_primitivesCount += primitivesCount;
+			_verticesCount += verticesCount;
+			_graphicsDevice->drawPrimitives(_format, currentBuffer->getVertices(), i->IndicesStart, primitivesCount);
 		}
-		
-		
+		_verticesCount = _verticesCounter;
+		_verticesCounter = 0;
 		if (usePostProcess)
 		{
 			_bloom.finishRender();
@@ -386,6 +413,8 @@ namespace drawing
 		{
 			_debugRender.apply(_graphicsDevice, _backBuffer->Transforms[0]);
 		}
+
+		_graphicsDevice->renderState.setDepth(graphics::DepthState::None);
 	}
 
 	IntPtr Batcher::getNativeInstance()
@@ -435,6 +464,11 @@ namespace drawing
 		drawMesh(_converter.getEffect(effect), _converter.getBlend(blendMode), texture, lightmapId, static_cast<TVertex *>(vertices), verticesCount, static_cast<ushort *>(indices), indicesCount, colorScale);
 	}
 
+	void Batcher::drawSolid(int z, llge::ITexture* textureId, uint lightmapId, void* vertices, int verticesCount, void* indices, int indicesCount, byte colorScale)
+	{
+		_zButcher->drawMesh(z, textureId, lightmapId, static_cast<TVertex *>(vertices), verticesCount, static_cast<ushort *>(indices), indicesCount, colorScale);
+	}
+
 	void Batcher::execute(bool usePostProcess)
 	{
 		executeRenderCommands(usePostProcess);
@@ -445,8 +479,227 @@ namespace drawing
 		_tonemapId = tonemapId;
 	}
 
+	int Batcher::getRenderedVerticesCount()
+	{
+		return _verticesCount;
+	}
+
+	int Batcher::getRenderedPrimitivesCount()
+	{
+		return _primitivesCount;
+	}
+
 	void Batcher::drawEdge(uint color, const core::Vector3& a, const core::Vector3& b)
 	{
 		_debugRender.drawEdge(color, a, b);
+	}
+
+	bool ZBatchEntry::equals(const ZBatchEntry& entry)
+	{
+		if (entry.originVertices != originVertices) return false;
+
+		return graphics::Effects::textureColorFog()->isConfigEqual(&entry.Config, &Config);
+	}
+
+	void ZBlock::reconstruct(int zLevel)
+	{
+		z = zLevel;
+		Buffer.reset();
+		Entries.clear();
+	}
+
+	void ZBlock::addMesh(llge::ITexture* texture, uint lightmapId, TVertex* vertices, int verticesCount, ushort* indices, int indicesCount, byte colorScale)
+	{
+		ZBatchEntry e;
+		Buffer.add(vertices, verticesCount, indices, indicesCount, colorScale, e);
+		llge::LightingConfig* config = static_cast<llge::LightingConfig *>(static_cast<void *>(&e.Config));
+		config->lightmap = lightmapId;
+		config->texture = texture->getId();
+		if(Entries.size() == 0)
+		{
+			Entries.push_back(e);
+		}
+		else if (Entries.back().equals(e))
+		{
+			Entries.back().indicesCount += indicesCount;
+			Entries.back().verticesCount += verticesCount;
+		}
+		else
+		{
+			Entries.push_back(e);
+		}
+	}
+
+	void ZBlock::applyRender(graphics::EffectBase *effect)
+	{
+		graphics::GraphicsDevice* graphicsDevice = &graphics::GraphicsDevice::Default;
+		uint primitivesCount;
+		for (std::vector<ZBatchEntry>::iterator i = Entries.begin(); i != Entries.end(); ++i)
+		{
+			effect->configApply(i->Config);
+			primitivesCount = i->indicesCount / 3;
+			graphicsDevice->drawPrimitives(graphics::VertexFormats::positionTextureColor(), i->originVertices, Buffer.allIndices() + i->indicesStart, primitivesCount);
+		}
+	}
+
+	ZBlocksPool::ZBlocksPool(): _blockSize(128)
+	{
+		_blocks.push_back(new ZBlock[_blockSize]);
+		_blocksIndex = 0;
+		_blockIndex = 0;
+	}
+
+	ZBlocksPool::~ZBlocksPool()
+	{
+		for (uint i = 0; i < _blocks.size(); i++)
+			delete [] _blocks[i];
+	}
+
+	void ZBlocksPool::reset()
+	{
+		_blocksIndex = 0;
+		_blockIndex = 0;
+	}
+
+	ZBlock* ZBlocksPool::queryBlock()
+	{
+		if (_blockIndex > _blockSize)
+		{
+			_blocksIndex = _blocks.size();
+			_blocks.push_back(new ZBlock[_blockSize]);
+			_blockIndex = 0;
+		}
+		ZBlock* result = _blocks[_blocksIndex] + _blockIndex;
+		_blockIndex++;
+		return result;
+	}
+
+	ZBatchBuffer::ZBatchBuffer()
+	{
+		_blockSize = 32768;
+		_verticesIndex = 0;
+		_verticesBufferIndex = 0;
+		_indices.reserve(_blockSize);
+	}
+
+	ZBatchBuffer::~ZBatchBuffer()
+	{
+		for (uint i = 0; i < _vertices.size(); i++)
+			delete[] _vertices[i];
+	}
+
+	void ZBatchBuffer::reset()
+	{
+		_indices.clear();
+		_verticesIndex = 0;
+		_verticesBufferIndex = 0;
+	}
+
+	void ZBatchBuffer::add(TVertex* vertices, int verticesCount, ushort* indices, int indicesCount, byte colorScale, ZBatchEntry& result)
+	{
+		int newVSize = _verticesIndex + verticesCount;
+		if (newVSize > _blockSize)
+		{
+			_verticesBufferIndex++;
+			_verticesIndex = 0;
+		}
+		if (_verticesBufferIndex >= _vertices.size())
+		{
+			_vertices.push_back(new TVertex[_blockSize]);
+		}
+
+		TVertex* target = _vertices[_verticesBufferIndex] + _verticesIndex;
+		TVertex* source = vertices;
+		for (int i = 0; i < verticesCount; ++i, ++target, ++source)
+		{
+			target->x = source->x;
+			target->y = source->y;
+			target->z = source->z;
+			target->color = graphics::Color::premul(source->color, colorScale, false);
+			target->u = source->u;
+			target->v = source->v;
+		}
+
+		result.originVertices = _vertices[_verticesBufferIndex];
+		result.verticesStart = _verticesIndex;
+		result.verticesCount = verticesCount;
+		result.indicesCount = indicesCount;
+		result.indicesStart = _indices.size();
+		for (uint i = 0; i < indicesCount; i++)
+		{
+			_indices.push_back(static_cast<ushort>(_verticesIndex + static_cast<int>(indices[i])));
+		}
+		_verticesIndex += verticesCount;
+
+	}
+
+	ushort* ZBatchBuffer::allIndices()
+	{
+		return _indices.data();
+	}
+
+	void ZBatcher::configure(graphics::BlendState::e blend, graphics::EffectBase* effect, core::MatrixContainer transform)
+	{
+		_blend = blend;
+		_effect = effect;
+		_transform = transform;
+	}
+
+	void ZBatcher::reset()
+	{
+		_blocksPool.reset();
+		_blocks.clear();
+		_verticesCounter = 0;
+		_indicesCounter = 0;
+	}
+
+	 
+	struct 
+	{
+		bool operator()(ZBlock* a, ZBlock* b)
+		{
+			return a->z < b->z;
+		}
+	} ZBlockComparer;
+
+	void ZBatcher::applyRender()
+	{
+		_blocksList.clear();
+		for (BlocksMap::iterator it = _blocks.begin(); it != _blocks.end(); ++it)
+		{
+			_blocksList.push_back(it->second);
+		}
+		std::sort(_blocksList.begin(), _blocksList.end(), ZBlockComparer);
+		
+		graphics::GraphicsDevice* graphicsDevice = &graphics::GraphicsDevice::Default;
+		graphicsDevice->renderState.setBlend(graphics::BlendState::Alpha);
+		graphicsDevice->renderState.setEffect(_effect);
+		graphics::UniformValues::projection()->setValue(_transform);
+		for (uint i = 0; i < _blocksList.size(); i++)
+		{
+			_blocksList[i]->applyRender(_effect);
+		}		
+	}
+
+	void ZBatcher::drawMesh(int z, llge::ITexture* texture, uint lightmapId, TVertex* vertices, int verticesCount, ushort* indices, int indicesCount, byte colorScale)
+	{		
+		_verticesCounter += verticesCount;
+		_indicesCounter += indicesCount;
+		
+		ZBlock* block = queryBlock(z);								
+		block->addMesh(texture, lightmapId, vertices, verticesCount, indices, indicesCount, colorScale);		
+	}
+
+	ZBlock* ZBatcher::queryBlock(int z)
+	{
+		BlocksMap::iterator it = _blocks.find(z);
+		if (it == _blocks.end())
+		{
+			ZBlock* newBlock = _blocksPool.queryBlock();
+			newBlock->reconstruct(z);
+			_blocks[z] = newBlock;
+			return newBlock;
+		}
+		return it->second;
 	}
 }

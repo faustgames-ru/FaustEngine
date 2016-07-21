@@ -9,51 +9,57 @@ namespace game
 	class IComponentConstructor: IBaseObject
 	{
 	public:
-		virtual Component* createComponent() = 0;
+		virtual int getTypeId() = 0;
+		virtual Component* createComponent(void*& instance) = 0;
 	};
 
-	template <typename T>
+	template <typename TComponent>
 	class ComponentConstructor : public IComponentConstructor
 	{
 	public:
-		typedef Component*(T::*constructor)();
-		ComponentConstructor(T* instance, constructor* constructor);
-		virtual Component* createComponent() OVERRIDE;
-	private:
-		constructor _constructor;
-		T* _instance;
+		static int typeId;
+		virtual int getTypeId() OVERRIDE;
+		virtual Component* createComponent(void*& instance) OVERRIDE;
 	};
-
+		
 	class ComponentsFactory
 	{
 	public:
+		static ComponentsFactory Default;
+		ComponentsFactory();
 		Component* createComponent(const char* name);		
-		void addConstructor(const char* name, IComponentConstructor* constructor);
-		template <typename T>
-		void addConstructor(const char* name, T* delegateInstance, typename ComponentConstructor<T>::constructor delegateMethod);
+		template <typename TComponent>
+		void addConstructor(const char* name);
 		typedef std::map<std::string, IComponentConstructor*> ConstructorsMap;
 	private:
 		ConstructorsMap _constructors;
+		std::vector<IComponentConstructor*> _constructorsList;
 	};
 
-	template <typename T>
-	ComponentConstructor<T>::ComponentConstructor(T* instance, constructor* constructor)
+	template <typename TComponent>
+	int ComponentConstructor<TComponent>::getTypeId()
 	{
-		_instance = instance;
-		_constructor = constructor;
+		return typeId;
 	}
 
-	template <typename T>
-	Component* ComponentConstructor<T>::createComponent()
+	template <typename TComponent>
+	Component* ComponentConstructor<TComponent>::createComponent(void*& instance)
 	{
-		return (_instance->*_constructor)();
-
+		TComponent* result = new TComponent();
+		instance = result;
+		return result;
 	}
 
-	template <typename T>
-	void ComponentsFactory::addConstructor(const char* name, T* delegateInstance, typename ComponentConstructor<T>::constructor delegateMethod)
+	template <typename TComponent>
+	int ComponentConstructor<TComponent>::typeId = -1;
+
+	template <typename TComponent>
+	void ComponentsFactory::addConstructor(const char* name)
 	{
-		addConstructor(name, new ComponentConstructor<T>(delegateInstance, delegateMethod));
+		ComponentConstructor<TComponent>::typeId = _constructorsList.size();
+		ComponentConstructor<TComponent>* constructorInstance = new ComponentConstructor<TComponent>();
+		_constructorsList.push_back(constructorInstance);
+		_constructors[name] = constructorInstance;
 	}
 }
 

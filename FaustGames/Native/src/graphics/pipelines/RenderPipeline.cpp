@@ -51,48 +51,7 @@ namespace graphics
 	RenderPipeline::RenderPipeline(): _verticesCount(0)
 	{
 	}
-/*
-	void RenderPipeline::draw(const RenderPipelineAbstractInput& data)
-	{
-		
-		RenderPipelineBufferPushResult verticesPtr = _vertices.push(static_cast<byte *>(data.verticesData), data.verticesSize);
-		int addVertives = data.verticesSize / data.format->getStride();
 
-		if (_blocks.size() == 0)
-		{
-			newBlock(data.format, data.effect, verticesPtr.ptr, data.indicesCount);
-		}
-		else
-		{
-			RenderPipelineBlock& block = _blocks.back();
-			if (verticesPtr.originPtr != block.verticesData)
-			{
-				newBlock(data.format, data.effect, verticesPtr.ptr, data.indicesCount);
-				_verticesCount = 0;
-			}
-			else if (block.effect != data.effect || block.format != data.format || _verticesCount + addVertives >= 65536)
-			{
-				newBlock(data.format, data.effect, verticesPtr.ptr, data.indicesCount);
-			}
-			else if (!true
-			//uniformsEquals()
-			)
-			{				
-				newBlock(data.format, data.effect, verticesPtr.ptr, data.indicesCount);
-			}
-			else
-			{
-				block.indicesCount += data.indicesCount;
-			}
-		}
-		for (int i = 0; i < data.indicesCount; i++)
-		{
-			_indices.push_back(_verticesCount + data.indicesData[i]);
-		}
-		_verticesCount += addVertives;
-		
-	}
-*/
 	void RenderPipeline::load()
 	{
 	}
@@ -120,18 +79,5 @@ namespace graphics
 		_vertices.reset();
 		_uniforms.reset();
 		_verticesCount = 0;
-	}
-	/*
-	RenderPipelineBlock& RenderPipeline::newBlock(VertexFormat* format, EffectBase* effect, void* verticesData, int indicesSize)
-	{
-		RenderPipelineBlock block;
-		block.format = format;
-		block.effect = effect;
-		block.verticesData = verticesData;
-		block.indicesStart = _indices.size();
-		block.indicesCount = indicesSize;
-		_blocks.push_back(block);
-		return _blocks.back();
-	}
-	*/
+	}	
 }

@@ -33,7 +33,9 @@ namespace geometry
 		bool contains(const Aabb2d& aabb) const;
 
 		bool contains(const core::Vector2& v) const;
-
+		
+		core::Vector2 size() const;
+		
 		static float squareProportion(const Aabb2d& aabb1, const Aabb2d& aabb2);
 
 		static bool cross(const Aabb2d& aabb1, const Aabb2d& aabb2);

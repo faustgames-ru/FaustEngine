@@ -124,7 +124,7 @@ namespace graphics
 				block.indicesCount += data.indicesCount;
 			}
 		}
-		for (uint i = 0; i < data.indicesCount; i++)
+		for (int i = 0; i < data.indicesCount; i++)
 		{
 			_indices.push_back(_verticesCount + data.indicesData[i]);
 		}

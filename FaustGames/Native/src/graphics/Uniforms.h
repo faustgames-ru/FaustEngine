@@ -24,6 +24,10 @@ namespace graphics
 		static UniformInfo *time();
 		static UniformInfo *pixelSize();
 		static UniformInfo *highlightColor();
+		static UniformInfo *fogStart();
+		static UniformInfo *fogDensity();
+		static UniformInfo *fogColor();
+		static UniformInfo *fogScale();
 	private:
 		static UniformInfo _cameraPosition;
 		static UniformInfo _projection;
@@ -35,6 +39,10 @@ namespace graphics
 		static UniformInfo _time;
 		static UniformInfo _pixelSize;
 		static UniformInfo _highlightColor;
+		static UniformInfo _fogStart;
+		static UniformInfo _fogDensity;
+		static UniformInfo _fogScale;
+		static UniformInfo _fogColor;
 	};
 
 	class UniformValues
@@ -50,6 +58,10 @@ namespace graphics
 		static inline UniformValueFloat *time(){ return &_time; }
 		static inline UniformValueVector2 *pixelSize(){ return &_pixelSize; }
 		static inline UniformValueVector3 *highlightColor() { return &_highlightColor; }
+		static inline UniformValueFloat* fogStart() { return &_fogStart; }
+		static inline UniformValueFloat* fogDensity() { return &_fogDensity; }
+		static inline UniformValueFloat* fogScale() { return &_fogScale; }
+		static inline UniformValueVector3* fogColor() { return &_fogColor; }
 
 		static void initSamplers();
 		static void resetSamplers();
@@ -65,6 +77,11 @@ namespace graphics
 		static UniformValueFloat _time;
 		static UniformValueVector2 _pixelSize;
 		static UniformValueVector3 _highlightColor;
+		static UniformValueFloat _fogStart;
+		static UniformValueFloat _fogDensity;
+		static UniformValueFloat _fogScale;
+		static UniformValueVector3 _fogColor;
+
 		static UniformValueTexture* _samplers[GraphicsConstants::Samplers2DLimit];
 	};
 }

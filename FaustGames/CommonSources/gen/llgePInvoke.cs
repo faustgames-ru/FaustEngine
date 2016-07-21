@@ -361,6 +361,34 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private void llge_UniformsFacade_setProjection (IntPtr classInstance, IntPtr floatMatrix);
+		public void SetFogStart (float value)
+		{
+			llge_UniformsFacade_setFogStart(ClassInstance, value);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_UniformsFacade_setFogStart (IntPtr classInstance, float value);
+		public void SetFogDensity (float value)
+		{
+			llge_UniformsFacade_setFogDensity(ClassInstance, value);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_UniformsFacade_setFogDensity (IntPtr classInstance, float value);
+		public void SetFogScale (float value)
+		{
+			llge_UniformsFacade_setFogScale(ClassInstance, value);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_UniformsFacade_setFogScale (IntPtr classInstance, float value);
+		public void SetFogColor (float r, float g, float b)
+		{
+			llge_UniformsFacade_setFogColor(ClassInstance, r, g, b);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_UniformsFacade_setFogColor (IntPtr classInstance, float r, float g, float b);
 	}
 	
 	public class VertexBuffer
@@ -830,13 +858,13 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private void llge_TerrainClipper_addClipperContour (IntPtr classInstance, IntPtr vertices2f, uint count);
-		public void BuildClipper (int sizeX, int sizeY, bool createDifference)
+		public void BuildClipper (int sizeX, int sizeY, int detailX, int detailY, bool createDifference)
 		{
-			llge_TerrainClipper_buildClipper(ClassInstance, sizeX, sizeY, createDifference);
+			llge_TerrainClipper_buildClipper(ClassInstance, sizeX, sizeY, detailX, detailY, createDifference);
 		}
 		
 		[DllImport(Version.Dll)]
-		static extern private void llge_TerrainClipper_buildClipper (IntPtr classInstance, int sizeX, int sizeY, bool createDifference);
+		static extern private void llge_TerrainClipper_buildClipper (IntPtr classInstance, int sizeX, int sizeY, int detailX, int detailY, bool createDifference);
 		public MeshesResult GetIntersectionResult ()
 		{
 			return new MeshesResult{ ClassInstance = llge_TerrainClipper_getIntersectionResult(ClassInstance) };
@@ -1237,6 +1265,13 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private void llge_Batch2d_draw (IntPtr classInstance, GraphicsEffects effect, BlendMode blendMode, IntPtr textureId, uint lightmapId, IntPtr vertices, int verticesCount, IntPtr indices, int indicesCount, byte colorScale);
+		public void DrawSolid (int z, Texture textureId, uint lightmapId, IntPtr vertices, int verticesCount, IntPtr indices, int indicesCount, byte colorScale)
+		{
+			llge_Batch2d_drawSolid(ClassInstance, z, textureId.ClassInstance, lightmapId, vertices, verticesCount, indices, indicesCount, colorScale);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_Batch2d_drawSolid (IntPtr classInstance, int z, IntPtr textureId, uint lightmapId, IntPtr vertices, int verticesCount, IntPtr indices, int indicesCount, byte colorScale);
 		public void Execute (bool usePostProcess)
 		{
 			llge_Batch2d_execute(ClassInstance, usePostProcess);
@@ -1244,6 +1279,20 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private void llge_Batch2d_execute (IntPtr classInstance, bool usePostProcess);
+		public int GetRenderedVerticesCount ()
+		{
+			return llge_Batch2d_getRenderedVerticesCount(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private int llge_Batch2d_getRenderedVerticesCount (IntPtr classInstance);
+		public int GetRenderedPrimitivesCount ()
+		{
+			return llge_Batch2d_getRenderedPrimitivesCount(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private int llge_Batch2d_getRenderedPrimitivesCount (IntPtr classInstance);
 	}
 	
 	public class SpineSkeletonBone

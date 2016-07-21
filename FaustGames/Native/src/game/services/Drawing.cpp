@@ -1,46 +1,54 @@
 #include "Drawing.h"
 #include "../../graphics/pipelines/RenderService.h"
+#include "../../content/ContentImage.h"
 
-namespace razor
+namespace game
 {
-	SpriteTransform::SpriteTransform(): s(0), c(1)
+	Rotation::Rotation() : s(0), c(1)
 	{
 	}
 
-	SpriteTransform::SpriteTransform(core::Vector3 p) : s(0), c(1)
+	Rotation::Rotation(float scale) : s(0), c(scale)
 	{
-		position = p;
 	}
 
-	SpriteTransform::SpriteTransform(core::Vector3 p, float scale) : s(0), c(scale)
+	Rotation::Rotation(float scale, float rotation): s(core::Math::sin(rotation)*scale), c(core::Math::cos(rotation)*scale)
 	{
-		position = p;
 	}
 
-	SpriteTransform::SpriteTransform(core::Vector3 p, float scale, float rotation) : 
-		s(core::Math::sin(rotation)*scale), 
-		c(core::Math::cos(rotation)*scale)
+	SpriteTransform::SpriteTransform()
 	{
-		position = p;
+	}
+
+	SpriteTransform::SpriteTransform(core::Vector3 p): position(p)
+	{
+	}
+
+	SpriteTransform::SpriteTransform(core::Vector3 p, float scale) : position(p), rotation(scale)
+	{
+	}
+
+	SpriteTransform::SpriteTransform(core::Vector3 p, float scale, float rotation) : position(p), rotation(scale, rotation)
+	{
 	}
 
 	core::Vector3 SpriteTransform::tansform(core::Vector3 p) const
 	{
 		return core::Vector3(
-			position.getX() + p.getX()*c - p.getY()*s,
-			position.getY() + p.getX()*s + p.getY()*c,
+			position.getX() + p.getX()*rotation.c - p.getY()*rotation.s,
+			position.getY() + p.getX()*rotation.s + p.getY()*rotation.c,
 			position.getZ() + p.getZ());
 	}
 
 	core::Vector3 SpriteTransform::tansform(core::Vector2 p) const
 	{
 		return core::Vector3(
-			position.getX() + p.getX()*c - p.getY()*s,
-			position.getY() + p.getX()*s + p.getY()*c,
+			position.getX() + p.getX()*rotation.c - p.getY()*rotation.s,
+			position.getY() + p.getX()*rotation.s + p.getY()*rotation.c,
 			position.getZ());
 	}
 
-	Pen::Pen(): color(0xffffffff), width(0.02f)
+	Pen::Pen() : color(0xffffffff), width(0.02f)
 	{
 	}
 
@@ -138,5 +146,27 @@ namespace razor
 	void Drawing::drawLine(float x1, float y1, float z1, float x2, float y2, float z2)
 	{
 		drawLine(core::Vector3(x1, y1, z1), core::Vector3(x2, y2, z2));
+	}
+
+	void Drawing::fillRect(const core::Vector3& c, const core::Vector2& s)
+	{
+		_solidVertices.resize(4);
+		_solidVertices[0].xyz = core::Vector3(c.getX() - s.getX(), c.getY() - s.getY(), c.getZ());
+		_solidVertices[1].xyz = core::Vector3(c.getX() - s.getX(), c.getY() + s.getY(), c.getZ());
+		_solidVertices[2].xyz = core::Vector3(c.getX() + s.getX(), c.getY() + s.getY(), c.getZ());
+		_solidVertices[3].xyz = core::Vector3(c.getX() + s.getX(), c.getY() - s.getY(), c.getZ());
+		for (int i = 0; i < 4; i++)
+		{
+			_solidVertices[i].color = pen.color;
+		}
+		
+		graphics::RenderPipelineInput<graphics::ColorVertex, graphics::UniformConfigNone> input;
+		input.verticesData = _solidVertices.data();
+		input.verticesCount = 4;
+		input.effect = graphics::EffectsBasic::solidColor();
+		input.indicesData = _quadIndices;
+		input.indicesCount = 6;
+		graphics::RenderPipeline* pipeline = graphics::RenderService::Default.pipeline;
+		pipeline->draw(input);
 	}
 }

@@ -3,6 +3,7 @@
 #include "Uniform.h"
 #include "UniformInfo.h"
 #include "VertexFormat.h"
+#include "../shaders/module_fog_vert.h"
 
 namespace graphics
 {
@@ -124,11 +125,26 @@ namespace graphics
 		return ++_samperIndex;
 	}
 
+	void Effect::replace(std::string& shader, const std::string& origin, const std::string& value)
+	{
+		int i = shader.find(origin, 0);
+		if (i == std::string::npos) return;
+		shader.replace(i, origin.length(), value);
+	}
+
+	void Effect::preprocessShaderCode(std::string& shader)
+	{
+		std::string module_fog((char *)module_fog_vert, module_fog_vert_size);
+		replace(shader, "INCLUDE_FOG_VERT", module_fog);
+	}
 
 	void Effect::create(const char *vertexShaderCode, int vertexShaderSize, const char *pixelShaderCode, int pixelShaderSize)
 	{
+		std::string vertexCode(vertexShaderCode, vertexShaderSize);
+		preprocessShaderCode(vertexCode);
+
 		_pixelShader = createShader(GL_FRAGMENT_SHADER, pixelShaderCode, pixelShaderSize);
-		_vertexShader = createShader(GL_VERTEX_SHADER, vertexShaderCode, vertexShaderSize);
+		_vertexShader = createShader(GL_VERTEX_SHADER, vertexCode.c_str(), vertexCode.size());
 
 		_shaderProgram = glCreateProgram();
 		Errors::check(Errors::CreateProgram);

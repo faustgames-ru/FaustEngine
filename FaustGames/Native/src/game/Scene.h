@@ -4,7 +4,6 @@
 #include "game_classes.h"
 #include "../graphics/utilities/Camera.h"
 #include "../geometry/QuadTree.h"
-#include "../core/AsyncState.h"
 #include "../content/serialization/ContentObject.h"
 
 namespace game
@@ -14,17 +13,20 @@ namespace game
 	public:
 		Scene();
 		~Scene();
-		core::AsyncChain* load(content::ContentObject* value);
+		void enqueueResources(const LoadArgs& e);
+		void loaded();
 		void update();
 		void invalidate(Component *);
+		graphics::Camera2d* camera();
 	private:
-		core::AsyncChain* loadEntity(content::ContentObject* value);
+		void enqueueEntityResources(const LoadArgs& e);
 		geometry::Aabb loadAabb(content::ContentObject* value);
 		void loadCamera(content::ContentObject* value);
 		static const int ComponentsUpdateOrderSize = 256;
 		void addLeaf(geometry::QuadTreeLeaf* leaf);
 		graphics::Camera2d _camera;
 		std::vector<Component* > _updateList[ComponentsUpdateOrderSize];
+		std::vector<Component* > _renderList[ComponentsUpdateOrderSize];
 		std::vector<Entity* > _entities;
 		geometry::QuadTree* _tree;
 	};

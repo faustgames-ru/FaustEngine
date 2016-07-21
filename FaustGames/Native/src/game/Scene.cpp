@@ -2,6 +2,8 @@
 #include "Component.h"
 #include "Entity.h"
 #include "../content/content.h"
+#include "../geometry/Quadtree.h"
+#include "ComponentsFactory.h"
 
 namespace game
 {
@@ -14,26 +16,51 @@ namespace game
 		// todo: cleanup all
 	}
 
-	core::AsyncChain* Scene::load(content::ContentObject* value)
+	void Scene::enqueueResources(const LoadArgs& e)
 	{
-		_tree = new geometry::QuadTree(loadAabb(value), 8);
+		content::ContentObject* value = e.value->asObject();
+		_tree = new geometry::QuadTree(loadAabb(value), 16);
 		loadCamera(value);
 
 		content::ContentArray* entities = (*value)["entities"]->asArray();
-		core::AsyncChain* result = core::AsyncChain::create();
-		for (uint i = 0; i < entities->size(); i++)
+		for (int i = 0; i < entities->size(); i++)
 		{
-			core::AsyncChain* entityLoadState = loadEntity((*entities)[i]->asObject());
-			result->addState(entityLoadState);
+			LoadArgs args;
+			args.content = e.content;
+			args.value = (*entities)[i];
+			enqueueEntityResources(args);
 		}
-		return result;
 	}
+
+	void Scene::loaded()
+	{
+		for (uint i = 0; i < _entities.size(); i++)
+		{
+			for (uint j = 0; j < _entities[i]->components.size(); j++)
+			{
+				_entities[i]->components[j]->loaded();
+				_tree->place(_entities[i]->components[j]->getAabb(), _entities[i]->components[j]->leaf);
+			}
+		}
+	}
+
+
+	struct 
+	{
+		bool operator()(Component* a, Component* b)
+		{
+			return a->getZOrder() > b->getZOrder();
+		}
+	} RenderComponentComparer;
 
 	void Scene::update()
 	{
+		_camera.update();
+
 		for (uint i = 0; i < ComponentsUpdateOrderSize; i++)
 		{
 			_updateList[i].clear();
+			_renderList[i].clear();
 		}
 		geometry::Frustum frustum(_camera.projection.Value);
 		_tree->foreachLeaf(&frustum, this, &Scene::addLeaf);
@@ -47,6 +74,17 @@ namespace game
 				_updateList[i][j]->update(e);
 			}
 		}
+		
+		_camera.update();
+		graphics::UniformValues::projection()->setValue(_camera.projection);
+		for (uint i = 0; i < ComponentsUpdateOrderSize; i++)
+		{
+			std::sort(_renderList[i].begin(), _renderList[i].end(), RenderComponentComparer);
+			for (uint j = 0; j < _renderList[i].size(); j++)
+			{
+				_renderList[i][j]->render();
+			}
+		}
 	}
 
 	void Scene::invalidate(Component* component)
@@ -54,11 +92,40 @@ namespace game
 		_tree->place(component->getAabb(), component->leaf);
 	}
 
-	core::AsyncChain* Scene::loadEntity(content::ContentObject* value)
+	graphics::Camera2d* Scene::camera()
 	{
+		return &_camera;
+	}
+
+	void Scene::enqueueEntityResources(const LoadArgs& e)
+	{
+		content::ContentObject* value = e.value->asObject();
 		Entity* entity = new Entity();
-		core::AsyncChain* result = core::AsyncChain::create();
-		return result;
+		content::ContentObject::ValuesMap& values = value->getValuesMap();
+		for (content::ContentObject::ValuesMap::iterator it = value->getValuesMap().begin(); it != value->getValuesMap().end(); ++it)
+		{
+			if(it->first == "position")
+			{
+				/// load entity position;
+				content::ContentArray* positionValues = it->second->asArray();
+				entity->position.setX((*positionValues)[0]->asFloat());
+				entity->position.setY((*positionValues)[1]->asFloat());
+				entity->position.setZ((*positionValues)[2]->asFloat());
+			}
+			else
+			{
+				Component* component = ComponentsFactory::Default.createComponent(it->first.c_str());
+				if (component != nullptr)
+				{
+					entity->addComponent(component);
+					LoadArgs args;
+					args.value = it->second;
+					args.content = e.content;
+					component->enqueueResources(args);
+				}
+			}
+		}
+		_entities.push_back(entity);
 	}
 
 	geometry::Aabb Scene::loadAabb(content::ContentObject* value)
@@ -66,8 +133,7 @@ namespace game
 		content::ContentArray* aabbValue = (*value)["aabb"]->asArray();
 		return geometry::Aabb(
 			(*aabbValue)[0]->asFloat(), (*aabbValue)[1]->asFloat(), (*aabbValue)[2]->asFloat(),
-			(*aabbValue)[3]->asFloat(), (*aabbValue)[4]->asFloat(), (*aabbValue)[5]->asFloat());
-		
+			(*aabbValue)[3]->asFloat(), (*aabbValue)[4]->asFloat(), (*aabbValue)[5]->asFloat());		
 	}
 
 	void Scene::loadCamera(content::ContentObject* value)
@@ -83,6 +149,13 @@ namespace game
 	void Scene::addLeaf(geometry::QuadTreeLeaf* leaf)
 	{
 		Component* component = static_cast<Component*>(leaf->userData);
-		_updateList[component->updateOrder].push_back(component);
+		if (component->updateOrder != UpdateOrder::None)
+		{
+			_updateList[component->updateOrder].push_back(component);
+		}
+		if (component->renderOrder != RenderOrder::None)
+		{
+			_renderList[component->renderOrder].push_back(component);
+		}
 	}
 }

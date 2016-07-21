@@ -21,6 +21,7 @@ namespace graphics
 	protected:
 	private:
 	};
+
 	class EffectTextureColor : public EffectBase
 	{
 	public:
@@ -31,6 +32,18 @@ namespace graphics
 	protected:
 	private:
 	};
+
+	class EffectTextureColorFog : public EffectBase
+	{
+	public:
+		EffectTextureColorFog();
+		~EffectTextureColorFog();
+		void create();
+		virtual void configApply(const void *config) OVERRIDE;
+	protected:
+	private:
+	};
+
 }
 
 #endif /*EFFECT_TEXTURE_COLOR_H*/

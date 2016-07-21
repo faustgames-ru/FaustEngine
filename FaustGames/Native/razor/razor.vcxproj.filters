@@ -468,9 +468,6 @@
     <ClInclude Include="..\src\graphics\pipelines\UniformsConfig.h">
       <Filter>engine\graphics\pipelines</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\razor\drawing\Drawing.h">
-      <Filter>razor\drawing</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\core\Log.h">
       <Filter>engine\core</Filter>
     </ClInclude>
@@ -516,11 +513,20 @@
     <ClInclude Include="..\src\game\ComponentsFactory.h">
       <Filter>engine\game</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\core\AsyncState.h">
-      <Filter>engine\core</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\content\ContentJson.h">
       <Filter>engine\content</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\game\components\FrameAnimation.h">
+      <Filter>engine\game\components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\game\services\Drawing.h">
+      <Filter>engine\game\services</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\razor\components\Spaceship.h">
+      <Filter>razor\components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\razor\components\Grid.h">
+      <Filter>razor\components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1022,9 +1028,6 @@
     <ClCompile Include="..\src\graphics\pipelines\UniformsConfig.cpp">
       <Filter>engine\graphics\pipelines</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\razor\drawing\Drawing.cpp">
-      <Filter>razor\drawing</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\core\Log.cpp">
       <Filter>engine\core</Filter>
     </ClCompile>
@@ -1061,11 +1064,20 @@
     <ClCompile Include="..\src\game\ComponentsFactory.cpp">
       <Filter>engine\game</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\core\AsyncState.cpp">
-      <Filter>engine\core</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\content\ContentJson.cpp">
       <Filter>engine\content</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\game\components\FrameAnimation.cpp">
+      <Filter>engine\game\components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\game\services\Drawing.cpp">
+      <Filter>engine\game\services</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\razor\components\Spaceship.cpp">
+      <Filter>razor\components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\razor\components\Grid.cpp">
+      <Filter>razor\components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1098,9 +1110,6 @@
     </Filter>
     <Filter Include="engine\fonts">
       <UniqueIdentifier>{9d311eac-cade-4aac-b524-22b6ac34c342}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="engine\core">
-      <UniqueIdentifier>{35405d5d-fa6a-4c94-8c9e-65b23422f1e3}</UniqueIdentifier>
     </Filter>
     <Filter Include="engine\shaders">
       <UniqueIdentifier>{b32fd100-f8b7-416a-92f4-86f8363dbc80}</UniqueIdentifier>
@@ -1141,9 +1150,6 @@
     <Filter Include="engine\graphics\pipelines">
       <UniqueIdentifier>{b23e369b-7636-456c-b4aa-d0a31b459583}</UniqueIdentifier>
     </Filter>
-    <Filter Include="razor\drawing">
-      <UniqueIdentifier>{a4e32d74-b687-4b0e-a883-ddd9c5c47a90}</UniqueIdentifier>
-    </Filter>
     <Filter Include="engine\graphics\utilities">
       <UniqueIdentifier>{f89fd81b-257a-4930-ab88-f8f3076b78a2}</UniqueIdentifier>
     </Filter>
@@ -1155,6 +1161,15 @@
     </Filter>
     <Filter Include="engine\game\components">
       <UniqueIdentifier>{33d2cb77-c314-461c-84f5-4f6210533387}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\game\services">
+      <UniqueIdentifier>{44135eed-cde5-455a-b706-04d4406cb8d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="razor\components">
+      <UniqueIdentifier>{1f526f0b-5642-4d5e-986c-4b93674789d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\core">
+      <UniqueIdentifier>{35405d5d-fa6a-4c94-8c9e-65b23422f1e3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

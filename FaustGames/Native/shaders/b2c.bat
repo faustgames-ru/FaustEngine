@@ -4,6 +4,8 @@ bin2c -o solid_color_frag.h shader_solid_color.frag
 bin2c -o solid_color_vert.h shader_solid_color.vert
 bin2c -o texture_color_frag.h shader_texture_color.frag
 bin2c -o texture_color_vert.h shader_texture_color.vert
+bin2c -o texture_color_fog_frag.h shader_texture_color_fog.frag
+bin2c -o texture_color_fog_vert.h shader_texture_color_fog.vert
 bin2c -o texture_color_highlight_frag.h shader_texture_color_highlight.frag
 bin2c -o texture_color_highlight_vert.h shader_texture_color_highlight.vert
 bin2c -o texture_alphamask_color_frag.h shader_texture_alphamask_color.frag
@@ -21,3 +23,4 @@ bin2c -o post_process_blur_frag.h shader_post_process_blur.frag
 bin2c -o post_process_vblur_vert.h shader_post_process_vblur.vert
 bin2c -o post_process_hblur_vert.h shader_post_process_hblur.vert
 bin2c -o post_process_bloom_add_filter_frag.h shader_post_process_bloom_add_filter.frag
+bin2c -o module_fog_vert.h module_fog.vert

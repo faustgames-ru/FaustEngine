@@ -4,10 +4,13 @@
 #include "drawing_classes.h"
 #include "PostProcess.h"
 #include "../core/DebugRender.h"
+#include <set>
 
 namespace drawing
 {
 	class BatchBuffer;
+	class ZBatcher;
+		
 	struct BatchEntry
 	{
 		ushort * IndicesStart;
@@ -19,7 +22,7 @@ namespace drawing
 		graphics::BlendState::e Blend;
 		graphics::EffectBase *Effect;
 	};
-	
+
 	typedef Mesh2dVertex TVertex;
 
 	class BatchBuffer
@@ -106,7 +109,7 @@ namespace drawing
 	private:
 		std::vector<SolidVertex> _edges;
 	};
-	
+
 	class Batcher : public llge::IBatch2d, public core::IDebugRender
 	{
 	public:
@@ -118,7 +121,7 @@ namespace drawing
 		void drawMesh(graphics::EffectBase *effect, graphics::BlendState::e blend, uint textureId, uint lightmapId, TVertex *vertices, int verticesCount, ushort *indices, int indicesCount, unsigned char colorScale);
 		void drawMesh(graphics::EffectBase *effect, graphics::BlendState::e blend, void* config, TVertex *vertices, int verticesCount, ushort *indices, int indicesCount, unsigned char colorScale);
 		void drawSpineMesh(const BatcherSpineMesh &mesh, byte colorScale);
-		
+
 		void executeRenderCommands(bool usePostProcess);
 
 		virtual IntPtr API_CALL getNativeInstance() OVERRIDE;
@@ -129,9 +132,11 @@ namespace drawing
 		virtual void API_CALL finishBatch() OVERRIDE;
 		virtual void API_CALL drawEx(llge::GraphicsEffects effect, llge::BlendMode blendMode, IntPtr config, void* vertices, int verticesCount, void* indices, int indicesCount, unsigned char colorScale) OVERRIDE;
 		virtual void API_CALL draw(llge::GraphicsEffects effect, llge::BlendMode blendMode, llge::ITexture* texture, uint lightmapId, void* vertices, int verticesCount, void* indices, int indicesCount, unsigned char colorScale) OVERRIDE;
+		virtual void API_CALL drawSolid(int z, llge::ITexture* textureId, uint lightmapId, void *vertices, int verticesCount, void *indices, int indicesCount, byte colorScale) OVERRIDE;
 		virtual void API_CALL execute(bool usePostProcess) OVERRIDE;
 		virtual void API_CALL setToneMap(uint tonemapId) OVERRIDE;
-
+		virtual int API_CALL getRenderedVerticesCount() OVERRIDE;
+		virtual int API_CALL getRenderedPrimitivesCount() OVERRIDE;
 		virtual void drawEdge(uint color, const core::Vector3 &a, const core::Vector3 &b) OVERRIDE;
 	private:
 		BatcherDebugRender _debugRender;
@@ -139,7 +144,7 @@ namespace drawing
 		uint _tonemapId;
 		BatchEntry _currentEntry;
 		int _batchBufferIndex;
-		
+
 		llge::LightingConfig _lightingConfig; // todo: remove
 		core::MatrixContainer _projection;
 		graphics::BlendState::e _blend;
@@ -153,7 +158,91 @@ namespace drawing
 		float _y;
 		float _w;
 		float _h;
-		TVertex* _localBuffer;
+		//TVertex* _localBuffer;
+
+		int _primitivesCount;
+		int _verticesCount;
+		int _verticesCounter;
+		ZBatcher* _zButcher;
+	};
+	
+	struct ZBatchEntry
+	{
+		TVertex* originVertices;
+		uint Config[CONFIG_MAX_SIZE];
+		int indicesStart;
+		int indicesCount;
+		int verticesStart;
+		int verticesCount;
+		bool equals(const ZBatchEntry &entry);
+	};
+	
+	class ZBatchBuffer
+	{
+	public:
+		ZBatchBuffer();
+		~ZBatchBuffer();
+		void reset();
+		void add(TVertex *vertices, int verticesCount, ushort *indices, int indicesCount, byte colorScale, ZBatchEntry& result);
+		ushort *allIndices();
+	private:
+		std::vector<TVertex*> _vertices;
+		std::vector<ushort> _indices;
+		int _blockSize;
+		int _verticesIndex;
+		int _verticesBufferIndex;
+	};
+
+	class ZBlock
+	{
+	public:
+		int z;
+		ZBatchBuffer Buffer;
+		std::vector<ZBatchEntry> Entries;
+		void reconstruct(int z);
+		void addMesh(llge::ITexture * texture, uint lightmapId, TVertex *vertices, int verticesCount, ushort *indices, int indicesCount, byte colorScale);
+		void applyRender(graphics::EffectBase *effect);
+	private:
+	};
+
+
+	class ZBlocksPool
+	{
+	public:
+		ZBlocksPool();
+		~ZBlocksPool();
+		void reset();
+		ZBlock * queryBlock();
+	private:
+		int _blockSize;
+		int _blocksIndex;
+		int _blockIndex;
+		std::vector<ZBlock*> _blocks;
+	};
+
+	class ZBatcher
+	{
+	public:
+		void configure(
+			graphics::BlendState::e blend,
+			graphics::EffectBase *effect,
+			core::MatrixContainer transform);
+		void reset();
+		void applyRender();
+		void drawMesh(int z, llge::ITexture * texture, uint lightmapId, TVertex *vertices, int verticesCount, ushort *indices, int indicesCount, byte colorScale);
+	private:
+		core::MatrixContainer _transform;
+		graphics::BlendState::e _blend;
+		graphics::EffectBase *_effect;
+		float _colorScale;
+		uint _config[CONFIG_MAX_SIZE];
+		typedef std::map<int, ZBlock*> BlocksMap;
+		std::vector<ZBlock*> _blocksList;
+		ZBlock* queryBlock(int z);
+		ZBlocksPool _blocksPool;
+		BlocksMap _blocks;
+		int _verticesCounter;
+		int _indicesCounter;
 	};
 }
 

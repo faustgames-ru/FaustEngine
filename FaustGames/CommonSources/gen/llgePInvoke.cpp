@@ -161,6 +161,26 @@ namespace llge
 		classInstance->setProjection(floatMatrix);
 	}
 	
+	extern "C" DLLEXPORT void API_CALL llge_UniformsFacade_setFogStart (IUniformsFacade * classInstance, float value)
+	{
+		classInstance->setFogStart(value);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_UniformsFacade_setFogDensity (IUniformsFacade * classInstance, float value)
+	{
+		classInstance->setFogDensity(value);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_UniformsFacade_setFogScale (IUniformsFacade * classInstance, float value)
+	{
+		classInstance->setFogScale(value);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_UniformsFacade_setFogColor (IUniformsFacade * classInstance, float r, float g, float b)
+	{
+		classInstance->setFogColor(r, g, b);
+	}
+	
 	extern "C" DLLEXPORT int API_CALL llge_VertexBuffer_getId (IVertexBuffer * classInstance)
 	{
 		return classInstance->getId();
@@ -471,9 +491,9 @@ namespace llge
 		classInstance->addClipperContour(vertices2f, count);
 	}
 	
-	extern "C" DLLEXPORT void API_CALL llge_TerrainClipper_buildClipper (ITerrainClipper * classInstance, int sizeX, int sizeY, bool createDifference)
+	extern "C" DLLEXPORT void API_CALL llge_TerrainClipper_buildClipper (ITerrainClipper * classInstance, int sizeX, int sizeY, int detailX, int detailY, bool createDifference)
 	{
-		classInstance->buildClipper(sizeX, sizeY, createDifference);
+		classInstance->buildClipper(sizeX, sizeY, detailX, detailY, createDifference);
 	}
 	
 	extern "C" DLLEXPORT IMeshesResult * API_CALL llge_TerrainClipper_getIntersectionResult (ITerrainClipper * classInstance)
@@ -726,9 +746,24 @@ namespace llge
 		classInstance->draw(effect, blendMode, textureId, lightmapId, vertices, verticesCount, indices, indicesCount, colorScale);
 	}
 	
+	extern "C" DLLEXPORT void API_CALL llge_Batch2d_drawSolid (IBatch2d * classInstance, int z, ITexture * textureId, uint lightmapId, void * vertices, int verticesCount, void * indices, int indicesCount, byte colorScale)
+	{
+		classInstance->drawSolid(z, textureId, lightmapId, vertices, verticesCount, indices, indicesCount, colorScale);
+	}
+	
 	extern "C" DLLEXPORT void API_CALL llge_Batch2d_execute (IBatch2d * classInstance, bool usePostProcess)
 	{
 		classInstance->execute(usePostProcess);
+	}
+	
+	extern "C" DLLEXPORT int API_CALL llge_Batch2d_getRenderedVerticesCount (IBatch2d * classInstance)
+	{
+		return classInstance->getRenderedVerticesCount();
+	}
+	
+	extern "C" DLLEXPORT int API_CALL llge_Batch2d_getRenderedPrimitivesCount (IBatch2d * classInstance)
+	{
+		return classInstance->getRenderedPrimitivesCount();
 	}
 	
 	extern "C" DLLEXPORT IntPtr API_CALL llge_SpineSkeletonBone_getName (ISpineSkeletonBone * classInstance)

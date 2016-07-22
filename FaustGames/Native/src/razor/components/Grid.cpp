@@ -10,9 +10,9 @@ namespace razor
 
 	void Grid::enqueueResources(const game::LoadArgs& e)
 	{
-		int sizeX = 1000;
-		int sizeY = 1000;
-		int step = 1;
+		int sizeX = 50;
+		int sizeY = 50;
+		int step = 5;
 		for (int x = -sizeX; x <= sizeX; x+= step)
 		{
 			for (int y = -sizeY; y <= sizeY; y+= step)

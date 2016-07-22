@@ -16,6 +16,7 @@ namespace game
 		void enqueueResources(const LoadArgs& e);
 		void loaded();
 		void update();
+		void invalidate(Entity *);
 		void invalidate(Component *);
 		graphics::Camera2d* camera();
 	private:

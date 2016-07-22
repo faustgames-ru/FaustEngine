@@ -11,6 +11,11 @@ namespace razor
 		classInstance->setRootPath(rootPath);
 	}
 	
+	extern "C" DLLEXPORT void API_CALL razor_RazorGame_updateMouse (IRazorGame * classInstance, int rawX, int rawY, int windowX, int windowY, uint buttons)
+	{
+		classInstance->updateMouse(rawX, rawY, windowX, windowY, buttons);
+	}
+	
 	extern "C" DLLEXPORT void API_CALL razor_RazorGame_updateEnvironment (IRazorGame * classInstance, int w, int h, float ellapsedTime)
 	{
 		classInstance->updateEnvironment(w, h, ellapsedTime);

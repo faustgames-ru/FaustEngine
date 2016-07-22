@@ -55,14 +55,12 @@ namespace game
 
 	void Scene::update()
 	{
-		_camera.update();
-
 		for (uint i = 0; i < ComponentsUpdateOrderSize; i++)
 		{
 			_updateList[i].clear();
 			_renderList[i].clear();
 		}
-		geometry::Frustum frustum(_camera.projection.Value);
+		geometry::Frustum frustum(_camera.transform.Value);
 		_tree->foreachLeaf(&frustum, this, &Scene::addLeaf);
 
 		UpdateArgs e;
@@ -76,7 +74,7 @@ namespace game
 		}
 		
 		_camera.update();
-		graphics::UniformValues::projection()->setValue(_camera.projection);
+		graphics::UniformValues::projection()->setValue(_camera.transform);
 		for (uint i = 0; i < ComponentsUpdateOrderSize; i++)
 		{
 			std::sort(_renderList[i].begin(), _renderList[i].end(), RenderComponentComparer);
@@ -84,6 +82,14 @@ namespace game
 			{
 				_renderList[i][j]->render();
 			}
+		}
+	}
+
+	void Scene::invalidate(Entity* entity)
+	{
+		for (uint i = 0; i < entity->components.size(); i++)
+		{
+			invalidate(entity->components[i]);
 		}
 	}
 

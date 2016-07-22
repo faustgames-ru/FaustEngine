@@ -139,4 +139,41 @@ namespace core
 	{
 		return Matrix2(scaleX, 0, 0, scaleY);
 	}
+
+	Quaternion::Quaternion()
+	{
+		_values[0] = 0;
+		_values[1] = 0;
+		_values[2] = 0;
+		_values[3] = 1;
+	}
+
+	Quaternion::Quaternion(Vector3 axis, float angle)
+	{
+		float s = Math::sin(angle / 2);
+		float c = Math::cos(angle / 2);
+		_values[0] = axis.getX() * s;
+		_values[1] = axis.getY() * s;
+		_values[2] = axis.getZ() * s;
+		_values[3] = c;
+	}
+
+	Quaternion::Quaternion(float x, float y, float z, float angle)
+	{
+		float s = Math::sin(angle / 2);
+		float c = Math::cos(angle / 2);
+		_values[0] = x * s;
+		_values[1] = y * s;
+		_values[2] = z * s;
+		_values[3] = c;
+	}
+
+	Vector3 Quaternion::transform(const Quaternion& q, const Vector3& v)
+	{
+		Vector3 u(q.getX(), q.getY(), q.getZ());
+		float s = q.getW();
+		return u * (Vector3::dotProduct(u, v)*2.0f)
+			+ v*(s*s - Vector3::dotProduct(u, u))
+			+ Vector3::crossProduct(u, v) * (s *2.0f);
+	}
 }

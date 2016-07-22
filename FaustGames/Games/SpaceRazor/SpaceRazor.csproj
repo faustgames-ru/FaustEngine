@@ -97,6 +97,10 @@
       <Project>{67C64342-A1A8-4ECA-BB99-D22934F256A7}</Project>
       <Name>GraphicsBinding</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Framework\InputHook\InputHook.csproj">
+      <Project>{8C0735AE-271E-4189-AC13-9BD00745FCDC}</Project>
+      <Name>InputHook</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\..\CommonDlls\glew32.dll">

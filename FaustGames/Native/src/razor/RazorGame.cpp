@@ -9,6 +9,8 @@
 #include "../game/ComponentsFactory.h"
 #include "components/Spaceship.h"
 #include "components/Grid.h"
+#include "../game/input/Mouse.h"
+#include "input/controllers/MouseController.h"
 
 
 namespace razor
@@ -23,14 +25,26 @@ namespace razor
 		_content->setRoot(rootPath);
 	}
 
+	void RazorGame::updateMouse(int rawX, int rawY, int windowX, int windowY, uint buttons)
+	{
+		game::Mouse::Default.update(rawX, rawY, windowX, windowY, buttons);
+	}
+
 	void RazorGame::updateEnvironment(int w, int h, float ellapsedTime)
 	{
 		_viewport.update(w, h);
+		if (ellapsedTime > 0.03f)
+		{
+			// slow motion on fps drop
+			ellapsedTime = 0.03f;
+		}
 		core::Environment::update(ellapsedTime);
 	}
 
 	void RazorGame::load()
 	{
+		InputBroker::Default.add(new MouseController());
+
 		resources::ContentManager::Default.startLoad();
 		_content->enqueueResource("razor.game")->setLoadedCallback(this, &RazorGame::gameLoaded);
 
@@ -57,7 +71,9 @@ namespace razor
 		{
 			return;
 		}
-		_updateScene->camera()->aspect = _viewport.getAspect();
+		_updateScene->camera()->viewport = &_viewport;	
+		_updateScene->camera()->update();
+		InputBroker::Default.update(_updateScene);
 		_updateScene->update();
 	}
 
@@ -72,7 +88,6 @@ namespace razor
 		graphics::GraphicsDevice::Default.clear();
 		graphics::GraphicsDevice::Default.renderState.setBlend(graphics::BlendState::Alpha);
 	
-		graphics::RenderPipeline* pipeline = graphics::RenderService::Default.pipeline;
 		graphics::RenderService::Default.applyPipelines();
 	}
 

@@ -213,6 +213,7 @@
     <ClInclude Include="..\src\game\game_classes.h" />
     <ClInclude Include="..\src\game\game_platform.h" />
     <ClInclude Include="..\src\game\game_references.h" />
+    <ClInclude Include="..\src\game\input\Mouse.h" />
     <ClInclude Include="..\src\game\Scene.h" />
     <ClInclude Include="..\src\game\services\Drawing.h" />
     <ClInclude Include="..\src\geometry\Aabb.h" />
@@ -287,6 +288,8 @@
     <ClInclude Include="..\src\graphics\VertexFormatsBasic.h" />
     <ClInclude Include="..\src\razor\components\Grid.h" />
     <ClInclude Include="..\src\razor\components\Spaceship.h" />
+    <ClInclude Include="..\src\razor\input\controllers\MouseController.h" />
+    <ClInclude Include="..\src\razor\input\InputBroker.h" />
     <ClInclude Include="..\src\razor\RazorGame.h" />
     <ClInclude Include="..\src\razor\razor_classes.h" />
     <ClInclude Include="..\src\razor\razor_platform.h" />
@@ -370,6 +373,7 @@
     <ClCompile Include="..\src\game\ComponentsFactory.cpp" />
     <ClCompile Include="..\src\game\components\FrameAnimation.cpp" />
     <ClCompile Include="..\src\game\Entity.cpp" />
+    <ClCompile Include="..\src\game\input\Mouse.cpp" />
     <ClCompile Include="..\src\game\Scene.cpp" />
     <ClCompile Include="..\src\game\services\Drawing.cpp" />
     <ClCompile Include="..\src\geometry\Aabb.cpp" />
@@ -429,6 +433,8 @@
     <ClCompile Include="..\src\razor\components\Grid.cpp" />
     <ClCompile Include="..\src\razor\components\Spaceship.cpp" />
     <ClCompile Include="..\src\razor\InitRazorRenderContext.cpp" />
+    <ClCompile Include="..\src\razor\input\controllers\MouseController.cpp" />
+    <ClCompile Include="..\src\razor\input\InputBroker.cpp" />
     <ClCompile Include="..\src\razor\RazorGame.cpp" />
     <ClCompile Include="..\src\razor\scenes\GameScene.cpp" />
     <ClCompile Include="..\src\resources\ContentManager.cpp" />

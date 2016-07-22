@@ -204,6 +204,13 @@ namespace core
 				(v.getX() * m.getXz() + v.getY() * m.getYz() + v.getZ() * m.getZz() + m.getWz()) * w);
 		}
 
+		static float transformZ(Matrix m, float z)
+		{
+			float w = 1.0f / (z * m.getZw() + m.getWw());
+			return (0 * m.getXz() + 0 * m.getYz() + z * m.getZz() + m.getWz()) * w;
+		}
+
+
 		static Matrix createTranslate(float x, float y, float z)
 		{
 			return Matrix(
@@ -303,6 +310,22 @@ namespace core
 	private:
 		float _values[4];
 	};
+
+	class Quaternion
+	{
+	public:
+		Quaternion();
+		Quaternion(Vector3 axis, float angle);
+		Quaternion(float x, float y, float z, float angle);
+		inline float getX() const { return _values[0]; }
+		inline float getY() const { return _values[1]; }
+		inline float getZ() const { return _values[2]; }
+		inline float getW() const { return _values[3]; }
+		static Vector3 transform(const Quaternion& q, const Vector3& v);
+	private:
+		float _values[4];
+	};
+
 }
 
 #endif /*MATRIX_H*/

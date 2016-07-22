@@ -35,6 +35,7 @@ namespace core
 		static float min(float v0, float v1);
 		static float exp(float v);
 		static float fmod(float x, float d);
+		static float clamp(float x, float from, float to);
 	};
 }
 

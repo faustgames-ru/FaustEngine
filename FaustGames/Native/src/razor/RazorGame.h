@@ -6,6 +6,7 @@
 #include "razor_classes.h"
 #include "../geometry/Quadtree.h"
 #include "../game/Scene.h"
+#include "input/InputBroker.h"
 
 namespace razor
 {
@@ -14,6 +15,7 @@ namespace razor
 	public:
 		RazorGame();
 		virtual void API_CALL setRootPath(String rootPath) OVERRIDE;
+		virtual void API_CALL updateMouse(int rawX, int rawY, int windowX, int windowY, uint buttons) OVERRIDE;
 		virtual void API_CALL updateEnvironment(int w, int h, float ellapsedTime) OVERRIDE;
 		virtual void API_CALL load() OVERRIDE;
 		virtual void API_CALL update() OVERRIDE;

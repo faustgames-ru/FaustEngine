@@ -90,6 +90,7 @@ namespace core
 	private:
 		float _values[3];
 	public:
+		static Vector3 infinity;
 		static Vector3 eX;
 		static Vector3 eY;
 		static Vector3 eZ;
@@ -112,6 +113,16 @@ namespace core
 			_values[0] = x;
 			_values[1] = y;
 			_values[2] = z;
+		}
+		inline void setXy(float x, float y)
+		{
+			_values[0] = x;
+			_values[1] = y;
+		}
+		inline void setXy(core::Vector2 xy)
+		{
+			_values[0] = xy.getX();
+			_values[1] = xy.getY();
 		}
 		inline float getX() const { return _values[0]; }
 		inline float getY() const { return _values[1]; }
@@ -190,8 +201,6 @@ namespace core
 		int IndicesFirst;
 		int IndicesCount;
 	};
-
-
 }
 
 #endif /*VECTOR_H*/

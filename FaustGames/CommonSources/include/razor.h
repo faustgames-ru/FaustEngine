@@ -30,10 +30,12 @@ typedef void * IntPtr;
 
 namespace razor
 {
+
 	class IRazorGame : IBaseObject
 	{
 	public:
 		virtual void API_CALL setRootPath(String rootPath) = 0;
+		virtual void API_CALL updateMouse(int rawX, int rawY, int windowX, int windowY, uint buttons) = 0;
 		virtual void API_CALL updateEnvironment(int w, int h, float ellapsedTime) = 0;
 		virtual void API_CALL load() = 0;
 		virtual void API_CALL update() = 0;

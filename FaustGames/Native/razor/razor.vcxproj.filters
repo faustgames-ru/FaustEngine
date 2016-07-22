@@ -528,6 +528,15 @@
     <ClInclude Include="..\src\razor\components\Grid.h">
       <Filter>razor\components</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\game\input\Mouse.h">
+      <Filter>engine\game\input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\razor\input\InputBroker.h">
+      <Filter>razor\input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\razor\input\controllers\MouseController.h">
+      <Filter>razor\input\controllers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
@@ -1079,6 +1088,15 @@
     <ClCompile Include="..\src\razor\components\Grid.cpp">
       <Filter>razor\components</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\game\input\Mouse.cpp">
+      <Filter>engine\game\input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\razor\input\InputBroker.cpp">
+      <Filter>razor\input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\razor\input\controllers\MouseController.cpp">
+      <Filter>razor\input\controllers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="common">
@@ -1170,6 +1188,15 @@
     </Filter>
     <Filter Include="engine\core">
       <UniqueIdentifier>{35405d5d-fa6a-4c94-8c9e-65b23422f1e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\game\input">
+      <UniqueIdentifier>{64d64685-bfac-4144-9672-38488083d016}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="razor\input">
+      <UniqueIdentifier>{6a1808e6-40f1-4799-b163-16b3b3fb49e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="razor\input\controllers">
+      <UniqueIdentifier>{00ff7235-f790-4242-b17b-2dbe5c505340}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

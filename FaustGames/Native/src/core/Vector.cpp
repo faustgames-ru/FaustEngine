@@ -327,6 +327,8 @@ namespace core
 		_values[2] = v;
 	}
 
+	Vector3 Vector3::infinity(Math::MaxValue, Math::MaxValue, Math::MaxValue);
+
 	Vector3 Vector3::eX(1.0f, 0.0f, 0.0f);
 	Vector3 Vector3::eY(0.0f, 1.0f, 0.0f);
 	Vector3 Vector3::eZ(0.0f, 0.0f, 1.0f);

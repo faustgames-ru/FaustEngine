@@ -26,6 +26,13 @@ namespace razor
 		
 		[DllImport(Version.Dll)]
 		static extern private void razor_RazorGame_setRootPath (IntPtr classInstance, String rootPath);
+		public void UpdateMouse (int rawX, int rawY, int windowX, int windowY, uint buttons)
+		{
+			razor_RazorGame_updateMouse(ClassInstance, rawX, rawY, windowX, windowY, buttons);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void razor_RazorGame_updateMouse (IntPtr classInstance, int rawX, int rawY, int windowX, int windowY, uint buttons);
 		public void UpdateEnvironment (int w, int h, float ellapsedTime)
 		{
 			razor_RazorGame_updateEnvironment(ClassInstance, w, h, ellapsedTime);

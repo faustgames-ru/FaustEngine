@@ -124,6 +124,14 @@ namespace core
 		return ::fmod(x, d);
 	}
 
+	float Math::clamp(float x, float from, float to)
+	{
+		if (x < from)
+			return from;
+		if (x > to)
+			return to;
+		return x;
+	}
 
 	bool Math::equals(float a, float b, float epsilon)
 	{

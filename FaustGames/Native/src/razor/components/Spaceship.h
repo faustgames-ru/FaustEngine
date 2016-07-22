@@ -16,6 +16,12 @@ namespace razor
 		virtual void update(const game::UpdateArgs& e) OVERRIDE;
 	private:
 		game::FrameAnimation* _animation;
+		float _acceleration;
+		float _maxVelocity;
+		float _velocity;
+		float _agularVelocity;
+		core::Vector2 _dir;
+
 	};
 }
 

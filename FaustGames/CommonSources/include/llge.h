@@ -35,6 +35,16 @@ namespace llge
 {
 	/// graphics enums
 
+	enum TextureFilterMode
+	{
+		Nearest = 0x0,
+		Linear = 0x1,
+		NearestMipmapNearest = 0x2,
+		LinearMipmapNearest = 0x3,
+		NearestMipmapLinear = 0x4,
+		LinearMipmapLinear = 0x5,
+	};
+
 	enum BlendMode
 	{
 		None = 0x0,
@@ -128,7 +138,15 @@ namespace llge
 	{
 		uint texture;
 	};
-			
+		
+	/// graphics structs
+	struct GraphicsConfig
+	{
+		bool generateMipmaps;
+		bool earlyDepthPath;
+		uint texturesFilter;
+	};
+	
 	struct LightingConfig
 	{
 		uint texture;
@@ -141,7 +159,6 @@ namespace llge
 		uint highlightColor;
 	};
 
-	/// graphics
 	class ITexture : IBaseObject
 	{
 	public:
@@ -252,7 +269,8 @@ namespace llge
 		virtual IRenderTarget2d * API_CALL createRenderTarget2d() = 0;
 		virtual IRenderTargetDepth2d * API_CALL createRenderTargetDepth2d() = 0;
 		virtual IVertexBuffer * API_CALL createVertexBuffer() = 0;
-		
+		virtual void API_CALL setupGraphics(IntPtr graphicsConfig) = 0;
+
 		virtual void API_CALL dispose() = 0;
 	};
 

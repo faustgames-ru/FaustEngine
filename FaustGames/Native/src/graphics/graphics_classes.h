@@ -69,6 +69,18 @@ namespace graphics
 		};
 	};
 
+	struct FilterMode
+	{
+		enum e
+		{
+			Nearest = 0x0,
+			Linear = 0x1,
+			NearestMipmapNearest = 0x2,
+			LinearMipmapNearest = 0x3,
+			NearestMipmapLinear = 0x4,
+			LinearMipmapLinear = 0x5,
+		};
+	};
 
 	class Uniforms;
 

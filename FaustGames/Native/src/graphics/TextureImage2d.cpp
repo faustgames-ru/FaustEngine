@@ -27,7 +27,7 @@ namespace graphics
 
 	TextureImage2d::TextureImage2d() : _createMipmaps(false), _wrap(false), _filter(true)
 	{
-		_createMipmaps = true;
+		setupConfig();
 		_size = 0;
 		_handle = 0;
 		X = 0;
@@ -35,6 +35,11 @@ namespace graphics
 		W = 1;
 		H = 1;
 		_handleDefault = _empty.getHandle();
+	}
+
+	void TextureImage2d::setupConfig()
+	{
+		_createMipmaps = GraphicsDevice::Default.config.generateMipmaps;
 	}
 
 	void TextureImage2d::traceTriangles(int width, int height, Image2dFormat::e format, void *pixels)
@@ -98,7 +103,7 @@ namespace graphics
 
 	TextureImage2d::TextureImage2d(bool generateMipmaps, bool useFilter) : _createMipmaps(generateMipmaps), _wrap(false), _filter(useFilter)
 	{
-		_createMipmaps = true;
+		setupConfig();
 
 		_size = 0;
 		_handle = 0;
@@ -126,6 +131,12 @@ namespace graphics
 		Errors::check(Errors::BindTexture);
 		if (_filter)
 		{
+
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GraphicsDevice::Default.config.getMagFilter());
+			Errors::check(Errors::TexParameteri);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GraphicsDevice::Default.config.getMinFilter());
+			Errors::check(Errors::TexParameteri);
+			/*
 			if (_createMipmaps)
 			{
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -140,6 +151,7 @@ namespace graphics
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 				Errors::check(Errors::TexParameteri);
 			}
+			*/
 		}
 		else
 		{

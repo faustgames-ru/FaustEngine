@@ -290,6 +290,38 @@ namespace llge
 			return new VBuffer();
 		}
 
+		virtual void API_CALL setupGraphics(IntPtr graphicsConfig)
+		{
+			GraphicsConfig* config = static_cast<GraphicsConfig*>(graphicsConfig);
+			GraphicsDevice::Default.config.earlyDepthPath = config->earlyDepthPath;
+			GraphicsDevice::Default.config.generateMipmaps = config->generateMipmaps;
+
+			TextureFilterMode filterMode = static_cast<TextureFilterMode>(config->texturesFilter);
+			switch (filterMode)
+			{
+			case Nearest: 
+				GraphicsDevice::Default.config.filterMode = FilterMode::Nearest;
+				break;
+			case Linear: 
+				GraphicsDevice::Default.config.filterMode = FilterMode::Linear;
+				break;
+			case NearestMipmapNearest: 
+				GraphicsDevice::Default.config.filterMode = FilterMode::NearestMipmapNearest;
+				break;
+			case LinearMipmapNearest: 
+				GraphicsDevice::Default.config.filterMode = FilterMode::LinearMipmapNearest;
+				break;
+			case NearestMipmapLinear: 
+				GraphicsDevice::Default.config.filterMode = FilterMode::NearestMipmapLinear;
+				break;
+			case LinearMipmapLinear: 
+				GraphicsDevice::Default.config.filterMode = FilterMode::LinearMipmapLinear;
+				break;
+			default: 
+				break;
+			}
+		}
+
 		virtual void API_CALL dispose() 
 		{
 			delete this;

@@ -10,6 +10,56 @@ namespace graphics
 	GraphicsDevice GraphicsDevice::Default;
     int GraphicsDevice::_primaryFbo(0);
 
+	int GraphicsConfig::getMagFilter()
+	{
+		switch (filterMode)
+		{
+		case FilterMode::Nearest:
+			return GL_NEAREST;
+		case FilterMode::Linear:
+			return GL_LINEAR;
+		case FilterMode::NearestMipmapNearest:
+			return GL_NEAREST;
+		case FilterMode::LinearMipmapNearest:
+			return GL_LINEAR;
+		case FilterMode::NearestMipmapLinear:
+			return GL_NEAREST;
+		case FilterMode::LinearMipmapLinear:
+			return GL_NEAREST;
+		default:
+			return GL_LINEAR;
+		}
+	}
+
+	int GraphicsConfig::getMinFilter()
+	{
+		switch (filterMode)
+		{
+		case FilterMode::Nearest:
+			return GL_NEAREST;
+		case FilterMode::Linear:
+			return GL_LINEAR;
+		case FilterMode::NearestMipmapNearest:
+			return GL_NEAREST_MIPMAP_NEAREST;
+		case FilterMode::LinearMipmapNearest:
+			return GL_LINEAR_MIPMAP_NEAREST;
+		case FilterMode::NearestMipmapLinear:
+			return GL_NEAREST_MIPMAP_NEAREST;
+		case FilterMode::LinearMipmapLinear:
+			return GL_NEAREST_MIPMAP_LINEAR;
+		default:
+			return GL_LINEAR;
+		}
+	}
+
+	GraphicsConfig::GraphicsConfig(): 
+		filterMode(FilterMode::Linear),
+		generateMipmaps(false),
+		earlyDepthPath(false)
+	{
+
+	}
+
 	GraphicsDevice::GraphicsDevice() : _colorState(0), _depthState(-1.0f), _activeTextureState(-1), _drawCalls(0), actualRenderTarget(0)
 	{
 	}

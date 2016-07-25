@@ -464,9 +464,16 @@ namespace drawing
 		drawMesh(_converter.getEffect(effect), _converter.getBlend(blendMode), texture, lightmapId, static_cast<TVertex *>(vertices), verticesCount, static_cast<ushort *>(indices), indicesCount, colorScale);
 	}
 
-	void Batcher::drawSolid(int z, llge::ITexture* textureId, uint lightmapId, void* vertices, int verticesCount, void* indices, int indicesCount, byte colorScale)
+	void Batcher::drawSolid(int z, llge::ITexture* texture, uint lightmapId, void* vertices, int verticesCount, void* indices, int indicesCount, byte colorScale)
 	{
-		_zButcher->drawMesh(z, textureId, lightmapId, static_cast<TVertex *>(vertices), verticesCount, static_cast<ushort *>(indices), indicesCount, colorScale);
+		if (graphics::GraphicsDevice::Default.config.earlyDepthPath)
+		{
+			_zButcher->drawMesh(z, texture, lightmapId, static_cast<TVertex *>(vertices), verticesCount, static_cast<ushort *>(indices), indicesCount, colorScale);
+		}
+		else
+		{
+			drawMesh(_converter.getEffect(llge::GraphicsEffects::EffectTextureColor), graphics::BlendState::Alpha, texture, lightmapId, static_cast<TVertex *>(vertices), verticesCount, static_cast<ushort *>(indices), indicesCount, colorScale);
+		}
 	}
 
 	void Batcher::execute(bool usePostProcess)

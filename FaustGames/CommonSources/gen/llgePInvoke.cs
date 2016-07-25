@@ -16,6 +16,16 @@ namespace llge
 #endif
 	}
 	
+	public enum TextureFilterMode
+	{
+		Nearest = 0x0,
+		Linear = 0x1,
+		NearestMipmapNearest = 0x2,
+		LinearMipmapNearest = 0x3,
+		NearestMipmapLinear = 0x4,
+		LinearMipmapLinear = 0x5,
+	}
+	
 	public enum BlendMode
 	{
 		None = 0x0,
@@ -105,6 +115,14 @@ namespace llge
 	public struct EffectConfig
 	{
 		public uint texture;
+	}
+	
+	[StructLayout(LayoutKind.Sequential)]
+	public struct GraphicsConfig
+	{
+		public bool generateMipmaps;
+		public bool earlyDepthPath;
+		public uint texturesFilter;
 	}
 	
 	[StructLayout(LayoutKind.Sequential)]
@@ -628,6 +646,13 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private IntPtr llge_GraphicsFactory_createVertexBuffer (IntPtr classInstance);
+		public void SetupGraphics (IntPtr graphicsConfig)
+		{
+			llge_GraphicsFactory_setupGraphics(ClassInstance, graphicsConfig);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_GraphicsFactory_setupGraphics (IntPtr classInstance, IntPtr graphicsConfig);
 		public void Dispose ()
 		{
 			llge_GraphicsFactory_dispose(ClassInstance);

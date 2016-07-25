@@ -341,6 +341,11 @@ namespace llge
 		return classInstance->createVertexBuffer();
 	}
 	
+	extern "C" DLLEXPORT void API_CALL llge_GraphicsFactory_setupGraphics (IGraphicsFactory * classInstance, IntPtr graphicsConfig)
+	{
+		classInstance->setupGraphics(graphicsConfig);
+	}
+	
 	extern "C" DLLEXPORT void API_CALL llge_GraphicsFactory_dispose (IGraphicsFactory * classInstance)
 	{
 		classInstance->dispose();

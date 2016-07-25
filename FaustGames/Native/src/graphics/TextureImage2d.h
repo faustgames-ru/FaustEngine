@@ -37,6 +37,7 @@ namespace graphics
 	protected:
 	private:
 		TextureImage2d();
+		void setupConfig();
 		void traceTriangles(int width, int height, Image2dFormat::e format, void *pixels);
 		static GLenum getFormat(Image2dFormat::e format);
 		std::vector<core::Vector2> _tracedVertices;

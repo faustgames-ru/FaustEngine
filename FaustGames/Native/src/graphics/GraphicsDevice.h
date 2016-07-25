@@ -20,9 +20,21 @@ namespace graphics
 		std::vector<TextureRenderTarget2d *> _all;
 	};
 	
+	class GraphicsConfig
+	{
+	public:
+		FilterMode::e filterMode;
+		bool generateMipmaps;
+		bool earlyDepthPath;
+		int getMagFilter();
+		int getMinFilter();
+		GraphicsConfig();
+	};
+	
 	class GraphicsDevice
 	{
 	public:
+		GraphicsConfig config;
 		static GraphicsDevice Default;
 		RenderState renderState;
 		IRenderTarget * actualRenderTarget;

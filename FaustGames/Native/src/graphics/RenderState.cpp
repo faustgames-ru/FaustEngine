@@ -44,10 +44,9 @@ namespace graphics
 		_blendState.applyState();
 		_effect.applyState();
 		_vertexBufferState.applyState();
-
-		if (!_depthState.isEqual())
+		
+		//if (!_depthState.isEqual())
 		{
-			glDepthFunc(GL_LESS);
 			switch (_depthState.getValue())
 			{
 			case DepthState::None: 
@@ -83,6 +82,10 @@ namespace graphics
 			case BlendState::Additive:
 				glEnable(GL_BLEND);
 				glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+				break;
+			case BlendState::Normal:
+				glEnable(GL_BLEND);
+				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 				break;
 			default:
 				glDisable(GL_BLEND);

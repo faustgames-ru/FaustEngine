@@ -109,7 +109,7 @@ namespace terrain
 		StripeConfig();
 		StripeWidth getWidth(core::Direction2::e d);
 		TileStripeType::e getType(core::Direction2::e d);
-
+		
 		virtual void API_CALL set(llge::TerrainStripeConfigType type, float inWidth, float outWidth, float width) OVERRIDE;
 		virtual void API_CALL setPhysicsMode(llge::TerrainStripePhysicsType mode) OVERRIDE;
 		virtual void API_CALL setFlipReversed(bool value) OVERRIDE;

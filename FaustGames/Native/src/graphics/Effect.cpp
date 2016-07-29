@@ -3,6 +3,7 @@
 #include "Uniform.h"
 #include "UniformInfo.h"
 #include "VertexFormat.h"
+#include "GraphicsDevice.h"
 #include "../shaders/module_fog_vert.h"
 
 namespace graphics
@@ -136,6 +137,15 @@ namespace graphics
 	{
 		std::string module_fog((char *)module_fog_vert, module_fog_vert_size);
 		replace(shader, "INCLUDE_FOG_VERT", module_fog);
+		
+	}
+
+	void preprocessPShaderCode(std::string& shader)
+	{
+		if (GraphicsDevice::Default.config.earlyFragmentTestsShaderCode)
+		{
+			shader = std::string("layout(early_fragment_tests) in;\n") + shader;
+		}
 	}
 
 	void Effect::create(const char *vertexShaderCode, int vertexShaderSize, const char *pixelShaderCode, int pixelShaderSize)
@@ -143,7 +153,10 @@ namespace graphics
 		std::string vertexCode(vertexShaderCode, vertexShaderSize);
 		preprocessShaderCode(vertexCode);
 
-		_pixelShader = createShader(GL_FRAGMENT_SHADER, pixelShaderCode, pixelShaderSize);
+		std::string pixelCode(pixelShaderCode, pixelShaderSize);
+		preprocessPShaderCode(pixelCode);
+
+		_pixelShader = createShader(GL_FRAGMENT_SHADER, pixelCode.c_str(), pixelCode.size());
 		_vertexShader = createShader(GL_VERTEX_SHADER, vertexCode.c_str(), vertexCode.size());
 
 		_shaderProgram = glCreateProgram();

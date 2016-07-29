@@ -120,7 +120,10 @@ namespace llge
 	{
 		PhysicsNone = 0x0,
 		PhysicsTop = 0x1,
-		PhysicsAll = 0x2,
+		PhysicsBottom = 0x2,
+		PhysicsLeft = 0x4,
+		PhysicsRight = 0x8,
+		PhysicsAll = 0xff,
 	};
 
 	/// physics structs
@@ -144,7 +147,11 @@ namespace llge
 	{
 		bool generateMipmaps;
 		bool earlyDepthPath;
+		bool enableFog;
+		bool earlyFragmentTestsShaderCode;
 		uint texturesFilter;
+		int mipmapsLevel;
+		int bloomDownsample;
 	};
 	
 	struct LightingConfig
@@ -318,6 +325,14 @@ namespace llge
 		virtual void API_CALL getIndices(int meshIndex, IntPtr indices) = 0;
 	};
 
+	class IP2t : IBaseObject
+	{
+	public:	
+		virtual void API_CALL buildContour(IntPtr vertices2f, uint count) = 0;
+		virtual int API_CALL getTrianglesCount() = 0;
+		virtual void API_CALL getTriangles(IntPtr triangles) = 0;
+	};
+	
 	class ITerrainClipper : IBaseObject
 	{
 	public:
@@ -336,6 +351,7 @@ namespace llge
 		virtual IQuadTree * API_CALL createQuadTree() = 0;
 		virtual IMarchingSquares * API_CALL createMarchingSquares() = 0;
 		virtual ITerrainClipper * API_CALL createTerrainClipper() = 0;
+		virtual IP2t * API_CALL createP2t() = 0;
 		virtual void API_CALL dispose() = 0;
 	};
 

@@ -11,13 +11,17 @@ namespace graphics
 	class PostProcessTargetManager
 	{
 	public:
+		PostProcessTargetManager();
 		TextureRenderTarget2d *pop();
 		void push(TextureRenderTarget2d *);
 		void setViewport(int width, int height);
+		bool isAvaliable();
 	private:
 		void addProcessRenderTarget();
 		std::vector<TextureRenderTarget2d *> _stack;
 		std::vector<TextureRenderTarget2d *> _all;
+		int _width;
+		int _height;
 	};
 	
 	class GraphicsConfig
@@ -26,6 +30,10 @@ namespace graphics
 		FilterMode::e filterMode;
 		bool generateMipmaps;
 		bool earlyDepthPath;
+		bool enableFog;
+		bool earlyFragmentTestsShaderCode;
+		int bloomDownsample;
+		int mipmapsLevel;
 		int getMagFilter();
 		int getMinFilter();
 		GraphicsConfig();
@@ -60,7 +68,9 @@ namespace graphics
 		void readPixels(void * pixels);
         static void create();
 		PostProcessTargetManager PostProcessTargets;
-		PostProcessTargetManager PostProcessScaledTargets;
+		PostProcessTargetManager PostProcessScaledTargets1;
+		PostProcessTargetManager PostProcessScaledTargets2;
+		PostProcessTargetManager PostProcessScaledTargets3;
 
 		void resetDrawCallsCounter();
 		int getDrawCallsCounterValue();

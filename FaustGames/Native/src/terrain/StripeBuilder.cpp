@@ -825,19 +825,35 @@ namespace terrain
 				edge.p[2] = p->next->p;
 				edge.p[3] = p->next->next->p;
 				core::Vector2 d = edge.p[2] - edge.p[1];
-				switch (config.PhysicsMode)
+				switch (d.direction())
 				{
-				case llge::PhysicsTop: 
-					if (d.direction() == core::Direction2::Right)
+				case core::Direction2::Left: 
+					if ((config.PhysicsMode & llge::PhysicsBottom) != 0)
 					{
 						_edges.push_back(edge);
 					}
 					break;
-				case llge::PhysicsAll: 
-					_edges.push_back(edge);
+				case core::Direction2::Right: 
+					if ((config.PhysicsMode & llge::PhysicsTop) != 0)
+					{
+						_edges.push_back(edge);
+					}
 					break;
-				default: break;
-				}
+				case core::Direction2::Top: 
+					if ((config.PhysicsMode & llge::PhysicsLeft) != 0)
+					{
+						_edges.push_back(edge);
+					}
+					break;
+				case core::Direction2::Bottom: 
+					if ((config.PhysicsMode & llge::PhysicsRight) != 0)
+					{
+						_edges.push_back(edge);
+					}
+					break;
+				default: 
+					break;
+				}				
 
 				p = p->next;
 			}

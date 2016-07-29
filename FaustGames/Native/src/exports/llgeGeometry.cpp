@@ -80,6 +80,12 @@ namespace llge
 			return new TerrainClipper();
 		}
 
+		virtual IP2t * API_CALL createP2t()
+		{
+			return new P2t();
+		}
+
+
 		virtual void API_CALL dispose()
 		{
 			delete this;

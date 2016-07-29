@@ -8,6 +8,9 @@
 #include "../../shaders/post_process_vblur_vert.h"
 #include "../../shaders/post_process_hblur_vert.h"
 #include "../../shaders/post_process_blur_frag.h"
+#include "../../shaders/post_process_empty_frag.h"
+#include "../../shaders/post_process_empty_color_frag.h"
+#include "../../shaders/post_process_color_vert.h"
 
 
 namespace graphics
@@ -36,7 +39,6 @@ namespace graphics
 	EffectPostProcessBloomFilter::EffectPostProcessBloomFilter()
 	{
 		_effect.addUniform(Uniforms::texture(), UniformValues::texture());
-		_effect.addUniform(Uniforms::lightmap(), UniformValues::lightmap());
 		_effect.addAttribute(Attributes::position());
 		_effect.addAttribute(Attributes::textureCoords());
 		_effect.addConstant("threshold", graphics::UniformType::Float);
@@ -54,6 +56,47 @@ namespace graphics
 			shader_post_process_vert_size, 
 			(char *)shader_post_process_bloom_filter_frag, 
 			shader_post_process_bloom_filter_frag_size);
+	}
+
+	EffectPostProcessEmpty::EffectPostProcessEmpty()
+	{
+		_effect.addUniform(Uniforms::texture(), UniformValues::texture());
+		_effect.addAttribute(Attributes::position());
+		_effect.addAttribute(Attributes::textureCoords());
+	}
+
+	EffectPostProcessEmpty::~EffectPostProcessEmpty()
+	{
+	}
+
+	void EffectPostProcessEmpty::create()
+	{
+		_effect.create(
+			(char *)shader_post_process_vert,
+			shader_post_process_vert_size,
+			(char *)shader_post_process_empty_frag,
+			shader_post_process_empty_frag_size);
+	}
+
+	EffectPostProcessEmptyColor::EffectPostProcessEmptyColor()
+	{
+		_effect.addUniform(Uniforms::texture(), UniformValues::texture());
+		_effect.addAttribute(Attributes::position());
+		_effect.addAttribute(Attributes::textureCoords());
+		_effect.addAttribute(Attributes::color());
+	}
+
+	EffectPostProcessEmptyColor::~EffectPostProcessEmptyColor()
+	{
+	}
+
+	void EffectPostProcessEmptyColor::create()
+	{
+		_effect.create(
+			(char *)shader_post_process_color_vert,
+			shader_post_process_color_vert_size,
+			(char *)shader_post_process_empty_color_frag,
+			shader_post_process_empty_color_frag_size);
 	}
 
 	EffectPostProcessVBlurFilter::EffectPostProcessVBlurFilter()

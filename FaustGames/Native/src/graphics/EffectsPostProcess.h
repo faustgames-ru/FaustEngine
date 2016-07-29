@@ -30,6 +30,27 @@ namespace graphics
 	private:
 	};	
 
+	class EffectPostProcessEmpty : public EffectBase
+	{
+	public:
+		EffectPostProcessEmpty();
+		~EffectPostProcessEmpty();
+		void create();
+	protected:
+	private:
+	};
+
+
+	class EffectPostProcessEmptyColor : public EffectBase
+	{
+	public:
+		EffectPostProcessEmptyColor();
+		~EffectPostProcessEmptyColor();
+		void create();
+	protected:
+	private:
+	};
+
 	class EffectPostProcessVBlurFilter : public EffectBase
 	{
 	public:

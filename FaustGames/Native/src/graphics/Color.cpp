@@ -108,11 +108,12 @@ namespace graphics
 
 	unsigned int Color::lerp(unsigned int from, unsigned int to, float u)
 	{
-		float a = getA(from);
+		float a0 = getA(from);
 		float r0 = getR(from);
 		float g0 = getG(from);
 		float b0 = getB(from);
 
+		float a1 = getA(to);
 		float r1 = getR(to);
 		float g1 = getG(to);
 		float b1 = getB(to);
@@ -120,6 +121,11 @@ namespace graphics
 		float r = core::Math::lerp(r0, r1, u);
 		float g = core::Math::lerp(g0, g1, u);
 		float b = core::Math::lerp(b0, b1, u);
-		return fromRgba(r, g, b, a);
+		float a = core::Math::lerp(a0, a1, u);
+		return fromRgba(
+			static_cast<byte>(r), 
+			static_cast<byte>(g), 
+			static_cast<byte>(b), 
+			static_cast<byte>(a));
 	}
 }

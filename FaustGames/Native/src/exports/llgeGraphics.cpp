@@ -295,6 +295,10 @@ namespace llge
 			GraphicsConfig* config = static_cast<GraphicsConfig*>(graphicsConfig);
 			GraphicsDevice::Default.config.earlyDepthPath = config->earlyDepthPath;
 			GraphicsDevice::Default.config.generateMipmaps = config->generateMipmaps;
+			GraphicsDevice::Default.config.enableFog = config->enableFog;
+			GraphicsDevice::Default.config.earlyFragmentTestsShaderCode = config->earlyFragmentTestsShaderCode;
+			GraphicsDevice::Default.config.mipmapsLevel = config->mipmapsLevel;
+			GraphicsDevice::Default.config.bloomDownsample = config->bloomDownsample;
 
 			TextureFilterMode filterMode = static_cast<TextureFilterMode>(config->texturesFilter);
 			switch (filterMode)

@@ -33,6 +33,8 @@ namespace graphics
 		static EffectRenderDepth * renderDepth();
 		static EffectPostProcessToneMapping * postProcessToneMapping();
 		static EffectPostProcessBloomFilter * postProcessBloomFilter();
+		static EffectPostProcessEmpty * postProcessEmpty();
+		static EffectPostProcessEmptyColor * postProcessEmptyColor();
 		static EffectPostProcessVBlurFilter * postProcessVBlurFilter();
 		static EffectPostProcessHBlurFilter * postProcessHBlurFilter();
 		static EffectPostProcessBloomAddFilter * postProcessBloomAddFilter();
@@ -49,6 +51,8 @@ namespace graphics
 		static EffectRenderDepth _renderDepth;
 		static EffectPostProcessToneMapping _postProcessToneMapping;
 		static EffectPostProcessBloomFilter _postProcessBloomFilter;
+		static EffectPostProcessEmpty _postProcessEmpty;
+		static EffectPostProcessEmptyColor _postProcessEmptyColor;
 		static EffectPostProcessVBlurFilter _postProcessVBlurFilter;
 		static EffectPostProcessHBlurFilter _postProcessHBlurFilter;
 		static EffectPostProcessBloomAddFilter _postProcessBloomAddFilter;

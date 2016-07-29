@@ -17,6 +17,9 @@ namespace graphics
 	EffectRenderDepth Effects::_renderDepth;
 	EffectPostProcessToneMapping Effects::_postProcessToneMapping;
 	EffectPostProcessBloomFilter Effects::_postProcessBloomFilter;
+	EffectPostProcessEmpty Effects::_postProcessEmpty;
+	EffectPostProcessEmptyColor Effects::_postProcessEmptyColor;
+
 	EffectPostProcessVBlurFilter Effects::_postProcessVBlurFilter;
 	EffectPostProcessHBlurFilter Effects::_postProcessHBlurFilter;
 	EffectPostProcessBloomAddFilter Effects::_postProcessBloomAddFilter;
@@ -36,6 +39,8 @@ namespace graphics
 		_renderDepth.create();
 		_postProcessToneMapping.create();
 		_postProcessBloomFilter.create();
+		_postProcessEmpty.create();
+		_postProcessEmptyColor.create();
 		_postProcessVBlurFilter.create();
 		_postProcessHBlurFilter.create();
 		_postProcessBloomAddFilter.create();
@@ -112,6 +117,16 @@ namespace graphics
 	EffectPostProcessBloomFilter * Effects::postProcessBloomFilter()
 	{
 		return &_postProcessBloomFilter;
+	}
+
+	EffectPostProcessEmpty* Effects::postProcessEmpty()
+	{
+		return &_postProcessEmpty;
+	}
+
+	EffectPostProcessEmptyColor* Effects::postProcessEmptyColor()
+	{
+		return &_postProcessEmptyColor;
 	}
 
 	EffectPostProcessVBlurFilter * Effects::postProcessVBlurFilter()

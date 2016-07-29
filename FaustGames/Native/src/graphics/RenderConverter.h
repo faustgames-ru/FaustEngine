@@ -4,6 +4,7 @@
 #include "graphics_classes.h"
 #include "Effects.h"
 #include "VertexFormats.h"
+#include "GraphicsDevice.h"
 
 namespace graphics
 {
@@ -20,7 +21,7 @@ namespace graphics
 		RenderConverter()
 		{
 			lastCreatedInstance = this;
-			_effects[llge::EffectTextureColor] = Effects::textureColorFog();
+			_effects[llge::EffectTextureColor] = Effects::textureColor();
 			_effects[llge::EffectTextureColorHighlight] = Effects::textureColorHighlight();
 			_effects[llge::EffectTextureAlphamaskColor] = Effects::textureAlphamaskColor();			
 			_effects[llge::EffectTextureLightmapColor] = Effects::textureLightmapColor();
@@ -38,19 +39,20 @@ namespace graphics
 		}
 		inline EffectBase * getEffect(llge::GraphicsEffects effect)
 		{
+			if (GraphicsDevice::Default.config.enableFog)
 			if (effect == llge::GraphicsEffects::EffectTextureColor)
 			{
-				effect = llge::GraphicsEffects::EffectTextureColor;
+				return Effects::textureColorFog();
 			}
-			return _effects[(int)effect];
+			return _effects[static_cast<int>(effect)];
 		}
 		inline VertexFormat * getFormat(llge::GraphicsVertexFormats format)
 		{
-			return _formats[(int)format];
+			return _formats[static_cast<int>(format)];
 		}
 		inline BlendState::e getBlend(llge::BlendMode blend)
 		{
-			return (BlendState::e)blend;
+			return static_cast<BlendState::e>(blend);
 		}
 	private:
 		EffectBase * _effects[32];

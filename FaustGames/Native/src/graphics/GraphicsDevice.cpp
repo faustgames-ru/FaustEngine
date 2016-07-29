@@ -46,16 +46,20 @@ namespace graphics
 		case FilterMode::NearestMipmapLinear:
 			return GL_NEAREST_MIPMAP_NEAREST;
 		case FilterMode::LinearMipmapLinear:
-			return GL_NEAREST_MIPMAP_LINEAR;
+			return GL_LINEAR_MIPMAP_LINEAR;
 		default:
 			return GL_LINEAR;
 		}
 	}
 
-	GraphicsConfig::GraphicsConfig(): 
+	GraphicsConfig::GraphicsConfig() :
 		filterMode(FilterMode::Linear),
 		generateMipmaps(false),
-		earlyDepthPath(false)
+		earlyDepthPath(false),
+		earlyFragmentTestsShaderCode(false),
+		enableFog(false),
+		bloomDownsample(2),
+		mipmapsLevel(0)
 	{
 
 	}
@@ -96,7 +100,13 @@ namespace graphics
             Errors::check(Errors::Viewport);
         }
 		PostProcessTargets.setViewport(width, height);
-		PostProcessScaledTargets.setViewport(width / 8, height / 8);
+		if (config.bloomDownsample <= 0)
+			config.bloomDownsample = 2;
+		//PostProcessScaledTargets.setViewport(width / config.bloomDownsample, height / config.bloomDownsample);
+		PostProcessScaledTargets1.setViewport(width / 2, height / 2);
+		PostProcessScaledTargets2.setViewport(width / 4, height / 4);
+		PostProcessScaledTargets3.setViewport(width / 8, height / 8);
+
 		/*
 		float rtWidth = width / 2;
 		float rtHeight = height / 2;
@@ -174,7 +184,6 @@ namespace graphics
 
 	void GraphicsDevice::clear()
 	{
-		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 		glDepthMask(GL_TRUE);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		Errors::check(Errors::Clear);
@@ -182,6 +191,7 @@ namespace graphics
 
 	void GraphicsDevice::clearDepth()
 	{
+		glDepthMask(GL_TRUE);
 		glClear(GL_DEPTH_BUFFER_BIT);
 		Errors::check(Errors::Clear);
 	}
@@ -299,6 +309,9 @@ namespace graphics
 	
 	void GraphicsDevice::create()
 	{        
+		glDepthMask(GL_TRUE);
+		glEnable(GL_DEPTH_TEST);
+
 		TextureImage2d::createStatic();
 	}
 	
@@ -315,11 +328,17 @@ namespace graphics
 	void PostProcessTargetManager::addProcessRenderTarget()
 	{
 		TextureRenderTarget2d * rt = new TextureRenderTarget2d();
-		rt->create(128, 128);
+		rt->create(_width, _height);
 		_stack.push_back(rt);
 		_all.push_back(rt);
 	}
 
+
+	PostProcessTargetManager::PostProcessTargetManager()
+	{
+		_width = 0;
+		_height = 0;
+	}
 
 	TextureRenderTarget2d *PostProcessTargetManager::pop()
 	{
@@ -339,6 +358,8 @@ namespace graphics
 	
 	void PostProcessTargetManager::setViewport(int width, int height)
 	{
+		_width = width;
+		_height = height;
 		for (uint i = 0; i < _all.size(); i++)
 		{
 			TextureRenderTarget2d *rt = _all[i];
@@ -350,4 +371,8 @@ namespace graphics
 		}
 	}
 
+	bool PostProcessTargetManager::isAvaliable()
+	{
+		return _width > 0 && _height > 0;
+	}
 }

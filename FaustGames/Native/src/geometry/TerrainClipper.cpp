@@ -465,4 +465,78 @@ namespace geometry
 			divide(aabb1, intersection);
 		}
 	}
+
+	void P2t::buildContour(IntPtr vertices2f, uint vertivesCount)
+	{
+		core::Vector2* vertices = static_cast<core::Vector2*>(vertices2f);
+		_allPoints.clear();
+		_triangles.clear();
+		for (uint i = 0; i < vertivesCount; i++)
+		{
+			_allPoints.push_back(p2t::Point(vertices[i].getX(), vertices[i].getY()));
+		}
+
+		std::vector<p2t::Point *> contour;
+		for (uint i = 0; i < vertivesCount; i++)
+		{
+			bool hasEquals = false;
+			for (uint j = 0; j < contour.size(); j++)
+			{
+				if (core::Vector2::equals(core::Vector2(_allPoints[i].x, _allPoints[i].y), core::Vector2(contour[j]->x, contour[j]->y)))
+				{
+					hasEquals = true;
+					break;
+				}
+			}
+			if (hasEquals)
+				continue;
+			contour.push_back(_allPoints.data() + i);
+		}
+		p2t::CDT cdt(contour);
+
+		cdt.Triangulate();
+		//todo: create triangles;
+		std::vector<p2t::Triangle *> triangles = cdt.GetTriangles();
+		p2t::Point *baseArd = _allPoints.data();
+		int count = 0;
+
+		for (uint i = 0; i < triangles.size(); i++)
+		{
+			p2t::Triangle *st = triangles[i];
+			bool removeTria = false;
+			uint t[3];
+			for (uint k = 0; k < 3; k++)
+			{
+				p2t::Point *p = st->GetPoint(k);
+				int n = p - baseArd;
+				if (n < _allPoints.size() && n >= 0)
+				{
+					t[k] = n;
+				}
+				else
+				{
+					removeTria = true;
+				}
+			}
+			if (!removeTria)
+			{
+				_triangles.push_back(t[0]);
+				_triangles.push_back(t[1]);
+				_triangles.push_back(t[2]);
+				count += 3;
+			}
+		}
+	}
+
+	int P2t::getTrianglesCount()
+	{
+		return _triangles.size();
+	}
+
+	void P2t::getTriangles(IntPtr triangles)
+	{
+		int* result = static_cast<int*>(triangles);
+		for (uint i = 0; i < _triangles.size(); i++)
+			result[i] = _triangles[i];
+	}
 }

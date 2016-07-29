@@ -486,6 +486,21 @@ namespace llge
 		classInstance->getIndices(meshIndex, indices);
 	}
 	
+	extern "C" DLLEXPORT void API_CALL llge_P2t_buildContour (IP2t * classInstance, IntPtr vertices2f, uint count)
+	{
+		classInstance->buildContour(vertices2f, count);
+	}
+	
+	extern "C" DLLEXPORT int API_CALL llge_P2t_getTrianglesCount (IP2t * classInstance)
+	{
+		return classInstance->getTrianglesCount();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_P2t_getTriangles (IP2t * classInstance, IntPtr triangles)
+	{
+		classInstance->getTriangles(triangles);
+	}
+	
 	extern "C" DLLEXPORT void API_CALL llge_TerrainClipper_clearClipper (ITerrainClipper * classInstance)
 	{
 		classInstance->clearClipper();
@@ -529,6 +544,11 @@ namespace llge
 	extern "C" DLLEXPORT ITerrainClipper * API_CALL llge_GeometryFactory_createTerrainClipper (IGeometryFactory * classInstance)
 	{
 		return classInstance->createTerrainClipper();
+	}
+	
+	extern "C" DLLEXPORT IP2t * API_CALL llge_GeometryFactory_createP2t (IGeometryFactory * classInstance)
+	{
+		return classInstance->createP2t();
 	}
 	
 	extern "C" DLLEXPORT void API_CALL llge_GeometryFactory_dispose (IGeometryFactory * classInstance)

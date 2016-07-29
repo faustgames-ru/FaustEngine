@@ -163,6 +163,9 @@
     <ClInclude Include="..\shaders\post_process_bloom_add_filter_frag.h" />
     <ClInclude Include="..\shaders\post_process_bloom_filter_frag.h" />
     <ClInclude Include="..\shaders\post_process_blur_frag.h" />
+    <ClInclude Include="..\shaders\post_process_color_vert.h" />
+    <ClInclude Include="..\shaders\post_process_empty_color_frag.h" />
+    <ClInclude Include="..\shaders\post_process_empty_frag.h" />
     <ClInclude Include="..\shaders\post_process_hblur_vert.h" />
     <ClInclude Include="..\shaders\post_process_tonemapping.h" />
     <ClInclude Include="..\shaders\post_process_vblur_vert.h" />

@@ -5,6 +5,7 @@
 
 #include "../src_clipper/clipper.hpp"
 #include "Aabb2d.h"
+#include "../../src_poly2tri/common/shapes.h"
 
 namespace geometry
 {
@@ -95,6 +96,19 @@ namespace geometry
 		MeshesResult _differenceResult;
 		bool _createDifference;
 	};
+
+	class P2t : public llge::IP2t
+	{
+	public:
+		virtual void API_CALL buildContour(IntPtr vertices2f, uint count) OVERRIDE;
+		virtual int API_CALL getTrianglesCount() OVERRIDE;
+		virtual void API_CALL getTriangles(IntPtr triangles) OVERRIDE;
+	private:
+		std::vector<int> _triangles;
+		std::vector<p2t::Point> _allPoints;
+
+	};
+
 }
 
 #endif /*TERRAIN_CLIPPER_H*/

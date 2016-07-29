@@ -369,26 +369,37 @@ namespace drawing
 		int primitivesCount;
 
 		RenderBuffer * _backBuffer = _buffer;
-		
-		if (usePostProcess)
+		if (usePostProcess && _bloom.isAvaliable())
 		{
 			_bloom.beginRender(_tonemapId);
 		}
-		
-		_graphicsDevice->clear();
+		else
+		{			
+			_graphicsDevice->clear();
+		}
 
 		if (_buffer->Transforms.size() > 0)
 		{
-			_graphicsDevice->renderState.setDepth(graphics::DepthState::ReadWrite);
-			_zButcher->configure(graphics::BlendState::Alpha, graphics::Effects::textureColorFog(), _buffer->Transforms[0]);
+			_zButcher->configure(graphics::BlendState::Alpha, _converter.getEffect(llge::EffectTextureColor), _buffer->Transforms[0]);
 			_zButcher->applyRender();
 		}
-		_graphicsDevice->renderState.setDepth(graphics::DepthState::Read);
-
+		bool _postEffectFinished = false;
 		for (TBatchEntries::iterator i = _backBuffer->Entries.begin(); i != _backBuffer->Entries.end(); ++i)
 		{
+				
+			if (i->TransformIndex > 0)
+			{
+				_graphicsDevice->clearDepth();
+				if (usePostProcess && !_postEffectFinished && _bloom.isAvaliable())
+				{
+					_bloom.finishRender();
+					_postEffectFinished = true;
+				}
+			}
+			
 			BatchBuffer * currentBuffer = _backBuffer->Buffers[i->BatchBufferIndex];
 			i->Effect->configApply(i->Config);
+
 			graphics::UniformValues::projection()->setValue(_backBuffer->Transforms[i->TransformIndex]);
 			//graphics::UniformValues::fogStart()->setValue(50.0f);
 			//graphics::UniformValues::fogDensity()->setValue(0.00005f);
@@ -400,15 +411,18 @@ namespace drawing
 			
 			_primitivesCount += primitivesCount;
 			_verticesCount += verticesCount;
+			_graphicsDevice->renderState.setBlend(graphics::BlendState::Alpha);
+			_graphicsDevice->renderState.setDepth(graphics::DepthState::Read);
 			_graphicsDevice->drawPrimitives(_format, currentBuffer->getVertices(), i->IndicesStart, primitivesCount);
 		}
 		_verticesCount = _verticesCounter;
 		_verticesCounter = 0;
-		if (usePostProcess)
+		
+		if (usePostProcess && !_postEffectFinished && _bloom.isAvaliable())
 		{
 			_bloom.finishRender();
 		}
-		
+
 		if (_backBuffer->Transforms.size() > 0)
 		{
 			_debugRender.apply(_graphicsDevice, _backBuffer->Transforms[0]);
@@ -660,7 +674,6 @@ namespace drawing
 		_indicesCounter = 0;
 	}
 
-	 
 	struct 
 	{
 		bool operator()(ZBlock* a, ZBlock* b)
@@ -677,8 +690,9 @@ namespace drawing
 			_blocksList.push_back(it->second);
 		}
 		std::sort(_blocksList.begin(), _blocksList.end(), ZBlockComparer);
-		
+		if (_blocksList.size() == 0) return;
 		graphics::GraphicsDevice* graphicsDevice = &graphics::GraphicsDevice::Default;
+		graphicsDevice->renderState.setDepth(graphics::DepthState::ReadWrite);
 		graphicsDevice->renderState.setBlend(graphics::BlendState::Alpha);
 		graphicsDevice->renderState.setEffect(_effect);
 		graphics::UniformValues::projection()->setValue(_transform);

@@ -97,7 +97,10 @@ namespace llge
 	{
 		PhysicsNone = 0x0,
 		PhysicsTop = 0x1,
-		PhysicsAll = 0x2,
+		PhysicsBottom = 0x2,
+		PhysicsLeft = 0x4,
+		PhysicsRight = 0x8,
+		PhysicsAll = 0xff,
 	}
 	
 	[StructLayout(LayoutKind.Sequential)]
@@ -122,7 +125,11 @@ namespace llge
 	{
 		public bool generateMipmaps;
 		public bool earlyDepthPath;
+		public bool enableFog;
+		public bool earlyFragmentTestsShaderCode;
 		public uint texturesFilter;
+		public int mipmapsLevel;
+		public int bloomDownsample;
 	}
 	
 	[StructLayout(LayoutKind.Sequential)]
@@ -866,6 +873,32 @@ namespace llge
 		static extern private void llge_MeshesResult_getIndices (IntPtr classInstance, int meshIndex, IntPtr indices);
 	}
 	
+	public class P2t
+	{
+		public IntPtr ClassInstance;
+		public void BuildContour (IntPtr vertices2f, uint count)
+		{
+			llge_P2t_buildContour(ClassInstance, vertices2f, count);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_P2t_buildContour (IntPtr classInstance, IntPtr vertices2f, uint count);
+		public int GetTrianglesCount ()
+		{
+			return llge_P2t_getTrianglesCount(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private int llge_P2t_getTrianglesCount (IntPtr classInstance);
+		public void GetTriangles (IntPtr triangles)
+		{
+			llge_P2t_getTriangles(ClassInstance, triangles);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_P2t_getTriangles (IntPtr classInstance, IntPtr triangles);
+	}
+	
 	public class TerrainClipper
 	{
 		public IntPtr ClassInstance;
@@ -937,6 +970,13 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private IntPtr llge_GeometryFactory_createTerrainClipper (IntPtr classInstance);
+		public P2t CreateP2t ()
+		{
+			return new P2t{ ClassInstance = llge_GeometryFactory_createP2t(ClassInstance) };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_GeometryFactory_createP2t (IntPtr classInstance);
 		public void Dispose ()
 		{
 			llge_GeometryFactory_dispose(ClassInstance);

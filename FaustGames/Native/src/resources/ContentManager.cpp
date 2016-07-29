@@ -71,7 +71,19 @@ namespace resources
 		if (!ContentProvider::existContent(name))
 			return 0;
 		//todo: load data from content provider
-		ContentProvider::openContent(name);
+
+		switch (graphics::GraphicsDevice::Default.config.mipmapsLevel)
+		{
+		case 1:
+			ContentProvider::openContent((std::string(name) + "_1").c_str());
+			break;
+		case 2:
+			ContentProvider::openContent((std::string(name) + "_2").c_str());
+			break;
+		default:
+			ContentProvider::openContent(name);
+		}
+
 
 		int m_Width;
 		int m_Height;

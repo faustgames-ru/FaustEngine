@@ -5,6 +5,7 @@
 #include "../../content/ContentFrameAnimation.h"
 #include "../../game/Component.h"
 #include "../../game/components/FrameAnimation.h"
+#include "../../game/components/Mesh.h"
 
 namespace razor
 {
@@ -15,7 +16,7 @@ namespace razor
 		virtual void loaded() OVERRIDE;
 		virtual void update(const game::UpdateArgs& e) OVERRIDE;
 	private:
-		game::FrameAnimation* _animation;
+		game::Mesh* _mesh;
 		float _acceleration;
 		float _maxVelocity;
 		float _velocity;

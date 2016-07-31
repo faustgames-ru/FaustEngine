@@ -79,6 +79,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Content Include="RazorContent\dark_fighter_6\dark_fighter_6_color.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="RazorContent\spaceship\blueship.frame_animation">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -86,6 +89,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="RazorContent\razor.game">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="RazorContent\dark_fighter_6\dark_fighter_6.mesh">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -98,7 +104,7 @@
       <Name>GraphicsBinding</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Framework\InputHook\InputHook.csproj">
-      <Project>{8C0735AE-271E-4189-AC13-9BD00745FCDC}</Project>
+      <Project>{8c0735ae-271e-4189-ac13-9bd00745fcdc}</Project>
       <Name>InputHook</Name>
     </ProjectReference>
   </ItemGroup>

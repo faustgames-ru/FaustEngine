@@ -147,7 +147,7 @@ namespace game
 		content::ContentObject* cameraValue = (*value)["camera"]->asObject();
 		content::ContentArray* target = (*cameraValue)["target"]->asArray();
 		_camera.target = core::Vector3((*target)[0]->asFloat(), (*target)[1]->asFloat(), (*target)[2]->asFloat());
-		_camera.fov = (*cameraValue)["fov"]->asFloat();;
+		_camera.fov = (*cameraValue)["fov"]->asFloat() * core::Math::Pi / 180.0f;
 		_camera.scale = (*cameraValue)["scale"]->asFloat();;
 		_camera.depth = (*cameraValue)["depth"]->asFloat();;
 	}

@@ -10,7 +10,7 @@
   "entities": [
     {
       "position": [ 0.0, 0.0, -0.1 ],
-      "frame_animation": "spaceship/blueship.frame_animation",
+      "mesh": "dark_fighter_6/dark_fighter_6.mesh",
       "spaceship": { }
     },
     {

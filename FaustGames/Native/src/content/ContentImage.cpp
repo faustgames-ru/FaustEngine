@@ -53,7 +53,7 @@ namespace content
 	{
 		int detail = 1;
 		bool mipmaps = false;
-		resources::ContentManager content = resources::ContentManager::Default;
+		resources::ContentManager* content = &resources::ContentManager::Default;
 		if (!resources::ContentProvider::existContent(e.fullPath.c_str()))
 		{
 			// todo: handle error
@@ -61,7 +61,7 @@ namespace content
 		}
 		else
 		{
-			graphics::Image2dData* imageData = content.loadUnregisteredTexture(e.fullPath.c_str());
+			graphics::Image2dData* imageData = content->loadUnregisteredTexture(e.fullPath.c_str());
 			if (imageData != nullptr)
 			{
 				// todo: configure loading;

@@ -2,7 +2,7 @@
 
 namespace graphics
 {
-	Camera2d::Camera2d(): fov(core::Math::Pi * 40.0f / 180.0f), scale(1.0f), aspect(16.0f / 9.0f), depth(1000.0f), target(core::Vector3::empty)
+	Camera2d::Camera2d(): viewport(nullptr), fov(core::Math::Pi * 40.0f / 180.0f), scale(1.0f), aspect(16.0f / 9.0f), depth(1000.0f), target(core::Vector3::empty)
 	{
 	}
 
@@ -47,7 +47,7 @@ namespace graphics
 		float minFov = core::Math::atan2(1.0f, depth*0.5f) * 2.0f;
 		core::Matrix translate = core::Matrix::createTranslate(-target.getX(), -target.getY(), target.getZ());
 		core::Matrix rotation = core::Matrix::identity;
-		//core::Matrix rotation = core::Matrix::createRotation(core::Vector3::eX, -core::Math::Pi / 16);
+		//core::Matrix rotation = core::Matrix::createRotation(core::Vector3::eX, -core::Math::Pi / 4);
 		if (fov < minFov)
 		{
 			core::Matrix ortho = core::Matrix::createOrtho(aspect, scale, depth*0.5f);

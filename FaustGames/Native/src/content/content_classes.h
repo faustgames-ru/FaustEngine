@@ -33,6 +33,13 @@ namespace content
 		ushort v;
 	};
 
+	struct MeshVertex
+	{
+		core::Vector3 xyz;
+		ushort u;
+		ushort v;
+	};
+
 
 	class ContentConstants
 	{
@@ -48,6 +55,7 @@ namespace content
 		{
 			None,
 			Json,
+			Mesh,
 			Image,
 			FrameAnimation,
 			BitmapFont

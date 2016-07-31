@@ -7,7 +7,7 @@
 
 namespace razor
 {
-	Spaceship::Spaceship(): _animation(nullptr)
+	Spaceship::Spaceship(): _mesh(nullptr)
 	{
 		updateOrder = game::UpdateOrder::Behaviors;
 
@@ -22,9 +22,7 @@ namespace razor
 	void Spaceship::loaded()
 	{
 		halfSize = core::Vector3::infinity;
-		_animation = owner->find<game::FrameAnimation>();
-		_animation->rotation = game::Rotation(1.0f, core::Math::Pi);
-		_animation->setPercent(0.5f);
+		_mesh = owner->find<game::Mesh>();
 	}
 
 	void Spaceship::update(const game::UpdateArgs& e)
@@ -33,6 +31,7 @@ namespace razor
 		core::Vector2 dir = (InputBroker::Default.target - owner->position.toVector2()).normalize();
 		if (!dir.isEmpty())
 		{
+			/*
 			float cross = core::Vector2::crossProduct(dir, _dir);
 			if (cross > 0)
 			{
@@ -42,16 +41,18 @@ namespace razor
 			{
 				_dir = _dir.rotate(_agularVelocity*core::Environment::elapsedSeconds);
 			}
-
+			*/
+			_dir = dir;
 			//_dir = core::Vector2::lerp(_dir, dir, core::Math::clamp(_agularVelocity*core::Environment::elapsedSeconds, 0.0f, 1.0f));
+			
+			dir = _dir.normalize();
 
-			dir = _dir.rotate90ccw().normalize();			
 			if (!_dir.isEmpty())
 			{
-				_animation->rotation.c = dir.getX();
-				_animation->rotation.s = dir.getY();
+				_mesh->transform = core::Matrix3::createRotation(core::Vector3::eZ, 0.125f, dir.getY(), dir.getX());
 				owner->position += _dir*_velocity;
 			}
+			
 		}
 
 		e.scene->camera()->target = core::Vector3::lerp(e.scene->camera()->target, owner->position, core::Environment::elapsedSeconds * 4.0f);

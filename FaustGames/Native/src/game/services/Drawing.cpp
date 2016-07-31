@@ -1,6 +1,7 @@
 #include "Drawing.h"
 #include "../../graphics/pipelines/RenderService.h"
 #include "../../content/ContentImage.h"
+#include "../../content/ContentMesh.h"
 
 namespace game
 {
@@ -48,6 +49,10 @@ namespace game
 			position.getZ());
 	}
 
+	MeshTransform::MeshTransform(): position(core::Vector3::empty), rotation(core::Matrix3::identity)
+	{
+	}
+
 	Pen::Pen() : color(0xffffffff), width(0.02f)
 	{
 	}
@@ -62,6 +67,28 @@ namespace game
 		_quadIndices[3] = 0;
 		_quadIndices[4] = 2;
 		_quadIndices[5] = 3;
+	}
+
+	void Drawing::drawMesh(const MeshTransform& transform, content::ContentMesh* mesh)
+	{
+		_spriteVertices.resize(mesh->vertices.size());
+		for (uint i = 0; i < mesh->vertices.size(); i++)
+		{
+			_spriteVertices[i].xyz = core::Matrix3::transform(transform.rotation, mesh->vertices[i].xyz) + transform.position;
+			_spriteVertices[i].color = 0xffffffff;
+			_spriteVertices[i].u = mesh->vertices[i].u;
+			_spriteVertices[i].v = mesh->vertices[i].v;
+		}
+
+		graphics::RenderPipelineInput<graphics::SpriteVertex, graphics::UniformConfigTexture> input;
+		input.verticesData = _spriteVertices.data();
+		input.verticesCount = mesh->vertices.size();
+		input.effect = graphics::EffectsBasic::textureColor();
+		input.indicesData = mesh->indices.data();
+		input.indicesCount = mesh->indices.size();
+		input.uniforms.testureId = mesh->diffuse->getHandle();
+		graphics::RenderPipeline* pipeline = graphics::RenderService::Default.pipeline;
+		pipeline->draw(input);
 	}
 
 	void Drawing::drawSprite(const SpriteTransform& transform, content::ContentImage* sprite)

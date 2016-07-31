@@ -1,5 +1,6 @@
 #include "ComponentsFactory.h"
 #include "components/FrameAnimation.h"
+#include "components/Mesh.h"
 
 namespace game
 {
@@ -8,6 +9,7 @@ namespace game
 	ComponentsFactory::ComponentsFactory()
 	{
 		addConstructor<FrameAnimation>("frame_animation");
+		addConstructor<Mesh>("mesh");
 	}
 
 	Component* ComponentsFactory::createComponent(const char* name)

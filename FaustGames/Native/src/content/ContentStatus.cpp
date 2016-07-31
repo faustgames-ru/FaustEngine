@@ -4,6 +4,7 @@
 #include "ContentBitmapFont.h"
 #include "../core/Path.h"
 #include "ContentJson.h"
+#include "ContentMesh.h"
 
 namespace content
 {
@@ -24,6 +25,11 @@ namespace content
 	IContent* ContentStatus::asContent() const
 	{
 		return _instance;
+	}
+
+	ContentMesh* ContentStatus::asMesh() const
+	{
+		return static_cast<ContentMesh*>(_castInstance);
 	}
 
 	ContentFrameAnimation* ContentStatus::asFrameAnimation() const
@@ -57,7 +63,11 @@ namespace content
 	void ContentStatus::detectType()
 	{
 		std::string ext = core::Path::getFileExt(path);
-		if (ext == "png")
+		if (ext == "mesh")
+		{
+			type = ContentType::Mesh;
+		}
+		else if (ext == "png")
 		{
 			type = ContentType::Image;
 		}
@@ -79,12 +89,18 @@ namespace content
 	{
 		ContentJson* json;
 		ContentImage* image;
+		ContentMesh* mesh;
 		ContentBitmapFont* font;
 		ContentFrameAnimation* frameAnimation;
 		switch (type)
 		{
 		case ContentType::None: break;
-		case ContentType::Image: 
+		case ContentType::Mesh:
+			mesh = ContentMesh::create();
+			_instance = mesh;
+			_castInstance = mesh;
+			break;
+		case ContentType::Image:
 			image = ContentImage::create();
 			_instance = image;
 			_castInstance = image;

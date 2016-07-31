@@ -161,6 +161,11 @@ namespace core
 		return Vector2(-getY(), getX());
 	}
 
+	Vector2 Vector2::inverse() const
+	{
+		return Vector2(-getY(), -getX());
+	}
+
 	Vector2 Vector2::rotate(float c, float s) const
 	{
 		return Vector2(

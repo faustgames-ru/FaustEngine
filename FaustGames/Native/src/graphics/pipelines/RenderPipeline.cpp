@@ -63,6 +63,7 @@ namespace graphics
 			RenderPipelineBlock& block = _blocks[i];
 			GraphicsDevice::Default.renderState.setEffect(block.effect);
 			block.uniformsConfig->apply();
+			GraphicsDevice::Default.renderState.setDepth(DepthState::ReadWrite);
 			GraphicsDevice::Default.drawPrimitives(
 				block.format,
 				block.verticesData,

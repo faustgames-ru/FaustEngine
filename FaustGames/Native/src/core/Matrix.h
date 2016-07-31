@@ -186,7 +186,8 @@ namespace core
 				Math::cos(p)*Math::cos(h), 0, 0, 0, 0, 1);
 
 		}
-			static Vector3 transform(Matrix m, Vector2 v)
+
+		static Vector3 transform(Matrix m, Vector2 v)
 		{
 			float w = 1.0f / (v.getX() * m.getXw() + v.getY() * m.getYw() + m.getWw());
 			return Vector3(
@@ -286,6 +287,40 @@ namespace core
 			Value = *((Matrix *)value);
 		}
 	};
+
+	class Matrix3
+	{
+	public:
+		Matrix3(
+			float m11, float m12, float m13,
+			float m21, float m22, float m23,
+			float m31, float m32, float m33);
+		
+		float getXx() const;
+		float getXy() const;
+		float getXz() const;
+		float getYx() const;
+		float getYy() const;
+		float getYz() const;
+		float getZx() const;
+		float getZy() const;
+		float getZz() const;
+		static Matrix3 identity;
+		static Matrix3 createRotation(const Vector3 n, float a);
+		static Matrix3 createRotation(const Vector3 n, float c, float s);
+		static Matrix3 createRotation(const Vector3 n, float scale, float c, float s);
+
+		static Vector3 transform(Matrix3 m, Vector3 v)
+		{
+			return Vector3(
+				v.getX() * m.getXx() + v.getY() * m.getYx() + v.getZ() * m.getZx(),
+				v.getX() * m.getXy() + v.getY() * m.getYy() + v.getZ() * m.getZy(),
+				v.getX() * m.getXz() + v.getY() * m.getYz() + v.getZ() * m.getZz());
+		}
+	private:
+		float _values[9];
+	};
+
 
 	class Matrix2
 	{

@@ -5,6 +5,7 @@
 
 namespace content
 {
+	class ContentMesh;
 	class ContentStatus;
 	
 	class IContentCallback: public IBaseObject
@@ -50,6 +51,7 @@ namespace content
 		void setLoadedCallback(T* delegateInstance, typename ContentCallback<T>::Callback delegateMethod);
 
 		IContent* asContent() const;
+		ContentMesh* asMesh() const;
 		ContentImage* asImage() const;
 		ContentFrameAnimation* asFrameAnimation() const;
 		ContentBitmapFont* asBitmapFont() const;

@@ -537,6 +537,15 @@
     <ClInclude Include="..\src\razor\input\controllers\MouseController.h">
       <Filter>razor\input\controllers</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\content\ContentMesh.h">
+      <Filter>engine\content</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\content\BinaryReader.h">
+      <Filter>engine\content</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\game\components\Mesh.h">
+      <Filter>engine\game\components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
@@ -1096,6 +1105,15 @@
     </ClCompile>
     <ClCompile Include="..\src\razor\input\controllers\MouseController.cpp">
       <Filter>razor\input\controllers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\content\ContentMesh.cpp">
+      <Filter>engine\content</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\content\BinaryReader.cpp">
+      <Filter>engine\content</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\game\components\Mesh.cpp">
+      <Filter>engine\game\components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

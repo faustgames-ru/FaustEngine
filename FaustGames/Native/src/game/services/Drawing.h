@@ -15,6 +15,7 @@ namespace game
 		Rotation(float scale);
 		Rotation(float scale, float rotation);
 	};
+
 	struct SpriteTransform
 	{
 		core::Vector3 position;
@@ -25,6 +26,13 @@ namespace game
 		SpriteTransform(core::Vector3 position, float scale, float rotation);
 		core::Vector3 tansform(core::Vector3 p) const;
 		core::Vector3 tansform(core::Vector2 p) const;
+	};
+
+	struct MeshTransform
+	{
+		core::Vector3 position;
+		core::Matrix3 rotation;
+		MeshTransform();
 	};
 
 	struct Pen
@@ -40,6 +48,7 @@ namespace game
 		static Drawing Default;
 		Pen pen;
 		Drawing();
+		void drawMesh(const MeshTransform& transform, content::ContentMesh* mesh);
 		void drawSprite(const SpriteTransform& transform, content::ContentImage* sprite);
 		void drawSprite(const SpriteTransform& transform, uint color, content::ContentImage* sprite);
 		void drawAabb(const geometry::Aabb& aabb);

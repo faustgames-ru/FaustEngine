@@ -163,12 +163,14 @@
     <ClInclude Include="..\shaders\solid_color_vert.h" />
     <ClInclude Include="..\shaders\texture_color_frag.h" />
     <ClInclude Include="..\shaders\texture_color_vert.h" />
+    <ClInclude Include="..\src\content\BinaryReader.h" />
     <ClInclude Include="..\src\content\content.h" />
     <ClInclude Include="..\src\content\ContentBitmapFont.h" />
     <ClInclude Include="..\src\content\ContentBlock.h" />
     <ClInclude Include="..\src\content\ContentFrameAnimation.h" />
     <ClInclude Include="..\src\content\ContentImage.h" />
     <ClInclude Include="..\src\content\ContentJson.h" />
+    <ClInclude Include="..\src\content\ContentMesh.h" />
     <ClInclude Include="..\src\content\ContentStatus.h" />
     <ClInclude Include="..\src\content\content_classes.h" />
     <ClInclude Include="..\src\content\content_platform.h" />
@@ -209,6 +211,7 @@
     <ClInclude Include="..\src\game\Component.h" />
     <ClInclude Include="..\src\game\ComponentsFactory.h" />
     <ClInclude Include="..\src\game\components\FrameAnimation.h" />
+    <ClInclude Include="..\src\game\components\Mesh.h" />
     <ClInclude Include="..\src\game\Entity.h" />
     <ClInclude Include="..\src\game\game_classes.h" />
     <ClInclude Include="..\src\game\game_platform.h" />
@@ -339,11 +342,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\CommonSources\gen\razorPInvoke.cpp" />
+    <ClCompile Include="..\src\content\BinaryReader.cpp" />
     <ClCompile Include="..\src\content\ContentBitmapFont.cpp" />
     <ClCompile Include="..\src\content\ContentBlock.cpp" />
     <ClCompile Include="..\src\content\ContentImage.cpp" />
     <ClCompile Include="..\src\content\ContentFrameAnimation.cpp" />
     <ClCompile Include="..\src\content\ContentJson.cpp" />
+    <ClCompile Include="..\src\content\ContentMesh.cpp" />
     <ClCompile Include="..\src\content\ContentStatus.cpp" />
     <ClCompile Include="..\src\content\serialization\ContentArray.cpp" />
     <ClCompile Include="..\src\content\serialization\ContentObject.cpp" />
@@ -372,6 +377,7 @@
     <ClCompile Include="..\src\game\Component.cpp" />
     <ClCompile Include="..\src\game\ComponentsFactory.cpp" />
     <ClCompile Include="..\src\game\components\FrameAnimation.cpp" />
+    <ClCompile Include="..\src\game\components\Mesh.cpp" />
     <ClCompile Include="..\src\game\Entity.cpp" />
     <ClCompile Include="..\src\game\input\Mouse.cpp" />
     <ClCompile Include="..\src\game\Scene.cpp" />

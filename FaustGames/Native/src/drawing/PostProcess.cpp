@@ -157,9 +157,11 @@ namespace drawing
 
 	void VignettingProcess::addVertex(core::Vector2 v)
 	{
-		float d0 = 0.8f;
-		float d1 = 1.2f;
-		float d2 = 1.6f;
+		
+
+		float d0 = graphics::GraphicsDevice::Default.config.vignettingR0;// 0.9f;
+		float d1 = graphics::GraphicsDevice::Default.config.vignettingR1;// 1.2f;
+		float d2 = graphics::GraphicsDevice::Default.config.vignettingR2;// 1.5f;
 
 		float l = v.length();
 		core::Vector2 v0 = v.normalize()*d0;
@@ -169,9 +171,9 @@ namespace drawing
 		float u1 = core::Math::clamp((v1.length() - d0) / (d1 - d0), 0.0f, 1.0f);
 		float u2 = core::Math::clamp((v2.length() - d1) / (d2 - d1), 0.0f, 1.0f);
 		
-		uint color0 = 0x00ffffff;
-		uint color1 = graphics::Color::lerp(color0, 0xffC0C0C0, u1);
-		uint color2 = graphics::Color::lerp(color1, 0xff404040, u2);
+		uint color0 = graphics::GraphicsDevice::Default.config.vignettingColor0;
+		uint color1 = graphics::Color::lerp(color0, graphics::GraphicsDevice::Default.config.vignettingColor1, u1);
+		uint color2 = graphics::Color::lerp(color1, graphics::GraphicsDevice::Default.config.vignettingColor2, u2);
 		_vertices.push_back(createVertex(v0, color0));
 		_vertices.push_back(createVertex(v1, color1));
 		_vertices.push_back(createVertex(v2, color2));
@@ -202,8 +204,10 @@ namespace drawing
 
 	void FilterAdd::execute(graphics::Texture *value0, graphics::Texture *value1, graphics::IRenderTarget *target)
 	{
-		
-		//refractor.update(0.02f);
+		if (graphics::GraphicsDevice::Default.config.refraction)
+		{
+			refractor.update();
+		}
 		graphics::GraphicsDevice::Default.setRenderTarget(target);
 		graphics::GraphicsDevice::Default.clear();
 		graphics::UniformValues::texture()->setValue(value0->getHandle());
@@ -212,14 +216,26 @@ namespace drawing
 		graphics::GraphicsDevice::Default.renderState.setBlend(graphics::BlendState::None);
 		graphics::GraphicsDevice::Default.renderState.setEffect(graphics::Effects::postProcessBloomAddFilter());
 		
-		graphics::GraphicsDevice::Default.drawPrimitives(graphics::VertexFormats::positionTexture(), _quadVertices, _quadIndices, 2);
-		/*
-		graphics::GraphicsDevice::Default.drawPrimitives(graphics::VertexFormats::positionTexture(), 
-			refractor._refractVertices.data(), 
-			refractor._refractIndices.data(), 
-			refractor._refractIndices.size() / 3);
-			*/
-		
+		if (graphics::GraphicsDevice::Default.config.refraction)
+		{
+			graphics::GraphicsDevice::Default.drawPrimitives(graphics::VertexFormats::positionTexture(),
+				refractor._refractVertices.data(),
+				refractor._refractIndices.data(),
+				refractor._refractIndices.size() / 3);
+		}
+		else
+		{
+			graphics::GraphicsDevice::Default.drawPrimitives(graphics::VertexFormats::positionTexture(), _quadVertices, _quadIndices, 2);
+		}
+	}
+
+	PostProcessBloom::PostProcessBloom() :
+		_tonemapId(0),
+		_source(nullptr),
+		_beginTarget(nullptr),
+		_blurMap(nullptr)
+	{
+
 	}
 
 	float calcDx(float d)
@@ -251,6 +267,7 @@ namespace drawing
 				_vertices[y][x].Z = h;
 				_vertices[y][x].U = uv.getX();
 				_vertices[y][x].V = uv.getY();
+				_normals[y][x] = core::Vector2::empty;
 			}
 		}
 		float dz00 = 0;
@@ -289,13 +306,13 @@ namespace drawing
 		}
 	}
 
-	void Refractor::update(float time)
+	void Refractor::update()
 	{		
 		_refractVertices.clear();
 		_refractIndices.clear();
-		_velocity = core::Vector2(0.25f, 1.0f);
-		_offset += _velocity * time;
-		float s = 0.001f;// / (size - 1);
+		_velocity = core::Vector2(graphics::GraphicsDevice::Default.config.refractionVelocityX, graphics::GraphicsDevice::Default.config.refractionVelocityY);
+		_offset = _velocity * graphics::GraphicsDevice::Default.config.ellapsedTime;
+		float s = 0.001f*graphics::GraphicsDevice::Default.config.refractionScale;
 		for (int y = 0; y < size; y++)
 		{
 			for (int x = 0; x < size; x++)
@@ -363,15 +380,7 @@ namespace drawing
 	}
 	
 	void PostProcessBloom::finishRender()
-	{
-		/*
-		if (_tonemapId != 0)
-		{
-			_tonemap.execute(_source, 0, _tonemapId);
-			graphics::GraphicsDevice::Default.PostProcessTargets.push(_source);
-		}
-		return;
-		*/
+	{	
 		
 		if (_tonemapId != 0)
 		{
@@ -381,40 +390,54 @@ namespace drawing
 			_source = tonemaped;
 		}
 
-		//graphics::TextureRenderTarget2d *blur0 = graphics::GraphicsDevice::Default.PostProcessScaledTargets.pop();
-		//graphics::TextureRenderTarget2d *blur1 = graphics::GraphicsDevice::Default.PostProcessScaledTargets.pop();
-		
-		graphics::TextureRenderTarget2d *downSample1 = graphics::GraphicsDevice::Default.PostProcessScaledTargets1.pop();
-		graphics::TextureRenderTarget2d *downSample2 = graphics::GraphicsDevice::Default.PostProcessScaledTargets2.pop();
-		graphics::TextureRenderTarget2d *downSample3 = graphics::GraphicsDevice::Default.PostProcessScaledTargets3.pop();
+		graphics::TextureRenderTarget2d *downSample1(nullptr);
+		graphics::TextureRenderTarget2d *downSample2(nullptr);
+		if(graphics::GraphicsDevice::Default.config.bloomDownsample > 0)
+		{
+			downSample1 = graphics::GraphicsDevice::Default.PostProcessScaledTargets1.pop();
+			downSample2 = graphics::GraphicsDevice::Default.PostProcessScaledTargets2.pop();
+		}
+		if (_blurMap == nullptr)
+			_blurMap = graphics::GraphicsDevice::Default.PostProcessScaledTargets3.pop();
 		graphics::TextureRenderTarget2d *bloom = graphics::GraphicsDevice::Default.PostProcessScaledTargets3.pop();
 
-		_empty.execute(_source, downSample1);
-		_empty.execute(downSample1, downSample2);
-		_empty.execute(downSample2, downSample3);
+		if (graphics::GraphicsDevice::Default.config.bloomDownsample > 0)
+		{
+			_empty.execute(_source, downSample1);
+			_empty.execute(downSample1, downSample2);
+			_empty.execute(downSample2, _blurMap);
+		}
+		else
+		{
+			_empty.execute(_source, _blurMap);
+		}
 			
 		graphics::UniformValues::pixelSize()->setValue(core::Vector2(
 			1.0f / static_cast<float>(bloom->getWidth()),
 			1.0f / static_cast<float>(bloom->getHeight())));
 
-		_hBlur.execute(downSample3, bloom);
-		_vBlur.execute(bloom, downSample3);
-		_filter.execute(downSample3, bloom);
+		_hBlur.execute(_blurMap, bloom);
+		_vBlur.execute(bloom, _blurMap);
+		_filter.execute(_blurMap, bloom);
 		_add.execute(_source, bloom, _beginTarget);
-		_vignetting.execute(downSample3);
+		if (graphics::GraphicsDevice::Default.config.vignetting)
+		{
+			_vignetting.execute(_blurMap);
+		}
 
-		graphics::GraphicsDevice::Default.PostProcessScaledTargets1.push(downSample1);
-		graphics::GraphicsDevice::Default.PostProcessScaledTargets2.push(downSample2);
-		graphics::GraphicsDevice::Default.PostProcessScaledTargets3.push(downSample3);
+		if (graphics::GraphicsDevice::Default.config.bloomDownsample > 0)
+		{
+			graphics::GraphicsDevice::Default.PostProcessScaledTargets1.push(downSample1);
+			graphics::GraphicsDevice::Default.PostProcessScaledTargets2.push(downSample2);
+		}
 		graphics::GraphicsDevice::Default.PostProcessScaledTargets3.push(bloom);
 		graphics::GraphicsDevice::Default.PostProcessTargets.push(_source);
 
-		/*
-		_vBlur.execute(graphics::GraphicsDevice::Default.PostProcessRenderTargets[2], graphics::GraphicsDevice::Default.PostProcessRenderTargets[3]);
-		_hBlur.execute(graphics::GraphicsDevice::Default.PostProcessRenderTargets[3], graphics::GraphicsDevice::Default.PostProcessRenderTargets[2]);
-		_add.execute(graphics::GraphicsDevice::Default.PostProcessRenderTargets[1], graphics::GraphicsDevice::Default.PostProcessRenderTargets[2], 0);
-		*/
+	}
 
+	graphics::TextureRenderTarget2d* PostProcessBloom::getBloorMap()
+	{
+		return _blurMap;
 	}
 
 	bool PostProcessBloom::isAvaliable()

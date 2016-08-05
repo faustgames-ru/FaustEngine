@@ -29,6 +29,7 @@ namespace graphics
 		static EffectTextureAlphamaskColor * textureAlphamaskColor();
 		static EffectTextureColorHighlight * textureColorHighlight();
 		static EffectTextureLightMapColor * textureLightmapColor();
+		static EffectTextureBlurColor * textureBlurColor();
 		//static EffectWater * water();
 		static EffectRenderDepth * renderDepth();
 		static EffectPostProcessToneMapping * postProcessToneMapping();
@@ -47,6 +48,7 @@ namespace graphics
 		static EffectTextureAlphamaskColor _textureAlphamaskColor;
 		static EffectTextureColorHighlight _textureColorHighlight;
 		static EffectTextureLightMapColor _textureLightmapColor;
+		static EffectTextureBlurColor _textureBlurColor;
 		//static EffectWater _water;
 		static EffectRenderDepth _renderDepth;
 		static EffectPostProcessToneMapping _postProcessToneMapping;

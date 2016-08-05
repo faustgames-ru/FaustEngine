@@ -44,6 +44,9 @@ namespace spine
 		virtual int API_CALL getSpineEventsCount();
 		virtual llge::ISpineSkeleton* API_CALL createSkeleton(void *floatMatrix);
 		virtual llge::ISpineAnimationStateData* API_CALL createStateData();
+		virtual IntPtr API_CALL errorMessage() OVERRIDE;
+		virtual bool API_CALL isValid() OVERRIDE;
+		
 		virtual void API_CALL dispose();
 	protected:
 	private:
@@ -53,6 +56,8 @@ namespace spine
 		std::vector<SpineSkeletonAnimation *> _animations;
 		std::vector<SpineEvent *> _events;
 		std::vector<SpineSkin *> _skins;
+		std::string _error;
+		bool _invalid;
 	};
 }
 

@@ -18,7 +18,7 @@ namespace graphics
 	{
 	public:
 		TextureRenderTarget2d();
-
+		TextureRenderTarget2d(bool filter);
 		virtual int getWidth(){ return _width; }
 		virtual int getHeight(){ return _height; }
 		virtual GLuint getFramebuffer(){ return _frameBuffer; }

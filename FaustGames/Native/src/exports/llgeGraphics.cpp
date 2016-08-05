@@ -299,6 +299,19 @@ namespace llge
 			GraphicsDevice::Default.config.earlyFragmentTestsShaderCode = config->earlyFragmentTestsShaderCode;
 			GraphicsDevice::Default.config.mipmapsLevel = config->mipmapsLevel;
 			GraphicsDevice::Default.config.bloomDownsample = config->bloomDownsample;
+			GraphicsDevice::Default.config.refraction = config->refraction;
+			GraphicsDevice::Default.config.refractionScale = config->refractionScale;
+			GraphicsDevice::Default.config.refractionVelocityX = config->refractionVelocityX;
+			GraphicsDevice::Default.config.refractionVelocityY = config->refractionVelocityY;
+			GraphicsDevice::Default.config.vignetting = config->vignetting;
+			GraphicsDevice::Default.config.vignettingR0 = config->vignettingR0;
+			GraphicsDevice::Default.config.vignettingR1 = config->vignettingR1;
+			GraphicsDevice::Default.config.vignettingR2 = config->vignettingR2;
+			GraphicsDevice::Default.config.vignettingColor0 = config->vignettingColor0;
+			GraphicsDevice::Default.config.vignettingColor1 = config->vignettingColor1;
+			GraphicsDevice::Default.config.vignettingColor2 = config->vignettingColor2;
+			GraphicsDevice::Default.config.ellapsedTime = config->ellapsedTime;
+			GraphicsDevice::Default.config.postEffectsScale = config->postEffectsScale;
 
 			TextureFilterMode filterMode = static_cast<TextureFilterMode>(config->texturesFilter);
 			switch (filterMode)

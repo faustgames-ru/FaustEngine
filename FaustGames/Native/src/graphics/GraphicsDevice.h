@@ -11,6 +11,7 @@ namespace graphics
 	class PostProcessTargetManager
 	{
 	public:
+		bool filter;
 		PostProcessTargetManager();
 		TextureRenderTarget2d *pop();
 		void push(TextureRenderTarget2d *);
@@ -34,6 +35,19 @@ namespace graphics
 		bool earlyFragmentTestsShaderCode;
 		int bloomDownsample;
 		int mipmapsLevel;
+		bool refraction;
+		float refractionScale;
+		float refractionVelocityX;
+		float refractionVelocityY;
+		bool vignetting;
+		float vignettingR0;
+		float vignettingR1;
+		float vignettingR2;
+		uint vignettingColor0;
+		uint vignettingColor1;
+		uint vignettingColor2;
+		float ellapsedTime;
+		float postEffectsScale;
 		int getMagFilter();
 		int getMinFilter();
 		GraphicsConfig();

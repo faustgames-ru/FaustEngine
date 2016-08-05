@@ -23,6 +23,18 @@ namespace spine
 			if (type == SP_ANIMATION_EVENT)
 			{
 				animationState->listenAnimationEvent(e->data->intValue);
+			} 
+			else if (type == SP_ANIMATION_END)
+			{
+				animationState->listenAnimationEvent(-1);
+			}
+			else if (type == SP_ANIMATION_COMPLETE)
+			{
+				animationState->listenAnimationEvent(-2);
+			}
+			else if (type == SP_ANIMATION_START)
+			{
+				animationState->listenAnimationEvent(-3);
 			}
 		}
 	}
@@ -33,7 +45,7 @@ namespace spine
 		_spAnimationState = spAnimationState_create(spData);
 		((spAnimationState*)_spAnimationState)->listener = animationStateListener;
 		((spAnimationState*)_spAnimationState)->rendererObject = this;
-		_eventsBuffer = new SpineEventsBuffer(spData->skeletonData->eventsCount);
+		_eventsBuffer = new SpineEventsBuffer(spData->skeletonData->eventsCount+3);
 	}
 	
 	SpineAnimationState::~SpineAnimationState()
@@ -66,11 +78,16 @@ namespace spine
 		}
 		
 		_animation = animation->getAnimation();
-
+		_eventsBuffer->EventsIndicesCount = 0;
 		spAnimationState_setAnimation((spAnimationState*)_spAnimationState, 0, (spAnimation *)_animation, loop);
 		if (normalize)
 		{
-			_timeNormalized = _prevTime / duration;
+			float prevTime = _prevTime;
+			if (prevTime >duration)
+			{
+				prevTime -= core::Math::trunc(prevTime / duration);
+			}
+			_timeNormalized = prevTime / duration;
 			float time = _timeNormalized * ((spAnimation *)_animation)->duration;
 			spAnimationState_dummy_update((spAnimationState*)_spAnimationState, time);
 			_prevTime = time;
@@ -126,7 +143,7 @@ namespace spine
 	{
 		delete this;
 	}
-
+		
 	int API_CALL SpineAnimationState::getSpineEventIndices(IntPtr indices, int limit)
 	{
 		int *inds = (int *)indices;
@@ -137,7 +154,12 @@ namespace spine
 		}
 		return _eventsBuffer->EventsIndicesCount;
 	}
-	
+
+	int SpineAnimationState::getSpineEventsLimit()
+	{
+		return _eventsBuffer->EventsIndicesLimit;
+	}
+
 	void SpineAnimationState::listenAnimationEvent(int eventIndex)
 	{
 		_eventsBuffer->EventsIndices[_eventsBuffer->EventsIndicesCount++] = eventIndex;

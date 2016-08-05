@@ -75,7 +75,7 @@ namespace drawing
 	{
 	public:
 		Refractor();
-		void update(float time);
+		void update();
 		std::vector<PostProcessVertex> _refractVertices;
 		std::vector<ushort> _refractIndices;
 	private:
@@ -100,12 +100,14 @@ namespace drawing
 	class PostProcessBloom
 	{
 	public:
+		PostProcessBloom();
 		virtual ~PostProcessBloom()
 		{
 		}
 
 		virtual void beginRender(uint tonemapId);
 		virtual void finishRender();
+		graphics::TextureRenderTarget2d* getBloorMap();
 		bool isAvaliable();
 	private:
 		BloomFilter _filter;		
@@ -113,11 +115,12 @@ namespace drawing
 		FilterVBlur _vBlur;
 		FilterHBlur _hBlur;		
 		FilterAdd _add;
-		TonemapFilter _tonemap;
 		VignettingProcess _vignetting;
+		TonemapFilter _tonemap;
 		uint _tonemapId;
 		graphics::TextureRenderTarget2d *_source;
 		graphics::IRenderTarget *_beginTarget;
+		graphics::TextureRenderTarget2d *_blurMap;
 		/*
 		graphics::TextureRenderTarget2d *_target0;
 		graphics::TextureRenderTarget2d *_target1;

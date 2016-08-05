@@ -14,6 +14,7 @@ bin2c -o shader_render_depth_frag.h shader_render_depth.frag
 bin2c -o shader_render_depth_vert.h shader_render_depth.vert
 bin2c -o texture_lightmap_color_frag.h shader_texture_lightmap_color.frag
 bin2c -o texture_lightmap_color_vert.h shader_texture_lightmap_color.vert
+bin2c -o texture_blur_color_frag.h shader_texture_blur_color.frag
 bin2c -o water_frag.h shader_water.frag
 bin2c -o water_vert.h shader_water.vert
 bin2c -o post_process_tonemapping.h shader_post_process_tonemapping.frag

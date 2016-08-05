@@ -9,8 +9,11 @@ namespace spine
 	{
 		int* EventsIndices;
 		int EventsIndicesCount;
+		int EventsIndicesLimit;
 		SpineEventsBuffer(int limit)
 		{
+			EventsIndicesCount = 0;
+			EventsIndicesLimit = limit;
 			EventsIndices = new int[limit];
 		}
 		~SpineEventsBuffer()
@@ -35,7 +38,8 @@ namespace spine
 		virtual void API_CALL addAnimation(llge::ISpineAnimation* animation, bool loop, float delay);
 		virtual void API_CALL dispose();
 		virtual int API_CALL getSpineEventIndices(IntPtr indices, int limit);
-
+		virtual int API_CALL getSpineEventsLimit();
+		
 		void listenAnimationEvent(int eventIndex);
 	protected:
 	private:

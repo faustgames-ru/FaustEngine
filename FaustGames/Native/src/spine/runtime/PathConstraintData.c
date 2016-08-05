@@ -1,10 +1,10 @@
 /******************************************************************************
  * Spine Runtimes Software License
  * Version 2.3
- * 
+ *
  * Copyright (c) 2013-2015, Esoteric Software
  * All rights reserved.
- * 
+ *
  * You are granted a perpetual, non-exclusive, non-sublicensable and
  * non-transferable license to use, install, execute and perform the Spine
  * Runtimes Software (the "Software") and derivative works solely for personal
@@ -16,7 +16,7 @@
  * or other intellectual property or proprietary rights notices on or in the
  * Software, including any copy thereof. Redistributions in binary or source
  * form must include this license and terms.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY ESOTERIC SOFTWARE "AS IS" AND ANY EXPRESS OR
  * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
@@ -29,22 +29,17 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#include <spine/BoneData.h>
+#include <spine/PathConstraintData.h>
 #include <spine/extension.h>
 
-spBoneData* spBoneData_create (int index, const char* name, spBoneData* parent) {
-	spBoneData* self = NEW(spBoneData);
-	CONST_CAST(int, self->index) = index;
+spPathConstraintData* spPathConstraintData_create (const char* name) {
+	spPathConstraintData* self = NEW(spPathConstraintData);
 	MALLOC_STR(self->name, name);
-	CONST_CAST(spBoneData*, self->parent) = parent;
-	self->scaleX = 1;
-	self->scaleY = 1;
-	self->inheritRotation = 1;
-	self->inheritScale = 1;
 	return self;
 }
 
-void spBoneData_dispose (spBoneData* self) {
+void spPathConstraintData_dispose (spPathConstraintData* self) {
 	FREE(self->name);
+	FREE(self->bones);
 	FREE(self);
 }

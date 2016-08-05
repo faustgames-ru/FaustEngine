@@ -142,10 +142,12 @@ namespace graphics
 
 	void preprocessPShaderCode(std::string& shader)
 	{
+		/*
 		if (GraphicsDevice::Default.config.earlyFragmentTestsShaderCode)
 		{
 			shader = std::string("layout(early_fragment_tests) in;\n") + shader;
 		}
+		*/
 	}
 
 	void Effect::create(const char *vertexShaderCode, int vertexShaderSize, const char *pixelShaderCode, int pixelShaderSize)

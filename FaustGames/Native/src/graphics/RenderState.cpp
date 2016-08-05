@@ -45,7 +45,7 @@ namespace graphics
 		_effect.applyState();
 		_vertexBufferState.applyState();
 		
-		//if (!_depthState.isEqual())
+		if (!_depthState.isEqual())
 		{
 			switch (_depthState.getValue())
 			{
@@ -68,7 +68,7 @@ namespace graphics
 			default: break;
 			}			
 		}
-		
+
 		if (!_blendState.isEqual())
 		{
 			switch (_blendState.getValue())
@@ -137,4 +137,13 @@ namespace graphics
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	}
 
+	void RenderState::resetDepth()
+	{
+		_depthState.reset();
+	}
+
+	void RenderState::resetBlend()
+	{
+		_blendState.reset();
+	}
 }

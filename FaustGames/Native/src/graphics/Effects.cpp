@@ -13,6 +13,7 @@ namespace graphics
 	EffectTextureAlphamaskColor Effects::_textureAlphamaskColor;
 	EffectTextureColorHighlight Effects::_textureColorHighlight;
 	EffectTextureLightMapColor Effects::_textureLightmapColor;
+	EffectTextureBlurColor Effects::_textureBlurColor;
 	//EffectWater Effects::_water;
 	EffectRenderDepth Effects::_renderDepth;
 	EffectPostProcessToneMapping Effects::_postProcessToneMapping;
@@ -35,6 +36,8 @@ namespace graphics
 		_textureAlphamaskColor.create();
 		_textureColorHighlight.create();
 		_textureLightmapColor.create();
+		_textureBlurColor.create();
+
 		//_water.create();
 		_renderDepth.create();
 		_postProcessToneMapping.create();
@@ -56,6 +59,7 @@ namespace graphics
 		_textureColorHighlight.getEffect()->cleanup();
 
 		_textureLightmapColor.getEffect()->cleanup();
+		_textureBlurColor.getEffect()->cleanup();
 		//_water.getEffect()->cleanup();
 		_renderDepth.getEffect()->cleanup();
 		_postProcessBloomFilter.getEffect()->cleanup();
@@ -98,6 +102,12 @@ namespace graphics
 	{
 		return &_textureLightmapColor;
 	}
+
+	EffectTextureBlurColor* Effects::textureBlurColor()
+	{
+		return &_textureBlurColor;
+	}
+
 	/*
 	EffectWater * Effects::water()
 	{

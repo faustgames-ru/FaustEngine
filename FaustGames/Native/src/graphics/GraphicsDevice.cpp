@@ -66,6 +66,7 @@ namespace graphics
 
 	GraphicsDevice::GraphicsDevice() : _colorState(0), _depthState(-1.0f), _activeTextureState(-1), _drawCalls(0), actualRenderTarget(0)
 	{
+		PostProcessTargets.filter = false;
 	}
 	
 	GraphicsDevice::~GraphicsDevice()
@@ -99,13 +100,19 @@ namespace graphics
             glViewport(x, y, width, height);
             Errors::check(Errors::Viewport);
         }
-		PostProcessTargets.setViewport(width, height);
+
+
+		config.postEffectsScale = core::Math::clamp(config.postEffectsScale, 0.25f, 1.0f);
+		int w = width*config.postEffectsScale;
+		int h = height*config.postEffectsScale;
+		
+		PostProcessTargets.setViewport(w, h);
 		if (config.bloomDownsample <= 0)
 			config.bloomDownsample = 2;
 		//PostProcessScaledTargets.setViewport(width / config.bloomDownsample, height / config.bloomDownsample);
-		PostProcessScaledTargets1.setViewport(width / 2, height / 2);
-		PostProcessScaledTargets2.setViewport(width / 4, height / 4);
-		PostProcessScaledTargets3.setViewport(width / 8, height / 8);
+		PostProcessScaledTargets1.setViewport(w / 2, h / 2);
+		PostProcessScaledTargets2.setViewport(w / 4, h / 4);
+		PostProcessScaledTargets3.setViewport(w / 8, h / 8);
 
 		/*
 		float rtWidth = width / 2;
@@ -185,6 +192,9 @@ namespace graphics
 	void GraphicsDevice::clear()
 	{
 		glDepthMask(GL_TRUE);
+		glDisable(GL_BLEND);
+		renderState.resetBlend();
+		renderState.resetDepth();
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		Errors::check(Errors::Clear);
 	}
@@ -192,6 +202,7 @@ namespace graphics
 	void GraphicsDevice::clearDepth()
 	{
 		glDepthMask(GL_TRUE);
+		renderState.resetDepth();
 		glClear(GL_DEPTH_BUFFER_BIT);
 		Errors::check(Errors::Clear);
 	}
@@ -327,7 +338,7 @@ namespace graphics
 	
 	void PostProcessTargetManager::addProcessRenderTarget()
 	{
-		TextureRenderTarget2d * rt = new TextureRenderTarget2d();
+		TextureRenderTarget2d * rt = new TextureRenderTarget2d(filter);
 		rt->create(_width, _height);
 		_stack.push_back(rt);
 		_all.push_back(rt);
@@ -336,6 +347,7 @@ namespace graphics
 
 	PostProcessTargetManager::PostProcessTargetManager()
 	{
+		filter = true;
 		_width = 0;
 		_height = 0;
 	}

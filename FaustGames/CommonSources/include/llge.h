@@ -152,6 +152,19 @@ namespace llge
 		uint texturesFilter;
 		int mipmapsLevel;
 		int bloomDownsample;
+		bool refraction;
+		float refractionScale;
+		float refractionVelocityX;
+		float refractionVelocityY;
+		bool vignetting;
+		float vignettingR0;
+		float vignettingR1;
+		float vignettingR2;
+		uint vignettingColor0;
+		uint vignettingColor1;
+		uint vignettingColor2;
+		float ellapsedTime;
+		float postEffectsScale;
 	};
 	
 	struct LightingConfig
@@ -516,6 +529,7 @@ namespace llge
 		virtual void API_CALL setAnimation(ISpineAnimation* animation, bool loop, bool normalize) = 0;
 		virtual void API_CALL addAnimation(ISpineAnimation* animation, bool loop, float delay) = 0;
 		virtual int API_CALL getSpineEventIndices(IntPtr indices, int limit) = 0;
+		virtual int API_CALL getSpineEventsLimit() = 0;
 		virtual void API_CALL dispose() = 0;
 	};
 
@@ -546,6 +560,8 @@ namespace llge
 		virtual int API_CALL getSpineEventsCount() = 0;
 		virtual ISpineSkeleton* API_CALL createSkeleton(void *floatMatrix) = 0;
 		virtual ISpineAnimationStateData* API_CALL createStateData() = 0;
+		virtual IntPtr API_CALL errorMessage() = 0;
+		virtual bool API_CALL isValid() = 0;
 		virtual void API_CALL dispose() = 0;
 	};
 

@@ -64,8 +64,8 @@ namespace spine
 		geometry::Aabb2d _aabb;
 		core::Matrix _transform;
 		static drawing::BatcherSpineMesh _mesh;
-		static int _quadIndices[6];
-		static float _uvBuffer[4096];
+		static ushort _quadIndices[6];
+		static float _uvBuffer[65536];
 		llge::LightingConfig _lightingConfig; // todo: remove
 		std::vector<SpineSkeletonBone *> _bones;		
 		std::vector<SpineSkeletonBounds> _bounds;

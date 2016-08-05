@@ -48,6 +48,11 @@ namespace spine
 		_spSkeletonJson = spSkeletonJson_create((spAtlas *)_spAtlas);
 		_spSkeletonData = spSkeletonJson_readSkeletonData((spSkeletonJson*)_spSkeletonJson, jsonText);
 		
+		if (_spSkeletonData == nullptr)
+		{
+			_error = ((spSkeletonJson*)_spSkeletonJson)->error;
+			return;
+		}
 
 		spSkeletonData* sd = (spSkeletonData*)_spSkeletonData;
 		_animations.resize(sd->animationsCount);
@@ -164,6 +169,16 @@ namespace spine
 	llge::ISpineAnimationStateData* API_CALL SpineSkeletonResource::createStateData()
 	{
 		return new SpineAnimationStateData(this);
+	}
+
+	IntPtr SpineSkeletonResource::errorMessage()
+	{
+		return const_cast<void *>(static_cast<const void *>(_error.c_str()));
+	}
+
+	bool SpineSkeletonResource::isValid()
+	{
+		return _spSkeletonData != nullptr;
 	}
 
 	void API_CALL SpineSkeletonResource::dispose()

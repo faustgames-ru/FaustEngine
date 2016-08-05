@@ -130,6 +130,19 @@ namespace llge
 		public uint texturesFilter;
 		public int mipmapsLevel;
 		public int bloomDownsample;
+		public bool refraction;
+		public float refractionScale;
+		public float refractionVelocityX;
+		public float refractionVelocityY;
+		public bool vignetting;
+		public float vignettingR0;
+		public float vignettingR1;
+		public float vignettingR2;
+		public uint vignettingColor0;
+		public uint vignettingColor1;
+		public uint vignettingColor2;
+		public float ellapsedTime;
+		public float postEffectsScale;
 	}
 	
 	[StructLayout(LayoutKind.Sequential)]
@@ -1628,6 +1641,13 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private int llge_SpineAnimationState_getSpineEventIndices (IntPtr classInstance, IntPtr indices, int limit);
+		public int GetSpineEventsLimit ()
+		{
+			return llge_SpineAnimationState_getSpineEventsLimit(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private int llge_SpineAnimationState_getSpineEventsLimit (IntPtr classInstance);
 		public void Dispose ()
 		{
 			llge_SpineAnimationState_dispose(ClassInstance);
@@ -1748,6 +1768,21 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private IntPtr llge_SpineResource_createStateData (IntPtr classInstance);
+		public IntPtr ErrorMessage ()
+		{
+			return llge_SpineResource_errorMessage(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_SpineResource_errorMessage (IntPtr classInstance);
+		public bool IsValid ()
+		{
+			return llge_SpineResource_isValid(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		[return: MarshalAs(UnmanagedType.I1)]
+		static extern private bool llge_SpineResource_isValid (IntPtr classInstance);
 		public void Dispose ()
 		{
 			llge_SpineResource_dispose(ClassInstance);

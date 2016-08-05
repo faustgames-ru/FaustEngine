@@ -966,6 +966,11 @@ namespace llge
 		return classInstance->getSpineEventIndices(indices, limit);
 	}
 	
+	extern "C" DLLEXPORT int API_CALL llge_SpineAnimationState_getSpineEventsLimit (ISpineAnimationState * classInstance)
+	{
+		return classInstance->getSpineEventsLimit();
+	}
+	
 	extern "C" DLLEXPORT void API_CALL llge_SpineAnimationState_dispose (ISpineAnimationState * classInstance)
 	{
 		classInstance->dispose();
@@ -1039,6 +1044,16 @@ namespace llge
 	extern "C" DLLEXPORT ISpineAnimationStateData * API_CALL llge_SpineResource_createStateData (ISpineResource * classInstance)
 	{
 		return classInstance->createStateData();
+	}
+	
+	extern "C" DLLEXPORT IntPtr API_CALL llge_SpineResource_errorMessage (ISpineResource * classInstance)
+	{
+		return classInstance->errorMessage();
+	}
+	
+	extern "C" DLLEXPORT bool API_CALL llge_SpineResource_isValid (ISpineResource * classInstance)
+	{
+		return classInstance->isValid();
 	}
 	
 	extern "C" DLLEXPORT void API_CALL llge_SpineResource_dispose (ISpineResource * classInstance)

@@ -31,7 +31,7 @@ namespace drawing
 		return _indicesCount + indicesCount < IndicesLimit && _verticesCount + verticesCount < VerticesLimit;
 	}
 
-	void BatchBuffer::addMesh(uint color, float z, float* vertices, float* uvs, int verticesCount, int* indices, int indicesCount, bool additive, byte colorScale)
+	void BatchBuffer::addMesh(uint color, float z, float* vertices, float* uvs, int verticesCount, ushort* indices, int indicesCount, bool additive, byte colorScale)
 	{
 		for (int i = 0; i < indicesCount; i++)
 		{
@@ -54,6 +54,36 @@ namespace drawing
 		_verticesCount += verticesCount;
 		_indicesCount += indicesCount;
 	}
+
+	void BatchBuffer::addMesh(uint color, float z, float* vertices, float* uvs, int verticesCount, ushort* indices, int indicesCount, bool additive, core::Matrix viewTransform, byte colorScale)
+	{
+		for (int i = 0; i < indicesCount; i++)
+		{
+			_indices[_indicesCount + i] = static_cast<unsigned short>(_verticesCount + indices[i]);
+		}
+
+		TVertex* target = _vertices + _verticesCount;
+		float* source = vertices;
+		float* uvsource = uvs;
+		core::Vector3 uv;
+		for (int i = 0; i < verticesCount; i++, target++)
+		{
+			target->x = *source; ++source;
+			target->y = *source; ++source;
+			target->z = z;
+			target->color = graphics::Color::premul(color, colorScale, additive);
+			target->u = _x + *uvsource *_w; ++uvsource;
+			target->v = _y + *uvsource *_h; ++uvsource;
+			//uv = core::Matrix::transform(viewTransform, core::Vector3(target->x, target->y, target->z));
+			//uv = (uv + core::Vector3(1.0f, 1.0f, 0.0f))*0.5f;
+			//target->u = uv.getX();
+			//target->v = uv.getY();
+		}
+
+		_verticesCount += verticesCount;
+		_indicesCount += indicesCount;
+	}
+
 
 	void BatchBuffer::addMesh(TVertex* vertices, int verticesCount, ushort* indices, int indicesCount, bool additive, unsigned char colorScale)
 	{
@@ -360,6 +390,59 @@ namespace drawing
 		currentBuffer->addMesh(mesh.Color, mesh.Z, mesh.Vertices, mesh.Uvs, mesh.VerticesCount, mesh.Indices, mesh.IndicesCount, mesh.State.Blend == graphics::BlendState::Additive, colorScale);
 	}
 
+	void Batcher::drawSpineMesh0(const BatcherSpineMesh& mesh, byte colorScale)
+	{
+		//drawSpineMesh(mesh, colorScale);
+		if (_bloom.getBloorMap() != nullptr)
+		{
+			llge::LightingConfig * config = static_cast<llge::LightingConfig *>(mesh.State.config);
+			//config->texture = _bloom.getBloorMap()->getHandle();
+			config->lightmap = _bloom.getBloorMap()->getHandle();
+
+			_verticesCounter += mesh.VerticesCount;
+			BatchBuffer * currentBuffer = _buffer->Buffers[_batchBufferIndex];
+			bool needNewEntry = false;
+			if (!currentBuffer->canAdd(mesh.VerticesCount, mesh.IndicesCount))
+			{
+				_batchBufferIndex++;
+				if (_buffer->Buffers.size() <= _batchBufferIndex)
+				{
+					_buffer->Buffers.push_back(new BatchBuffer());
+#ifdef __ANDROID__
+					__android_log_print(ANDROID_LOG_ERROR, "TRACKERS", "%s", "new render buffer allocated");
+#endif
+				}
+
+				currentBuffer = _buffer->Buffers[_batchBufferIndex];
+				currentBuffer->reset();
+				needNewEntry = true;
+			}
+			graphics::EffectBase* effect = graphics::Effects::textureBlurColor();
+
+			if (effect != _effect || needNewEntry || !mesh.State.isConfigEqual(_config))
+			{
+				if (_currentEntry.IndicesCount != 0)
+					_buffer->Entries.push_back(_currentEntry);
+				_currentEntry.IndicesStart = currentBuffer->getCurrentIndices();
+				_currentEntry.IndicesCount = 0;
+				_currentEntry.BatchBufferIndex = _batchBufferIndex;
+				effect->configCopy(_currentEntry.Config, mesh.State.config);
+				effect->configCopy(_config, mesh.State.config);
+
+				_currentEntry.Blend = _blend = mesh.State.Blend;
+				_currentEntry.Effect = _effect = effect;
+				_currentEntry.TransformIndex = _buffer->Transforms.size() - 1;
+				_currentEntry.RenderTargetIndex = _buffer->RenderTargets.size() - 1;
+			}
+
+			_currentEntry.IndicesCount += mesh.IndicesCount;
+			currentBuffer->_x = _x;
+			currentBuffer->_y = _y;
+			currentBuffer->_w = _w;
+			currentBuffer->_h = _h;
+			currentBuffer->addMesh(mesh.Color, mesh.Z, mesh.Vertices, mesh.Uvs, mesh.VerticesCount, mesh.Indices, mesh.IndicesCount, mesh.State.Blend == graphics::BlendState::Additive, _buffer->Transforms.back().Value, colorScale);
+		}
+	}
 
 	void Batcher::executeRenderCommands(bool usePostProcess)
 	{

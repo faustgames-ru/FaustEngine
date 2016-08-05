@@ -16,14 +16,13 @@
 #include "spine/RegionAttachment.h"
 #include "spine/BoundingBoxAttachment.h"
 #include "spine/MeshAttachment.h"
-#include "spine/WeightedMeshAttachment.h"
 
 namespace spine
 {
-	drawing::BatcherSpineMesh SpineSkeleton::_mesh(4096);
-	int SpineSkeleton::_quadIndices[6] = { 0, 1, 2, 0, 2, 3 };
-	float SpineSkeleton::_uvBuffer[4096];
-
+	drawing::BatcherSpineMesh SpineSkeleton::_mesh(65536);
+	ushort SpineSkeleton::_quadIndices[6] = { 0, 1, 2, 0, 2, 3 };
+	float SpineSkeleton::_uvBuffer[65536];
+	/*
 	void spSkinnedMeshAttachment_updateUVs_fixed(spWeightedMeshAttachment* self, float *uvs) {
 		int i;
 		float width = self->regionU2 - self->regionU, height = self->regionV2 - self->regionV;
@@ -40,19 +39,19 @@ namespace spine
 			}
 		}
 	}
-
+	*/
 	void spMeshAttachment_updateUVs_fixed(spMeshAttachment* self, float *uvs) {
 		int i;
 		float width = self->regionU2 - self->regionU, height = self->regionV2 - self->regionV;
 
 		if (self->regionRotate) {
-			for (i = 0; i < self->verticesCount; i += 2) {
+			for (i = 0; i < self->super.worldVerticesLength; i += 2) {
 				uvs[i] = self->regionU + self->regionUVs[i + 1] * width;
 				uvs[i + 1] = self->regionV + height - self->regionUVs[i] * height;
 			}
 		}
 		else {
-			for (i = 0; i < self->verticesCount; i += 2) {
+			for (i = 0; i < self->super.worldVerticesLength; i += 2) {
 				uvs[i] = self->regionU + self->regionUVs[i] * width;
 				uvs[i + 1] = self->regionV + self->regionUVs[i + 1] * height;
 			}
@@ -136,6 +135,16 @@ namespace spine
 		{
 			spSlot* slot = s->drawOrder[i];
 			if (!slot->attachment) continue;
+			/*
+			bool isTrail = false;
+			if (strstr(slot->attachment->name, "_tr") != nullptr)
+				isTrail = true;
+			if (strstr(slot->attachment->name, "sh_") != nullptr)
+				isTrail = true;
+			if (strstr(slot->attachment->name, "COMBO") != nullptr)
+				isTrail = true;
+			*/
+			
 			_mesh.Color = graphics::Color::fromRgba(slot->r*s->r, slot->g*s->g, slot->b*s->b, slot->a*s->a);
 			_mesh.State.Blend = slot->data->blendMode == SP_BLEND_MODE_NORMAL
 				? graphics::BlendState::Alpha
@@ -168,16 +177,22 @@ namespace spine
 				spBoundingBoxAttachment * boundingBox = SUB_CAST(spBoundingBoxAttachment, slot->attachment);
 				_bounds.push_back(SpineSkeletonBounds());
 				SpineSkeletonBounds& bounds = _bounds.back();
-				spBoundingBoxAttachment_computeWorldVertices(boundingBox, slot->bone, bounds.vertices);
-				bounds.count = boundingBox->verticesCount;
+				spBoundingBoxAttachment_computeWorldVertices(boundingBox, slot, bounds.vertices);
+				bounds.count = boundingBox->super.worldVerticesLength;
 				break;
 			}
-			case SP_ATTACHMENT_MESH:
+			case SP_ATTACHMENT_LINKED_MESH:
 			{
-				spMeshAttachment * mesh = SUB_CAST(spMeshAttachment, slot->attachment);
-				spMeshAttachment_updateUVs_fixed(mesh, _uvBuffer);
+				break;
+			}
+			case SP_ATTACHMENT_MESH: 
+			{
+				spMeshAttachment * mesh = SUB_CAST(spMeshAttachment, slot->attachment);				
 				spMeshAttachment_computeWorldVertices(mesh, slot, _mesh.Vertices);
-				for (int j = 0; j < mesh->verticesCount; j += 2)
+				
+				spMeshAttachment_updateUVs_fixed(mesh, _uvBuffer);
+
+				for (int j = 0; j < mesh->super.worldVerticesLength; j += 2)
 				{
 					transform(_mesh.Vertices + j, _mesh.Vertices + j + 1);
 					aabb.expand(_mesh.Vertices[j], _mesh.Vertices[j + 1]);
@@ -185,15 +200,25 @@ namespace spine
 				_mesh.Uvs = _uvBuffer;
 				_mesh.Indices = mesh->triangles;
 				_mesh.IndicesCount = mesh->trianglesCount;
-				_mesh.VerticesCount = mesh->verticesCount / 2;
+				_mesh.VerticesCount = mesh->super.worldVerticesLength / 2;
 				//_mesh.State.TextureId = getTextureId(mesh->rendererObject);
 				_lightingConfig.texture = getTextureId(mesh->rendererObject);
+				/*
+				if (isTrail)
+				{
+					batcher->drawSpineMesh0(_mesh, colorScale);
+				}
+				else
+				{
+				}
+				*/
 				batcher->drawSpineMesh(_mesh, colorScale);
 				break;
 			}
-			case SP_ATTACHMENT_WEIGHTED_MESH:
+			/*
+			case SP_ATTACHMENT_LINKED_MESH:
 			{
-
+				
 				spWeightedMeshAttachment * skinnedMesh = SUB_CAST(spWeightedMeshAttachment, slot->attachment);
 				spSkinnedMeshAttachment_updateUVs_fixed(skinnedMesh, _uvBuffer);
 				spWeightedMeshAttachment_computeWorldVertices(skinnedMesh, slot, _mesh.Vertices);
@@ -209,8 +234,10 @@ namespace spine
 				_lightingConfig.texture = getTextureId(skinnedMesh->rendererObject);
 				//_mesh.State.TextureId = getTextureId(skinnedMesh->rendererObject);
 				batcher->drawSpineMesh(_mesh, colorScale);
+				
 				break;
 			}
+			*/
 			default:
 			{
 				break;
@@ -291,21 +318,23 @@ namespace spine
 					spBoundingBoxAttachment * boundingBox = SUB_CAST(spBoundingBoxAttachment, slot->attachment);
 					_bounds.push_back(SpineSkeletonBounds());
 					SpineSkeletonBounds& bounds = _bounds.back();
-					spBoundingBoxAttachment_computeWorldVertices(boundingBox, slot->bone, bounds.vertices);
-					bounds.count = boundingBox->verticesCount;
+					spBoundingBoxAttachment_computeWorldVertices(boundingBox, slot, bounds.vertices);
+					bounds.count = boundingBox->super.worldVerticesLength;
 					break;
 				}
+				case SP_ATTACHMENT_LINKED_MESH:
 				case SP_ATTACHMENT_MESH:
 				{
 					spMeshAttachment * mesh = SUB_CAST(spMeshAttachment, slot->attachment);
 					spMeshAttachment_computeWorldVertices(mesh, slot, _mesh.Vertices);
-					for (int j = 0; j < mesh->verticesCount; j += 2)
+					for (int j = 0; j < mesh->super.worldVerticesLength; j += 2)
 					{
 						transform(_mesh.Vertices + j, _mesh.Vertices + j + 1);
 						aabb.expand(_mesh.Vertices[j], _mesh.Vertices[j + 1]);
 					}
 					break;
 				}
+				/*
 				case SP_ATTACHMENT_WEIGHTED_MESH:
 				{
 					spWeightedMeshAttachment * skinnedMesh = SUB_CAST(spWeightedMeshAttachment, slot->attachment);
@@ -317,6 +346,7 @@ namespace spine
 					}
 					break;
 				}
+				*/
 				default:
 				{
 					break;
@@ -403,18 +433,19 @@ namespace spine
 					break;
 				}
 				case SP_ATTACHMENT_MESH:
-				{
+				{					
 					spMeshAttachment * mesh = SUB_CAST(spMeshAttachment, slot->attachment);
 					spMeshAttachment_updateUVs_fixed(mesh, _uvBuffer);
 					spMeshAttachment_computeWorldVertices(mesh, slot, _mesh.Vertices);
-					for (int j = 0; j < mesh->verticesCount; j += 2)
+					for (int j = 0; j < mesh->super.worldVerticesLength; j += 2)
 						transform(_mesh.Vertices + j, _mesh.Vertices + j + 1);
 					_mesh.Indices = mesh->triangles;
 					_mesh.IndicesCount = mesh->trianglesCount;
-					_mesh.VerticesCount = mesh->verticesCount / 2;
+					_mesh.VerticesCount = mesh->super.worldVerticesLength / 2;
 					buffer.Add(_mesh);
 					break;
 				}
+				/*
 				case SP_ATTACHMENT_WEIGHTED_MESH:
 				{
 
@@ -429,6 +460,7 @@ namespace spine
 					buffer.Add(_mesh);
 					break;
 				}
+				*/
 				default:
 				{
 					break;
@@ -487,12 +519,13 @@ namespace spine
 					//spBoundingBoxAttachment_computeWorldVertices(boundingBox, slot->bone, _mesh.Vertices);
 					break;
 				}
+				case SP_ATTACHMENT_LINKED_MESH:
 				case SP_ATTACHMENT_MESH:
 				{					
 					spMeshAttachment * mesh = SUB_CAST(spMeshAttachment, slot->attachment);
 					spMeshAttachment_updateUVs_fixed(mesh, _uvBuffer);
 					spMeshAttachment_computeWorldVertices(mesh, slot, _mesh.Vertices);
-					for (int j = 0; j < mesh->verticesCount; j += 2)
+					for (int j = 0; j < mesh->super.worldVerticesLength; j += 2)
 					{
 						transform(_mesh.Vertices + j, _mesh.Vertices + j + 1);
 						aabb.expand(_mesh.Vertices[j], _mesh.Vertices[j + 1]);
@@ -500,12 +533,13 @@ namespace spine
 					_mesh.Uvs = _uvBuffer;
 					_mesh.Indices = mesh->triangles;
 					_mesh.IndicesCount = mesh->trianglesCount;
-					_mesh.VerticesCount = mesh->verticesCount / 2;
+					_mesh.VerticesCount = mesh->super.worldVerticesLength / 2;
 					//_mesh.State.TextureId = getTextureId(mesh->rendererObject);
 					_lightingConfig.texture = getTextureId(mesh->rendererObject);
 					batcher->drawSpineMesh(_mesh, colorScale);
 					break;
 				}
+				/*
 				case SP_ATTACHMENT_WEIGHTED_MESH:
 				{			
 					
@@ -526,6 +560,7 @@ namespace spine
 					batcher->drawSpineMesh(_mesh, colorScale);
 					break;
 				}
+				*/
 				default:
 				{
 					break;

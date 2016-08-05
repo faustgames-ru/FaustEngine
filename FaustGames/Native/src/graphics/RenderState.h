@@ -22,6 +22,8 @@ namespace graphics
 		void apply(VertexFormat *vertexFormat, void *vertexData);
 		void init();
 
+		void resetDepth();
+		void resetBlend();
 	protected:
 	private:
         State<GLuint> _vertexBufferState;

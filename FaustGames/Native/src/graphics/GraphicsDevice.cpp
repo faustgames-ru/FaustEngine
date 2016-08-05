@@ -83,7 +83,7 @@ namespace graphics
         }
         if (core::Math::abs(depth - _depthState) > 0.0001f)
         {
-            glClearDepthf(depth);
+            glClearDepth(static_cast<double>(depth));
 			_depthState = depth;
         }
 	}

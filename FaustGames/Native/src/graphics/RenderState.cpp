@@ -45,7 +45,7 @@ namespace graphics
 		_effect.applyState();
 		_vertexBufferState.applyState();
 		
-		if (!_depthState.isEqual())
+		//if (!_depthState.isEqual())
 		{
 			switch (_depthState.getValue())
 			{
@@ -69,7 +69,7 @@ namespace graphics
 			}			
 		}
 
-		if (!_blendState.isEqual())
+		//if (!_blendState.isEqual())
 		{
 			switch (_blendState.getValue())
 			{

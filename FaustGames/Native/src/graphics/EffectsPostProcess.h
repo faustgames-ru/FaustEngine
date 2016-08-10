@@ -81,6 +81,26 @@ namespace graphics
 	protected:
 	private:
 	};
+
+	class EffectPostProcessBloomDepthAddFilter : public EffectBase
+	{
+	public:
+		EffectPostProcessBloomDepthAddFilter();
+		~EffectPostProcessBloomDepthAddFilter();
+		void create();
+	protected:
+	private:
+	};
+
+	class EffectPostProcessMix : public EffectBase
+	{
+	public:
+		EffectPostProcessMix();
+		~EffectPostProcessMix();
+		void create();
+	protected:
+	private:
+	};
 }
 
 #endif /*EFFECT_POST_PROCESS_H*/

@@ -3,6 +3,7 @@
 #include "Attributes.h"
 #include "../../shaders/post_process_vert.h"
 #include "../../shaders/post_process_bloom_add_filter_frag.h"
+#include "../../shaders/post_process_bloom_depth_add_filter.h"
 #include "../../shaders/post_process_tonemapping.h"
 #include "../../shaders/post_process_bloom_filter_frag.h"
 #include "../../shaders/post_process_vblur_vert.h"
@@ -11,6 +12,7 @@
 #include "../../shaders/post_process_empty_frag.h"
 #include "../../shaders/post_process_empty_color_frag.h"
 #include "../../shaders/post_process_color_vert.h"
+#include "../../shaders/post_process_mix_frag.h"
 
 
 namespace graphics
@@ -162,4 +164,46 @@ namespace graphics
 			shader_post_process_bloom_add_filter_frag_size);
 	}
 
+	EffectPostProcessBloomDepthAddFilter::EffectPostProcessBloomDepthAddFilter()
+	{
+		_effect.addUniform(Uniforms::texture(), UniformValues::texture());
+		_effect.addUniform(Uniforms::lightmap(), UniformValues::lightmap());
+		_effect.addUniform(Uniforms::depthmap(), UniformValues::depthmap());
+		_effect.addAttribute(Attributes::position());
+		_effect.addAttribute(Attributes::textureCoords());
+	}
+
+	EffectPostProcessBloomDepthAddFilter::~EffectPostProcessBloomDepthAddFilter()
+	{
+	}
+
+	void EffectPostProcessBloomDepthAddFilter::create()
+	{
+		_effect.create(
+			(char *)shader_post_process_vert,
+			shader_post_process_vert_size,
+			(char *)shader_post_process_bloom_depth_add_filter_frag,
+			shader_post_process_bloom_depth_add_filter_frag_size);
+	}
+
+	EffectPostProcessMix::EffectPostProcessMix()
+	{
+		_effect.addUniform(Uniforms::texture(), UniformValues::texture());
+		_effect.addUniform(Uniforms::lightmap(), UniformValues::lightmap());
+		_effect.addAttribute(Attributes::position());
+		_effect.addAttribute(Attributes::textureCoords());
+	}
+
+	EffectPostProcessMix::~EffectPostProcessMix()
+	{
+	}
+
+	void EffectPostProcessMix::create()
+	{
+		_effect.create(
+			(char *)shader_post_process_vert,
+			shader_post_process_vert_size,
+			(char *)shader_post_process_mix_frag,
+			shader_post_process_mix_frag_size);
+	}
 }

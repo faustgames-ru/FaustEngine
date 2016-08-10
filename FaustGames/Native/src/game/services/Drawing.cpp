@@ -75,7 +75,7 @@ namespace game
 		for (uint i = 0; i < mesh->vertices.size(); i++)
 		{
 			_spriteVertices[i].xyz = core::Matrix3::transform(transform.rotation, mesh->vertices[i].xyz) + transform.position;
-			_spriteVertices[i].color = 0xffffffff;
+			_spriteVertices[i].color = 0xff808080;
 			_spriteVertices[i].u = mesh->vertices[i].u;
 			_spriteVertices[i].v = mesh->vertices[i].v;
 		}

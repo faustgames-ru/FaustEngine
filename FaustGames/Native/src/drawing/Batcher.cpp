@@ -390,60 +390,6 @@ namespace drawing
 		currentBuffer->addMesh(mesh.Color, mesh.Z, mesh.Vertices, mesh.Uvs, mesh.VerticesCount, mesh.Indices, mesh.IndicesCount, mesh.State.Blend == graphics::BlendState::Additive, colorScale);
 	}
 
-	void Batcher::drawSpineMesh0(const BatcherSpineMesh& mesh, byte colorScale)
-	{
-		//drawSpineMesh(mesh, colorScale);
-		if (_bloom.getBloorMap() != nullptr)
-		{
-			llge::LightingConfig * config = static_cast<llge::LightingConfig *>(mesh.State.config);
-			//config->texture = _bloom.getBloorMap()->getHandle();
-			config->lightmap = _bloom.getBloorMap()->getHandle();
-
-			_verticesCounter += mesh.VerticesCount;
-			BatchBuffer * currentBuffer = _buffer->Buffers[_batchBufferIndex];
-			bool needNewEntry = false;
-			if (!currentBuffer->canAdd(mesh.VerticesCount, mesh.IndicesCount))
-			{
-				_batchBufferIndex++;
-				if (_buffer->Buffers.size() <= _batchBufferIndex)
-				{
-					_buffer->Buffers.push_back(new BatchBuffer());
-#ifdef __ANDROID__
-					__android_log_print(ANDROID_LOG_ERROR, "TRACKERS", "%s", "new render buffer allocated");
-#endif
-				}
-
-				currentBuffer = _buffer->Buffers[_batchBufferIndex];
-				currentBuffer->reset();
-				needNewEntry = true;
-			}
-			graphics::EffectBase* effect = graphics::Effects::textureBlurColor();
-
-			if (effect != _effect || needNewEntry || !mesh.State.isConfigEqual(_config))
-			{
-				if (_currentEntry.IndicesCount != 0)
-					_buffer->Entries.push_back(_currentEntry);
-				_currentEntry.IndicesStart = currentBuffer->getCurrentIndices();
-				_currentEntry.IndicesCount = 0;
-				_currentEntry.BatchBufferIndex = _batchBufferIndex;
-				effect->configCopy(_currentEntry.Config, mesh.State.config);
-				effect->configCopy(_config, mesh.State.config);
-
-				_currentEntry.Blend = _blend = mesh.State.Blend;
-				_currentEntry.Effect = _effect = effect;
-				_currentEntry.TransformIndex = _buffer->Transforms.size() - 1;
-				_currentEntry.RenderTargetIndex = _buffer->RenderTargets.size() - 1;
-			}
-
-			_currentEntry.IndicesCount += mesh.IndicesCount;
-			currentBuffer->_x = _x;
-			currentBuffer->_y = _y;
-			currentBuffer->_w = _w;
-			currentBuffer->_h = _h;
-			currentBuffer->addMesh(mesh.Color, mesh.Z, mesh.Vertices, mesh.Uvs, mesh.VerticesCount, mesh.Indices, mesh.IndicesCount, mesh.State.Blend == graphics::BlendState::Additive, _buffer->Transforms.back().Value, colorScale);
-		}
-	}
-
 	void Batcher::executeRenderCommands(bool usePostProcess)
 	{
 		_primitivesCount = 0;
@@ -452,9 +398,16 @@ namespace drawing
 		int primitivesCount;
 
 		RenderBuffer * _backBuffer = _buffer;
+		//graphics::Texture *blurmap = _bloom.getBlurMap();
 		if (usePostProcess && _bloom.isAvaliable())
 		{
 			_bloom.beginRender(_tonemapId);
+			/*
+			if (blurmap != nullptr)
+			{
+				graphics::EffectTextureBlurmap::blurmap = blurmap->getHandle();
+			}
+			*/
 		}
 		else
 		{			
@@ -463,9 +416,11 @@ namespace drawing
 
 		if (_buffer->Transforms.size() > 0)
 		{
+			glDepthFunc(GL_LESS);
 			_zButcher->configure(graphics::BlendState::Alpha, _converter.getEffect(llge::EffectTextureColor), _buffer->Transforms[0]);
 			_zButcher->applyRender();
 		}
+		glDepthFunc(GL_LEQUAL);
 		bool _postEffectFinished = false;
 		for (TBatchEntries::iterator i = _backBuffer->Entries.begin(); i != _backBuffer->Entries.end(); ++i)
 		{
@@ -481,6 +436,12 @@ namespace drawing
 			}
 			
 			BatchBuffer * currentBuffer = _backBuffer->Buffers[i->BatchBufferIndex];
+			/*
+			if (blurmap != nullptr && !_postEffectFinished)
+			{
+				i->Effect = graphics::Effects::textureBlurmap();
+			}
+			*/
 			i->Effect->configApply(i->Config);
 
 			graphics::UniformValues::projection()->setValue(_backBuffer->Transforms[i->TransformIndex]);
@@ -495,7 +456,7 @@ namespace drawing
 			_primitivesCount += primitivesCount;
 			_verticesCount += verticesCount;
 			_graphicsDevice->renderState.setBlend(graphics::BlendState::Alpha);
-			_graphicsDevice->renderState.setDepth(graphics::DepthState::Read);
+			_graphicsDevice->renderState.setDepth(graphics::DepthState::ReadWrite);
 			_graphicsDevice->drawPrimitives(_format, currentBuffer->getVertices(), i->IndicesStart, primitivesCount);
 		}
 		_verticesCount = _verticesCounter;

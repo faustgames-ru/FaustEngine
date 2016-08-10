@@ -161,12 +161,14 @@
     <ClInclude Include="..\..\CommonSources\include\llge.h" />
     <ClInclude Include="..\shaders\module_fog_vert.h" />
     <ClInclude Include="..\shaders\post_process_bloom_add_filter_frag.h" />
+    <ClInclude Include="..\shaders\post_process_bloom_depth_add_filter.h" />
     <ClInclude Include="..\shaders\post_process_bloom_filter_frag.h" />
     <ClInclude Include="..\shaders\post_process_blur_frag.h" />
     <ClInclude Include="..\shaders\post_process_color_vert.h" />
     <ClInclude Include="..\shaders\post_process_empty_color_frag.h" />
     <ClInclude Include="..\shaders\post_process_empty_frag.h" />
     <ClInclude Include="..\shaders\post_process_hblur_vert.h" />
+    <ClInclude Include="..\shaders\post_process_mix_frag.h" />
     <ClInclude Include="..\shaders\post_process_tonemapping.h" />
     <ClInclude Include="..\shaders\post_process_vblur_vert.h" />
     <ClInclude Include="..\shaders\post_process_vert.h" />
@@ -178,6 +180,8 @@
     <ClInclude Include="..\shaders\solid_vert.h" />
     <ClInclude Include="..\shaders\texture_alphamask_color_frag.h" />
     <ClInclude Include="..\shaders\texture_alphamask_color_vert.h" />
+    <ClInclude Include="..\shaders\texture_blurmap_color_frag.h" />
+    <ClInclude Include="..\shaders\texture_blurmap_color_vert.h" />
     <ClInclude Include="..\shaders\texture_blur_color_frag.h" />
     <ClInclude Include="..\shaders\texture_color_fog_frag.h" />
     <ClInclude Include="..\shaders\texture_color_fog_vert.h" />

@@ -44,6 +44,18 @@ namespace graphics
 	private:
 	};
 
+	class EffectTextureBlurmap : public EffectBase
+	{
+	public:
+		static uint blurmap;
+		EffectTextureBlurmap();
+		~EffectTextureBlurmap();
+		void create();
+		virtual void configApply(const void *config) OVERRIDE;
+	protected:
+	private:
+	};
+
 }
 
 #endif /*EFFECT_TEXTURE_COLOR_H*/

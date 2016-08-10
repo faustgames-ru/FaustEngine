@@ -118,9 +118,9 @@ namespace physics
 		_world->QueryAABB(_debugRenderCallback, aabb);
 	}
 
-	bool PhysicalWorld::makeRayCastFirst(float x0, float y0, float x1, float y1, uint mask, IntPtr resultPoint, IntPtr resultNormal)
+	bool PhysicalWorld::makeRayCastFirst(float x0, float y0, float x1, float y1, uint mask, bool ignoreSensors, IntPtr resultPoint, IntPtr resultNormal)
 	{
-		bool result = rayCastFirst(x0, y0, x1, y1, mask, *static_cast<core::Vector2 *>(resultPoint), *static_cast<core::Vector2 *>(resultNormal));
+		bool result = rayCastFirst(x0, y0, x1, y1, mask, ignoreSensors, *static_cast<core::Vector2 *>(resultPoint), *static_cast<core::Vector2 *>(resultNormal));
 		return result;
 	}
 
@@ -237,9 +237,9 @@ namespace physics
 		}
 	}
 
-	bool PhysicalWorld::rayCastFirst(float x0, float y0, float x1, float y1, uint mask, core::Vector2& result, core::Vector2 &resultNormal)
+	bool PhysicalWorld::rayCastFirst(float x0, float y0, float x1, float y1, uint mask, bool ignoreSensors, core::Vector2& result, core::Vector2 &resultNormal)
 	{
-		_raycastFirst.init(mask);
+		_raycastFirst.init(mask, ignoreSensors);
 		_world->RayCast(&_raycastFirst, b2Vec2(_dimensions.toWorld(x0), _dimensions.toWorld(y0)), b2Vec2(_dimensions.toWorld(x1), _dimensions.toWorld(y1)));
 		result = core::Vector2(_dimensions.fromWorld(_raycastFirst.bestPoint.getX()), _dimensions.fromWorld(_raycastFirst.bestPoint.getY()));
 		resultNormal = _raycastFirst.bestNormal;
@@ -297,12 +297,13 @@ namespace physics
 		return true;
 	}
 
-	RayCastFirstCallback::RayCastFirstCallback(): mask(0xffffffff), best(nullptr), bestFraction(1.0f)
+	RayCastFirstCallback::RayCastFirstCallback(): mask(0xffffffff), best(nullptr), bestFraction(1.0f), ignoreSensors(true)
 	{
 	}
 
-	void RayCastFirstCallback::init(uint maskBits)
+	void RayCastFirstCallback::init(uint maskBits, bool sensors)
 	{
+		ignoreSensors = sensors;
 		bestFraction = 1.0f;
 		best = nullptr;
 		mask = maskBits;
@@ -311,6 +312,8 @@ namespace physics
 	float RayCastFirstCallback::ReportFixture(b2Fixture* fixture, const b2Vec2& point, const b2Vec2& normal, float32 fraction)
 	{
 		if ((fixture->GetFilterData().categoryBits & mask) == 0)
+			return 1.0f;
+		if (ignoreSensors && fixture->IsSensor())
 			return 1.0f;
 		if (fraction <= bestFraction)
 		{

@@ -31,7 +31,7 @@ namespace razor
 
 		if (!_dir.isEmpty())
 		{
-			_mesh->transform = core::Matrix3::createRotation(core::Vector3::eZ, 0.125f, _dir.getY(), _dir.getX());
+			_mesh->transform = core::Matrix3::createRotation(core::Vector3::eZ, 0.25f, _dir.getY(), _dir.getX());
 		}
 
 		e.scene->camera()->target = e.scene->camera()->target + core::Vector3(0, 1 * core::Environment::elapsedSeconds, 0);

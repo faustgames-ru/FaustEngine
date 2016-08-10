@@ -26,9 +26,10 @@ namespace physics
 		float bestFraction;
 		core::Vector2 bestPoint;
 		core::Vector2 bestNormal;
+		bool ignoreSensors;
 		RayCastFirstCallback();
 
-		void init(uint maskBits);
+		void init(uint maskBits, bool ignoreSensors);
 		virtual float ReportFixture(b2Fixture* fixture, const b2Vec2& point, const b2Vec2& normal, float32 fraction) OVERRIDE;
 	};
 
@@ -59,10 +60,10 @@ namespace physics
 		void debugRenderFixture(core::Vector2 center, float sin, float cos, b2Fixture * fixture);
 		void debugRenderShape(uint color, core::Vector2 center, float sin, float cos, b2Shape * shape);
 
-		bool rayCastFirst(float x0, float y0, float x1, float y1, uint mask, core::Vector2 &result, core::Vector2 &resultNormal);
+		bool rayCastFirst(float x0, float y0, float x1, float y1, uint mask, bool ignoreSensors, core::Vector2 &result, core::Vector2 &resultNormal);
 
 		virtual void API_CALL debugRender(float x, float y, float rx, float ry) OVERRIDE;
-		virtual bool API_CALL makeRayCastFirst(float x0, float y0, float x1, float y1, uint mask, IntPtr resultPoint, IntPtr resultNormal) OVERRIDE;
+		virtual bool API_CALL makeRayCastFirst(float x0, float y0, float x1, float y1, uint mask, bool ignoreSensors, IntPtr resultPoint, IntPtr resultNormal) OVERRIDE;
 		virtual llge::IPhysicalBody* API_CALL createPhysicalBody(llge::PhysicalBodyType type, float x, float y, float rotation, bool fixedRotation) OVERRIDE;
 		virtual void API_CALL disposePhysicalBody(llge::IPhysicalBody* body) OVERRIDE;
 		virtual llge::IPhysicalFixedJoint* API_CALL createPhysicalFixedJoint(llge::IPhysicalBody* ground, llge::IPhysicalBody* body, float x, float y, float maxForce) OVERRIDE;

@@ -122,7 +122,6 @@ namespace drawing
 		void drawMesh(graphics::EffectBase *effect, graphics::BlendState::e blend, uint textureId, uint lightmapId, TVertex *vertices, int verticesCount, ushort *indices, int indicesCount, unsigned char colorScale);
 		void drawMesh(graphics::EffectBase *effect, graphics::BlendState::e blend, void* config, TVertex *vertices, int verticesCount, ushort *indices, int indicesCount, unsigned char colorScale);
 		void drawSpineMesh(const BatcherSpineMesh &mesh, byte colorScale);
-		void drawSpineMesh0(const BatcherSpineMesh &mesh, byte colorScale);
 
 		void executeRenderCommands(bool usePostProcess);
 

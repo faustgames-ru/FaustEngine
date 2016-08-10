@@ -5,6 +5,8 @@
 #include "../../shaders/texture_color_vert.h"
 #include "../../shaders/texture_color_fog_frag.h"
 #include "../../shaders/texture_color_fog_vert.h"
+#include "../../shaders/texture_blurmap_color_frag.h";
+#include "../../shaders/texture_blurmap_color_vert.h";
 
 namespace graphics
 {
@@ -86,5 +88,36 @@ namespace graphics
 	{
 		const llge::EffectConfig* ec = static_cast<const llge::EffectConfig*>(config);
 		graphics::UniformValues::texture()->setValue(ec->texture);
+	}
+
+	uint EffectTextureBlurmap::blurmap(0);
+
+
+	EffectTextureBlurmap::EffectTextureBlurmap()
+	{
+		_configSize = sizeof(llge::EffectConfig);
+		_effect.addUniform(Uniforms::projection(), UniformValues::projection());
+		_effect.addUniform(Uniforms::texture(), UniformValues::texture());
+		_effect.addUniform(Uniforms::lightmap(), UniformValues::lightmap());
+
+		_effect.addAttribute(Attributes::position());
+		_effect.addAttribute(Attributes::textureCoords());
+		_effect.addAttribute(Attributes::color());
+	}
+
+	EffectTextureBlurmap::~EffectTextureBlurmap()
+	{
+	}
+
+	void EffectTextureBlurmap::create()
+	{
+		_effect.create((char *)shader_texture_blurmap_color_vert, shader_texture_blurmap_color_vert_size, (char *)shader_texture_blurmap_color_frag, shader_texture_blurmap_color_frag_size);
+	}
+
+	void EffectTextureBlurmap::configApply(const void* config)
+	{
+		const llge::EffectConfig* ec = static_cast<const llge::EffectConfig*>(config);
+		graphics::UniformValues::texture()->setValue(ec->texture);
+		graphics::UniformValues::lightmap()->setValue(blurmap);
 	}
 }

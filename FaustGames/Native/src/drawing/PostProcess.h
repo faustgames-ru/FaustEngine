@@ -32,25 +32,31 @@ namespace drawing
 	class TonemapFilter
 	{
 	public:
-		virtual void execute(graphics::TextureRenderTarget2d *source, graphics::TextureRenderTarget2d *target, uint tonemapId);
+		virtual void execute(graphics::Texture* source, graphics::IRenderTarget *target, uint tonemapId);
 	};
 
 	class BloomFilter
 	{
 	public:
-		virtual void execute(graphics::TextureRenderTarget2d *source, graphics::IRenderTarget *target);
+		virtual void execute(graphics::Texture* source, graphics::IRenderTarget *target);
 	};
 
 	class EmptyProcess
 	{
 	public:
-		virtual void execute(graphics::TextureRenderTarget2d *source, graphics::IRenderTarget *target);
+		virtual void execute(graphics::Texture* source, graphics::IRenderTarget *target);
+	};
+
+	class DebugDepthProcess
+	{
+	public:
+		virtual void execute(graphics::Texture* source, graphics::IRenderTarget *target);
 	};
 
 	class VignettingProcess
 	{
 	public:
-		virtual void execute(graphics::Texture *source);
+		virtual void execute(graphics::Texture* source);
 	private:
 		void addVertex(core::Vector2 v);
 		std::vector<Mesh2dVertex> _vertices;
@@ -60,14 +66,14 @@ namespace drawing
 	class FilterVBlur
 	{
 	public:
-		virtual void execute(graphics::TextureRenderTarget2d *source, graphics::TextureRenderTarget2d *target);
+		virtual void execute(graphics::Texture* source, graphics::IRenderTarget *target);
 	};
 
 	
 	class FilterHBlur 
 	{
 	public:
-		virtual void execute(graphics::TextureRenderTarget2d *source, graphics::TextureRenderTarget2d *target);
+		virtual void execute(graphics::Texture* source, graphics::IRenderTarget *target);
 	};
 
 
@@ -86,16 +92,13 @@ namespace drawing
 		PostProcessVertex _vertices[size][size];
 		core::Vector2 _normals[size][size];
 	};
-	
+
 	class FilterAdd
 	{
 	public:
 		Refractor refractor;
-		virtual void execute(graphics::Texture *value0, graphics::Texture *value1, graphics::IRenderTarget *target);
+		virtual void execute(graphics::Texture* value0, graphics::Texture* value1, graphics::IRenderTarget *target);
 	};
-
-
-
 
 	class PostProcessBloom
 	{
@@ -107,20 +110,22 @@ namespace drawing
 
 		virtual void beginRender(uint tonemapId);
 		virtual void finishRender();
-		graphics::TextureRenderTarget2d* getBloorMap();
 		bool isAvaliable();
+		graphics::Texture* getBlurMap();
 	private:
 		BloomFilter _filter;		
 		EmptyProcess _empty;
+		DebugDepthProcess _debugDepth;
 		FilterVBlur _vBlur;
 		FilterHBlur _hBlur;		
 		FilterAdd _add;
 		VignettingProcess _vignetting;
 		TonemapFilter _tonemap;
 		uint _tonemapId;
-		graphics::TextureRenderTarget2d *_source;
+		graphics::IPostProcessTarget *_source;
 		graphics::IRenderTarget *_beginTarget;
-		graphics::TextureRenderTarget2d *_blurMap;
+		graphics::IPostProcessTarget *_blurMap;
+
 		/*
 		graphics::TextureRenderTarget2d *_target0;
 		graphics::TextureRenderTarget2d *_target1;

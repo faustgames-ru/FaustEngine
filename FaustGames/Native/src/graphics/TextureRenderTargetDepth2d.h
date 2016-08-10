@@ -6,7 +6,7 @@
 #include "TextureRenderTarget2d.h"
 namespace graphics
 {
-	class TextureRenderTargetDepth2d : public llge::IRenderTargetDepth2d, IRenderTarget
+	class TextureRenderTargetDepth2d : public llge::IRenderTargetDepth2d, public IRenderTarget
 	{
 	public:
 		TextureRenderTargetDepth2d();
@@ -20,14 +20,14 @@ namespace graphics
 		virtual void API_CALL create(int width, int height);
 		virtual void API_CALL cleanup();
 		virtual void API_CALL dispose() { delete this; }
+		Texture _colorTexture;
+		Texture _depthTexture;
 	protected:
 	private:
 		bool _filter;
 		int _width;
 		int _height;
 		GLuint _frameBuffer;
-		Texture _colorTexture;
-		Texture _depthTexture;
 	};
 }
 

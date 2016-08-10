@@ -818,6 +818,18 @@
     <ClInclude Include="..\src\spine\runtime\Json.h">
       <Filter>spine\runtime</Filter>
     </ClInclude>
+    <ClInclude Include="..\shaders\post_process_bloom_depth_add_filter.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shaders\texture_blurmap_color_vert.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shaders\texture_blurmap_color_frag.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shaders\post_process_mix_frag.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\CommonSources\gen\llgePInvoke.cpp">

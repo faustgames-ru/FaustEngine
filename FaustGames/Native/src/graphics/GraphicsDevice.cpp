@@ -52,6 +52,18 @@ namespace graphics
 		}
 	}
 
+	std::string Extensions::names[Count] = 
+	{
+		"OES_depth_texture"
+	};
+
+	bool GraphicsDevice::extensions[Extensions::Count] =
+	{
+		false
+	};
+
+
+
 	GraphicsConfig::GraphicsConfig() :
 		filterMode(FilterMode::Linear),
 		generateMipmaps(false),
@@ -64,7 +76,7 @@ namespace graphics
 
 	}
 
-	GraphicsDevice::GraphicsDevice() : _colorState(0), _depthState(-1.0f), _activeTextureState(-1), _drawCalls(0), actualRenderTarget(0)
+	GraphicsDevice::GraphicsDevice() : actualRenderTarget(0), _depthState(-1.0f), _colorState(0), _activeTextureState(-1), _drawCalls(0)
 	{
 		PostProcessTargets.filter = false;
 	}
@@ -106,6 +118,7 @@ namespace graphics
 		int w = width*config.postEffectsScale;
 		int h = height*config.postEffectsScale;
 		
+		//PostProcessDepthTargets.setViewport(w, h);
 		PostProcessTargets.setViewport(w, h);
 		if (config.bloomDownsample <= 0)
 			config.bloomDownsample = 2;
@@ -156,7 +169,7 @@ namespace graphics
 			glBindFramebuffer(GL_FRAMEBUFFER, renderTarget->getFramebuffer());
 			Errors::check(Errors::BindFramebuffer);
 
-			/*
+			
 			GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
 			Errors::check(Errors::CheckFramebufferStatus);
 			if (status != GL_FRAMEBUFFER_COMPLETE)
@@ -182,7 +195,7 @@ namespace graphics
 				}
 				return;
 			}
-			*/
+			
 
 			glViewport(0, 0, renderTarget->getWidth(), renderTarget->getHeight());
 			Errors::check(Errors::Viewport);
@@ -322,7 +335,11 @@ namespace graphics
 	{        
 		glDepthMask(GL_TRUE);
 		glEnable(GL_DEPTH_TEST);
-
+		const char* oesExts = static_cast<const char*>(static_cast<const void *>(glGetString(GL_EXTENSIONS)));
+		for (int i = 0; i < Extensions::Count; i++)
+		{
+			extensions[i] = strstr(oesExts, Extensions::names[i].c_str()) != nullptr;
+		}
 		TextureImage2d::createStatic();
 	}
 	
@@ -338,32 +355,133 @@ namespace graphics
 	
 	void PostProcessTargetManager::addProcessRenderTarget()
 	{
-		TextureRenderTarget2d * rt = new TextureRenderTarget2d(filter);
+		IPostProcessTarget * rt = _constructor->createPostProcessTarget(filter);
 		rt->create(_width, _height);
 		_stack.push_back(rt);
 		_all.push_back(rt);
 	}
 
 
+	PostProcessTarget::PostProcessTarget(TextureRenderTarget2d* target): _target(target)
+	{
+	}
+
+	IRenderTarget* PostProcessTarget::getRenderTarget()
+	{
+		return _target;
+	}
+
+	Texture* PostProcessTarget::getColor()
+	{
+		return _target;
+	}
+
+	Texture* PostProcessTarget::getDepth()
+	{
+		return nullptr;
+	}
+
+	int PostProcessTarget::getWidth()
+	{
+		return _target->getWidth();
+	}
+
+	int PostProcessTarget::getHeight()
+	{
+		return _target->getHeight();
+	}
+
+	void PostProcessTarget::create(int width, int height)
+	{
+		_target->create(width, height);
+	}
+
+	void PostProcessTarget::cleanup()
+	{
+		_target->cleanup();
+	}
+
+	PostProcessDepthTarget::PostProcessDepthTarget(TextureRenderTargetDepth2d* target)
+	{
+		_target = target;
+	}
+
+	IRenderTarget* PostProcessDepthTarget::getRenderTarget()
+	{
+		return _target;
+	}
+
+	Texture* PostProcessDepthTarget::getColor()
+	{
+		return &_target->_colorTexture;
+	}
+
+	Texture* PostProcessDepthTarget::getDepth()
+	{
+		return &_target->_depthTexture;
+	}
+
+	int PostProcessDepthTarget::getWidth()
+	{
+		return _target->getWidth();
+	}
+
+	int PostProcessDepthTarget::getHeight()
+	{
+		return _target->getHeight();
+	}
+
+	void PostProcessDepthTarget::create(int width, int height)
+	{
+		_target->create(width, height);
+	}
+
+	void PostProcessDepthTarget::cleanup()
+	{
+		_target->cleanup();
+	}
+
+	PostProcessTargetConstructor PostProcessTargetConstructor::Default;
+
+
+	IPostProcessTarget* PostProcessTargetConstructor::createPostProcessTarget(bool filter)
+	{
+		return new PostProcessTarget(new TextureRenderTarget2d(filter));
+	}
+
+	PostProcessTargetDepthConstructor PostProcessTargetDepthConstructor::Default;
+
+
+	IPostProcessTarget* PostProcessTargetDepthConstructor::createPostProcessTarget(bool filter)
+	{
+		return new PostProcessDepthTarget(new TextureRenderTargetDepth2d());
+	}
+
 	PostProcessTargetManager::PostProcessTargetManager()
 	{
+		_constructor = &PostProcessTargetConstructor::Default;
 		filter = true;
 		_width = 0;
 		_height = 0;
 	}
 
-	TextureRenderTarget2d *PostProcessTargetManager::pop()
+	void PostProcessTargetManager::setConstructor(IPostProcessTargetConstructor* constructor)
+	{
+		_constructor = constructor;
+	}
+
+	IPostProcessTarget *PostProcessTargetManager::pop()
 	{
 		if (_stack.size() == 0)
 		{
 			addProcessRenderTarget();
 		}
-		TextureRenderTarget2d * res = _stack[_stack.size() - 1];
+		IPostProcessTarget * res = _stack[_stack.size() - 1];
 		_stack.pop_back();
 		return res;
 	}
 	
-	void PostProcessTargetManager::push(TextureRenderTarget2d *rt)
+	void PostProcessTargetManager::push(IPostProcessTarget *rt)
 	{
 		_stack.push_back(rt);
 	}
@@ -374,7 +492,7 @@ namespace graphics
 		_height = height;
 		for (uint i = 0; i < _all.size(); i++)
 		{
-			TextureRenderTarget2d *rt = _all[i];
+			IPostProcessTarget *rt = _all[i];
 			if ((rt->getWidth() != width) || (rt->getHeight() != height))
 			{
 				rt->cleanup();

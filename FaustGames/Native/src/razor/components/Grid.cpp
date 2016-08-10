@@ -18,7 +18,7 @@ namespace razor
 			for (int y = -sizeY; y <= sizeY; y+= step)
 			{
 				GridNode* node = new GridNode();
-				node->position = core::Vector3(x, y, 0);
+				node->position = core::Vector3(x, y, 1);
 				owner->addComponent(node);
 			}
 		}

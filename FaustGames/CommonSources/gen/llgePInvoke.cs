@@ -2623,14 +2623,14 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private void llge_PhysicalWorld_debugRender (IntPtr classInstance, float x, float y, float rx, float ry);
-		public bool MakeRayCastFirst (float x0, float y0, float x1, float y1, uint mask, IntPtr resultPoint, IntPtr resultNormal)
+		public bool MakeRayCastFirst (float x0, float y0, float x1, float y1, uint mask, bool ignoreSensors, IntPtr resultPoint, IntPtr resultNormal)
 		{
-			return llge_PhysicalWorld_makeRayCastFirst(ClassInstance, x0, y0, x1, y1, mask, resultPoint, resultNormal);
+			return llge_PhysicalWorld_makeRayCastFirst(ClassInstance, x0, y0, x1, y1, mask, ignoreSensors, resultPoint, resultNormal);
 		}
 		
 		[DllImport(Version.Dll)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		static extern private bool llge_PhysicalWorld_makeRayCastFirst (IntPtr classInstance, float x0, float y0, float x1, float y1, uint mask, IntPtr resultPoint, IntPtr resultNormal);
+		static extern private bool llge_PhysicalWorld_makeRayCastFirst (IntPtr classInstance, float x0, float y0, float x1, float y1, uint mask, bool ignoreSensors, IntPtr resultPoint, IntPtr resultNormal);
 		public PhysicalBody CreatePhysicalBody (PhysicalBodyType type, float x, float y, float rotation, bool fixedRotation)
 		{
 			return new PhysicalBody{ ClassInstance = llge_PhysicalWorld_createPhysicalBody(ClassInstance, type, x, y, rotation, fixedRotation) };

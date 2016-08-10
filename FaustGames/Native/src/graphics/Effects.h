@@ -30,6 +30,7 @@ namespace graphics
 		static EffectTextureColorHighlight * textureColorHighlight();
 		static EffectTextureLightMapColor * textureLightmapColor();
 		static EffectTextureBlurColor * textureBlurColor();
+		static EffectTextureBlurmap* textureBlurmap();
 		//static EffectWater * water();
 		static EffectRenderDepth * renderDepth();
 		static EffectPostProcessToneMapping * postProcessToneMapping();
@@ -39,6 +40,7 @@ namespace graphics
 		static EffectPostProcessVBlurFilter * postProcessVBlurFilter();
 		static EffectPostProcessHBlurFilter * postProcessHBlurFilter();
 		static EffectPostProcessBloomAddFilter * postProcessBloomAddFilter();
+
 	protected:
 	private:
 		static EffectSolid _solid;
@@ -49,6 +51,7 @@ namespace graphics
 		static EffectTextureColorHighlight _textureColorHighlight;
 		static EffectTextureLightMapColor _textureLightmapColor;
 		static EffectTextureBlurColor _textureBlurColor;
+		static EffectTextureBlurmap _textureBlurmap;
 		//static EffectWater _water;
 		static EffectRenderDepth _renderDepth;
 		static EffectPostProcessToneMapping _postProcessToneMapping;

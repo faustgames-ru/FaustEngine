@@ -4,25 +4,101 @@
 #include "graphics_classes.h"
 #include "RenderState.h"
 #include "TextureRenderTarget2d.h"
+#include "TextureRenderTargetDepth2d.h"
 #include "VertexBuffer.h"
 
 namespace graphics
 {
+
+	class IPostProcessTarget : public IBaseObject
+	{
+	public:
+		virtual IRenderTarget* getRenderTarget() = 0;
+		virtual Texture* getColor() = 0;
+		virtual Texture* getDepth() = 0;
+		virtual int getWidth() = 0;
+		virtual int getHeight() = 0;
+		virtual void API_CALL create(int width, int height) = 0;
+		virtual void API_CALL cleanup() = 0;
+	};
+	
+	class PostProcessTarget : public IPostProcessTarget
+	{
+	public:
+		PostProcessTarget(TextureRenderTarget2d* target);
+		virtual IRenderTarget* getRenderTarget() OVERRIDE;
+		virtual Texture* getColor() OVERRIDE;
+		virtual Texture* getDepth() OVERRIDE;
+		virtual int getWidth() OVERRIDE;
+		virtual int getHeight() OVERRIDE;
+		virtual void API_CALL create(int width, int height) OVERRIDE;
+		virtual void API_CALL cleanup() OVERRIDE;
+	private:
+		TextureRenderTarget2d* _target;
+	};
+		
+	class PostProcessDepthTarget : public IPostProcessTarget
+	{
+	public:
+		PostProcessDepthTarget(TextureRenderTargetDepth2d* target);
+		virtual IRenderTarget* getRenderTarget() OVERRIDE;
+		virtual Texture* getColor() OVERRIDE;
+		virtual Texture* getDepth() OVERRIDE;
+		virtual int getWidth() OVERRIDE;
+		virtual int getHeight() OVERRIDE;
+		virtual void API_CALL create(int width, int height) OVERRIDE;
+		virtual void API_CALL cleanup() OVERRIDE;
+	private:
+		TextureRenderTargetDepth2d* _target;
+	};
+
+	class IPostProcessTargetConstructor: public IBaseObject
+	{
+	public:
+		virtual IPostProcessTarget* createPostProcessTarget(bool filter) = 0;
+	};
+
+	class PostProcessTargetConstructor : public IPostProcessTargetConstructor
+	{
+	public:
+		static PostProcessTargetConstructor Default;
+		virtual IPostProcessTarget* createPostProcessTarget(bool filter) OVERRIDE;
+	};
+
+	class PostProcessTargetDepthConstructor : public IPostProcessTargetConstructor
+	{
+	public:
+		static PostProcessTargetDepthConstructor Default;
+		virtual IPostProcessTarget* createPostProcessTarget(bool filter) OVERRIDE;
+	};
+
 	class PostProcessTargetManager
 	{
 	public:
 		bool filter;
 		PostProcessTargetManager();
-		TextureRenderTarget2d *pop();
-		void push(TextureRenderTarget2d *);
+		void setConstructor(IPostProcessTargetConstructor* constructor);
+		IPostProcessTarget *pop();
+		void push(IPostProcessTarget *);
 		void setViewport(int width, int height);
 		bool isAvaliable();
 	private:
 		void addProcessRenderTarget();
-		std::vector<TextureRenderTarget2d *> _stack;
-		std::vector<TextureRenderTarget2d *> _all;
+		std::vector<IPostProcessTarget *> _stack;
+		std::vector<IPostProcessTarget *> _all;
 		int _width;
 		int _height;
+		IPostProcessTargetConstructor* _constructor;
+	};
+
+	struct Extensions
+	{
+		enum e
+		{
+			OES_depth_texture = 0x0,
+			Count = 0x1,
+		};
+		static std::string names[Count];
 	};
 	
 	class GraphicsConfig
@@ -56,6 +132,7 @@ namespace graphics
 	class GraphicsDevice
 	{
 	public:
+		static bool extensions[Extensions::Count];
 		GraphicsConfig config;
 		static GraphicsDevice Default;
 		RenderState renderState;

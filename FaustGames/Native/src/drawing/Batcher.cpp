@@ -456,7 +456,7 @@ namespace drawing
 			_primitivesCount += primitivesCount;
 			_verticesCount += verticesCount;
 			_graphicsDevice->renderState.setBlend(graphics::BlendState::Alpha);
-			_graphicsDevice->renderState.setDepth(graphics::DepthState::ReadWrite);
+			_graphicsDevice->renderState.setDepth(graphics::DepthState::Read);
 			_graphicsDevice->drawPrimitives(_format, currentBuffer->getVertices(), i->IndicesStart, primitivesCount);
 		}
 		_verticesCount = _verticesCounter;

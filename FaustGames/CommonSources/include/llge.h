@@ -12,7 +12,7 @@
 #ifdef __APPLE__
 #define API_CALL
 #define DLLEXPORT
-#define OVERRIDE
+#define OVERRIDE override
 #else
 #define API_CALL __stdcall
 #define DLLEXPORT __declspec( dllexport )

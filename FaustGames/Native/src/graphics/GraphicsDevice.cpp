@@ -95,7 +95,16 @@ namespace graphics
         }
         if (core::Math::abs(depth - _depthState) > 0.0001f)
         {
+#ifdef __ANDROID__
+            glClearDepthf(depth);
+#else
+#ifdef __APPLE__
+            glClearDepthf(depth);
+#else
             glClearDepth(static_cast<double>(depth));
+#endif
+#endif
+            
 			_depthState = depth;
         }
 	}

@@ -1316,6 +1316,16 @@ namespace llge
 		return classInstance->testOverlap(fixture);
 	}
 	
+	extern "C" DLLEXPORT bool API_CALL llge_PhysicalFixture_testPolygonOverlapEx (IPhysicalFixture * classInstance, float x, float y, IntPtr polygon2f, uint count, IntPtr contactPoint)
+	{
+		return classInstance->testPolygonOverlapEx(x, y, polygon2f, count, contactPoint);
+	}
+	
+	extern "C" DLLEXPORT bool API_CALL llge_PhysicalFixture_testOverlapEx (IPhysicalFixture * classInstance, IPhysicalFixture * fixture, IntPtr contactPoint)
+	{
+		return classInstance->testOverlapEx(fixture, contactPoint);
+	}
+	
 	extern "C" DLLEXPORT void API_CALL llge_PhysicalFixture_pauseCollisions (IPhysicalFixture * classInstance, uint group)
 	{
 		classInstance->pauseCollisions(group);

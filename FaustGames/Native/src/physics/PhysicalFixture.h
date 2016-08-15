@@ -19,6 +19,8 @@ namespace physics
 		bool polygonOverlap(float x, float y, const core::Vector2* points, uint count);
 		virtual bool API_CALL testPolygonOverlap(float x, float y, IntPtr polygon2f, uint count) OVERRIDE;
 		virtual bool API_CALL testOverlap(llge::IPhysicalFixture* f) OVERRIDE;
+		virtual bool API_CALL testPolygonOverlapEx(float x, float y, IntPtr polygon2f, uint count, IntPtr contactPoint);
+		virtual bool API_CALL testOverlapEx(IPhysicalFixture* fixture, IntPtr contactPoint);
 
 		virtual void API_CALL pauseCollisions(uint leaveGroup) OVERRIDE;
 		virtual void API_CALL resumeCollisions() OVERRIDE;

@@ -2206,6 +2206,22 @@ namespace llge
 		[DllImport(Version.Dll)]
 		[return: MarshalAs(UnmanagedType.I1)]
 		static extern private bool llge_PhysicalFixture_testOverlap (IntPtr classInstance, IntPtr fixture);
+		public bool TestPolygonOverlapEx (float x, float y, IntPtr polygon2f, uint count, IntPtr contactPoint)
+		{
+			return llge_PhysicalFixture_testPolygonOverlapEx(ClassInstance, x, y, polygon2f, count, contactPoint);
+		}
+		
+		[DllImport(Version.Dll)]
+		[return: MarshalAs(UnmanagedType.I1)]
+		static extern private bool llge_PhysicalFixture_testPolygonOverlapEx (IntPtr classInstance, float x, float y, IntPtr polygon2f, uint count, IntPtr contactPoint);
+		public bool TestOverlapEx (PhysicalFixture fixture, IntPtr contactPoint)
+		{
+			return llge_PhysicalFixture_testOverlapEx(ClassInstance, fixture.ClassInstance, contactPoint);
+		}
+		
+		[DllImport(Version.Dll)]
+		[return: MarshalAs(UnmanagedType.I1)]
+		static extern private bool llge_PhysicalFixture_testOverlapEx (IntPtr classInstance, IntPtr fixture, IntPtr contactPoint);
 		public void PauseCollisions (uint group)
 		{
 			llge_PhysicalFixture_pauseCollisions(ClassInstance, group);

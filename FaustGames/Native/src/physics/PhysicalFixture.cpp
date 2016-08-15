@@ -12,6 +12,26 @@ namespace physics
 	{
 	}
 
+	bool b2TestOverlap(const b2Shape* shapeA, int32 indexA,
+		const b2Shape* shapeB, int32 indexB,
+		const b2Transform& xfA, const b2Transform& xfB,
+		b2DistanceOutput &output)
+	{
+		b2DistanceInput input;
+		input.proxyA.Set(shapeA, indexA);
+		input.proxyB.Set(shapeB, indexB);
+		input.transformA = xfA;
+		input.transformB = xfB;
+		input.useRadii = true;
+
+		b2SimplexCache cache;
+		cache.count = 0;
+
+		b2Distance(&output, &cache, &input);
+
+		return output.distance < 10.0f * b2_epsilon;
+	}
+	
 	bool PhysicalFixture::polygonOverlap(float x, float y, const core::Vector2* points, uint count)
 	{
 		b2PolygonShape poly;
@@ -31,6 +51,31 @@ namespace physics
 		PhysicalFixture* other = static_cast<PhysicalFixture*>(f->getNativeInstance());
 		b2Fixture* otherF = other->fixture;
 		return b2TestOverlap(otherF->GetShape(), 0, fixture->GetShape(), 0, otherF->GetBody()->GetTransform(), fixture->GetBody()->GetTransform());
+	}
+
+	bool PhysicalFixture::testPolygonOverlapEx(float x, float y, IntPtr polygon2f, uint count, IntPtr contactPoint)
+	{
+		b2PolygonShape poly;
+		core::Vector2* points = static_cast<core::Vector2*>(polygon2f);
+		PhysicalFactory::initPolygon(points, count, _dimensions, &poly);
+		b2Transform transform;
+		transform.Set(b2Vec2(_dimensions.toWorld(x), _dimensions.toWorld(y)), 0.0f);
+		b2DistanceOutput output;
+		bool result = b2TestOverlap((b2Shape*)&poly, 0, fixture->GetShape(), 0, transform, fixture->GetBody()->GetTransform(), output);
+		return result;
+	}
+
+	bool PhysicalFixture::testOverlapEx(IPhysicalFixture* f, IntPtr contactPoint)
+	{
+		PhysicalFixture* other = static_cast<PhysicalFixture*>(f->getNativeInstance());
+		b2Fixture* otherF = other->fixture;
+		b2DistanceOutput output;
+		bool result = b2TestOverlap(otherF->GetShape(), 0, fixture->GetShape(), 0, otherF->GetBody()->GetTransform(), fixture->GetBody()->GetTransform(), output);
+		core::Vector2* contact = static_cast<core::Vector2*>(contactPoint);
+
+		contact->setX(_dimensions.toWorld(output.pointA.x + output.pointB.x)*0.5f);
+		contact->setY(_dimensions.toWorld(output.pointA.y + output.pointB.y)*0.5f);
+		return result;
 	}
 
 	void PhysicalFixture::pauseCollisions(uint group)

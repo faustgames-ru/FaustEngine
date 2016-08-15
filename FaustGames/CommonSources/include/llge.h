@@ -674,6 +674,10 @@ namespace llge
 		virtual IntPtr API_CALL getNativeInstance() = 0;
 		virtual bool API_CALL testPolygonOverlap(float x, float y, IntPtr polygon2f, uint count) = 0;
 		virtual bool API_CALL testOverlap(IPhysicalFixture* fixture) = 0;
+
+		virtual bool API_CALL testPolygonOverlapEx(float x, float y, IntPtr polygon2f, uint count, IntPtr contactPoint) = 0;
+		virtual bool API_CALL testOverlapEx(IPhysicalFixture* fixture, IntPtr contactPoint) = 0;
+
 		virtual void API_CALL pauseCollisions(uint group) = 0;
 		virtual void API_CALL resumeCollisions() = 0;
 		virtual int API_CALL getContactsCounter() = 0;

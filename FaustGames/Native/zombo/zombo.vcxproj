@@ -465,7 +465,7 @@
     <ClCompile Include="..\src\terrain\TerrainFactory.cpp" />
     <ClCompile Include="..\src\terrain\terrain_classes.cpp" />
     <ClCompile Include="..\src\zombo\editor\ZomboEditor.cpp" />
-    <ClCompile Include="..\src\zombo\InitRazorRenderContext.cpp" />
+    <ClCompile Include="..\src\zombo\InitZomboRenderContext.cpp" />
     <ClCompile Include="..\src_cjson\cJSON.c" />
     <ClCompile Include="..\src_clipper\clipper.cpp" />
     <ClCompile Include="..\src_freetype\autofit\autofit.c" />

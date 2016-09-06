@@ -1167,11 +1167,11 @@
     <ClCompile Include="..\src_cjson\cJSON.c">
       <Filter>third_party\cjson</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\zombo\InitRazorRenderContext.cpp">
-      <Filter>zombo</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\zombo\editor\ZomboEditor.cpp">
       <Filter>zombo\editor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\zombo\InitZomboRenderContext.cpp">
+      <Filter>zombo</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

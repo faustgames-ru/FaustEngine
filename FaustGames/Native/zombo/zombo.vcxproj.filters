@@ -1,137 +1,104 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="core">
-      <UniqueIdentifier>{fc049044-9e3f-4ecb-b8f8-541a36e33886}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="graphics">
-      <UniqueIdentifier>{ee58e0fc-0a4b-48bf-bf4d-f409427ea5a6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="exports">
       <UniqueIdentifier>{6c50707c-2f2a-4e4d-bb55-718fee7238d8}</UniqueIdentifier>
     </Filter>
     <Filter Include="common">
       <UniqueIdentifier>{52296692-4906-4308-88b5-5d16497cca62}</UniqueIdentifier>
     </Filter>
-    <Filter Include="resources">
-      <UniqueIdentifier>{bdb4f70e-f3cf-47b8-b7be-fe7a8f39cb1a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="resources\lpng">
-      <UniqueIdentifier>{2ce19b8f-6064-4c0e-a28f-dc92489470fb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="resources\zlib">
-      <UniqueIdentifier>{6e8df11f-5e40-4d37-ab8c-3ea1fcc3c1f0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="zombo">
-      <UniqueIdentifier>{48a8caf6-e1e8-42b0-b0cd-c353f1f25e90}</UniqueIdentifier>
+      <UniqueIdentifier>{0188ac56-c994-4bcf-8c0f-fd75b7caba12}</UniqueIdentifier>
     </Filter>
-    <Filter Include="zombo\render">
-      <UniqueIdentifier>{61e9efeb-9ce0-4ce6-9daa-a8cd7803daab}</UniqueIdentifier>
+    <Filter Include="third_party">
+      <UniqueIdentifier>{ccc06308-8686-4cad-9ed9-cf9c8230e7a9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="zombo\animation">
-      <UniqueIdentifier>{8f794bbd-4107-486d-802b-f965b2e54b19}</UniqueIdentifier>
+    <Filter Include="engine">
+      <UniqueIdentifier>{71b56558-7262-451b-b71a-1bdc1a0f84aa}</UniqueIdentifier>
     </Filter>
-    <Filter Include="zombo\content">
-      <UniqueIdentifier>{0c20176f-8e0b-438a-b9f0-e406634b56d8}</UniqueIdentifier>
+    <Filter Include="engine\terrain">
+      <UniqueIdentifier>{a93ce430-8b9b-4055-9bc9-b2f9d1dc347e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="zombo\common">
-      <UniqueIdentifier>{d2271228-6fb2-45ee-9128-2a3d8e0a0186}</UniqueIdentifier>
+    <Filter Include="engine\content">
+      <UniqueIdentifier>{14d69fd7-b7a0-4203-a837-3192e9104efb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="zombo\cjson">
-      <UniqueIdentifier>{cdc68fc0-b98f-45cb-accb-26b60fb8a4ac}</UniqueIdentifier>
+    <Filter Include="engine\content\serialization">
+      <UniqueIdentifier>{83d103e1-e690-48f4-9e12-f399c1a71d97}</UniqueIdentifier>
     </Filter>
-    <Filter Include="zombo\content\loaders">
-      <UniqueIdentifier>{4bbac86c-1110-45eb-b20b-39e34fceb0ee}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="zombo\scenes">
-      <UniqueIdentifier>{fd770cb4-4d76-4f59-b9a5-85983bf7822c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="zombo\common\states">
-      <UniqueIdentifier>{d952ff55-03c1-470a-9652-82183a96a69a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="zombo\common\asyncs">
-      <UniqueIdentifier>{5a4bf914-7265-4f24-ae5f-96b59f4485fa}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="zombo\render\Batcher">
-      <UniqueIdentifier>{d09abccf-29eb-4f77-9d18-b8c7cb0cbb08}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="zombo\entities">
-      <UniqueIdentifier>{c8af4861-f5d1-4ec8-84a2-8ddee2ed9deb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="zombo\behaviors">
-      <UniqueIdentifier>{dae8dab4-add5-4bfa-8645-525cd6a408c6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="zombo\content\serialization">
-      <UniqueIdentifier>{01b64bbd-1a57-435c-9980-7723eb22b8ad}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="zombo\_editor">
-      <UniqueIdentifier>{3fed44d5-15ce-430b-a376-c7e41713626c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="zombo\_editor\modes">
-      <UniqueIdentifier>{38a1747e-18c6-49aa-a41c-35d2adcd65d9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="zombo\_editor\commands">
-      <UniqueIdentifier>{c3dc1251-5328-460d-beae-161dd7743094}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="zombo\_editor\camera">
-      <UniqueIdentifier>{b8f2d8c1-1785-4bb8-b91d-d7ae74b01245}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="freetype">
-      <UniqueIdentifier>{9226d0fc-14cf-4e3d-b3fd-400f51bb941f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="freetype\FT_MODULES">
-      <UniqueIdentifier>{83b895e8-07ba-4e09-9af3-7e1bc22466d9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="fonts">
+    <Filter Include="engine\fonts">
       <UniqueIdentifier>{8b450da8-2d40-46ba-a4bd-67e6c39214f1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="geometry">
+    <Filter Include="engine\game">
+      <UniqueIdentifier>{2b16d3b0-2e50-4fbe-ada1-c65acb3141ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\game\components">
+      <UniqueIdentifier>{e92f2401-9b6a-441f-b157-5edbecada359}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\game\input">
+      <UniqueIdentifier>{0a337ae6-9474-4297-8ff9-138b952c373b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\game\services">
+      <UniqueIdentifier>{f1708a1b-69f8-48b8-91d3-4449c481f285}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\geometry">
       <UniqueIdentifier>{fc4ca26f-4c00-4c23-bdfc-caf553e82e4b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="poly2tri">
-      <UniqueIdentifier>{37c29d14-8ca3-490b-8c57-de10feac7b94}</UniqueIdentifier>
+    <Filter Include="engine\graphics">
+      <UniqueIdentifier>{ee58e0fc-0a4b-48bf-bf4d-f409427ea5a6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="poly2tri\common">
-      <UniqueIdentifier>{53dc5fa3-fe57-42b4-9d74-187b0c558a23}</UniqueIdentifier>
+    <Filter Include="engine\graphics\pipelines">
+      <UniqueIdentifier>{f5b80429-a3ee-4d63-aa3f-9720492baec9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="poly2tri\sweep">
-      <UniqueIdentifier>{6f4882aa-ffc7-45cc-8d14-3a17d1e04ae8}</UniqueIdentifier>
+    <Filter Include="engine\graphics\utilities">
+      <UniqueIdentifier>{f8f51470-c890-4026-8fb3-55628f2dfbec}</UniqueIdentifier>
     </Filter>
-    <Filter Include="rectanglebinpack">
-      <UniqueIdentifier>{c21c60a6-b459-4b1f-a051-6fccd687f60e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="zombo\_editor\toolbox">
-      <UniqueIdentifier>{3b3ae215-a92c-4d9a-b250-74a57c2cccca}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="zombo\objects">
-      <UniqueIdentifier>{8111468f-e9df-436a-aa5a-258a4d95fad3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="zombo\_editor\curves">
-      <UniqueIdentifier>{b8ec91b9-5acb-45fc-b328-9c107f34e9ae}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="zombo\_editor\drawing">
-      <UniqueIdentifier>{19871925-a362-48f9-9449-bad5ce817e59}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="navmesh">
+    <Filter Include="engine\navmesh">
       <UniqueIdentifier>{48b2ed21-5b20-47d3-a294-1df782e97f54}</UniqueIdentifier>
     </Filter>
-    <Filter Include="clipper">
-      <UniqueIdentifier>{9a845750-8430-40ba-a241-d0f598660bf9}</UniqueIdentifier>
+    <Filter Include="engine\resources">
+      <UniqueIdentifier>{bdb4f70e-f3cf-47b8-b7be-fe7a8f39cb1a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="resources_fonts">
+    <Filter Include="engine\resources\lpng">
+      <UniqueIdentifier>{2ce19b8f-6064-4c0e-a28f-dc92489470fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\resources\zlib">
+      <UniqueIdentifier>{6e8df11f-5e40-4d37-ab8c-3ea1fcc3c1f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\resources_fonts">
       <UniqueIdentifier>{be727489-7c22-448c-8a2e-91cd5ab3a440}</UniqueIdentifier>
     </Filter>
-    <Filter Include="zombo\_editor\grid">
-      <UniqueIdentifier>{c7d17550-fc82-489d-8254-d3b6ba27f584}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="shaders">
+    <Filter Include="engine\shaders">
       <UniqueIdentifier>{f56f7ea8-0aaf-4aed-ab59-4898beff468c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="zombo\_editor\menu">
-      <UniqueIdentifier>{f931ef87-ee5a-44db-8190-099c71bf5138}</UniqueIdentifier>
+    <Filter Include="engine\core">
+      <UniqueIdentifier>{fc049044-9e3f-4ecb-b8f8-541a36e33886}</UniqueIdentifier>
     </Filter>
-    <Filter Include="zombo\content\savers">
-      <UniqueIdentifier>{23192bf3-fc26-4efe-ba22-4ba5b555d2c6}</UniqueIdentifier>
+    <Filter Include="third_party\poly2tri">
+      <UniqueIdentifier>{37c29d14-8ca3-490b-8c57-de10feac7b94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="third_party\poly2tri\common">
+      <UniqueIdentifier>{53dc5fa3-fe57-42b4-9d74-187b0c558a23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="third_party\poly2tri\sweep">
+      <UniqueIdentifier>{6f4882aa-ffc7-45cc-8d14-3a17d1e04ae8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="third_party\freetype">
+      <UniqueIdentifier>{9226d0fc-14cf-4e3d-b3fd-400f51bb941f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="third_party\freetype\FT_MODULES">
+      <UniqueIdentifier>{83b895e8-07ba-4e09-9af3-7e1bc22466d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="third_party\clipper">
+      <UniqueIdentifier>{9a845750-8430-40ba-a241-d0f598660bf9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="third_party\cjson">
+      <UniqueIdentifier>{abecc359-80e1-4a7f-97af-6e0aed1e9e57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="third_party\rectanglebinpack">
+      <UniqueIdentifier>{c21c60a6-b459-4b1f-a051-6fccd687f60e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="zombo\editor">
+      <UniqueIdentifier>{52a10fe5-46fb-4099-a174-d88960f85f38}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -141,580 +108,520 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="..\src\core\core_classes.h">
-      <Filter>core</Filter>
+      <Filter>engine\core</Filter>
     </ClInclude>
     <ClInclude Include="..\src\core\core_platform.h">
-      <Filter>core</Filter>
+      <Filter>engine\core</Filter>
     </ClInclude>
     <ClInclude Include="..\src\core\Lazy.h">
-      <Filter>core</Filter>
+      <Filter>engine\core</Filter>
     </ClInclude>
     <ClInclude Include="..\src\core\Math.h">
-      <Filter>core</Filter>
+      <Filter>engine\core</Filter>
     </ClInclude>
     <ClInclude Include="..\src\core\Matrix.h">
-      <Filter>core</Filter>
+      <Filter>engine\core</Filter>
     </ClInclude>
     <ClInclude Include="..\src\core\StaticArray.h">
-      <Filter>core</Filter>
+      <Filter>engine\core</Filter>
     </ClInclude>
     <ClInclude Include="..\src\core\Vector.h">
-      <Filter>core</Filter>
+      <Filter>engine\core</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\AttributeInfo.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\Attributes.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\Color.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\Effect.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\EffectBase.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\EffectSolidColor.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\EffectTextureColor.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\Errors.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\GraphicsDevice.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\graphics_classes.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\graphics_platform.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\graphics_references.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\Image2dData.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\RenderState.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\State.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\StateCompare.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\Texture.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\TextureImage2d.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\TextureLoader.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\TextureRenderTarget2d.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\Uniform.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\UniformInfo.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\Uniforms.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\UniformValue.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\UniformValueFloat.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\UniformValueMatrix.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\UniformValueTexture.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\VertexFormat.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\VertexFormatPositionColor.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\VertexFormatPositionTextureColor.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\graphics.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\core\core.h">
-      <Filter>core</Filter>
+      <Filter>engine\core</Filter>
     </ClInclude>
     <ClInclude Include="..\shaders\solid_color_frag.h">
-      <Filter>shaders</Filter>
+      <Filter>engine\shaders</Filter>
     </ClInclude>
     <ClInclude Include="..\shaders\solid_color_vert.h">
-      <Filter>shaders</Filter>
+      <Filter>engine\shaders</Filter>
     </ClInclude>
     <ClInclude Include="..\shaders\texture_color_frag.h">
-      <Filter>shaders</Filter>
+      <Filter>engine\shaders</Filter>
     </ClInclude>
     <ClInclude Include="..\shaders\texture_color_vert.h">
-      <Filter>shaders</Filter>
+      <Filter>engine\shaders</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\VertexBuffer.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\StaticBatch.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\Batcher.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\core\BasicTest.h">
-      <Filter>core</Filter>
+      <Filter>engine\core</Filter>
     </ClInclude>
     <ClInclude Include="..\src\core\Allocator.h">
-      <Filter>core</Filter>
+      <Filter>engine\core</Filter>
     </ClInclude>
     <ClInclude Include="..\src\core\SystemAllocationPolicy.h">
-      <Filter>core</Filter>
+      <Filter>engine\core</Filter>
     </ClInclude>
     <ClInclude Include="..\src\core\HollowsAllocationPolicy.h">
-      <Filter>core</Filter>
+      <Filter>engine\core</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\TextureCubemap.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\UniformValueVector3.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\resources\zlib\crc32.h">
-      <Filter>resources\zlib</Filter>
+      <Filter>engine\resources\zlib</Filter>
     </ClInclude>
     <ClInclude Include="..\src\resources\zlib\deflate.h">
-      <Filter>resources\zlib</Filter>
+      <Filter>engine\resources\zlib</Filter>
     </ClInclude>
     <ClInclude Include="..\src\resources\zlib\gzguts.h">
-      <Filter>resources\zlib</Filter>
+      <Filter>engine\resources\zlib</Filter>
     </ClInclude>
     <ClInclude Include="..\src\resources\zlib\inffast.h">
-      <Filter>resources\zlib</Filter>
+      <Filter>engine\resources\zlib</Filter>
     </ClInclude>
     <ClInclude Include="..\src\resources\zlib\inffixed.h">
-      <Filter>resources\zlib</Filter>
+      <Filter>engine\resources\zlib</Filter>
     </ClInclude>
     <ClInclude Include="..\src\resources\zlib\inflate.h">
-      <Filter>resources\zlib</Filter>
+      <Filter>engine\resources\zlib</Filter>
     </ClInclude>
     <ClInclude Include="..\src\resources\zlib\inftrees.h">
-      <Filter>resources\zlib</Filter>
+      <Filter>engine\resources\zlib</Filter>
     </ClInclude>
     <ClInclude Include="..\src\resources\zlib\trees.h">
-      <Filter>resources\zlib</Filter>
+      <Filter>engine\resources\zlib</Filter>
     </ClInclude>
     <ClInclude Include="..\src\resources\zlib\zconf.h">
-      <Filter>resources\zlib</Filter>
+      <Filter>engine\resources\zlib</Filter>
     </ClInclude>
     <ClInclude Include="..\src\resources\zlib\zlib.h">
-      <Filter>resources\zlib</Filter>
+      <Filter>engine\resources\zlib</Filter>
     </ClInclude>
     <ClInclude Include="..\src\resources\zlib\zutil.h">
-      <Filter>resources\zlib</Filter>
+      <Filter>engine\resources\zlib</Filter>
     </ClInclude>
     <ClInclude Include="..\src\resources\lpng\png.h">
-      <Filter>resources\lpng</Filter>
+      <Filter>engine\resources\lpng</Filter>
     </ClInclude>
     <ClInclude Include="..\src\resources\lpng\pngconf.h">
-      <Filter>resources\lpng</Filter>
+      <Filter>engine\resources\lpng</Filter>
     </ClInclude>
     <ClInclude Include="..\src\resources\lpng\pngdebug.h">
-      <Filter>resources\lpng</Filter>
+      <Filter>engine\resources\lpng</Filter>
     </ClInclude>
     <ClInclude Include="..\src\resources\lpng\pnginfo.h">
-      <Filter>resources\lpng</Filter>
+      <Filter>engine\resources\lpng</Filter>
     </ClInclude>
     <ClInclude Include="..\src\resources\lpng\pnglibconf.h">
-      <Filter>resources\lpng</Filter>
+      <Filter>engine\resources\lpng</Filter>
     </ClInclude>
     <ClInclude Include="..\src\resources\lpng\pngpriv.h">
-      <Filter>resources\lpng</Filter>
+      <Filter>engine\resources\lpng</Filter>
     </ClInclude>
     <ClInclude Include="..\src\resources\lpng\pngstruct.h">
-      <Filter>resources\lpng</Filter>
+      <Filter>engine\resources\lpng</Filter>
     </ClInclude>
     <ClInclude Include="..\src\resources\ContentManager.h">
-      <Filter>resources</Filter>
+      <Filter>engine\resources</Filter>
     </ClInclude>
     <ClInclude Include="..\src\resources\resources.h">
-      <Filter>resources</Filter>
+      <Filter>engine\resources</Filter>
     </ClInclude>
     <ClInclude Include="..\src\resources\resources_classes.h">
-      <Filter>resources</Filter>
+      <Filter>engine\resources</Filter>
     </ClInclude>
     <ClInclude Include="..\src\resources\resources_references.h">
-      <Filter>resources</Filter>
+      <Filter>engine\resources</Filter>
     </ClInclude>
     <ClInclude Include="..\src\resources\resources_platform.h">
-      <Filter>resources</Filter>
+      <Filter>engine\resources</Filter>
     </ClInclude>
     <ClInclude Include="..\src\resources\ContentProvider.h">
-      <Filter>resources</Filter>
+      <Filter>engine\resources</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\EffectConstant.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\TextureRenderTargetDepth2d.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\RenderConverter.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\CommonSources\include\zombo.h">
       <Filter>common</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\EffectsBasic.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\RenderConverterBasic.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\config_defines.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\VertexFormatsBasic.h">
-      <Filter>graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\zombo\ZomboGame.h">
-      <Filter>zombo</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\CommonSources\include\BaseObjects.h">
       <Filter>common</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\zombo\zombo_classes.h">
-      <Filter>zombo</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\zombo\zombo_references.h">
-      <Filter>zombo</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\zombo\render\ZomboRenderSprite.h">
-      <Filter>zombo\render</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\zombo\render\ZomboRenderSystem.h">
-      <Filter>zombo\render</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\zombo\animation\ZomboFrameAnimation.h">
-      <Filter>zombo\animation</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\zombo\animation\ZomboFrameAnimationSystem.h">
-      <Filter>zombo\animation</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\zombo\common\ZomboTransfom.h">
-      <Filter>zombo\common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\zombo\cjson\cJSON.h">
-      <Filter>zombo\cjson</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\zombo\content\ZomboContentSystem.h">
-      <Filter>zombo\content</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\zombo\content\ZomboContentBlock.h">
-      <Filter>zombo\content</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\zombo\zombo_platform.h">
-      <Filter>zombo</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\core\Path.h">
-      <Filter>core</Filter>
+      <Filter>engine\core</Filter>
     </ClInclude>
     <ClInclude Include="..\src\core\Convert.h">
-      <Filter>core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\zombo\content\loaders\LoaderJsonAtlas.h">
-      <Filter>zombo\content\loaders</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\zombo\content\ZomboAtlas.h">
-      <Filter>zombo\content</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\zombo\common\asyncs\ZomboAsyncState.h">
-      <Filter>zombo\common\asyncs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\zombo\common\states\ZomboStateController.h">
-      <Filter>zombo\common\states</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\zombo\scenes\ZomboScene.h">
-      <Filter>zombo\scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\zombo\ZomboEntity.h">
-      <Filter>zombo</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\zombo\common\ZomboBounds.h">
-      <Filter>zombo\common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\zombo\ZomboWorld.h">
-      <Filter>zombo</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\zombo\common\ZomboCamera.h">
-      <Filter>zombo\common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\zombo\entities\ZomboPlayer.h">
-      <Filter>zombo\entities</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\zombo\common\ZomboGameEnvironment.h">
-      <Filter>zombo\common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\zombo\common\ZomboTimeLine.h">
-      <Filter>zombo\common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\zombo\content\loaders\ZomboJsonScene.h">
-      <Filter>zombo\content\loaders</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\zombo\behaviors\ZomboBehaviorPlayer.h">
-      <Filter>zombo\behaviors</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\zombo\behaviors\ZomboBehaviors.h">
-      <Filter>zombo\behaviors</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\zombo\content\serialization\ZomboSerializer.h">
-      <Filter>zombo\content\serialization</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\zombo\content\serialization\ZomboValue.h">
-      <Filter>zombo\content\serialization</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\zombo\content\serialization\ZomboArray.h">
-      <Filter>zombo\content\serialization</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\zombo\content\serialization\ZomboObject.h">
-      <Filter>zombo\content\serialization</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\zombo\content\ZomboContentScene.h">
-      <Filter>zombo\content</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\zombo\_editor\ZomboEditor.h">
-      <Filter>zombo\_editor</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\zombo\_editor\ZomboEditorInput.h">
-      <Filter>zombo\_editor</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\zombo\_editor\ZomboEditorViewport.h">
-      <Filter>zombo\_editor</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\zombo\_editor\ZomboEditorRenderService.h">
-      <Filter>zombo\_editor</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\zombo\_editor\commands\ZomboEditorCommands.h">
-      <Filter>zombo\_editor\commands</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\zombo\_editor\commands\ZomboEditorCommand.h">
-      <Filter>zombo\_editor\commands</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\zombo\_editor\commands\ZomboSetEditorMode.h">
-      <Filter>zombo\_editor\commands</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\zombo\_editor\modes\ZomboEditorSelectionMode.h">
-      <Filter>zombo\_editor\modes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\zombo\_editor\EditorMode.h">
-      <Filter>zombo\_editor</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\zombo\_editor\ZomboEditorCamera.h">
-      <Filter>zombo\_editor</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\zombo\_editor\camera\ZomboCameraMoveXY.h">
-      <Filter>zombo\_editor\camera</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\zombo\_editor\camera\ZomboCameraRotate.h">
-      <Filter>zombo\_editor\camera</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\zombo\common\ZomboInterpolatedValue.h">
-      <Filter>zombo\common</Filter>
+      <Filter>engine\core</Filter>
     </ClInclude>
     <ClInclude Include="..\src\fonts\Font.h">
-      <Filter>fonts</Filter>
+      <Filter>engine\fonts</Filter>
     </ClInclude>
     <ClInclude Include="..\src\fonts\fonts_classes.h">
-      <Filter>fonts</Filter>
+      <Filter>engine\fonts</Filter>
     </ClInclude>
     <ClInclude Include="..\src\fonts\fonts_references.h">
-      <Filter>fonts</Filter>
+      <Filter>engine\fonts</Filter>
     </ClInclude>
     <ClInclude Include="..\src\fonts\fonts_platform.h">
-      <Filter>fonts</Filter>
+      <Filter>engine\fonts</Filter>
     </ClInclude>
     <ClInclude Include="..\src\fonts\IFontRenderer.h">
-      <Filter>fonts</Filter>
+      <Filter>engine\fonts</Filter>
     </ClInclude>
     <ClInclude Include="..\src\fonts\FontsManager.h">
-      <Filter>fonts</Filter>
+      <Filter>engine\fonts</Filter>
     </ClInclude>
     <ClInclude Include="..\src\fonts\OutlineVectorFont.h">
-      <Filter>fonts</Filter>
+      <Filter>engine\fonts</Filter>
     </ClInclude>
     <ClInclude Include="..\src\fonts\FontCharSet.h">
-      <Filter>fonts</Filter>
+      <Filter>engine\fonts</Filter>
     </ClInclude>
     <ClInclude Include="..\src\geometry\Aabb2d.h">
-      <Filter>geometry</Filter>
+      <Filter>engine\geometry</Filter>
     </ClInclude>
     <ClInclude Include="..\src\geometry\geometry.h">
-      <Filter>geometry</Filter>
+      <Filter>engine\geometry</Filter>
     </ClInclude>
     <ClInclude Include="..\src\geometry\geometry_classes.h">
-      <Filter>geometry</Filter>
+      <Filter>engine\geometry</Filter>
     </ClInclude>
     <ClInclude Include="..\src\geometry\geometry_platform.h">
-      <Filter>geometry</Filter>
+      <Filter>engine\geometry</Filter>
     </ClInclude>
     <ClInclude Include="..\src\geometry\geometry_references.h">
-      <Filter>geometry</Filter>
+      <Filter>engine\geometry</Filter>
     </ClInclude>
     <ClInclude Include="..\src\geometry\Quadtree2d.h">
-      <Filter>geometry</Filter>
+      <Filter>engine\geometry</Filter>
     </ClInclude>
     <ClInclude Include="..\src\geometry\Quadtree2dItem.h">
-      <Filter>geometry</Filter>
+      <Filter>engine\geometry</Filter>
     </ClInclude>
     <ClInclude Include="..\src\geometry\Quadtree2dNode.h">
-      <Filter>geometry</Filter>
+      <Filter>engine\geometry</Filter>
     </ClInclude>
     <ClInclude Include="..\src_poly2tri\poly2tri.h">
-      <Filter>poly2tri</Filter>
+      <Filter>third_party\poly2tri</Filter>
     </ClInclude>
     <ClInclude Include="..\src_poly2tri\sweep\advancing_front.h">
-      <Filter>poly2tri\sweep</Filter>
+      <Filter>third_party\poly2tri\sweep</Filter>
     </ClInclude>
     <ClInclude Include="..\src_poly2tri\sweep\cdt.h">
-      <Filter>poly2tri\sweep</Filter>
+      <Filter>third_party\poly2tri\sweep</Filter>
     </ClInclude>
     <ClInclude Include="..\src_poly2tri\sweep\sweep.h">
-      <Filter>poly2tri\sweep</Filter>
+      <Filter>third_party\poly2tri\sweep</Filter>
     </ClInclude>
     <ClInclude Include="..\src_poly2tri\sweep\sweep_context.h">
-      <Filter>poly2tri\sweep</Filter>
+      <Filter>third_party\poly2tri\sweep</Filter>
     </ClInclude>
     <ClInclude Include="..\src_poly2tri\common\shapes.h">
-      <Filter>poly2tri\common</Filter>
+      <Filter>third_party\poly2tri\common</Filter>
     </ClInclude>
     <ClInclude Include="..\src_poly2tri\common\utils.h">
-      <Filter>poly2tri\common</Filter>
+      <Filter>third_party\poly2tri\common</Filter>
     </ClInclude>
     <ClInclude Include="..\src\fonts\BitmapFont.h">
-      <Filter>fonts</Filter>
+      <Filter>engine\fonts</Filter>
     </ClInclude>
     <ClInclude Include="..\src\fonts\FontRects.h">
-      <Filter>fonts</Filter>
+      <Filter>engine\fonts</Filter>
     </ClInclude>
     <ClInclude Include="..\src_rectanglebinpack\GuillotineBinPack.h">
-      <Filter>rectanglebinpack</Filter>
+      <Filter>third_party\rectanglebinpack</Filter>
     </ClInclude>
     <ClInclude Include="..\src_rectanglebinpack\MaxRectsBinPack.h">
-      <Filter>rectanglebinpack</Filter>
+      <Filter>third_party\rectanglebinpack</Filter>
     </ClInclude>
     <ClInclude Include="..\src_rectanglebinpack\Rect.h">
-      <Filter>rectanglebinpack</Filter>
+      <Filter>third_party\rectanglebinpack</Filter>
     </ClInclude>
     <ClInclude Include="..\src_rectanglebinpack\ShelfBinPack.h">
-      <Filter>rectanglebinpack</Filter>
+      <Filter>third_party\rectanglebinpack</Filter>
     </ClInclude>
     <ClInclude Include="..\src_rectanglebinpack\ShelfNextFitBinPack.h">
-      <Filter>rectanglebinpack</Filter>
+      <Filter>third_party\rectanglebinpack</Filter>
     </ClInclude>
     <ClInclude Include="..\src_rectanglebinpack\SkylineBinPack.h">
-      <Filter>rectanglebinpack</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\zombo\ZomboLog.h">
-      <Filter>zombo</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\zombo\_editor\ZomboEditorLogDisplayer.h">
-      <Filter>zombo\_editor</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\zombo\content\ZomboBitmapFont.h">
-      <Filter>zombo\content</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\zombo\content\ZomboContentGame.h">
-      <Filter>zombo\content</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\zombo\_editor\toolbox\ZomboToolBox.h">
-      <Filter>zombo\_editor\toolbox</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\zombo\_editor\toolbox\ZomboToolBoxItemRenderer.h">
-      <Filter>zombo\_editor\toolbox</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\zombo\objects\ZomboPlatform.h">
-      <Filter>zombo\objects</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\zombo\_editor\curves\CurvesManager.h">
-      <Filter>zombo\_editor\curves</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\zombo\_editor\drawing\Drawer.h">
-      <Filter>zombo\_editor\drawing</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\zombo\_editor\curves\CurvesStateSelect.h">
-      <Filter>zombo\_editor\curves</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\zombo\_editor\curves\CurvesStateMovePoint.h">
-      <Filter>zombo\_editor\curves</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\zombo\_editor\curves\CurvesStateMoveSegment.h">
-      <Filter>zombo\_editor\curves</Filter>
+      <Filter>third_party\rectanglebinpack</Filter>
     </ClInclude>
     <ClInclude Include="..\src\geometry\Frustum.h">
-      <Filter>geometry</Filter>
+      <Filter>engine\geometry</Filter>
     </ClInclude>
     <ClInclude Include="..\src\navmesh\navmesh_classes.h">
-      <Filter>navmesh</Filter>
+      <Filter>engine\navmesh</Filter>
     </ClInclude>
     <ClInclude Include="..\src\navmesh\navmesh_platform.h">
-      <Filter>navmesh</Filter>
+      <Filter>engine\navmesh</Filter>
     </ClInclude>
     <ClInclude Include="..\src_clipper\clipper.hpp">
-      <Filter>clipper</Filter>
+      <Filter>third_party\clipper</Filter>
     </ClInclude>
     <ClInclude Include="..\src\navmesh\NavMesh.h">
-      <Filter>navmesh</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\zombo\_editor\ZomboEditorLoadingScreen.h">
-      <Filter>zombo\_editor</Filter>
+      <Filter>engine\navmesh</Filter>
     </ClInclude>
     <ClInclude Include="..\resources_fonts\FontQuicksandRegular.h">
-      <Filter>resources_fonts</Filter>
+      <Filter>engine\resources_fonts</Filter>
     </ClInclude>
     <ClInclude Include="..\src\navmesh\AStar.h">
-      <Filter>navmesh</Filter>
+      <Filter>engine\navmesh</Filter>
     </ClInclude>
     <ClInclude Include="..\src\navmesh\Funnel.h">
-      <Filter>navmesh</Filter>
+      <Filter>engine\navmesh</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\zombo\_editor\curves\CurvesStateMoveBinding.h">
-      <Filter>zombo\_editor\curves</Filter>
+    <ClInclude Include="..\src\core\MarchingSquares.h">
+      <Filter>engine\core</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\zombo\common\ZomboStatistics.h">
-      <Filter>zombo\common</Filter>
+    <ClInclude Include="..\src\content\serialization\ContentArray.h">
+      <Filter>engine\content\serialization</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\zombo\_editor\ZomboEditorStatisticsDisplayer.h">
-      <Filter>zombo\_editor</Filter>
+    <ClInclude Include="..\src\content\serialization\ContentObject.h">
+      <Filter>engine\content\serialization</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\zombo\common\ValuesAnimator.h">
-      <Filter>zombo\common</Filter>
+    <ClInclude Include="..\src\content\serialization\ContentSerializer.h">
+      <Filter>engine\content\serialization</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\zombo\common\SConfig.h">
-      <Filter>zombo\common</Filter>
+    <ClInclude Include="..\src\content\serialization\ContentValue.h">
+      <Filter>engine\content\serialization</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\zombo\common\SEntry.h">
-      <Filter>zombo\common</Filter>
+    <ClInclude Include="..\src\content\BinaryReader.h">
+      <Filter>engine\content</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\zombo\_editor\menu\ContextMenu.h">
-      <Filter>zombo\_editor\menu</Filter>
+    <ClInclude Include="..\src\content\content.h">
+      <Filter>engine\content</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\zombo\content\savers\ZomboContentSaver.h">
-      <Filter>zombo\content\savers</Filter>
+    <ClInclude Include="..\src\content\content_classes.h">
+      <Filter>engine\content</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\content\content_platform.h">
+      <Filter>engine\content</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\content\content_references.h">
+      <Filter>engine\content</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\content\ContentBitmapFont.h">
+      <Filter>engine\content</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\content\ContentBlock.h">
+      <Filter>engine\content</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\content\ContentFrameAnimation.h">
+      <Filter>engine\content</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\content\ContentImage.h">
+      <Filter>engine\content</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\content\ContentJson.h">
+      <Filter>engine\content</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\content\ContentMesh.h">
+      <Filter>engine\content</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\content\ContentStatus.h">
+      <Filter>engine\content</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\game\Component.h">
+      <Filter>engine\game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\game\ComponentsFactory.h">
+      <Filter>engine\game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\game\Entity.h">
+      <Filter>engine\game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\game\game_classes.h">
+      <Filter>engine\game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\game\game_platform.h">
+      <Filter>engine\game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\game\game_references.h">
+      <Filter>engine\game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\game\Scene.h">
+      <Filter>engine\game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\game\services\Drawing.h">
+      <Filter>engine\game\services</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\game\input\Mouse.h">
+      <Filter>engine\game\input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\game\components\FrameAnimation.h">
+      <Filter>engine\game\components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\game\components\Mesh.h">
+      <Filter>engine\game\components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\terrain\StripeBuilder.h">
+      <Filter>engine\terrain</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\terrain\terrain_classes.h">
+      <Filter>engine\terrain</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\terrain\terrain_platform.h">
+      <Filter>engine\terrain</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\terrain\terrain_references.h">
+      <Filter>engine\terrain</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\terrain\TerrainFactory.h">
+      <Filter>engine\terrain</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\geometry\Aabb.h">
+      <Filter>engine\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\geometry\Quadtree.h">
+      <Filter>engine\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\geometry\TerrainClipper.h">
+      <Filter>engine\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\utilities\Camera.h">
+      <Filter>engine\graphics\utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\utilities\Viewport.h">
+      <Filter>engine\graphics\utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\pipelines\RenderPipeline.h">
+      <Filter>engine\graphics\pipelines</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\pipelines\RenderService.h">
+      <Filter>engine\graphics\pipelines</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\pipelines\RenderVertex.h">
+      <Filter>engine\graphics\pipelines</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\pipelines\UniformsConfig.h">
+      <Filter>engine\graphics\pipelines</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Spline.h">
+      <Filter>engine\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Environment.h">
+      <Filter>engine\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_cjson\cJSON.h">
+      <Filter>third_party\cjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\zombo\editor\ZomboEditor.h">
+      <Filter>zombo\editor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -724,616 +631,547 @@
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="..\src\core\Math.cpp">
-      <Filter>core</Filter>
+      <Filter>engine\core</Filter>
     </ClCompile>
     <ClCompile Include="..\src\core\Matrix.cpp">
-      <Filter>core</Filter>
+      <Filter>engine\core</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\AttributeInfo.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\Attributes.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\Color.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\Effect.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\EffectBase.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\EffectSolidColor.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\EffectTextureColor.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\Errors.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\GraphicsDevice.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\Image2dData.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\RenderState.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\Texture.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\TextureImage2d.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\TextureLoader.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\TextureRenderTarget2d.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\Uniform.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\UniformInfo.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\Uniforms.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\UniformValue.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\UniformValueFloat.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\UniformValueMatrix.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\UniformValueTexture.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\VertexFormat.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\exports\llgeGraphics.cpp">
       <Filter>exports</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\VertexBuffer.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\StaticBatch.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\core\BasicTest.cpp">
-      <Filter>core</Filter>
+      <Filter>engine\core</Filter>
     </ClCompile>
     <ClCompile Include="..\src\core\SystemAllocationPolicy.cpp">
-      <Filter>core</Filter>
+      <Filter>engine\core</Filter>
     </ClCompile>
     <ClCompile Include="..\src\core\HollowsAllocationPolicy.cpp">
-      <Filter>core</Filter>
+      <Filter>engine\core</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\TextureCubemap.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\UniformValueVector3.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\resources\zlib\adler32.c">
-      <Filter>resources\zlib</Filter>
+      <Filter>engine\resources\zlib</Filter>
     </ClCompile>
     <ClCompile Include="..\src\resources\zlib\compress.c">
-      <Filter>resources\zlib</Filter>
+      <Filter>engine\resources\zlib</Filter>
     </ClCompile>
     <ClCompile Include="..\src\resources\zlib\crc32.c">
-      <Filter>resources\zlib</Filter>
+      <Filter>engine\resources\zlib</Filter>
     </ClCompile>
     <ClCompile Include="..\src\resources\zlib\deflate.c">
-      <Filter>resources\zlib</Filter>
+      <Filter>engine\resources\zlib</Filter>
     </ClCompile>
     <ClCompile Include="..\src\resources\zlib\gzclose.c">
-      <Filter>resources\zlib</Filter>
+      <Filter>engine\resources\zlib</Filter>
     </ClCompile>
     <ClCompile Include="..\src\resources\zlib\gzlib.c">
-      <Filter>resources\zlib</Filter>
+      <Filter>engine\resources\zlib</Filter>
     </ClCompile>
     <ClCompile Include="..\src\resources\zlib\gzread.c">
-      <Filter>resources\zlib</Filter>
+      <Filter>engine\resources\zlib</Filter>
     </ClCompile>
     <ClCompile Include="..\src\resources\zlib\gzwrite.c">
-      <Filter>resources\zlib</Filter>
+      <Filter>engine\resources\zlib</Filter>
     </ClCompile>
     <ClCompile Include="..\src\resources\zlib\infback.c">
-      <Filter>resources\zlib</Filter>
+      <Filter>engine\resources\zlib</Filter>
     </ClCompile>
     <ClCompile Include="..\src\resources\zlib\inffast.c">
-      <Filter>resources\zlib</Filter>
+      <Filter>engine\resources\zlib</Filter>
     </ClCompile>
     <ClCompile Include="..\src\resources\zlib\inflate.c">
-      <Filter>resources\zlib</Filter>
+      <Filter>engine\resources\zlib</Filter>
     </ClCompile>
     <ClCompile Include="..\src\resources\zlib\inftrees.c">
-      <Filter>resources\zlib</Filter>
+      <Filter>engine\resources\zlib</Filter>
     </ClCompile>
     <ClCompile Include="..\src\resources\zlib\trees.c">
-      <Filter>resources\zlib</Filter>
+      <Filter>engine\resources\zlib</Filter>
     </ClCompile>
     <ClCompile Include="..\src\resources\zlib\uncompr.c">
-      <Filter>resources\zlib</Filter>
+      <Filter>engine\resources\zlib</Filter>
     </ClCompile>
     <ClCompile Include="..\src\resources\zlib\zutil.c">
-      <Filter>resources\zlib</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\resources\lpng\example.c">
-      <Filter>resources\lpng</Filter>
+      <Filter>engine\resources\zlib</Filter>
     </ClCompile>
     <ClCompile Include="..\src\resources\lpng\png.c">
-      <Filter>resources\lpng</Filter>
+      <Filter>engine\resources\lpng</Filter>
     </ClCompile>
     <ClCompile Include="..\src\resources\lpng\pngerror.c">
-      <Filter>resources\lpng</Filter>
+      <Filter>engine\resources\lpng</Filter>
     </ClCompile>
     <ClCompile Include="..\src\resources\lpng\pngget.c">
-      <Filter>resources\lpng</Filter>
+      <Filter>engine\resources\lpng</Filter>
     </ClCompile>
     <ClCompile Include="..\src\resources\lpng\pngmem.c">
-      <Filter>resources\lpng</Filter>
+      <Filter>engine\resources\lpng</Filter>
     </ClCompile>
     <ClCompile Include="..\src\resources\lpng\pngpread.c">
-      <Filter>resources\lpng</Filter>
+      <Filter>engine\resources\lpng</Filter>
     </ClCompile>
     <ClCompile Include="..\src\resources\lpng\pngread.c">
-      <Filter>resources\lpng</Filter>
+      <Filter>engine\resources\lpng</Filter>
     </ClCompile>
     <ClCompile Include="..\src\resources\lpng\pngrio.c">
-      <Filter>resources\lpng</Filter>
+      <Filter>engine\resources\lpng</Filter>
     </ClCompile>
     <ClCompile Include="..\src\resources\lpng\pngrtran.c">
-      <Filter>resources\lpng</Filter>
+      <Filter>engine\resources\lpng</Filter>
     </ClCompile>
     <ClCompile Include="..\src\resources\lpng\pngrutil.c">
-      <Filter>resources\lpng</Filter>
+      <Filter>engine\resources\lpng</Filter>
     </ClCompile>
     <ClCompile Include="..\src\resources\lpng\pngset.c">
-      <Filter>resources\lpng</Filter>
+      <Filter>engine\resources\lpng</Filter>
     </ClCompile>
     <ClCompile Include="..\src\resources\lpng\pngtest.c">
-      <Filter>resources\lpng</Filter>
+      <Filter>engine\resources\lpng</Filter>
     </ClCompile>
     <ClCompile Include="..\src\resources\lpng\pngtrans.c">
-      <Filter>resources\lpng</Filter>
+      <Filter>engine\resources\lpng</Filter>
     </ClCompile>
     <ClCompile Include="..\src\resources\lpng\pngwio.c">
-      <Filter>resources\lpng</Filter>
+      <Filter>engine\resources\lpng</Filter>
     </ClCompile>
     <ClCompile Include="..\src\resources\lpng\pngwrite.c">
-      <Filter>resources\lpng</Filter>
+      <Filter>engine\resources\lpng</Filter>
     </ClCompile>
     <ClCompile Include="..\src\resources\lpng\pngwtran.c">
-      <Filter>resources\lpng</Filter>
+      <Filter>engine\resources\lpng</Filter>
     </ClCompile>
     <ClCompile Include="..\src\resources\lpng\pngwutil.c">
-      <Filter>resources\lpng</Filter>
+      <Filter>engine\resources\lpng</Filter>
     </ClCompile>
     <ClCompile Include="..\src\resources\ContentManager.cpp">
-      <Filter>resources</Filter>
+      <Filter>engine\resources</Filter>
     </ClCompile>
     <ClCompile Include="..\src\resources\ContentProviderWindows.cpp">
-      <Filter>resources</Filter>
+      <Filter>engine\resources</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\EffectConstant.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\exports\llgeResources.cpp">
       <Filter>exports</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\TextureRenderTargetDepth2d.cpp">
-      <Filter>graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\resources\ContentProviderObb.cpp">
-      <Filter>resources</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\RenderConverter.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\..\CommonSources\gen\zomboPInvoke.cpp">
       <Filter>common</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\EffectsBasic.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\RenderConverterBasic.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\VertexFormatsBasic.cpp">
-      <Filter>graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\zombo\ZomboGame.cpp">
-      <Filter>zombo</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\zombo\cjson\cJSON.c">
-      <Filter>zombo\cjson</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\zombo\content\ZomboContentBlock.cpp">
-      <Filter>zombo\content</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\core\Path.cpp">
-      <Filter>core</Filter>
+      <Filter>engine\core</Filter>
     </ClCompile>
     <ClCompile Include="..\src\core\Convert.cpp">
-      <Filter>core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\zombo\content\loaders\LoaderJsonAtlas.cpp">
-      <Filter>zombo\content\loaders</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\zombo\content\ZomboAtlas.cpp">
-      <Filter>zombo\content</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\zombo\common\asyncs\ZomboAsyncState.cpp">
-      <Filter>zombo\common\asyncs</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\zombo\common\states\ZomboStateController.cpp">
-      <Filter>zombo\common\states</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\zombo\scenes\ZomboScene.cpp">
-      <Filter>zombo\scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\zombo\common\ZomboTransfom.cpp">
-      <Filter>zombo\common</Filter>
+      <Filter>engine\core</Filter>
     </ClCompile>
     <ClCompile Include="..\src\core\Vector.cpp">
-      <Filter>core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\zombo\ZomboEntity.cpp">
-      <Filter>zombo</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\zombo\render\ZomboRenderSprite.cpp">
-      <Filter>zombo\render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\zombo\common\ZomboBounds.cpp">
-      <Filter>zombo\common</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\zombo\ZomboWorld.cpp">
-      <Filter>zombo</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\zombo\render\ZomboRenderSystem.cpp">
-      <Filter>zombo\render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\zombo\common\ZomboCamera.cpp">
-      <Filter>zombo\common</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\zombo\zombo_classes.cpp">
-      <Filter>zombo</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\zombo\entities\ZomboPlayer.cpp">
-      <Filter>zombo\entities</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\zombo\animation\ZomboFrameAnimation.cpp">
-      <Filter>zombo\animation</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\zombo\common\ZomboGameEnvironment.cpp">
-      <Filter>zombo\common</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\zombo\common\ZomboTimeLine.cpp">
-      <Filter>zombo\common</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\zombo\content\ZomboContentSystem.cpp">
-      <Filter>zombo\content</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\zombo\behaviors\ZomboBehaviorPlayer.cpp">
-      <Filter>zombo\behaviors</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\zombo\behaviors\ZomboBehaviors.cpp">
-      <Filter>zombo\behaviors</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\zombo\content\serialization\ZomboValue.cpp">
-      <Filter>zombo\content\serialization</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\zombo\content\serialization\ZomboObject.cpp">
-      <Filter>zombo\content\serialization</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\zombo\content\serialization\ZomboArray.cpp">
-      <Filter>zombo\content\serialization</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\zombo\content\serialization\ZomboSerializer.cpp">
-      <Filter>zombo\content\serialization</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\zombo\content\ZomboContentScene.cpp">
-      <Filter>zombo\content</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\zombo\_editor\ZomboEditor.cpp">
-      <Filter>zombo\_editor</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\zombo\_editor\ZomboEditorInput.cpp">
-      <Filter>zombo\_editor</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\zombo\_editor\ZomboEditorViewport.cpp">
-      <Filter>zombo\_editor</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\zombo\_editor\ZomboEditorRenderService.cpp">
-      <Filter>zombo\_editor</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\zombo\_editor\commands\ZomboEditorCommands.cpp">
-      <Filter>zombo\_editor\commands</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\zombo\_editor\commands\ZomboEditorCommand.cpp">
-      <Filter>zombo\_editor\commands</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\zombo\_editor\commands\ZomboSetEditorMode.cpp">
-      <Filter>zombo\_editor\commands</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\zombo\_editor\modes\ZomboEditorSelectionMode.cpp">
-      <Filter>zombo\_editor\modes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\zombo\_editor\ZomboEditorCamera.cpp">
-      <Filter>zombo\_editor</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\zombo\_editor\camera\ZomboCameraMoveXY.cpp">
-      <Filter>zombo\_editor\camera</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\zombo\_editor\camera\ZomboCameraRotate.cpp">
-      <Filter>zombo\_editor\camera</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\zombo\common\ZomboInterpolatedValue.cpp">
-      <Filter>zombo\common</Filter>
+      <Filter>engine\core</Filter>
     </ClCompile>
     <ClCompile Include="..\src_freetype\autofit\autofit.c">
-      <Filter>freetype</Filter>
+      <Filter>third_party\freetype</Filter>
     </ClCompile>
     <ClCompile Include="..\src_freetype\bdf\bdf.c">
-      <Filter>freetype</Filter>
+      <Filter>third_party\freetype</Filter>
     </ClCompile>
     <ClCompile Include="..\src_freetype\cff\cff.c">
-      <Filter>freetype</Filter>
+      <Filter>third_party\freetype</Filter>
     </ClCompile>
     <ClCompile Include="..\src_freetype\base\ftbase.c">
-      <Filter>freetype</Filter>
+      <Filter>third_party\freetype</Filter>
     </ClCompile>
     <ClCompile Include="..\src_freetype\base\ftbitmap.c">
-      <Filter>freetype</Filter>
+      <Filter>third_party\freetype</Filter>
     </ClCompile>
     <ClCompile Include="..\src_freetype\cache\ftcache.c">
-      <Filter>freetype</Filter>
+      <Filter>third_party\freetype</Filter>
     </ClCompile>
     <ClCompile Include="..\src_freetype\base\ftfstype.c">
-      <Filter>freetype</Filter>
+      <Filter>third_party\freetype</Filter>
     </ClCompile>
     <ClCompile Include="..\src_freetype\base\ftgasp.c">
-      <Filter>freetype</Filter>
+      <Filter>third_party\freetype</Filter>
     </ClCompile>
     <ClCompile Include="..\src_freetype\base\ftglyph.c">
-      <Filter>freetype</Filter>
+      <Filter>third_party\freetype</Filter>
     </ClCompile>
     <ClCompile Include="..\src_freetype\gzip\ftgzip.c">
-      <Filter>freetype</Filter>
+      <Filter>third_party\freetype</Filter>
     </ClCompile>
     <ClCompile Include="..\src_freetype\base\ftinit.c">
-      <Filter>freetype</Filter>
+      <Filter>third_party\freetype</Filter>
     </ClCompile>
     <ClCompile Include="..\src_freetype\lzw\ftlzw.c">
-      <Filter>freetype</Filter>
+      <Filter>third_party\freetype</Filter>
     </ClCompile>
     <ClCompile Include="..\src_freetype\base\ftstroke.c">
-      <Filter>freetype</Filter>
+      <Filter>third_party\freetype</Filter>
     </ClCompile>
     <ClCompile Include="..\src_freetype\base\ftsystem.c">
-      <Filter>freetype</Filter>
+      <Filter>third_party\freetype</Filter>
     </ClCompile>
     <ClCompile Include="..\src_freetype\smooth\smooth.c">
-      <Filter>freetype</Filter>
+      <Filter>third_party\freetype</Filter>
     </ClCompile>
     <ClCompile Include="..\src_freetype\base\ftbbox.c">
-      <Filter>freetype\FT_MODULES</Filter>
+      <Filter>third_party\freetype\FT_MODULES</Filter>
     </ClCompile>
     <ClCompile Include="..\src_freetype\base\ftfntfmt.c">
-      <Filter>freetype\FT_MODULES</Filter>
+      <Filter>third_party\freetype\FT_MODULES</Filter>
     </ClCompile>
     <ClCompile Include="..\src_freetype\base\ftgxval.c">
-      <Filter>freetype\FT_MODULES</Filter>
+      <Filter>third_party\freetype\FT_MODULES</Filter>
     </ClCompile>
     <ClCompile Include="..\src_freetype\base\ftlcdfil.c">
-      <Filter>freetype\FT_MODULES</Filter>
+      <Filter>third_party\freetype\FT_MODULES</Filter>
     </ClCompile>
     <ClCompile Include="..\src_freetype\base\ftmm.c">
-      <Filter>freetype\FT_MODULES</Filter>
+      <Filter>third_party\freetype\FT_MODULES</Filter>
     </ClCompile>
     <ClCompile Include="..\src_freetype\base\ftotval.c">
-      <Filter>freetype\FT_MODULES</Filter>
+      <Filter>third_party\freetype\FT_MODULES</Filter>
     </ClCompile>
     <ClCompile Include="..\src_freetype\base\ftpatent.c">
-      <Filter>freetype\FT_MODULES</Filter>
+      <Filter>third_party\freetype\FT_MODULES</Filter>
     </ClCompile>
     <ClCompile Include="..\src_freetype\base\ftpfr.c">
-      <Filter>freetype\FT_MODULES</Filter>
+      <Filter>third_party\freetype\FT_MODULES</Filter>
     </ClCompile>
     <ClCompile Include="..\src_freetype\base\ftsynth.c">
-      <Filter>freetype\FT_MODULES</Filter>
+      <Filter>third_party\freetype\FT_MODULES</Filter>
     </ClCompile>
     <ClCompile Include="..\src_freetype\base\fttype1.c">
-      <Filter>freetype\FT_MODULES</Filter>
+      <Filter>third_party\freetype\FT_MODULES</Filter>
     </ClCompile>
     <ClCompile Include="..\src_freetype\base\ftwinfnt.c">
-      <Filter>freetype\FT_MODULES</Filter>
+      <Filter>third_party\freetype\FT_MODULES</Filter>
     </ClCompile>
     <ClCompile Include="..\src_freetype\pcf\pcf.c">
-      <Filter>freetype\FT_MODULES</Filter>
+      <Filter>third_party\freetype\FT_MODULES</Filter>
     </ClCompile>
     <ClCompile Include="..\src_freetype\pfr\pfr.c">
-      <Filter>freetype\FT_MODULES</Filter>
+      <Filter>third_party\freetype\FT_MODULES</Filter>
     </ClCompile>
     <ClCompile Include="..\src_freetype\psaux\psaux.c">
-      <Filter>freetype\FT_MODULES</Filter>
+      <Filter>third_party\freetype\FT_MODULES</Filter>
     </ClCompile>
     <ClCompile Include="..\src_freetype\pshinter\pshinter.c">
-      <Filter>freetype\FT_MODULES</Filter>
+      <Filter>third_party\freetype\FT_MODULES</Filter>
     </ClCompile>
     <ClCompile Include="..\src_freetype\raster\raster.c">
-      <Filter>freetype\FT_MODULES</Filter>
+      <Filter>third_party\freetype\FT_MODULES</Filter>
     </ClCompile>
     <ClCompile Include="..\src_freetype\sfnt\sfnt.c">
-      <Filter>freetype\FT_MODULES</Filter>
+      <Filter>third_party\freetype\FT_MODULES</Filter>
     </ClCompile>
     <ClCompile Include="..\src_freetype\psnames\psmodule.c">
-      <Filter>freetype\FT_MODULES</Filter>
+      <Filter>third_party\freetype\FT_MODULES</Filter>
     </ClCompile>
     <ClCompile Include="..\src_freetype\type1\type1.c">
-      <Filter>freetype\FT_MODULES</Filter>
+      <Filter>third_party\freetype\FT_MODULES</Filter>
     </ClCompile>
     <ClCompile Include="..\src_freetype\cid\type1cid.c">
-      <Filter>freetype\FT_MODULES</Filter>
+      <Filter>third_party\freetype\FT_MODULES</Filter>
     </ClCompile>
     <ClCompile Include="..\src_freetype\type42\type42.c">
-      <Filter>freetype\FT_MODULES</Filter>
+      <Filter>third_party\freetype\FT_MODULES</Filter>
     </ClCompile>
     <ClCompile Include="..\src_freetype\winfonts\winfnt.c">
-      <Filter>freetype\FT_MODULES</Filter>
+      <Filter>third_party\freetype\FT_MODULES</Filter>
     </ClCompile>
     <ClCompile Include="ftdebug.c">
-      <Filter>freetype</Filter>
+      <Filter>third_party\freetype</Filter>
     </ClCompile>
     <ClCompile Include="..\src_freetype\truetype\truetype.c">
-      <Filter>freetype\FT_MODULES</Filter>
+      <Filter>third_party\freetype\FT_MODULES</Filter>
     </ClCompile>
     <ClCompile Include="..\src\fonts\Font.cpp">
-      <Filter>fonts</Filter>
+      <Filter>engine\fonts</Filter>
     </ClCompile>
     <ClCompile Include="..\src\fonts\FontsManager.cpp">
-      <Filter>fonts</Filter>
+      <Filter>engine\fonts</Filter>
     </ClCompile>
     <ClCompile Include="..\src\fonts\OutlineVectorFont.cpp">
-      <Filter>fonts</Filter>
+      <Filter>engine\fonts</Filter>
     </ClCompile>
     <ClCompile Include="..\src\fonts\FontCharSet.cpp">
-      <Filter>fonts</Filter>
+      <Filter>engine\fonts</Filter>
     </ClCompile>
     <ClCompile Include="..\src\geometry\Aabb2d.cpp">
-      <Filter>geometry</Filter>
+      <Filter>engine\geometry</Filter>
     </ClCompile>
     <ClCompile Include="..\src\geometry\Quadtree2d.cpp">
-      <Filter>geometry</Filter>
+      <Filter>engine\geometry</Filter>
     </ClCompile>
     <ClCompile Include="..\src\geometry\Quadtree2dNode.cpp">
-      <Filter>geometry</Filter>
+      <Filter>engine\geometry</Filter>
     </ClCompile>
     <ClCompile Include="..\src_poly2tri\sweep\advancing_front.cc">
-      <Filter>poly2tri\sweep</Filter>
+      <Filter>third_party\poly2tri\sweep</Filter>
     </ClCompile>
     <ClCompile Include="..\src_poly2tri\sweep\cdt.cc">
-      <Filter>poly2tri\sweep</Filter>
+      <Filter>third_party\poly2tri\sweep</Filter>
     </ClCompile>
     <ClCompile Include="..\src_poly2tri\sweep\sweep.cc">
-      <Filter>poly2tri\sweep</Filter>
+      <Filter>third_party\poly2tri\sweep</Filter>
     </ClCompile>
     <ClCompile Include="..\src_poly2tri\sweep\sweep_context.cc">
-      <Filter>poly2tri\sweep</Filter>
+      <Filter>third_party\poly2tri\sweep</Filter>
     </ClCompile>
     <ClCompile Include="..\src_poly2tri\common\shapes.cc">
-      <Filter>poly2tri\common</Filter>
+      <Filter>third_party\poly2tri\common</Filter>
     </ClCompile>
     <ClCompile Include="..\src\fonts\BitmapFont.cpp">
-      <Filter>fonts</Filter>
+      <Filter>engine\fonts</Filter>
     </ClCompile>
     <ClCompile Include="..\src\fonts\FontRects.cpp">
-      <Filter>fonts</Filter>
+      <Filter>engine\fonts</Filter>
     </ClCompile>
     <ClCompile Include="..\src_rectanglebinpack\GuillotineBinPack.cpp">
-      <Filter>rectanglebinpack</Filter>
+      <Filter>third_party\rectanglebinpack</Filter>
     </ClCompile>
     <ClCompile Include="..\src_rectanglebinpack\MaxRectsBinPack.cpp">
-      <Filter>rectanglebinpack</Filter>
+      <Filter>third_party\rectanglebinpack</Filter>
     </ClCompile>
     <ClCompile Include="..\src_rectanglebinpack\Rect.cpp">
-      <Filter>rectanglebinpack</Filter>
+      <Filter>third_party\rectanglebinpack</Filter>
     </ClCompile>
     <ClCompile Include="..\src_rectanglebinpack\ShelfBinPack.cpp">
-      <Filter>rectanglebinpack</Filter>
+      <Filter>third_party\rectanglebinpack</Filter>
     </ClCompile>
     <ClCompile Include="..\src_rectanglebinpack\ShelfNextFitBinPack.cpp">
-      <Filter>rectanglebinpack</Filter>
+      <Filter>third_party\rectanglebinpack</Filter>
     </ClCompile>
     <ClCompile Include="..\src_rectanglebinpack\SkylineBinPack.cpp">
-      <Filter>rectanglebinpack</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\zombo\ZomboLog.cpp">
-      <Filter>zombo</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\zombo\_editor\ZomboEditorLogDisplayer.cpp">
-      <Filter>zombo\_editor</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\zombo\content\ZomboBitmapFont.cpp">
-      <Filter>zombo\content</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\zombo\content\ZomboContentGame.cpp">
-      <Filter>zombo\content</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\zombo\_editor\toolbox\ZomboToolBox.cpp">
-      <Filter>zombo\_editor\toolbox</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\zombo\_editor\toolbox\ZomboToolBoxItemRenderer.cpp">
-      <Filter>zombo\_editor\toolbox</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\zombo\objects\ZomboPlatform.cpp">
-      <Filter>zombo\objects</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\zombo\_editor\curves\CurvesManager.cpp">
-      <Filter>zombo\_editor\curves</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\zombo\_editor\drawing\Drawer.cpp">
-      <Filter>zombo\_editor\drawing</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\zombo\_editor\curves\CurvesStateSelect.cpp">
-      <Filter>zombo\_editor\curves</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\zombo\_editor\curves\CurvesStateMovePoint.cpp">
-      <Filter>zombo\_editor\curves</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\zombo\_editor\curves\CurvesStateMoveSegment.cpp">
-      <Filter>zombo\_editor\curves</Filter>
+      <Filter>third_party\rectanglebinpack</Filter>
     </ClCompile>
     <ClCompile Include="..\src\geometry\Frustum.cpp">
-      <Filter>geometry</Filter>
+      <Filter>engine\geometry</Filter>
     </ClCompile>
     <ClCompile Include="..\src_clipper\clipper.cpp">
-      <Filter>clipper</Filter>
+      <Filter>third_party\clipper</Filter>
     </ClCompile>
     <ClCompile Include="..\src\navmesh\navmesh_references.h">
-      <Filter>navmesh</Filter>
+      <Filter>engine\navmesh</Filter>
     </ClCompile>
     <ClCompile Include="..\src\navmesh\NavMesh.cpp">
-      <Filter>navmesh</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\zombo\_editor\ZomboEditorLoadingScreen.cpp">
-      <Filter>zombo\_editor</Filter>
+      <Filter>engine\navmesh</Filter>
     </ClCompile>
     <ClCompile Include="..\src\navmesh\AStar.cpp">
-      <Filter>navmesh</Filter>
+      <Filter>engine\navmesh</Filter>
     </ClCompile>
     <ClCompile Include="..\src\navmesh\Funnel.cpp">
-      <Filter>navmesh</Filter>
+      <Filter>engine\navmesh</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\zombo\_editor\curves\CurvesStateMoveBinding.cpp">
-      <Filter>zombo\_editor\curves</Filter>
+    <ClCompile Include="..\src\resources\ContentProviderObb.cpp">
+      <Filter>engine\resources</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\zombo\common\ZomboStatistics.cpp">
-      <Filter>zombo\common</Filter>
+    <ClCompile Include="..\src\core\MarchingSquares.cpp">
+      <Filter>engine\core</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\zombo\_editor\ZomboEditorStatisticsDisplayer.cpp">
-      <Filter>zombo\_editor</Filter>
+    <ClCompile Include="..\src\content\serialization\ContentArray.cpp">
+      <Filter>engine\content\serialization</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\zombo\common\ValuesAnimator.cpp">
-      <Filter>zombo\common</Filter>
+    <ClCompile Include="..\src\content\serialization\ContentObject.cpp">
+      <Filter>engine\content\serialization</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\zombo\common\SConfig.cpp">
-      <Filter>zombo\common</Filter>
+    <ClCompile Include="..\src\content\serialization\ContentSerializer.cpp">
+      <Filter>engine\content\serialization</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\zombo\_editor\menu\ContextMenu.cpp">
-      <Filter>zombo\_editor\menu</Filter>
+    <ClCompile Include="..\src\content\serialization\ContentValue.cpp">
+      <Filter>engine\content\serialization</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\zombo\content\savers\ZomboContentSaver.cpp">
-      <Filter>zombo\content\savers</Filter>
+    <ClCompile Include="..\src\content\BinaryReader.cpp">
+      <Filter>engine\content</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\content\ContentBitmapFont.cpp">
+      <Filter>engine\content</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\content\ContentBlock.cpp">
+      <Filter>engine\content</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\content\ContentFrameAnimation.cpp">
+      <Filter>engine\content</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\content\ContentImage.cpp">
+      <Filter>engine\content</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\content\ContentJson.cpp">
+      <Filter>engine\content</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\content\ContentMesh.cpp">
+      <Filter>engine\content</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\content\ContentStatus.cpp">
+      <Filter>engine\content</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\game\Component.cpp">
+      <Filter>engine\game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\game\ComponentsFactory.cpp">
+      <Filter>engine\game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\game\Entity.cpp">
+      <Filter>engine\game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\game\Scene.cpp">
+      <Filter>engine\game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\game\services\Drawing.cpp">
+      <Filter>engine\game\services</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\game\input\Mouse.cpp">
+      <Filter>engine\game\input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\game\components\FrameAnimation.cpp">
+      <Filter>engine\game\components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\game\components\Mesh.cpp">
+      <Filter>engine\game\components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\terrain\StripeBuilder.cpp">
+      <Filter>engine\terrain</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\terrain\terrain_classes.cpp">
+      <Filter>engine\terrain</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\terrain\TerrainFactory.cpp">
+      <Filter>engine\terrain</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\geometry\Aabb.cpp">
+      <Filter>engine\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\geometry\Quadtree.cpp">
+      <Filter>engine\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\geometry\TerrainClipper.cpp">
+      <Filter>engine\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\utilities\Camera.cpp">
+      <Filter>engine\graphics\utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\utilities\Viewport.cpp">
+      <Filter>engine\graphics\utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\pipelines\RenderPipeline.cpp">
+      <Filter>engine\graphics\pipelines</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\pipelines\RenderService.cpp">
+      <Filter>engine\graphics\pipelines</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\pipelines\RenderVertex.cpp">
+      <Filter>engine\graphics\pipelines</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graphics\pipelines\UniformsConfig.cpp">
+      <Filter>engine\graphics\pipelines</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\Spline.cpp">
+      <Filter>engine\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\Environment.cpp">
+      <Filter>engine\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_cjson\cJSON.c">
+      <Filter>third_party\cjson</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\zombo\InitRazorRenderContext.cpp">
+      <Filter>zombo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\zombo\editor\ZomboEditor.cpp">
+      <Filter>zombo\editor</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -1,142 +1,103 @@
 ﻿using System;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Threading;
+using System.Diagnostics;
 using System.Windows.Forms;
 using GraphicsBinding;
+using InputHook;
+using zombo;
+using WinApi = GraphicsBinding.WinApi;
 
 namespace Zombo.Editor
 {
     public partial class MainWindow : Form
     {
-        const string EditorModeToolStripButtonName = "_editorMode";
-        const string CameraModeToolStripButtonName = "_cameraMode";
-
         public MainWindow()
         {
             InitializeComponent();
+            Input.Register(Handle);
+            _glWindow = new GLWindow(this, OpenGLGlobals.OpenGLContext);
+            try
+            {
+                OpenGLGlobals.InitializeGLFunctionsEntires(_glWindow);
+                _editor = zombo.zombo.CreateZomboEditor();
+                _editor.SetRootPath(Application.StartupPath.Replace('\\', '/') + "/ZmoboContent/");
+            }
+            catch (Exception e)
+            {
+                OnException(e);
+            }
+
             Application.Idle += ApplicationIdle;
-            Closed += MainWindowClosed;
+            Closed += WindowClosed;
         }
 
-        public static Control FindFocusedControl(Control control)
+        protected override void WndProc(ref Message m)
         {
-            var container = control as ContainerControl;
-            return (null != container
-                ? FindFocusedControl(container.ActiveControl)
-                : control);
+            Input.WinProc(ref m);
+            base.WndProc(ref m);
         }
 
-        public static string GetControlPath(Control control)
+        private void OnException(Exception e)
         {
-            var path = control.Name;
-            var parent = control.Parent;
-            while (parent != null)
+            MessageBox.Show(e.ToString());
+        }
+
+        private uint GetMouseButtons()
+        {
+            uint mouseButtons = 0;
+            if ((MouseButtons & MouseButtons.Left) != MouseButtons.None)
             {
-                path = parent.Name + "/" + path;
-                parent = parent.Parent;
+                mouseButtons |= 0x1;
             }
-            return path;
-        }
-
-        private static ToolStripControlHost Find(Control c)
-        {
-            var p = c.Parent;
-            while (p != null)
+            if ((MouseButtons & MouseButtons.Right) != MouseButtons.None)
             {
-                if (p is ToolStrip)
-                    break;
-                p = p.Parent;
+                mouseButtons |= 0x2;
             }
-            if (p == null)
-                return null;
-
-            ToolStrip ts = (ToolStrip)p;
-            foreach (ToolStripItem i in ts.Items)
+            if ((MouseButtons & MouseButtons.Middle) != MouseButtons.None)
             {
-                var h = Find(i, c);
-                if (h != null)
-                    return h;
+                mouseButtons |= 0x4;
             }
-            return null;
+            return mouseButtons;
         }
 
-        private static ToolStripControlHost Find(ToolStripItem item, Control c)
+        private void InternalCallUpdateAndRender()
         {
-            ToolStripControlHost result = null;
-            if (item is ToolStripControlHost)
+            Input.Update();
+
+            var seconds = (float)_stopwatch.Elapsed.TotalSeconds;
+            _stopwatch.Restart();
+            Text = $"fps: {(1.0f / seconds):000.0}";
+            _editor.UpdateEnvironment(ClientSize.Width, ClientSize.Height, seconds);
+            var mousePos = PointToClient(Cursor.Position);
+            _editor.UpdateMouse(Input.Mouse.XDelta, Input.Mouse.YDelta, mousePos.X, mousePos.Y, GetMouseButtons());
+            if (!_initialized)
             {
-                var h = (ToolStripControlHost)item;
-                if (h.Control == c)
-                {
-                    result = h;
-                }
+                ExecuteOpenGLAction(InternalCallLoad);
+                _initialized = true;
             }
-            else if (item is ToolStripDropDownItem)
-            {
-                var ddm = (ToolStripDropDownItem)item;
-                foreach (ToolStripItem i in ddm.DropDown.Items)
-                {
-                    result = Find(i, c);
-                    if (result != null)
-                        break;
-                }
-            }
-            return result;
+            _editor.Update();
+            ExecuteOpenGLAction(InternalCallRender);
         }
 
-        public static ToolStripControlHost FindHost(Control control)
+        private void InternalCallLoad()
         {
-            return Find(control);
+            _editor.Load();
         }
-
-        public static bool IsControlTextEdit(Control control)
+        private void InternalCallRender()
         {
-            if (control is TextBox) return true;
-            var host = FindHost(control);
-            if (host is ToolStripTextBox) return true;
-            return false;
-
+            _editor.Render();
+            _glWindow.SwapOpenGLBuffers();
         }
 
-        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        public void ExecuteOpenGLAction(Action action)
         {
-            var focused = FindFocusedControl(this);
-            if (focused != null)
-            {
-                if (IsControlTextEdit(focused))
-                {
-                    return base.ProcessCmdKey(ref msg, keyData);
-                }
-            }
-            switch (keyData)
-            {
-                case (Keys.Control | Keys.Z):
-                    _undo.PerformClick();
-                    break;
-                case (Keys.Control | Keys.Shift | Keys.Z):
-                    _redo.PerformClick();
-                    break;
-            }
-            return base.ProcessCmdKey(ref msg, keyData);
+            if (action == null)
+                return;
+            OpenGLGlobals.OpenGLContext.MakeCurrent(_glWindow);
+            action();
+            OpenGLGlobals.OpenGLContext.MakeCurrent(null);
         }
 
-        private void InvalidateComboFov()
-        {
-            var fov = (int)Math.Round(_zomboEditScene.ZomboCamera.GetFov() * 180.0f / Math.PI);
-            var newValue = $"{fov}";
-            if (_comboFov.Text == newValue) return;
-            _comboFov.TextChanged -= _comboFov_TextChanged;
-            _comboFov.Text = newValue;
-            _comboFov.TextChanged += _comboFov_TextChanged;
-        }
-
-        private void MainWindowClosed(object sender, EventArgs e)
-        {
-            Application.Idle -= ApplicationIdle;
-        }
-
-        bool IsApplicationIdle()
+        private bool IsApplicationIdle()
         {
             NativeMessage result;
             return WinApi.PeekMessage(out result, IntPtr.Zero, (uint)0, (uint)0, (uint)0) == 0;
@@ -146,107 +107,18 @@ namespace Zombo.Editor
         {
             while (IsApplicationIdle())
             {
-                _zomboEditScene.InternalCallUpdateAndRender();
-                InvalidateUndoButtons();
-                InvalidateCameraModeButtons();
-                InvalidateComboFov();
+                InternalCallUpdateAndRender();
             }
         }
 
-        private void InvalidateUndoButtons()
+        private void WindowClosed(object sender, EventArgs e)
         {
-            var undo = _zomboEditScene.ZomboEditor.IsUndoAvaliable();
-            _undo.Enabled = undo;
-            var redo = _zomboEditScene.ZomboEditor.IsRedoAvaliable();
-            _redo.Enabled = redo;
+            Application.Idle -= ApplicationIdle;
         }
 
-        private void InvalidateCameraModeButtons()
-        {
-            var mode = Marshal.PtrToStringAnsi(_zomboEditScene.ZomboCamera.GetMode());
-            foreach (var toolButton in _toolbox.Items.OfType<ToolStripButton>().Where(tb => tb.Name.StartsWith(CameraModeToolStripButtonName)))
-            {
-                toolButton.Checked = toolButton.Name == CameraModeToolStripButtonName + mode;
-            }
-        }
-
-        private void InvalidateModeButtons()
-        {
-            var mode = Marshal.PtrToStringAnsi(_zomboEditScene.ZomboEditor.GetMode());
-            foreach (var toolButton in _toolbox.Items.OfType<ToolStripButton>().Where(tb => tb.Name.StartsWith(EditorModeToolStripButtonName)))
-            {
-                toolButton.Checked = toolButton.Name == EditorModeToolStripButtonName + mode;
-            }
-            InvalidateUndoButtons();
-        }
-
-        private void CameraModeSwitch(object sender, EventArgs e)
-        {
-            var button = sender as ToolStripButton;
-            if (button == null)
-                return;
-            var modeName = button.Name.Replace(CameraModeToolStripButtonName, string.Empty);
-            _zomboEditScene.ZomboCamera.SetMode(modeName);
-            InvalidateCameraModeButtons();            
-        }
-
-        private void EditorModeSwitch(object sender, EventArgs e)
-        {
-            var button = sender as ToolStripButton;
-            if (button == null)
-                return;
-            var modeName = button.Name.Replace(EditorModeToolStripButtonName, string.Empty);
-            _zomboEditScene.ZomboEditor.SetMode(modeName);
-            InvalidateModeButtons();
-        }
-
-        private void _undo_Click(object sender, EventArgs e)
-        {
-            _zomboEditScene.ZomboEditor.Undo();
-            InvalidateModeButtons();
-        }
-
-        private void _redo_Click(object sender, EventArgs e)
-        {
-            _zomboEditScene.ZomboEditor.Redo();
-            InvalidateModeButtons();
-        }
-
-        private void _comboFov_TextChanged(object sender, EventArgs e)
-        {
-            int value;
-            if (int.TryParse(_comboFov.Text, out value))
-            {
-                _zomboEditScene.ZomboCamera.SetFov((float)(value * Math.PI / 180.0f));
-            }
-            else
-            {
-                InvalidateComboFov();
-            }
-        }
-
-        private void MainWindow_Load(object sender, EventArgs e)
-        {
-            InvalidateModeButtons();
-            InvalidateCameraModeButtons();
-            InvalidateComboFov();
-        }
-
-        private void _zomboEditScene_MouseDown(object sender, MouseEventArgs e)
-        {
-        }
-
-        private void _zomboEditScene_MouseUp(object sender, MouseEventArgs e)
-        {
-        }
-
-        private void _zomboEditScene_Move(object sender, EventArgs e)
-        {
-        }
-
-        private void MainWindow_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            _zomboEditScene.ZomboEditor.Finish();
-        }
+        private bool _initialized = false;
+        private readonly GLWindow _glWindow;
+        private readonly ZomboEditor _editor;
+        private Stopwatch _stopwatch = new Stopwatch();
     }
 }

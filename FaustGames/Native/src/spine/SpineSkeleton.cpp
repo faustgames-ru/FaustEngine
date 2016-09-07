@@ -74,6 +74,7 @@ namespace spine
 
 	SpineSkeletonBone::SpineSkeletonBone(void* bone)
 	{
+		fx = llge::BoneFxNone;
 		_spBone = bone;
 	}
 
@@ -92,15 +93,24 @@ namespace spine
 		return static_cast<spBone *>(_spBone)->worldY;
 	}
 
+	void SpineSkeletonBone::setBoneFx(llge::BoneFx value)
+	{
+		fx = value;
+	}
+
 	SpineSkeleton::SpineSkeleton(SpineSkeletonResource *resource, float* transform) : _spSkeleton(0)
 	{
 		initFromResource(resource);
 		spSkeleton *s = (spSkeleton*)_spSkeleton;
 		spSkeletonData *sd = (spSkeletonData*)resource->getSkeletonData();
+		/*
 		if (sd->skinsCount > 1)
 		{
 			spSkeleton_setSkin(s, sd->skins[1]);
 		}
+		*/
+		spSkeleton_setSkin(s, (spSkin*)resource->_dynamicSkin->getNativeInstance());
+
 		if (transform)
 			_transform.setData(transform);
 		else
@@ -131,26 +141,44 @@ namespace spine
 		graphics::EffectBase * effectInstance = graphics::RenderConverter::getInstance()->getEffect(effect);
 		effectInstance->configCopy(&_lightingConfig, effectConfig);
 		_mesh.State.config = &_lightingConfig;
+		uint lightmap = _lightingConfig.lightmap;
 		for (int i = 0; i < s->slotsCount; i++)
 		{
 			spSlot* slot = s->drawOrder[i];
 			if (!slot->attachment) continue;
-			/*
-			bool isTrail = false;
-			if (strstr(slot->attachment->name, "_tr") != nullptr)
-				isTrail = true;
-			if (strstr(slot->attachment->name, "sh_") != nullptr)
-				isTrail = true;
-			if (strstr(slot->attachment->name, "COMBO") != nullptr)
-				isTrail = true;
-			*/
 			
 			_mesh.Color = graphics::Color::fromRgba(slot->r*s->r, slot->g*s->g, slot->b*s->b, slot->a*s->a);
 			_mesh.State.Blend = slot->data->blendMode == SP_BLEND_MODE_NORMAL
 				? graphics::BlendState::Alpha
 				: graphics::BlendState::Additive;
 
-			_mesh.State.Effect = effectInstance;// graphics::Effects::textureLightmapColor();
+			SpineSkeletonBone* bone = _bones[slot->bone->data->index];
+			
+			if (bone->fx == llge::BoneFx::BoneFxIgnoreLight)
+			{
+				_mesh.State.Effect = graphics::Effects::textureColor();
+				_lightingConfig.lightmap = lightmap;
+			}
+			else if (bone->fx == llge::BoneFx::BoneFxBlur)
+			{
+				continue;
+				/*
+				if (batcher->usedPostProcess())
+				{
+					_mesh.State.Effect = graphics::Effects::textureBlurColor();
+					_lightingConfig.lightmap = batcher->getBlurMap()->getHandle();
+				}
+				else
+				{
+					continue;
+				}
+				*/
+			}
+			else
+			{				
+				_mesh.State.Effect = effectInstance;// graphics::Effects::textureLightmapColor();
+				_lightingConfig.lightmap = lightmap;
+			}
 
 			switch (slot->attachment->type)
 			{
@@ -167,7 +195,6 @@ namespace spine
 				_mesh.Indices = _quadIndices;
 				_mesh.IndicesCount = 6;
 				_mesh.VerticesCount = 4;
-				//_mesh.State.TextureId = getTextureId(region->rendererObject);
 				_lightingConfig.texture = getTextureId(region->rendererObject);
 				batcher->drawSpineMesh(_mesh, colorScale);
 				break;
@@ -201,43 +228,10 @@ namespace spine
 				_mesh.Indices = mesh->triangles;
 				_mesh.IndicesCount = mesh->trianglesCount;
 				_mesh.VerticesCount = mesh->super.worldVerticesLength / 2;
-				//_mesh.State.TextureId = getTextureId(mesh->rendererObject);
 				_lightingConfig.texture = getTextureId(mesh->rendererObject);
-				/*
-				if (isTrail)
-				{
-					batcher->drawSpineMesh0(_mesh, colorScale);
-				}
-				else
-				{
-				}
-				*/
 				batcher->drawSpineMesh(_mesh, colorScale);
 				break;
-			}
-			/*
-			case SP_ATTACHMENT_LINKED_MESH:
-			{
-				
-				spWeightedMeshAttachment * skinnedMesh = SUB_CAST(spWeightedMeshAttachment, slot->attachment);
-				spSkinnedMeshAttachment_updateUVs_fixed(skinnedMesh, _uvBuffer);
-				spWeightedMeshAttachment_computeWorldVertices(skinnedMesh, slot, _mesh.Vertices);
-				for (int j = 0; j < skinnedMesh->uvsCount; j += 2)
-				{
-					transform(_mesh.Vertices + j, _mesh.Vertices + j + 1);
-					aabb.expand(_mesh.Vertices[j], _mesh.Vertices[j + 1]);
-				}
-				_mesh.Uvs = _uvBuffer;
-				_mesh.Indices = skinnedMesh->triangles;
-				_mesh.IndicesCount = skinnedMesh->trianglesCount;
-				_mesh.VerticesCount = skinnedMesh->uvsCount / 2;
-				_lightingConfig.texture = getTextureId(skinnedMesh->rendererObject);
-				//_mesh.State.TextureId = getTextureId(skinnedMesh->rendererObject);
-				batcher->drawSpineMesh(_mesh, colorScale);
-				
-				break;
-			}
-			*/
+			}			
 			default:
 			{
 				break;
@@ -333,20 +327,7 @@ namespace spine
 						aabb.expand(_mesh.Vertices[j], _mesh.Vertices[j + 1]);
 					}
 					break;
-				}
-				/*
-				case SP_ATTACHMENT_WEIGHTED_MESH:
-				{
-					spWeightedMeshAttachment * skinnedMesh = SUB_CAST(spWeightedMeshAttachment, slot->attachment);
-					spWeightedMeshAttachment_computeWorldVertices(skinnedMesh, slot, _mesh.Vertices);
-					for (int j = 0; j < skinnedMesh->uvsCount; j += 2)
-					{
-						transform(_mesh.Vertices + j, _mesh.Vertices + j + 1);
-						aabb.expand(_mesh.Vertices[j], _mesh.Vertices[j + 1]);
-					}
-					break;
-				}
-				*/
+				}				
 				default:
 				{
 					break;
@@ -444,23 +425,7 @@ namespace spine
 					_mesh.VerticesCount = mesh->super.worldVerticesLength / 2;
 					buffer.Add(_mesh);
 					break;
-				}
-				/*
-				case SP_ATTACHMENT_WEIGHTED_MESH:
-				{
-
-					spWeightedMeshAttachment * skinnedMesh = SUB_CAST(spWeightedMeshAttachment, slot->attachment);
-					spSkinnedMeshAttachment_updateUVs_fixed(skinnedMesh, _uvBuffer);
-					spWeightedMeshAttachment_computeWorldVertices(skinnedMesh, slot, _mesh.Vertices);
-					for (int j = 0; j < skinnedMesh->uvsCount; j += 2)
-						transform(_mesh.Vertices + j, _mesh.Vertices + j + 1);
-					_mesh.Indices = skinnedMesh->triangles;
-					_mesh.IndicesCount = skinnedMesh->trianglesCount;
-					_mesh.VerticesCount = skinnedMesh->uvsCount / 2;
-					buffer.Add(_mesh);
-					break;
-				}
-				*/
+				}			
 				default:
 				{
 					break;
@@ -490,8 +455,20 @@ namespace spine
 			_mesh.State.Blend = slot->data->blendMode == SP_BLEND_MODE_NORMAL
 				? graphics::BlendState::Alpha 
 				: graphics::BlendState::Additive;
-
-			_mesh.State.Effect = effectInstance;// graphics::Effects::textureLightmapColor();
+			
+			SpineSkeletonBone* bone = _bones[slot->bone->data->index];
+			if (bone->fx == llge::BoneFx::BoneFxIgnoreLight)
+			{
+				_mesh.State.Effect = graphics::Effects::textureColor();
+			}
+			else if (bone->fx == llge::BoneFx::BoneFxBlur)
+			{
+				continue;
+			}
+			else
+			{
+				_mesh.State.Effect = effectInstance;
+			}
 
 			switch (slot->attachment->type)
 			{

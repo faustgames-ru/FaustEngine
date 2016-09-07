@@ -107,19 +107,28 @@ bool InScanArea(Point& pa, Point& pb, Point& pc, Point& pd)
 }
 
 */
-
-bool InScanArea(const Point& pa, const Point& pb, const Point& pc, const Point& pd)
+enum InScanAreaResult
+{
+	InScanAreaResultNone = 0x0,
+	InScanAreaResultTrue = 0x1,
+	InScanAreaResultFalse = 0x2
+};
+InScanAreaResult InScanArea(const Point& pa, const Point& pb, const Point& pc, const Point& pd)
 {
   double oadb = (pa.x - pb.x)*(pd.y - pb.y) - (pd.x - pb.x)*(pa.y - pb.y);
   if (oadb >= -EPSILON) {
-    return false;
+	if (std::abs(oadb) < EPSILON)
+		return InScanAreaResultNone;
+    return InScanAreaResultFalse;
   }
 
   double oadc = (pa.x - pc.x)*(pd.y - pc.y) - (pd.x - pc.x)*(pa.y - pc.y);
   if (oadc <= EPSILON) {
-    return false;
+	if (std::abs(oadb) < EPSILON)
+		return InScanAreaResultNone;
+	return InScanAreaResultFalse;
   }
-  return true;
+  return InScanAreaResultTrue;
 }
 
 }

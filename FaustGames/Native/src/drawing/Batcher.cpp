@@ -195,7 +195,8 @@ namespace drawing
 		_blend(graphics::BlendState::e::Alpha),
 		_effect(nullptr),
 		_format(graphics::VertexFormats::positionTextureColor()),
-		_verticesCounter(0)
+		_verticesCounter(0),
+		_usedPostProcess(false)
 	{
 		core::DebugDraw::Default.Render = this;
 		_buffer = new RenderBuffer();
@@ -347,6 +348,12 @@ namespace drawing
 
 	void Batcher::drawSpineMesh(const BatcherSpineMesh &mesh, byte colorScale)
 	{
+		if (_bloom.getBlurMap() != nullptr)
+		{
+			graphics::EffectTextureBlurmap::blurmap = _bloom.getBlurMap()->getHandle();
+		}
+
+
 		_verticesCounter += mesh.VerticesCount;
 		BatchBuffer * currentBuffer = _buffer->Buffers[_batchBufferIndex];
 		bool needNewEntry = false;
@@ -390,8 +397,13 @@ namespace drawing
 		currentBuffer->addMesh(mesh.Color, mesh.Z, mesh.Vertices, mesh.Uvs, mesh.VerticesCount, mesh.Indices, mesh.IndicesCount, mesh.State.Blend == graphics::BlendState::Additive, colorScale);
 	}
 
+	void Batcher::drawSplineMesh(TVertex* vertices, int verticesCount)
+	{
+	}
+
 	void Batcher::executeRenderCommands(bool usePostProcess)
 	{
+		_usedPostProcess = usePostProcess;
 		_primitivesCount = 0;
 		_verticesCount = 0;
 		int verticesCount;
@@ -557,6 +569,16 @@ namespace drawing
 	void Batcher::drawEdge(uint color, const core::Vector3& a, const core::Vector3& b)
 	{
 		_debugRender.drawEdge(color, a, b);
+	}
+
+	bool Batcher::usedPostProcess()
+	{
+		return _usedPostProcess && _bloom.isAvaliable() && _bloom.getBlurMap() != nullptr;
+	}
+
+	graphics::Texture* Batcher::getBlurMap()
+	{
+		return _bloom.getBlurMap();
 	}
 
 	bool ZBatchEntry::equals(const ZBatchEntry& entry)

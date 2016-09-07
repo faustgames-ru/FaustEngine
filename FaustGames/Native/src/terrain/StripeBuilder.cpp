@@ -219,10 +219,10 @@ namespace terrain
 			int tilesCount = static_cast<int>(core::Math::round(l1 / w.width)) * config.DetailX;
 			
 			core::Spline2 spline(
-				p0.x, p0.y,
-				p1.x, p1.y,
-				p2.x, p2.y,
-				p3.x, p3.y, tension, tilesCount * 2);
+				p0.x, p0.y, p0.t * tension,
+				p1.x, p1.y, p1.t * tension,
+				p2.x, p2.y, p2.t * tension,
+				p3.x, p3.y, p3.t * tension, tilesCount * 2);
 			for (uint j = 0; j < tilesCount; j++)
 			{
 				float l = static_cast<float>(j + 1)*spline.length() / static_cast<float>(tilesCount);
@@ -253,15 +253,15 @@ namespace terrain
 			}
 
 			s->t->addSpline(
-				tp0.x, tp0.y,
-				tp1.x, tp1.y,
-				tp2.x, tp2.y,
-				tp3.x, tp3.y, tension, tilesCount * 2);
+				tp0.x, tp0.y, p0.t * tension,
+				tp1.x, tp1.y, p1.t * tension,
+				tp2.x, tp2.y, p2.t * tension,
+				tp3.x, tp3.y, p3.t * tension, tilesCount * 2);
 			s->b->addSpline(
-				bp0.x, bp0.y,
-				bp1.x, bp1.y,
-				bp2.x, bp2.y,
-				bp3.x, bp3.y, tension, tilesCount * 2);
+				bp0.x, bp0.y, p0.t * tension,
+				bp1.x, bp1.y, p1.t * tension,
+				bp2.x, bp2.y, p2.t * tension,
+				bp3.x, bp3.y, p3.t * tension, tilesCount * 2);
 			
 			s->rt = lp2->tr;
 			s->rb = lp2->br;

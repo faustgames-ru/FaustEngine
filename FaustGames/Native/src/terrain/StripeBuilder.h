@@ -15,6 +15,7 @@ namespace terrain
 		float y;
 		float wt;
 		float wb;
+		float t;
 
 		StripePoint offset(float dx, float dy);
 		StripePoint offset(core::Vector2 d);

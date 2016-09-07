@@ -2,21 +2,28 @@
 
 namespace core
 {
-	Spline2::Spline2(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3, float t, int detail)
+	Spline2::Spline2(
+		float x0, float y0, float t0,
+		float x1, float y1, float t1,
+		float x2, float y2, float t2,
+		float x3, float y3, float t3, int detail)
 	{
 		if (detail < 3)
 			detail = 3;
 
 		_detail = detail;
-		_t = t;
 		_p[0].setX(x0);
 		_p[0].setY(y0);
+		_t[0] = t0;
 		_p[1].setX(x1);
 		_p[1].setY(y1);
+		_t[1] = t1;
 		_p[2].setX(x2);
 		_p[2].setY(y2);
+		_t[2] = t2;
 		_p[3].setX(x3);
 		_p[3].setY(y3);
+		_t[3] = t3;
 		_len = new float[detail];
 		Vector2 p0 = get(0);
 		float l = 0;
@@ -74,8 +81,8 @@ namespace core
 			return _p[2];
 		}
 		return Vector2(
-			Math::spline(_p[0].getX(), _p[1].getX(), _p[2].getX(), _p[3].getX(), u, _t),
-			Math::spline(_p[0].getY(), _p[1].getY(), _p[2].getY(), _p[3].getY(), u, _t));
+			Math::spline(_p[0].getX(), _p[1].getX(), _p[2].getX(), _p[3].getX(), u, _t[1], _t[2]),
+			Math::spline(_p[0].getY(), _p[1].getY(), _p[2].getY(), _p[3].getY(), u, _t[1], _t[2]));
 	}
 
 	float Spline2::length()
@@ -93,14 +100,18 @@ namespace core
 			delete _splines[i];
 	}
 
-	void MacroSpline2::addSpline(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3, float t, int detail)
+	void MacroSpline2::addSpline(
+		float x0, float y0, float t0,
+		float x1, float y1, float t1,
+		float x2, float y2, float t2,
+		float x3, float y3, float t3, int detail)
 	{
 		Spline2 *spline = new Spline2(
-			x0, y0,
-			x1, y1,
-			x2, y2,
-			x3, y3,
-			t, detail);
+			x0, y0, t0,
+			x1, y1, t1,
+			x2, y2, t2,
+			x3, y3, t3, 
+			detail);
 		_len += spline->length();
 		_splines.push_back(spline);
 	}

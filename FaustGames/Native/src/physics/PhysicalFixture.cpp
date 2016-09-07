@@ -62,6 +62,11 @@ namespace physics
 		transform.Set(b2Vec2(_dimensions.toWorld(x), _dimensions.toWorld(y)), 0.0f);
 		b2DistanceOutput output;
 		bool result = b2TestOverlap((b2Shape*)&poly, 0, fixture->GetShape(), 0, transform, fixture->GetBody()->GetTransform(), output);
+
+		core::Vector2* contact = static_cast<core::Vector2*>(contactPoint);
+		contact->setX(_dimensions.fromWorld(output.pointA.x + output.pointB.x)*0.5f);
+		contact->setY(_dimensions.fromWorld(output.pointA.y + output.pointB.y)*0.5f);
+
 		return result;
 	}
 
@@ -71,10 +76,10 @@ namespace physics
 		b2Fixture* otherF = other->fixture;
 		b2DistanceOutput output;
 		bool result = b2TestOverlap(otherF->GetShape(), 0, fixture->GetShape(), 0, otherF->GetBody()->GetTransform(), fixture->GetBody()->GetTransform(), output);
+		
 		core::Vector2* contact = static_cast<core::Vector2*>(contactPoint);
-
-		contact->setX(_dimensions.toWorld(output.pointA.x + output.pointB.x)*0.5f);
-		contact->setY(_dimensions.toWorld(output.pointA.y + output.pointB.y)*0.5f);
+		contact->setX(_dimensions.fromWorld(output.pointA.x + output.pointB.x)*0.5f);
+		contact->setY(_dimensions.fromWorld(output.pointA.y + output.pointB.y)*0.5f);
 		return result;
 	}
 

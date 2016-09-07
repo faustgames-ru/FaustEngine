@@ -5,6 +5,7 @@
 #include "Math.h"
 #include "../../src_poly2tri/sweep/cdt.h"
 #include <iterator>
+#include "../geometry/TerrainClipper.h"
 
 namespace core
 {
@@ -114,6 +115,49 @@ namespace core
 		}
 	}
 
+	void MarchingSquares::buildSolid(IntPtr boolPoints, IntPtr boolInversePoints, int w, int h)
+	{
+		bool* points = static_cast<bool*>(boolPoints);
+		for (int y = 0; y <= h; y++)
+		{
+			for (int x = 0; x <= w; x++)
+			{
+				// make test;
+				bool l00 = getValue(points, w, h, x + 0, y + 0);
+				bool l01 = getValue(points, w, h, x + 1, y + 0);
+				bool l10 = getValue(points, w, h, x + 0, y + 1);
+				bool l11 = getValue(points, w, h, x + 1, y + 1);
+				char value = getValue(l00, l01, l10, l11);
+				MarchingSquaresEdgeCase edgeCase = DefaultCases.Cases[value];
+				MarchingSquaresPoint p(x * 2, y * 2);
+				for (int i = 0; i < edgeCase.count; i++)
+				{
+					_edges.push_back(edgeCase.edges[i] + p);
+				}
+			}
+		}
+
+		bool* inversePoints = static_cast<bool*>(boolInversePoints);
+		for (int y = 0; y <= h; y++)
+		{
+			for (int x = 0; x <= w; x++)
+			{
+				// make test;
+				bool l00 = getValue(inversePoints, w, h, x + 0, y + 0);
+				bool l01 = getValue(inversePoints, w, h, x + 1, y + 0);
+				bool l10 = getValue(inversePoints, w, h, x + 0, y + 1);
+				bool l11 = getValue(inversePoints, w, h, x + 1, y + 1);
+				char value = getValue(l00, l01, l10, l11);
+				MarchingSquaresEdgeCase edgeCase = DefaultCases.Cases[value];
+				MarchingSquaresPoint p(x * 2, y * 2);
+				for (int i = 0; i < edgeCase.count; i++)
+				{
+					_inverseEdges.push_back(edgeCase.edges[i] + p);
+				}
+			}
+		}
+	}
+
 	typedef std::map<int, MarchingSquaresNode*> NodesMap;
 
 	MarchingSquaresNode* findOrCreateNode(NodesMap &nodes, MarchingSquaresPoint p)
@@ -137,6 +181,12 @@ namespace core
 
 	void MarchingSquares::collectEdges()
 	{
+		collectEdges(_edges, _points);
+		if (_inverseEdges.size() > 0)
+		{
+			collectEdges(_inverseEdges, _inversePoints);
+		}
+		/*
 		std::vector<MarchingSquaresSegment *> segments;
 		NodesMap nodes;
 		for (uint i = 0; i < _edges.size(); i++)
@@ -223,6 +273,7 @@ namespace core
 		{
 			delete segments[i];
 		}
+		*/
 	}
 
 	int polygonArea(std::vector<MarchingSquaresPoint>& p)
@@ -239,36 +290,27 @@ namespace core
 	}
 
 	void MarchingSquares::simplifyPathes(int tolerance)
-	{
-		/*
-		int maxArea = 0;
-		int maxIndex = -1;
-		for (uint i = 0; i < _points.size(); i++)
-		{
-			int area = polygonArea(_points[i]);
-			if (area > maxArea)
-			{
-				maxArea = area;
-				maxIndex = i;
-			}
-		}
-
-		if (maxIndex >= 0)
-		{
-			std::vector<MarchingSquaresPoint> path = _points[maxIndex];
-			simplifyClosedPath(path);
-			_points.clear();
-			_points.push_back(path);
-		}
-		*/
-		for (uint i = 0; i < _points.size(); i++)
-		{
-			simplifyClosedPath(_points[i], tolerance);
-		}		
+	{		
+		simplifyPathes(tolerance, _points);
+		simplifyPathes(tolerance, _inversePoints);		
 	}
 
 	void MarchingSquares::triangulatePathes()
 	{
+		
+		std::vector<std::vector<MarchingSquaresPoint> > workSet;
+		clipPathes(_points, _inversePoints, ClipperLib::ClipType::ctDifference, workSet);
+		triangulatePathes(workSet, _blendVertices, _blendIndices);
+
+		workSet.clear();
+		clipPathes(_points, _inversePoints, ClipperLib::ClipType::ctUnion, workSet);
+		triangulatePathes(workSet, _vertices, _indices);
+
+		workSet.clear();
+		clipPathes(_points, _inversePoints, ClipperLib::ClipType::ctIntersection, workSet);
+		triangulatePathes(workSet, _solidVertices, _solidIndices);
+
+		/*
 		if (_points.size() == 0) return;
 		std::vector<std::vector<uint> > polylinesIndices;
 		std::vector<std::vector<p2t::Point *> > polylines;
@@ -329,6 +371,7 @@ namespace core
 			_indices.push_back(i1);
 			_indices.push_back(i2);
 		}
+		*/
 	}
 
 	IntPtr MarchingSquares::getEdges()
@@ -376,6 +419,46 @@ namespace core
 		return _indices.data();
 	}
 
+	int MarchingSquares::getSolidVerticesCount()
+	{
+		return _solidVertices.size();
+	}
+
+	IntPtr MarchingSquares::getSolidVertices()
+	{
+		return _solidVertices.data();
+	}
+
+	int MarchingSquares::getSolidIndicesCount()
+	{
+		return _solidIndices.size();
+	}
+
+	IntPtr MarchingSquares::getSolidIndices()
+	{
+		return _solidIndices.data();
+	}
+
+	int MarchingSquares::getBlendVerticesCount()
+	{
+		return _blendVertices.size();
+	}
+
+	IntPtr MarchingSquares::getBlendVertices()
+	{
+		return _blendVertices.data();
+	}
+
+	int MarchingSquares::getBlendIndicesCount()
+	{
+		return _blendIndices.size();
+	}
+
+	IntPtr MarchingSquares::getBlendIndices()
+	{
+		return _blendIndices.data();
+	}
+
 	void MarchingSquares::dispose()
 	{
 		delete this;
@@ -389,6 +472,212 @@ namespace core
 	std::vector<ushort>& MarchingSquares::getTriangulationIndices()
 	{
 		return _indices;
+	}
+
+	void MarchingSquares::simplifyPathes(int tolerance, std::vector<std::vector<MarchingSquaresPoint>>& points)
+	{		
+		for (uint i = 0; i < points.size(); i++)
+		{
+			simplifyClosedPath(points[i], tolerance);
+		}
+	}
+
+	void MarchingSquares::clipPathes(std::vector<std::vector<MarchingSquaresPoint>>& subj, std::vector<std::vector<MarchingSquaresPoint>>& clip, int type, std::vector<std::vector<MarchingSquaresPoint>>& result)
+	{
+		ClipperLib::Clipper clipper;
+		ClipperLib::Paths pathes;
+		for (uint i = 0; i < subj.size(); i++)
+		{
+			ClipperLib::Path p;
+			for (uint j = 0; j < subj[i].size(); j++)
+			{
+				p.push_back(ClipperLib::IntPoint(subj[i][j].x, subj[i][j].y));
+			}
+			if (p.size() > 0)
+			{
+				clipper.AddPath(p, ClipperLib::PolyType::ptSubject, true);
+			}
+		}
+		for (uint i = 0; i < clip.size(); i++)
+		{
+			ClipperLib::Path p;
+			for (uint j = 0; j < clip[i].size(); j++)
+			{
+				p.push_back(ClipperLib::IntPoint(clip[i][j].x, clip[i][j].y));
+			}
+			if (p.size() > 0)
+			{
+				clipper.AddPath(p, ClipperLib::PolyType::ptClip, true);
+			}
+		}
+
+		ClipperLib::Paths res;
+		if (!clipper.Execute(static_cast<ClipperLib::ClipType>(type), res))
+			return;
+		ClipperLib::SimplifyPolygons(res);
+		for (uint i = 0; i < res.size(); i++)
+		{
+			std::vector<MarchingSquaresPoint> p;
+			for (uint j = 0; j < res[i].size(); j++)
+			{
+				p.push_back(MarchingSquaresPoint(res[i][j].X, res[i][j].Y));
+			}
+			result.push_back(p);
+		}
+	}
+
+	void MarchingSquares::triangulatePathes(std::vector<std::vector<MarchingSquaresPoint>>& points, std::vector<MarchingSquaresPoint>& vertices, std::vector<ushort>& indices)
+	{
+		if (points.size() == 0) return;
+		std::vector<std::vector<uint> > polylinesIndices;
+		std::vector<std::vector<p2t::Point *> > polylines;
+		std::vector<p2t::Point> allPoints;
+		vertices.clear();
+
+		polylines.resize(points.size());
+		polylinesIndices.resize(points.size());
+
+		for (uint j = 0; j < polylines.size(); j++)
+		{
+			for (uint k = 0; k < points[j].size(); k++)
+			{
+				uint i = allPoints.size();
+				allPoints.push_back(p2t::Point(points[j][k].x, points[j][k].y));
+				vertices.push_back(points[j][k]);
+				polylinesIndices[j].push_back(i);
+			}
+		}
+		if (allPoints.size() == 0) return;
+		for (uint j = 0; j < polylines.size(); j++)
+		{
+			polylines[j].resize(polylinesIndices[j].size());
+			for (uint k = 0; k < polylinesIndices[j].size(); k++)
+			{
+				polylines[j][k] = &(allPoints[polylinesIndices[j][k]]);
+			}
+		}
+
+		if (polylines.size() == 0) return;
+
+		p2t::CDT cdt(polylines[0]);
+		for (uint k = 1; k < polylines.size(); k++)
+		{
+			if (polylines[k].size() == 0) continue;
+			cdt.AddHole(polylines[k]);
+		}
+		cdt.Triangulate();
+		std::vector<p2t::Triangle *> triangles = cdt.GetTriangles();
+		p2t::Point *baseArd = &allPoints[0];
+
+		for (uint j = 0; j < triangles.size(); j++)
+		{
+			p2t::Point *p0 = triangles[j]->GetPoint(0);
+			p2t::Point *p1 = triangles[j]->GetPoint(1);
+			p2t::Point *p2 = triangles[j]->GetPoint(2);
+
+			ushort i0 = p0 - baseArd;
+			ushort i1 = p1 - baseArd;
+			ushort i2 = p2 - baseArd;
+			if (i0 >= allPoints.size())
+				continue;
+			if (i1 >= allPoints.size())
+				continue;
+			if (i2 >= allPoints.size())
+				continue;
+			indices.push_back(i0);
+			indices.push_back(i1);
+			indices.push_back(i2);
+		}
+	}
+
+	void MarchingSquares::collectEdges(std::vector<MarchingSquaresEdge>& edges, std::vector<std::vector<MarchingSquaresPoint>>& points)
+	{
+		std::vector<MarchingSquaresSegment *> segments;
+		NodesMap nodes;
+		for (uint i = 0; i < edges.size(); i++)
+		{
+			MarchingSquaresNode* n0 = findOrCreateNode(nodes, edges[i].p0);
+			MarchingSquaresNode* n1 = findOrCreateNode(nodes, edges[i].p1);
+			MarchingSquaresSegment* seg = new MarchingSquaresSegment();
+			seg->edge = edges[i];
+			seg->n0 = n0;
+			seg->n1 = n1;
+			n0->segments.push_back(seg);
+			n0->neighbours.push_back(n1);
+			n1->segments.push_back(seg);
+			n1->neighbours.push_back(n0);
+			segments.push_back(seg);
+		}
+
+
+		int cn2 = 0;
+		int c2 = 0;
+
+		if (nodes.size() == 0)
+		{
+			return;
+		}
+
+		for (NodesMap::const_iterator it = nodes.begin(); it != nodes.end(); ++it)
+		{
+			if (it->second->neighbours.size() != 2)
+			{
+				// exception?
+				cn2++;
+			}
+			else
+			{
+				c2++;
+			}
+		}
+
+		while (!nodes.empty())
+		{
+			int maxY = 0;
+			MarchingSquaresNode *node = nodes.begin()->second;
+			for (NodesMap::const_iterator it = nodes.begin(); it != nodes.end(); ++it)
+			{
+				if (it->second->point.y > maxY)
+				{
+					node = it->second;
+					maxY = it->second->point.y;
+				}
+			}
+
+			points.push_back(std::vector<MarchingSquaresPoint>());
+			std::vector<MarchingSquaresPoint>& contour = points.back();
+			while (true)
+			{
+				node->parsed = true;
+				contour.push_back(node->point);
+				MarchingSquaresNode *next = nullptr;
+				for (uint i = 0; i < node->neighbours.size(); i++)
+				{
+					if (!node->neighbours[i]->parsed)
+					{
+						next = node->neighbours[i];
+						break;
+					}
+				}
+				node = next;
+				if (node == nullptr)
+					break;
+			}
+			for (uint i = 0; i < contour.size(); i++)
+			{
+				NodesMap::iterator it = nodes.find(contour[i].getKey());
+				nodes.erase(it);
+			}
+		}
+
+		for (NodesMap::const_iterator it = nodes.begin(); it != nodes.end(); ++it)
+		{
+			delete it->second;
+		}
+		for (uint i = 0; i < segments.size(); i++)
+		{
+			delete segments[i];
+		}
 	}
 
 	bool MarchingSquares::getValue(bool* points, int w, int h, int x, int y)

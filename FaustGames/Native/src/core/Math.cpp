@@ -89,6 +89,16 @@ namespace core
 			p4*(s*u*u*u - s*u*u);
 	}
 
+	float Math::spline(float p1, float p2, float p3, float p4, float u, float s2, float s3)
+	{
+		float bp1 = p2;
+		float bp4 = p3;
+
+		float bp2 = p2 + ((p3 - p2) + (p2 - p1))* s2 / 3;
+		float bp3 = p3 + ((p2 - p3) + (p3 - p4))* s3 / 3;
+		return cubic(bp1, bp2, bp3, bp4, u);
+	}
+
 	float Math::asin(float v)
 	{
 		return ::asin(v);

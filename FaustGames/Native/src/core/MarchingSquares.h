@@ -49,6 +49,7 @@ namespace core
 		static MarchingSquaresCases DefaultCases;
 		MarchingSquares();
 		virtual void API_CALL build(IntPtr boolPoints, int w, int h) OVERRIDE;
+		virtual void API_CALL buildSolid(IntPtr boolPoints, IntPtr boolInversePoints, int w, int h) OVERRIDE;
 		virtual void API_CALL collectEdges() OVERRIDE;
 		virtual void API_CALL simplifyPathes(int tolerance) OVERRIDE;
 		virtual void API_CALL triangulatePathes() OVERRIDE;
@@ -63,11 +64,25 @@ namespace core
 		virtual int API_CALL getIndicesCount() OVERRIDE;
 		virtual IntPtr API_CALL getIndices() OVERRIDE;
 
+		virtual int API_CALL getSolidVerticesCount() OVERRIDE;
+		virtual IntPtr API_CALL getSolidVertices() OVERRIDE;
+		virtual int API_CALL getSolidIndicesCount() OVERRIDE;
+		virtual IntPtr API_CALL getSolidIndices() OVERRIDE;
+		virtual int API_CALL getBlendVerticesCount() OVERRIDE;
+		virtual IntPtr API_CALL getBlendVertices() OVERRIDE;
+		virtual int API_CALL getBlendIndicesCount() OVERRIDE;
+		virtual IntPtr API_CALL getBlendIndices() OVERRIDE;
+
+
 		virtual void API_CALL dispose() OVERRIDE;
 
 		std::vector<MarchingSquaresPoint>& getTriangulationVertices();
 		std::vector<ushort>& getTriangulationIndices();
 	private:
+		void collectEdges(std::vector<MarchingSquaresEdge>& edges, std::vector<std::vector<MarchingSquaresPoint>>& points);
+		void simplifyPathes(int tolerance, std::vector<std::vector<MarchingSquaresPoint>>& points);
+		void clipPathes(std::vector<std::vector<MarchingSquaresPoint>>& subj, std::vector<std::vector<MarchingSquaresPoint>>& clip, int type, std::vector<std::vector<MarchingSquaresPoint>>& result);
+		void triangulatePathes(std::vector<std::vector<MarchingSquaresPoint>>& points, std::vector<MarchingSquaresPoint>& _vertices, std::vector<ushort>& _indices);
 		static bool getValue(bool *points, int w, int h, int x, int y);
 		static char getValue(bool l00, bool l01, bool l10, bool l11);
 		void simplifyPath(std::vector<MarchingSquaresPoint> &path, int tolerance) const;
@@ -75,10 +90,17 @@ namespace core
 		int _w;
 		int _h;
 		std::vector<MarchingSquaresEdge> _edges;
+		std::vector<MarchingSquaresEdge> _inverseEdges;
 		std::vector<std::vector<MarchingSquaresPoint> > _points;
+		std::vector<std::vector<MarchingSquaresPoint> > _inversePoints;
 
 		std::vector<ushort> _indices;
 		std::vector<MarchingSquaresPoint> _vertices;
+
+		std::vector<ushort> _solidIndices;
+		std::vector<MarchingSquaresPoint> _solidVertices;
+		std::vector<ushort> _blendIndices;
+		std::vector<MarchingSquaresPoint> _blendVertices;
 	};
 
 	struct MarchingSquaresNode;

@@ -103,6 +103,13 @@ namespace llge
 		PhysicsAll = 0xff,
 	}
 	
+	public enum BoneFx
+	{
+		BoneFxNone = 0x0,
+		BoneFxIgnoreLight = 0x1,
+		BoneFxBlur = 0x2,
+	}
+	
 	[StructLayout(LayoutKind.Sequential)]
 	public struct PhysicsFixtureConfig
 	{
@@ -692,6 +699,13 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private void llge_MarchingSquares_build (IntPtr classInstance, IntPtr boolPoints, int w, int h);
+		public void BuildSolid (IntPtr boolPoints, IntPtr boolInversePoints, int w, int h)
+		{
+			llge_MarchingSquares_buildSolid(ClassInstance, boolPoints, boolInversePoints, w, h);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_MarchingSquares_buildSolid (IntPtr classInstance, IntPtr boolPoints, IntPtr boolInversePoints, int w, int h);
 		public void CollectEdges ()
 		{
 			llge_MarchingSquares_collectEdges(ClassInstance);
@@ -776,6 +790,62 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private IntPtr llge_MarchingSquares_getIndices (IntPtr classInstance);
+		public int GetSolidVerticesCount ()
+		{
+			return llge_MarchingSquares_getSolidVerticesCount(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private int llge_MarchingSquares_getSolidVerticesCount (IntPtr classInstance);
+		public IntPtr GetSolidVertices ()
+		{
+			return llge_MarchingSquares_getSolidVertices(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_MarchingSquares_getSolidVertices (IntPtr classInstance);
+		public int GetSolidIndicesCount ()
+		{
+			return llge_MarchingSquares_getSolidIndicesCount(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private int llge_MarchingSquares_getSolidIndicesCount (IntPtr classInstance);
+		public IntPtr GetSolidIndices ()
+		{
+			return llge_MarchingSquares_getSolidIndices(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_MarchingSquares_getSolidIndices (IntPtr classInstance);
+		public int GetBlendVerticesCount ()
+		{
+			return llge_MarchingSquares_getBlendVerticesCount(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private int llge_MarchingSquares_getBlendVerticesCount (IntPtr classInstance);
+		public IntPtr GetBlendVertices ()
+		{
+			return llge_MarchingSquares_getBlendVertices(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_MarchingSquares_getBlendVertices (IntPtr classInstance);
+		public int GetBlendIndicesCount ()
+		{
+			return llge_MarchingSquares_getBlendIndicesCount(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private int llge_MarchingSquares_getBlendIndicesCount (IntPtr classInstance);
+		public IntPtr GetBlendIndices ()
+		{
+			return llge_MarchingSquares_getBlendIndices(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_MarchingSquares_getBlendIndices (IntPtr classInstance);
 		public void Dispose ()
 		{
 			llge_MarchingSquares_dispose(ClassInstance);
@@ -1397,6 +1467,13 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private float llge_SpineSkeletonBone_getY (IntPtr classInstance);
+		public void SetBoneFx (BoneFx fx)
+		{
+			llge_SpineSkeletonBone_setBoneFx(ClassInstance, fx);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_SpineSkeletonBone_setBoneFx (IntPtr classInstance, BoneFx fx);
 	}
 	
 	public class SpineSkeleton

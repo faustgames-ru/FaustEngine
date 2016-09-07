@@ -28,6 +28,7 @@ namespace core
 		static float conic(float p0, float p1, float p2, float u);
 		static float cubic(float p0, float p1, float p2, float p3, float u);
 		static float spline(float p1, float p2, float p3, float p4, float u, float w);
+		static float spline(float p1, float p2, float p3, float p4, float u, float w2, float w3);
 		static float asin(float v);
 		static float frac(float v);
 		static float max(float v0, float v1);

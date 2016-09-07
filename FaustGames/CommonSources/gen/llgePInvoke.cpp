@@ -356,6 +356,11 @@ namespace llge
 		classInstance->build(boolPoints, w, h);
 	}
 	
+	extern "C" DLLEXPORT void API_CALL llge_MarchingSquares_buildSolid (IMarchingSquares * classInstance, IntPtr boolPoints, IntPtr boolInversePoints, int w, int h)
+	{
+		classInstance->buildSolid(boolPoints, boolInversePoints, w, h);
+	}
+	
 	extern "C" DLLEXPORT void API_CALL llge_MarchingSquares_collectEdges (IMarchingSquares * classInstance)
 	{
 		classInstance->collectEdges();
@@ -414,6 +419,46 @@ namespace llge
 	extern "C" DLLEXPORT IntPtr API_CALL llge_MarchingSquares_getIndices (IMarchingSquares * classInstance)
 	{
 		return classInstance->getIndices();
+	}
+	
+	extern "C" DLLEXPORT int API_CALL llge_MarchingSquares_getSolidVerticesCount (IMarchingSquares * classInstance)
+	{
+		return classInstance->getSolidVerticesCount();
+	}
+	
+	extern "C" DLLEXPORT IntPtr API_CALL llge_MarchingSquares_getSolidVertices (IMarchingSquares * classInstance)
+	{
+		return classInstance->getSolidVertices();
+	}
+	
+	extern "C" DLLEXPORT int API_CALL llge_MarchingSquares_getSolidIndicesCount (IMarchingSquares * classInstance)
+	{
+		return classInstance->getSolidIndicesCount();
+	}
+	
+	extern "C" DLLEXPORT IntPtr API_CALL llge_MarchingSquares_getSolidIndices (IMarchingSquares * classInstance)
+	{
+		return classInstance->getSolidIndices();
+	}
+	
+	extern "C" DLLEXPORT int API_CALL llge_MarchingSquares_getBlendVerticesCount (IMarchingSquares * classInstance)
+	{
+		return classInstance->getBlendVerticesCount();
+	}
+	
+	extern "C" DLLEXPORT IntPtr API_CALL llge_MarchingSquares_getBlendVertices (IMarchingSquares * classInstance)
+	{
+		return classInstance->getBlendVertices();
+	}
+	
+	extern "C" DLLEXPORT int API_CALL llge_MarchingSquares_getBlendIndicesCount (IMarchingSquares * classInstance)
+	{
+		return classInstance->getBlendIndicesCount();
+	}
+	
+	extern "C" DLLEXPORT IntPtr API_CALL llge_MarchingSquares_getBlendIndices (IMarchingSquares * classInstance)
+	{
+		return classInstance->getBlendIndices();
 	}
 	
 	extern "C" DLLEXPORT void API_CALL llge_MarchingSquares_dispose (IMarchingSquares * classInstance)
@@ -804,6 +849,11 @@ namespace llge
 	extern "C" DLLEXPORT float API_CALL llge_SpineSkeletonBone_getY (ISpineSkeletonBone * classInstance)
 	{
 		return classInstance->getY();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_SpineSkeletonBone_setBoneFx (ISpineSkeletonBone * classInstance, BoneFx fx)
+	{
+		classInstance->setBoneFx(fx);
 	}
 	
 	extern "C" DLLEXPORT float API_CALL llge_SpineSkeleton_getBoundsVertexX (ISpineSkeleton * classInstance, int boundsIndex, int vertexIndex)

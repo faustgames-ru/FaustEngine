@@ -25,6 +25,22 @@ namespace drawing
 
 	typedef Mesh2dVertex TVertex;
 
+	class ColorCorrection
+	{
+	public:
+		float saturation;
+		float hue;
+		float minL;
+		float maxL;
+		float midL;
+	};
+
+	class ColorTrasform
+	{
+	public:
+		uint trasform(core::Vector3 v, uint color);
+	};
+
 	class BatchBuffer
 	{
 	public:
@@ -122,6 +138,7 @@ namespace drawing
 		void drawMesh(graphics::EffectBase *effect, graphics::BlendState::e blend, uint textureId, uint lightmapId, TVertex *vertices, int verticesCount, ushort *indices, int indicesCount, unsigned char colorScale);
 		void drawMesh(graphics::EffectBase *effect, graphics::BlendState::e blend, void* config, TVertex *vertices, int verticesCount, ushort *indices, int indicesCount, unsigned char colorScale);
 		void drawSpineMesh(const BatcherSpineMesh &mesh, byte colorScale);
+		void drawSplineMesh(TVertex *vertices, int verticesCount);
 
 		void executeRenderCommands(bool usePostProcess);
 
@@ -139,6 +156,8 @@ namespace drawing
 		virtual int API_CALL getRenderedVerticesCount() OVERRIDE;
 		virtual int API_CALL getRenderedPrimitivesCount() OVERRIDE;
 		virtual void drawEdge(uint color, const core::Vector3 &a, const core::Vector3 &b) OVERRIDE;
+		bool usedPostProcess();
+		graphics::Texture* getBlurMap();
 	private:
 		BatcherDebugRender _debugRender;
 		RenderBuffer *_buffer;
@@ -165,6 +184,7 @@ namespace drawing
 		int _verticesCount;
 		int _verticesCounter;
 		ZBatcher* _zButcher;
+		bool _usedPostProcess;
 	};
 	
 	struct ZBatchEntry

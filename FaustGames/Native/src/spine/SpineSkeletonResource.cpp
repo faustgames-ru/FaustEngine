@@ -11,6 +11,7 @@
 #include "spine/SkeletonData.h"
 #include "spine/Atlas.h"
 #include "spine/AtlasAttachmentLoader.h"
+#include <spine/extension.h>
 
 namespace spine
 {
@@ -40,6 +41,17 @@ namespace spine
 		_name = s->name;
 	}
 
+	void spSkin_addSkin(spSkin* target, spSkin* source)
+	{
+		if (source == nullptr) return;
+		_spSkin* src = SUB_CAST(_spSkin, source);
+
+		const _Entry *entry = src->entries;
+		while (entry) {
+			spSkin_addAttachment(target, entry->slotIndex, entry->name, entry->attachment);
+			entry = entry->next;
+		}
+	}
 
 
 	void API_CALL SpineSkeletonResource::load(String atlasText, String jsonText, String dir)
@@ -55,6 +67,13 @@ namespace spine
 		}
 
 		spSkeletonData* sd = (spSkeletonData*)_spSkeletonData;
+		
+		spSkin* _spSkin = spSkin_create("my_awaysome_skin");
+		spSkin_addSkin(_spSkin, sd->defaultSkin);
+		spSkin_addSkin(_spSkin, spSkeletonData_findSkin(sd, "MECH"));
+		spSkin_addSkin(_spSkin, spSkeletonData_findSkin(sd, "ARMOR_1"));
+		
+		_dynamicSkin = new SpineSkin(_spSkin);
 		_animations.resize(sd->animationsCount);
 		
 		for (int i = 0; i < _animations.size(); i++)
@@ -74,7 +93,7 @@ namespace spine
 		{
 			spSkin* s = sd->skins[i];
 			_skins[i] = new SpineSkin(s);
-		}
+		}		
 	}
 
 	void API_CALL SpineSkeletonResource::unLoad()
@@ -103,6 +122,11 @@ namespace spine
 			delete _skins[i];
 		}
 		_skins.clear();
+		if (_dynamicSkin != nullptr)
+		{
+			delete _dynamicSkin;
+			_dynamicSkin = nullptr;
+		}
 	}
 
 	llge::ISpineAnimation* API_CALL SpineSkeletonResource::getSpineAnimation(int i)
@@ -134,7 +158,6 @@ namespace spine
 	{
 		return getEventsCount();
 	}
-
 
 	void* SpineSkeletonResource::getSkeletonData()
 	{

@@ -126,6 +126,13 @@ namespace llge
 		PhysicsAll = 0xff,
 	};
 
+	enum BoneFx
+	{
+		BoneFxNone = 0x0,
+		BoneFxIgnoreLight = 0x1,
+		BoneFxBlur = 0x2,
+	};
+
 	/// physics structs
 	struct PhysicsFixtureConfig
 	{
@@ -300,6 +307,7 @@ namespace llge
 	{
 	public:
 		virtual void API_CALL build(IntPtr boolPoints, int w, int h) = 0;
+		virtual void API_CALL buildSolid(IntPtr boolPoints, IntPtr boolInversePoints, int w, int h) = 0;
 		virtual void API_CALL collectEdges() = 0;
 		virtual void API_CALL simplifyPathes(int tolerance) = 0;
 		virtual void API_CALL triangulatePathes() = 0;
@@ -312,6 +320,15 @@ namespace llge
 		virtual IntPtr API_CALL getVertices() = 0;
 		virtual int API_CALL getIndicesCount() = 0;
 		virtual IntPtr API_CALL getIndices() = 0;
+		virtual int API_CALL getSolidVerticesCount() = 0;
+		virtual IntPtr API_CALL getSolidVertices() = 0;
+		virtual int API_CALL getSolidIndicesCount() = 0;
+		virtual IntPtr API_CALL getSolidIndices() = 0;
+		virtual int API_CALL getBlendVerticesCount() = 0;
+		virtual IntPtr API_CALL getBlendVertices() = 0;
+		virtual int API_CALL getBlendIndicesCount() = 0;
+		virtual IntPtr API_CALL getBlendIndices() = 0;
+
 		virtual void API_CALL dispose() = 0;
 	};
 
@@ -475,6 +492,7 @@ namespace llge
 		virtual IntPtr API_CALL getName() = 0;
 		virtual float API_CALL getX() = 0;
 		virtual float API_CALL getY() = 0;
+		virtual void API_CALL setBoneFx(BoneFx fx) = 0;
 	};
 
 	class ISpineSkeleton : IBaseObject

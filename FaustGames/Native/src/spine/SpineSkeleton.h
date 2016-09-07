@@ -8,10 +8,12 @@ namespace spine
 	class SpineSkeletonBone : public llge::ISpineSkeletonBone
 	{
 	public:
+		llge::BoneFx fx;
 		SpineSkeletonBone(void *bone);
 		virtual IntPtr API_CALL getName() OVERRIDE;
 		virtual float API_CALL getX() OVERRIDE;
 		virtual float API_CALL getY() OVERRIDE;
+		virtual void API_CALL setBoneFx(llge::BoneFx fx) OVERRIDE;
 	private:
 		void *_spBone;
 	};

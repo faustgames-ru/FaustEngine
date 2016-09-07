@@ -24,7 +24,7 @@ namespace spine
 		std::string _name;
 		void * _spSkin;
 	};
-
+	
 	class SpineSkeletonResource : public llge::ISpineResource
 	{
 	public:
@@ -33,6 +33,7 @@ namespace spine
 		int getAnimationsCount();
 		SpineEvent* getEvent(int i);
 		int getEventsCount();
+		SpineSkin* _dynamicSkin;
 
 		virtual void API_CALL load(String atlasText, String jsonText, String dir);
 		virtual void API_CALL unLoad();
@@ -53,9 +54,9 @@ namespace spine
 		void * _spAtlas;
 		void *_spSkeletonJson;
 		void *_spSkeletonData;
-		std::vector<SpineSkeletonAnimation *> _animations;
-		std::vector<SpineEvent *> _events;
-		std::vector<SpineSkin *> _skins;
+		std::vector<SpineSkeletonAnimation* > _animations;
+		std::vector<SpineEvent* > _events;
+		std::vector<SpineSkin* > _skins;
 		std::string _error;
 		bool _invalid;
 	};

@@ -700,8 +700,8 @@ void Sweep::FlipEdgeEvent(SweepContext& tcx, Point& ep, Point& eq, Triangle* t, 
 {
   Triangle& ot = t->NeighborAcross(p);
   Point& op = *ot.OppositePoint(*t, p);
-
-  if (InScanArea(p, *t->PointCCW(p), *t->PointCW(p), op)) {
+  InScanAreaResult inScanAreaResult = InScanArea(p, *t->PointCCW(p), *t->PointCW(p), op);
+  if (inScanAreaResult == InScanAreaResultTrue) {
     // Lets rotate shared edge one vertex CW
     RotateTrianglePair(*t, p, ot, op);
     tcx.MapTriangleToNodes(*t);
@@ -722,6 +722,8 @@ void Sweep::FlipEdgeEvent(SweepContext& tcx, Point& ep, Point& eq, Triangle* t, 
       FlipEdgeEvent(tcx, ep, eq, t, p);
     }
   } else {
+	if (inScanAreaResult == InScanAreaResultNone) 
+		return;
     Point& newP = NextFlipPoint(ep, eq, ot, op);
     FlipScanEdgeEvent(tcx, ep, eq, *t, ot, newP);
     EdgeEvent(tcx, ep, eq, t, p);
@@ -766,8 +768,8 @@ void Sweep::FlipScanEdgeEvent(SweepContext& tcx, Point& ep, Point& eq, Triangle&
 {
   Triangle& ot = t.NeighborAcross(p);
   Point& op = *ot.OppositePoint(t, p);
-
-  if (InScanArea(eq, *flip_triangle.PointCCW(eq), *flip_triangle.PointCW(eq), op)) {
+  InScanAreaResult inScanAreaResult = InScanArea(eq, *flip_triangle.PointCCW(eq), *flip_triangle.PointCW(eq), op);
+  if (inScanAreaResult == InScanAreaResultTrue) {
     // flip with new edge op->eq
     FlipEdgeEvent(tcx, eq, op, &ot, op);
     // TODO: Actually I just figured out that it should be possible to
@@ -778,6 +780,8 @@ void Sweep::FlipScanEdgeEvent(SweepContext& tcx, Point& ep, Point& eq, Triangle&
     // Turns out at first glance that this is somewhat complicated
     // so it will have to wait.
   } else{
+	if (inScanAreaResult == InScanAreaResultNone)
+		return;
     Point& newP = NextFlipPoint(ep, eq, ot, op);
     FlipScanEdgeEvent(tcx, ep, eq, flip_triangle, ot, newP);
   }

@@ -3,6 +3,7 @@
 #include <string>
 #include <stdlib.h>
 #include <map>
+#include <cstdint>
 
 #ifdef __APPLE__
 #endif

@@ -50,23 +50,15 @@
     <Compile Include="..\..\CommonSources\gen\zomboPInvoke.cs">
       <Link>zomboPInvoke.cs</Link>
     </Compile>
-    <Compile Include="Controls\ZomboEditSceneControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\ZomboEditSceneControl.Designer.cs">
-      <DependentUpon>ZomboEditSceneControl.cs</DependentUpon>
-    </Compile>
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainWindow.Designer.cs">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="OpenGLGlobals.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Controls\ZomboEditSceneControl.resx">
-      <DependentUpon>ZomboEditSceneControl.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </EmbeddedResource>
@@ -89,6 +81,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Content Include="ZmoboContent\test_scene_0.scene">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ZmoboContent\zombo.game">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -117,6 +115,13 @@
       <Project>{67C64342-A1A8-4ECA-BB99-D22934F256A7}</Project>
       <Name>GraphicsBinding</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Framework\InputHook\InputHook.csproj">
+      <Project>{8c0735ae-271e-4189-ac13-9bd00745fcdc}</Project>
+      <Name>InputHook</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Controls\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

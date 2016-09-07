@@ -6,144 +6,29 @@
 
 namespace zombo
 {
-	extern "C" DLLEXPORT void API_CALL zombo_ZomboGame_setRootPath (IZomboGame * classInstance, String rootPath)
-	{
-		classInstance->setRootPath(rootPath);
-	}
-	
-	extern "C" DLLEXPORT void API_CALL zombo_ZomboGame_load (IZomboGame * classInstance, int w, int h)
-	{
-		classInstance->load(w, h);
-	}
-	
-	extern "C" DLLEXPORT void API_CALL zombo_ZomboGame_update (IZomboGame * classInstance, int w, int h, float ellapsedTime)
-	{
-		classInstance->update(w, h, ellapsedTime);
-	}
-	
-	extern "C" DLLEXPORT void API_CALL zombo_ZomboGame_render (IZomboGame * classInstance, int w, int h, float ellapsedTime)
-	{
-		classInstance->render(w, h, ellapsedTime);
-	}
-	
-	extern "C" DLLEXPORT void API_CALL zombo_ZomboGame_release (IZomboGame * classInstance)
-	{
-		classInstance->release();
-	}
-	
-	extern "C" DLLEXPORT void API_CALL zombo_ZomboEditorMouse_update (IZomboEditorMouse * classInstance, int mouseX, int mouseY, uint mouseButtons)
-	{
-		classInstance->update(mouseX, mouseY, mouseButtons);
-	}
-	
-	extern "C" DLLEXPORT IZomboEditorMouse * API_CALL zombo_ZomboEditorInput_getEditorMouse (IZomboEditorInput * classInstance)
-	{
-		return classInstance->getEditorMouse();
-	}
-	
-	extern "C" DLLEXPORT void API_CALL zombo_ZomboEditorViewport_update (IZomboEditorViewport * classInstance, int width, int height)
-	{
-		classInstance->update(width, height);
-	}
-	
-	extern "C" DLLEXPORT IntPtr API_CALL zombo_ZomboEditorCamera_getMode (IZomboEditorCamera * classInstance)
-	{
-		return classInstance->getMode();
-	}
-	
-	extern "C" DLLEXPORT void API_CALL zombo_ZomboEditorCamera_setMode (IZomboEditorCamera * classInstance, String modeName)
-	{
-		classInstance->setMode(modeName);
-	}
-	
-	extern "C" DLLEXPORT void API_CALL zombo_ZomboEditorCamera_setScale (IZomboEditorCamera * classInstance, float scale)
-	{
-		classInstance->setScale(scale);
-	}
-	
-	extern "C" DLLEXPORT void API_CALL zombo_ZomboEditorCamera_setFov (IZomboEditorCamera * classInstance, float scale)
-	{
-		classInstance->setFov(scale);
-	}
-	
-	extern "C" DLLEXPORT float API_CALL zombo_ZomboEditorCamera_getScale (IZomboEditorCamera * classInstance)
-	{
-		return classInstance->getScale();
-	}
-	
-	extern "C" DLLEXPORT float API_CALL zombo_ZomboEditorCamera_getFov (IZomboEditorCamera * classInstance)
-	{
-		return classInstance->getFov();
-	}
-	
-	extern "C" DLLEXPORT bool API_CALL zombo_ZomboEditorCamera_isUndoAvaliable (IZomboEditorCamera * classInstance)
-	{
-		return classInstance->isUndoAvaliable();
-	}
-	
-	extern "C" DLLEXPORT bool API_CALL zombo_ZomboEditorCamera_isRedoAvaliable (IZomboEditorCamera * classInstance)
-	{
-		return classInstance->isRedoAvaliable();
-	}
-	
-	extern "C" DLLEXPORT void API_CALL zombo_ZomboEditorCamera_undo (IZomboEditorCamera * classInstance)
-	{
-		classInstance->undo();
-	}
-	
-	extern "C" DLLEXPORT void API_CALL zombo_ZomboEditorCamera_redo (IZomboEditorCamera * classInstance)
-	{
-		classInstance->redo();
-	}
-	
 	extern "C" DLLEXPORT void API_CALL zombo_ZomboEditor_setRootPath (IZomboEditor * classInstance, String rootPath)
 	{
 		classInstance->setRootPath(rootPath);
 	}
 	
-	extern "C" DLLEXPORT IntPtr API_CALL zombo_ZomboEditor_getMode (IZomboEditor * classInstance)
+	extern "C" DLLEXPORT void API_CALL zombo_ZomboEditor_updateMouse (IZomboEditor * classInstance, int rawX, int rawY, int windowX, int windowY, uint buttons)
 	{
-		return classInstance->getMode();
+		classInstance->updateMouse(rawX, rawY, windowX, windowY, buttons);
 	}
 	
-	extern "C" DLLEXPORT void API_CALL zombo_ZomboEditor_setMode (IZomboEditor * classInstance, String modeName)
+	extern "C" DLLEXPORT void API_CALL zombo_ZomboEditor_updateEnvironment (IZomboEditor * classInstance, int w, int h, float ellapsedTime)
 	{
-		classInstance->setMode(modeName);
+		classInstance->updateEnvironment(w, h, ellapsedTime);
 	}
 	
-	extern "C" DLLEXPORT bool API_CALL zombo_ZomboEditor_isUndoAvaliable (IZomboEditor * classInstance)
+	extern "C" DLLEXPORT void API_CALL zombo_ZomboEditor_load (IZomboEditor * classInstance)
 	{
-		return classInstance->isUndoAvaliable();
+		classInstance->load();
 	}
 	
-	extern "C" DLLEXPORT bool API_CALL zombo_ZomboEditor_isRedoAvaliable (IZomboEditor * classInstance)
+	extern "C" DLLEXPORT void API_CALL zombo_ZomboEditor_update (IZomboEditor * classInstance)
 	{
-		return classInstance->isRedoAvaliable();
-	}
-	
-	extern "C" DLLEXPORT void API_CALL zombo_ZomboEditor_undo (IZomboEditor * classInstance)
-	{
-		classInstance->undo();
-	}
-	
-	extern "C" DLLEXPORT void API_CALL zombo_ZomboEditor_redo (IZomboEditor * classInstance)
-	{
-		classInstance->redo();
-	}
-	
-	extern "C" DLLEXPORT void API_CALL zombo_ZomboEditor_init (IZomboEditor * classInstance)
-	{
-		classInstance->init();
-	}
-	
-	extern "C" DLLEXPORT void API_CALL zombo_ZomboEditor_finish (IZomboEditor * classInstance)
-	{
-		classInstance->finish();
-	}
-	
-	extern "C" DLLEXPORT void API_CALL zombo_ZomboEditor_update (IZomboEditor * classInstance, float ellapsedTime)
-	{
-		classInstance->update(ellapsedTime);
+		classInstance->update();
 	}
 	
 	extern "C" DLLEXPORT void API_CALL zombo_ZomboEditor_render (IZomboEditor * classInstance)

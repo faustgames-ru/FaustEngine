@@ -15,6 +15,18 @@
 
 namespace spine
 {
+	void spSkin_addSkin(spSkin* target, spSkin* source)
+	{
+		if (source == nullptr) return;
+		_spSkin* src = SUB_CAST(_spSkin, source);
+
+		const _Entry *entry = src->entries;
+		while (entry) {
+			spSkin_addAttachment(target, entry->slotIndex, entry->name, entry->attachment);
+			entry = entry->next;
+		}
+	}
+	
 	IntPtr API_CALL SpineEvent::getName()
 	{
 		return (IntPtr)_name.c_str();
@@ -34,25 +46,60 @@ namespace spine
 	{
 		return _spSkin;
 	}
+
 	SpineSkin::SpineSkin(void * skin) 
 	{
 		_spSkin = skin;
-		spSkin* s = (spSkin*)_spSkin;
+		spSkin* s = static_cast<spSkin*>(_spSkin);
 		_name = s->name;
 	}
 
-	void spSkin_addSkin(spSkin* target, spSkin* source)
+	llge::ISpineSkin* SpineDynamicSkin::skinValue()
 	{
-		if (source == nullptr) return;
-		_spSkin* src = SUB_CAST(_spSkin, source);
-
-		const _Entry *entry = src->entries;
-		while (entry) {
-			spSkin_addAttachment(target, entry->slotIndex, entry->name, entry->attachment);
-			entry = entry->next;
-		}
+		return _value;
 	}
 
+	void SpineDynamicSkin::addSkin(llge::ISpineSkin* value)
+	{
+		spSkin* src = static_cast<spSkin*>(value->getNativeInstance());
+		spSkin* dst = static_cast<spSkin*>(_value->getNativeInstance());
+		spSkin_addSkin(dst, src);
+	}
+
+	void spDynamicSkinEntry_Dispose(_Entry* self) {
+		FREE(self->name);
+		FREE(self);
+	}
+	
+	void spDynamicSkin_dispose(spSkin* self) {
+		_Entry* entry = SUB_CAST(_spSkin, self)->entries;
+		while (entry) {
+			_Entry* nextEntry = entry->next;
+			spDynamicSkinEntry_Dispose(entry);
+			entry = nextEntry;
+		}
+
+		FREE(self->name);
+		FREE(self);
+	}
+
+	void SpineDynamicSkin::dispose()
+	{
+		spSkin* nativeSkin = static_cast<spSkin*>(_value->getNativeInstance());
+		spDynamicSkin_dispose(nativeSkin);
+		delete _value;
+		_value = nullptr;
+	}
+
+	SpineDynamicSkin::SpineDynamicSkin()
+	{
+		_value = new SpineSkin(spSkin_create("dynamic_skin"));
+	}
+
+	SpineDynamicSkin::~SpineDynamicSkin()
+	{
+		dispose();
+	}
 
 	void API_CALL SpineSkeletonResource::load(String atlasText, String jsonText, String dir)
 	{
@@ -67,13 +114,7 @@ namespace spine
 		}
 
 		spSkeletonData* sd = (spSkeletonData*)_spSkeletonData;
-		
-		spSkin* _spSkin = spSkin_create("my_awaysome_skin");
-		spSkin_addSkin(_spSkin, sd->defaultSkin);
-		spSkin_addSkin(_spSkin, spSkeletonData_findSkin(sd, "MECH"));
-		spSkin_addSkin(_spSkin, spSkeletonData_findSkin(sd, "ARMOR_1"));
-		
-		_dynamicSkin = new SpineSkin(_spSkin);
+		_defaultSkin = new SpineSkin(sd->defaultSkin);
 		_animations.resize(sd->animationsCount);
 		
 		for (int i = 0; i < _animations.size(); i++)
@@ -122,11 +163,14 @@ namespace spine
 			delete _skins[i];
 		}
 		_skins.clear();
-		if (_dynamicSkin != nullptr)
+		
+		for (int i = 0; i < _dynamicSkins.size(); i++)
 		{
-			delete _dynamicSkin;
-			_dynamicSkin = nullptr;
+			delete _dynamicSkins[i];
 		}
+		_dynamicSkins.clear();
+
+		delete _defaultSkin;
 	}
 
 	llge::ISpineAnimation* API_CALL SpineSkeletonResource::getSpineAnimation(int i)
@@ -158,7 +202,7 @@ namespace spine
 	{
 		return getEventsCount();
 	}
-
+	
 	void* SpineSkeletonResource::getSkeletonData()
 	{
 		return _spSkeletonData;
@@ -192,6 +236,18 @@ namespace spine
 	llge::ISpineAnimationStateData* API_CALL SpineSkeletonResource::createStateData()
 	{
 		return new SpineAnimationStateData(this);
+	}
+
+	llge::ISpineDynamicSkin* SpineSkeletonResource::createDynamicSkin()
+	{
+		SpineDynamicSkin* dynamicSkin = new SpineDynamicSkin();
+		_dynamicSkins.push_back(dynamicSkin);
+		return dynamicSkin;
+	}
+
+	llge::ISpineSkin* SpineSkeletonResource::getDefaultSkin()
+	{
+		return _defaultSkin;
 	}
 
 	IntPtr SpineSkeletonResource::errorMessage()

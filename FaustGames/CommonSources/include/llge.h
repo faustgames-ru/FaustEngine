@@ -523,12 +523,19 @@ namespace llge
 		virtual void API_CALL dispose() = 0;
 	};
 
-
+	
 	class ISpineSkin : IBaseObject
 	{
 	public:
 		virtual IntPtr API_CALL getNativeInstance() = 0;
 		virtual IntPtr API_CALL getName() = 0;
+	};
+
+	class ISpineDynamicSkin : IBaseObject
+	{
+	public:
+		virtual ISpineSkin* API_CALL skinValue() = 0;
+		virtual void API_CALL addSkin(ISpineSkin* skin) = 0;
 	};
 
 	class ISpineAnimation : IBaseObject
@@ -580,6 +587,8 @@ namespace llge
 		virtual ISpineAnimationStateData* API_CALL createStateData() = 0;
 		virtual IntPtr API_CALL errorMessage() = 0;
 		virtual bool API_CALL isValid() = 0;
+		virtual ISpineDynamicSkin* API_CALL createDynamicSkin() = 0;
+		virtual ISpineSkin* API_CALL getDefaultSkin() = 0;
 		virtual void API_CALL dispose() = 0;
 	};
 

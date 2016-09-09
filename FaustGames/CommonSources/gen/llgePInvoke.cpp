@@ -976,6 +976,16 @@ namespace llge
 		return classInstance->getName();
 	}
 	
+	extern "C" DLLEXPORT ISpineSkin * API_CALL llge_SpineDynamicSkin_skinValue (ISpineDynamicSkin * classInstance)
+	{
+		return classInstance->skinValue();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_SpineDynamicSkin_addSkin (ISpineDynamicSkin * classInstance, ISpineSkin * skin)
+	{
+		classInstance->addSkin(skin);
+	}
+	
 	extern "C" DLLEXPORT IntPtr API_CALL llge_SpineAnimation_getNativeInstance (ISpineAnimation * classInstance)
 	{
 		return classInstance->getNativeInstance();
@@ -1104,6 +1114,16 @@ namespace llge
 	extern "C" DLLEXPORT bool API_CALL llge_SpineResource_isValid (ISpineResource * classInstance)
 	{
 		return classInstance->isValid();
+	}
+	
+	extern "C" DLLEXPORT ISpineDynamicSkin * API_CALL llge_SpineResource_createDynamicSkin (ISpineResource * classInstance)
+	{
+		return classInstance->createDynamicSkin();
+	}
+	
+	extern "C" DLLEXPORT ISpineSkin * API_CALL llge_SpineResource_getDefaultSkin (ISpineResource * classInstance)
+	{
+		return classInstance->getDefaultSkin();
 	}
 	
 	extern "C" DLLEXPORT void API_CALL llge_SpineResource_dispose (ISpineResource * classInstance)

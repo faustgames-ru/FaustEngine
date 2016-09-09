@@ -103,14 +103,12 @@ namespace spine
 		initFromResource(resource);
 		spSkeleton *s = (spSkeleton*)_spSkeleton;
 		spSkeletonData *sd = (spSkeletonData*)resource->getSkeletonData();
-		/*
+		
 		if (sd->skinsCount > 1)
 		{
 			spSkeleton_setSkin(s, sd->skins[1]);
 		}
-		*/
-		spSkeleton_setSkin(s, (spSkin*)resource->_dynamicSkin->getNativeInstance());
-
+		
 		if (transform)
 			_transform.setData(transform);
 		else

@@ -1654,6 +1654,25 @@ namespace llge
 		static extern private IntPtr llge_SpineSkin_getName (IntPtr classInstance);
 	}
 	
+	public class SpineDynamicSkin
+	{
+		public IntPtr ClassInstance;
+		public SpineSkin SkinValue ()
+		{
+			return new SpineSkin{ ClassInstance = llge_SpineDynamicSkin_skinValue(ClassInstance) };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_SpineDynamicSkin_skinValue (IntPtr classInstance);
+		public void AddSkin (SpineSkin skin)
+		{
+			llge_SpineDynamicSkin_addSkin(ClassInstance, skin.ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_SpineDynamicSkin_addSkin (IntPtr classInstance, IntPtr skin);
+	}
+	
 	public class SpineAnimation
 	{
 		public IntPtr ClassInstance;
@@ -1860,6 +1879,20 @@ namespace llge
 		[DllImport(Version.Dll)]
 		[return: MarshalAs(UnmanagedType.I1)]
 		static extern private bool llge_SpineResource_isValid (IntPtr classInstance);
+		public SpineDynamicSkin CreateDynamicSkin ()
+		{
+			return new SpineDynamicSkin{ ClassInstance = llge_SpineResource_createDynamicSkin(ClassInstance) };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_SpineResource_createDynamicSkin (IntPtr classInstance);
+		public SpineSkin GetDefaultSkin ()
+		{
+			return new SpineSkin{ ClassInstance = llge_SpineResource_getDefaultSkin(ClassInstance) };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_SpineResource_getDefaultSkin (IntPtr classInstance);
 		public void Dispose ()
 		{
 			llge_SpineResource_dispose(ClassInstance);

@@ -1,9 +1,13 @@
 ﻿  SpineSkeletonResource.cpp
-c:\_faust\faustengine\faustgames\native\src\spine\spineskeletonresource.cpp(79): warning C4018: '<': signed/unsigned mismatch
-c:\_faust\faustengine\faustgames\native\src\spine\spineskeletonresource.cpp(85): warning C4018: '<': signed/unsigned mismatch
-c:\_faust\faustengine\faustgames\native\src\spine\spineskeletonresource.cpp(92): warning C4018: '<': signed/unsigned mismatch
-c:\_faust\faustengine\faustgames\native\src\spine\spineskeletonresource.cpp(110): warning C4018: '<': signed/unsigned mismatch
-c:\_faust\faustengine\faustgames\native\src\spine\spineskeletonresource.cpp(115): warning C4018: '<': signed/unsigned mismatch
 c:\_faust\faustengine\faustgames\native\src\spine\spineskeletonresource.cpp(120): warning C4018: '<': signed/unsigned mismatch
+c:\_faust\faustengine\faustgames\native\src\spine\spineskeletonresource.cpp(126): warning C4018: '<': signed/unsigned mismatch
+c:\_faust\faustengine\faustgames\native\src\spine\spineskeletonresource.cpp(133): warning C4018: '<': signed/unsigned mismatch
+c:\_faust\faustengine\faustgames\native\src\spine\spineskeletonresource.cpp(151): warning C4018: '<': signed/unsigned mismatch
+c:\_faust\faustengine\faustgames\native\src\spine\spineskeletonresource.cpp(156): warning C4018: '<': signed/unsigned mismatch
+c:\_faust\faustengine\faustgames\native\src\spine\spineskeletonresource.cpp(161): warning C4018: '<': signed/unsigned mismatch
+c:\_faust\faustengine\faustgames\native\src\spine\spineskeletonresource.cpp(167): warning C4018: '<': signed/unsigned mismatch
+  llgePInvoke.cpp
+  Generating Code...
+     Creating library C:\work\sources\github\moon\Solutions\Debug\llge.lib and object C:\work\sources\github\moon\Solutions\Debug\llge.exp
   llge.vcxproj -> C:\work\sources\github\moon\Solutions\Debug\llge.dll
   llge.vcxproj -> C:\work\sources\github\moon\Solutions\Debug\llge.pdb (Full PDB)

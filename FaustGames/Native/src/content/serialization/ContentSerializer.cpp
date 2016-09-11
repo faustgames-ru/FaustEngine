@@ -88,7 +88,7 @@ namespace content
 		switch (value->getType())
 		{
 		case ContentValueType::None:
-			break;
+			return nullptr; // exception?
 		case ContentValueType::Bool:
 			return cJSON_CreateBool(value->asBool()?1:0);
 		case ContentValueType::Int:
@@ -105,7 +105,8 @@ namespace content
 			obj = cJSON_CreateObject();
 			fillJsonObject(value->asObject(), obj);
 			return obj;
-		default: break;
+		default: 
+			return nullptr; // exception?
 		}
 	}
 	

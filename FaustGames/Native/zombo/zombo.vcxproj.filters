@@ -100,6 +100,12 @@
     <Filter Include="zombo\editor">
       <UniqueIdentifier>{52a10fe5-46fb-4099-a174-d88960f85f38}</UniqueIdentifier>
     </Filter>
+    <Filter Include="zombo\editor\toolbar">
+      <UniqueIdentifier>{a3006f24-c1d9-4cd1-9380-f2ac4a011d79}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="zombo\editor\components">
+      <UniqueIdentifier>{47dbdea2-2774-40a1-8050-d78511edaa57}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\CommonSources\include\llge.h">
@@ -622,6 +628,12 @@
     </ClInclude>
     <ClInclude Include="..\src\zombo\editor\ZomboEditor.h">
       <Filter>zombo\editor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\zombo\editor\components\grid.h">
+      <Filter>zombo\editor\components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Delegate.h">
+      <Filter>engine\core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1172,6 +1184,12 @@
     </ClCompile>
     <ClCompile Include="..\src\zombo\InitZomboRenderContext.cpp">
       <Filter>zombo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\Delegate.cpp">
+      <Filter>engine\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\zombo\editor\components\grid.cpp">
+      <Filter>zombo\editor\components</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

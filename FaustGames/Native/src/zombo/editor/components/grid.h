@@ -1,10 +1,9 @@
-#ifndef RAZOR_COMPONENTS_GRID_H
-#define RAZOR_COMPONENTS_GRID_H
+#ifndef ZOMBO_EDITOR_COMPONENTS_H
+#define ZOMBO_EDITOR_COMPONENTS_H
 
-#include "../razor_classes.h"
 #include "../../game/Component.h"
 
-namespace razor
+namespace zombo
 {
 	class Grid : public game::Component
 	{
@@ -14,15 +13,18 @@ namespace razor
 	private:
 	};
 
-	class GridNode : public game::Component
+	class GridEdge : public game::Component
 	{
 	public:
-		GridNode();
-		virtual void enqueueResources(const game::LoadArgs& e) OVERRIDE;
+		core::Vector3 p0;
+		core::Vector3 p1;
+		uint color;
+		GridEdge();
 		virtual void loaded(const game::LoadedArgs& e) OVERRIDE;
 		virtual void render(const game::RenderArgs& e) OVERRIDE;
+	private:
 	};
 }
 
 
-#endif /*RAZOR_COMPONENTS_SPACESHIP_H*/
+#endif /*ZOMBO_EDITOR_COMPONENTS_H*/

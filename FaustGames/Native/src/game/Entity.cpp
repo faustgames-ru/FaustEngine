@@ -2,6 +2,11 @@
 
 namespace game
 {
+	Entity::Entity()
+	{
+		position = core::Vector3::empty;
+	}
+
 	void Entity::addComponent(Component* component)
 	{
 		components.push_back(component);

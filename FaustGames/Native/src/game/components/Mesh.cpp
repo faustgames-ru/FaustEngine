@@ -13,7 +13,7 @@ namespace game
 		e.content->enqueueResource(e.value->asString())->setLoadedCallback(this, &Mesh::resourcesLoaded);
 	}
 
-	void Mesh::render()
+	void Mesh::render(const RenderArgs& e)
 	{
 		MeshTransform t;
 		t.position = owner->position;

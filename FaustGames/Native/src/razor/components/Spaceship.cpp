@@ -19,7 +19,7 @@ namespace razor
 		_dir = core::Vector2::axisY;
 	}
 	
-	void Spaceship::loaded()
+	void Spaceship::loaded(const game::LoadedArgs& e)
 	{
 		halfSize = core::Vector3::infinity;
 		_mesh = owner->find<game::Mesh>();

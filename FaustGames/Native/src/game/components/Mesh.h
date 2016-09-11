@@ -14,7 +14,7 @@ namespace game
 		core::Matrix3 transform;
 		Mesh();
 		virtual void enqueueResources(const LoadArgs& e) OVERRIDE;
-		virtual void render() OVERRIDE;
+		virtual void render(const RenderArgs& e) OVERRIDE;
 	private:
 		void resourcesLoaded(content::ContentStatus* status);
 		content::ContentMesh* _contentMesh;

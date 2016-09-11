@@ -81,10 +81,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Content Include="ZmoboContent\test_scene_0.scene">
+    <Content Include="ZmoboContent\zombo.game">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="ZmoboContent\zombo.game">
+    <Content Include="ZmoboContent\editor_scene.scene">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

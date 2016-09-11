@@ -33,12 +33,12 @@ namespace razor
 	{
 	}
 
-	void GridNode::loaded()
+	void GridNode::loaded(const game::LoadedArgs& e)
 	{
 		halfSize = core::Vector3(0.1f, 0.1f, 0.0f);
 	}
 
-	void GridNode::render()
+	void GridNode::render(const game::RenderArgs& e)
 	{
 		game::Drawing::Default.pen.color = 0x80808080;
 		game::Drawing::Default.fillRect(position, halfSize.toVector2());

@@ -15,7 +15,7 @@ namespace game
 		FrameAnimation();
 		virtual void enqueueResources(const LoadArgs& e) OVERRIDE;
 		virtual void update(const UpdateArgs& e) OVERRIDE;
-		virtual void render() OVERRIDE;
+		virtual void render(const RenderArgs& e) OVERRIDE;
 
 		void setPercent(float percent);
 		void setFrame(float frameIndex);
@@ -23,7 +23,7 @@ namespace game
 		void play();
 		void pause();
 	private:
-		void display();
+		void display() const;
 		void resourcesLoaded(content::ContentStatus* status);
 		content::ContentFrameAnimation* _animation;
 		content::ContentImage* _frame;

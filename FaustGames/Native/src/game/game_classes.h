@@ -12,20 +12,55 @@ namespace game
 	class Entity;
 	class Component;
 
+	struct EmptyArgs
+	{
+		
+	};
+
 	struct UpdateArgs
+	{
+		Scene* scene;
+	};
+
+	struct LoadedArgs
+	{
+		Scene* scene;
+	};
+
+	struct RenderArgs
 	{
 		Scene* scene;
 	};
 
 	struct LoadArgs
 	{
+		Scene* scene;
 		content::ContentValue* value;
 		content::ContentBlock* content;
 	};
 
+	struct InputStatus
+	{
+		enum e : byte
+		{
+			None = 0,
+			Handled = 1,
+		};
+	};
+
+	struct InputOrder
+	{
+		enum e : byte
+		{
+			None = 0,
+			Gui = 1,
+			Default = 2,
+		};
+	};
+
 	struct UpdateOrder
 	{
-		enum e
+		enum e : byte
 		{
 			None = 0,
 			Behaviors = 1,
@@ -35,7 +70,7 @@ namespace game
 
 	struct RenderOrder
 	{
-		enum e
+		enum e : byte
 		{
 			None = 0,
 			Default = 1,
@@ -44,4 +79,4 @@ namespace game
 	};
 }
 
-#endif /*GEOMETRY_CLASSES_H*/
+#endif /*GAME_CLASSES_H*/

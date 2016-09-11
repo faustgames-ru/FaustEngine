@@ -13,7 +13,7 @@ namespace razor
 	{
 	public:
 		Spaceship();
-		virtual void loaded() OVERRIDE;
+		virtual void loaded(const game::LoadedArgs& e) OVERRIDE;
 		virtual void update(const game::UpdateArgs& e) OVERRIDE;
 	private:
 		game::Mesh* _mesh;

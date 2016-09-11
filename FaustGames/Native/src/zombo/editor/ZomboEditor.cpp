@@ -7,6 +7,7 @@
 #include "../../content/content.h"
 #include "../../game/ComponentsFactory.h"
 #include "../../game/input/Mouse.h"
+#include "components/grid.h"
 
 
 namespace zombo
@@ -41,6 +42,8 @@ namespace zombo
 	{
 		resources::ContentManager::Default.startLoad();
 		_content->enqueueResource("zombo.game")->setLoadedCallback(this, &ZomboEditor::gameLoaded);
+
+		game::ComponentsFactory::Default.addConstructor<Grid>("grid");
 
 		EFFECTS_CALL_CREATE
 		FORMATS_CALL_CREATE
@@ -97,11 +100,11 @@ namespace zombo
 	{
 		_loadedScene = new game::Scene();
 		game::LoadArgs args;
+		args.scene = _loadedScene;
 		args.content = _content;
 		args.value = status->asJson()->value;
 		_loadedScene->enqueueResources(args);
 	}
-
 
 	extern "C" DLLEXPORT IZomboEditor* API_CALL createZomboEditor()
 	{

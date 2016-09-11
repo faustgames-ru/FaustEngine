@@ -13,8 +13,9 @@ namespace game
 	{
 	public:
 		Component();
-		byte updateOrder;
-		byte renderOrder;
+		InputOrder::e inputOrder;
+		UpdateOrder::e updateOrder;
+		RenderOrder::e renderOrder;
 		Entity* owner;
 		core::Vector3 position;
 		core::Vector3 halfSize;
@@ -25,9 +26,10 @@ namespace game
 		int getTypeId() const;
 		void* getInstance() const;
 		virtual void enqueueResources(const LoadArgs& e) {};
-		virtual void loaded() {};
+		virtual void loaded(const LoadedArgs& e) {};
+		virtual InputStatus::e input();
 		virtual void update(const UpdateArgs& e) {};
-		virtual void render() {};
+		virtual void render(const RenderArgs& e) {};
 		virtual void dispose();
 	private:
 		friend ComponentsFactory;

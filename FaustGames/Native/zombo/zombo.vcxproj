@@ -184,6 +184,7 @@
     <ClInclude Include="..\src\content\serialization\ContentSerializer.h" />
     <ClInclude Include="..\src\content\serialization\ContentValue.h" />
     <ClInclude Include="..\src\core\Convert.h" />
+    <ClInclude Include="..\src\core\Delegate.h" />
     <ClInclude Include="..\src\core\Environment.h" />
     <ClInclude Include="..\src\core\HollowsAllocationPolicy.h" />
     <ClInclude Include="..\src\core\MarchingSquares.h" />
@@ -316,6 +317,7 @@
     <ClInclude Include="..\src\terrain\terrain_classes.h" />
     <ClInclude Include="..\src\terrain\terrain_platform.h" />
     <ClInclude Include="..\src\terrain\terrain_references.h" />
+    <ClInclude Include="..\src\zombo\editor\components\grid.h" />
     <ClInclude Include="..\src\zombo\editor\ZomboEditor.h" />
     <ClInclude Include="..\src_cjson\cJSON.h" />
     <ClInclude Include="..\src_clipper\clipper.hpp" />
@@ -352,6 +354,7 @@
     <ClCompile Include="..\src\content\serialization\ContentValue.cpp" />
     <ClCompile Include="..\src\core\BasicTest.cpp" />
     <ClCompile Include="..\src\core\Convert.cpp" />
+    <ClCompile Include="..\src\core\Delegate.cpp" />
     <ClCompile Include="..\src\core\Environment.cpp" />
     <ClCompile Include="..\src\core\HollowsAllocationPolicy.cpp" />
     <ClCompile Include="..\src\core\MarchingSquares.cpp" />
@@ -464,6 +467,7 @@
     <ClCompile Include="..\src\terrain\StripeBuilder.cpp" />
     <ClCompile Include="..\src\terrain\TerrainFactory.cpp" />
     <ClCompile Include="..\src\terrain\terrain_classes.cpp" />
+    <ClCompile Include="..\src\zombo\editor\components\grid.cpp" />
     <ClCompile Include="..\src\zombo\editor\ZomboEditor.cpp" />
     <ClCompile Include="..\src\zombo\InitZomboRenderContext.cpp" />
     <ClCompile Include="..\src_cjson\cJSON.c" />

@@ -23,6 +23,21 @@ namespace geometry
 	{
 	}
 
+	core::Vector3 Aabb::center() const
+	{
+		return (Max + Min)*0.5f;
+	}
+
+	core::Vector3 Aabb::size() const
+	{
+		return Max - Min;
+	}
+
+	core::Vector3 Aabb::halfSize() const
+	{
+		return size() * 0.5f;
+	}
+
 	Aabb Aabb::fromCenter(core::Vector3 center, core::Vector3 halfSize)
 	{
 		return Aabb(center - halfSize, center + halfSize);

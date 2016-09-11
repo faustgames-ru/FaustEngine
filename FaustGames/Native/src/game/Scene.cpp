@@ -23,9 +23,10 @@ namespace game
 		loadCamera(value);
 
 		content::ContentArray* entities = (*value)["entities"]->asArray();
+		LoadArgs args;
+		args.scene = this;
 		for (int i = 0; i < entities->size(); i++)
 		{
-			LoadArgs args;
 			args.content = e.content;
 			args.value = (*entities)[i];
 			enqueueEntityResources(args);
@@ -34,11 +35,13 @@ namespace game
 
 	void Scene::loaded()
 	{
+		LoadedArgs args;
+		args.scene = this;
 		for (uint i = 0; i < _entities.size(); i++)
 		{
 			for (uint j = 0; j < _entities[i]->components.size(); j++)
 			{
-				_entities[i]->components[j]->loaded();
+				_entities[i]->components[j]->loaded(args);
 				_tree->place(_entities[i]->components[j]->getAabb(), _entities[i]->components[j]->leaf);
 			}
 		}
@@ -53,6 +56,14 @@ namespace game
 		}
 	} RenderComponentComparer;
 
+	struct
+	{
+		bool operator()(Component* a, Component* b)
+		{
+			return a->getZOrder() < b->getZOrder();
+		}
+	} InputComponentComparer;
+
 	void Scene::update()
 	{
 		for (uint i = 0; i < ComponentsUpdateOrderSize; i++)
@@ -62,6 +73,21 @@ namespace game
 		}
 		geometry::Frustum frustum(_camera.transform.Value);
 		_tree->foreachLeaf(&frustum, this, &Scene::addLeaf);
+
+
+		for (uint i = 0; i < ComponentsUpdateOrderSize; i++)
+		{
+			std::sort(_inputList[i].begin(), _inputList[i].end(), InputComponentComparer);
+			InputStatus::e status = InputStatus::None;
+			for (uint j = 0; j < _inputList[i].size(); j++)
+			{
+				status = _updateList[i][j]->input();
+				if (status != InputStatus::None)
+					break;
+			}
+			if (status != InputStatus::None)
+				break;
+		}
 
 		UpdateArgs e;
 		e.scene = this;
@@ -75,12 +101,14 @@ namespace game
 		
 		_camera.update();
 		graphics::UniformValues::projection()->setValue(_camera.transform);
+		RenderArgs re;
+		re.scene = this;
 		for (uint i = 0; i < ComponentsUpdateOrderSize; i++)
 		{
 			std::sort(_renderList[i].begin(), _renderList[i].end(), RenderComponentComparer);
 			for (uint j = 0; j < _renderList[i].size(); j++)
 			{
-				_renderList[i][j]->render();
+				_renderList[i][j]->render(re);
 			}
 		}
 	}
@@ -93,9 +121,14 @@ namespace game
 		}
 	}
 
-	void Scene::invalidate(Component* component)
+	void Scene::invalidate(Component* component) const
 	{
 		_tree->place(component->getAabb(), component->leaf);
+	}
+
+	geometry::Aabb Scene::bounds() const
+	{
+		return _bounds;
 	}
 
 	graphics::Camera2d* Scene::camera()
@@ -108,6 +141,8 @@ namespace game
 		content::ContentObject* value = e.value->asObject();
 		Entity* entity = new Entity();
 		content::ContentObject::ValuesMap& values = value->getValuesMap();
+		LoadArgs args;
+		args.scene = this;
 		for (content::ContentObject::ValuesMap::iterator it = value->getValuesMap().begin(); it != value->getValuesMap().end(); ++it)
 		{
 			if(it->first == "position")
@@ -124,7 +159,6 @@ namespace game
 				if (component != nullptr)
 				{
 					entity->addComponent(component);
-					LoadArgs args;
 					args.value = it->second;
 					args.content = e.content;
 					component->enqueueResources(args);
@@ -137,9 +171,10 @@ namespace game
 	geometry::Aabb Scene::loadAabb(content::ContentObject* value)
 	{
 		content::ContentArray* aabbValue = (*value)["aabb"]->asArray();
-		return geometry::Aabb(
+		_bounds = geometry::Aabb(
 			(*aabbValue)[0]->asFloat(), (*aabbValue)[1]->asFloat(), (*aabbValue)[2]->asFloat(),
 			(*aabbValue)[3]->asFloat(), (*aabbValue)[4]->asFloat(), (*aabbValue)[5]->asFloat());		
+		return _bounds;
 	}
 
 	void Scene::loadCamera(content::ContentObject* value)
@@ -155,6 +190,10 @@ namespace game
 	void Scene::addLeaf(geometry::QuadTreeLeaf* leaf)
 	{
 		Component* component = static_cast<Component*>(leaf->userData);
+		if (component->inputOrder != InputOrder::None)
+		{
+			_inputList[component->inputOrder].push_back(component);
+		}
 		if (component->updateOrder != UpdateOrder::None)
 		{
 			_updateList[component->updateOrder].push_back(component);

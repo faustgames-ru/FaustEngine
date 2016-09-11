@@ -47,7 +47,7 @@ namespace game
 
 	}
 
-	void FrameAnimation::render()
+	void FrameAnimation::render(const RenderArgs& e)
 	{
 		display();
 	}
@@ -77,7 +77,7 @@ namespace game
 		_frameRate = 0;
 	}
 
-	void FrameAnimation::display()
+	void FrameAnimation::display() const
 	{
 		SpriteTransform t;
 		t.position = owner->position;

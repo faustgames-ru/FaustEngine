@@ -2,7 +2,7 @@
 
 namespace graphics
 {
-	Camera2d::Camera2d(): viewport(nullptr), fov(core::Math::Pi * 40.0f / 180.0f), scale(1.0f), aspect(16.0f / 9.0f), depth(1000.0f), target(core::Vector3::empty)
+	Camera2d::Camera2d(): viewport(nullptr), fov(core::Math::Pi * 40.0f / 180.0f), scale(1.0f), aspect(16.0f / 9.0f), depth(1000.0f), pixelSize(0.1f), target(core::Vector3::empty)
 	{
 	}
 
@@ -43,6 +43,7 @@ namespace graphics
 		if (viewport != nullptr)
 		{
 			aspect = viewport->getAspect();
+			pixelSize = 2.0f * scale / viewport->h;
 		}
 		float minFov = core::Math::atan2(1.0f, depth*0.5f) * 2.0f;
 		core::Matrix translate = core::Matrix::createTranslate(-target.getX(), -target.getY(), target.getZ());

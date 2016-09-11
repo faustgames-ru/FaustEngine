@@ -14,6 +14,7 @@ namespace graphics
 		float scale;
 		float aspect;
 		float depth;
+		float pixelSize;
 		core::Vector3 target;
 		core::MatrixContainer transform;
 		core::MatrixContainer skybox;

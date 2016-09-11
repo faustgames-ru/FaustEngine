@@ -11,6 +11,7 @@ namespace game
 	class Entity
 	{
 	public:
+		Entity();
 		std::vector<Component* > components;
 		core::Vector3 position;
 		

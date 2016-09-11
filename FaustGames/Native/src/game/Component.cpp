@@ -3,7 +3,7 @@
 
 namespace game
 {
-	Component::Component(): updateOrder(0), renderOrder(0), owner(nullptr), position(0.0f, 0.0f, 0.0f), halfSize(1.0f, 1.0f, 1.0f), leaf(nullptr), _typeId(-1), _instance(nullptr)
+	Component::Component(): inputOrder(InputOrder::None), updateOrder(UpdateOrder::None), renderOrder(RenderOrder::None), owner(nullptr), position(0.0f, 0.0f, 0.0f), halfSize(1.0f, 1.0f, 1.0f), leaf(nullptr), _typeId(-1), _instance(nullptr)
 	{
 	}
 
@@ -25,6 +25,11 @@ namespace game
 	void* Component::getInstance() const
 	{
 		return _instance;
+	}
+
+	InputStatus::e Component::input()
+	{
+		return InputStatus::None;
 	}
 
 	void Component::dispose()

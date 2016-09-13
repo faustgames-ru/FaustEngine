@@ -1626,6 +1626,13 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private void llge_SpineSkeleton_applySkin (IntPtr classInstance, IntPtr spineSkinNativeInstance);
+		public void SetHsv (int tintIndex, float h, float s, float v)
+		{
+			llge_SpineSkeleton_setHsv(ClassInstance, tintIndex, h, s, v);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_SpineSkeleton_setHsv (IntPtr classInstance, int tintIndex, float h, float s, float v);
 		public void Dispose ()
 		{
 			llge_SpineSkeleton_dispose(ClassInstance);

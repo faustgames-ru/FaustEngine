@@ -22,24 +22,7 @@ namespace spine
 	drawing::BatcherSpineMesh SpineSkeleton::_mesh(65536);
 	ushort SpineSkeleton::_quadIndices[6] = { 0, 1, 2, 0, 2, 3 };
 	float SpineSkeleton::_uvBuffer[65536];
-	/*
-	void spSkinnedMeshAttachment_updateUVs_fixed(spWeightedMeshAttachment* self, float *uvs) {
-		int i;
-		float width = self->regionU2 - self->regionU, height = self->regionV2 - self->regionV;
-		if (self->regionRotate) {
-			for (i = 0; i < self->uvsCount; i += 2) {
-				uvs[i] = self->regionU + self->regionUVs[i + 1] * width;
-				uvs[i + 1] = self->regionV + height - self->regionUVs[i] * height;
-			}
-		}
-		else {
-			for (i = 0; i < self->uvsCount; i += 2) {
-				uvs[i] = self->regionU + self->regionUVs[i] * width;
-				uvs[i + 1] = self->regionV + self->regionUVs[i + 1] * height;
-			}
-		}
-	}
-	*/
+
 	void spMeshAttachment_updateUVs_fixed(spMeshAttachment* self, float *uvs) {
 		int i;
 		float width = self->regionU2 - self->regionU, height = self->regionV2 - self->regionV;
@@ -76,6 +59,7 @@ namespace spine
 	{
 		fx = llge::BoneFxNone;
 		_spBone = bone;
+		boneTintIndex = -1;
 	}
 
 	IntPtr SpineSkeletonBone::getName()
@@ -100,6 +84,10 @@ namespace spine
 
 	SpineSkeleton::SpineSkeleton(SpineSkeletonResource *resource, float* transform) : _spSkeleton(0)
 	{
+		for (uint i = 0; i < tintColorsCount; i++)
+		{
+			_tintColors[i] = 0xff808080;
+		}
 		initFromResource(resource);
 		spSkeleton *s = (spSkeleton*)_spSkeleton;
 		spSkeletonData *sd = (spSkeletonData*)resource->getSkeletonData();
@@ -120,7 +108,17 @@ namespace spine
 		int i;
 		for (i = 0; i < s->bonesCount; ++i)
 		{
-			_bones.push_back(new SpineSkeletonBone(s->bones[i]));
+			SpineSkeletonBone* bone = new SpineSkeletonBone(s->bones[i]);
+			_bones.push_back(bone);
+			std::string boneName = s->bones[i]->data->name;
+			for (int j = 0; j < tintColorsCount; j++)
+			{
+				if (boneName.find(_tintBones[j]) != std::string::npos)
+				{
+					bone->boneTintIndex = j;
+					break;
+				}
+			}
 		}
 	}
 
@@ -137,22 +135,31 @@ namespace spine
 		geometry::Aabb2d aabb;
 		_mesh.Z = _transform.getWz();
 		graphics::EffectBase * effectInstance = graphics::RenderConverter::getInstance()->getEffect(effect);
+		graphics::EffectBase * effectInstanceHsv = graphics::RenderConverter::getInstance()->getHsvEffect(effect);
+
 		effectInstance->configCopy(&_lightingConfig, effectConfig);
 		_mesh.State.config = &_lightingConfig;
 		uint lightmap = _lightingConfig.lightmap;
+		bool premul = true;
 		for (int i = 0; i < s->slotsCount; i++)
 		{
 			spSlot* slot = s->drawOrder[i];
 			if (!slot->attachment) continue;
-			
+			premul = true;
 			_mesh.Color = graphics::Color::fromRgba(slot->r*s->r, slot->g*s->g, slot->b*s->b, slot->a*s->a);
 			_mesh.State.Blend = slot->data->blendMode == SP_BLEND_MODE_NORMAL
 				? graphics::BlendState::Alpha
 				: graphics::BlendState::Additive;
 
 			SpineSkeletonBone* bone = _bones[slot->bone->data->index];
-			
-			if (bone->fx == llge::BoneFx::BoneFxIgnoreLight)
+
+			if (bone->boneTintIndex >= 0)
+			{
+				_mesh.Color = _tintColors[bone->boneTintIndex] | _mesh.Color & 0xff000000;
+				_mesh.State.Effect = effectInstanceHsv;
+				premul = false;
+			}
+			else if (bone->fx == llge::BoneFx::BoneFxIgnoreLight)
 			{
 				_mesh.State.Effect = graphics::Effects::textureColor();
 				_lightingConfig.lightmap = lightmap;
@@ -160,80 +167,69 @@ namespace spine
 			else if (bone->fx == llge::BoneFx::BoneFxBlur)
 			{
 				continue;
-				/*
-				if (batcher->usedPostProcess())
-				{
-					_mesh.State.Effect = graphics::Effects::textureBlurColor();
-					_lightingConfig.lightmap = batcher->getBlurMap()->getHandle();
-				}
-				else
-				{
-					continue;
-				}
-				*/
 			}
 			else
-			{				
+			{
 				_mesh.State.Effect = effectInstance;// graphics::Effects::textureLightmapColor();
 				_lightingConfig.lightmap = lightmap;
 			}
 
 			switch (slot->attachment->type)
 			{
-			case SP_ATTACHMENT_REGION:
-			{
-				spRegionAttachment * region = SUB_CAST(spRegionAttachment, slot->attachment);
-				spRegionAttachment_computeWorldVertices(region, slot->bone, _mesh.Vertices);
-				for (int j = 0; j < 8; j += 2)
+				case SP_ATTACHMENT_REGION:
 				{
-					transform(_mesh.Vertices + j, _mesh.Vertices + j + 1);
-					aabb.expand(_mesh.Vertices[j], _mesh.Vertices[j + 1]);
+					spRegionAttachment* region = SUB_CAST(spRegionAttachment, slot->attachment);
+					spRegionAttachment_computeWorldVertices(region, slot->bone, _mesh.Vertices);
+					for (int j = 0; j < 8; j += 2)
+					{
+						transform(_mesh.Vertices + j, _mesh.Vertices + j + 1);
+						aabb.expand(_mesh.Vertices[j], _mesh.Vertices[j + 1]);
+					}
+					_mesh.Uvs = region->uvs;
+					_mesh.Indices = _quadIndices;
+					_mesh.IndicesCount = 6;
+					_mesh.VerticesCount = 4;
+					_lightingConfig.texture = getTextureId(region->rendererObject);
+					batcher->drawSpineMesh(_mesh, colorScale, premul);
+					break;
 				}
-				_mesh.Uvs = region->uvs;
-				_mesh.Indices = _quadIndices;
-				_mesh.IndicesCount = 6;
-				_mesh.VerticesCount = 4;
-				_lightingConfig.texture = getTextureId(region->rendererObject);
-				batcher->drawSpineMesh(_mesh, colorScale);
-				break;
-			}
-			case SP_ATTACHMENT_BOUNDING_BOX:
-			{
-				spBoundingBoxAttachment * boundingBox = SUB_CAST(spBoundingBoxAttachment, slot->attachment);
-				_bounds.push_back(SpineSkeletonBounds());
-				SpineSkeletonBounds& bounds = _bounds.back();
-				spBoundingBoxAttachment_computeWorldVertices(boundingBox, slot, bounds.vertices);
-				bounds.count = boundingBox->super.worldVerticesLength;
-				break;
-			}
-			case SP_ATTACHMENT_LINKED_MESH:
-			{
-				break;
-			}
-			case SP_ATTACHMENT_MESH: 
-			{
-				spMeshAttachment * mesh = SUB_CAST(spMeshAttachment, slot->attachment);				
-				spMeshAttachment_computeWorldVertices(mesh, slot, _mesh.Vertices);
-				
-				spMeshAttachment_updateUVs_fixed(mesh, _uvBuffer);
+				case SP_ATTACHMENT_BOUNDING_BOX:
+				{
+					spBoundingBoxAttachment* boundingBox = SUB_CAST(spBoundingBoxAttachment, slot->attachment);
+					_bounds.push_back(SpineSkeletonBounds());
+					SpineSkeletonBounds& bounds = _bounds.back();
+					spBoundingBoxAttachment_computeWorldVertices(boundingBox, slot, bounds.vertices);
+					bounds.count = boundingBox->super.worldVerticesLength;
+					break;
+				}
+				case SP_ATTACHMENT_LINKED_MESH:
+				{
+					break;
+				}
+				case SP_ATTACHMENT_MESH:
+				{
+					spMeshAttachment* mesh = SUB_CAST(spMeshAttachment, slot->attachment);
+					spMeshAttachment_computeWorldVertices(mesh, slot, _mesh.Vertices);
 
-				for (int j = 0; j < mesh->super.worldVerticesLength; j += 2)
-				{
-					transform(_mesh.Vertices + j, _mesh.Vertices + j + 1);
-					aabb.expand(_mesh.Vertices[j], _mesh.Vertices[j + 1]);
+					spMeshAttachment_updateUVs_fixed(mesh, _uvBuffer);
+
+					for (int j = 0; j < mesh->super.worldVerticesLength; j += 2)
+					{
+						transform(_mesh.Vertices + j, _mesh.Vertices + j + 1);
+						aabb.expand(_mesh.Vertices[j], _mesh.Vertices[j + 1]);
+					}
+					_mesh.Uvs = _uvBuffer;
+					_mesh.Indices = mesh->triangles;
+					_mesh.IndicesCount = mesh->trianglesCount;
+					_mesh.VerticesCount = mesh->super.worldVerticesLength / 2;
+					_lightingConfig.texture = getTextureId(mesh->rendererObject);
+					batcher->drawSpineMesh(_mesh, colorScale, premul);
+					break;
 				}
-				_mesh.Uvs = _uvBuffer;
-				_mesh.Indices = mesh->triangles;
-				_mesh.IndicesCount = mesh->trianglesCount;
-				_mesh.VerticesCount = mesh->super.worldVerticesLength / 2;
-				_lightingConfig.texture = getTextureId(mesh->rendererObject);
-				batcher->drawSpineMesh(_mesh, colorScale);
-				break;
-			}			
-			default:
-			{
-				break;
-			}
+				default:
+				{
+					break;
+				}
 			}
 		}
 		_aabb = aabb;
@@ -485,7 +481,7 @@ namespace spine
 					_mesh.VerticesCount = 4;
 					//_mesh.State.TextureId = getTextureId(region->rendererObject);
 					_lightingConfig.texture = getTextureId(region->rendererObject);
-					batcher->drawSpineMesh(_mesh, colorScale);
+					batcher->drawSpineMesh(_mesh, colorScale, false);
 					break;
 				}
 				case SP_ATTACHMENT_BOUNDING_BOX:
@@ -511,7 +507,7 @@ namespace spine
 					_mesh.VerticesCount = mesh->super.worldVerticesLength / 2;
 					//_mesh.State.TextureId = getTextureId(mesh->rendererObject);
 					_lightingConfig.texture = getTextureId(mesh->rendererObject);
-					batcher->drawSpineMesh(_mesh, colorScale);
+					batcher->drawSpineMesh(_mesh, colorScale, false);
 					break;
 				}
 				/*
@@ -637,5 +633,29 @@ namespace spine
 		return  _transform.getWz();
 	}
 
+	void SpineSkeleton::setHsv(int tintIndex, float h, float s, float v)
+	{
+		_tintColors[tintIndex] = graphics::Color::fromRgba(h, s, v, 1.0f);
+	}
+
+	std::string SpineSkeleton::_tintBones[tintColorsCount] =
+	{
+		"_tint00",
+		"_tint01",
+		"_tint02",
+		"_tint03",
+		"_tint04",
+		"_tint05",
+		"_tint06",
+		"_tint07",
+		"_tint08",
+		"_tint09",
+		"_tint10",
+		"_tint11",
+		"_tint12",
+		"_tint13",
+		"_tint14",
+		"_tint15"
+	};
 
 }

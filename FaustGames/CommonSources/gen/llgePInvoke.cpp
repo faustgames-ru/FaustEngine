@@ -961,6 +961,11 @@ namespace llge
 		classInstance->applySkin(spineSkinNativeInstance);
 	}
 	
+	extern "C" DLLEXPORT void API_CALL llge_SpineSkeleton_setHsv (ISpineSkeleton * classInstance, int tintIndex, float h, float s, float v)
+	{
+		classInstance->setHsv(tintIndex, h, s, v);
+	}
+	
 	extern "C" DLLEXPORT void API_CALL llge_SpineSkeleton_dispose (ISpineSkeleton * classInstance)
 	{
 		classInstance->dispose();

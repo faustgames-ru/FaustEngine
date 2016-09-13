@@ -26,6 +26,7 @@ namespace graphics
 		static EffectSolidColor * solidColor();
 		static EffectTextureColor * textureColor();
 		static EffectTextureColorFog * textureColorFog();
+		static EffectTextureColorHsvFog * textureColorHsvFog();
 		static EffectTextureAlphamaskColor * textureAlphamaskColor();
 		static EffectTextureColorHighlight * textureColorHighlight();
 		static EffectTextureLightMapColor * textureLightmapColor();
@@ -47,6 +48,7 @@ namespace graphics
 		static EffectSolidColor _solidColor;
 		static EffectTextureColor _textureColor;
 		static EffectTextureColorFog _textureColorFog;
+		static EffectTextureColorHsvFog _textureColorHsvFog;
 		static EffectTextureAlphamaskColor _textureAlphamaskColor;
 		static EffectTextureColorHighlight _textureColorHighlight;
 		static EffectTextureLightMapColor _textureLightmapColor;

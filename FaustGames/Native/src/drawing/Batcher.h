@@ -58,6 +58,7 @@ namespace drawing
 
 		bool canAdd(int verticesCount, int indicesCount) const;
 		void addMesh(uint color, float z, float* vertices, float* uvs, int verticesCount, ushort* indices, int indicesCount, bool additive, byte colorScale);
+		void addMeshNotPremul(uint color, float z, float* vertices, float* uvs, int verticesCount, ushort* indices, int indicesCount, bool additive, byte colorScale);
 		void addMesh(uint color, float z, float* vertices, float* uvs, int verticesCount, ushort* indices, int indicesCount, bool additive, core::Matrix viewTransform, byte colorScale);
 		void addMesh(TVertex* vertices, int verticesCount, ushort* indices, int indicesCount, bool additive, unsigned char colorScale);
 		TVertex* getVertices();
@@ -137,7 +138,7 @@ namespace drawing
 		void drawMesh(graphics::EffectBase *effect, graphics::BlendState::e blend, llge::ITexture * texture, uint lightmapId, TVertex *vertices, int verticesCount, ushort *indices, int indicesCount, float colorScale);
 		void drawMesh(graphics::EffectBase *effect, graphics::BlendState::e blend, uint textureId, uint lightmapId, TVertex *vertices, int verticesCount, ushort *indices, int indicesCount, unsigned char colorScale);
 		void drawMesh(graphics::EffectBase *effect, graphics::BlendState::e blend, void* config, TVertex *vertices, int verticesCount, ushort *indices, int indicesCount, unsigned char colorScale);
-		void drawSpineMesh(const BatcherSpineMesh &mesh, byte colorScale);
+		void drawSpineMesh(const BatcherSpineMesh &mesh, byte colorScale, bool pemul);
 		void drawSplineMesh(TVertex *vertices, int verticesCount);
 
 		void executeRenderCommands(bool usePostProcess);

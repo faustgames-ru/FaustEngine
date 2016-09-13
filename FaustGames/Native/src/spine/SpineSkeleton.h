@@ -9,6 +9,7 @@ namespace spine
 	{
 	public:
 		llge::BoneFx fx;
+		int boneTintIndex;
 		SpineSkeletonBone(void *bone);
 		virtual IntPtr API_CALL getName() OVERRIDE;
 		virtual float API_CALL getX() OVERRIDE;
@@ -57,6 +58,7 @@ namespace spine
 		virtual float API_CALL getMaxX();
 		virtual float API_CALL getMaxY();
 		virtual float API_CALL getZ();
+		virtual void API_CALL setHsv(int tintIndex, float h, float s, float v);
 
 
 	protected:
@@ -71,6 +73,9 @@ namespace spine
 		llge::LightingConfig _lightingConfig; // todo: remove
 		std::vector<SpineSkeletonBone *> _bones;		
 		std::vector<SpineSkeletonBounds> _bounds;
+		static const int tintColorsCount = 16;
+		uint _tintColors[tintColorsCount];
+		static std::string _tintBones[tintColorsCount];
 	};
 }
 

@@ -830,6 +830,12 @@
     <ClInclude Include="..\shaders\post_process_mix_frag.h">
       <Filter>shaders</Filter>
     </ClInclude>
+    <ClInclude Include="..\shaders\texture_color_hsv_fog_vert.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shaders\texture_color_hsv_fog_frag.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\CommonSources\gen\llgePInvoke.cpp">

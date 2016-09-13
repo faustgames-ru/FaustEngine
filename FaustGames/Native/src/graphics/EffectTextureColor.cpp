@@ -7,6 +7,8 @@
 #include "../../shaders/texture_color_fog_vert.h"
 #include "../../shaders/texture_blurmap_color_frag.h";
 #include "../../shaders/texture_blurmap_color_vert.h";
+#include "../../shaders/texture_color_hsv_fog_vert.h"
+#include "../../shaders/texture_color_hsv_fog_frag.h"
 
 namespace graphics
 {
@@ -85,6 +87,36 @@ namespace graphics
 	}
 
 	void EffectTextureColorFog::configApply(const void* config)
+	{
+		const llge::EffectConfig* ec = static_cast<const llge::EffectConfig*>(config);
+		graphics::UniformValues::texture()->setValue(ec->texture);
+	}
+
+	EffectTextureColorHsvFog::EffectTextureColorHsvFog()
+	{
+		_configSize = sizeof(llge::EffectConfig);
+		_effect.addUniform(Uniforms::projection(), UniformValues::projection());
+		_effect.addUniform(Uniforms::texture(), UniformValues::texture());
+		_effect.addUniform(Uniforms::fogStart(), UniformValues::fogStart());
+		_effect.addUniform(Uniforms::fogDensity(), UniformValues::fogDensity());
+		_effect.addUniform(Uniforms::fogColor(), UniformValues::fogColor());
+		_effect.addUniform(Uniforms::fogScale(), UniformValues::fogScale());
+
+		_effect.addAttribute(Attributes::position());
+		_effect.addAttribute(Attributes::textureCoords());
+		_effect.addAttribute(Attributes::color());
+	}
+
+	EffectTextureColorHsvFog::~EffectTextureColorHsvFog()
+	{
+	}
+
+	void EffectTextureColorHsvFog::create()
+	{
+		_effect.create((char *)shader_texture_color_hsv_fog_vert, shader_texture_color_hsv_fog_vert_size, (char *)shader_texture_color_hsv_fog_frag, shader_texture_color_hsv_fog_frag_size);
+	}
+
+	void EffectTextureColorHsvFog::configApply(const void* config)
 	{
 		const llge::EffectConfig* ec = static_cast<const llge::EffectConfig*>(config);
 		graphics::UniformValues::texture()->setValue(ec->texture);

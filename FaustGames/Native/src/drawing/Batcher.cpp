@@ -55,6 +55,30 @@ namespace drawing
 		_indicesCount += indicesCount;
 	}
 
+	void BatchBuffer::addMeshNotPremul(uint color, float z, float* vertices, float* uvs, int verticesCount, ushort* indices, int indicesCount, bool additive, byte colorScale)
+	{
+		for (int i = 0; i < indicesCount; i++)
+		{
+			_indices[_indicesCount + i] = static_cast<unsigned short>(_verticesCount + indices[i]);
+		}
+
+		TVertex* target = _vertices + _verticesCount;
+		float* source = vertices;
+		float* uvsource = uvs;
+		for (int i = 0; i < verticesCount; i++, target++)
+		{
+			target->x = *source; ++source;
+			target->y = *source; ++source;
+			target->z = z;
+			target->color = color;
+			target->u = _x + *uvsource *_w; ++uvsource;
+			target->v = _y + *uvsource *_h; ++uvsource;
+		}
+
+		_verticesCount += verticesCount;
+		_indicesCount += indicesCount;
+	}
+
 	void BatchBuffer::addMesh(uint color, float z, float* vertices, float* uvs, int verticesCount, ushort* indices, int indicesCount, bool additive, core::Matrix viewTransform, byte colorScale)
 	{
 		for (int i = 0; i < indicesCount; i++)
@@ -346,7 +370,7 @@ namespace drawing
 		currentBuffer->addMesh(vertices, verticesCount, indices, indicesCount, blend == graphics::BlendState::Additive, colorScale);
 	}
 
-	void Batcher::drawSpineMesh(const BatcherSpineMesh &mesh, byte colorScale)
+	void Batcher::drawSpineMesh(const BatcherSpineMesh &mesh, byte colorScale, bool pemul)
 	{
 		if (_bloom.getBlurMap() != nullptr)
 		{
@@ -394,7 +418,14 @@ namespace drawing
 		currentBuffer->_y = _y;
 		currentBuffer->_w = _w;
 		currentBuffer->_h = _h;
-		currentBuffer->addMesh(mesh.Color, mesh.Z, mesh.Vertices, mesh.Uvs, mesh.VerticesCount, mesh.Indices, mesh.IndicesCount, mesh.State.Blend == graphics::BlendState::Additive, colorScale);
+		if (pemul)
+		{
+			currentBuffer->addMesh(mesh.Color, mesh.Z, mesh.Vertices, mesh.Uvs, mesh.VerticesCount, mesh.Indices, mesh.IndicesCount, mesh.State.Blend == graphics::BlendState::Additive, colorScale);
+		}
+		else
+		{
+			currentBuffer->addMeshNotPremul(mesh.Color, mesh.Z, mesh.Vertices, mesh.Uvs, mesh.VerticesCount, mesh.Indices, mesh.IndicesCount, mesh.State.Blend == graphics::BlendState::Additive, colorScale);
+		}
 	}
 
 	void Batcher::drawSplineMesh(TVertex* vertices, int verticesCount)

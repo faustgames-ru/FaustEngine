@@ -520,6 +520,7 @@ namespace llge
 		virtual void API_CALL setBonesToSetupPose() = 0;
 		virtual void API_CALL setSlotsToSetupPose() = 0;
 		virtual void API_CALL applySkin(IntPtr spineSkinNativeInstance) = 0;
+		virtual void API_CALL setHsv(int tintIndex, float h, float s, float v) = 0;
 		virtual void API_CALL dispose() = 0;
 	};
 

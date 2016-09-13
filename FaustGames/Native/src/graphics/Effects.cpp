@@ -10,6 +10,7 @@ namespace graphics
 	EffectSolidColor Effects::_solidColor;
 	EffectTextureColor Effects::_textureColor;
 	EffectTextureColorFog Effects::_textureColorFog;
+	EffectTextureColorHsvFog Effects::_textureColorHsvFog;
 	EffectTextureAlphamaskColor Effects::_textureAlphamaskColor;
 	EffectTextureColorHighlight Effects::_textureColorHighlight;
 	EffectTextureLightMapColor Effects::_textureLightmapColor;
@@ -35,6 +36,7 @@ namespace graphics
 		_solidColor.create();
 		_textureColor.create();
 		_textureColorFog.create();
+		_textureColorHsvFog.create();
 		_textureAlphamaskColor.create();
 		_textureColorHighlight.create();
 		_textureLightmapColor.create();
@@ -91,6 +93,11 @@ namespace graphics
 	EffectTextureColorFog* Effects::textureColorFog()
 	{
 		return &_textureColorFog;
+	}
+
+	EffectTextureColorHsvFog* Effects::textureColorHsvFog()
+	{
+		return &_textureColorHsvFog;
 	}
 
 	EffectTextureAlphamaskColor * Effects::textureAlphamaskColor() 

@@ -44,6 +44,17 @@ namespace graphics
 	private:
 	};
 
+	class EffectTextureColorHsvFog : public EffectBase
+	{
+	public:
+		EffectTextureColorHsvFog();
+		~EffectTextureColorHsvFog();
+		void create();
+		virtual void configApply(const void *config) OVERRIDE;
+	protected:
+	private:
+	};
+
 	class EffectTextureBlurmap : public EffectBase
 	{
 	public:

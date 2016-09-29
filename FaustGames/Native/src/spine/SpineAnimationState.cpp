@@ -17,7 +17,7 @@ namespace spine
 {
 	void animationStateListener(spAnimationState* state, int trackIndex, spEventType type, spEvent* e, int loopCount)
 	{
-		SpineAnimationState* animationState = (SpineAnimationState *)state->rendererObject;
+		SpineAnimationState* animationState = static_cast<SpineAnimationState *>(state->rendererObject);
 		if (animationState)
 		{
 			if (type == SP_ANIMATION_EVENT)
@@ -41,10 +41,10 @@ namespace spine
 	
 	SpineAnimationState::SpineAnimationState(SpineAnimationStateData *data) : _animation(0)
 	{
-		spAnimationStateData *spData = (spAnimationStateData*)data->getStateData();
+		spAnimationStateData *spData = static_cast<spAnimationStateData*>(data->getStateData());
 		_spAnimationState = spAnimationState_create(spData);
-		((spAnimationState*)_spAnimationState)->listener = animationStateListener;
-		((spAnimationState*)_spAnimationState)->rendererObject = this;
+		static_cast<spAnimationState*>(_spAnimationState)->listener = animationStateListener;
+		static_cast<spAnimationState*>(_spAnimationState)->rendererObject = this;
 		_eventsBuffer = new SpineEventsBuffer(spData->skeletonData->eventsCount+3);
 	}
 	
@@ -65,21 +65,34 @@ namespace spine
 		}
 	}
 
+	void spAnimationState_set_time(spAnimationState* self, float time, float duration) {
+		int i;
+		float previousDelta;
+		time *= self->timeScale;
+		time = core::Math::clamp(time, 0, duration);
+		for (i = 0; i < self->tracksCount; ++i) {
+			spTrackEntry* current = self->tracks[i];
+			if (!current) continue;
+			current->time = time;
+			current->lastTime = 0;
+		}
+	}
+
 	void SpineAnimationState::setAnimation(SpineSkeletonAnimation *animation, bool loop, bool normalize)
 	{
 		float duration;
 		if (_animation)
 		{
-			duration = ((spAnimation *)_animation)->duration;
+			duration = static_cast<spAnimation *>(_animation)->duration;
 		}
 		else
 		{
-			duration = ((spAnimation *)animation->getAnimation())->duration;
+			duration = static_cast<spAnimation *>(animation->getAnimation())->duration;
 		}
 		
 		_animation = animation->getAnimation();
 		_eventsBuffer->EventsIndicesCount = 0;
-		spAnimationState_setAnimation((spAnimationState*)_spAnimationState, 0, (spAnimation *)_animation, loop);
+		spAnimationState_setAnimation(static_cast<spAnimationState*>(_spAnimationState), 0, static_cast<spAnimation *>(_animation), loop);
 		if (normalize)
 		{
 			float prevTime = _prevTime;
@@ -88,13 +101,13 @@ namespace spine
 				prevTime -= core::Math::trunc(prevTime / duration);
 			}
 			_timeNormalized = prevTime / duration;
-			float time = _timeNormalized * ((spAnimation *)_animation)->duration;
-			spAnimationState_dummy_update((spAnimationState*)_spAnimationState, time);
+			float time = _timeNormalized * static_cast<spAnimation *>(_animation)->duration;
+			spAnimationState_dummy_update(static_cast<spAnimationState*>(_spAnimationState), time);
 			_prevTime = time;
 		}
 		else
 		{
-			spAnimationState_dummy_update((spAnimationState*)_spAnimationState, 0);
+			spAnimationState_dummy_update(static_cast<spAnimationState*>(_spAnimationState), 0);
 			_prevTime = 0;
 		}
 	}
@@ -102,13 +115,13 @@ namespace spine
 	void SpineAnimationState::addAnimation(SpineSkeletonAnimation *animation, bool loop, float delay)
 	{
 		_animation = animation->getAnimation();
-		spAnimationState_addAnimation((spAnimationState*)_spAnimationState, 0, (spAnimation *)_animation, loop, delay);
+		spAnimationState_addAnimation(static_cast<spAnimationState*>(_spAnimationState), 0, static_cast<spAnimation *>(_animation), loop, delay);
 	}
 	
 	void API_CALL SpineAnimationState::update(float delta)
 	{
-		spAnimationState* state = (spAnimationState*)_spAnimationState;		
-		if ((_animation) && (state->tracksCount > 0) && state->tracks)
+		spAnimationState* state = static_cast<spAnimationState*>(_spAnimationState);		
+		if ((_animation != nullptr) && (state->tracksCount > 0) && state->tracks)
 		{
 			if (state->tracks[0])
 			{
@@ -118,25 +131,25 @@ namespace spine
 				_time = state->tracks[0]->time;
 			}
 		}
-		spAnimationState_update((spAnimationState*)_spAnimationState, delta);
+		spAnimationState_update(static_cast<spAnimationState*>(_spAnimationState), delta);
 	}
 	
 
 	void API_CALL SpineAnimationState::apply(llge::ISpineSkeleton *skeleton)
 	{
 		_eventsBuffer->EventsIndicesCount = 0;
-		apply((SpineSkeleton *)skeleton->getNativeInstance());
-		((SpineSkeleton *)skeleton->getNativeInstance())->updateAabb();
+		apply(static_cast<SpineSkeleton *>(skeleton->getNativeInstance()));
+		static_cast<SpineSkeleton *>(skeleton->getNativeInstance())->updateAabb();
 	}
 
 	void API_CALL SpineAnimationState::setAnimation(llge::ISpineAnimation* animation, bool loop, bool normalize)
 	{
-		setAnimation((SpineSkeletonAnimation *)animation->getNativeInstance(), loop, normalize);
+		setAnimation(static_cast<SpineSkeletonAnimation *>(animation->getNativeInstance()), loop, normalize);
 	}
 
 	void API_CALL SpineAnimationState::addAnimation(llge::ISpineAnimation* animation, bool loop, float delay)
 	{
-		addAnimation((SpineSkeletonAnimation *)animation->getNativeInstance(), loop, delay);
+		addAnimation(static_cast<SpineSkeletonAnimation *>(animation->getNativeInstance()), loop, delay);
 	}
 	
 	void API_CALL SpineAnimationState::dispose()
@@ -146,7 +159,7 @@ namespace spine
 		
 	int API_CALL SpineAnimationState::getSpineEventIndices(IntPtr indices, int limit)
 	{
-		int *inds = (int *)indices;
+		int *inds = static_cast<int *>(indices);
 		for (int i = 0; i < _eventsBuffer->EventsIndicesCount; i++)
 		{
 			if (i >= limit) return limit;
@@ -168,7 +181,7 @@ namespace spine
 
 	void SpineAnimationState::apply(SpineSkeleton* skeleton)
 	{
-		spAnimationState_apply((spAnimationState*)_spAnimationState, (spSkeleton*)skeleton->getSkeleton());
+		spAnimationState_apply(static_cast<spAnimationState*>(_spAnimationState), static_cast<spSkeleton*>(skeleton->getSkeleton()));
 	}
 
 	
@@ -176,9 +189,31 @@ namespace spine
 	{
 		if (_spAnimationState)
 		{
-			spAnimationState_dispose((spAnimationState*)_spAnimationState);
+			spAnimationState_dispose(static_cast<spAnimationState*>(_spAnimationState));
 			_spAnimationState = 0;
 			delete _eventsBuffer;
+		}
+	}
+
+	float SpineAnimationState::getTime()
+	{
+		spAnimationState* state = static_cast<spAnimationState*>(_spAnimationState);
+		if (_animation != nullptr && state->tracksCount > 0 && state->tracks != nullptr)
+		{
+			if (state->tracks[0])
+			{
+				return state->tracks[0]->time;
+			}
+		}
+		return 0.0f;
+	}
+
+	void SpineAnimationState::setTime(float time)
+	{
+		if (_animation != nullptr)
+		{
+			float duration = static_cast<spAnimation *>(_animation)->duration;
+			spAnimationState_set_time(static_cast<spAnimationState*>(_spAnimationState), time, duration);
 		}
 	}
 }

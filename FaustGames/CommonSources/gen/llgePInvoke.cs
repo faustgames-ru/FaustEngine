@@ -1709,6 +1709,20 @@ namespace llge
 	public class SpineAnimationState
 	{
 		public IntPtr ClassInstance;
+		public float GetTime ()
+		{
+			return llge_SpineAnimationState_getTime(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private float llge_SpineAnimationState_getTime (IntPtr classInstance);
+		public void SetTime (float time)
+		{
+			llge_SpineAnimationState_setTime(ClassInstance, time);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_SpineAnimationState_setTime (IntPtr classInstance, float time);
 		public void Update (float delta)
 		{
 			llge_SpineAnimationState_update(ClassInstance, delta);

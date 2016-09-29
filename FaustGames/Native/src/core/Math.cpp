@@ -94,8 +94,8 @@ namespace core
 		float bp1 = p2;
 		float bp4 = p3;
 
-		float bp2 = p2 + ((p3 - p2) + (p2 - p1))* s2 / 3;
-		float bp3 = p3 + ((p2 - p3) + (p3 - p4))* s3 / 3;
+		float bp2 = p2 + (p3 - p1)* s2 / 3.0f;
+		float bp3 = p3 + (p2 - p4)* s3 / 3.0f;
 		return cubic(bp1, bp2, bp3, bp4, u);
 	}
 

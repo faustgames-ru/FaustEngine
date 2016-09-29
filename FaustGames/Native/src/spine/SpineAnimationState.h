@@ -32,12 +32,14 @@ namespace spine
 		void apply(SpineSkeleton *skeleton);
 		void cleanup();
 		
-		virtual void API_CALL update(float delta);
-		virtual void API_CALL apply(llge::ISpineSkeleton *skeleton);
-		virtual void API_CALL setAnimation(llge::ISpineAnimation* animation, bool loop, bool normalize);
-		virtual void API_CALL addAnimation(llge::ISpineAnimation* animation, bool loop, float delay);
-		virtual void API_CALL dispose();
-		virtual int API_CALL getSpineEventIndices(IntPtr indices, int limit);
+		virtual float API_CALL getTime() OVERRIDE;
+		virtual void API_CALL setTime(float time) OVERRIDE;
+		virtual void API_CALL update(float delta) OVERRIDE;
+		virtual void API_CALL apply(llge::ISpineSkeleton *skeleton) OVERRIDE;
+		virtual void API_CALL setAnimation(llge::ISpineAnimation* animation, bool loop, bool normalize) OVERRIDE;
+		virtual void API_CALL addAnimation(llge::ISpineAnimation* animation, bool loop, float delay) OVERRIDE;
+		virtual void API_CALL dispose() OVERRIDE;
+		virtual int API_CALL getSpineEventIndices(IntPtr indices, int limit) OVERRIDE;
 		virtual int API_CALL getSpineEventsLimit();
 		
 		void listenAnimationEvent(int eventIndex);

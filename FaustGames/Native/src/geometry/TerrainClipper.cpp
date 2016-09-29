@@ -211,10 +211,21 @@ namespace geometry
 			_tyCoords[i] = 1.0f - static_cast<float>(i) / static_cast<float>(detailX);
 		}
 
+
+
 		sizeX /= detailX;
 		sizeY /= detailX;
 		_tileSizeX = sizeX*detailX;
 		_tileSizeY = sizeY*detailX;
+
+		float minX = static_cast<int>(core::Math::round(_contoursBounds.Min.getX() / _tileSizeX)) * _tileSizeX;
+		float minY = static_cast<int>(core::Math::round(_contoursBounds.Min.getY() / _tileSizeY)) * _tileSizeY;
+		float maxX = static_cast<int>(core::Math::round(_contoursBounds.Max.getX() / _tileSizeX) + 1) * _tileSizeX;
+		float maxY = static_cast<int>(core::Math::round(_contoursBounds.Max.getY() / _tileSizeY) + 1) * _tileSizeY;
+
+		_contoursBounds.Min = core::Vector2(minX, minY);
+		_contoursBounds.Max = core::Vector2(maxX, maxY);
+
 		_createDifference = createDifference;
 		core::Vector2 center = (_contoursBounds.Max + _contoursBounds.Min)*0.5f;
 		core::Vector2 size = _contoursBounds.Max - _contoursBounds.Min;

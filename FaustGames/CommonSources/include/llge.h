@@ -550,6 +550,8 @@ namespace llge
 	class ISpineAnimationState : IBaseObject
 	{
 	public:
+		virtual float API_CALL getTime() = 0;
+		virtual void API_CALL setTime(float time) = 0;
 		virtual void API_CALL update(float delta) = 0;
 		virtual void API_CALL apply(ISpineSkeleton *skeleton) = 0;
 		virtual void API_CALL setAnimation(ISpineAnimation* animation, bool loop, bool normalize) = 0;

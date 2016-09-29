@@ -1006,6 +1006,16 @@ namespace llge
 		return classInstance->getDuration();
 	}
 	
+	extern "C" DLLEXPORT float API_CALL llge_SpineAnimationState_getTime (ISpineAnimationState * classInstance)
+	{
+		return classInstance->getTime();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_SpineAnimationState_setTime (ISpineAnimationState * classInstance, float time)
+	{
+		classInstance->setTime(time);
+	}
+	
 	extern "C" DLLEXPORT void API_CALL llge_SpineAnimationState_update (ISpineAnimationState * classInstance, float delta)
 	{
 		classInstance->update(delta);

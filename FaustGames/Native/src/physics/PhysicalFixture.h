@@ -39,8 +39,11 @@ namespace physics
 		virtual void API_CALL setSensor(bool value) OVERRIDE;
 		virtual void API_CALL setCollidesWith(uint value) OVERRIDE;
 		virtual void API_CALL setCollisionGroup(uint value) OVERRIDE;
+		virtual void API_CALL setRaycastGroup(ushort value) OVERRIDE;
+		ushort getRaycastGroup();
 	private:
 		ushort _collisionGroup;
+		ushort _raycastGroup;
 		PhysicalConverter _dimensions;
 	};
 }

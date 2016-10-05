@@ -118,9 +118,15 @@ namespace physics
 		_world->QueryAABB(_debugRenderCallback, aabb);
 	}
 
-	bool PhysicalWorld::makeRayCastFirst(float x0, float y0, float x1, float y1, uint mask, bool ignoreSensors, IntPtr resultPoint, IntPtr resultNormal)
+	bool PhysicalWorld::makeRayCastFirstEx(float x0, float y0, float x1, float y1, uint raycastMask, uint mask, bool ignoreSensors, IntPtr result)
 	{
-		bool result = rayCastFirst(x0, y0, x1, y1, mask, ignoreSensors, *static_cast<core::Vector2 *>(resultPoint), *static_cast<core::Vector2 *>(resultNormal));
+		bool res = rayCastFirst(x0, y0, x1, y1, raycastMask, mask, ignoreSensors, *static_cast<llge::RayCastResult*>(result));
+		return res;
+	}
+
+	bool PhysicalWorld::makeRayCastFirst(float x0, float y0, float x1, float y1, uint raycastMask, uint mask, bool ignoreSensors, IntPtr resultPoint, IntPtr resultNormal)
+	{
+		bool result = rayCastFirst(x0, y0, x1, y1, raycastMask, mask, ignoreSensors, *static_cast<core::Vector2 *>(resultPoint), *static_cast<core::Vector2 *>(resultNormal));
 		return result;
 	}
 
@@ -237,9 +243,31 @@ namespace physics
 		}
 	}
 
-	bool PhysicalWorld::rayCastFirst(float x0, float y0, float x1, float y1, uint mask, bool ignoreSensors, core::Vector2& result, core::Vector2 &resultNormal)
+	bool PhysicalWorld::rayCastFirst(float x0, float y0, float x1, float y1, ushort raycastMask, uint mask, bool ignoreSensors, llge::RayCastResult& result)
 	{
-		_raycastFirst.init(mask, ignoreSensors);
+		_raycastFirst.init(mask, ignoreSensors, raycastMask);
+		_world->RayCast(&_raycastFirst, b2Vec2(_dimensions.toWorld(x0), _dimensions.toWorld(y0)), b2Vec2(_dimensions.toWorld(x1), _dimensions.toWorld(y1)));
+		core::Vector2 resultPosition = core::Vector2(_dimensions.fromWorld(_raycastFirst.bestPoint.getX()), _dimensions.fromWorld(_raycastFirst.bestPoint.getY()));
+		core::Vector2 resultNormal = _raycastFirst.bestNormal;
+
+		result.resultNormalX = resultNormal.getX();
+		result.resultNormalY = resultNormal.getY();
+		result.resultPositionX = resultPosition.getX();
+		result.resultPositionY = resultPosition.getY();
+
+		bool hasRaycast = _raycastFirst.best != nullptr;
+		if(hasRaycast)
+		{
+			PhysicalFixture *f = static_cast<PhysicalFixture *>(_raycastFirst.best->GetUserData());
+			result.resultColisionGroup = f->getCollisionGroup();			
+			result.resultRaycastGroup = f->getRaycastGroup();
+		}
+		return hasRaycast;
+	}
+
+	bool PhysicalWorld::rayCastFirst(float x0, float y0, float x1, float y1, ushort raycastMask, uint mask, bool ignoreSensors, core::Vector2& result, core::Vector2 &resultNormal)
+	{
+		_raycastFirst.init(mask, ignoreSensors, raycastMask);
 		_world->RayCast(&_raycastFirst, b2Vec2(_dimensions.toWorld(x0), _dimensions.toWorld(y0)), b2Vec2(_dimensions.toWorld(x1), _dimensions.toWorld(y1)));
 		result = core::Vector2(_dimensions.fromWorld(_raycastFirst.bestPoint.getX()), _dimensions.fromWorld(_raycastFirst.bestPoint.getY()));
 		resultNormal = _raycastFirst.bestNormal;
@@ -297,16 +325,17 @@ namespace physics
 		return true;
 	}
 
-	RayCastFirstCallback::RayCastFirstCallback(): mask(0xffffffff), best(nullptr), bestFraction(1.0f), ignoreSensors(true)
+	RayCastFirstCallback::RayCastFirstCallback(): mask(0xffffffff), raycastMask(0xffff), best(nullptr), bestFraction(1.0f), ignoreSensors(true)
 	{
 	}
 
-	void RayCastFirstCallback::init(uint maskBits, bool sensors)
+	void RayCastFirstCallback::init(uint maskBits, bool sensors, ushort raycastMaskBits)
 	{
 		ignoreSensors = sensors;
 		bestFraction = 1.0f;
 		best = nullptr;
 		mask = maskBits;
+		raycastMask = raycastMaskBits;
 	}
 
 	float RayCastFirstCallback::ReportFixture(b2Fixture* fixture, const b2Vec2& point, const b2Vec2& normal, float32 fraction)
@@ -314,6 +343,10 @@ namespace physics
 		if ((fixture->GetFilterData().categoryBits & mask) == 0)
 			return 1.0f;
 		if (ignoreSensors && fixture->IsSensor())
+			return 1.0f;
+		PhysicalFixture* f = static_cast<PhysicalFixture*>(fixture->GetUserData());
+		ushort raycastGroup = f->getRaycastGroup();
+		if ((raycastGroup & raycastMask) == 0)
 			return 1.0f;
 		if (fraction <= bestFraction)
 		{

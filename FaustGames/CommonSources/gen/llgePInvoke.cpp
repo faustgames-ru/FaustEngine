@@ -1486,6 +1486,11 @@ namespace llge
 		classInstance->setCollisionGroup(value);
 	}
 	
+	extern "C" DLLEXPORT void API_CALL llge_PhysicalFixture_setRaycastGroup (IPhysicalFixture * classInstance, ushort value)
+	{
+		classInstance->setRaycastGroup(value);
+	}
+	
 	extern "C" DLLEXPORT void API_CALL llge_PhysicalContactIterator_CalcWorldManifold (IPhysicalContactIterator * classInstance)
 	{
 		classInstance->CalcWorldManifold();
@@ -1691,9 +1696,14 @@ namespace llge
 		classInstance->debugRender(x, y, rx, ry);
 	}
 	
-	extern "C" DLLEXPORT bool API_CALL llge_PhysicalWorld_makeRayCastFirst (IPhysicalWorld * classInstance, float x0, float y0, float x1, float y1, uint mask, bool ignoreSensors, IntPtr resultPoint, IntPtr resultNormal)
+	extern "C" DLLEXPORT bool API_CALL llge_PhysicalWorld_makeRayCastFirstEx (IPhysicalWorld * classInstance, float x0, float y0, float x1, float y1, uint raycastMask, uint mask, bool ignoreSensors, IntPtr result)
 	{
-		return classInstance->makeRayCastFirst(x0, y0, x1, y1, mask, ignoreSensors, resultPoint, resultNormal);
+		return classInstance->makeRayCastFirstEx(x0, y0, x1, y1, raycastMask, mask, ignoreSensors, result);
+	}
+	
+	extern "C" DLLEXPORT bool API_CALL llge_PhysicalWorld_makeRayCastFirst (IPhysicalWorld * classInstance, float x0, float y0, float x1, float y1, uint raycastMask, uint mask, bool ignoreSensors, IntPtr resultPoint, IntPtr resultNormal)
+	{
+		return classInstance->makeRayCastFirst(x0, y0, x1, y1, raycastMask, mask, ignoreSensors, resultPoint, resultNormal);
 	}
 	
 	extern "C" DLLEXPORT IPhysicalBody * API_CALL llge_PhysicalWorld_createPhysicalBody (IPhysicalWorld * classInstance, PhysicalBodyType type, float x, float y, float rotation, bool fixedRotation)

@@ -4,8 +4,9 @@
 namespace physics
 {
 	PhysicalFixture::PhysicalFixture(b2Fixture* fixtureInstance, PhysicalConverter dimensions)
-		: contactsCounter(0), index(-1), fixture(fixtureInstance), _collisionGroup(fixture->GetFilterData().maskBits), _dimensions(dimensions)
+		: contactsCounter(0), index(-1), fixture(fixtureInstance), _collisionGroup(fixture->GetFilterData().maskBits), _raycastGroup(0x1), _dimensions(dimensions)
 	{
+		fixtureInstance->SetUserData(static_cast<void*>(this));
 	}
 
 	PhysicalFixture::~PhysicalFixture()
@@ -166,5 +167,15 @@ namespace physics
 		b2Filter filter = fixture->GetFilterData();
 		filter.categoryBits = value;
 		fixture->SetFilterData(filter);
+	}
+
+	void PhysicalFixture::setRaycastGroup(ushort value)
+	{
+		_raycastGroup = value;
+	}
+
+	ushort PhysicalFixture::getRaycastGroup()
+	{
+		return _raycastGroup;
 	}
 }

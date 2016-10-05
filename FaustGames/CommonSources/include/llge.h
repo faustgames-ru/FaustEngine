@@ -143,6 +143,17 @@ namespace llge
 		uint collisionGroup;
 		uint isSensor;
 	};
+	
+	struct RayCastResult
+	{
+		float resultPositionX;
+		float resultPositionY;
+		float resultNormalX;
+		float resultNormalY;
+		uint resultColisionGroup;
+		uint resultRaycastGroup;
+	};
+
 
 	struct EffectConfig
 	{
@@ -723,6 +734,7 @@ namespace llge
 		virtual void API_CALL setSensor(bool value) = 0;
 		virtual void API_CALL setCollidesWith(uint value) = 0;
 		virtual void API_CALL setCollisionGroup(uint value) = 0;
+		virtual void API_CALL setRaycastGroup(ushort value) = 0;
 	};
 	
 	class IPhysicalContactIterator : IBaseObject
@@ -787,7 +799,8 @@ namespace llge
 	{
 	public:
 		virtual void API_CALL debugRender(float x, float y, float rx, float ry) = 0;
-		virtual bool API_CALL makeRayCastFirst(float x0, float y0, float x1, float y1, uint mask, bool ignoreSensors, IntPtr resultPoint, IntPtr resultNormal) = 0;
+		virtual bool API_CALL makeRayCastFirstEx(float x0, float y0, float x1, float y1, uint raycastMask, uint mask, bool ignoreSensors, IntPtr result) = 0;
+		virtual bool API_CALL makeRayCastFirst(float x0, float y0, float x1, float y1, uint raycastMask, uint mask, bool ignoreSensors, IntPtr resultPoint, IntPtr resultNormal) = 0;
 		virtual IPhysicalBody* API_CALL createPhysicalBody(PhysicalBodyType type, float x, float y, float rotation, bool fixedRotation) = 0;
 		virtual void API_CALL disposePhysicalBody(IPhysicalBody* body) = 0;
 		virtual IPhysicalFixedJoint* API_CALL createPhysicalFixedJoint(IPhysicalBody* ground, IPhysicalBody* body, float x, float y, float maxForce) = 0;

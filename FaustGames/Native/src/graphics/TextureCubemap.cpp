@@ -6,6 +6,10 @@ namespace graphics
 {
 	TextureCubemap::TextureCubemap() : _wrap(false), _filter(true)
 	{
+		X = 0;
+		Y = 0;
+		W = 1;
+		H = 1;
 	}
 	void TextureCubemap::create()
 	{

@@ -133,12 +133,6 @@ namespace llge
 	}
 	
 	[StructLayout(LayoutKind.Sequential)]
-	public struct EffectConfig
-	{
-		public uint texture;
-	}
-	
-	[StructLayout(LayoutKind.Sequential)]
 	public struct GraphicsConfig
 	{
 		public bool generateMipmaps;
@@ -164,6 +158,12 @@ namespace llge
 	}
 	
 	[StructLayout(LayoutKind.Sequential)]
+	public struct EffectConfig
+	{
+		public uint texture;
+	}
+	
+	[StructLayout(LayoutKind.Sequential)]
 	public struct LightingConfig
 	{
 		public uint texture;
@@ -175,6 +175,19 @@ namespace llge
 	{
 		public uint texture;
 		public uint highlightColor;
+	}
+	
+	[StructLayout(LayoutKind.Sequential)]
+	public struct BatcherConfig
+	{
+		public int effect;
+		public int blendMode;
+		public IntPtr vertices;
+		public int verticesCount;
+		public IntPtr indices;
+		public int indicesCount;
+		public int colorScale;
+		public IntPtr texture;
 	}
 	
 	public class Texture
@@ -1410,20 +1423,13 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private void llge_Batch2d_setToneMap (IntPtr classInstance, uint tonemapId);
-		public void DrawEx (GraphicsEffects effect, BlendMode blendMode, IntPtr config, IntPtr vertices, int verticesCount, IntPtr indices, int indicesCount, byte colorScale)
+		public void Draw (IntPtr batcherConfig, IntPtr texturesConfig)
 		{
-			llge_Batch2d_drawEx(ClassInstance, effect, blendMode, config, vertices, verticesCount, indices, indicesCount, colorScale);
+			llge_Batch2d_draw(ClassInstance, batcherConfig, texturesConfig);
 		}
 		
 		[DllImport(Version.Dll)]
-		static extern private void llge_Batch2d_drawEx (IntPtr classInstance, GraphicsEffects effect, BlendMode blendMode, IntPtr config, IntPtr vertices, int verticesCount, IntPtr indices, int indicesCount, byte colorScale);
-		public void Draw (GraphicsEffects effect, BlendMode blendMode, Texture textureId, uint lightmapId, IntPtr vertices, int verticesCount, IntPtr indices, int indicesCount, byte colorScale)
-		{
-			llge_Batch2d_draw(ClassInstance, effect, blendMode, textureId.ClassInstance, lightmapId, vertices, verticesCount, indices, indicesCount, colorScale);
-		}
-		
-		[DllImport(Version.Dll)]
-		static extern private void llge_Batch2d_draw (IntPtr classInstance, GraphicsEffects effect, BlendMode blendMode, IntPtr textureId, uint lightmapId, IntPtr vertices, int verticesCount, IntPtr indices, int indicesCount, byte colorScale);
+		static extern private void llge_Batch2d_draw (IntPtr classInstance, IntPtr batcherConfig, IntPtr texturesConfig);
 		public void DrawSolid (int z, Texture textureId, uint lightmapId, IntPtr vertices, int verticesCount, IntPtr indices, int indicesCount, byte colorScale)
 		{
 			llge_Batch2d_drawSolid(ClassInstance, z, textureId.ClassInstance, lightmapId, vertices, verticesCount, indices, indicesCount, colorScale);
@@ -2057,13 +2063,6 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private void llge_ContentManager_loadImage (IntPtr classInstance, int id, IntPtr textureImage);
-		public void ReloadImages ()
-		{
-			llge_ContentManager_reloadImages(ClassInstance);
-		}
-		
-		[DllImport(Version.Dll)]
-		static extern private void llge_ContentManager_reloadImages (IntPtr classInstance);
 		public TextureBuffer2d LoadBuffer (int id)
 		{
 			return new TextureBuffer2d{ ClassInstance = llge_ContentManager_loadBuffer(ClassInstance, id) };

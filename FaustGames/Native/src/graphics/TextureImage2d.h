@@ -17,7 +17,7 @@ namespace graphics
 		TextureImage2d(bool generateMipmaps, bool useFilter);
 	
 		void setData(const Image2dData *data);
-		void setData(int width, int height, Image2dFormat::e format, unsigned int *pixels);
+		void virtual setData(int width, int height, Image2dFormat::e format, unsigned int *pixels);
 		static void createStatic();
 		static void cleanupStatic();
         virtual IntPtr API_CALL getTextureImageInstance(){ return this; }
@@ -34,6 +34,7 @@ namespace graphics
 
         static TextureImage2d _empty;
 		static bool TraceTriangles;
+		bool AtlasEntry;
 	protected:
 	private:
 		TextureImage2d();
@@ -47,6 +48,18 @@ namespace graphics
 		bool _filter;
 		int _size;
     };
+
+
+	class TextureAtlasPage : public TextureImage2d
+	{
+	public:
+		TextureAtlasPage(bool useFilter);
+		void createRect(float x, float y, float w, float h, TextureImage2d* texture);
+	private:
+		std::vector<TextureImage2d* > _rects;
+		int _aliveRects;
+	};
+
 	/*
 	class TextureImage2dProxy : public Texture, public llge::ITextureImage2d
 	{

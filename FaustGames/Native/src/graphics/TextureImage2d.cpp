@@ -103,6 +103,7 @@ namespace graphics
 
 	TextureImage2d::TextureImage2d(bool generateMipmaps, bool useFilter) : _createMipmaps(generateMipmaps), _wrap(false), _filter(useFilter)
 	{
+		AtlasEntry = false;
 		setupConfig();
 
 		_size = 0;
@@ -116,11 +117,13 @@ namespace graphics
 	
 	void API_CALL TextureImage2d::LoadPixels(int width, int height, llge::TextureImage2dFormat format, void *pixels)
 	{
+		if (AtlasEntry) return;
 		setData(width, height, (Image2dFormat::e)format, (unsigned int *)pixels);
 	}
 	
 	void API_CALL TextureImage2d::create()
 	{
+		if (AtlasEntry) return;
 		//UniformValues::resetSamplers();
 		glGenTextures(1, &_handle);
 		Errors::check(Errors::GenTextures);
@@ -182,6 +185,7 @@ namespace graphics
 
 	void API_CALL TextureImage2d::cleanup()
 	{
+		if (AtlasEntry) return;
 		Size -= _size;
 		_size = 0;
 		glDeleteTextures(1, &_handle);
@@ -210,6 +214,7 @@ namespace graphics
 	
 	void TextureImage2d::setData(int width, int height, Image2dFormat::e format, unsigned int *pixels)
 	{
+		if (AtlasEntry) return;
 		Size -= _size;
 		_size = width * height;
 		switch (format)
@@ -219,6 +224,10 @@ namespace graphics
 			break;
 		case Image2dFormat::Rgba:
 			_size *= 4;
+			break;
+		case Image2dFormat::Etc1:
+		case Image2dFormat::Pvrtc:
+			_size *= 2;
 			break;
 		default:
 			break;
@@ -233,7 +242,7 @@ namespace graphics
 		glBindTexture(GL_TEXTURE_2D, _handle);		
 		Errors::check(Errors::BindTexture);
 
-		if (_createMipmaps)
+		if (_createMipmaps && format != Image2dFormat::Pvrtc && format != Image2dFormat::Etc1)
 		{
 			int w = width;
 			int h = height;
@@ -335,6 +344,16 @@ namespace graphics
 				}
 			}
 		}
+		else if (format == Image2dFormat::Pvrtc)
+		{
+			glCompressedTexImage2D(GL_TEXTURE_2D, 0, getFormat(format), width, height, 0, GL_UNSIGNED_BYTE, pixels+2);
+			Errors::check(Errors::CompressedTexImage2D);
+		}
+		else if (format == Image2dFormat::Etc1)
+		{
+			glCompressedTexImage2D(GL_TEXTURE_2D, 0, getFormat(format), width, height, 0, GL_UNSIGNED_BYTE, pixels+4);
+			Errors::check(Errors::CompressedTexImage2D);
+		}
 		else
 		{
 			glTexImage2D(GL_TEXTURE_2D, 0, getFormat(format), width, height, 0, getFormat(format), GL_UNSIGNED_BYTE, pixels);
@@ -352,6 +371,7 @@ namespace graphics
 
 	void TextureImage2d::setData(const Image2dData *data)
 	{
+		if (AtlasEntry) return;
 		setData(data->Width, data->Height, data->Format, data->Pixels);
 	}
 
@@ -363,9 +383,29 @@ namespace graphics
 			return GL_RGB;
 		case Image2dFormat::Rgba:
 			return GL_RGBA;
+		case Image2dFormat::Pvrtc:
+			return 0x8C02; // GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG
+		case Image2dFormat::Etc1:
+			return GL_COMPRESSED_RGB8_ETC2;
 		default:
 			return GL_RGBA;
 		}
+	}
+
+	TextureAtlasPage::TextureAtlasPage(bool useFilter): TextureImage2d(false, useFilter), _aliveRects(0)
+	{
+	}
+
+	void TextureAtlasPage::createRect(float x, float y, float w, float h, TextureImage2d* result)
+	{
+		result->setHandle(getHandle());
+		result->X = x;
+		result->Y = y;
+		result->W = w;
+		result->H = h;
+		result->AtlasEntry = true;
+		_rects.push_back(result);
+		_aliveRects++;
 	}
 
 	void TextureImage2d::createStatic()

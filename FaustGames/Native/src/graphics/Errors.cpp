@@ -132,5 +132,6 @@ namespace graphics
 		"BufferData",
 		"Uniform3f",
 		"Uniform2f",
+		"CompressedTexImage2D"
 	};
 }

@@ -3,8 +3,125 @@
 #include "lpng/png.h"
 #include "../core/HollowsAllocationPolicy.h"
 
+#include "../../src_rectanglebinpack/GuillotineBinPack.h"
+
 namespace resources
 {
+	class AtlasPage
+	{
+	};
+
+	class AtlasOnlinePacker : public IAtlasOnlinePacker
+	{
+	public:
+		AtlasOnlinePacker();
+		void init(int w, int h);
+		virtual bool insert(const AtlasEntryInput &input, AtlasEntry &output) OVERRIDE;
+		virtual void applyCurrentPage() OVERRIDE;
+	private:
+		float scaleX(int x);
+		float scaleY(int y);
+		graphics::TextureAtlasPage* cretateNextPage();
+		void applyPageRect(rbp::Rect r, graphics::Image2dData* image);
+		rbp::GuillotineBinPack _pack;
+		std::vector<graphics::TextureAtlasPage* > _pages;
+		graphics::TextureAtlasPage* _actualPage;
+		int _w;
+		int _h;
+		graphics::Image2dData* _pageData;
+	};
+
+	AtlasOnlinePacker::AtlasOnlinePacker() : _actualPage(nullptr), _w(1), _h(1), _pageData(nullptr)
+	{
+		init(4096, 4096);
+	}
+
+	void AtlasOnlinePacker::init(int w, int h)
+	{
+		_pack.allowRotate = false;
+		_pack.Init(w, h);
+		_w = w;
+		_h = h;
+		_pageData = new graphics::Image2dData(w, h);
+	}
+
+	bool AtlasOnlinePacker::insert(const AtlasEntryInput& input, AtlasEntry& output)
+	{
+		if (input.image->Width > _w / 4 || input.image->Height > _h / 4)
+		{
+			return false;
+		}
+		if (_pageData == nullptr) return false;
+		if (_actualPage == nullptr)
+		{
+			_actualPage = cretateNextPage();
+		}
+		rbp::Rect r = _pack.Insert(input.image->Width, input.image->Height, true, rbp::GuillotineBinPack::RectBestAreaFit, rbp::GuillotineBinPack::SplitMinimizeArea);
+		if (r.width == 0 || r.height == 0)
+		{
+			applyCurrentPage();
+			_actualPage = cretateNextPage();
+			r = _pack.Insert(input.image->Width, input.image->Height, true, rbp::GuillotineBinPack::RectBestAreaFit, rbp::GuillotineBinPack::SplitMinimizeArea);
+		}
+		if (r.width == 0 || r.height == 0)
+			return false;
+		applyPageRect(r, input.image);
+		_actualPage->createRect(
+			scaleX(r.x),
+			scaleX(r.y),
+			scaleX(r.width),
+			scaleX(r.height),
+			input.texture);
+		return true;
+	}
+
+	float AtlasOnlinePacker::scaleX(int x)
+	{
+		return static_cast<float>(x) / static_cast<float>(_w);
+	}
+
+	float AtlasOnlinePacker::scaleY(int y)
+	{
+		return static_cast<float>(y) / static_cast<float>(_h);
+	}
+
+	graphics::TextureAtlasPage* AtlasOnlinePacker::cretateNextPage()
+	{
+		graphics::TextureAtlasPage *actualPage = new graphics::TextureAtlasPage(true);
+		actualPage->create();
+		_pages.push_back(actualPage);
+		_pack.Init(_w, _h);
+		return actualPage;
+	}
+
+	void AtlasOnlinePacker::applyPageRect(rbp::Rect r, graphics::Image2dData* image)
+	{
+		int rowDstBase = r.y * _w + r.x;
+		int rowSrcBase = 0;
+		for (int y = 0; y < r.height; y++)
+		{
+			int rowDst = rowDstBase;
+			int rowSrc = rowSrcBase;
+			for (int x = 0; x < r.width; x++)
+			{
+				_pageData->Pixels[rowDst] = image->Pixels[rowSrc];
+				rowDst++;
+				rowSrc++;
+			}
+
+			rowDstBase += _w;
+			rowSrcBase += r.width;
+		}
+	}
+
+	void AtlasOnlinePacker::applyCurrentPage()
+	{
+		if (_actualPage == nullptr)
+			return;
+		_actualPage->setData(_pageData);
+		std::memset(_pageData->Pixels, 0, _pageData->Height*_pageData->Width * 4);
+	}
+
 	void readData(png_structp pngPtr, png_bytep data, png_size_t length)
 	{
 		ContentProvider::read(data, length);
@@ -23,13 +140,14 @@ namespace resources
 
 	ContentManager::ContentManager() : _image(0), _isOpened(false)
 	{
-
+		_packerRGBA = new AtlasOnlinePacker();
 	}
 
 	void ContentManager::cleanup()
 	{
 		_files.clear();
 	}
+
 	unsigned int ContentManager::registerTexture(const char *name)
 	{
 		unsigned int result = _files.size();
@@ -68,6 +186,24 @@ namespace resources
 
 	graphics::Image2dData * ContentManager::loadUnregisteredTexture(const char *name)
 	{
+		std::string path = name;
+		if (path.size() > 4)
+		{
+			path[path.size() - 3] = 'p';
+			path[path.size() - 2] = 'k';
+			path[path.size() - 1] = 'm';
+			if (ContentProvider::existContent(path.c_str()))
+			{
+				return loadUnregisteredEtcTexture(path.c_str());
+			}
+			path[path.size() - 3] = 'p';
+			path[path.size() - 2] = 'v';
+			path[path.size() - 1] = 'r';
+			if (ContentProvider::existContent(path.c_str()))
+			{
+				return loadUnregisteredPvrTexture(path.c_str());
+			}
+		}
 		if (!ContentProvider::existContent(name))
 			return 0;
 		//todo: load data from content provider
@@ -155,13 +291,13 @@ namespace resources
 			//throw ref new Exception(-1, "Error during init_io");
 			return 0;
 		}
-		if (_useLoadRegion)
-		{
-			int offset = _loadRegion.Y * _pageWidth + _loadRegion.X;
-			for (size_t i = 0; i < (size_t)m_Height; i++)
-				m_RowPtrs[i] = (png_byte*)_image->Pixels + (offset + i*_pageWidth)*m_Channels;
-		}
-		else
+		//if (_useLoadRegion)
+		//{
+		//	int offset = _loadRegion.Y * _pageWidth + _loadRegion.X;
+		//	for (size_t i = 0; i < (size_t)m_Height; i++)
+		//		m_RowPtrs[i] = (png_byte*)_image->Pixels + (offset + i*_pageWidth)*m_Channels;
+		//}
+		//else
 		{
 			int step = m_Width * m_Channels;
 			int newStep = (step / 4) * 4;
@@ -216,6 +352,35 @@ namespace resources
 		return _image;
 	}
 
+	graphics::Image2dData* ContentManager::loadUnregisteredPvrTexture(const char* name)
+	{
+		ContentProvider::openContent(name);
+		ContentProvider::read(_image->Pixels, ImageBufferSize);
+		ContentProvider::closeContent();
+		_image->Width = *(_image->Pixels + 0);
+		_image->Height = *(_image->Pixels + 1);
+
+		_image->Format = graphics::Image2dFormat::Pvrtc;
+		return _image;
+	}
+
+	graphics::Image2dData* ContentManager::loadUnregisteredEtcTexture(const char* name)
+	{
+		ContentProvider::openContent(name);
+		int size = ContentProvider::read(_image->Pixels, ImageBufferSize);
+		ContentProvider::closeContent();
+		
+		byte* pkmh = static_cast<byte*>(static_cast<void*>(_image->Pixels));
+		
+
+
+		_image->Width = (*(pkmh + 8) << 8) + *(pkmh + 9);
+		_image->Height = (*(pkmh + 10) << 8) + *(pkmh + 11);
+
+		_image->Format = graphics::Image2dFormat::Etc1;
+		return _image;
+	}
+
 	char* ContentManager::loadString(const char* name)
 	{
 		ContentProvider::openContent(name);
@@ -248,11 +413,12 @@ namespace resources
 		m_RowPtrs = 0;
 		_image = 0;
 		_isOpened = false;
+		_packerRGBA->applyCurrentPage();
 	}
 
 	llge::IContentAtlasMap * API_CALL ContentManager::getContentAtlasMap()
 	{
-		return &AtlasMap;
+		return nullptr;
 	}
 	
 	void API_CALL ContentManager::replaceSeparator(bool value)
@@ -265,18 +431,6 @@ namespace resources
 		return registerTexture(name);
 	}
 
-	void API_CALL ContentManager::reloadImages()
-	{
-		for (resources::TexturesMap::iterator it = resources::ContentManager::Default._loadedImages.begin(); it != resources::ContentManager::Default._loadedImages.end(); it++)
-		{
-			LoadImageEntry entry;
-			graphics::TextureImage2d *image = it->second;
-			entry.fileName = it->first;
-			entry.textureImage = image;
-			_loadEntries.push_back(entry);
-		}
-	}
-
 	void API_CALL ContentManager::startLoad()
 	{
 		open();
@@ -284,6 +438,22 @@ namespace resources
 
 	bool API_CALL ContentManager::update()
 	{
+		if(!ImageSizeLoaded)
+		{
+			int maxTextureSize[1];
+			glGetIntegerv(GL_MAX_TEXTURE_SIZE, maxTextureSize);
+			if (glGetError() == GL_NO_ERROR)
+			{
+				int size = maxTextureSize[0];
+				const int sizeLimit = 1024 * 4;
+				if (size > sizeLimit)
+					size = sizeLimit;
+				ImageMaxWidth = size;
+				ImageMaxHeight = size;
+				ImageBufferSize = ImageMaxWidth*ImageMaxHeight;
+				ImageSizeLoaded = true;
+			}
+		}
 
 		if ((_loadEntries.size() == 0) && (_disposeEntries.size() == 0))
 			return true;
@@ -301,6 +471,7 @@ namespace resources
 			fprintf(stderr, "\n");
 			*/
 			graphics::Image2dData * image = loadUnregisteredTexture(_loadEntries[i].fileName.c_str());
+			if (tryPlaceIntoAtlas(image, _loadEntries[i].textureImage)) continue;
 			_loadEntries[i].textureImage->create();
 			if (image != nullptr)
 			{
@@ -327,8 +498,16 @@ namespace resources
 		//if (AtlasMap.loadImage(name, textureImage))
 		//	return;
 		graphics::Image2dData * image = loadUnregisteredTexture(name);
+
 		if (image)
-			textureImage->LoadPixels(image->Width, image->Height, (llge::TextureImage2dFormat)image->Format, image->Pixels);
+		{
+			graphics::TextureImage2d* texture = static_cast<graphics::TextureImage2d*>(textureImage->getTextureImageInstance());
+			if (!tryPlaceIntoAtlas(image, texture))
+			{
+				texture->create();
+				textureImage->LoadPixels(image->Width, image->Height, (llge::TextureImage2dFormat)image->Format, image->Pixels);
+			}
+		}
 	}
 
 	llge::ITextureBuffer2d * API_CALL ContentManager::loadBuffer(int id)
@@ -356,22 +535,7 @@ namespace resources
 	{
 		return _image->Pixels;
 	}
-
-	void ContentManager::useLoadRegion(bool value)
-	{
-		_useLoadRegion = value;
-	}
-	void ContentManager::setLoadRegion(RectRegion loadRegion)
-	{
-		_loadRegion = loadRegion;
-	}
-
-	void ContentManager::setPage(int pageWidth, int pageHeight)
-	{
-		_pageWidth = pageWidth;
-		_pageHeight = pageHeight;
-	}
-
+	
 	void* ContentManager::getBuffer() const
 	{
 		if (_image == 0)
@@ -386,6 +550,31 @@ namespace resources
 		return ImageBufferSize;
 	}
 
+	bool ContentManager::tryPlaceIntoAtlas(graphics::Image2dData* image, graphics::TextureImage2d* texture)
+	{
+		IAtlasOnlinePacker* packer = nullptr;
+		switch (image->Format)
+		{
+		case graphics::Image2dFormat::Rgba:
+			packer = _packerRGBA;
+			break;
+		default:
+			break;
+		}
+		if (packer != nullptr)
+		{
+			AtlasEntryInput ei;
+			AtlasEntry e;
+			ei.image = image;
+			ei.texture = texture;
+			if (packer->insert(ei, e))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
 	void API_CALL ContentManager::finishLoad()
 	{
 		close();
@@ -398,127 +587,9 @@ namespace resources
 
 	bool ContentManager::_replaceSeparator(false);
 
-	void API_CALL ContentAtlasMap::resetMap()
-	{
-        /*
-		_pages.clear();
-		_rects.clear();
-         */
-	}
+	bool ContentManager::ImageSizeLoaded(false);
 
-	void API_CALL ContentAtlasMap::addRect(char* name, int pageIndex, int x, int y, int width, int height)
-	{
-        /*
-		ContentAtlasRect rect;
-		rect.PageIndex = pageIndex;
-		rect.Region.X = x;
-		rect.Region.Y = y;
-		rect.Region.Width = width;
-		rect.Region.Height = height;
-		while (rect.PageIndex >= _pages.size())
-		{
-			_pages.push_back(ContentAtlasPage());
-		}
-		int w = rect.Region.X + rect.Region.Width + 2;
-		int h = rect.Region.Y + rect.Region.Height + 2;
-		if (_pages[rect.PageIndex].Width < w)
-			_pages[rect.PageIndex].Width = w;
-		if (_pages[rect.PageIndex].Height < h)
-			_pages[rect.PageIndex].Height = h;
-		_rects[name] = rect;
-         */
-	}
-	
-	struct PageRegion
-	{
-		std::string FileName;
-		ContentAtlasRect Rect;
-		PageRegion(const std::string &fileName, const ContentAtlasRect &rect)
-		{
-			FileName = fileName;
-			Rect = rect;
-		}
-	};
-
-	struct PageContainer
-	{
-		ContentAtlasPage Page;
-		std::vector<PageRegion *> RectFiles;
-	};
-
-	void API_CALL ContentAtlasMap::loadTextures()
-	{
-        /*
-		std::vector<PageContainer *> pages;
-		pages.resize(_pages.size());
-		for (size_t i = 0; i < _pages.size(); i++)
-		{
-			pages[i] = new PageContainer();
-			pages[i]->Page = _pages[i];
-		}
-		for (ContentAtlasRects::iterator i = _rects.begin(); i != _rects.end(); i++)
-		{
-			pages[i->second.PageIndex]->RectFiles.push_back(new PageRegion(i->first, i->second));
-		}
-
-		if (_textures.size() != _pages.size())
-		{
-			for (size_t i = _pages.size(); i < _textures.size(); i++)
-			{
-				_textures[i]->cleanup();
-				_textures[i]->dispose();
-			}
-			int start = _textures.size();
-			_textures.resize(_pages.size());
-			for (size_t i = start; i < _pages.size(); i++)
-			{
-				_textures[i] = new graphics::TextureImage2d(false, true);
-				_textures[i]->create();
-			}
-		}
-
-		ContentManager::Default.useLoadRegion(true);
-		for (size_t i = 0; i < pages.size(); i++)
-		{
-			ContentManager::Default.setPage(pages[i]->Page.Width, pages[i]->Page.Height);
-			graphics::Image2dData *imageData = 0;
-			for (size_t j = 0; j < pages[i]->RectFiles.size(); j++)
-			{
-				ContentManager::Default.setLoadRegion(pages[i]->RectFiles[j]->Rect.Region);
-				imageData = ContentManager::Default.loadUnregisteredTexture(pages[i]->RectFiles[j]->FileName.c_str());
-			}
-			if (imageData)
-			{
-				_textures[i]->LoadPixels(pages[i]->Page.Width, pages[i]->Page.Height, llge::Rgba, imageData->Pixels);
-				// load texture
-			}
-		}
-		ContentManager::Default.useLoadRegion(false);
-		for (size_t i = 0; i < pages.size(); i++)
-		{
-			delete pages[i];
-			for (size_t j = 0; j < pages[i]->RectFiles.size(); j++)
-			{
-				delete pages[i]->RectFiles[j];
-			}
-		}
-         */
-	}
-	
-	bool ContentAtlasMap::loadImage(const char *name, llge::ITextureImage2d *textureImage)
-	{
-        return false;
-        /*
-		ContentAtlasRects::iterator it = _rects.find(name);
-		if (it == _rects.end())
-			return false;
-		graphics::TextureImage2d* proxy = (graphics::TextureImage2dProxy*)textureImage->getTextureImageInstance();
-		proxy->setProxyInstance(_textures[it->second.PageIndex]);
-		proxy->X = ((float)it->second.Region.X + 0.5f) / (float)_pages[it->second.PageIndex].Width;
-		proxy->Y = ((float)it->second.Region.Y + 0.5f) / (float)_pages[it->second.PageIndex].Height;
-		proxy->W = ((float)it->second.Region.Width - 1.0f) / (float)_pages[it->second.PageIndex].Width;
-		proxy->H = ((float)it->second.Region.Height - 1.0f) / (float)_pages[it->second.PageIndex].Height;
-		return true;
-         */
-	}
+	int ContentManager::ImageBufferSize = 2048 * 2048;
+	int ContentManager::ImageMaxHeight = 2048;
+	int ContentManager::ImageMaxWidth = 2048;
 }

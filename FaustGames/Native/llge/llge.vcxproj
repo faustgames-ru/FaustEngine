@@ -400,6 +400,12 @@
     <ClInclude Include="..\src_poly2tri\sweep\cdt.h" />
     <ClInclude Include="..\src_poly2tri\sweep\sweep.h" />
     <ClInclude Include="..\src_poly2tri\sweep\sweep_context.h" />
+    <ClInclude Include="..\src_rectanglebinpack\GuillotineBinPack.h" />
+    <ClInclude Include="..\src_rectanglebinpack\MaxRectsBinPack.h" />
+    <ClInclude Include="..\src_rectanglebinpack\Rect.h" />
+    <ClInclude Include="..\src_rectanglebinpack\ShelfBinPack.h" />
+    <ClInclude Include="..\src_rectanglebinpack\ShelfNextFitBinPack.h" />
+    <ClInclude Include="..\src_rectanglebinpack\SkylineBinPack.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
@@ -625,6 +631,12 @@
     <ClCompile Include="..\src_poly2tri\sweep\cdt.cc" />
     <ClCompile Include="..\src_poly2tri\sweep\sweep.cc" />
     <ClCompile Include="..\src_poly2tri\sweep\sweep_context.cc" />
+    <ClCompile Include="..\src_rectanglebinpack\GuillotineBinPack.cpp" />
+    <ClCompile Include="..\src_rectanglebinpack\MaxRectsBinPack.cpp" />
+    <ClCompile Include="..\src_rectanglebinpack\Rect.cpp" />
+    <ClCompile Include="..\src_rectanglebinpack\ShelfBinPack.cpp" />
+    <ClCompile Include="..\src_rectanglebinpack\ShelfNextFitBinPack.cpp" />
+    <ClCompile Include="..\src_rectanglebinpack\SkylineBinPack.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="stdafx.cpp" />
   </ItemGroup>

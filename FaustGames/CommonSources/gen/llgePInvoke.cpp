@@ -806,14 +806,9 @@ namespace llge
 		classInstance->setToneMap(tonemapId);
 	}
 	
-	extern "C" DLLEXPORT void API_CALL llge_Batch2d_drawEx (IBatch2d * classInstance, GraphicsEffects effect, BlendMode blendMode, IntPtr config, void * vertices, int verticesCount, void * indices, int indicesCount, byte colorScale)
+	extern "C" DLLEXPORT void API_CALL llge_Batch2d_draw (IBatch2d * classInstance, IntPtr batcherConfig, IntPtr texturesConfig)
 	{
-		classInstance->drawEx(effect, blendMode, config, vertices, verticesCount, indices, indicesCount, colorScale);
-	}
-	
-	extern "C" DLLEXPORT void API_CALL llge_Batch2d_draw (IBatch2d * classInstance, GraphicsEffects effect, BlendMode blendMode, ITexture * textureId, uint lightmapId, void * vertices, int verticesCount, void * indices, int indicesCount, byte colorScale)
-	{
-		classInstance->draw(effect, blendMode, textureId, lightmapId, vertices, verticesCount, indices, indicesCount, colorScale);
+		classInstance->draw(batcherConfig, texturesConfig);
 	}
 	
 	extern "C" DLLEXPORT void API_CALL llge_Batch2d_drawSolid (IBatch2d * classInstance, int z, ITexture * textureId, uint lightmapId, void * vertices, int verticesCount, void * indices, int indicesCount, byte colorScale)
@@ -1219,11 +1214,6 @@ namespace llge
 	extern "C" DLLEXPORT void API_CALL llge_ContentManager_loadImage (IContentManager * classInstance, int id, ITextureImage2d * textureImage)
 	{
 		classInstance->loadImage(id, textureImage);
-	}
-	
-	extern "C" DLLEXPORT void API_CALL llge_ContentManager_reloadImages (IContentManager * classInstance)
-	{
-		classInstance->reloadImages();
 	}
 	
 	extern "C" DLLEXPORT ITextureBuffer2d * API_CALL llge_ContentManager_loadBuffer (IContentManager * classInstance, int id)

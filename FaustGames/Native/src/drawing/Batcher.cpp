@@ -180,6 +180,7 @@ namespace drawing
 		Uvs = nullptr;
 		Z = 0;
 		VerticesCount = 0;
+		texture = nullptr;
 		Indices = nullptr;
 		IndicesCount = 0;
 	}
@@ -191,6 +192,7 @@ namespace drawing
 		Uvs = nullptr;
 		Z = 0;
 		VerticesCount = 0;
+		texture = nullptr;
 		Vertices = static_cast<float *>(core::Mem::allocate(verticesLimit * sizeof(float) * 2));
 		Indices = nullptr;
 		IndicesCount = 0;
@@ -264,16 +266,9 @@ namespace drawing
 	void Batcher::drawMesh(graphics::EffectBase *effect, graphics::BlendState::e blend, llge::ITexture * texture, uint lightmapId, TVertex *vertices, int verticesCount, ushort *indices, int indicesCount, float colorScale)
 	{
 		_verticesCounter += verticesCount;
-		graphics::Texture * textureInstance = static_cast<graphics::Texture *>(texture->getTextureInstance());
-		_x = textureInstance->X;
-		_y = textureInstance->Y;
-		_w = textureInstance->W;
-		_h = textureInstance->H;
-		drawMesh(effect, blend, textureInstance->getHandle(), lightmapId, vertices, verticesCount, indices, indicesCount, colorScale);
-		_x = 0;
-		_y = 0;
-		_w = 1;
-		_h = 1;
+		setupUVTransform(texture);
+		drawMesh(effect, blend, texture->getId(), lightmapId, vertices, verticesCount, indices, indicesCount, colorScale);
+		cleanupUVTransform();
 	}
 	
 	void Batcher::drawMesh(graphics::EffectBase *effect, graphics::BlendState::e blend, uint textureId, uint lightmapId, TVertex *vertices, int verticesCount, ushort *indices, int indicesCount, unsigned char colorScale)
@@ -371,7 +366,12 @@ namespace drawing
 	}
 
 	void Batcher::drawSpineMesh(const BatcherSpineMesh &mesh, byte colorScale, bool pemul)
-	{
+	{		
+		if (mesh.texture != nullptr)
+		{
+			setupUVTransform(mesh.texture);
+		}
+
 		if (_bloom.getBlurMap() != nullptr)
 		{
 			graphics::EffectTextureBlurmap::blurmap = _bloom.getBlurMap()->getHandle();
@@ -428,8 +428,21 @@ namespace drawing
 		}
 	}
 
-	void Batcher::drawSplineMesh(TVertex* vertices, int verticesCount)
+	void Batcher::setupUVTransform(llge::ITexture* texture)
 	{
+		graphics::Texture * textureInstance = static_cast<graphics::Texture *>(texture->getTextureInstance());
+		_x = textureInstance->X;
+		_y = textureInstance->Y;
+		_w = textureInstance->W;
+		_h = textureInstance->H;
+	}
+
+	void Batcher::cleanupUVTransform()
+	{
+		_x = 0.0f;
+		_y = 0.0f;
+		_w = 1.0f;
+		_h = 1.0f;
 	}
 
 	void Batcher::executeRenderCommands(bool usePostProcess)
@@ -555,25 +568,45 @@ namespace drawing
 		finish();
 	}
 
+	void Batcher::draw(IntPtr batcherConfig, IntPtr texturesConfig)
+	{
+		llge::BatcherConfig* bc = static_cast<llge::BatcherConfig*>(batcherConfig);
+		setupUVTransform(static_cast<graphics::Texture*>(bc->texture));
+		drawMesh(
+			_converter.getEffect(static_cast<llge::GraphicsEffects>(bc->effect)),
+			_converter.getBlend(static_cast<llge::BlendMode>(bc->blendMode)),
+			texturesConfig,
+			static_cast<TVertex *>(bc->vertices),
+			bc->verticesCount,
+			static_cast<ushort *>(bc->indices),
+			bc->indicesCount,
+			static_cast<byte>(bc->colorScale));
+		cleanupUVTransform();
+	}
+	/*
 	void Batcher::drawEx(llge::GraphicsEffects effect, llge::BlendMode blendMode, IntPtr config, void* vertices, int verticesCount, void* indices, int indicesCount, unsigned char colorScale)
 	{
 		drawMesh(_converter.getEffect(effect), _converter.getBlend(blendMode), config, static_cast<TVertex *>(vertices), verticesCount, static_cast<ushort *>(indices), indicesCount, colorScale);
 	}
-
-	void Batcher::draw(llge::GraphicsEffects effect, llge::BlendMode blendMode, llge::ITexture* texture, uint lightmapId, void* vertices, int verticesCount, void* indices, int indicesCount, unsigned char colorScale)
-	{
-		drawMesh(_converter.getEffect(effect), _converter.getBlend(blendMode), texture, lightmapId, static_cast<TVertex *>(vertices), verticesCount, static_cast<ushort *>(indices), indicesCount, colorScale);
-	}
-
+	*/
 	void Batcher::drawSolid(int z, llge::ITexture* texture, uint lightmapId, void* vertices, int verticesCount, void* indices, int indicesCount, byte colorScale)
 	{
 		if (graphics::GraphicsDevice::Default.config.earlyDepthPath)
 		{
+			graphics::Texture * textureInstance = static_cast<graphics::Texture *>(texture->getTextureInstance());
+
+			_zButcher->_x = textureInstance->X;
+			_zButcher->_y = textureInstance->Y;
+			_zButcher->_w = textureInstance->W;
+			_zButcher->_h = textureInstance->H;
+
 			_zButcher->drawMesh(z, texture, lightmapId, static_cast<TVertex *>(vertices), verticesCount, static_cast<ushort *>(indices), indicesCount, colorScale);
 		}
 		else
 		{
+			setupUVTransform(texture);
 			drawMesh(_converter.getEffect(llge::GraphicsEffects::EffectTextureColor), graphics::BlendState::Alpha, texture, lightmapId, static_cast<TVertex *>(vertices), verticesCount, static_cast<ushort *>(indices), indicesCount, colorScale);
+			cleanupUVTransform();
 		}
 	}
 
@@ -629,6 +662,10 @@ namespace drawing
 	void ZBlock::addMesh(llge::ITexture* texture, uint lightmapId, TVertex* vertices, int verticesCount, ushort* indices, int indicesCount, byte colorScale)
 	{
 		ZBatchEntry e;
+		Buffer._x = _x;
+		Buffer._y = _y;
+		Buffer._w = _w;
+		Buffer._h = _h;
 		Buffer.add(vertices, verticesCount, indices, indicesCount, colorScale, e);
 		llge::LightingConfig* config = static_cast<llge::LightingConfig *>(static_cast<void *>(&e.Config));
 		config->lightmap = lightmapId;
@@ -698,6 +735,10 @@ namespace drawing
 		_verticesIndex = 0;
 		_verticesBufferIndex = 0;
 		_indices.reserve(_blockSize);
+		_x = 0.0f;
+		_y = 0.0f;
+		_w = 1.0f;
+		_h = 1.0f;
 	}
 
 	ZBatchBuffer::~ZBatchBuffer()
@@ -734,8 +775,8 @@ namespace drawing
 			target->y = source->y;
 			target->z = source->z;
 			target->color = graphics::Color::premul(source->color, colorScale, false);
-			target->u = source->u;
-			target->v = source->v;
+			target->u = _x + source->u*_w;
+			target->v = _y + source->v*_h;
 		}
 
 		result.originVertices = _vertices[_verticesBufferIndex];
@@ -805,7 +846,11 @@ namespace drawing
 		_indicesCounter += indicesCount;
 		
 		ZBlock* block = queryBlock(z);								
-		block->addMesh(texture, lightmapId, vertices, verticesCount, indices, indicesCount, colorScale);		
+		block->_x = _x;
+		block->_y = _y;
+		block->_w = _w;
+		block->_h = _h;
+		block->addMesh(texture, lightmapId, vertices, verticesCount, indices, indicesCount, colorScale);
 	}
 
 	ZBlock* ZBatcher::queryBlock(int z)

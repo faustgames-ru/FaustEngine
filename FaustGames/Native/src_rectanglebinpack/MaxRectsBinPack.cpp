@@ -21,7 +21,8 @@ using namespace std;
 
 MaxRectsBinPack::MaxRectsBinPack()
 :binWidth(0),
-binHeight(0)
+binHeight(0),
+allowRotate(true)
 {
 }
 
@@ -196,7 +197,7 @@ Rect MaxRectsBinPack::FindPositionForNewNodeBottomLeft(int width, int height, in
 				bestX = freeRectangles[i].x;
 			}
 		}
-		if (freeRectangles[i].width >= height && freeRectangles[i].height >= width)
+		if (freeRectangles[i].width >= height && freeRectangles[i].height >= width && allowRotate)
 		{
 			int topSideY = freeRectangles[i].y + width;
 			if (topSideY < bestY || (topSideY == bestY && freeRectangles[i].x < bestX))
@@ -243,7 +244,7 @@ Rect MaxRectsBinPack::FindPositionForNewNodeBestShortSideFit(int width, int heig
 			}
 		}
 
-		if (freeRectangles[i].width >= height && freeRectangles[i].height >= width)
+		if (freeRectangles[i].width >= height && freeRectangles[i].height >= width && allowRotate)
 		{
 			int flippedLeftoverHoriz = abs(freeRectangles[i].width - height);
 			int flippedLeftoverVert = abs(freeRectangles[i].height - width);
@@ -294,7 +295,7 @@ Rect MaxRectsBinPack::FindPositionForNewNodeBestLongSideFit(int width, int heigh
 			}
 		}
 
-		if (freeRectangles[i].width >= height && freeRectangles[i].height >= width)
+		if (freeRectangles[i].width >= height && freeRectangles[i].height >= width && allowRotate)
 		{
 			int leftoverHoriz = abs(freeRectangles[i].width - height);
 			int leftoverVert = abs(freeRectangles[i].height - width);
@@ -346,7 +347,7 @@ Rect MaxRectsBinPack::FindPositionForNewNodeBestAreaFit(int width, int height,
 			}
 		}
 
-		if (freeRectangles[i].width >= height && freeRectangles[i].height >= width)
+		if (freeRectangles[i].width >= height && freeRectangles[i].height >= width && allowRotate)
 		{
 			int leftoverHoriz = abs(freeRectangles[i].width - height);
 			int leftoverVert = abs(freeRectangles[i].height - width);
@@ -415,7 +416,7 @@ Rect MaxRectsBinPack::FindPositionForNewNodeContactPoint(int width, int height, 
 				bestContactScore = score;
 			}
 		}
-		if (freeRectangles[i].width >= height && freeRectangles[i].height >= width)
+		if (freeRectangles[i].width >= height && freeRectangles[i].height >= width && allowRotate)
 		{
 			int score = ContactPointScoreNode(freeRectangles[i].x, freeRectangles[i].y, height, width);
 			if (score > bestContactScore)

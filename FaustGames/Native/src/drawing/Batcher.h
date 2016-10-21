@@ -106,6 +106,7 @@ namespace drawing
 		int VerticesCount;
 		unsigned short *Indices;
 		int IndicesCount;
+		graphics::Texture* texture;
 		BatcherSpineMesh();
 		BatcherSpineMesh(int verticesLimit);
 	};
@@ -139,7 +140,8 @@ namespace drawing
 		void drawMesh(graphics::EffectBase *effect, graphics::BlendState::e blend, uint textureId, uint lightmapId, TVertex *vertices, int verticesCount, ushort *indices, int indicesCount, unsigned char colorScale);
 		void drawMesh(graphics::EffectBase *effect, graphics::BlendState::e blend, void* config, TVertex *vertices, int verticesCount, ushort *indices, int indicesCount, unsigned char colorScale);
 		void drawSpineMesh(const BatcherSpineMesh &mesh, byte colorScale, bool pemul);
-		void drawSplineMesh(TVertex *vertices, int verticesCount);
+		void setupUVTransform(llge::ITexture* texture);
+		void cleanupUVTransform();
 
 		void executeRenderCommands(bool usePostProcess);
 
@@ -149,8 +151,7 @@ namespace drawing
 		virtual void API_CALL addRenderTarget(IntPtr renderTargetInstance) OVERRIDE;
 		virtual void API_CALL startBatch() OVERRIDE;
 		virtual void API_CALL finishBatch() OVERRIDE;
-		virtual void API_CALL drawEx(llge::GraphicsEffects effect, llge::BlendMode blendMode, IntPtr config, void* vertices, int verticesCount, void* indices, int indicesCount, unsigned char colorScale) OVERRIDE;
-		virtual void API_CALL draw(llge::GraphicsEffects effect, llge::BlendMode blendMode, llge::ITexture* texture, uint lightmapId, void* vertices, int verticesCount, void* indices, int indicesCount, unsigned char colorScale) OVERRIDE;
+		virtual void API_CALL draw(IntPtr batcherConfig, IntPtr texturesConfig) OVERRIDE;
 		virtual void API_CALL drawSolid(int z, llge::ITexture* textureId, uint lightmapId, void *vertices, int verticesCount, void *indices, int indicesCount, byte colorScale) OVERRIDE;
 		virtual void API_CALL execute(bool usePostProcess) OVERRIDE;
 		virtual void API_CALL setToneMap(uint tonemapId) OVERRIDE;
@@ -207,6 +208,10 @@ namespace drawing
 		void reset();
 		void add(TVertex *vertices, int verticesCount, ushort *indices, int indicesCount, byte colorScale, ZBatchEntry& result);
 		ushort *allIndices();
+		float _x;
+		float _y;
+		float _w;
+		float _h;
 	private:
 		std::vector<TVertex*> _vertices;
 		std::vector<ushort> _indices;
@@ -224,6 +229,10 @@ namespace drawing
 		void reconstruct(int z);
 		void addMesh(llge::ITexture * texture, uint lightmapId, TVertex *vertices, int verticesCount, ushort *indices, int indicesCount, byte colorScale);
 		void applyRender(graphics::EffectBase *effect);
+		float _x;
+		float _y;
+		float _w;
+		float _h;
 	private:
 	};
 
@@ -252,6 +261,10 @@ namespace drawing
 		void reset();
 		void applyRender();
 		void drawMesh(int z, llge::ITexture * texture, uint lightmapId, TVertex *vertices, int verticesCount, ushort *indices, int indicesCount, byte colorScale);
+		float _x;
+		float _y;
+		float _w;
+		float _h;
 	private:
 		core::MatrixContainer _transform;
 		graphics::BlendState::e _blend;

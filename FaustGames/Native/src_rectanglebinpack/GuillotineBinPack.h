@@ -18,6 +18,7 @@ namespace rbp {
 class GuillotineBinPack
 {
 public:
+	bool allowRotate;
 	/// The initial bin size will be (0,0). Call Init to set the bin size.
 	GuillotineBinPack();
 

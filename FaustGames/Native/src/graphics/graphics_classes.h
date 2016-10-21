@@ -14,6 +14,8 @@ namespace graphics
 		{
 			Rgba = 0x0,
 			Rgb = 0x1,
+			Pvrtc = 0x2,
+			Etc1 = 0x3,
 		};
 	};
 

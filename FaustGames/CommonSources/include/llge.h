@@ -155,11 +155,6 @@ namespace llge
 	};
 
 
-	struct EffectConfig
-	{
-		uint texture;
-	};
-		
 	/// graphics structs
 	struct GraphicsConfig
 	{
@@ -185,6 +180,11 @@ namespace llge
 		float postEffectsScale;
 	};
 	
+	struct EffectConfig
+	{
+		uint texture;
+	};
+
 	struct LightingConfig
 	{
 		uint texture;
@@ -195,6 +195,18 @@ namespace llge
 	{
 		uint texture;
 		uint highlightColor;
+	};
+	
+	struct BatcherConfig
+	{
+		int effect;
+		int blendMode;
+		IntPtr vertices;
+		int verticesCount;
+		IntPtr indices;
+		int indicesCount;
+		int colorScale;
+		IntPtr texture;
 	};
 
 	class ITexture : IBaseObject
@@ -487,8 +499,7 @@ namespace llge
 		virtual void API_CALL startBatch() = 0;
 		virtual void API_CALL finishBatch() = 0;
 		virtual void API_CALL setToneMap(uint tonemapId) = 0;
-		virtual void API_CALL drawEx(GraphicsEffects effect, BlendMode blendMode, IntPtr config, void *vertices, int verticesCount, void *indices, int indicesCount, byte colorScale) = 0;
-		virtual void API_CALL draw(GraphicsEffects effect, BlendMode blendMode, ITexture* textureId, uint lightmapId, void *vertices, int verticesCount, void *indices, int indicesCount, byte colorScale) = 0;
+		virtual void API_CALL draw(IntPtr batcherConfig, IntPtr texturesConfig) = 0;
 		virtual void API_CALL drawSolid(int z, ITexture* textureId, uint lightmapId, void *vertices, int verticesCount, void *indices, int indicesCount, byte colorScale) = 0;
 		virtual void API_CALL execute(bool usePostProcess) = 0;
 
@@ -642,7 +653,6 @@ namespace llge
 		virtual int API_CALL registerImage(char * name) = 0;
 		virtual void API_CALL startLoad() = 0;
 		virtual void API_CALL loadImage(int id, ITextureImage2d *textureImage) = 0;
-		virtual void API_CALL reloadImages() = 0;
 		virtual ITextureBuffer2d * API_CALL loadBuffer(int id) = 0;
 		virtual void API_CALL finishLoad() = 0;
 		virtual bool API_CALL update() = 0;

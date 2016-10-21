@@ -55,6 +55,20 @@ namespace spine
 		}
 	}
 
+	inline graphics::TextureImage2d * getTexture(void *attachmentRendererObject)
+	{
+		if (attachmentRendererObject)
+		{
+			spAtlasRegion * aRegion = (spAtlasRegion *)attachmentRendererObject;
+			graphics::TextureImage2d * image = (graphics::TextureImage2d *)aRegion->page->rendererObject;
+			return image;
+		}
+		else
+		{
+			return nullptr;
+		}
+	}
+
 	SpineSkeletonBone::SpineSkeletonBone(void* bone)
 	{
 		fx = llge::BoneFxNone;
@@ -189,6 +203,7 @@ namespace spine
 					_mesh.Indices = _quadIndices;
 					_mesh.IndicesCount = 6;
 					_mesh.VerticesCount = 4;
+					_mesh.texture = getTexture(region->rendererObject);
 					_lightingConfig.texture = getTextureId(region->rendererObject);
 					batcher->drawSpineMesh(_mesh, colorScale, premul);
 					break;
@@ -222,6 +237,7 @@ namespace spine
 					_mesh.Indices = mesh->triangles;
 					_mesh.IndicesCount = mesh->trianglesCount;
 					_mesh.VerticesCount = mesh->super.worldVerticesLength / 2;
+					_mesh.texture = getTexture(mesh->rendererObject);
 					_lightingConfig.texture = getTextureId(mesh->rendererObject);
 					batcher->drawSpineMesh(_mesh, colorScale, premul);
 					break;
@@ -398,6 +414,7 @@ namespace spine
 					_mesh.Indices = _quadIndices;
 					_mesh.IndicesCount = 6;
 					_mesh.VerticesCount = 4;
+					_mesh.texture = getTexture(region->rendererObject);
 					buffer.Add(_mesh);
 					break;
 				}
@@ -416,6 +433,7 @@ namespace spine
 						transform(_mesh.Vertices + j, _mesh.Vertices + j + 1);
 					_mesh.Indices = mesh->triangles;
 					_mesh.IndicesCount = mesh->trianglesCount;
+					_mesh.texture = getTexture(mesh->rendererObject);
 					_mesh.VerticesCount = mesh->super.worldVerticesLength / 2;
 					buffer.Add(_mesh);
 					break;
@@ -479,6 +497,7 @@ namespace spine
 					_mesh.Indices = _quadIndices;
 					_mesh.IndicesCount = 6;
 					_mesh.VerticesCount = 4;
+					_mesh.texture = getTexture(region->rendererObject);
 					//_mesh.State.TextureId = getTextureId(region->rendererObject);
 					_lightingConfig.texture = getTextureId(region->rendererObject);
 					batcher->drawSpineMesh(_mesh, colorScale, false);
@@ -505,6 +524,7 @@ namespace spine
 					_mesh.Indices = mesh->triangles;
 					_mesh.IndicesCount = mesh->trianglesCount;
 					_mesh.VerticesCount = mesh->super.worldVerticesLength / 2;
+					_mesh.texture = getTexture(mesh->rendererObject);
 					//_mesh.State.TextureId = getTextureId(mesh->rendererObject);
 					_lightingConfig.texture = getTextureId(mesh->rendererObject);
 					batcher->drawSpineMesh(_mesh, colorScale, false);

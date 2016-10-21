@@ -450,7 +450,7 @@ Rect GuillotineBinPack::FindPositionForNewNode(int width, int height, FreeRectCh
 			break;
 		}
 		// If this is a perfect fit sideways, choose it.
-		else if (height == freeRectangles[i].width && width == freeRectangles[i].height)
+		else if (height == freeRectangles[i].width && width == freeRectangles[i].height && allowRotate)
 		{
 			bestNode.x = freeRectangles[i].x;
 			bestNode.y = freeRectangles[i].y;
@@ -478,7 +478,7 @@ Rect GuillotineBinPack::FindPositionForNewNode(int width, int height, FreeRectCh
 			}
 		}
 		// Does the rectangle fit sideways?
-		else if (height <= freeRectangles[i].width && width <= freeRectangles[i].height)
+		else if (height <= freeRectangles[i].width && width <= freeRectangles[i].height && allowRotate)
 		{
 			int score = ScoreByHeuristic(height, width, freeRectangles[i], rectChoice);
 

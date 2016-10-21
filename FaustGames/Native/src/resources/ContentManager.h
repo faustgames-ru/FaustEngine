@@ -13,67 +13,23 @@ namespace resources
 		graphics::TextureImage2d *textureImage;
 	};
 
-	struct RectRegion
-	{
-		int X;
-		int Y;
-		int Width;
-		int Height;
-	};
-
-	struct ContentAtlasRect
-	{
-		int PageIndex;
-		RectRegion Region;
-	};
-
-	struct ContentAtlasPage
-	{
-		ContentAtlasPage() :Width(0), Height(0) {}
-		int Width;
-		int Height;
-	};
-
-	typedef std::map<std::string, ContentAtlasRect> ContentAtlasRects;	
-
-	struct TexturesAtlasRegion
-	{
-		bool Rotated;
-		int X;
-		int Y;
-		int Width;
-		int Height;
-		int PageWidth;
-		int PageHeight;
-		core::Vector2 transform(core::Vector2 origin);
-	};
-
-	class TexturesAtlasPage
+	class AtlasEntryInput
 	{
 	public:
-		graphics::TextureImage2d * TextureInstance;
-		int Width;
-		int Height;
-	};
-	
-	class TexturesAtlas
-	{
-	public:
-		std::vector<TexturesAtlasPage *> Pages;
-		graphics::Image2dData * ImageBuffer;
+		graphics::Image2dData *image;
+		graphics::TextureImage2d* texture;
 	};
 
-	class ContentAtlasMap : public llge::IContentAtlasMap
+	class AtlasEntry
 	{
 	public:
-		virtual void API_CALL resetMap();
-		virtual void API_CALL addRect(char* name, int pageIndex, int x, int y, int width, int height);
-		virtual void API_CALL loadTextures();
-		bool loadImage(const char *name, llge::ITextureImage2d *textureImage);
-	private:
-		std::vector<ContentAtlasPage> _pages;
-		ContentAtlasRects _rects;
-		std::vector<graphics::TextureImage2d *> _textures;
+	};
+
+	class IAtlasOnlinePacker : public IBaseObject
+	{
+	public:
+		virtual bool insert(const AtlasEntryInput &input, AtlasEntry &output) = 0;
+		virtual void applyCurrentPage() = 0;
 	};
 
 	class ContentManager : public llge::IContentManager, public llge::ITextureBuffer2d
@@ -83,6 +39,8 @@ namespace resources
 		void cleanup();
 		unsigned int registerTexture(const char *name);
 		graphics::Image2dData * loadUnregisteredTexture(const char *name);
+		graphics::Image2dData * loadUnregisteredPvrTexture(const char *name);
+		graphics::Image2dData * loadUnregisteredEtcTexture(const char *name);
 		char* loadString(const char *name);
 		graphics::TextureImage2d * addLoadTexture(const char *name);
 		void addDisposeTexture(graphics::TextureImage2d *image);
@@ -94,7 +52,6 @@ namespace resources
 		virtual void API_CALL replaceSeparator(bool value);
 		//virtual void API_CALL setObbFile(char * obbFile);
 		virtual int API_CALL registerImage(char * name);
-		virtual void API_CALL reloadImages();
 		virtual void API_CALL startLoad();
 		virtual bool API_CALL update();
 		virtual void API_CALL loadImage(int id, llge::ITextureImage2d *textureImage);
@@ -106,35 +63,25 @@ namespace resources
 		virtual int API_CALL getWidth();
 		virtual int API_CALL getHeight();
 		virtual IntPtr API_CALL getPixels();
-		void useLoadRegion(bool value);
-		void setLoadRegion(RectRegion loadRegion);
-		void setPage(int pageWidth, int pageHeight);
 		static ContentManager Default;
 		static bool _replaceSeparator;
 		TexturesMap _loadedImages;
 		void *getBuffer() const;
 		int getBufferSize() const;
 	private:
+		bool tryPlaceIntoAtlas(graphics::Image2dData* image, graphics::TextureImage2d* texture);
+
 		std::vector<std::string> _files;
 		std::vector<LoadImageEntry> _loadEntries;
 		std::vector<graphics::TextureImage2d *> _disposeEntries;
 		graphics::Image2dData *_image;
 		bool _isOpened;
-		RectRegion _loadRegion;
-		bool _useLoadRegion;
-		int _pageWidth;
-		int _pageHeight;
-		ContentAtlasMap AtlasMap;
-#ifdef __ANDROID__
-		static const int ImageBufferSize = 2048 * 2048; //(2048x2048x32bpp)
-		static const int ImageMaxHeight = 2048;
-		static const int ImageMaxWidth = 2048;
-#else
-		static const int ImageBufferSize = 4*2048 * 2048; //(4096x4096x32bpp)
-		static const int ImageMaxHeight = 2*2048;
-		static const int ImageMaxWidth = 2*2048;
-#endif
-	};	
+		IAtlasOnlinePacker* _packerRGBA;
+		static bool ImageSizeLoaded;
+		static int ImageBufferSize;
+		static int ImageMaxHeight;
+		static int ImageMaxWidth;
+	};		
 }
 
 #endif /*CONTENT_MANAGER_H*/

@@ -47,7 +47,7 @@ namespace resources
 
 	bool AtlasOnlinePacker::insert(const AtlasEntryInput& input, AtlasEntry& output)
 	{
-		if (input.image->Width > _w / 4 || input.image->Height > _h / 4)
+		if (input.image->Width >= _w / 2 || input.image->Height >= _h / 2)
 		{
 			return false;
 		}
@@ -56,12 +56,12 @@ namespace resources
 		{
 			_actualPage = cretateNextPage();
 		}
-		rbp::Rect r = _pack.Insert(input.image->Width, input.image->Height, true, rbp::GuillotineBinPack::RectBestAreaFit, rbp::GuillotineBinPack::SplitMinimizeArea);
+		rbp::Rect r = _pack.Insert(input.image->Width / 2, input.image->Height / 2, true, rbp::GuillotineBinPack::RectBestAreaFit, rbp::GuillotineBinPack::SplitMinimizeArea);
 		if (r.width == 0 || r.height == 0)
 		{
 			applyCurrentPage();
 			_actualPage = cretateNextPage();
-			r = _pack.Insert(input.image->Width, input.image->Height, true, rbp::GuillotineBinPack::RectBestAreaFit, rbp::GuillotineBinPack::SplitMinimizeArea);
+			r = _pack.Insert(input.image->Width / 2, input.image->Height / 2, true, rbp::GuillotineBinPack::RectBestAreaFit, rbp::GuillotineBinPack::SplitMinimizeArea);
 		}
 		if (r.width == 0 || r.height == 0)
 			return false;
@@ -106,11 +106,11 @@ namespace resources
 			{
 				_pageData->Pixels[rowDst] = image->Pixels[rowSrc];
 				rowDst++;
-				rowSrc++;
+				rowSrc+=2;
 			}
 
 			rowDstBase += _w;
-			rowSrcBase += r.width;
+			rowSrcBase += image->Width * 2;
 		}
 	}
 
@@ -119,7 +119,6 @@ namespace resources
 		if (_actualPage == nullptr)
 			return;
 		_actualPage->setData(_pageData);
-		std::memset(_pageData->Pixels, 0, _pageData->Height*_pageData->Width * 4);
 	}
 
 	void readData(png_structp pngPtr, png_bytep data, png_size_t length)

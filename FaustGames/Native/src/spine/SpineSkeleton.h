@@ -5,12 +5,21 @@
 
 namespace spine
 {
+	class SpineSkeletonSlot
+	{
+	public:
+		SpineSkeletonSlot(void *slot);
+		void setRgb(uint color);
+		const char* name();
+	private:
+		void *_spSlot;
+	};
 	class SpineSkeletonBone : public llge::ISpineSkeletonBone
 	{
 	public:
 		llge::BoneFx fx;
-		int boneTintIndex;
 		SpineSkeletonBone(void *bone);
+		const char* name();
 		virtual IntPtr API_CALL getName() OVERRIDE;
 		virtual float API_CALL getX() OVERRIDE;
 		virtual float API_CALL getY() OVERRIDE;
@@ -45,7 +54,7 @@ namespace spine
 		void transform(float *x, float *y);
 		void API_CALL updateWorldTransform();
 		void *getSkeleton() const;
-		void findBone(const char *boneName);
+		SpineSkeletonBone* findBone(const char *boneName);
 		virtual IntPtr API_CALL getNativeInstance();
 		virtual void API_CALL applySkin(IntPtr spineSkinNativeInstance);
 		virtual void API_CALL dispose();
@@ -59,6 +68,8 @@ namespace spine
 		virtual float API_CALL getMaxY();
 		virtual float API_CALL getZ();
 		virtual void API_CALL setHsv(int tintIndex, float h, float s, float v);
+		SpineSkeletonSlot* findSlot(const char* slotName);
+		void setSlotRgb(const char* name, int color);
 
 
 	protected:
@@ -71,7 +82,8 @@ namespace spine
 		static ushort _quadIndices[6];
 		static float _uvBuffer[65536];
 		llge::LightingConfig _lightingConfig; // todo: remove
-		std::vector<SpineSkeletonBone *> _bones;		
+		std::vector<SpineSkeletonSlot *> _slots;
+		std::vector<SpineSkeletonBone *> _bones;
 		std::vector<SpineSkeletonBounds> _bounds;
 		static const int tintColorsCount = 16;
 		uint _tintColors[tintColorsCount];

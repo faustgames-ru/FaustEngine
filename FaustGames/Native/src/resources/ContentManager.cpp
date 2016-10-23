@@ -139,7 +139,7 @@ namespace resources
 
 	ContentManager::ContentManager() : _image(0), _isOpened(false)
 	{
-		_packerRGBA = new AtlasOnlinePacker();
+		//_packerRGBA = new AtlasOnlinePacker();
 	}
 
 	void ContentManager::cleanup()
@@ -391,6 +391,7 @@ namespace resources
 		{
 			len += count;
 		}
+		string[len] = 0;
 		ContentProvider::closeContent();
 		return string;
 	}
@@ -412,7 +413,7 @@ namespace resources
 		m_RowPtrs = 0;
 		_image = 0;
 		_isOpened = false;
-		_packerRGBA->applyCurrentPage();
+		//_packerRGBA->applyCurrentPage();
 	}
 
 	llge::IContentAtlasMap * API_CALL ContentManager::getContentAtlasMap()
@@ -551,6 +552,8 @@ namespace resources
 
 	bool ContentManager::tryPlaceIntoAtlas(graphics::Image2dData* image, graphics::TextureImage2d* texture)
 	{
+		return false;
+		/*
 		IAtlasOnlinePacker* packer = nullptr;
 		switch (image->Format)
 		{
@@ -572,6 +575,7 @@ namespace resources
 			}
 		}
 		return false;
+		*/
 	}
 
 	void API_CALL ContentManager::finishLoad()

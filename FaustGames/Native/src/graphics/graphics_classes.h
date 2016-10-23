@@ -102,8 +102,8 @@ namespace graphics
 	{
 	public:
 		static const int Samplers2DStart = 1;
-		static const int Samplers2DLimit = 5;
-		static const int SamplersCubeStart = 6;
+		static const int Samplers2DLimit = 6;
+		static const int SamplersCubeStart = 7;
 		static const int SamplersCubeLimit = 2;
 		static const int StaticBatchBufferSize = 32768;
 		static const int StaticBatchBlocksLimit = 2;

@@ -317,9 +317,6 @@
     <ClInclude Include="..\src\core\BasicTest.h">
       <Filter>engine\core</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\tests\TestStandartAllocations.h">
-      <Filter>tests</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\tests\tests_platform.h">
       <Filter>tests</Filter>
     </ClInclude>
@@ -863,6 +860,15 @@
     <ClInclude Include="..\src_rectanglebinpack\SkylineBinPack.h">
       <Filter>rectanglebinpack</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\tests\TestGame.h">
+      <Filter>tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shaders\texture_color_vert_paint.h">
+      <Filter>engine\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shaders\texture_color_frag_paint.h">
+      <Filter>engine\shaders</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\CommonSources\gen\llgePInvoke.cpp">
@@ -983,9 +989,6 @@
     </ClCompile>
     <ClCompile Include="..\src\core\BasicTest.cpp">
       <Filter>engine\core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\tests\TestStandartAllocations.cpp">
-      <Filter>tests</Filter>
     </ClCompile>
     <ClCompile Include="..\src\core\SystemAllocationPolicy.cpp">
       <Filter>engine\core</Filter>
@@ -1535,6 +1538,9 @@
     </ClCompile>
     <ClCompile Include="..\src_rectanglebinpack\SkylineBinPack.cpp">
       <Filter>rectanglebinpack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\tests\TestGame.cpp">
+      <Filter>tests</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

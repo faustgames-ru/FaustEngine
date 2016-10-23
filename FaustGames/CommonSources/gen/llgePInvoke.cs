@@ -44,6 +44,7 @@ namespace llge
 		EffectBloomFilter = 0x6,
 		EffectTextureColorHighlight = 0x7,
 		EffectTextureAlphamaskColor = 0x8,
+		EffectTexturePaint = 0x9,
 	}
 	
 	public enum GraphicsVertexFormats
@@ -3000,8 +3001,76 @@ namespace llge
 		static extern private void llge_TerrainFactory_dispose (IntPtr classInstance);
 	}
 	
+	public class TestGame
+	{
+		public IntPtr ClassInstance;
+		public void SetRootPath (String rootPath)
+		{
+			llge_TestGame_setRootPath(ClassInstance, rootPath);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_TestGame_setRootPath (IntPtr classInstance, String rootPath);
+		public void UpdateColors (IntPtr colors)
+		{
+			llge_TestGame_updateColors(ClassInstance, colors);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_TestGame_updateColors (IntPtr classInstance, IntPtr colors);
+		public void UpdateMouse (int rawX, int rawY, int windowX, int windowY, uint buttons)
+		{
+			llge_TestGame_updateMouse(ClassInstance, rawX, rawY, windowX, windowY, buttons);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_TestGame_updateMouse (IntPtr classInstance, int rawX, int rawY, int windowX, int windowY, uint buttons);
+		public void UpdateEnvironment (int w, int h, float ellapsedTime)
+		{
+			llge_TestGame_updateEnvironment(ClassInstance, w, h, ellapsedTime);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_TestGame_updateEnvironment (IntPtr classInstance, int w, int h, float ellapsedTime);
+		public void Load ()
+		{
+			llge_TestGame_load(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_TestGame_load (IntPtr classInstance);
+		public void Update ()
+		{
+			llge_TestGame_update(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_TestGame_update (IntPtr classInstance);
+		public void Render ()
+		{
+			llge_TestGame_render(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_TestGame_render (IntPtr classInstance);
+		public void Release ()
+		{
+			llge_TestGame_release(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_TestGame_release (IntPtr classInstance);
+	}
+	
 	public class llge
 	{
+		static public TestGame CreateTestGame ()
+		{
+			return new TestGame{ ClassInstance = createTestGame() };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr createTestGame ();
 		static public Batch2d CreateBatch2d ()
 		{
 			return new Batch2d{ ClassInstance = createBatch2d() };

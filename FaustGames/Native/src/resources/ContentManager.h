@@ -76,7 +76,7 @@ namespace resources
 		std::vector<graphics::TextureImage2d *> _disposeEntries;
 		graphics::Image2dData *_image;
 		bool _isOpened;
-		IAtlasOnlinePacker* _packerRGBA;
+		//IAtlasOnlinePacker* _packerRGBA;
 		static bool ImageSizeLoaded;
 		static int ImageBufferSize;
 		static int ImageMaxHeight;

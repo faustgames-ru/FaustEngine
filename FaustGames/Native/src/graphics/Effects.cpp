@@ -16,6 +16,7 @@ namespace graphics
 	EffectTextureLightMapColor Effects::_textureLightmapColor;
 	EffectTextureBlurColor Effects::_textureBlurColor;
 	EffectTextureBlurmap Effects::_textureBlurmap;
+	EffectTexturePaint Effects::_texturePaint;
 
 	//EffectWater Effects::_water;
 	EffectRenderDepth Effects::_renderDepth;
@@ -42,7 +43,7 @@ namespace graphics
 		_textureLightmapColor.create();
 		_textureBlurColor.create();
 		_textureBlurmap.create();
-
+		_texturePaint.create();
 		//_water.create();
 		_renderDepth.create();
 		_postProcessToneMapping.create();
@@ -66,6 +67,7 @@ namespace graphics
 		_textureLightmapColor.getEffect()->cleanup();
 		_textureBlurColor.getEffect()->cleanup();
 		_textureBlurmap.getEffect()->cleanup();
+		_texturePaint.getEffect()->cleanup();
 		//_water.getEffect()->cleanup();
 		_renderDepth.getEffect()->cleanup();
 		_postProcessBloomFilter.getEffect()->cleanup();
@@ -123,6 +125,11 @@ namespace graphics
 	EffectTextureBlurmap* Effects::textureBlurmap()
 	{
 		return &_textureBlurmap;
+	}
+
+	EffectTexturePaint* Effects::texturePaint()
+	{
+		return &_texturePaint;
 	}
 
 	/*

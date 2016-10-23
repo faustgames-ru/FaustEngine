@@ -43,6 +43,7 @@ namespace spine
 	public:
 		void *getSkeletonData();
 		SpineSkeletonAnimation* getAnimation(int i);
+		SpineSkeletonAnimation* findAnimation(const char* name);
 		int getAnimationsCount();
 		SpineEvent* getEvent(int i);
 		int getEventsCount();

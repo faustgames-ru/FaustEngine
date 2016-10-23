@@ -22,6 +22,11 @@ namespace spine
 		return _spAnimation;
 	}
 
+	std::string SpineSkeletonAnimation::name() const
+	{
+		return static_cast<spAnimation *>(_spAnimation)->name;
+	}
+
 	IntPtr API_CALL SpineSkeletonAnimation::getNativeInstance()
 	{
 		return this;

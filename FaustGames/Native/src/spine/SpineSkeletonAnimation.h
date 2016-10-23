@@ -10,6 +10,7 @@ namespace spine
 	public:
 		SpineSkeletonAnimation(void *animation);
 		void *getAnimation();
+		std::string name() const;
 		virtual IntPtr API_CALL getNativeInstance();
 		virtual IntPtr API_CALL getName();
 		virtual float API_CALL getDuration();

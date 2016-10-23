@@ -4,6 +4,8 @@ bin2c -o solid_color_frag.h shader_solid_color.frag
 bin2c -o solid_color_vert.h shader_solid_color.vert
 bin2c -o texture_color_frag.h shader_texture_color.frag
 bin2c -o texture_color_vert.h shader_texture_color.vert
+bin2c -o texture_color_frag_paint.h shader_texture_color_paint.frag
+bin2c -o texture_color_vert_paint.h shader_texture_color_paint.vert
 bin2c -o texture_color_fog_frag.h shader_texture_color_fog.frag
 bin2c -o texture_color_fog_vert.h shader_texture_color_fog.vert
 bin2c -o texture_color_hsv_fog_frag.h shader_texture_color_hsv_fog.frag

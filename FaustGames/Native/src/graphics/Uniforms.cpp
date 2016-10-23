@@ -12,7 +12,8 @@ namespace graphics
 	UniformInfo Uniforms::_time("time", UniformType::Float);	
 	UniformInfo Uniforms::_pixelSize("pixelSize", UniformType::Vector2);
 	UniformInfo Uniforms::_highlightColor("highlightColor", UniformType::Vector3);
-	
+	UniformInfo Uniforms::_paintmask("paintmask", UniformType::Sampler2D);
+
 	UniformInfo Uniforms::_fogStart("fogStart", UniformType::Float);
 	UniformInfo Uniforms::_fogDensity("fogDensity", UniformType::Float);
 	UniformInfo Uniforms::_fogScale("fogScale", UniformType::Float);
@@ -88,6 +89,11 @@ namespace graphics
 		return &_fogScale;
 	}
 
+	UniformInfo* Uniforms::paintmask()
+	{
+		return &_paintmask;
+	}
+
 	UniformValueVector3 UniformValues::_cameraPosition;
 	UniformValueMatrix UniformValues::_projection;
 	UniformValueTexture UniformValues::_texture;
@@ -102,6 +108,8 @@ namespace graphics
 	UniformValueFloat UniformValues::_fogDensity;
 	UniformValueFloat UniformValues::_fogScale;
 	UniformValueVector3 UniformValues::_fogColor;
+	UniformValueTexture UniformValues::_paintmask;
+
 
 
 	void UniformValues::initSamplers()
@@ -111,7 +119,8 @@ namespace graphics
 		initSampler(&_environment, 2);
 		initSampler(&_depthmap, 3);
 		initSampler(&_normalmap, 4);
-		for (int i = 5; i < GraphicsConstants::Samplers2DLimit; i++)
+		initSampler(&_paintmask, 1);
+		for (int i = 0; i < GraphicsConstants::Samplers2DLimit; i++)
 		{
 			_samplers[i] = 0;
 		}

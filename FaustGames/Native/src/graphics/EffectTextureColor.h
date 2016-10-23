@@ -67,6 +67,17 @@ namespace graphics
 	private:
 	};
 
+	class EffectTexturePaint : public EffectBase
+	{
+	public:
+		EffectTexturePaint();
+		~EffectTexturePaint();
+		void create();
+		virtual void configApply(const void *config) OVERRIDE;
+	protected:
+	private:
+	};
+
 }
 
 #endif /*EFFECT_TEXTURE_COLOR_H*/

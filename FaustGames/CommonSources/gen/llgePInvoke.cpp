@@ -1821,5 +1821,45 @@ namespace llge
 		classInstance->dispose();
 	}
 	
+	extern "C" DLLEXPORT void API_CALL llge_TestGame_setRootPath (ITestGame * classInstance, String rootPath)
+	{
+		classInstance->setRootPath(rootPath);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_TestGame_updateColors (ITestGame * classInstance, IntPtr colors)
+	{
+		classInstance->updateColors(colors);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_TestGame_updateMouse (ITestGame * classInstance, int rawX, int rawY, int windowX, int windowY, uint buttons)
+	{
+		classInstance->updateMouse(rawX, rawY, windowX, windowY, buttons);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_TestGame_updateEnvironment (ITestGame * classInstance, int w, int h, float ellapsedTime)
+	{
+		classInstance->updateEnvironment(w, h, ellapsedTime);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_TestGame_load (ITestGame * classInstance)
+	{
+		classInstance->load();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_TestGame_update (ITestGame * classInstance)
+	{
+		classInstance->update();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_TestGame_render (ITestGame * classInstance)
+	{
+		classInstance->render();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_TestGame_release (ITestGame * classInstance)
+	{
+		classInstance->release();
+	}
+	
 }
 

@@ -30,6 +30,7 @@ namespace graphics
 			_effects[llge::EffectRenderDepth] = Effects::renderDepth();
 			_effects[llge::EffectSolidColor] = Effects::solidColor();
 			_effects[llge::EffectBloomFilter] = Effects::postProcessBloomFilter();
+			_effects[llge::EffectTexturePaint] = Effects::texturePaint();			
 			
 
 			_formats[llge::FormatPositionTextureColor] = VertexFormats::positionTextureColor();

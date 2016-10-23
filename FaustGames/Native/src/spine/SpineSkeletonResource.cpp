@@ -264,4 +264,14 @@ namespace spine
 	{
 		delete this;
 	}
+
+	SpineSkeletonAnimation* SpineSkeletonResource::findAnimation(const char* name)
+	{
+		for (uint i = 0; i < _animations.size(); i++)
+		{
+			if (_animations[i]->name() == name)
+				return _animations[i];
+		}
+		return nullptr;
+	}
 }

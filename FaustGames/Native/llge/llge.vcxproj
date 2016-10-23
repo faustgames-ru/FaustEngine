@@ -186,11 +186,13 @@
     <ClInclude Include="..\shaders\texture_color_fog_frag.h" />
     <ClInclude Include="..\shaders\texture_color_fog_vert.h" />
     <ClInclude Include="..\shaders\texture_color_frag.h" />
+    <ClInclude Include="..\shaders\texture_color_frag_paint.h" />
     <ClInclude Include="..\shaders\texture_color_highlight_frag.h" />
     <ClInclude Include="..\shaders\texture_color_highlight_vert.h" />
     <ClInclude Include="..\shaders\texture_color_hsv_fog_frag.h" />
     <ClInclude Include="..\shaders\texture_color_hsv_fog_vert.h" />
     <ClInclude Include="..\shaders\texture_color_vert.h" />
+    <ClInclude Include="..\shaders\texture_color_vert_paint.h" />
     <ClInclude Include="..\shaders\texture_lightmap_color_frag.h" />
     <ClInclude Include="..\shaders\texture_lightmap_color_vert.h" />
     <ClInclude Include="..\shaders\water_frag.h" />
@@ -341,7 +343,7 @@
     <ClInclude Include="..\src\terrain\terrain_classes.h" />
     <ClInclude Include="..\src\terrain\terrain_platform.h" />
     <ClInclude Include="..\src\terrain\terrain_references.h" />
-    <ClInclude Include="..\src\tests\TestStandartAllocations.h" />
+    <ClInclude Include="..\src\tests\TestGame.h" />
     <ClInclude Include="..\src\tests\tests_classes.h" />
     <ClInclude Include="..\src\tests\tests_platform.h" />
     <ClInclude Include="..\src\tests\tests_references.h" />
@@ -578,7 +580,7 @@
     <ClCompile Include="..\src\spine\spine.cpp" />
     <ClCompile Include="..\src\terrain\StripeBuilder.cpp" />
     <ClCompile Include="..\src\terrain\TerrainFactory.cpp" />
-    <ClCompile Include="..\src\tests\TestStandartAllocations.cpp" />
+    <ClCompile Include="..\src\tests\TestGame.cpp" />
     <ClCompile Include="..\src_box2d\Box2D\Collision\b2BroadPhase.cpp" />
     <ClCompile Include="..\src_box2d\Box2D\Collision\b2CollideCircle.cpp" />
     <ClCompile Include="..\src_box2d\Box2D\Collision\b2CollideEdge.cpp" />

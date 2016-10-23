@@ -34,7 +34,7 @@ typedef void * IntPtr;
 namespace llge
 {
 	/// graphics enums
-
+		
 	enum TextureFilterMode
 	{
 		Nearest = 0x0,
@@ -63,6 +63,7 @@ namespace llge
 		EffectBloomFilter = 0x6,
 		EffectTextureColorHighlight = 0x7,
 		EffectTextureAlphamaskColor = 0x8,
+		EffectTexturePaint = 0x9,
 	};
 
 	enum GraphicsVertexFormats
@@ -858,7 +859,22 @@ namespace llge
 		virtual ITerrainStripeBuilder * API_CALL createStripeBuilder() = 0;
 		virtual void API_CALL dispose() = 0;
 	};
-		
+	
+	class ITestGame : IBaseObject
+	{
+	public:
+		virtual void API_CALL setRootPath(String rootPath) = 0;
+		virtual void API_CALL updateColors(IntPtr colors) = 0;
+		virtual void API_CALL updateMouse(int rawX, int rawY, int windowX, int windowY, uint buttons) = 0;
+		virtual void API_CALL updateEnvironment(int w, int h, float ellapsedTime) = 0;
+		virtual void API_CALL load() = 0;
+		virtual void API_CALL update() = 0;
+		virtual void API_CALL render() = 0;
+		virtual void API_CALL release() = 0;
+	};
+
+	extern "C" DLLEXPORT ITestGame* API_CALL createTestGame();
+
 	extern "C" DLLEXPORT IBatch2d * API_CALL createBatch2d();
     
 	extern "C" DLLEXPORT ITexture * API_CALL createTextureByID(uint id);

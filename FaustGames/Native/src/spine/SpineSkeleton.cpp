@@ -69,11 +69,33 @@ namespace spine
 		}
 	}
 
+	SpineSkeletonSlot::SpineSkeletonSlot(void* slot)
+	{
+		_spSlot = slot;
+	}
+
+	void SpineSkeletonSlot::setRgb(uint color)
+	{
+		spSlot* slot = static_cast<spSlot*>(_spSlot);
+		slot->r = graphics::Color::getRf(color);
+		slot->g = graphics::Color::getGf(color);
+		slot->b = graphics::Color::getBf(color);
+	}
+
+	const char* SpineSkeletonSlot::name()
+	{
+		return static_cast<spSlot *>(_spSlot)->data->name;
+	}
+
 	SpineSkeletonBone::SpineSkeletonBone(void* bone)
 	{
 		fx = llge::BoneFxNone;
 		_spBone = bone;
-		boneTintIndex = -1;
+	}
+
+	const char* SpineSkeletonBone::name()
+	{
+		return static_cast<spBone *>(_spBone)->data->name;
 	}
 
 	IntPtr SpineSkeletonBone::getName()
@@ -124,15 +146,11 @@ namespace spine
 		{
 			SpineSkeletonBone* bone = new SpineSkeletonBone(s->bones[i]);
 			_bones.push_back(bone);
-			std::string boneName = s->bones[i]->data->name;
-			for (int j = 0; j < tintColorsCount; j++)
-			{
-				if (boneName.find(_tintBones[j]) != std::string::npos)
-				{
-					bone->boneTintIndex = j;
-					break;
-				}
-			}
+		}
+		for (i = 0; i < s->slotsCount; ++i)
+		{
+			SpineSkeletonSlot* slot = new SpineSkeletonSlot(s->slots[i]);
+			_slots.push_back(slot);
 		}
 	}
 
@@ -158,6 +176,8 @@ namespace spine
 		for (int i = 0; i < s->slotsCount; i++)
 		{
 			spSlot* slot = s->drawOrder[i];
+			if (!slot->data) 
+				continue;
 			if (!slot->attachment) continue;
 			premul = true;
 			_mesh.Color = graphics::Color::fromRgba(slot->r*s->r, slot->g*s->g, slot->b*s->b, slot->a*s->a);
@@ -167,13 +187,7 @@ namespace spine
 
 			SpineSkeletonBone* bone = _bones[slot->bone->data->index];
 
-			if (bone->boneTintIndex >= 0)
-			{
-				_mesh.Color = _tintColors[bone->boneTintIndex] | _mesh.Color & 0xff000000;
-				_mesh.State.Effect = effectInstanceHsv;
-				premul = false;
-			}
-			else if (bone->fx == llge::BoneFx::BoneFxIgnoreLight)
+			if (bone->fx == llge::BoneFx::BoneFxIgnoreLight)
 			{
 				_mesh.State.Effect = graphics::Effects::textureColor();
 				_lightingConfig.lightmap = lightmap;
@@ -585,13 +599,19 @@ namespace spine
 		return _spSkeleton;
 	}
 
-	/*
-	void SpineSkeleton::findBone(const char* boneName)
+	
+	SpineSkeletonBone* SpineSkeleton::findBone(const char* boneName)
 	{
-		spBone* bone = spSkeleton_findBone((spSkeleton *)_spSkeleton, boneName);
-		bone->
+		for (uint i = 0; i < _bones.size(); i++)
+		{
+			if (std::string(_bones[i]->name()) == boneName)
+			{
+				return _bones[i];
+			}
+		}
+		return nullptr;
 	}
-	*/
+	
 	IntPtr API_CALL SpineSkeleton::getNativeInstance()
 	{
 		return this;
@@ -658,24 +678,24 @@ namespace spine
 		_tintColors[tintIndex] = graphics::Color::fromRgba(h, s, v, 1.0f);
 	}
 
-	std::string SpineSkeleton::_tintBones[tintColorsCount] =
+	SpineSkeletonSlot* SpineSkeleton::findSlot(const char* slotName)
 	{
-		"_tint00",
-		"_tint01",
-		"_tint02",
-		"_tint03",
-		"_tint04",
-		"_tint05",
-		"_tint06",
-		"_tint07",
-		"_tint08",
-		"_tint09",
-		"_tint10",
-		"_tint11",
-		"_tint12",
-		"_tint13",
-		"_tint14",
-		"_tint15"
-	};
+		for (uint i = 0; i < _slots.size(); i++)
+		{
+			if (std::string(_slots[i]->name()) == slotName)
+			{
+				return _slots[i];
+			}
+		}
+		return nullptr;
+	}
 
+	void SpineSkeleton::setSlotRgb(const char* name, int color)
+	{
+		spine::SpineSkeletonSlot* slot = findSlot(name);
+		if (name != nullptr)
+		{
+			slot->setRgb(color);
+		}
+	}
 }

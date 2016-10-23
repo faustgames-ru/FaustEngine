@@ -469,7 +469,7 @@ namespace drawing
 		{			
 			_graphicsDevice->clear();
 		}
-
+		
 		if (_buffer->Transforms.size() > 0)
 		{
 			glDepthFunc(GL_LESS);

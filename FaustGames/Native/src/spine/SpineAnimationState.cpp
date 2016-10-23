@@ -45,7 +45,7 @@ namespace spine
 		_spAnimationState = spAnimationState_create(spData);
 		static_cast<spAnimationState*>(_spAnimationState)->listener = animationStateListener;
 		static_cast<spAnimationState*>(_spAnimationState)->rendererObject = this;
-		_eventsBuffer = new SpineEventsBuffer(spData->skeletonData->eventsCount+3);
+		_eventsBuffer = new SpineEventsBuffer((spData->skeletonData->eventsCount+3) * 4);
 	}
 	
 	SpineAnimationState::~SpineAnimationState()
@@ -137,7 +137,6 @@ namespace spine
 
 	void API_CALL SpineAnimationState::apply(llge::ISpineSkeleton *skeleton)
 	{
-		_eventsBuffer->EventsIndicesCount = 0;
 		apply(static_cast<SpineSkeleton *>(skeleton->getNativeInstance()));
 		static_cast<SpineSkeleton *>(skeleton->getNativeInstance())->updateAabb();
 	}
@@ -181,6 +180,7 @@ namespace spine
 
 	void SpineAnimationState::apply(SpineSkeleton* skeleton)
 	{
+		_eventsBuffer->EventsIndicesCount = 0;
 		spAnimationState_apply(static_cast<spAnimationState*>(_spAnimationState), static_cast<spSkeleton*>(skeleton->getSkeleton()));
 	}
 

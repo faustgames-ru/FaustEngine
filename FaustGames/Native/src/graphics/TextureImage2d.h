@@ -7,13 +7,22 @@
 
 namespace graphics
 {
+	class TexturesDecompressorBuffer
+	{
+	public:
+		TexturesDecompressorBuffer();
+		uint* pixelsBuffer;
+		int size;
+
+		void realloc(int size);
+	};
 
 	class TextureImage2d : public Texture, public llge::ITextureImage2d
 	{
 	public:
 		static int Size;
+		static TexturesDecompressorBuffer pixelsBuffer;
 		static TextureImage2d * empty(){ return &_empty; }
-		
 		TextureImage2d(bool generateMipmaps, bool useFilter);
 	
 		void setData(const Image2dData *data);
@@ -41,6 +50,8 @@ namespace graphics
 		void setupConfig();
 		void traceTriangles(int width, int height, Image2dFormat::e format, void *pixels);
 		static GLenum getFormat(Image2dFormat::e format);
+		static float getSize(int size, Image2dFormat::e format);
+		static byte* getPixels(Image2dFormat::e format, uint *pixels);
 		std::vector<core::Vector2> _tracedVertices;
 		std::vector<ushort> _tracedIndices;
 		bool _createMipmaps;
@@ -48,7 +59,6 @@ namespace graphics
 		bool _filter;
 		int _size;
     };
-
 
 	class TextureAtlasPage : public TextureImage2d
 	{

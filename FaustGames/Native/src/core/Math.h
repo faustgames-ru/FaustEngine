@@ -37,6 +37,7 @@ namespace core
 		static float exp(float v);
 		static float fmod(float x, float d);
 		static float clamp(float x, float from, float to);
+		static int pot(int value);
 	};
 }
 

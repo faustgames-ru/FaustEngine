@@ -6,10 +6,6 @@ namespace drawing
 	{
 		_verticesCount = 0;
 		_indicesCount = 0;
-		_x = 0.0f;
-		_y = 0.0f;
-		_w = 1.0f;
-		_h = 1.0f;
 		_vertices = static_cast<TVertex *>(malloc(VerticesLimit * sizeof(TVertex)));
 		_indices = static_cast<ushort *>(malloc(IndicesLimit * sizeof(unsigned short)));
 	}
@@ -47,8 +43,10 @@ namespace drawing
 			target->y = *source; ++source;
 			target->z = z;
 			target->color = graphics::Color::premul(color, colorScale, additive);
-			target->u = _x + *uvsource *_w; ++uvsource;
-			target->v = _y + *uvsource *_h; ++uvsource;
+			float u = *uvsource; ++uvsource;
+			float v = *uvsource; ++uvsource;
+			target->u = textureTransform.transformU(u, v);
+			target->v = textureTransform.transformV(u, v);
 		}
 
 		_verticesCount += verticesCount;
@@ -71,8 +69,10 @@ namespace drawing
 			target->y = *source; ++source;
 			target->z = z;
 			target->color = color;
-			target->u = _x + *uvsource *_w; ++uvsource;
-			target->v = _y + *uvsource *_h; ++uvsource;
+			float u = *uvsource; ++uvsource;
+			float v = *uvsource; ++uvsource;
+			target->u = textureTransform.transformU(u, v);
+			target->v = textureTransform.transformV(u, v);
 		}
 
 		_verticesCount += verticesCount;
@@ -96,8 +96,11 @@ namespace drawing
 			target->y = *source; ++source;
 			target->z = z;
 			target->color = graphics::Color::premul(color, colorScale, additive);
-			target->u = _x + *uvsource *_w; ++uvsource;
-			target->v = _y + *uvsource *_h; ++uvsource;
+			float u = *uvsource; ++uvsource;
+			float v = *uvsource; ++uvsource;
+			target->u = textureTransform.transformU(u, v);
+			target->v = textureTransform.transformV(u, v);
+
 			//uv = core::Matrix::transform(viewTransform, core::Vector3(target->x, target->y, target->z));
 			//uv = (uv + core::Vector3(1.0f, 1.0f, 0.0f))*0.5f;
 			//target->u = uv.getX();
@@ -123,8 +126,8 @@ namespace drawing
 			target->x = source->x;
 			target->y = source->y;
 			target->z = source->z;
-			target->u = _x + source->u *_w;
-			target->v = _y + source->v *_h;
+			target->u = textureTransform.transformU(source->u, source->v);
+			target->v = textureTransform.transformV(source->u, source->v);
 			target->color = graphics::Color::premul(source->color, colorScale, additive);
 		}
 
@@ -228,10 +231,7 @@ namespace drawing
 		_buffer = new RenderBuffer();
 		//_localBuffer = static_cast<TVertex *>(malloc(graphics::GraphicsConstants::LocalBufferSize * sizeof(TVertex)));
 		_graphicsDevice = &graphics::GraphicsDevice::Default;
-		_x = 0;
-		_y = 0;
-		_w = 1;
-		_h = 1;
+		_textureTransform = graphics::TextureTransform();
 		_zButcher = new ZBatcher();
 	}
 	
@@ -314,10 +314,7 @@ namespace drawing
 
 		//_textureId = textureId;
 		_currentEntry.IndicesCount += indicesCount;
-		currentBuffer->_x = _x;
-		currentBuffer->_y = _y;
-		currentBuffer->_w = _w;
-		currentBuffer->_h = _h;
+		currentBuffer->textureTransform = _textureTransform;
 		currentBuffer->addMesh(vertices, verticesCount, indices, indicesCount, blend == graphics::BlendState::Additive, colorScale);
 	}
 
@@ -358,10 +355,7 @@ namespace drawing
 		}
 
 		_currentEntry.IndicesCount += indicesCount;
-		currentBuffer->_x = _x;
-		currentBuffer->_y = _y;
-		currentBuffer->_w = _w;
-		currentBuffer->_h = _h;
+		currentBuffer->textureTransform = _textureTransform;
 		currentBuffer->addMesh(vertices, verticesCount, indices, indicesCount, blend == graphics::BlendState::Additive, colorScale);
 	}
 
@@ -414,10 +408,7 @@ namespace drawing
 		}
 
 		_currentEntry.IndicesCount += mesh.IndicesCount;
-		currentBuffer->_x = _x;
-		currentBuffer->_y = _y;
-		currentBuffer->_w = _w;
-		currentBuffer->_h = _h;
+		currentBuffer->textureTransform = _textureTransform;
 		if (pemul)
 		{
 			currentBuffer->addMesh(mesh.Color, mesh.Z, mesh.Vertices, mesh.Uvs, mesh.VerticesCount, mesh.Indices, mesh.IndicesCount, mesh.State.Blend == graphics::BlendState::Additive, colorScale);
@@ -431,18 +422,12 @@ namespace drawing
 	void Batcher::setupUVTransform(llge::ITexture* texture)
 	{
 		graphics::Texture * textureInstance = static_cast<graphics::Texture *>(texture->getTextureInstance());
-		_x = textureInstance->X;
-		_y = textureInstance->Y;
-		_w = textureInstance->W;
-		_h = textureInstance->H;
+		_textureTransform = textureInstance->transform;
 	}
 
 	void Batcher::cleanupUVTransform()
 	{
-		_x = 0.0f;
-		_y = 0.0f;
-		_w = 1.0f;
-		_h = 1.0f;
+		_textureTransform = graphics::TextureTransform();
 	}
 
 	void Batcher::executeRenderCommands(bool usePostProcess)
@@ -595,11 +580,7 @@ namespace drawing
 		{
 			graphics::Texture * textureInstance = static_cast<graphics::Texture *>(texture->getTextureInstance());
 
-			_zButcher->_x = textureInstance->X;
-			_zButcher->_y = textureInstance->Y;
-			_zButcher->_w = textureInstance->W;
-			_zButcher->_h = textureInstance->H;
-
+			_zButcher->textureTransform = textureInstance->transform;
 			_zButcher->drawMesh(z, texture, lightmapId, static_cast<TVertex *>(vertices), verticesCount, static_cast<ushort *>(indices), indicesCount, colorScale);
 		}
 		else
@@ -662,10 +643,7 @@ namespace drawing
 	void ZBlock::addMesh(llge::ITexture* texture, uint lightmapId, TVertex* vertices, int verticesCount, ushort* indices, int indicesCount, byte colorScale)
 	{
 		ZBatchEntry e;
-		Buffer._x = _x;
-		Buffer._y = _y;
-		Buffer._w = _w;
-		Buffer._h = _h;
+		Buffer.textureTransform = textureTransform;
 		Buffer.add(vertices, verticesCount, indices, indicesCount, colorScale, e);
 		llge::LightingConfig* config = static_cast<llge::LightingConfig *>(static_cast<void *>(&e.Config));
 		config->lightmap = lightmapId;
@@ -735,10 +713,6 @@ namespace drawing
 		_verticesIndex = 0;
 		_verticesBufferIndex = 0;
 		_indices.reserve(_blockSize);
-		_x = 0.0f;
-		_y = 0.0f;
-		_w = 1.0f;
-		_h = 1.0f;
 	}
 
 	ZBatchBuffer::~ZBatchBuffer()
@@ -775,8 +749,8 @@ namespace drawing
 			target->y = source->y;
 			target->z = source->z;
 			target->color = graphics::Color::premul(source->color, colorScale, false);
-			target->u = _x + source->u*_w;
-			target->v = _y + source->v*_h;
+			target->u = textureTransform.transformU(source->u, source->v);
+			target->v = textureTransform.transformV(source->u, source->v);
 		}
 
 		result.originVertices = _vertices[_verticesBufferIndex];
@@ -846,10 +820,7 @@ namespace drawing
 		_indicesCounter += indicesCount;
 		
 		ZBlock* block = queryBlock(z);								
-		block->_x = _x;
-		block->_y = _y;
-		block->_w = _w;
-		block->_h = _h;
+		block->textureTransform = textureTransform;
 		block->addMesh(texture, lightmapId, vertices, verticesCount, indices, indicesCount, colorScale);
 	}
 

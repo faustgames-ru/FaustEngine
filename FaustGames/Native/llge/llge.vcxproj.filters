@@ -109,6 +109,9 @@
     <Filter Include="engine\spine\runtime">
       <UniqueIdentifier>{106823d2-47e2-4009-aea8-15ca367459e3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="third_party\decompressors">
+      <UniqueIdentifier>{b069492a-b59a-4707-9d45-a9013bb07d2a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\CommonSources\include\llge.h">
@@ -316,15 +319,6 @@
     </ClInclude>
     <ClInclude Include="..\src\core\BasicTest.h">
       <Filter>engine\core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\tests\tests_platform.h">
-      <Filter>tests</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\tests\tests_classes.h">
-      <Filter>tests</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\tests\tests_references.h">
-      <Filter>tests</Filter>
     </ClInclude>
     <ClInclude Include="..\src\core\Allocator.h">
       <Filter>engine\core</Filter>
@@ -860,14 +854,17 @@
     <ClInclude Include="..\src_rectanglebinpack\SkylineBinPack.h">
       <Filter>rectanglebinpack</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\tests\TestGame.h">
-      <Filter>tests</Filter>
-    </ClInclude>
     <ClInclude Include="..\shaders\texture_color_vert_paint.h">
       <Filter>engine\shaders</Filter>
     </ClInclude>
     <ClInclude Include="..\shaders\texture_color_frag_paint.h">
       <Filter>engine\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\resources\AtlasPacker.h">
+      <Filter>engine\resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_decompressors\PVRTDecompress.h">
+      <Filter>third_party\decompressors</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1539,8 +1536,11 @@
     <ClCompile Include="..\src_rectanglebinpack\SkylineBinPack.cpp">
       <Filter>rectanglebinpack</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\tests\TestGame.cpp">
-      <Filter>tests</Filter>
+    <ClCompile Include="..\src\resources\AtlasPacker.cpp">
+      <Filter>engine\resources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_decompressors\PVRTDecompress.cpp">
+      <Filter>third_party\decompressors</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

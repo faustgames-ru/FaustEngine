@@ -69,6 +69,11 @@ namespace llge
 	{
 		Rgba = 0x0,
 		Rgb = 0x1,
+		TextureFormatPvrtc12 = 0x2,
+		TextureFormatPvrtc14 = 0x3,
+		TextureFormatEtc1 = 0x4,
+		TextureFormatAtc = 0x5,
+		TextureFormatEnumSize = 0x6,
 	}
 	
 	public enum ComponentsTypes
@@ -2043,13 +2048,13 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private void llge_ContentManager_replaceSeparator (IntPtr classInstance, bool value);
-		public int RegisterImage (string name)
+		public int RegisterImage (string name, int w, int h, TextureImage2dFormat format)
 		{
-			return llge_ContentManager_registerImage(ClassInstance, name);
+			return llge_ContentManager_registerImage(ClassInstance, name, w, h, format);
 		}
 		
 		[DllImport(Version.Dll)]
-		static extern private int llge_ContentManager_registerImage (IntPtr classInstance, string name);
+		static extern private int llge_ContentManager_registerImage (IntPtr classInstance, string name, int w, int h, TextureImage2dFormat format);
 		public void StartLoad ()
 		{
 			llge_ContentManager_startLoad(ClassInstance);
@@ -2057,6 +2062,20 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private void llge_ContentManager_startLoad (IntPtr classInstance);
+		public void StartAtlasBuild ()
+		{
+			llge_ContentManager_startAtlasBuild(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_ContentManager_startAtlasBuild (IntPtr classInstance);
+		public void FinishAtlasBuild ()
+		{
+			llge_ContentManager_finishAtlasBuild(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_ContentManager_finishAtlasBuild (IntPtr classInstance);
 		public void LoadImage (int id, TextureImage2d textureImage)
 		{
 			llge_ContentManager_loadImage(ClassInstance, id, textureImage.ClassInstance);
@@ -3064,13 +3083,6 @@ namespace llge
 	
 	public class llge
 	{
-		static public TestGame CreateTestGame ()
-		{
-			return new TestGame{ ClassInstance = createTestGame() };
-		}
-		
-		[DllImport(Version.Dll)]
-		static extern private IntPtr createTestGame ();
 		static public Batch2d CreateBatch2d ()
 		{
 			return new Batch2d{ ClassInstance = createBatch2d() };

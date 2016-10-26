@@ -46,10 +46,7 @@ namespace drawing
 	public:
 		const int VerticesLimit = 32768;
 		const int IndicesLimit = 32768;
-		float _x;
-		float _y;
-		float _w;
-		float _h;
+		graphics::TextureTransform textureTransform;
 		BatchBuffer();
 
 		~BatchBuffer();
@@ -176,10 +173,7 @@ namespace drawing
 		graphics::VertexFormat * _format;
 		graphics::RenderConverter _converter;
 		PostProcessBloom _bloom;
-		float _x;
-		float _y;
-		float _w;
-		float _h;
+		graphics::TextureTransform _textureTransform;
 		//TVertex* _localBuffer;
 
 		int _primitivesCount;
@@ -208,10 +202,7 @@ namespace drawing
 		void reset();
 		void add(TVertex *vertices, int verticesCount, ushort *indices, int indicesCount, byte colorScale, ZBatchEntry& result);
 		ushort *allIndices();
-		float _x;
-		float _y;
-		float _w;
-		float _h;
+		graphics::TextureTransform textureTransform;
 	private:
 		std::vector<TVertex*> _vertices;
 		std::vector<ushort> _indices;
@@ -229,10 +220,7 @@ namespace drawing
 		void reconstruct(int z);
 		void addMesh(llge::ITexture * texture, uint lightmapId, TVertex *vertices, int verticesCount, ushort *indices, int indicesCount, byte colorScale);
 		void applyRender(graphics::EffectBase *effect);
-		float _x;
-		float _y;
-		float _w;
-		float _h;
+		graphics::TextureTransform textureTransform;
 	private:
 	};
 
@@ -261,10 +249,7 @@ namespace drawing
 		void reset();
 		void applyRender();
 		void drawMesh(int z, llge::ITexture * texture, uint lightmapId, TVertex *vertices, int verticesCount, ushort *indices, int indicesCount, byte colorScale);
-		float _x;
-		float _y;
-		float _w;
-		float _h;
+		graphics::TextureTransform textureTransform;
 	private:
 		core::MatrixContainer _transform;
 		graphics::BlendState::e _blend;

@@ -13,12 +13,12 @@ void _spAtlasPage_createTexture(spAtlasPage* self, const char* path)
 			if (replace[i] == '/')
 				replace[i] = '_';
 		}
-		texture = resources::ContentManager::Default.addLoadTexture(replace.c_str());
+		texture = resources::ContentManager::Default.addLoadTexture(replace.c_str(), self->width, self->height, llge::Rgba);
 		resources::ContentManager::Default._loadedImages[replace] = texture;
 	}
 	else
 	{
-		texture = resources::ContentManager::Default.addLoadTexture(path);
+		texture = resources::ContentManager::Default.addLoadTexture(path, self->width, self->height, llge::Rgba);
 		resources::ContentManager::Default._loadedImages[path] = texture;
 	}
 

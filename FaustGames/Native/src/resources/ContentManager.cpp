@@ -1,12 +1,14 @@
 #include "ContentManager.h"
 #include "ContentProvider.h"
 #include "lpng/png.h"
+#include "AtlasPacker.h"
 #include "../core/HollowsAllocationPolicy.h"
 
 #include "../../src_rectanglebinpack/GuillotineBinPack.h"
 
 namespace resources
 {
+	/*
 	class AtlasPage
 	{
 	};
@@ -120,7 +122,7 @@ namespace resources
 			return;
 		_actualPage->setData(_pageData);
 	}
-
+	*/
 	void readData(png_structp pngPtr, png_bytep data, png_size_t length)
 	{
 		ContentProvider::read(data, length);
@@ -139,7 +141,11 @@ namespace resources
 
 	ContentManager::ContentManager() : _image(0), _isOpened(false)
 	{
-		//_packerRGBA = new AtlasOnlinePacker();
+		for (int i = 0; i < llge::TextureFormatEnumSize; i++)
+		{
+			_packers[i] = nullptr;
+		}
+		_isAtlasBuilderStarted = false;
 	}
 
 	void ContentManager::cleanup()
@@ -147,10 +153,16 @@ namespace resources
 		_files.clear();
 	}
 
-	unsigned int ContentManager::registerTexture(const char *name)
+	unsigned int ContentManager::registerTexture(const char *name, int w, int h, llge::TextureImage2dFormat format)
 	{
 		unsigned int result = _files.size();
-		_files.push_back(name);
+		LoadRegisrtyEntry entry;
+		entry.fileName = name;
+		int mipLevel = 1 << graphics::GraphicsDevice::Default.config.mipmapsLevel;
+		entry.w = w / mipLevel;
+		entry.h = h / mipLevel;
+		entry.format = format;
+		_files.push_back(entry);
 		return result;
 	}
 
@@ -166,6 +178,26 @@ namespace resources
 		return image;
 	}
 
+	graphics::TextureImage2d* ContentManager::addLoadTexture(const char* name, int w, int h, llge::TextureImage2dFormat format)
+	{
+		int wLimint = ImageMaxWidth / 2;
+		int hLimint = ImageMaxHeight / 2;
+		IAtlasPacker * packer = queryPacker(format);
+		if (packer != nullptr)
+		{
+			if (w > 0 && h > 0 && packer->ready() && w <= wLimint && h <= hLimint)
+			{
+				AtlasImageInput input;
+				input.texture = new graphics::TextureImage2d(false, true);;
+				input.width = w;
+				input.height = h;
+				packer->add(name, input);
+				return input.texture;
+			}
+		}
+		return addLoadTexture(name);
+	}
+
 	void ContentManager::addDisposeTexture(graphics::TextureImage2d *image)
 	{
 		_disposeEntries.push_back(image);
@@ -179,7 +211,7 @@ namespace resources
 
 	graphics::Image2dData * ContentManager::loadTexture(int id)
 	{
-		const char *name = _files[id].c_str();
+		const char *name = _files[id].fileName.c_str();
 		return loadUnregisteredTexture(name);
 	}
 
@@ -354,12 +386,21 @@ namespace resources
 	graphics::Image2dData* ContentManager::loadUnregisteredPvrTexture(const char* name)
 	{
 		ContentProvider::openContent(name);
-		ContentProvider::read(_image->Pixels, ImageBufferSize);
+		int size = ContentProvider::read(_image->Pixels, ImageBufferSize);
 		ContentProvider::closeContent();
 		_image->Width = *(_image->Pixels + 0);
 		_image->Height = *(_image->Pixels + 1);
-
-		_image->Format = graphics::Image2dFormat::Pvrtc;
+		
+		int bpp = *(_image->Pixels + 2);
+		if (bpp == 2)
+		{
+			_image->Format = graphics::Image2dFormat::Pvrtc12;
+		}
+		else
+		{
+			_image->Format = graphics::Image2dFormat::Pvrtc14;
+		}
+		
 		return _image;
 	}
 
@@ -416,6 +457,32 @@ namespace resources
 		//_packerRGBA->applyCurrentPage();
 	}
 
+	void ContentManager::startAtlasBuild()
+	{
+		AtlasTexturesPool::Default.clear();
+		for (int i = 0; i < llge::TextureFormatEnumSize; i++)
+		{
+			IAtlasPacker* packer = _packers[i];
+			if (packer != nullptr)
+				packer->startPack(ImageMaxWidth);
+		}
+		_isAtlasBuilderStarted = true;
+	}
+
+	void ContentManager::finishAtlasBuild()
+	{
+		for (int i = 0; i < llge::TextureFormatEnumSize; i++)
+		{
+			IAtlasPacker* packer = _packers[i];
+			if (packer != nullptr)
+			{
+				packer->finishPack();
+				packer->loadFiles();
+			}
+		}
+		_isAtlasBuilderStarted = false;
+	}
+
 	llge::IContentAtlasMap * API_CALL ContentManager::getContentAtlasMap()
 	{
 		return nullptr;
@@ -426,9 +493,9 @@ namespace resources
 		_replaceSeparator = value;
 	}
 
-	int API_CALL ContentManager::registerImage(char * name)
+	int API_CALL ContentManager::registerImage(char * name, int w, int h, llge::TextureImage2dFormat format)
 	{
-		return registerTexture(name);
+		return registerTexture(name, w, h, format);
 	}
 
 	void API_CALL ContentManager::startLoad()
@@ -471,7 +538,6 @@ namespace resources
 			fprintf(stderr, "\n");
 			*/
 			graphics::Image2dData * image = loadUnregisteredTexture(_loadEntries[i].fileName.c_str());
-			if (tryPlaceIntoAtlas(image, _loadEntries[i].textureImage)) continue;
 			_loadEntries[i].textureImage->create();
 			if (image != nullptr)
 			{
@@ -494,19 +560,36 @@ namespace resources
 
 	void API_CALL ContentManager::loadImage(int id, llge::ITextureImage2d *textureImage)
 	{
-		const char *name = _files[id].c_str();
-		//if (AtlasMap.loadImage(name, textureImage))
-		//	return;
+		const char *name = _files[id].fileName.c_str();
+		int w = _files[id].w;
+		int h = _files[id].h;
+		graphics::TextureImage2d* texture = static_cast<graphics::TextureImage2d*>(textureImage->getTextureImageInstance());
+		
+		int wLimint = ImageMaxWidth * 2 / 3;
+		int hLimint = ImageMaxHeight * 2 / 3;
+
+		llge::TextureImage2dFormat format = _files[id].format;
+
+		IAtlasPacker* packer = queryPacker(format);
+
+		if (packer != nullptr)
+		{
+			if (w > 0 && h > 0 && packer->ready() && w < wLimint && h < hLimint)
+			{
+				AtlasImageInput input;
+				input.texture = texture;
+				input.width = w;
+				input.height = h;
+				packer->add(name, input);
+				return;
+			}
+		}
 		graphics::Image2dData * image = loadUnregisteredTexture(name);
 
 		if (image)
 		{
-			graphics::TextureImage2d* texture = static_cast<graphics::TextureImage2d*>(textureImage->getTextureImageInstance());
-			if (!tryPlaceIntoAtlas(image, texture))
-			{
-				texture->create();
-				textureImage->LoadPixels(image->Width, image->Height, (llge::TextureImage2dFormat)image->Format, image->Pixels);
-			}
+			texture->create();
+			textureImage->LoadPixels(image->Width, image->Height, (llge::TextureImage2dFormat)image->Format, image->Pixels);
 		}
 	}
 
@@ -550,32 +633,16 @@ namespace resources
 		return ImageBufferSize;
 	}
 
-	bool ContentManager::tryPlaceIntoAtlas(graphics::Image2dData* image, graphics::TextureImage2d* texture)
+	IAtlasPacker* ContentManager::queryPacker(llge::TextureImage2dFormat format)
 	{
-		return false;
-		/*
-		IAtlasOnlinePacker* packer = nullptr;
-		switch (image->Format)
+		if (!_isAtlasBuilderStarted) return nullptr;
+		int packerIndex = llge::TextureImage2dFormat::Rgba;// format;
+		if (_packers[packerIndex] == nullptr)
 		{
-		case graphics::Image2dFormat::Rgba:
-			packer = _packerRGBA;
-			break;
-		default:
-			break;
+			_packers[packerIndex] = AtlasPacker::create(llge::TextureImage2dFormat::Rgba);
+			_packers[packerIndex]->startPack(ImageMaxWidth);
 		}
-		if (packer != nullptr)
-		{
-			AtlasEntryInput ei;
-			AtlasEntry e;
-			ei.image = image;
-			ei.texture = texture;
-			if (packer->insert(ei, e))
-			{
-				return true;
-			}
-		}
-		return false;
-		*/
+		return _packers[packerIndex];
 	}
 
 	void API_CALL ContentManager::finishLoad()

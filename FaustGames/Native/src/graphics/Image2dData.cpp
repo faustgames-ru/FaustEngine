@@ -3,7 +3,7 @@
 
 namespace graphics
 {
-	Image2dData::Image2dData(int bufferSize)
+	Image2dData::Image2dData(int bufferSize) : Width(0), Height(0)
 	{
 		Format = Image2dFormat::Rgba;
 		//Pixels = (unsigned int *)core::Mem::allocate(bufferSize * sizeof(unsigned int));

@@ -6,6 +6,21 @@
 
 namespace graphics
 {
+	class TextureTransform
+	{
+	public:
+		float x0;
+		float y0;
+		float xx;
+		float xy;
+		float yx;
+		float yy;
+		TextureTransform();
+		TextureTransform(float x, float y, float w, float h);
+		float transformU(float u, float v);
+		float transformV(float u, float v);
+	};
+
 	class Texture : public llge::ITexture
 	{
 	public:
@@ -19,10 +34,7 @@ namespace graphics
 		virtual IntPtr API_CALL getTextureInstance() { return this; }
 
 		inline void setHandle(GLuint value) { _handle = value; }
-		float X;
-		float Y;
-		float W;
-		float H;
+		TextureTransform transform;
 	protected:
 		GLuint _handle;
 		GLuint _handleDefault;

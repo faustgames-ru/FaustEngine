@@ -143,6 +143,16 @@ namespace core
 		return x;
 	}
 
+	int Math::pot(int value)
+	{
+		int v = 1;
+		while (v < value)
+		{
+			v <<= 1;
+		}
+		return v;
+	}
+
 	bool Math::equals(float a, float b, float epsilon)
 	{
 		float d = a - b;

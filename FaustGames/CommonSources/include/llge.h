@@ -88,6 +88,11 @@ namespace llge
 	{
 		Rgba = 0x0,
 		Rgb = 0x1,
+		TextureFormatPvrtc12 = 0x2,
+		TextureFormatPvrtc14 = 0x3,
+		TextureFormatEtc1 = 0x4,
+		TextureFormatAtc = 0x5,
+		TextureFormatEnumSize = 0x6
 	};
 
 
@@ -651,8 +656,10 @@ namespace llge
 	public:
 		virtual IContentAtlasMap * API_CALL getContentAtlasMap() = 0;
 		virtual void API_CALL replaceSeparator(bool value) = 0;
-		virtual int API_CALL registerImage(char * name) = 0;
+		virtual int API_CALL registerImage(char * name, int w, int h, TextureImage2dFormat format) = 0;
 		virtual void API_CALL startLoad() = 0;
+		virtual void API_CALL startAtlasBuild() = 0;
+		virtual void API_CALL finishAtlasBuild() = 0;
 		virtual void API_CALL loadImage(int id, ITextureImage2d *textureImage) = 0;
 		virtual ITextureBuffer2d * API_CALL loadBuffer(int id) = 0;
 		virtual void API_CALL finishLoad() = 0;
@@ -872,8 +879,6 @@ namespace llge
 		virtual void API_CALL render() = 0;
 		virtual void API_CALL release() = 0;
 	};
-
-	extern "C" DLLEXPORT ITestGame* API_CALL createTestGame();
 
 	extern "C" DLLEXPORT IBatch2d * API_CALL createBatch2d();
     

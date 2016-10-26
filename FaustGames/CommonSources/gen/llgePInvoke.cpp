@@ -1201,14 +1201,24 @@ namespace llge
 		classInstance->replaceSeparator(value);
 	}
 	
-	extern "C" DLLEXPORT int API_CALL llge_ContentManager_registerImage (IContentManager * classInstance, char * name)
+	extern "C" DLLEXPORT int API_CALL llge_ContentManager_registerImage (IContentManager * classInstance, char * name, int w, int h, TextureImage2dFormat format)
 	{
-		return classInstance->registerImage(name);
+		return classInstance->registerImage(name, w, h, format);
 	}
 	
 	extern "C" DLLEXPORT void API_CALL llge_ContentManager_startLoad (IContentManager * classInstance)
 	{
 		classInstance->startLoad();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_ContentManager_startAtlasBuild (IContentManager * classInstance)
+	{
+		classInstance->startAtlasBuild();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_ContentManager_finishAtlasBuild (IContentManager * classInstance)
+	{
+		classInstance->finishAtlasBuild();
 	}
 	
 	extern "C" DLLEXPORT void API_CALL llge_ContentManager_loadImage (IContentManager * classInstance, int id, ITextureImage2d * textureImage)

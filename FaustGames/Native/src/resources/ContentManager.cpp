@@ -218,6 +218,7 @@ namespace resources
 	graphics::Image2dData * ContentManager::loadUnregisteredTexture(const char *name)
 	{
 		std::string path = name;
+		/*
 		if (path.size() > 4)
 		{
 			path[path.size() - 3] = 'p';
@@ -235,6 +236,7 @@ namespace resources
 				return loadUnregisteredPvrTexture(path.c_str());
 			}
 		}
+		*/
 		if (!ContentProvider::existContent(name))
 			return 0;
 		//todo: load data from content provider
@@ -459,6 +461,7 @@ namespace resources
 
 	void ContentManager::startAtlasBuild()
 	{
+		/*
 		AtlasTexturesPool::Default.clear();
 		for (int i = 0; i < llge::TextureFormatEnumSize; i++)
 		{
@@ -467,10 +470,12 @@ namespace resources
 				packer->startPack(ImageMaxWidth);
 		}
 		_isAtlasBuilderStarted = true;
+		*/
 	}
 
 	void ContentManager::finishAtlasBuild()
 	{
+		/*
 		for (int i = 0; i < llge::TextureFormatEnumSize; i++)
 		{
 			IAtlasPacker* packer = _packers[i];
@@ -481,6 +486,7 @@ namespace resources
 			}
 		}
 		_isAtlasBuilderStarted = false;
+		*/
 	}
 
 	llge::IContentAtlasMap * API_CALL ContentManager::getContentAtlasMap()
@@ -635,6 +641,8 @@ namespace resources
 
 	IAtlasPacker* ContentManager::queryPacker(llge::TextureImage2dFormat format)
 	{
+		return nullptr;
+		/*
 		if (!_isAtlasBuilderStarted) return nullptr;
 		int packerIndex = llge::TextureImage2dFormat::Rgba;// format;
 		if (_packers[packerIndex] == nullptr)
@@ -643,6 +651,7 @@ namespace resources
 			_packers[packerIndex]->startPack(ImageMaxWidth);
 		}
 		return _packers[packerIndex];
+		*/
 	}
 
 	void API_CALL ContentManager::finishLoad()

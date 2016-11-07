@@ -4,6 +4,7 @@ namespace graphics
 {
 	UniformInfo Uniforms::_cameraPosition("cameraPosition", UniformType::Vector3);
 	UniformInfo Uniforms::_projection("projection", UniformType::Matrix4);
+	UniformInfo Uniforms::_colorTransform("colorTransform", UniformType::Matrix3);
 	UniformInfo Uniforms::_texture("texture", UniformType::Sampler2D);
 	UniformInfo Uniforms::_lightmap("lightmap", UniformType::Sampler2D);
 	UniformInfo Uniforms::_environment("environment", UniformType::Sampler2D);
@@ -30,6 +31,12 @@ namespace graphics
 	{
 		return &_projection;
 	}
+
+	UniformInfo * Uniforms::colorTransform()
+	{
+		return &_colorTransform;
+	}
+
 
 	UniformInfo * Uniforms::texture()
 	{
@@ -96,6 +103,7 @@ namespace graphics
 
 	UniformValueVector3 UniformValues::_cameraPosition;
 	UniformValueMatrix UniformValues::_projection;
+	UniformValueMatrix3 UniformValues::_colorTransform;
 	UniformValueTexture UniformValues::_texture;
 	UniformValueTexture UniformValues::_lightmap;
 	UniformValueTexture UniformValues::_environment;

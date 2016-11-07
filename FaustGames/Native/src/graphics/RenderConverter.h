@@ -65,6 +65,24 @@ namespace graphics
 			return  Effects::textureColorHsvFog();
 			// _effects[static_cast<int>(effect)];
 		}
+		inline EffectBase * getRgbTransformeffect(llge::GraphicsEffects effect)
+		{
+			/*
+			if (GraphicsDevice::Default.config.enableFog)
+			{
+			if (effect == llge::GraphicsEffects::EffectTextureColor)
+			{
+			return Effects::textureColorHsvFog(); //todo: use hsv
+			}
+			}
+			if (effect == llge::GraphicsEffects::EffectTextureLightmapColor)
+			{
+			return Effects::textureLightmapColor(); //todo: use hsv
+			}
+			*/
+			return  Effects::textureRgbTransform();
+			// _effects[static_cast<int>(effect)];
+		}
 		inline VertexFormat * getFormat(llge::GraphicsVertexFormats format)
 		{
 			return _formats[static_cast<int>(format)];

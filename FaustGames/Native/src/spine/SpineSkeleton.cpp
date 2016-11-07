@@ -120,6 +120,7 @@ namespace spine
 
 	SpineSkeleton::SpineSkeleton(SpineSkeletonResource *resource, float* transform) : _spSkeleton(0)
 	{
+		_colorTransform = core::Matrix3::identity;
 		for (uint i = 0; i < tintColorsCount; i++)
 		{
 			_tintColors[i] = 0xff808080;
@@ -163,12 +164,16 @@ namespace spine
 	{
 		_bounds.clear();
 		drawing::Batcher* batcher = (drawing::Batcher*)batch->getNativeInstance();
+		batcher->addColorTransform(_colorTransform);
 		spSkeleton *s = (spSkeleton *)_spSkeleton;
 		geometry::Aabb2d aabb;
 		_mesh.Z = _transform.getWz();
 		graphics::EffectBase * effectInstance = graphics::RenderConverter::getInstance()->getEffect(effect);
-		graphics::EffectBase * effectInstanceHsv = graphics::RenderConverter::getInstance()->getHsvEffect(effect);
+		//graphics::EffectBase * effectInstanceHsv = graphics::RenderConverter::getInstance()->getHsvEffect(effect);
+		graphics::EffectBase * effectInstanceRgbTransform = graphics::RenderConverter::getInstance()->getRgbTransformeffect(effect);
 
+		effectInstance = effectInstanceRgbTransform;
+		
 		effectInstance->configCopy(&_lightingConfig, effectConfig);
 		_mesh.State.config = &_lightingConfig;
 		uint lightmap = _lightingConfig.lightmap;
@@ -184,7 +189,7 @@ namespace spine
 			_mesh.State.Blend = slot->data->blendMode == SP_BLEND_MODE_NORMAL
 				? graphics::BlendState::Alpha
 				: graphics::BlendState::Additive;
-
+			
 			SpineSkeletonBone* bone = _bones[slot->bone->data->index];
 
 			if (bone->fx == llge::BoneFx::BoneFxIgnoreLight)
@@ -676,6 +681,11 @@ namespace spine
 	void SpineSkeleton::setHsv(int tintIndex, float h, float s, float v)
 	{
 		_tintColors[tintIndex] = graphics::Color::fromRgba(h, s, v, 1.0f);
+	}
+
+	void SpineSkeleton::setRgbTransform(void* floatMatrix3)
+	{
+		_colorTransform.setData(static_cast<float *>(floatMatrix3));
 	}
 
 	SpineSkeletonSlot* SpineSkeleton::findSlot(const char* slotName)

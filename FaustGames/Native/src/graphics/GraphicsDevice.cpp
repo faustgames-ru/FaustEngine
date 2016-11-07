@@ -213,18 +213,18 @@ namespace graphics
 
 	void GraphicsDevice::clear()
 	{
-		glDepthMask(GL_TRUE);
-		glDisable(GL_BLEND);
-		renderState.resetBlend();
-		renderState.resetDepth();
+		renderState.setDepth(DepthState::ReadWrite);
+		renderState.applyDepth();
+		renderState.setBlend(BlendState::Alpha);
+		renderState.applyBlend();
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		Errors::check(Errors::Clear);
 	}
 
 	void GraphicsDevice::clearDepth()
 	{
-		glDepthMask(GL_TRUE);
-		renderState.resetDepth();
+		renderState.setDepth(DepthState::ReadWrite);
+		renderState.applyDepth();
 		glClear(GL_DEPTH_BUFFER_BIT);
 		Errors::check(Errors::Clear);
 	}

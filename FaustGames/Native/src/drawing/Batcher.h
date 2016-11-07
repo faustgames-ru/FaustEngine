@@ -18,6 +18,7 @@ namespace drawing
 		int IndicesCount;
 		int BatchBufferIndex;
 		int TransformIndex;
+		int ColorTransformIndex;
 		int RenderTargetIndex;
 		graphics::BlendState::e Blend;
 		graphics::EffectBase *Effect;
@@ -71,6 +72,7 @@ namespace drawing
 
 	typedef std::vector<graphics::IRenderTarget *> TBatchRenderTargets;
 	typedef std::vector<core::MatrixContainer> TBatchTransforms;
+	typedef std::vector<core::Matrix3Container> TBatchColorTransforms;
 	typedef std::vector<BatchBuffer *> TBatchBuffers;
 	typedef std::vector<BatchEntry> TBatchEntries;
 
@@ -80,6 +82,7 @@ namespace drawing
 		TBatchBuffers Buffers;
 		TBatchEntries Entries;
 		TBatchTransforms Transforms;
+		TBatchColorTransforms ColorTransforms;
 		TBatchRenderTargets RenderTargets;
 		RenderBuffer();
 		~RenderBuffer();
@@ -141,6 +144,7 @@ namespace drawing
 		void cleanupUVTransform();
 
 		void executeRenderCommands(bool usePostProcess);
+		void addColorTransform(const core::Matrix3 &value);
 
 		virtual IntPtr API_CALL getNativeInstance() OVERRIDE;
 		void applyEntry();
@@ -166,6 +170,7 @@ namespace drawing
 
 		llge::LightingConfig _lightingConfig; // todo: remove
 		core::MatrixContainer _projection;
+		core::Matrix3Container _colorTransform;
 		graphics::BlendState::e _blend;
 		graphics::EffectBase *_effect;
 		uint _config[CONFIG_MAX_SIZE];
@@ -181,6 +186,7 @@ namespace drawing
 		int _verticesCounter;
 		ZBatcher* _zButcher;
 		bool _usedPostProcess;
+		core::Matrix3Container _emptyColorTransformContainer;
 	};
 	
 	struct ZBatchEntry

@@ -56,7 +56,8 @@ namespace graphics
 			Uniform3f = 43,
 			Uniform2f = 44,
 			CompressedTexImage2D = 45,
-			EnumSize = 46,
+			UniformMatrix3fv = 46,
+			EnumSize = 47,
 
 		};
 

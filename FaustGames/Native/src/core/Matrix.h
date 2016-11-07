@@ -291,6 +291,7 @@ namespace core
 	class Matrix3
 	{
 	public:
+		Matrix3() {}
 		Matrix3(
 			float m11, float m12, float m13,
 			float m21, float m22, float m23,
@@ -317,6 +318,12 @@ namespace core
 				v.getX() * m.getXy() + v.getY() * m.getYy() + v.getZ() * m.getZy(),
 				v.getX() * m.getXz() + v.getY() * m.getYz() + v.getZ() * m.getZz());
 		}
+		inline const float *getData() const { return &(_values[0]); }
+		inline void setData(const float *value)
+		{
+			for (int i = 0; i < 9; i++)
+				_values[i] = value[i];
+		}
 	private:
 		float _values[9];
 	};
@@ -335,7 +342,7 @@ namespace core
 		static Matrix2 mul(const Matrix2 &a, const Matrix2 &b);
 		static Matrix2 createRotation(float angle);
 		static Matrix2 createScale(float scaleX, float scaleY);
-
+		inline const float *getData() const { return &(_values[0]); }
 		static Vector2 transform(Matrix2 m, Vector2 v)
 		{
 			return Vector2(
@@ -345,6 +352,23 @@ namespace core
 	private:
 		float _values[4];
 	};
+	
+	class Matrix3Container
+	{
+	private:
+		static int _id;
+	public:
+		int id;
+		Matrix3 Value;
+		Matrix3Container();
+
+		explicit Matrix3Container(const Matrix3 &value);
+
+		void setValue(const Matrix3 &value);
+
+		void setValue(const float *value);
+	};
+
 
 	class Quaternion
 	{

@@ -191,6 +191,7 @@
     <ClInclude Include="..\shaders\texture_color_highlight_vert.h" />
     <ClInclude Include="..\shaders\texture_color_hsv_fog_frag.h" />
     <ClInclude Include="..\shaders\texture_color_hsv_fog_vert.h" />
+    <ClInclude Include="..\shaders\texture_color_rgb_transform_frag.h" />
     <ClInclude Include="..\shaders\texture_color_vert.h" />
     <ClInclude Include="..\shaders\texture_color_vert_paint.h" />
     <ClInclude Include="..\shaders\texture_lightmap_color_frag.h" />

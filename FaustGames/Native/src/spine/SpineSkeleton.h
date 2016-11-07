@@ -68,6 +68,7 @@ namespace spine
 		virtual float API_CALL getMaxY();
 		virtual float API_CALL getZ();
 		virtual void API_CALL setHsv(int tintIndex, float h, float s, float v);
+		virtual void API_CALL setRgbTransform(void *floatMatrix3) OVERRIDE;
 		SpineSkeletonSlot* findSlot(const char* slotName);
 		void setSlotRgb(const char* name, int color);
 
@@ -78,6 +79,7 @@ namespace spine
 		void *_spSkeleton;
 		geometry::Aabb2d _aabb;
 		core::Matrix _transform;
+		core::Matrix3 _colorTransform;
 		static drawing::BatcherSpineMesh _mesh;
 		static ushort _quadIndices[6];
 		static float _uvBuffer[65536];

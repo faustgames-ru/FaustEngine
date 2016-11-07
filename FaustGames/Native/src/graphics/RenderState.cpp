@@ -33,43 +33,21 @@ namespace graphics
 		_depthState.setState(depthState);
 	}
 
+	void RenderState::setDepthfunc(DepthFunc::e depthFunc)
+	{
+		_depthFunc.setState(depthFunc);
+	}
+
 	void RenderState::setVertexBuffer(GLuint vertexBufferHandle)
 	{
 		_vertexBufferState.setState(vertexBufferHandle);
 	}
-		
-	void RenderState::apply(VertexFormat *vertexFormat, void *vertexData)
-	{
-		_depthState.applyState();
-		_blendState.applyState();
-		_effect.applyState();
-		_vertexBufferState.applyState();
-		
-		//if (!_depthState.isEqual())
-		{
-			switch (_depthState.getValue())
-			{
-			case DepthState::None: 
-				glDepthMask(GL_FALSE);
-				glDisable(GL_DEPTH_TEST);
-				break;
-			case DepthState::Read: 
-				glDepthMask(GL_FALSE);
-				glEnable(GL_DEPTH_TEST);
-				break;
-			case DepthState::Write: 
-				glDepthMask(GL_TRUE);
-				glDisable(GL_DEPTH_TEST);
-				break;
-			case DepthState::ReadWrite: 
-				glDepthMask(GL_TRUE);
-				glEnable(GL_DEPTH_TEST);
-				break;
-			default: break;
-			}			
-		}
 
-		//if (!_blendState.isEqual())
+	void RenderState::applyBlend()
+	{
+		_blendState.applyState();
+
+		if (!_blendState.isEqual())
 		{
 			switch (_blendState.getValue())
 			{
@@ -93,6 +71,62 @@ namespace graphics
 			}
 			/// apply blend
 		}
+	}
+
+	void RenderState::applyDepth()
+	{
+		_depthState.applyState();
+		if (!_depthState.isEqual())
+		{
+			switch (_depthState.getValue())
+			{
+			case DepthState::None:
+				glDepthMask(GL_FALSE);
+				glDisable(GL_DEPTH_TEST);
+				break;
+			case DepthState::Read:
+				glDepthMask(GL_FALSE);
+				glEnable(GL_DEPTH_TEST);
+				break;
+			case DepthState::Write:
+				glDepthMask(GL_TRUE);
+				glDisable(GL_DEPTH_TEST);
+				break;
+			case DepthState::ReadWrite:
+				glDepthMask(GL_TRUE);
+				glEnable(GL_DEPTH_TEST);
+				break;
+			default: break;
+			}
+		}
+	}
+
+	void RenderState::applyDepthFunc()
+	{
+		_depthFunc.applyState();
+		if (!_depthFunc.isEqual())
+		{
+			switch (_depthFunc.getValue())
+			{
+			case DepthFunc::Less: 
+				glDepthFunc(GL_LESS);
+				break;
+			case DepthFunc::LessEqual: 
+				glDepthFunc(GL_LEQUAL);
+				break;
+			default: break;
+			}
+		}
+	}
+
+	void RenderState::apply(VertexFormat *vertexFormat, void *vertexData)
+	{
+		applyDepth();
+		applyBlend();
+		applyDepthFunc();
+		_effect.applyState();
+		_vertexBufferState.applyState();
+				
 		
 		if (!_effect.isEqual())
 		{
@@ -137,13 +171,4 @@ namespace graphics
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	}
 
-	void RenderState::resetDepth()
-	{
-		_depthState.reset();
-	}
-
-	void RenderState::resetBlend()
-	{
-		_blendState.reset();
-	}
 }

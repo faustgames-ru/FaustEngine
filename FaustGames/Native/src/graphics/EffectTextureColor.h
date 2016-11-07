@@ -78,6 +78,16 @@ namespace graphics
 	private:
 	};
 
+	class EffectTextureRgbTransform : public EffectBase
+	{
+	public:
+		EffectTextureRgbTransform();
+		~EffectTextureRgbTransform();
+		void create();
+		virtual void configApply(const void *config) OVERRIDE;
+	protected:
+	private:
+	};
 }
 
 #endif /*EFFECT_TEXTURE_COLOR_H*/

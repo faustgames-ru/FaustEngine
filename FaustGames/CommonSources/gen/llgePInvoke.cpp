@@ -961,6 +961,11 @@ namespace llge
 		classInstance->setHsv(tintIndex, h, s, v);
 	}
 	
+	extern "C" DLLEXPORT void API_CALL llge_SpineSkeleton_setRgbTransform (ISpineSkeleton * classInstance, void * floatMatrix3)
+	{
+		classInstance->setRgbTransform(floatMatrix3);
+	}
+	
 	extern "C" DLLEXPORT void API_CALL llge_SpineSkeleton_dispose (ISpineSkeleton * classInstance)
 	{
 		classInstance->dispose();

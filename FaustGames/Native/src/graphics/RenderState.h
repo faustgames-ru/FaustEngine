@@ -18,12 +18,13 @@ namespace graphics
 		void setEffect(EffectBase *effect);
 		void setBlend(BlendState::e blendState);
 		void setDepth(DepthState::e depthState);
+		void setDepthfunc(DepthFunc::e depthFunc);
 		void setVertexBuffer(GLuint vertexBufferHandle);
+		void applyBlend();
+		void applyDepth();
+		void applyDepthFunc();
 		void apply(VertexFormat *vertexFormat, void *vertexData);
 		void init();
-
-		void resetDepth();
-		void resetBlend();
 	protected:
 	private:
         State<GLuint> _vertexBufferState;
@@ -32,6 +33,7 @@ namespace graphics
 		State<void *> _vertexDataState;
 		State<BlendState::e> _blendState;
 		State<DepthState::e> _depthState;
+		State<DepthFunc::e> _depthFunc;
 		StateCompare<unsigned int> _attributesState;
 		int _attributesCount;
 	};

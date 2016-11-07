@@ -9,6 +9,10 @@ namespace graphics
 	class UniformValue
 	{
 	public:
+		virtual ~UniformValue()
+		{
+		}
+
 		virtual void apply(Uniform *uniform) = 0;
 		virtual void reset() = 0;
 		virtual int getSamplerIndex(){ return -1; };

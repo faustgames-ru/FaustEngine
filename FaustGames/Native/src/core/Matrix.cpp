@@ -10,6 +10,7 @@ namespace core
 		0, 0, 0, 1);
 
 	int MatrixContainer::_id(0);
+	int Matrix3Container::_id(0);
 
 	Matrix2 Matrix2::identity(1, 0, 0, 1);
 
@@ -250,6 +251,29 @@ namespace core
 	Matrix2 Matrix2::createScale(float scaleX, float scaleY)
 	{
 		return Matrix2(scaleX, 0, 0, scaleY);
+	}
+
+	Matrix3Container::Matrix3Container()
+	{
+		id = (++_id) << 16;
+	}
+
+	Matrix3Container::Matrix3Container(const Matrix3& value)
+	{
+		id = (++_id) << 16;
+		Value = value;
+	}
+
+	void Matrix3Container::setValue(const Matrix3& value)
+	{
+		++id;
+		Value = value;
+	}
+
+	void Matrix3Container::setValue(const float* value)
+	{
+		++id;
+		Value = *(static_cast<const Matrix3 *>(static_cast<const void *>(value)));
 	}
 
 	Quaternion::Quaternion()

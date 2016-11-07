@@ -24,10 +24,6 @@ namespace graphics
 		{
 			return _equal;
 		}
-		inline void reset()
-		{
-			_equal = false;
-		}
 		inline void setState(T value)
 		{
 			_newValue = value;

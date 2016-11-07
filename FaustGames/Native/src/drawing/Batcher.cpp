@@ -233,6 +233,7 @@ namespace drawing
 		_graphicsDevice = &graphics::GraphicsDevice::Default;
 		_textureTransform = graphics::TextureTransform();
 		_zButcher = new ZBatcher();
+		_emptyColorTransformContainer = core::Matrix3Container(core::Matrix3::identity);
 	}
 	
 	Batcher::~Batcher()
@@ -248,6 +249,7 @@ namespace drawing
 		_verticesCounter = 0;
 		_buffer->Entries.clear();
 		_buffer->Transforms.clear();
+		_buffer->ColorTransforms.clear();
 		_batchBufferIndex = 0;
 		for (uint i = 0; i < CONFIG_MAX_SIZE; i++)
 			_config[i] = 0;
@@ -309,6 +311,7 @@ namespace drawing
 			_currentEntry.Blend = _blend = blend;
 			_currentEntry.Effect = _effect = effect;
 			_currentEntry.TransformIndex = _buffer->Transforms.size() - 1;
+			_currentEntry.ColorTransformIndex = _buffer->ColorTransforms.size() - 1;
 			_currentEntry.RenderTargetIndex = _buffer->RenderTargets.size() - 1;
 		}
 
@@ -351,6 +354,7 @@ namespace drawing
 			_currentEntry.Blend = _blend = blend;
 			_currentEntry.Effect = _effect = effect;
 			_currentEntry.TransformIndex = _buffer->Transforms.size() - 1;
+			_currentEntry.ColorTransformIndex = _buffer->ColorTransforms.size() - 1;
 			_currentEntry.RenderTargetIndex = _buffer->RenderTargets.size() - 1;
 		}
 
@@ -404,6 +408,7 @@ namespace drawing
 			_currentEntry.Blend = _blend = mesh.State.Blend;
 			_currentEntry.Effect = _effect = mesh.State.Effect;
 			_currentEntry.TransformIndex = _buffer->Transforms.size() - 1;
+			_currentEntry.ColorTransformIndex = _buffer->ColorTransforms.size() - 1;
 			_currentEntry.RenderTargetIndex = _buffer->RenderTargets.size() - 1;
 		}
 
@@ -457,11 +462,9 @@ namespace drawing
 		
 		if (_buffer->Transforms.size() > 0)
 		{
-			glDepthFunc(GL_LESS);
 			_zButcher->configure(graphics::BlendState::Alpha, _converter.getEffect(llge::EffectTextureColor), _buffer->Transforms[0]);
 			_zButcher->applyRender();
 		}
-		glDepthFunc(GL_LEQUAL);
 		bool _postEffectFinished = false;
 		for (TBatchEntries::iterator i = _backBuffer->Entries.begin(); i != _backBuffer->Entries.end(); ++i)
 		{
@@ -486,6 +489,11 @@ namespace drawing
 			i->Effect->configApply(i->Config);
 
 			graphics::UniformValues::projection()->setValue(_backBuffer->Transforms[i->TransformIndex]);
+			if (i->ColorTransformIndex >= 0)
+			{
+				graphics::UniformValues::colorTransform()->setValue(_backBuffer->ColorTransforms[i->ColorTransformIndex]);
+
+			}
 			//graphics::UniformValues::fogStart()->setValue(50.0f);
 			//graphics::UniformValues::fogDensity()->setValue(0.00005f);
 			//graphics::UniformValues::fogColor()->setValue(core::Vector3(0.1, 0.6, 0.7));
@@ -498,9 +506,10 @@ namespace drawing
 			_verticesCount += verticesCount;
 			_graphicsDevice->renderState.setBlend(graphics::BlendState::Alpha);
 			_graphicsDevice->renderState.setDepth(graphics::DepthState::Read);
+			_graphicsDevice->renderState.setDepthfunc(graphics::DepthFunc::LessEqual);
 			_graphicsDevice->drawPrimitives(_format, currentBuffer->getVertices(), i->IndicesStart, primitivesCount);
 		}
-		_verticesCount = _verticesCounter;
+		_verticesCount = _verticesCounter; 
 		_verticesCounter = 0;
 		
 		if (usePostProcess && !_postEffectFinished && _bloom.isAvaliable())
@@ -516,6 +525,13 @@ namespace drawing
 		_graphicsDevice->renderState.setDepth(graphics::DepthState::None);
 	}
 
+	void Batcher::addColorTransform(const core::Matrix3& value)
+	{
+		_colorTransform.setValue(value);
+		_buffer->ColorTransforms.push_back(_colorTransform);
+		applyEntry();
+	} 
+
 	IntPtr Batcher::getNativeInstance()
 	{
 		return this;
@@ -526,7 +542,13 @@ namespace drawing
 		if (_currentEntry.IndicesCount != 0)
 		{
 			_buffer->Entries.push_back(_currentEntry);
-			_currentEntry.IndicesCount = 0;
+			//if (_batchBufferIndex < _buffer->Buffers.size())
+			//{
+			//	_currentEntry.IndicesStart = _buffer->Buffers[_batchBufferIndex]->getCurrentIndices();
+			//	_currentEntry.BatchBufferIndex = _batchBufferIndex;
+			//}
+			//_currentEntry.IndicesCount = 0;
+			_effect = nullptr;
 		}
 	}
 
@@ -804,6 +826,7 @@ namespace drawing
 		std::sort(_blocksList.begin(), _blocksList.end(), ZBlockComparer);
 		if (_blocksList.size() == 0) return;
 		graphics::GraphicsDevice* graphicsDevice = &graphics::GraphicsDevice::Default;
+		graphicsDevice->renderState.setDepthfunc(graphics::DepthFunc::Less);
 		graphicsDevice->renderState.setDepth(graphics::DepthState::ReadWrite);
 		graphicsDevice->renderState.setBlend(graphics::BlendState::Alpha);
 		graphicsDevice->renderState.setEffect(_effect);

@@ -16,6 +16,7 @@ namespace graphics
 	public:
 		static UniformInfo *cameraPosition();
 		static UniformInfo *projection();
+		static UniformInfo *colorTransform();
 		static UniformInfo *texture();
 		static UniformInfo *lightmap();
 		static UniformInfo *environment();
@@ -32,6 +33,7 @@ namespace graphics
 	private:
 		static UniformInfo _cameraPosition;
 		static UniformInfo _projection;
+		static UniformInfo _colorTransform;
 		static UniformInfo _texture;
 		static UniformInfo _lightmap;
 		static UniformInfo _environment;
@@ -52,6 +54,7 @@ namespace graphics
 	public:
 		static inline UniformValueVector3 * cameraPosition(){ return &_cameraPosition; }
 		static inline UniformValueMatrix *projection(){ return &_projection; }
+		static inline UniformValueMatrix3 *colorTransform() { return &_colorTransform; }
 		static inline UniformValueTexture *texture(){ return &_texture; }
 		static inline UniformValueTexture *lightmap(){ return &_lightmap; }
 		static inline UniformValueTexture *environment(){ return &_environment; }
@@ -72,6 +75,7 @@ namespace graphics
 		static void initSampler(UniformValueTexture *sampler, int index);
 		static UniformValueVector3 _cameraPosition;
 		static UniformValueMatrix _projection;
+		static UniformValueMatrix3 _colorTransform;
 		static UniformValueTexture _texture;
 		static UniformValueTexture _lightmap;
 		static UniformValueTexture _environment;

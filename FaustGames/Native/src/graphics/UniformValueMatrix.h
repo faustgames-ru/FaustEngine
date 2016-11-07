@@ -11,11 +11,25 @@ namespace graphics
 	public:
 		UniformValueMatrix();
 		void setValue(const core::MatrixContainer &value);
-		virtual void apply(Uniform *uniform);
-		virtual void reset();
+		virtual void apply(Uniform *uniform) OVERRIDE;
+		virtual void reset() OVERRIDE;
 	protected:
 	private:
 		core::MatrixContainer _value;
+		bool _equal;
+		unsigned int _applyMask;
+	};
+
+	class UniformValueMatrix3 : public UniformValue
+	{
+	public:
+		UniformValueMatrix3();
+		void setValue(const core::Matrix3Container &value);
+		virtual void apply(Uniform *uniform) OVERRIDE;
+		virtual void reset() OVERRIDE;
+	protected:
+	private:
+		core::Matrix3Container _value;
 		bool _equal;
 		unsigned int _applyMask;
 	};

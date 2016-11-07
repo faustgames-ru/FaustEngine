@@ -1656,6 +1656,13 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private void llge_SpineSkeleton_setHsv (IntPtr classInstance, int tintIndex, float h, float s, float v);
+		public void SetRgbTransform (IntPtr floatMatrix3)
+		{
+			llge_SpineSkeleton_setRgbTransform(ClassInstance, floatMatrix3);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_SpineSkeleton_setRgbTransform (IntPtr classInstance, IntPtr floatMatrix3);
 		public void Dispose ()
 		{
 			llge_SpineSkeleton_dispose(ClassInstance);

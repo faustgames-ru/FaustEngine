@@ -42,6 +42,16 @@ namespace graphics
 		};
 	};
 
+	struct DepthFunc
+	{
+		enum e
+		{
+			None = 0x0,
+			Less = 0x01,
+			LessEqual = 0x02,
+		};
+	};
+
 	struct UniformType
 	{
 		enum e

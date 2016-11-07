@@ -33,6 +33,7 @@ namespace graphics
 		static EffectTextureBlurColor * textureBlurColor();
 		static EffectTextureBlurmap* textureBlurmap();
 		static EffectTexturePaint* texturePaint();
+		static EffectTextureRgbTransform* textureRgbTransform();
 		//static EffectWater * water();
 		static EffectRenderDepth * renderDepth();
 		static EffectPostProcessToneMapping * postProcessToneMapping();
@@ -56,6 +57,7 @@ namespace graphics
 		static EffectTextureBlurColor _textureBlurColor;
 		static EffectTextureBlurmap _textureBlurmap;
 		static EffectTexturePaint _texturePaint;
+		static EffectTextureRgbTransform _textureRgbTransform;
 		//static EffectWater _water;
 		static EffectRenderDepth _renderDepth;
 		static EffectPostProcessToneMapping _postProcessToneMapping;

@@ -42,6 +42,8 @@ namespace physics
 		PhysicalBody(b2Body* bodyInstance, PhysicalConverter dimensions, PhysicalConverter velocity);
 		~PhysicalBody();
 		
+		void destroyFixtures();
+
 		PhysicalFixture* createFixture(llge::PhysicsFixtureConfig config, PhysicalShape* shape);
 		void destroyFixture(PhysicalFixture* fixture);
 
@@ -63,10 +65,10 @@ namespace physics
 		virtual llge::IPhysicalFixture* API_CALL createPolygonFixture(IntPtr vertices2f, int count, llge::PhysicsFixtureConfig config) OVERRIDE;
 
 	private:
-		std::vector<PhysicalFixture *> _fistures;
 		PhysicalConverter _dimensions;
 		PhysicalConverter _velocity;
 		PhysicalContactIterator _contactsIterator;
+		std::vector<PhysicalFixture *> _fistures;
 	};
 }
 

@@ -17,18 +17,20 @@ namespace physics
 	{
 		for (uint i = 0; i < _joints.size(); i++)
 		{
-			_world->DestroyJoint(_joints[i]->joint);
+			// joints will be romoved by their bodies
+			//_world->DestroyJoint(_joints[i]->joint);
 			delete _joints[i];
 		}
 		_joints.clear();
 
 		for (uint i = 0; i < _bodies.size(); i++)
 		{
+			_bodies[i]->destroyFixtures();
 			_world->DestroyBody(_bodies[i]->body);
 			delete _bodies[i];
 		}
 		_bodies.clear();
-
+		
 		delete _debugRenderCallback;
 		delete _world;
 	}
@@ -70,6 +72,7 @@ namespace physics
 
 	void PhysicalWorld::destroyBody(PhysicalBody* body)
 	{
+		body->destroyFixtures();
 		int index = body->bodyIndex;
 		_world->DestroyBody(_bodies[index]->body);
 		_bodies[index] = _bodies.back();
@@ -95,7 +98,7 @@ namespace physics
 
 	void PhysicalWorld::destroyJoint(PhysicalJoint* joint)
 	{
-		int index = joint->index;
+ 		int index = joint->index;
 		_world->DestroyJoint(_joints[index]->joint);
 		_joints[index] = _joints.back();
 		_joints[index]->index = index;

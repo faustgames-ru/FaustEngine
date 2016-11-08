@@ -1,380 +1,118 @@
-﻿Build started 06.11.2016 12:34:59.
-     1>Project "F:\sources\github\FaustEngine\FaustGames\Native\llge\llge.vcxproj" on node 2 (Build target(s)).
-     1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /I..\include /I..\..\CommonSources\include /I..\src\resources\zlib /I..\src_box2d /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _USRDLL /D LLGE_EXPORTS /D _CRT_SECURE_NO_WARNINGS /D OGL_ERRORS_CHECK /D _WINDLL /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt ..\src\drawing\Batcher.cpp ..\src\drawing\Camera.cpp ..\src\drawing\PostProcess.cpp ..\src\drawing\RenderItem2d.cpp ..\src\drawing\RenderMesh2d.cpp ..\src\drawing\Renderer2d.cpp ..\src\drawing\WaterRenderer.cpp ..\src\entities\Aabb2dComponent.cpp ..\src\entities\Component.cpp ..\src\entities\DummyEntitiesFilter.cpp ..\src\entities\EntitiesFilter.cpp ..\src\entities\EntitiesWorld.cpp ..\src\entities\Entity.cpp ..\src\entities\MatrixTransformComponent.cpp ..\src\entities\QuadtreeEntitiesFilter.cpp ..\src\entities\Render2dComponent.cpp ..\src\entities\RenderSystem2d.cpp ..\src\entities\System.cpp ..\src\entities\Transform2dComponent.cpp ..\src\entities\TransformSystem2d.cpp ..\src\exports\llge.cpp ..\src\exports\llgeDrawing.cpp ..\src\exports\llgeEntities.cpp ..\src\exports\llgeGraphics.cpp ..\src\exports\llgeResources.cpp ..\src\graphics\AttributeInfo.cpp ..\src\graphics\Attributes.cpp ..\src\graphics\Color.cpp ..\src\graphics\Effect.cpp ..\src\graphics\EffectBase.cpp ..\src\graphics\EffectConstant.cpp ..\src\graphics\EffectRenderDepth.cpp ..\src\graphics\EffectSolid.cpp ..\src\graphics\EffectSolidColor.cpp ..\src\graphics\EffectTextureAlphamaskColor.cpp ..\src\graphics\EffectTextureColor.cpp ..\src\graphics\EffectTextureColorHighlight.cpp ..\src\graphics\EffectTextureLightMapColor.cpp ..\src\graphics\EffectWater.cpp ..\src\graphics\Effects.cpp ..\src\graphics\EffectsPostProcess.cpp ..\src\graphics\Errors.cpp ..\src\graphics\GraphicsDevice.cpp ..\src\graphics\Image2dData.cpp ..\src\graphics\RenderConverter.cpp ..\src\graphics\RenderState.cpp ..\src\graphics\StaticBatch.cpp ..\src\graphics\Texture.cpp ..\src\graphics\TextureCubemap.cpp ..\src\graphics\TextureImage2d.cpp ..\src\graphics\TextureLoader.cpp ..\src\graphics\TextureRenderTarget2d.cpp ..\src\graphics\TextureRenderTargetDepth2d.cpp ..\src\graphics\Uniform.cpp ..\src\graphics\UniformInfo.cpp ..\src\graphics\UniformValue.cpp ..\src\graphics\UniformValueCubemap.cpp ..\src\graphics\UniformValueFloat.cpp ..\src\graphics\UniformValueMatrix.cpp ..\src\graphics\UniformValueTexture.cpp ..\src\graphics\UniformValueVector3.cpp ..\src\graphics\Uniforms.cpp ..\src\graphics\VertexBuffer.cpp ..\src\graphics\VertexFormat.cpp ..\src\graphics\VertexFormats.cpp ..\src\resources\AtlasPacker.cpp ..\src\resources\ContentManager.cpp ..\src\resources\ContentProviderObb.cpp ..\src\resources\ContentProviderWindows.cpp ..\src\spine\SpineAnimationState.cpp ..\src\spine\SpineAnimationStateData.cpp ..\src\spine\SpineSkeleton.cpp ..\src\spine\SpineSkeletonAnimation.cpp ..\src\spine\SpineSkeletonResource.cpp ..\src\spine\spine.cpp
-         VertexFormats.cpp
-         Uniforms.cpp
-         UniformValueCubemap.cpp
-         TextureImage2d.cpp
-     1>f:\sources\github\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(66): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-     1>f:\sources\github\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(66): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-     1>f:\sources\github\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(67): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-     1>f:\sources\github\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(67): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-     1>f:\sources\github\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(68): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-     1>f:\sources\github\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(68): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-     1>f:\sources\github\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(69): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-     1>f:\sources\github\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(69): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-     1>f:\sources\github\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(91): warning C4018: '<': signed/unsigned mismatch
-     1>f:\sources\github\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(93): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-     1>f:\sources\github\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(95): warning C4018: '<': signed/unsigned mismatch
-     1>f:\sources\github\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(220): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-     1>f:\sources\github\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(468): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
-     1>f:\sources\github\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(470): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
-     1>f:\sources\github\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(472): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
-     1>f:\sources\github\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(474): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
-     1>f:\sources\github\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(476): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
-         RenderState.cpp
-         GraphicsDevice.cpp
-     1>f:\sources\github\faustengine\faustgames\native\src\graphics\graphicsdevice.cpp(127): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-     1>f:\sources\github\faustengine\faustgames\native\src\graphics\graphicsdevice.cpp(128): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-         Effects.cpp
-         Batcher.cpp
-     1>f:\sources\github\faustengine\faustgames\native\src\drawing\batcher.cpp(272): warning C4244: 'argument': conversion from 'float' to 'unsigned char', possible loss of data
-     1>f:\sources\github\faustengine\faustgames\native\src\drawing\batcher.cpp(284): warning C4018: '<=': signed/unsigned mismatch
-     1>f:\sources\github\faustengine\faustgames\native\src\drawing\batcher.cpp(332): warning C4018: '<=': signed/unsigned mismatch
-     1>f:\sources\github\faustengine\faustgames\native\src\drawing\batcher.cpp(385): warning C4018: '<=': signed/unsigned mismatch
-     1>f:\sources\github\faustengine\faustgames\native\src\drawing\batcher.cpp(761): warning C4018: '>=': signed/unsigned mismatch
-     1>f:\sources\github\faustengine\faustgames\native\src\drawing\batcher.cpp(783): warning C4018: '<': signed/unsigned mismatch
-         Generating Code...
-         Compiling...
-         spine.cpp
-     1>f:\sources\github\faustengine\faustgames\native\src\spine\spine.cpp(11): warning C4018: '<': signed/unsigned mismatch
-         SpineSkeletonResource.cpp
-     1>f:\sources\github\faustengine\faustgames\native\src\spine\spineskeletonresource.cpp(120): warning C4018: '<': signed/unsigned mismatch
-     1>f:\sources\github\faustengine\faustgames\native\src\spine\spineskeletonresource.cpp(126): warning C4018: '<': signed/unsigned mismatch
-     1>f:\sources\github\faustengine\faustgames\native\src\spine\spineskeletonresource.cpp(133): warning C4018: '<': signed/unsigned mismatch
-     1>f:\sources\github\faustengine\faustgames\native\src\spine\spineskeletonresource.cpp(151): warning C4018: '<': signed/unsigned mismatch
-     1>f:\sources\github\faustengine\faustgames\native\src\spine\spineskeletonresource.cpp(156): warning C4018: '<': signed/unsigned mismatch
-     1>f:\sources\github\faustengine\faustgames\native\src\spine\spineskeletonresource.cpp(161): warning C4018: '<': signed/unsigned mismatch
-     1>f:\sources\github\faustengine\faustgames\native\src\spine\spineskeletonresource.cpp(167): warning C4018: '<': signed/unsigned mismatch
-         SpineSkeletonAnimation.cpp
-         SpineSkeleton.cpp
-         SpineAnimationStateData.cpp
-         SpineAnimationState.cpp
-     1>f:\sources\github\faustengine\faustgames\native\src\spine\spineanimationstate.cpp(58): warning C4101: 'previousDelta': unreferenced local variable
-     1>f:\sources\github\faustengine\faustgames\native\src\spine\spineanimationstate.cpp(70): warning C4101: 'previousDelta': unreferenced local variable
-         ContentProviderWindows.cpp
-         ContentProviderObb.cpp
-     1>f:\sources\github\faustengine\faustgames\native\src\resources\contentproviderobb.cpp(109): warning C4244: 'argument': conversion from 'int64_t' to 'long', possible loss of data
-         ContentManager.cpp
-         AtlasPacker.cpp
-     1>f:\sources\github\faustengine\faustgames\native\src\resources\atlaspacker.cpp(49): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-     1>f:\sources\github\faustengine\faustgames\native\src\resources\atlaspacker.cpp(49): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-     1>f:\sources\github\faustengine\faustgames\native\src\resources\atlaspacker.cpp(65): warning C4244: 'argument': conversion from 'const int' to 'float', possible loss of data
-     1>f:\sources\github\faustengine\faustgames\native\src\resources\atlaspacker.cpp(75): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-     1>f:\sources\github\faustengine\faustgames\native\src\resources\atlaspacker.cpp(75): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-     1>f:\sources\github\faustengine\faustgames\native\src\resources\atlaspacker.cpp(76): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-     1>f:\sources\github\faustengine\faustgames\native\src\resources\atlaspacker.cpp(76): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-     1>f:\sources\github\faustengine\faustgames\native\src\resources\atlaspacker.cpp(84): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-     1>f:\sources\github\faustengine\faustgames\native\src\resources\atlaspacker.cpp(84): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-     1>f:\sources\github\faustengine\faustgames\native\src\resources\atlaspacker.cpp(105): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-     1>f:\sources\github\faustengine\faustgames\native\src\resources\atlaspacker.cpp(106): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-     1>f:\sources\github\faustengine\faustgames\native\src\resources\atlaspacker.cpp(128): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-     1>f:\sources\github\faustengine\faustgames\native\src\resources\atlaspacker.cpp(129): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-     1>f:\sources\github\faustengine\faustgames\native\src\resources\atlaspacker.cpp(141): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-     1>f:\sources\github\faustengine\faustgames\native\src\resources\atlaspacker.cpp(142): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-         VertexFormat.cpp
-         VertexBuffer.cpp
-         UniformValueVector3.cpp
-         UniformValueTexture.cpp
-         UniformValueMatrix.cpp
-         UniformValueFloat.cpp
-         UniformValue.cpp
-         UniformInfo.cpp
-         Uniform.cpp
-         TextureRenderTargetDepth2d.cpp
-         Generating Code...
-         Compiling...
-         TextureRenderTarget2d.cpp
-         TextureLoader.cpp
-         TextureCubemap.cpp
-         Texture.cpp
-         StaticBatch.cpp
-         RenderConverter.cpp
-         Image2dData.cpp
-         Errors.cpp
-         EffectsPostProcess.cpp
-         EffectWater.cpp
-         EffectTextureLightMapColor.cpp
-         EffectTextureColorHighlight.cpp
-         EffectTextureColor.cpp
-     1>f:\sources\github\faustengine\faustgames\native\src\graphics\effecttexturecolor.cpp(9): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-     1>f:\sources\github\faustengine\faustgames\native\src\graphics\effecttexturecolor.cpp(10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-         EffectTextureAlphamaskColor.cpp
-         EffectSolidColor.cpp
-         EffectSolid.cpp
-         EffectRenderDepth.cpp
-         EffectConstant.cpp
-         EffectBase.cpp
-         Effect.cpp
-         Generating Code...
-         Compiling...
-         Color.cpp
-         Attributes.cpp
-         AttributeInfo.cpp
-         llgeResources.cpp
-         llgeGraphics.cpp
-         llgeEntities.cpp
-         llgeDrawing.cpp
-         llge.cpp
-         TransformSystem2d.cpp
-         Transform2dComponent.cpp
-         System.cpp
-         RenderSystem2d.cpp
-         Render2dComponent.cpp
-         QuadtreeEntitiesFilter.cpp
-         MatrixTransformComponent.cpp
-         Entity.cpp
-         EntitiesWorld.cpp
-         EntitiesFilter.cpp
-         DummyEntitiesFilter.cpp
-         Component.cpp
-         Generating Code...
-         Compiling...
-         Aabb2dComponent.cpp
-         WaterRenderer.cpp
-         Renderer2d.cpp
-         RenderMesh2d.cpp
-         RenderItem2d.cpp
-         PostProcess.cpp
-     1>f:\sources\github\faustengine\faustgames\native\src\drawing\postprocess.cpp(134): warning C4267: 'argument': conversion from 'size_t' to 'unsigned short', possible loss of data
-     1>f:\sources\github\faustengine\faustgames\native\src\drawing\postprocess.cpp(135): warning C4267: 'argument': conversion from 'size_t' to 'unsigned short', possible loss of data
-     1>f:\sources\github\faustengine\faustgames\native\src\drawing\postprocess.cpp(138): warning C4267: 'argument': conversion from 'size_t' to 'unsigned short', possible loss of data
-     1>f:\sources\github\faustengine\faustgames\native\src\drawing\postprocess.cpp(142): warning C4267: 'argument': conversion from 'size_t' to 'unsigned short', possible loss of data
-     1>f:\sources\github\faustengine\faustgames\native\src\drawing\postprocess.cpp(143): warning C4267: 'argument': conversion from 'size_t' to 'unsigned short', possible loss of data
-     1>f:\sources\github\faustengine\faustgames\native\src\drawing\postprocess.cpp(146): warning C4267: 'argument': conversion from 'size_t' to 'unsigned short', possible loss of data
-         Camera.cpp
-         Generating Code...
-       Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"F:\sources-1c\moon\Solutions\Debug\llge.dll" /INCREMENTAL /NOLOGO /LIBPATH:..\lib\Win32 opengl32.lib glew32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"F:\sources-1c\moon\Solutions\Debug\llge.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"F:\sources-1c\moon\Solutions\Debug\llge.lib" /MACHINE:X86 /DLL Debug\llgePInvoke.obj
-         Debug\BasicTest.obj
-         Debug\DebugRender.obj
-         Debug\HollowsAllocationPolicy.obj
-         Debug\MarchingSquares.obj
-         Debug\Math.obj
-         Debug\Matrix.obj
-         Debug\Spline.obj
-         Debug\SystemAllocationPolicy.obj
-         Debug\Vector.obj
-         Debug\Batcher.obj
-         Debug\Camera.obj
-         Debug\PostProcess.obj
-         Debug\Renderer2d.obj
-         Debug\RenderItem2d.obj
-         Debug\RenderMesh2d.obj
-         Debug\WaterRenderer.obj
-         Debug\Aabb2dComponent.obj
-         Debug\Component.obj
-         Debug\EntitiesFilter.obj
-         Debug\Entity.obj
-         Debug\EntitiesWorld.obj
-         Debug\DummyEntitiesFilter.obj
-         Debug\MatrixTransformComponent.obj
-         Debug\QuadtreeEntitiesFilter.obj
-         Debug\Render2dComponent.obj
-         Debug\RenderSystem2d.obj
-         Debug\System.obj
-         Debug\Transform2dComponent.obj
-         Debug\TransformSystem2d.obj
-         Debug\llgeDrawing.obj
-         Debug\llgeEntities.obj
-         Debug\llgeGeometry.obj
-         Debug\llgeGraphics.obj
-         Debug\llge.obj
-         Debug\llgeResources.obj
-         Debug\Aabb2d.obj
-         Debug\Quadtree2d.obj
-         Debug\Quadtree2dNode.obj
-         Debug\TerrainClipper.obj
-         Debug\AttributeInfo.obj
-         Debug\Attributes.obj
-         Debug\Color.obj
-         Debug\Effect.obj
-         Debug\EffectBase.obj
-         Debug\EffectConstant.obj
-         Debug\EffectRenderDepth.obj
-         Debug\Effects.obj
-         Debug\EffectSolid.obj
-         Debug\EffectSolidColor.obj
-         Debug\EffectsPostProcess.obj
-         Debug\EffectTextureAlphamaskColor.obj
-         Debug\EffectTextureColor.obj
-         Debug\EffectTextureColorHighlight.obj
-         Debug\EffectTextureLightMapColor.obj
-         Debug\EffectWater.obj
-         Debug\Errors.obj
-         Debug\GraphicsDevice.obj
-         Debug\Image2dData.obj
-         Debug\RenderConverter.obj
-         Debug\RenderState.obj
-         Debug\StaticBatch.obj
-         Debug\Texture.obj
-         Debug\TextureCubemap.obj
-         Debug\TextureImage2d.obj
-         Debug\TextureLoader.obj
-         Debug\TextureRenderTarget2d.obj
-         Debug\TextureRenderTargetDepth2d.obj
-         Debug\Uniform.obj
-         Debug\UniformInfo.obj
-         Debug\Uniforms.obj
-         Debug\UniformValue.obj
-         Debug\UniformValueCubemap.obj
-         Debug\UniformValueFloat.obj
-         Debug\UniformValueMatrix.obj
-         Debug\UniformValueTexture.obj
-         Debug\UniformValueVector3.obj
-         Debug\VertexBuffer.obj
-         Debug\VertexFormat.obj
-         Debug\VertexFormats.obj
-         Debug\AStar.obj
-         Debug\Funnel.obj
-         Debug\NavEdges.obj
-         Debug\NavMesh.obj
-         Debug\PhysicalBody.obj
-         Debug\PhysicalConverter.obj
-         Debug\PhysicalFactory.obj
-         Debug\PhysicalFixture.obj
-         Debug\PhysicalJoint.obj
-         Debug\PhysicalShape.obj
-         Debug\PhysicalWorld.obj
-         Debug\AtlasPacker.obj
-         Debug\ContentManager.obj
-         Debug\ContentProviderObb.obj
-         Debug\ContentProviderWindows.obj
-         Debug\png.obj
-         Debug\pngerror.obj
-         Debug\pngget.obj
-         Debug\pngmem.obj
-         Debug\pngpread.obj
-         Debug\pngread.obj
-         Debug\pngrio.obj
-         Debug\pngrtran.obj
-         Debug\pngrutil.obj
-         Debug\pngset.obj
-         Debug\pngtest.obj
-         Debug\pngtrans.obj
-         Debug\pngwio.obj
-         Debug\pngwrite.obj
-         Debug\pngwtran.obj
-         Debug\pngwutil.obj
-         Debug\adler32.obj
-         Debug\compress.obj
-         Debug\crc32.obj
-         Debug\deflate.obj
-         Debug\gzclose.obj
-         Debug\gzlib.obj
-         Debug\gzread.obj
-         Debug\gzwrite.obj
-         Debug\infback.obj
-         Debug\inffast.obj
-         Debug\inflate.obj
-         Debug\inftrees.obj
-         Debug\trees.obj
-         Debug\uncompr.obj
-         Debug\zutil.obj
-         Debug\Animation.obj
-         Debug\AnimationState.obj
-         Debug\AnimationStateData.obj
-         Debug\Atlas.obj
-         Debug\AtlasAttachmentLoader.obj
-         Debug\Attachment.obj
-         Debug\AttachmentLoader.obj
-         Debug\Bone.obj
-         Debug\BoneData.obj
-         Debug\BoundingBoxAttachment.obj
-         Debug\Event.obj
-         Debug\EventData.obj
-         Debug\extension.obj
-         Debug\IkConstraint.obj
-         Debug\IkConstraintData.obj
-         Debug\Json.obj
-         Debug\MeshAttachment.obj
-         Debug\PathAttachment.obj
-         Debug\PathConstraint.obj
-         Debug\PathConstraintData.obj
-         Debug\RegionAttachment.obj
-         Debug\Skeleton.obj
-         Debug\SkeletonBounds.obj
-         Debug\SkeletonData.obj
-         Debug\SkeletonJson.obj
-         Debug\Skin.obj
-         Debug\Slot.obj
-         Debug\SlotData.obj
-         Debug\TransformConstraint.obj
-         Debug\TransformConstraintData.obj
-         Debug\VertexAttachment.obj
-         Debug\SpineAnimationState.obj
-         Debug\SpineAnimationStateData.obj
-         Debug\SpineSkeleton.obj
-         Debug\SpineSkeletonAnimation.obj
-         Debug\SpineSkeletonResource.obj
-         Debug\spine.obj
-         Debug\StripeBuilder.obj
-         Debug\TerrainFactory.obj
-         Debug\b2BroadPhase.obj
-         Debug\b2CollideCircle.obj
-         Debug\b2CollideEdge.obj
-         Debug\b2CollidePolygon.obj
-         Debug\b2Collision.obj
-         Debug\b2Distance.obj
-         Debug\b2DynamicTree.obj
-         Debug\b2TimeOfImpact.obj
-         Debug\b2ChainShape.obj
-         Debug\b2CircleShape.obj
-         Debug\b2EdgeShape.obj
-         Debug\b2PolygonShape.obj
-         Debug\b2BlockAllocator.obj
-         Debug\b2Draw.obj
-         Debug\b2Math.obj
-         Debug\b2Settings.obj
-         Debug\b2StackAllocator.obj
-         Debug\b2Timer.obj
-         Debug\b2Body.obj
-         Debug\b2ContactManager.obj
-         Debug\b2Fixture.obj
-         Debug\b2Island.obj
-         Debug\b2World.obj
-         Debug\b2WorldCallbacks.obj
-         Debug\b2ChainAndCircleContact.obj
-         Debug\b2ChainAndPolygonContact.obj
-         Debug\b2CircleContact.obj
-         Debug\b2Contact.obj
-         Debug\b2ContactSolver.obj
-         Debug\b2EdgeAndCircleContact.obj
-         Debug\b2EdgeAndPolygonContact.obj
-         Debug\b2PolygonAndCircleContact.obj
-         Debug\b2PolygonContact.obj
-         Debug\b2DistanceJoint.obj
-         Debug\b2FrictionJoint.obj
-         Debug\b2GearJoint.obj
-         Debug\b2Joint.obj
-         Debug\b2MotorJoint.obj
-         Debug\b2MouseJoint.obj
-         Debug\b2PrismaticJoint.obj
-         Debug\b2PulleyJoint.obj
-         Debug\b2RevoluteJoint.obj
-         Debug\b2RopeJoint.obj
-         Debug\b2WeldJoint.obj
-         Debug\b2WheelJoint.obj
-         Debug\b2Rope.obj
-         Debug\clipper.obj
-         Debug\PVRTDecompress.obj
-         Debug\shapes.obj
-         Debug\advancing_front.obj
-         Debug\cdt.obj
-         Debug\sweep.obj
-         Debug\sweep_context.obj
-         Debug\GuillotineBinPack.obj
-         Debug\MaxRectsBinPack.obj
-         Debug\Rect.obj
-         Debug\ShelfBinPack.obj
-         Debug\ShelfNextFitBinPack.obj
-         Debug\SkylineBinPack.obj
-         Debug\dllmain.obj
-         Debug\stdafx.obj
-         llge.vcxproj -> F:\sources-1c\moon\Solutions\Debug\llge.dll
-     1>Done Building Project "F:\sources\github\FaustEngine\FaustGames\Native\llge\llge.vcxproj" (Build target(s)).
-
-Build succeeded.
-
-Time Elapsed 00:00:59.90
+﻿  SpineSkeleton.cpp
+  PhysicalWorld.cpp
+  llgePInvoke.cpp
+  Generating Code...
+  Compiling...
+  SpineSkeletonResource.cpp
+c:\_faust\faustengine\faustgames\native\src\spine\spineskeletonresource.cpp(120): warning C4018: '<': signed/unsigned mismatch
+c:\_faust\faustengine\faustgames\native\src\spine\spineskeletonresource.cpp(126): warning C4018: '<': signed/unsigned mismatch
+c:\_faust\faustengine\faustgames\native\src\spine\spineskeletonresource.cpp(133): warning C4018: '<': signed/unsigned mismatch
+c:\_faust\faustengine\faustgames\native\src\spine\spineskeletonresource.cpp(151): warning C4018: '<': signed/unsigned mismatch
+c:\_faust\faustengine\faustgames\native\src\spine\spineskeletonresource.cpp(156): warning C4018: '<': signed/unsigned mismatch
+c:\_faust\faustengine\faustgames\native\src\spine\spineskeletonresource.cpp(161): warning C4018: '<': signed/unsigned mismatch
+c:\_faust\faustengine\faustgames\native\src\spine\spineskeletonresource.cpp(167): warning C4018: '<': signed/unsigned mismatch
+  SpineSkeletonAnimation.cpp
+  SpineAnimationState.cpp
+c:\_faust\faustengine\faustgames\native\src\spine\spineanimationstate.cpp(58): warning C4101: 'previousDelta': unreferenced local variable
+c:\_faust\faustengine\faustgames\native\src\spine\spineanimationstate.cpp(70): warning C4101: 'previousDelta': unreferenced local variable
+  Generating Code...
+  Skipping... (no relevant changes detected)
+  TerrainFactory.cpp
+  StripeBuilder.cpp
+  spine.cpp
+  SpineAnimationStateData.cpp
+  ContentProviderWindows.cpp
+  ContentProviderObb.cpp
+  ContentManager.cpp
+  AtlasPacker.cpp
+  PhysicalShape.cpp
+  PhysicalJoint.cpp
+  PhysicalFixture.cpp
+  PhysicalFactory.cpp
+  PhysicalConverter.cpp
+  PhysicalBody.cpp
+  NavMesh.cpp
+  Funnel.cpp
+  AStar.cpp
+  VertexFormats.cpp
+  VertexFormat.cpp
+  VertexBuffer.cpp
+  Uniforms.cpp
+  UniformValueVector3.cpp
+  UniformValueTexture.cpp
+  UniformValueMatrix.cpp
+  UniformValueFloat.cpp
+  UniformValueCubemap.cpp
+  UniformValue.cpp
+  UniformInfo.cpp
+  Uniform.cpp
+  TextureRenderTargetDepth2d.cpp
+  TextureRenderTarget2d.cpp
+  TextureLoader.cpp
+  TextureImage2d.cpp
+  TextureCubemap.cpp
+  Texture.cpp
+  StaticBatch.cpp
+  RenderState.cpp
+  RenderConverter.cpp
+  Image2dData.cpp
+  GraphicsDevice.cpp
+  Errors.cpp
+  EffectsPostProcess.cpp
+  Effects.cpp
+  EffectWater.cpp
+  EffectTextureLightMapColor.cpp
+  EffectTextureColorHighlight.cpp
+  EffectTextureColor.cpp
+  EffectTextureAlphamaskColor.cpp
+  EffectSolidColor.cpp
+  EffectSolid.cpp
+  EffectRenderDepth.cpp
+  EffectConstant.cpp
+  EffectBase.cpp
+  Effect.cpp
+  Color.cpp
+  Attributes.cpp
+  AttributeInfo.cpp
+  TerrainClipper.cpp
+  Quadtree2dNode.cpp
+  Quadtree2d.cpp
+  Aabb2d.cpp
+  llgeResources.cpp
+  llgeGraphics.cpp
+  llgeGeometry.cpp
+  llgeEntities.cpp
+  llgeDrawing.cpp
+  llge.cpp
+  TransformSystem2d.cpp
+  Transform2dComponent.cpp
+  System.cpp
+  RenderSystem2d.cpp
+  Render2dComponent.cpp
+  QuadtreeEntitiesFilter.cpp
+  MatrixTransformComponent.cpp
+  Entity.cpp
+  EntitiesWorld.cpp
+  EntitiesFilter.cpp
+  DummyEntitiesFilter.cpp
+  Component.cpp
+  Aabb2dComponent.cpp
+  WaterRenderer.cpp
+  Renderer2d.cpp
+  RenderMesh2d.cpp
+  RenderItem2d.cpp
+  PostProcess.cpp
+  Camera.cpp
+  Batcher.cpp
+  Vector.cpp
+  SystemAllocationPolicy.cpp
+  Spline.cpp
+  Matrix.cpp
+  Math.cpp
+  MarchingSquares.cpp
+  HollowsAllocationPolicy.cpp
+  DebugRender.cpp
+  BasicTest.cpp
+     Creating library C:\work\sources\github\moon\Solutions\Debug\llge.lib and object C:\work\sources\github\moon\Solutions\Debug\llge.exp
+  llge.vcxproj -> C:\work\sources\github\moon\Solutions\Debug\llge.dll
+  llge.vcxproj -> C:\work\sources\github\moon\Solutions\Debug\llge.pdb (Full PDB)

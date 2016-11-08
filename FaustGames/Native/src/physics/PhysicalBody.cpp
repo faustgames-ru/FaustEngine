@@ -114,12 +114,19 @@ namespace physics
 	}
 
 	PhysicalBody::~PhysicalBody()
+	{		
+	}
+
+	void PhysicalBody::destroyFixtures()
 	{
 		for (uint i = 0; i < _fistures.size(); i++)
 		{
+			body->DestroyFixture(_fistures[i]->fixture);
 			delete _fistures[i];
 		}
+		_fistures.clear();
 	}
+
 
 	PhysicalFixture* PhysicalBody::createFixture(llge::PhysicsFixtureConfig config, PhysicalShape* shape)
 	{

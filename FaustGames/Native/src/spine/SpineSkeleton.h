@@ -18,12 +18,15 @@ namespace spine
 	{
 	public:
 		llge::BoneFx fx;
+		int rgbTransfomrIndex;
 		SpineSkeletonBone(void *bone);
 		const char* name();
 		virtual IntPtr API_CALL getName() OVERRIDE;
 		virtual float API_CALL getX() OVERRIDE;
 		virtual float API_CALL getY() OVERRIDE;
 		virtual void API_CALL setBoneFx(llge::BoneFx fx) OVERRIDE;
+		virtual void API_CALL setBoneRgbTransfomrIndex(int index) OVERRIDE;
+
 	private:
 		void *_spBone;
 	};
@@ -67,19 +70,21 @@ namespace spine
 		virtual float API_CALL getMaxX();
 		virtual float API_CALL getMaxY();
 		virtual float API_CALL getZ();
-		virtual void API_CALL setHsv(int tintIndex, float h, float s, float v);
-		virtual void API_CALL setRgbTransform(void *floatMatrix3) OVERRIDE;
+		virtual void API_CALL setRgbTransform(int index, void *floatMatrix3) OVERRIDE;
+		virtual void API_CALL setDefaultRgbTransform(int index) OVERRIDE;
 		SpineSkeletonSlot* findSlot(const char* slotName);
 		void setSlotRgb(const char* name, int color);
 
-
 	protected:
 	private:
+		static const int _colorTransformCount = 16;
+		static std::string _colorTransformNames[16];
+
 		void initFromResource(SpineSkeletonResource *resource);
 		void *_spSkeleton;
 		geometry::Aabb2d _aabb;
 		core::Matrix _transform;
-		core::Matrix3 _colorTransform;
+		core::Matrix3 _colorTransform[_colorTransformCount];
 		static drawing::BatcherSpineMesh _mesh;
 		static ushort _quadIndices[6];
 		static float _uvBuffer[65536];
@@ -87,9 +92,7 @@ namespace spine
 		std::vector<SpineSkeletonSlot *> _slots;
 		std::vector<SpineSkeletonBone *> _bones;
 		std::vector<SpineSkeletonBounds> _bounds;
-		static const int tintColorsCount = 16;
-		uint _tintColors[tintColorsCount];
-		static std::string _tintBones[tintColorsCount];
+		int _defaultRgbTransformIndex;
 	};
 }
 

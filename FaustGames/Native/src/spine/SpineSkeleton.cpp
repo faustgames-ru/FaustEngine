@@ -90,6 +90,7 @@ namespace spine
 	SpineSkeletonBone::SpineSkeletonBone(void* bone)
 	{
 		fx = llge::BoneFxNone;
+		rgbTransfomrIndex = -1;
 		_spBone = bone;
 	}
 
@@ -118,12 +119,25 @@ namespace spine
 		fx = value;
 	}
 
+	void SpineSkeletonBone::setBoneRgbTransfomrIndex(int index)
+	{
+		rgbTransfomrIndex = index;
+	}
+
+	inline bool ends_with(std::string const & value, std::string const & ending)
+	{
+		if (ending.size() > value.size()) return false;
+		return std::equal(ending.rbegin(), ending.rend(), value.rbegin());
+	}
+
+
+
 	SpineSkeleton::SpineSkeleton(SpineSkeletonResource *resource, float* transform) : _spSkeleton(0)
 	{
-		_colorTransform = core::Matrix3::identity;
-		for (uint i = 0; i < tintColorsCount; i++)
+		_defaultRgbTransformIndex = -1;		
+		for (uint i = 0; i < _colorTransformCount; i++)
 		{
-			_tintColors[i] = 0xff808080;
+			_colorTransform[i] = core::Matrix3::identity;
 		}
 		initFromResource(resource);
 		spSkeleton *s = (spSkeleton*)_spSkeleton;
@@ -146,6 +160,14 @@ namespace spine
 		for (i = 0; i < s->bonesCount; ++i)
 		{
 			SpineSkeletonBone* bone = new SpineSkeletonBone(s->bones[i]);
+			std::string boneName = bone->name();
+			for (int j = 0; j < _colorTransformCount; j++)
+			{
+				if (ends_with(boneName, _colorTransformNames[j]))
+				{
+					bone->setBoneRgbTransfomrIndex(j);
+				}
+			}
 			_bones.push_back(bone);
 		}
 		for (i = 0; i < s->slotsCount; ++i)
@@ -164,15 +186,11 @@ namespace spine
 	{
 		_bounds.clear();
 		drawing::Batcher* batcher = (drawing::Batcher*)batch->getNativeInstance();
-		batcher->addColorTransform(_colorTransform);
 		spSkeleton *s = (spSkeleton *)_spSkeleton;
 		geometry::Aabb2d aabb;
 		_mesh.Z = _transform.getWz();
 		graphics::EffectBase * effectInstance = graphics::RenderConverter::getInstance()->getEffect(effect);
-		//graphics::EffectBase * effectInstanceHsv = graphics::RenderConverter::getInstance()->getHsvEffect(effect);
 		graphics::EffectBase * effectInstanceRgbTransform = graphics::RenderConverter::getInstance()->getRgbTransformeffect(effect);
-
-		effectInstance = effectInstanceRgbTransform;
 		
 		effectInstance->configCopy(&_lightingConfig, effectConfig);
 		_mesh.State.config = &_lightingConfig;
@@ -191,8 +209,17 @@ namespace spine
 				: graphics::BlendState::Additive;
 			
 			SpineSkeletonBone* bone = _bones[slot->bone->data->index];
-
-			if (bone->fx == llge::BoneFx::BoneFxIgnoreLight)
+			if (_defaultRgbTransformIndex >= 0 && bone->rgbTransfomrIndex < 0)
+			{
+				batcher->addColorTransform(_colorTransform[_defaultRgbTransformIndex]);
+				_mesh.State.Effect = effectInstanceRgbTransform;
+			}
+			else if (bone->rgbTransfomrIndex >= 0)
+			{
+				batcher->addColorTransform(_colorTransform[bone->rgbTransfomrIndex]);
+				_mesh.State.Effect = effectInstanceRgbTransform;
+			}
+			else if (bone->fx == llge::BoneFx::BoneFxIgnoreLight)
 			{
 				_mesh.State.Effect = graphics::Effects::textureColor();
 				_lightingConfig.lightmap = lightmap;
@@ -678,14 +705,9 @@ namespace spine
 		return  _transform.getWz();
 	}
 
-	void SpineSkeleton::setHsv(int tintIndex, float h, float s, float v)
+	void SpineSkeleton::setRgbTransform(int index, void* floatMatrix3)
 	{
-		_tintColors[tintIndex] = graphics::Color::fromRgba(h, s, v, 1.0f);
-	}
-
-	void SpineSkeleton::setRgbTransform(void* floatMatrix3)
-	{
-		_colorTransform.setData(static_cast<float *>(floatMatrix3));
+		_colorTransform[index].setData(static_cast<float *>(floatMatrix3));
 	}
 
 	SpineSkeletonSlot* SpineSkeleton::findSlot(const char* slotName)
@@ -708,4 +730,29 @@ namespace spine
 			slot->setRgb(color);
 		}
 	}
+
+	void SpineSkeleton::setDefaultRgbTransform(int index)
+	{
+		_defaultRgbTransformIndex = index;
+	}
+
+	std::string SpineSkeleton::_colorTransformNames[16]
+	{
+		"tint00",
+		"tint01",
+		"tint02",
+		"tint03",
+		"tint04",
+		"tint05",
+		"tint06",
+		"tint07",
+		"tint08",
+		"tint09",
+		"tint10",
+		"tint11",
+		"tint12",
+		"tint13",
+		"tint14",
+		"tint15",
+	};
 }

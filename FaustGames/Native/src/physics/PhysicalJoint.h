@@ -14,17 +14,14 @@ namespace physics
 		PhysicalConverter dimensions;
 		b2Joint * joint;
 		PhysicalJoint(b2Joint * jointInstance, PhysicalConverter dimensionsValue);
-		virtual ~PhysicalJoint()
-		{
-			
-		}
+		virtual ~PhysicalJoint();
 	};
 	
 	class PhysicalFixedJoint: public PhysicalJoint, public llge::IPhysicalFixedJoint
 	{
 	public:
 		PhysicalFixedJoint(b2MouseJoint * jointInstance, PhysicalConverter dimensions);
-
+		virtual ~PhysicalFixedJoint() OVERRIDE;
 		void setTarget(float x, float y);
 		void setMaxForce(float value);
 		void setFrequency(float value);

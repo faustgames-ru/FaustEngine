@@ -7,7 +7,15 @@ namespace physics
 	{
 	}
 
+	PhysicalJoint::~PhysicalJoint()
+	{
+	}
+
 	PhysicalFixedJoint::PhysicalFixedJoint(b2MouseJoint * jointInstance, PhysicalConverter dimensions) : PhysicalJoint(jointInstance, dimensions), _joint(jointInstance)
+	{
+	}
+
+	PhysicalFixedJoint::~PhysicalFixedJoint()
 	{
 	}
 

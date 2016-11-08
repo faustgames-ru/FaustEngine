@@ -851,6 +851,11 @@ namespace llge
 		classInstance->setBoneFx(fx);
 	}
 	
+	extern "C" DLLEXPORT void API_CALL llge_SpineSkeletonBone_setBoneRgbTransfomrIndex (ISpineSkeletonBone * classInstance, int index)
+	{
+		classInstance->setBoneRgbTransfomrIndex(index);
+	}
+	
 	extern "C" DLLEXPORT float API_CALL llge_SpineSkeleton_getBoundsVertexX (ISpineSkeleton * classInstance, int boundsIndex, int vertexIndex)
 	{
 		return classInstance->getBoundsVertexX(boundsIndex, vertexIndex);
@@ -956,14 +961,14 @@ namespace llge
 		classInstance->applySkin(spineSkinNativeInstance);
 	}
 	
-	extern "C" DLLEXPORT void API_CALL llge_SpineSkeleton_setHsv (ISpineSkeleton * classInstance, int tintIndex, float h, float s, float v)
+	extern "C" DLLEXPORT void API_CALL llge_SpineSkeleton_setRgbTransform (ISpineSkeleton * classInstance, int index, void * floatMatrix3)
 	{
-		classInstance->setHsv(tintIndex, h, s, v);
+		classInstance->setRgbTransform(index, floatMatrix3);
 	}
 	
-	extern "C" DLLEXPORT void API_CALL llge_SpineSkeleton_setRgbTransform (ISpineSkeleton * classInstance, void * floatMatrix3)
+	extern "C" DLLEXPORT void API_CALL llge_SpineSkeleton_setDefaultRgbTransform (ISpineSkeleton * classInstance, int index)
 	{
-		classInstance->setRgbTransform(floatMatrix3);
+		classInstance->setDefaultRgbTransform(index);
 	}
 	
 	extern "C" DLLEXPORT void API_CALL llge_SpineSkeleton_dispose (ISpineSkeleton * classInstance)

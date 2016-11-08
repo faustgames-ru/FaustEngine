@@ -1497,6 +1497,13 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private void llge_SpineSkeletonBone_setBoneFx (IntPtr classInstance, BoneFx fx);
+		public void SetBoneRgbTransfomrIndex (int index)
+		{
+			llge_SpineSkeletonBone_setBoneRgbTransfomrIndex(ClassInstance, index);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_SpineSkeletonBone_setBoneRgbTransfomrIndex (IntPtr classInstance, int index);
 	}
 	
 	public class SpineSkeleton
@@ -1649,20 +1656,20 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private void llge_SpineSkeleton_applySkin (IntPtr classInstance, IntPtr spineSkinNativeInstance);
-		public void SetHsv (int tintIndex, float h, float s, float v)
+		public void SetRgbTransform (int index, IntPtr floatMatrix3)
 		{
-			llge_SpineSkeleton_setHsv(ClassInstance, tintIndex, h, s, v);
+			llge_SpineSkeleton_setRgbTransform(ClassInstance, index, floatMatrix3);
 		}
 		
 		[DllImport(Version.Dll)]
-		static extern private void llge_SpineSkeleton_setHsv (IntPtr classInstance, int tintIndex, float h, float s, float v);
-		public void SetRgbTransform (IntPtr floatMatrix3)
+		static extern private void llge_SpineSkeleton_setRgbTransform (IntPtr classInstance, int index, IntPtr floatMatrix3);
+		public void SetDefaultRgbTransform (int index)
 		{
-			llge_SpineSkeleton_setRgbTransform(ClassInstance, floatMatrix3);
+			llge_SpineSkeleton_setDefaultRgbTransform(ClassInstance, index);
 		}
 		
 		[DllImport(Version.Dll)]
-		static extern private void llge_SpineSkeleton_setRgbTransform (IntPtr classInstance, IntPtr floatMatrix3);
+		static extern private void llge_SpineSkeleton_setDefaultRgbTransform (IntPtr classInstance, int index);
 		public void Dispose ()
 		{
 			llge_SpineSkeleton_dispose(ClassInstance);

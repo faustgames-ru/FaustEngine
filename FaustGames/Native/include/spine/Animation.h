@@ -68,6 +68,9 @@ void spAnimation_dispose (spAnimation* self);
 void spAnimation_apply (const spAnimation* self, struct spSkeleton* skeleton, float lastTime, float time, int loop,
 		spEvent** events, int* eventsCount);
 
+void spAnimation_apply_for_mix(const spAnimation* self, struct spSkeleton* skeleton, float lastTime, float time, int loop,
+	spEvent** events, int* eventsCount);
+
 /** Poses the skeleton at the specified time for this animation mixed with the current pose.
  * @param lastTime The last time the animation was applied.
  * @param events Any triggered events are added. May be null.

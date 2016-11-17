@@ -77,6 +77,25 @@ void spAnimation_mix (const spAnimation* self, spSkeleton* skeleton, float lastT
 		spTimeline_apply(self->timelines[i], skeleton, lastTime, time, events, eventsCount, alpha);
 }
 
+void spAnimation_apply_for_mix(const spAnimation* self, spSkeleton* skeleton, float lastTime, float time, int loop, spEvent** events,
+	int* eventsCount) {
+	int i, n = self->timelinesCount;
+
+	if (loop && self->duration) {
+		time = FMOD(time, self->duration);
+		if (lastTime > 0) lastTime = FMOD(lastTime, self->duration);
+	}
+
+	for (i = 0; i < n; ++i)
+	{
+		if (self->timelines[i]->type == SP_TIMELINE_ATTACHMENT) continue;
+		if (self->timelines[i]->type == SP_TIMELINE_SCALE) continue;
+		if (self->timelines[i]->type == SP_TIMELINE_DRAWORDER) continue;
+		if (self->timelines[i]->type == SP_TIMELINE_EVENT) continue;		
+		spTimeline_apply(self->timelines[i], skeleton, lastTime, time, events, eventsCount, 1);
+	}
+}
+
 /**/
 
 typedef struct _spTimelineVtable {

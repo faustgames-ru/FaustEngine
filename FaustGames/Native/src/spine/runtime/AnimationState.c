@@ -145,7 +145,8 @@ void spAnimationState_apply (spAnimationState* self, spSkeleton* skeleton) {
 
 			float previousTime = previous->time;
 			if (!previous->loop && previousTime > previous->endTime) previousTime = previous->endTime;
-			spAnimation_apply(previous->animation, skeleton, previousTime, previousTime, previous->loop, 0, 0);
+			spAnimation_apply_for_mix(previous->animation, skeleton, previousTime, previousTime, previous->loop, 0, 0);
+			//spAnimation_apply(previous->animation, skeleton, previousTime, previousTime, previous->loop, 0, 0);
 
 			if (alpha >= 1) {
 				alpha = 1;

@@ -435,7 +435,7 @@ namespace resources
 		if (format == 1) // Rgba4444
 		{
 			_image->Format = graphics::Image2dFormat::Rgba4444;
-			_image->RawDataOffset = 4 + skipHashWords;
+			_image->RawDataOffset = 3 + skipHashWords;
 			return _image;
 		}
 		if (format == 2 || format == 3) // Pvrtc

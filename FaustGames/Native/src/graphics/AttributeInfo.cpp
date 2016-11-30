@@ -3,7 +3,7 @@
 namespace graphics
 {
 	GLuint AttributeInfo::_locationCounter(0);
-
+	
 	AttributeInfo::AttributeInfo(const char *name, AttributeType::e type) : _name(name), _type(type)
 	{
 		switch (_type)

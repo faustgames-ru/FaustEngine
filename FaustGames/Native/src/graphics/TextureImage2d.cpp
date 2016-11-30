@@ -379,6 +379,8 @@ namespace graphics
 		uint u32ColorData;
 	};
 	
+	std::vector<int> _formats;
+
 	void TextureImage2d::setData(const Image2dData *data)
 	{
 		if (AtlasEntry) return;
@@ -412,19 +414,21 @@ namespace graphics
 			}
 			else
 			{
-				int formats[256];
-				glGetIntegerv(GL_COMPRESSED_TEXTURE_FORMATS, formats);
+				GLint numFormats = 0;
+				glGetIntegerv(GL_NUM_COMPRESSED_TEXTURE_FORMATS, &numFormats);
+				_formats.resize(numFormats);
+				glGetIntegerv(GL_COMPRESSED_TEXTURE_FORMATS, _formats.data());
 				int f = getFormat(data->Format);
 				bool isFormatSupported = false;
-				/*
-				for (int i = 0; i < 256; i++)
+				
+				for (int i = 0; i < _formats.size(); i++)
 				{
-					if (f == formats[i])
+					if (f == _formats[i])
 					{
 						isFormatSupported = true;
 					}
 				}
-				*/
+				
 				if (!isFormatSupported)
 				{
 					if (data->Format == Image2dFormat::Pvrtc14 || data->Format == Image2dFormat::Pvrtc12)
@@ -706,7 +710,7 @@ namespace graphics
 		case Image2dFormat::Astc:
 			return COMPRESSED_RGBA_ASTC_4x4_KHR;
 		case Image2dFormat::Rgba4444:
-			return GL_RGBA; //GL_COMPRESSED_RGB8_ETC2;
+			return GL_RGBA;
 		default:
 			return GL_RGBA;
 		}

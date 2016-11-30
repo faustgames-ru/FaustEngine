@@ -493,7 +493,23 @@ namespace graphics
 				}
 				if (isFormatSupported)
 				{
-					int compressedImageSize = getSize(data->Width*data->Height, data->Format); // todo: calc image size
+					if (data->Format == Image2dFormat::Pvrtc14 || data->Format == Image2dFormat::Pvrtc12)
+					{
+						int pot = core::Math::pot(core::Math::max(data->Width + data->Border * 2, data->Height + data->Border * 2));
+						if (pot != data->Width || pot != data->Height)
+						{
+							TexturesDecompressorBuffer pixelsBuffer;
+							DecodePvrtcOrder(data, &pixelsBuffer);
+							int compressedImageSize = getSize(pot*pot, data->Format); 
+							glCompressedTexImage2D(GL_TEXTURE_2D, 0, getFormat(data->Format), pot, pot, 0, compressedImageSize, data->Pixels + data->RawDataOffset);
+							Errors::check(Errors::CompressedTexImage2D);
+							transform = TextureTransform(0, 0,
+								static_cast<float>(data->Width) / static_cast<float>(pot),
+								static_cast<float>(data->Height) / static_cast<float>(pot));
+							return;
+						}
+					}
+					int compressedImageSize = getSize(data->Width*data->Height, data->Format);
 					glCompressedTexImage2D(GL_TEXTURE_2D, 0, getFormat(data->Format), data->Width, data->Height, 0, compressedImageSize, data->Pixels + data->RawDataOffset);
 					Errors::check(Errors::CompressedTexImage2D);
 				}
@@ -502,6 +518,37 @@ namespace graphics
 		}
 		glBindTexture(GL_TEXTURE_2D, 0);
 		Errors::check(Errors::BindTexture);
+	}
+
+	void DecodePvrtcOrder(const Image2dData *data, TexturesDecompressorBuffer *resultBuffer)
+	{
+		int pot = core::Math::pot(core::Math::max(data->Width + data->Border * 2, data->Height + data->Border * 2));
+
+		int64_t* src = reinterpret_cast<int64_t*>(data->Pixels + data->RawDataOffset);
+
+		int blocksX = core::Math::align(data->Width + data->Border * 2, 4) / 4;
+		if (data->Format == Image2dFormat::Pvrtc12)
+			blocksX = core::Math::align(data->Width + data->Border * 2, 8) / 8;
+		int blocksY = core::Math::align(data->Height + data->Border * 2, 4) / 4;
+
+		int size = pot * pot;
+		if (data->Format == Image2dFormat::Pvrtc12)
+			size /= 4;
+		else
+			size /= 2;
+		resultBuffer->realloc(size);
+		int64_t* dst = reinterpret_cast<int64_t*>(resultBuffer->pixelsBuffer);
+		int i = 0;
+		for (int y = 0; y < blocksY; y++)
+		{
+			for (int x = 0; x < blocksX; x++)
+			{
+				int code = core::Math::mortonCode(y, x);
+				int64_t block = src[i];
+				dst[code] = block;
+				i++;
+			}
+		}
 	}
 
 	int DecodePvrtc(const Image2dData *data, TexturesDecompressorBuffer *resultBuffer)

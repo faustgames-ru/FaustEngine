@@ -90,6 +90,7 @@ namespace graphics
 	};
      */
 
+	void DecodePvrtcOrder(const Image2dData *data, TexturesDecompressorBuffer *resultBuffer);
 	int DecodePvrtc(const Image2dData *data, TexturesDecompressorBuffer *resultBuffer);
 	void DecodeAtc(const Image2dData *data, TexturesDecompressorBuffer *resultBuffer, int &aW, int &aH);
 	void DecodeEtc2(const Image2dData *data, TexturesDecompressorBuffer *resultBuffer, int &aW, int &aH);

@@ -632,7 +632,6 @@
     <ClCompile Include="..\src_decompressors\PVRTDecompress.cpp" />
     <ClCompile Include="..\src_decompress_ati\DecompressAtc.cpp" />
     <ClCompile Include="..\src_etcpack\source_edit\etcdec.cpp" />
-    <ClCompile Include="..\src_etcpack\source_edit\etcimage.cpp" />
     <ClCompile Include="..\src_etcpack\source_edit\etcpack.cpp" />
     <ClCompile Include="..\src_poly2tri\common\shapes.cc" />
     <ClCompile Include="..\src_poly2tri\sweep\advancing_front.cc" />

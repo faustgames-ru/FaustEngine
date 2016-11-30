@@ -7,6 +7,57 @@
 #include "../../src_decompress_ati/DecompressAtc.h"
 #include "../../src_etcpack/etcpack_lib.h"
 
+
+#define ATC_RGB_AMD							0x8C92
+#define ATC_RGBA_EXPLICIT_ALPHA_AMD			0x8C93
+#define ATC_RGBA_INTERPOLATED_ALPHA_AMD		0x87EE
+
+#define COMPRESSED_RGB_PVRTC_4BPPV1_IMG		0x8C00
+#define COMPRESSED_RGB_PVRTC_2BPPV1_IMG		0x8C01
+#define COMPRESSED_RGBA_PVRTC_4BPPV1_IMG	0x8C02
+#define COMPRESSED_RGBA_PVRTC_2BPPV1_IMG	0x8C03
+
+#define COMPRESSED_RGB8_ETC2                             0x9274
+#define COMPRESSED_SRGB8_ETC2                            0x9275
+#define COMPRESSED_RGB8_PUNCHTHROUGH_ALPHA1_ETC2         0x9276
+#define COMPRESSED_SRGB8_PUNCHTHROUGH_ALPHA1_ETC2        0x9277
+#define COMPRESSED_RGBA8_ETC2_EAC                        0x9278
+#define COMPRESSED_SRGB8_ALPHA8_ETC2_EAC                 0x9279
+#define COMPRESSED_R11_EAC                               0x9270
+#define COMPRESSED_SIGNED_R11_EAC                        0x9271
+#define COMPRESSED_RG11_EAC                              0x9272
+#define COMPRESSED_SIGNED_RG11_EAC                       0x9273
+
+#define COMPRESSED_RGBA_ASTC_4x4_KHR            0x93B0
+#define COMPRESSED_RGBA_ASTC_5x4_KHR            0x93B1
+#define COMPRESSED_RGBA_ASTC_5x5_KHR            0x93B2
+#define COMPRESSED_RGBA_ASTC_6x5_KHR            0x93B3
+#define COMPRESSED_RGBA_ASTC_6x6_KHR            0x93B4
+#define COMPRESSED_RGBA_ASTC_8x5_KHR            0x93B5
+#define COMPRESSED_RGBA_ASTC_8x6_KHR            0x93B6
+#define COMPRESSED_RGBA_ASTC_8x8_KHR            0x93B7
+#define COMPRESSED_RGBA_ASTC_10x5_KHR           0x93B8
+#define COMPRESSED_RGBA_ASTC_10x6_KHR           0x93B9
+#define COMPRESSED_RGBA_ASTC_10x8_KHR           0x93BA
+#define COMPRESSED_RGBA_ASTC_10x10_KHR          0x93BB
+#define COMPRESSED_RGBA_ASTC_12x10_KHR          0x93BC
+#define COMPRESSED_RGBA_ASTC_12x12_KHR          0x93BD
+
+#define COMPRESSED_SRGB8_ALPHA8_ASTC_4x4_KHR    0x93D0
+#define COMPRESSED_SRGB8_ALPHA8_ASTC_5x4_KHR    0x93D1
+#define COMPRESSED_SRGB8_ALPHA8_ASTC_5x5_KHR    0x93D2
+#define COMPRESSED_SRGB8_ALPHA8_ASTC_6x5_KHR    0x93D3
+#define COMPRESSED_SRGB8_ALPHA8_ASTC_6x6_KHR    0x93D4
+#define COMPRESSED_SRGB8_ALPHA8_ASTC_8x5_KHR    0x93D5
+#define COMPRESSED_SRGB8_ALPHA8_ASTC_8x6_KHR    0x93D6
+#define COMPRESSED_SRGB8_ALPHA8_ASTC_8x8_KHR    0x93D7
+#define COMPRESSED_SRGB8_ALPHA8_ASTC_10x5_KHR   0x93D8
+#define COMPRESSED_SRGB8_ALPHA8_ASTC_10x6_KHR   0x93D9
+#define COMPRESSED_SRGB8_ALPHA8_ASTC_10x8_KHR   0x93DA
+#define COMPRESSED_SRGB8_ALPHA8_ASTC_10x10_KHR  0x93DB
+#define COMPRESSED_SRGB8_ALPHA8_ASTC_12x10_KHR  0x93DC
+#define COMPRESSED_SRGB8_ALPHA8_ASTC_12x12_KHR  0x93DD
+
 namespace graphics
 {
 
@@ -645,14 +696,15 @@ namespace graphics
 		case Image2dFormat::Rgba:
 			return GL_RGBA;
 		case Image2dFormat::Pvrtc12:
+			return COMPRESSED_RGBA_PVRTC_2BPPV1_IMG;
 		case Image2dFormat::Pvrtc14:
-			return 0x8C02; // GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG
+			return COMPRESSED_RGBA_PVRTC_4BPPV1_IMG;
 		case Image2dFormat::Etc1:
-			return GL_COMPRESSED_RGB8_ETC2;
+			return COMPRESSED_RGB8_ETC2;
 		case Image2dFormat::Etc2:
-			return GL_COMPRESSED_RGBA8_ETC2_EAC;
+			return COMPRESSED_RGBA8_ETC2_EAC;
 		case Image2dFormat::Astc:
-			return GL_COMPRESSED_RGBA_ASTC_4x4_KHR;
+			return COMPRESSED_RGBA_ASTC_4x4_KHR;
 		case Image2dFormat::Rgba4444:
 			return GL_RGBA; //GL_COMPRESSED_RGB8_ETC2;
 		default:

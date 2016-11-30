@@ -1,3 +1,18 @@
-﻿  PVRTDecompress.cpp
+﻿  etcpack.cpp
+c:\_faust\faustengine\faustgames\native\src_etcpack\source_edit\etcpack.cpp(140): warning C4091: 'static ': ignored on left of 'PATTERN' when no variable is declared
+c:\_faust\faustengine\faustgames\native\src_etcpack\source_edit\etcpack.cpp(142): warning C4091: 'static ': ignored on left of 'MODE' when no variable is declared
+c:\_faust\faustengine\faustgames\native\src_etcpack\source_edit\etcpack.cpp(182): warning C4091: 'static ': ignored on left of 'ETC2PACKAGE' when no variable is declared
+c:\_faust\faustengine\faustgames\native\src_etcpack\source_edit\etcpack.cpp(183): warning C4091: 'static ': ignored on left of 'COMPRESS_MODE' when no variable is declared
+c:\_faust\faustengine\faustgames\native\src_etcpack\source_edit\etcpack.cpp(184): warning C4091: 'static ': ignored on left of 'SPEED' when no variable is declared
+c:\_faust\faustengine\faustgames\native\src_etcpack\source_edit\etcpack.cpp(185): warning C4091: 'static ': ignored on left of 'METRIC' when no variable is declared
+c:\_faust\faustengine\faustgames\native\src_etcpack\source_edit\etcpack.cpp(186): warning C4091: 'static ': ignored on left of 'CODEC' when no variable is declared
+c:\_faust\faustengine\faustgames\native\src_etcpack\source_edit\etcpack.cpp(224): warning C4091: 'static ': ignored on left of '' when no variable is declared
+c:\_faust\faustengine\faustgames\native\src_etcpack\source_edit\etcpack.cpp(445): warning C4473: 'printf' : not enough arguments passed for format string
+  c:\_faust\faustengine\faustgames\native\src_etcpack\source_edit\etcpack.cpp(445): note: placeholders and their parameters expect 1 variadic arguments, but 0 were provided
+  c:\_faust\faustengine\faustgames\native\src_etcpack\source_edit\etcpack.cpp(445): note: the missing variadic argument 1 is required by format string '%s'
+c:\_faust\faustengine\faustgames\native\src_etcpack\source_edit\etcpack.cpp(9078): warning C4474: 'printf' : too many arguments passed for format string
+  c:\_faust\faustengine\faustgames\native\src_etcpack\source_edit\etcpack.cpp(9078): note: placeholders and their parameters expect 0 variadic arguments, but 1 were provided
+c:\_faust\faustengine\faustgames\native\src_etcpack\source_edit\etcpack.cpp(9122): warning C4474: 'printf' : too many arguments passed for format string
+  c:\_faust\faustengine\faustgames\native\src_etcpack\source_edit\etcpack.cpp(9122): note: placeholders and their parameters expect 0 variadic arguments, but 1 were provided
   llge.vcxproj -> C:\work\sources\github\moon\Solutions\Debug\llge.dll
   llge.vcxproj -> C:\work\sources\github\moon\Solutions\Debug\llge.pdb (Full PDB)

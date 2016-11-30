@@ -1569,8 +1569,5 @@
     <ClCompile Include="..\src_etcpack\source_edit\etcdec.cpp">
       <Filter>third_party\etcpack\source_edit</Filter>
     </ClCompile>
-    <ClCompile Include="..\src_etcpack\source_edit\etcimage.cpp">
-      <Filter>third_party\etcpack\source_edit</Filter>
-    </ClCompile>
   </ItemGroup>
 </Project>

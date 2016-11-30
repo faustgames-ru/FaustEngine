@@ -34,6 +34,9 @@ FILE_LIST += $(wildcard $(LOCAL_PATH)/../../../Native/src_box2d/Box2D/Dynamics/J
 FILE_LIST += $(wildcard $(LOCAL_PATH)/../../../Native/src_box2d/Box2D/Rope/*.c*)
 FILE_LIST += $(wildcard $(LOCAL_PATH)/../../../Native/src_poly2tri/common/*.c*)
 FILE_LIST += $(wildcard $(LOCAL_PATH)/../../../Native/src_poly2tri/sweep/*.c*)
+FILE_LIST += $(wildcard $(LOCAL_PATH)/../../../Native/src_etcpack/*.c*)
+FILE_LIST += $(wildcard $(LOCAL_PATH)/../../../Native/src_etcpack/source_edit/*.c*)
+FILE_LIST += $(wildcard $(LOCAL_PATH)/../../../Native/src_decompress_ati/*.c*)
 LOCAL_SRC_FILES :=$(FILE_LIST:$(LOCAL_PATH)/%=%)
 LOCAL_LDLIBS := -lGLESv2 -lz -llog -landroid
 LOCAL_CPP_FEATURES += exceptions

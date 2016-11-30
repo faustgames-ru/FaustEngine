@@ -38,6 +38,16 @@ namespace core
 		static float fmod(float x, float d);
 		static float clamp(float x, float from, float to);
 		static int pot(int value);
+		static int align(int value, int align);
+
+		static uint mortonCode(uint x, uint y);
+		static void mortonDecode(uint m, uint &x, uint &y);
+		static uint mortonDecodeX(uint m);
+		static uint mortonDecodeY(uint m);
+	private:
+		static uint morton2DSplitBy2Bits(uint a);
+		static uint morton2DGetSecondBits(uint m);
+		static uint Magicbit2DMasks32[];
 	};
 }
 

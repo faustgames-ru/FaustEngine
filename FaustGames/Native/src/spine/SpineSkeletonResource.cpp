@@ -101,9 +101,12 @@ namespace spine
 		dispose();
 	}
 
-	void API_CALL SpineSkeletonResource::load(String atlasText, String jsonText, String dir)
-	{
-		_spAtlas = spAtlas_create(atlasText, strlen(atlasText), dir, 0);
+	void API_CALL SpineSkeletonResource::load(String atlasText, String jsonText, String dir, llge::TextureQueryFormat format)
+	{		
+		_atlasRenderObject.pagesFormat = format;
+		//spAtlas* atlas = spAtlas_create(atlasText, strlen(atlasText), dir, &_atlasRenderObject);
+		
+		_spAtlas = spAtlas_create(atlasText, strlen(atlasText), dir, &_atlasRenderObject);
 		_spSkeletonJson = spSkeletonJson_create((spAtlas *)_spAtlas);
 		_spSkeletonData = spSkeletonJson_readSkeletonData((spSkeletonJson*)_spSkeletonJson, jsonText);
 		

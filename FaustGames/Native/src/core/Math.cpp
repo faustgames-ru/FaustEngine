@@ -153,9 +153,62 @@ namespace core
 		return v;
 	}
 
+	int Math::align(int value, int align)
+	{
+		int result = (value / align)*align;
+		if (result < value)
+			result += align;
+		return result;
+	}
+
+	uint Math::mortonCode(uint x, uint y)
+	{
+		return morton2DSplitBy2Bits(x) | (morton2DSplitBy2Bits(y) << 1);
+	}
+
+	void Math::mortonDecode(uint m, uint& x, uint& y)
+	{
+		x = mortonDecodeX(m);
+		y = mortonDecodeY(m);
+	}
+
+	uint Math::mortonDecodeX(uint m)
+	{
+		return morton2DGetSecondBits(m);
+	}
+
+	uint Math::mortonDecodeY(uint m)
+	{
+		return morton2DGetSecondBits(m >> 1);
+	}
+
+	uint Math::morton2DSplitBy2Bits(uint a)
+	{
+		uint* masks = Magicbit2DMasks32;
+		uint x = a;
+		x = (x | x << 16) & masks[1];
+		x = (x | x << 8) & masks[2];
+		x = (x | x << 4) & masks[3];
+		x = (x | x << 2) & masks[4];
+		x = (x | x << 1) & masks[5];
+		return x;
+	}
+
+	uint Math::morton2DGetSecondBits(uint m)
+	{
+		uint* masks = Magicbit2DMasks32;
+		uint x = m & masks[4];
+		x = (x ^ (x >> 2)) & masks[3];
+		x = (x ^ (x >> 4)) & masks[2];
+		x = (x ^ (x >> 8)) & masks[1];
+		return x;
+	}
+
 	bool Math::equals(float a, float b, float epsilon)
 	{
 		float d = a - b;
 		return (d > -epsilon) && (d < epsilon);
 	}
+
+	uint Math::Magicbit2DMasks32[] = { 0xFFFFFFFF, 0x0000FFFF, 0x00FF00FF, 0x0F0F0F0F, 0x33333333, 0x55555555 };
 }

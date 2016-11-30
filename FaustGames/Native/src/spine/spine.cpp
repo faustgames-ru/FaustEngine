@@ -1,10 +1,12 @@
 #include "spine_classes.h"
 #include "spine/Atlas.h"
 #include "spine/extension.h"
+#include "SpineSkeletonResource.h"
 
 void _spAtlasPage_createTexture(spAtlasPage* self, const char* path)
 {
 	graphics::TextureImage2d* texture;
+	spine::AtlasRenderObject* renderObject = static_cast<spine::AtlasRenderObject *>(self->atlas->rendererObject);
 	if (resources::ContentManager::_replaceSeparator)
 	{
 		std::string replace = path;
@@ -13,12 +15,13 @@ void _spAtlasPage_createTexture(spAtlasPage* self, const char* path)
 			if (replace[i] == '/')
 				replace[i] = '_';
 		}
-		texture = resources::ContentManager::Default.addLoadTexture(replace.c_str(), self->width, self->height, llge::Rgba);
+
+		texture = resources::ContentManager::Default.addLoadTexture(replace.c_str(), self->width, self->height, renderObject->pagesFormat);
 		resources::ContentManager::Default._loadedImages[replace] = texture;
 	}
-	else
+	else 
 	{
-		texture = resources::ContentManager::Default.addLoadTexture(path, self->width, self->height, llge::Rgba);
+		texture = resources::ContentManager::Default.addLoadTexture(path, self->width, self->height, renderObject->pagesFormat);
 		resources::ContentManager::Default._loadedImages[path] = texture;
 	}
 

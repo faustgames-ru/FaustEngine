@@ -195,6 +195,7 @@ namespace llge
 		virtual void API_CALL drawEdges(GraphicsEffects effect, GraphicsVertexFormats vertexFormat, void *vertices, int primitivesCount)
 		{
 			graphicsDevice->renderState.setBlend(_blendMode);
+			graphicsDevice->renderState.setDepth(DepthState::None);
 			graphicsDevice->renderState.setEffect(_converter.getEffect(effect));
 			graphicsDevice->drawEdges(_converter.getFormat(vertexFormat), vertices, primitivesCount);
 		}
@@ -202,6 +203,7 @@ namespace llge
 		virtual void API_CALL draw(GraphicsEffects effect, GraphicsVertexFormats vertexFormat, void *vertices, int primitivesCount)
 		{
 			graphicsDevice->renderState.setBlend(_blendMode);
+			graphicsDevice->renderState.setDepth(DepthState::None);
 			graphicsDevice->renderState.setEffect(_converter.getEffect(effect));
 			graphicsDevice->drawTriangles(_converter.getFormat(vertexFormat), vertices, primitivesCount);
 		}
@@ -209,6 +211,7 @@ namespace llge
 		virtual void API_CALL drawElements(GraphicsEffects effect, GraphicsVertexFormats vertexFormat, void *vertices, void *indices, int primitivesCount)
 		{
 			graphicsDevice->renderState.setBlend(_blendMode);
+			graphicsDevice->renderState.setDepth(DepthState::None);
 			graphicsDevice->renderState.setEffect(_converter.getEffect(effect));
 			graphicsDevice->drawPrimitives(_converter.getFormat(vertexFormat), vertices, (unsigned short *)indices, primitivesCount);
 		}
@@ -216,6 +219,7 @@ namespace llge
 		virtual void API_CALL drawVertexBuffer(GraphicsEffects effect, GraphicsVertexFormats vertexFormat, IVertexBuffer *vertexBuffer, void *indices, int primitivesCount)
 		{
 			graphicsDevice->renderState.setBlend(_blendMode);
+			graphicsDevice->renderState.setDepth(DepthState::None);
 			graphicsDevice->renderState.setEffect(_converter.getEffect(effect));
 			graphicsDevice->drawVertexBuffer(_converter.getFormat(vertexFormat), vertexBuffer->getId(), (unsigned short *)indices, primitivesCount);
 		}

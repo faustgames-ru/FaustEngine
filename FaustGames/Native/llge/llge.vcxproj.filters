@@ -112,6 +112,15 @@
     <Filter Include="third_party\decompressors">
       <UniqueIdentifier>{b069492a-b59a-4707-9d45-a9013bb07d2a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="third_party\decompress_ati">
+      <UniqueIdentifier>{ed23673d-b9d7-432e-9e1d-844b8caa5cad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="third_party\etcpack">
+      <UniqueIdentifier>{f00a4e2f-d503-4ee1-a0a1-caf9f6d49ccf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="third_party\etcpack\source_edit">
+      <UniqueIdentifier>{f9bdeca2-862e-41ac-a046-0041bfbab538}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\CommonSources\include\llge.h">
@@ -869,6 +878,12 @@
     <ClInclude Include="..\shaders\texture_color_rgb_transform_frag.h">
       <Filter>engine\shaders</Filter>
     </ClInclude>
+    <ClInclude Include="..\src_decompress_ati\DecompressAtc.h">
+      <Filter>third_party\decompress_ati</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_etcpack\etcpack_lib.h">
+      <Filter>third_party\etcpack</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\CommonSources\gen\llgePInvoke.cpp">
@@ -1544,6 +1559,18 @@
     </ClCompile>
     <ClCompile Include="..\src_decompressors\PVRTDecompress.cpp">
       <Filter>third_party\decompressors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_decompress_ati\DecompressAtc.cpp">
+      <Filter>third_party\decompress_ati</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_etcpack\source_edit\etcpack.cpp">
+      <Filter>third_party\etcpack\source_edit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_etcpack\source_edit\etcdec.cpp">
+      <Filter>third_party\etcpack\source_edit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_etcpack\source_edit\etcimage.cpp">
+      <Filter>third_party\etcpack\source_edit</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

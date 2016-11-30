@@ -4,6 +4,8 @@
 #include "GraphicsDevice.h"
 #include "Color.h"
 #include "../../src_decompressors/PVRTDecompress.h"
+#include "../../src_decompress_ati/DecompressAtc.h"
+#include "../../src_etcpack/etcpack_lib.h"
 
 namespace graphics
 {
@@ -25,8 +27,6 @@ namespace graphics
 			value |= v << (i * 8);
 		}
 	};
-
-	TexturesDecompressorBuffer TextureImage2d::pixelsBuffer;
 
 	TextureImage2d::TextureImage2d() : _createMipmaps(false), _wrap(false), _filter(true)
 	{
@@ -107,15 +107,21 @@ namespace graphics
 
 		_size = 0;
 		_handle = 0;
-		_handleDefault = _empty.getHandle();	
+		_handleDefault = _empty.getHandle();
 	}
-	
+
 	void API_CALL TextureImage2d::LoadPixels(int width, int height, llge::TextureImage2dFormat format, void *pixels)
 	{
 		if (AtlasEntry) return;
-		setData(width, height, (Image2dFormat::e)format, (unsigned int *)pixels);
+		Image2dData data;
+		data.Width = width;
+		data.Height = height;
+		data.Format = static_cast<Image2dFormat::e>(format);
+		data.Pixels = static_cast<unsigned int*>(pixels);
+		setData(&data);
+		data.Pixels = nullptr;
 	}
-	
+
 	void API_CALL TextureImage2d::create()
 	{
 		if (AtlasEntry) return;
@@ -159,14 +165,14 @@ namespace graphics
 			Errors::check(Errors::TexParameteri);
 		}
 
-		if (_wrap) 
+		if (_wrap)
 		{
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 			Errors::check(Errors::TexParameteri);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 			Errors::check(Errors::TexParameteri);
 		}
-		else 
+		else
 		{
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 			Errors::check(Errors::TexParameteri);
@@ -206,18 +212,127 @@ namespace graphics
 	{
 		return _tracedIndices.data();
 	}
-		
+
 	struct PvrtcBlock
 	{
 		int i0;
 		int i1;
 	};
 
-	void TextureImage2d::setData(int width, int height, Image2dFormat::e format, unsigned int *pixels)
+	void TextureImage2d::loadMipmaps(int width, int height, Image2dFormat::e format, unsigned int *pixels)
+	{
+		int w = width;
+		int h = height;
+
+		int mip = 0;
+		while ((w > 0) || (h > 0))
+		{
+			glTexImage2D(GL_TEXTURE_2D, mip, getFormat(format), w == 0 ? 1 : w, h == 0 ? 1 : h, 0, getFormat(format), GL_UNSIGNED_BYTE, pixels);
+			Errors::check(Errors::TexImage2D);
+			int pw = w;
+			w /= 2;
+			h /= 2;
+
+			int i0 = 0;
+			int i1 = 0;
+			int i2 = 0;
+			int i3 = 0;
+			ImageColor c0(0);
+			ImageColor c1(0);
+			ImageColor c2(0);
+			ImageColor c3(0);
+			ImageColor c(0);
+
+			unsigned int r;
+			unsigned int g;
+			unsigned int b;
+			unsigned int a;
+
+			if (format == Image2dFormat::Rgba)
+			{
+				for (int y = 0; y < h; y++)
+				{
+					i0 = (y * 2 + 0) * pw + 0 + 0;
+					i1 = (y * 2 + 1) * pw + 0 + 0;
+					i2 = (y * 2 + 0) * pw + 0 + 1;
+					i3 = (y * 2 + 1) * pw + 0 + 1;
+
+					for (int x = 0; x < w; x++)
+					{
+						//i0 = (y * 2 + 0) * w * 2 + x * 2 + 0;
+						//i1 = (y * 2 + 1) * w * 2 + x * 2 + 0;
+						//i2 = (y * 2 + 0) * w * 2 + x * 2 + 1;
+						//i3 = (y * 2 + 1) * w * 2 + x * 2 + 1;
+
+
+
+						c0 = ImageColor(pixels[i0]);
+						c1 = ImageColor(pixels[i1]);
+						c2 = ImageColor(pixels[i2]);
+						c3 = ImageColor(pixels[i3]);
+
+
+						r = (c0.getComponent(0) + c1.getComponent(0) + c2.getComponent(0) + c3.getComponent(0)) >> 2;
+						g = (c0.getComponent(1) + c1.getComponent(1) + c2.getComponent(1) + c3.getComponent(1)) >> 2;
+						b = (c0.getComponent(2) + c1.getComponent(2) + c2.getComponent(2) + c3.getComponent(2)) >> 2;
+						a = (c0.getComponent(3) + c1.getComponent(3) + c2.getComponent(3) + c3.getComponent(3)) >> 2;
+						c.setComponent(0, r);
+						c.setComponent(1, g);
+						c.setComponent(2, b);
+						c.setComponent(3, a);
+
+						pixels[y * w + x] = c0.value;
+
+						i0 += 2;
+						i1 += 2;
+						i2 += 2;
+						i3 += 2;
+					}
+				}
+				mip++;
+			}
+			else
+			{
+				byte* pixels3 = static_cast<byte*>(static_cast<void *>(pixels));
+				for (int y = 0; y < h; y++)
+				{
+					i0 = ((y * 2 + 0) * pw + 0 + 0) * 3;
+					i1 = ((y * 2 + 1) * pw + 0 + 0) * 3;
+					i2 = ((y * 2 + 0) * pw + 0 + 1) * 3;
+					i3 = ((y * 2 + 1) * pw + 0 + 1) * 3;
+
+					for (int x = 0; x < w; x++)
+					{
+						r = (pixels3[i0 + 0] + pixels3[i1 + 0] + pixels3[i2 + 0] + pixels3[i3 + 0]) >> 2;
+						g = (pixels3[i0 + 1] + pixels3[i1 + 1] + pixels3[i2 + 1] + pixels3[i3 + 1]) >> 2;
+						b = (pixels3[i0 + 2] + pixels3[i1 + 2] + pixels3[i2 + 2] + pixels3[i3 + 2]) >> 2;
+
+						pixels3[(y * w + x) * 3 + 0] = r;
+						pixels3[(y * w + x) * 3 + 1] = g;
+						pixels3[(y * w + x) * 3 + 2] = b;
+
+						i0 += 2 * 3;
+						i1 += 2 * 3;
+						i2 += 2 * 3;
+						i3 += 2 * 3;
+					}
+				}
+				mip++;
+			}
+		}
+	}
+
+	struct PVRTCWord
+	{
+		uint u32ModulationData;
+		uint u32ColorData;
+	};
+	
+	void TextureImage2d::setData(const Image2dData *data)
 	{
 		if (AtlasEntry) return;
 		Size -= _size;
-		_size = getSize(width * height, format);
+		_size = getSize(data->Width * data->Height, data->Format);
 		Size += _size;
 		UniformValues::resetSamplers();
 		GraphicsDevice::Default.resetSamplersState();
@@ -225,124 +340,32 @@ namespace graphics
 		glActiveTexture(GL_TEXTURE0);
 		Errors::check(Errors::ActiveTexture);
 
-		glBindTexture(GL_TEXTURE_2D, _handle);		
+		glBindTexture(GL_TEXTURE_2D, _handle);
 		Errors::check(Errors::BindTexture);
 
-		if (_createMipmaps && (format == Image2dFormat::Rgb || format == Image2dFormat::Rgba))
+		if (_createMipmaps && (data->Format == Image2dFormat::Rgb || data->Format == Image2dFormat::Rgba))
 		{
-			int w = width;
-			int h = height;
-
-			int mip = 0;
-			while ((w > 0) || (h > 0))
-			{
-				glTexImage2D(GL_TEXTURE_2D, mip, getFormat(format), w == 0 ? 1 : w, h == 0 ? 1 : h, 0, getFormat(format), GL_UNSIGNED_BYTE, pixels);
-				Errors::check(Errors::TexImage2D);
-				int pw = w;
-				w /= 2;
-				h /= 2;
-
-				int i0 = 0;
-				int i1 = 0;
-				int i2 = 0;
-				int i3 = 0;
-				ImageColor c0(0);
-				ImageColor c1(0);
-				ImageColor c2(0);
-				ImageColor c3(0);
-				ImageColor c(0);
-
-				unsigned int r;
-				unsigned int g;
-				unsigned int b;
-				unsigned int a;
-
-				if (format == Image2dFormat::Rgba)
-				{
-					for (int y = 0; y < h; y++)
-					{
-						i0 = (y * 2 + 0) * pw + 0 + 0;
-						i1 = (y * 2 + 1) * pw + 0 + 0;
-						i2 = (y * 2 + 0) * pw + 0 + 1;
-						i3 = (y * 2 + 1) * pw + 0 + 1;
-
-						for (int x = 0; x < w; x++)
-						{
-							//i0 = (y * 2 + 0) * w * 2 + x * 2 + 0;
-							//i1 = (y * 2 + 1) * w * 2 + x * 2 + 0;
-							//i2 = (y * 2 + 0) * w * 2 + x * 2 + 1;
-							//i3 = (y * 2 + 1) * w * 2 + x * 2 + 1;
-
-
-
-							c0 = ImageColor(pixels[i0]);
-							c1 = ImageColor(pixels[i1]);
-							c2 = ImageColor(pixels[i2]);
-							c3 = ImageColor(pixels[i3]);
-
-
-							r = (c0.getComponent(0) + c1.getComponent(0) + c2.getComponent(0) + c3.getComponent(0)) >> 2;
-							g = (c0.getComponent(1) + c1.getComponent(1) + c2.getComponent(1) + c3.getComponent(1)) >> 2;
-							b = (c0.getComponent(2) + c1.getComponent(2) + c2.getComponent(2) + c3.getComponent(2)) >> 2;
-							a = (c0.getComponent(3) + c1.getComponent(3) + c2.getComponent(3) + c3.getComponent(3)) >> 2;
-							c.setComponent(0, r);
-							c.setComponent(1, g);
-							c.setComponent(2, b);
-							c.setComponent(3, a);
-
-							pixels[y * w + x] = c0.value;
-
-							i0 += 2;
-							i1 += 2;
-							i2 += 2;
-							i3 += 2;
-						}
-					}
-					mip++;
-				}
-				else
-				{
-					byte* pixels3 = static_cast<byte*>(static_cast<void *>(pixels));
-					for (int y = 0; y < h; y++)
-					{
-						i0 = ((y * 2 + 0) * pw + 0 + 0)*3;
-						i1 = ((y * 2 + 1) * pw + 0 + 0)*3;
-						i2 = ((y * 2 + 0) * pw + 0 + 1)*3;
-						i3 = ((y * 2 + 1) * pw + 0 + 1)*3;
-
-						for (int x = 0; x < w; x++)
-						{
-							r = (pixels3[i0 + 0] + pixels3[i1 + 0] + pixels3[i2 + 0] + pixels3[i3 + 0]) >> 2;
-							g = (pixels3[i0 + 1] + pixels3[i1 + 1] + pixels3[i2 + 1] + pixels3[i3 + 1]) >> 2;
-							b = (pixels3[i0 + 2] + pixels3[i1 + 2] + pixels3[i2 + 2] + pixels3[i3 + 2]) >> 2;
-
-							pixels3[(y * w + x) * 3 + 0] = r;
-							pixels3[(y * w + x) * 3 + 1] = g;
-							pixels3[(y * w + x) * 3 + 2] = b;
-
-							i0 += 2*3;
-							i1 += 2*3;
-							i2 += 2*3;
-							i3 += 2*3;
-						}
-					}
-					mip++;
-				}
-			}
+			loadMipmaps(data->Width, data->Height, data->Format, data->Pixels);
 		}
 		else
 		{
-			if (format == Image2dFormat::Rgb || format == Image2dFormat::Rgba)
+			if (data->Format == Image2dFormat::Rgb || data->Format == Image2dFormat::Rgba)
 			{
-				glTexImage2D(GL_TEXTURE_2D, 0, getFormat(format), width, height, 0, getFormat(format), GL_UNSIGNED_BYTE, pixels);
+				glTexImage2D(GL_TEXTURE_2D, 0, getFormat(data->Format), data->Width, data->Height, 0, getFormat(data->Format), GL_UNSIGNED_BYTE, data->Pixels);
+				Errors::check(Errors::TexImage2D);
+			}
+			else if (data->Format == Image2dFormat::Rgba4444)
+			{
+				glTexImage2D(GL_TEXTURE_2D, 0, getFormat(data->Format), data->Width, data->Height, 0, getFormat(data->Format), GL_UNSIGNED_SHORT_4_4_4_4, data->Pixels + data->RawDataOffset);
 				Errors::check(Errors::TexImage2D);
 			}
 			else
 			{
 				int formats[256];
 				glGetIntegerv(GL_COMPRESSED_TEXTURE_FORMATS, formats);
-				int f = getFormat(format);
+				int f = getFormat(data->Format);
 				bool isFormatSupported = false;
+				/*
 				for (int i = 0; i < 256; i++)
 				{
 					if (f == formats[i])
@@ -350,96 +373,267 @@ namespace graphics
 						isFormatSupported = true;
 					}
 				}
+				*/
 				if (!isFormatSupported)
 				{
-					if (format == Image2dFormat::Pvrtc12)
+					if (data->Format == Image2dFormat::Pvrtc14 || data->Format == Image2dFormat::Pvrtc12)
 					{
-						int w = core::Math::pot(width);
-						int h = core::Math::pot(height);
-						pixelsBuffer.realloc(w * h);
-						int bw = w / 8;
-						int bh = h / 4;
-						int bsw = width / 8;
-						int bsh = height / 4;
-						int size = bw*bh;
-						int *words = new int[size * 2];
-						int *src = reinterpret_cast<int *>(getPixels(format, pixels));
-						for(int i = 0; i < size; i++)
-						{
-							words[i * 2 + 0] = -1;
-							words[i * 2 + 1] = 0;
-						}
-						
-						for (int y = 0; y < 1/*bsh*/; y++)
-						{
-							for (int x = 0; x < 512/*bsw / 4*/; x++)
-							{
-								int iw = x + y*bw;
-								int is = x + y*bsw;
-								words[iw * 2 + 0] = 1332609027;// src[is * 2 + 0];
-								words[iw * 2 + 1] = -1523931861;// src[is * 2 + 1];
-							}
-						}
-						
-						pvr::PVRTDecompressPVRTC(words, 1, w, h, reinterpret_cast<unsigned char*>(pixelsBuffer.pixelsBuffer));
-						//transform = TextureTransform(0, 0, width / w, height / h);
-						
+						TexturesDecompressorBuffer resultBuffer;
+						int pot = DecodePvrtc(data, &resultBuffer);
 						Image2dFormat::e fmt = Image2dFormat::Rgba;
 
-						glTexImage2D(GL_TEXTURE_2D, 0, getFormat(fmt), w, h, 0, getFormat(fmt), GL_UNSIGNED_BYTE, pixelsBuffer.pixelsBuffer);
-						Errors::check(Errors::TexImage2D); 
-					}
-					else if (format == Image2dFormat::Pvrtc14)
-					{
-						pixelsBuffer.realloc(width * height);						
-						pvr::PVRTDecompressPVRTC(getPixels(format, pixels), 0, width, height, reinterpret_cast<unsigned char*>(pixelsBuffer.pixelsBuffer));
-						
-						Image2dFormat::e fmt = Image2dFormat::Rgba;
-
-						glTexImage2D(GL_TEXTURE_2D, 0, getFormat(fmt), width, height, 0, getFormat(fmt), GL_UNSIGNED_BYTE, pixelsBuffer.pixelsBuffer);
+						glTexImage2D(GL_TEXTURE_2D, 0, getFormat(fmt), pot, pot, 0, getFormat(fmt), GL_UNSIGNED_BYTE, resultBuffer.pixelsBuffer);
+						transform = TextureTransform(0, 0,
+							static_cast<float>(data->Width) / static_cast<float>(pot),
+							static_cast<float>(data->Height) / static_cast<float>(pot));
 						Errors::check(Errors::TexImage2D);
+					}
+					else if (data->Format == Image2dFormat::Atc)
+					{
+						TexturesDecompressorBuffer pixelsBuffer;
+						int aW = data->Width;
+						int aH = data->Height;
+						DecodeAtc(data, &pixelsBuffer, aW, aH);
+						Image2dFormat::e fmt = Image2dFormat::Rgba;
+
+						glTexImage2D(GL_TEXTURE_2D, 0, getFormat(fmt), aW, aH, 0, getFormat(fmt), GL_UNSIGNED_BYTE, pixelsBuffer.pixelsBuffer);
+						transform = TextureTransform(0, 0,
+							static_cast<float>(data->Width) / static_cast<float>(aW),
+							static_cast<float>(data->Height) / static_cast<float>(aH));
+						Errors::check(Errors::TexImage2D);
+					}
+					else if (data->Format == Image2dFormat::Etc1)
+					{
+						TexturesDecompressorBuffer pixelsBuffer;
+						int aW = data->Width;
+						int aH = data->Height;
+						DecodeEtc1(data, &pixelsBuffer, aW, aH);
+						Image2dFormat::e fmt = Image2dFormat::Rgb;
+
+						glTexImage2D(GL_TEXTURE_2D, 0, getFormat(fmt), aW, aH, 0, getFormat(fmt), GL_UNSIGNED_BYTE, pixelsBuffer.pixelsBuffer);
+						transform = TextureTransform(0, 0,
+							static_cast<float>(data->Width) / static_cast<float>(aW),
+							static_cast<float>(data->Height) / static_cast<float>(aH));
+						Errors::check(Errors::TexImage2D);
+					}
+					else if (data->Format == Image2dFormat::Etc2)
+					{
+						TexturesDecompressorBuffer pixelsBuffer;
+						int aW = data->Width;
+						int aH = data->Height;
+						DecodeEtc2(data, &pixelsBuffer, aW, aH);
+						Image2dFormat::e fmt = Image2dFormat::Rgba;
+
+						glTexImage2D(GL_TEXTURE_2D, 0, getFormat(fmt), aW, aH, 0, getFormat(fmt), GL_UNSIGNED_BYTE, pixelsBuffer.pixelsBuffer);
+						transform = TextureTransform(0, 0,
+							static_cast<float>(data->Width) / static_cast<float>(aW),
+							static_cast<float>(data->Height) / static_cast<float>(aH));
+						Errors::check(Errors::TexImage2D);
+					}
+					if (data->Format == Image2dFormat::Astc)
+					{
+						// todo: Astc decode
 					}
 					// todo convert	
 				}
 				if (isFormatSupported)
 				{
-					glCompressedTexImage2D(GL_TEXTURE_2D, 0, getFormat(format), width, height, 0, GL_UNSIGNED_BYTE, getPixels(format, pixels));
+					int compressedImageSize = getSize(data->Width*data->Height, data->Format); // todo: calc image size
+					glCompressedTexImage2D(GL_TEXTURE_2D, 0, getFormat(data->Format), data->Width, data->Height, 0, compressedImageSize, data->Pixels + data->RawDataOffset);
 					Errors::check(Errors::CompressedTexImage2D);
-					/*
-					if (format == Image2dFormat::Pvrtc12)
-					{
-					glCompressedTexImage2D(GL_TEXTURE_2D, 0, getFormat(format), width, height, 0, GL_UNSIGNED_BYTE, pixels + 2);
-					Errors::check(Errors::CompressedTexImage2D);
-					}
-					else if (format == Image2dFormat::Etc1)
-					{
-					glCompressedTexImage2D(GL_TEXTURE_2D, 0, getFormat(format), width, height, 0, GL_UNSIGNED_BYTE, pixels + 4);
-					Errors::check(Errors::CompressedTexImage2D);
-					}
-					else
-					{
-					glTexImage2D(GL_TEXTURE_2D, 0, getFormat(format), width, height, 0, getFormat(format), GL_UNSIGNED_BYTE, pixels);
-					Errors::check(Errors::TexImage2D);
-					}
-					*/
 				}
 			}
-			
+
 		}
 		glBindTexture(GL_TEXTURE_2D, 0);
 		Errors::check(Errors::BindTexture);
-
-		if (TraceTriangles)
-		{
-			//traceTriangles(width, height, format, pixels);
-		}
 	}
 
-
-	void TextureImage2d::setData(const Image2dData *data)
+	int DecodePvrtc(const Image2dData *data, TexturesDecompressorBuffer *resultBuffer)
 	{
-		if (AtlasEntry) return;
-		setData(data->Width, data->Height, data->Format, data->Pixels);
+		int pot = core::Math::pot(core::Math::max(data->Width + data->Border * 2, data->Height + data->Border * 2));
+
+		TexturesDecompressorBuffer pixelsBuffer;
+
+		pixelsBuffer.realloc(pot * pot);
+		resultBuffer->realloc(pot * pot);
+		int64_t* dst = reinterpret_cast<int64_t*>(pixelsBuffer.pixelsBuffer);
+		int64_t* src = reinterpret_cast<int64_t*>(data->Pixels + data->RawDataOffset);
+		for (int i = 0; i < pixelsBuffer.size; i++)
+		{
+			pixelsBuffer.pixelsBuffer[i] = 0;
+		}
+
+		int blocksX = core::Math::align(data->Width + data->Border * 2, 4) / 4;
+		if (data->Format == Image2dFormat::Pvrtc12)
+			blocksX = core::Math::align(data->Width + data->Border * 2, 8) / 8;
+		int blocksY = core::Math::align(data->Height + data->Border * 2, 4) / 4;
+		int i = 0;
+		for (int y = 0; y < blocksY; y++)
+		{
+			for (int x = 0; x < blocksX; x++)
+			{
+				int code = core::Math::mortonCode(y, x);
+				int64_t block = src[i];
+				dst[code] = block;
+				i++;
+			}
+		}
+
+		pvr::PVRTDecompressPVRTC(dst, data->Format == Image2dFormat::Pvrtc12 ? 1 : 0, pot, pot, reinterpret_cast<unsigned char*>(resultBuffer->pixelsBuffer));
+		return pot;
+	}
+
+	void DecodeAtc(const Image2dData* data, TexturesDecompressorBuffer* pixelsBuffer, int& aW, int& aH)
+	{
+		aW = core::Math::align(data->Width, 4);
+		aH = core::Math::align(data->Height, 4);
+
+		pixelsBuffer->realloc(aW * aH);
+
+		int blocksX = aW / 4;
+		int blocksY = aH / 4;
+
+		uint* dst = reinterpret_cast<uint*>(pixelsBuffer->pixelsBuffer);
+		unsigned long* src = reinterpret_cast<unsigned long*>(data->Pixels + data->RawDataOffset);
+		int srcIndex = 0;
+		int dstBlockIndex = 0;
+
+
+		for (int y = 0; y < blocksY; y++)
+		{
+			uint* row = dst;
+			for (int x = 0; x < blocksX; x++)
+			{
+				unsigned long compressed[4];
+				byte rgba[4 * 4 * 4];
+				uint* rgbaptr = reinterpret_cast<uint*>(rgba);
+				compressed[0] = src[srcIndex];
+				srcIndex++;
+				compressed[1] = src[srcIndex];
+				srcIndex++;
+				compressed[2] = src[srcIndex];
+				srcIndex++;
+				compressed[3] = src[srcIndex];
+				srcIndex++;
+
+				atc::CCodec_ATC::DecompressRGBABlock_ExplicitAlpha(rgba, compressed);
+
+				int j = 0;
+				uint* subDst = row;
+				for (int iy = 0; iy < 4; iy++)
+				{
+					uint* subRow = subDst;
+					for (int ix = 0; ix < 4; ix++)
+					{
+						*subRow = *rgbaptr;
+						subRow++;
+						rgbaptr++;
+					}
+					subDst += aW;
+				}
+				row += 4;
+			}
+			dst += aW * 4;
+		}
+	}
+	
+	void copyBytes4(byte* src, byte* dst)
+	{
+		dst[0] = src[0];
+		dst[1] = src[1];
+		dst[2] = src[2];
+		dst[3] = src[3];
+	}
+	
+	void swapBytes4(byte* src, byte* dst)
+	{
+		dst[3] = src[0];
+		dst[2] = src[1];
+		dst[1] = src[2];
+		dst[0] = src[3];
+	}
+	int swapBytes4(int value)
+	{
+		
+		byte* src = reinterpret_cast<byte*>(&value);
+		int result;
+		byte* dst = reinterpret_cast<byte*>(&result);
+		swapBytes4(src, dst);
+		return result;
+	}
+	
+	void DecodeEtc2(const Image2dData* data, TexturesDecompressorBuffer* pixelsBuffer, int& aW, int& aH)
+	{
+		setupAlphaTable();
+
+		aW = core::Math::align(data->Width, 4);
+		aH = core::Math::align(data->Height, 4);
+
+		pixelsBuffer->realloc(aW * aH);
+
+		int blocksX = aW / 4;
+		int blocksY = aH / 4;
+
+		byte* dst = reinterpret_cast<byte*>(pixelsBuffer->pixelsBuffer);
+		byte* src = reinterpret_cast<byte*>(data->Pixels + data->RawDataOffset);
+		int srcIndex = 0;
+
+
+		unsigned int compressed[4];
+		for (int y = 0; y < blocksY; y++)
+		{
+			for (int x = 0; x < blocksX; x++)
+			{
+				byte* compressedPtr0 = reinterpret_cast<byte*>(compressed + 0);
+				byte* compressedPtr1 = reinterpret_cast<byte*>(compressed + 1);
+				byte* compressedPtr2 = reinterpret_cast<byte*>(compressed + 2);
+				byte* compressedPtr3 = reinterpret_cast<byte*>(compressed + 3);
+				copyBytes4(src + srcIndex, compressedPtr0);
+				srcIndex += 4;
+				copyBytes4(src + srcIndex, compressedPtr1);
+				srcIndex += 4;
+				swapBytes4(src + srcIndex, compressedPtr2);
+				srcIndex += 4;
+				swapBytes4(src + srcIndex, compressedPtr3);
+				srcIndex += 4;
+				
+				decompressBlockAlphaC(compressedPtr0, dst + 3, aW, aH, x * 4, y * 4, 4);
+				decompressBlockETC2c(compressed[2], compressed[3], dst, aW, aH, x * 4, y * 4, 4);
+			}
+		}
+	}
+	
+	void DecodeEtc1(const Image2dData* data, TexturesDecompressorBuffer* pixelsBuffer, int& aW, int& aH)
+	{
+		aW = core::Math::align(data->Width, 4);
+		aH = core::Math::align(data->Height, 4);
+
+		pixelsBuffer->realloc(aW * aH * 3 / 4);
+
+		int blocksX = aW / 4;
+		int blocksY = aH / 4;
+
+		byte* dst = reinterpret_cast<byte*>(pixelsBuffer->pixelsBuffer);
+		byte* src = reinterpret_cast<byte*>(data->Pixels + data->RawDataOffset);
+		int srcIndex = 0;
+
+
+		unsigned int compressed[2];
+		for (int y = 0; y < blocksY; y++)
+		{
+			for (int x = 0; x < blocksX; x++)
+			{
+				byte* compressedPtr0 = reinterpret_cast<byte*>(compressed+0);
+				byte* compressedPtr1 = reinterpret_cast<byte*>(compressed+1);
+				swapBytes4(src + srcIndex, compressedPtr0);
+				srcIndex += 4;
+				swapBytes4(src + srcIndex, compressedPtr1);
+				srcIndex += 4;
+
+				decompressBlockETC2(compressed[0], compressed[1], dst, aW, aH, x*4, y*4);
+			}
+		}
 	}
 
 	GLenum TextureImage2d::getFormat(Image2dFormat::e format)
@@ -454,6 +648,12 @@ namespace graphics
 		case Image2dFormat::Pvrtc14:
 			return 0x8C02; // GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG
 		case Image2dFormat::Etc1:
+			return GL_COMPRESSED_RGB8_ETC2;
+		case Image2dFormat::Etc2:
+			return GL_COMPRESSED_RGBA8_ETC2_EAC;
+		case Image2dFormat::Astc:
+			return GL_COMPRESSED_RGBA_ASTC_4x4_KHR;
+		case Image2dFormat::Rgba4444:
 			return GL_RGBA; //GL_COMPRESSED_RGB8_ETC2;
 		default:
 			return GL_RGBA;
@@ -473,7 +673,12 @@ namespace graphics
 		case Image2dFormat::Pvrtc14:
 			return size / 2;
 		case Image2dFormat::Etc1:
-			return size / 6;
+			return size / 2;
+		case Image2dFormat::Etc2:
+		case Image2dFormat::Astc:
+			return size;
+		case Image2dFormat::Atc:
+			return size;
 		default:
 			return GL_RGBA;
 		}
@@ -488,9 +693,11 @@ namespace graphics
 			return reinterpret_cast<byte*>(pixels);
 		case Image2dFormat::Pvrtc12:
 		case Image2dFormat::Pvrtc14:
-			return reinterpret_cast<byte*>(pixels + 4);
+			return reinterpret_cast<byte*>(pixels);
 		case Image2dFormat::Etc1:
-			return reinterpret_cast<byte*>(pixels + 4);
+		case Image2dFormat::Etc2:
+		case Image2dFormat::Astc:
+			return reinterpret_cast<byte*>(pixels);
 		default:
 			return reinterpret_cast<byte*>(pixels);
 		}
@@ -498,24 +705,39 @@ namespace graphics
 
 	TexturesDecompressorBuffer::TexturesDecompressorBuffer()
 	{
-		size = 2048 * 2048;
-		pixelsBuffer = new uint[size];
+		size = 0;
+		pixelsBuffer = nullptr;
+	}
+
+	TexturesDecompressorBuffer::~TexturesDecompressorBuffer()
+	{
+		if (pixelsBuffer == nullptr) return;
+		delete[] pixelsBuffer;
+		size = 0;
+		pixelsBuffer = nullptr;
 	}
 
 	void TexturesDecompressorBuffer::realloc(int newSize)
 	{
 		if(pixelsBuffer == nullptr)
 		{
-			pixelsBuffer = new uint[size];
 			size = newSize;
+			pixelsBuffer = new uint[size];
 		}
 		else
 		{
 			if (newSize > size)
 			{
-				delete pixelsBuffer;
-				pixelsBuffer = new uint[size];
+				delete[] pixelsBuffer;
 				size = newSize;
+				if (newSize > 0)
+				{
+					pixelsBuffer = new uint[size];
+				}
+				else
+				{
+					pixelsBuffer = nullptr;
+				}
 			}
 		}
 	}
@@ -537,7 +759,13 @@ namespace graphics
 	{
 		_empty.create();
 		unsigned int blackPixel = 0x00000000;
-		_empty.setData(1, 1, Image2dFormat::Rgba, &blackPixel);
+		Image2dData data;
+		data.Width = 1;
+		data.Height = 1;
+		data.Format = Image2dFormat::Rgba;
+		data.Pixels = &blackPixel;
+		_empty.setData(&data);
+		data.Pixels = nullptr;
 	}
 
 	void TextureImage2d::cleanupStatic()
@@ -620,4 +848,11 @@ namespace graphics
 		delete this;
 	}
  */
+
+	/*
+	* Color1555To888() - In addition to the conversion, this function returns a boolean
+	*                    TRUE or FALSE indicating if the high bit is set.
+	*/
+	
+
 }

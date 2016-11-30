@@ -11,14 +11,14 @@ namespace resources
 	{
 		std::string fileName;
 		graphics::TextureImage2d *textureImage;
+		int w;
+		int h;
+		llge::TextureQueryFormat queryFormat;
 	};
 
 	struct LoadRegisrtyEntry
 	{
 		std::string fileName;
-		int w;
-		int h;
-		llge::TextureImage2dFormat format;
 	};
 	/*
 	class AtlasEntryInput
@@ -45,13 +45,15 @@ namespace resources
 	public:
 		ContentManager();
 		void cleanup();
-		unsigned int registerTexture(const char *name, int w, int h, llge::TextureImage2dFormat format);
-		graphics::Image2dData * loadUnregisteredTexture(const char *name);
+		unsigned int registerTexture(const char *name);
+		graphics::Image2dData * loadUnregisteredTexture(const char *name, llge::TextureQueryFormat queryFormat);
 		graphics::Image2dData * loadUnregisteredPvrTexture(const char *name);
-		graphics::Image2dData * loadUnregisteredEtcTexture(const char *name);
+		graphics::Image2dData * loadUnregisteredRgba4444Texture(const char *name);
+		graphics::Image2dData * loadUnregisteredCompressedTexture(const char *name);
+
 		char* loadString(const char *name);
-		graphics::TextureImage2d * addLoadTexture(const char *name);
-		graphics::TextureImage2d * addLoadTexture(const char *name, int w, int h, llge::TextureImage2dFormat format);
+		graphics::TextureImage2d * addLoadTexture(const char *name, llge::TextureQueryFormat format);
+		graphics::TextureImage2d * addLoadTexture(const char *name, int w, int h, llge::TextureQueryFormat format);
 		void addDisposeTexture(graphics::TextureImage2d *image);
 		graphics::Image2dData * loadTexture(int id);
 		void open();
@@ -62,12 +64,14 @@ namespace resources
 
 
 		virtual llge::IContentAtlasMap * API_CALL getContentAtlasMap()OVERRIDE;
+		virtual void API_CALL useCompression(llge::TextureImage2dFormat format) override;
+
 		virtual void API_CALL replaceSeparator(bool value)OVERRIDE;
 		//virtual void API_CALL setObbFile(char * obbFile);
-		virtual int API_CALL registerImage(char * name, int w, int h, llge::TextureImage2dFormat format)OVERRIDE;
+		virtual int API_CALL registerImage(char * name) OVERRIDE;
 		virtual void API_CALL startLoad()OVERRIDE;
 		virtual bool API_CALL update()OVERRIDE;
-		virtual void API_CALL loadImage(int id, llge::ITextureImage2d *textureImage) OVERRIDE;
+		virtual void API_CALL loadImage(int id, llge::ITextureImage2d *textureImage, int w, int h, llge::TextureQueryFormat queryFormat) OVERRIDE;
 		virtual llge::ITextureBuffer2d *API_CALL loadBuffer(int id)OVERRIDE;
 		virtual void API_CALL finishLoad()OVERRIDE;
 		virtual void API_CALL dispose()OVERRIDE;
@@ -90,10 +94,11 @@ namespace resources
 		std::vector<LoadRegisrtyEntry> _files;
 		std::vector<LoadImageEntry> _loadEntries;
 		std::vector<graphics::TextureImage2d *> _disposeEntries;
+		char* _compressionExt;
 		graphics::Image2dData *_image;
 		bool _isOpened;
 		bool _isAtlasBuilderStarted;
-		IAtlasPacker* _packers[llge::TextureFormatEnumSize];
+		IAtlasPacker* _packers[llge::TFEnumSize];
 		static bool ImageSizeLoaded;
 	};		
 }

@@ -37,6 +37,12 @@ namespace spine
 		SpineSkin* _value;
 	};
 
+	class AtlasRenderObject
+	{
+	public:
+		llge::TextureQueryFormat pagesFormat;
+	};
+
 
 	class SpineSkeletonResource : public llge::ISpineResource
 	{
@@ -48,7 +54,7 @@ namespace spine
 		SpineEvent* getEvent(int i);
 		int getEventsCount();
 
-		virtual void API_CALL load(String atlasText, String jsonText, String dir);
+		virtual void API_CALL load(String atlasText, String jsonText, String dir, llge::TextureQueryFormat format);
 		virtual void API_CALL unLoad();
 		virtual llge::ISpineAnimation* API_CALL getSpineAnimation(int i);
 		virtual int API_CALL getSpineAnimationsCount();
@@ -77,6 +83,7 @@ namespace spine
 		SpineSkin* _defaultSkin;
 		std::string _error;
 		bool _invalid;
+		AtlasRenderObject _atlasRenderObject;
 	};
 }
 

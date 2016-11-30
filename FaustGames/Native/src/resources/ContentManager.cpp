@@ -8,6 +8,13 @@
 
 namespace resources
 {
+
+	char* nilExt("nil");
+	char* texExt("tex");
+	char* pvrExt("pvr");
+	char* atcExt("atc");
+	char* pkmExt("pkm");
+	char* astcExt("ast");
 	/*
 	class AtlasPage
 	{
@@ -32,7 +39,7 @@ namespace resources
 		int _h;
 		graphics::Image2dData* _pageData;
 	};
-
+	
 	AtlasOnlinePacker::AtlasOnlinePacker() : _actualPage(nullptr), _w(1), _h(1), _pageData(nullptr)
 	{
 		init(4096, 4096);
@@ -139,9 +146,10 @@ namespace resources
 		core::Mem::deallocate(mem);
 	}
 
-	ContentManager::ContentManager() : _image(0), _isOpened(false)
+	ContentManager::ContentManager() : _image(nullptr), _isOpened(false)
 	{
-		for (int i = 0; i < llge::TextureFormatEnumSize; i++)
+		_compressionExt = "pvr";
+		for (int i = 0; i < llge::TFEnumSize; i++)
 		{
 			_packers[i] = nullptr;
 		}
@@ -153,36 +161,34 @@ namespace resources
 		_files.clear();
 	}
 
-	unsigned int ContentManager::registerTexture(const char *name, int w, int h, llge::TextureImage2dFormat format)
+	unsigned int ContentManager::registerTexture(const char *name)
 	{
 		unsigned int result = _files.size();
 		LoadRegisrtyEntry entry;
 		entry.fileName = name;
 		int mipLevel = 1 << graphics::GraphicsDevice::Default.config.mipmapsLevel;
-		entry.w = w / mipLevel;
-		entry.h = h / mipLevel;
-		entry.format = format;
 		_files.push_back(entry);
 		return result;
 	}
 
 	ContentManager ContentManager::Default;
 
-	graphics::TextureImage2d* ContentManager::addLoadTexture(const char *name)
+	graphics::TextureImage2d* ContentManager::addLoadTexture(const char *name, llge::TextureQueryFormat format)
 	{
 		LoadImageEntry entry;
 		graphics::TextureImage2d *image = new graphics::TextureImage2d(false, true);
 		entry.fileName = name;
+		entry.queryFormat = format;
 		entry.textureImage = image;
 		_loadEntries.push_back(entry);
 		return image;
 	}
 
-	graphics::TextureImage2d* ContentManager::addLoadTexture(const char* name, int w, int h, llge::TextureImage2dFormat format)
+	graphics::TextureImage2d* ContentManager::addLoadTexture(const char* name, int w, int h, llge::TextureQueryFormat format)
 	{
-		int wLimint = ImageMaxWidth / 2;
-		int hLimint = ImageMaxHeight / 2;
-		IAtlasPacker * packer = queryPacker(format);
+		int wLimint = ImageMaxWidth / 2 - 16;
+		int hLimint = ImageMaxHeight / 2 - 16;
+		IAtlasPacker * packer = nullptr;// queryPacker(format);
 		if (packer != nullptr)
 		{
 			if (w > 0 && h > 0 && packer->ready() && w <= wLimint && h <= hLimint)
@@ -195,7 +201,7 @@ namespace resources
 				return input.texture;
 			}
 		}
-		return addLoadTexture(name);
+		return addLoadTexture(name, format);
 	}
 
 	void ContentManager::addDisposeTexture(graphics::TextureImage2d *image)
@@ -212,31 +218,35 @@ namespace resources
 	graphics::Image2dData * ContentManager::loadTexture(int id)
 	{
 		const char *name = _files[id].fileName.c_str();
-		return loadUnregisteredTexture(name);
+		return loadUnregisteredTexture(name, llge::TextureQueryFormat::TQFRgba8888);
 	}
 
-	graphics::Image2dData * ContentManager::loadUnregisteredTexture(const char *name)
+	graphics::Image2dData * ContentManager::loadUnregisteredTexture(const char *name, llge::TextureQueryFormat queryFormat)
 	{
 		std::string path = name;
-		/*
 		if (path.size() > 4)
 		{
-			path[path.size() - 3] = 'p';
-			path[path.size() - 2] = 'k';
-			path[path.size() - 1] = 'm';
-			if (ContentProvider::existContent(path.c_str()))
+			if (queryFormat == llge::TQFRgba4444)
 			{
-				return loadUnregisteredEtcTexture(path.c_str());
+				path[path.size() - 3] = texExt[0];
+				path[path.size() - 2] = texExt[1];
+				path[path.size() - 1] = texExt[2];
+				if (ContentProvider::existContent(path.c_str()))
+				{
+					return loadUnregisteredCompressedTexture(path.c_str());
+				}
 			}
-			path[path.size() - 3] = 'p';
-			path[path.size() - 2] = 'v';
-			path[path.size() - 1] = 'r';
-			if (ContentProvider::existContent(path.c_str()))
+			else if (queryFormat == llge::TQFPlatformCompressed)
 			{
-				return loadUnregisteredPvrTexture(path.c_str());
+				path[path.size() - 3] = _compressionExt[0];
+				path[path.size() - 2] = _compressionExt[1];
+				path[path.size() - 1] = _compressionExt[2];
+				if (ContentProvider::existContent(path.c_str()))
+				{
+					return loadUnregisteredCompressedTexture(path.c_str());
+				}
 			}
 		}
-		*/
 		if (!ContentProvider::existContent(name))
 			return 0;
 		//todo: load data from content provider
@@ -392,35 +402,73 @@ namespace resources
 		ContentProvider::closeContent();
 		_image->Width = *(_image->Pixels + 0);
 		_image->Height = *(_image->Pixels + 1);
-		
-		int bpp = *(_image->Pixels + 2);
-		if (bpp == 2)
-		{
-			_image->Format = graphics::Image2dFormat::Pvrtc12;
-		}
-		else
-		{
-			_image->Format = graphics::Image2dFormat::Pvrtc14;
-		}
-		
+		_image->Border = *(_image->Pixels + 2);
+		int bpp = *(_image->Pixels + 3);
+		_image->Format = bpp == 2?graphics::Image2dFormat::Pvrtc12: graphics::Image2dFormat::Pvrtc14;
+		_image->RawDataOffset = 5;
 		return _image;
 	}
 
-	graphics::Image2dData* ContentManager::loadUnregisteredEtcTexture(const char* name)
+	graphics::Image2dData* ContentManager::loadUnregisteredRgba4444Texture(const char* name)
 	{
 		ContentProvider::openContent(name);
 		int size = ContentProvider::read(_image->Pixels, ImageBufferSize);
 		ContentProvider::closeContent();
-		
-		byte* pkmh = static_cast<byte*>(static_cast<void*>(_image->Pixels));
-		
-
-
-		_image->Width = (*(pkmh + 8) << 8) + *(pkmh + 9);
-		_image->Height = (*(pkmh + 10) << 8) + *(pkmh + 11);
-
-		_image->Format = graphics::Image2dFormat::Etc1;
+		_image->Width = *(_image->Pixels + 0);
+		_image->Height = *(_image->Pixels + 1);
+		_image->Format = graphics::Image2dFormat::Rgba4444;
+		_image->RawDataOffset = 2;
 		return _image;
+	}
+
+	graphics::Image2dData* ContentManager::loadUnregisteredCompressedTexture(const char* name)
+	{
+		ContentProvider::openContent(name);
+		int size = ContentProvider::read(_image->Pixels, ImageBufferSize);
+		ContentProvider::closeContent();
+		int format = *(_image->Pixels + 0);
+		int compression = *(_image->Pixels + 1);
+		int skipHashWords = 2 + *(_image->Pixels + 2) / 4;
+		_image->Width = *(_image->Pixels + 1 + skipHashWords);
+		_image->Height = *(_image->Pixels + 2 + skipHashWords);
+		_image->Border = 0;
+		if (format == 1) // Rgba4444
+		{
+			_image->Format = graphics::Image2dFormat::Rgba4444;
+			_image->RawDataOffset = 4 + skipHashWords;
+			return _image;
+		}
+		if (format == 2 || format == 3) // Pvrtc
+		{
+			_image->Border = *(_image->Pixels + 3+ skipHashWords);
+			int bpp = *(_image->Pixels + 4 + skipHashWords);
+			_image->Format = bpp == 2 ? graphics::Image2dFormat::Pvrtc12 : graphics::Image2dFormat::Pvrtc14;
+			_image->RawDataOffset = 6 + skipHashWords;
+			return _image;
+		}
+		if (format == 4) // Atc
+		{
+			_image->Format = graphics::Image2dFormat::Atc;
+			_image->RawDataOffset = 5 + skipHashWords;
+			return _image;
+		}
+		if (format == 5) // Etc2
+		{
+			int hasAlpha = *(_image->Pixels + 3 + skipHashWords);
+
+			_image->Format = hasAlpha ? graphics::Image2dFormat::Etc2 : graphics::Image2dFormat::Etc1;
+			_image->RawDataOffset = 5 + skipHashWords;
+			return _image;
+		}
+		if (format == 6) // Astc
+		{
+			int hasAlpha = *(_image->Pixels + 3 + skipHashWords);
+
+			_image->Format = graphics::Image2dFormat::Astc;
+			_image->RawDataOffset = 5 + skipHashWords;
+			return _image;
+		}
+		return nullptr;
 	}
 
 	char* ContentManager::loadString(const char* name)
@@ -460,23 +508,20 @@ namespace resources
 	}
 
 	void ContentManager::startAtlasBuild()
-	{
-		/*
+	{		
 		AtlasTexturesPool::Default.clear();
-		for (int i = 0; i < llge::TextureFormatEnumSize; i++)
+		for (int i = 0; i < llge::TFEnumSize; i++)
 		{
 			IAtlasPacker* packer = _packers[i];
 			if (packer != nullptr)
 				packer->startPack(ImageMaxWidth);
 		}
-		_isAtlasBuilderStarted = true;
-		*/
+		_isAtlasBuilderStarted = true;		
 	}
 
 	void ContentManager::finishAtlasBuild()
-	{
-		/*
-		for (int i = 0; i < llge::TextureFormatEnumSize; i++)
+	{		
+		for (int i = 0; i < llge::TFEnumSize; i++)
 		{
 			IAtlasPacker* packer = _packers[i];
 			if (packer != nullptr)
@@ -485,23 +530,56 @@ namespace resources
 				packer->loadFiles();
 			}
 		}
-		_isAtlasBuilderStarted = false;
-		*/
+		_isAtlasBuilderStarted = false;		
 	}
 
 	llge::IContentAtlasMap * API_CALL ContentManager::getContentAtlasMap()
 	{
 		return nullptr;
 	}
+
 	
+
+	void ContentManager::useCompression(llge::TextureImage2dFormat format)
+	{
+		switch (format)
+		{
+		case llge::TFRgba8888: 
+			_compressionExt = nilExt;
+			break;			
+		case llge::TFRgb888: 
+			_compressionExt = nilExt;
+			break;
+		case llge::TFRgba4444: 
+			_compressionExt = texExt;
+			break;
+		case llge::TFPvrtc12: 
+			_compressionExt = pvrExt;
+			break;
+		case llge::TFPvrtc14: 
+			_compressionExt = pvrExt;
+			break;
+		case llge::TFAtc:
+			_compressionExt = atcExt;
+			break;
+		case llge::TFEtc2:
+			_compressionExt = pkmExt;
+			break;
+		case llge::TFAstc:
+			_compressionExt = astcExt;
+			break;
+		default: break;
+		}
+	}
+
 	void API_CALL ContentManager::replaceSeparator(bool value)
 	{
 		_replaceSeparator = value;
 	}
 
-	int API_CALL ContentManager::registerImage(char * name, int w, int h, llge::TextureImage2dFormat format)
+	int API_CALL ContentManager::registerImage(char * name)
 	{
-		return registerTexture(name, w, h, format);
+		return registerTexture(name);
 	}
 
 	void API_CALL ContentManager::startLoad()
@@ -543,11 +621,11 @@ namespace resources
 			fprintf(stderr, _loadEntries[i].fileName.c_str());
 			fprintf(stderr, "\n");
 			*/
-			graphics::Image2dData * image = loadUnregisteredTexture(_loadEntries[i].fileName.c_str());
+			graphics::Image2dData * image = loadUnregisteredTexture(_loadEntries[i].fileName.c_str(), _loadEntries[i].queryFormat);
 			_loadEntries[i].textureImage->create();
 			if (image != nullptr)
 			{
-				_loadEntries[i].textureImage->LoadPixels(image->Width, image->Height, (llge::TextureImage2dFormat)image->Format, image->Pixels);
+				_loadEntries[i].textureImage->setData(image);
 			}
 		}
 		_loadEntries.clear();
@@ -564,19 +642,16 @@ namespace resources
 	}
 
 
-	void API_CALL ContentManager::loadImage(int id, llge::ITextureImage2d *textureImage)
+	void API_CALL ContentManager::loadImage(int id, llge::ITextureImage2d *textureImage, int w, int h, llge::TextureQueryFormat queryFormat)
 	{
 		const char *name = _files[id].fileName.c_str();
-		int w = _files[id].w;
-		int h = _files[id].h;
 		graphics::TextureImage2d* texture = static_cast<graphics::TextureImage2d*>(textureImage->getTextureImageInstance());
 		
 		int wLimint = ImageMaxWidth * 2 / 3;
 		int hLimint = ImageMaxHeight * 2 / 3;
 
-		llge::TextureImage2dFormat format = _files[id].format;
-
-		IAtlasPacker* packer = queryPacker(format);
+		//llge::TextureImage2dFormat format = _files[id].format;
+		IAtlasPacker* packer = nullptr;// queryPacker(format);
 
 		if (packer != nullptr)
 		{
@@ -590,12 +665,13 @@ namespace resources
 				return;
 			}
 		}
-		graphics::Image2dData * image = loadUnregisteredTexture(name);
+		graphics::Image2dData * image = loadUnregisteredTexture(name, queryFormat);
 
 		if (image)
 		{
 			texture->create();
-			textureImage->LoadPixels(image->Width, image->Height, (llge::TextureImage2dFormat)image->Format, image->Pixels);
+			graphics::TextureImage2d* textureInstance = static_cast<graphics::TextureImage2d*>(textureImage->getTextureImageInstance());
+			textureInstance->setData(image);
 		}
 	}
 
@@ -642,16 +718,16 @@ namespace resources
 	IAtlasPacker* ContentManager::queryPacker(llge::TextureImage2dFormat format)
 	{
 		return nullptr;
-		/*
 		if (!_isAtlasBuilderStarted) return nullptr;
-		int packerIndex = llge::TextureImage2dFormat::Rgba;// format;
+		if (format != llge::TextureImage2dFormat::TFRgba8888)return nullptr;
+		int packerIndex = llge::TextureImage2dFormat::TFRgba8888;// format;
 		if (_packers[packerIndex] == nullptr)
 		{
-			_packers[packerIndex] = AtlasPacker::create(llge::TextureImage2dFormat::Rgba);
+			_packers[packerIndex] = AtlasPacker::create(llge::TextureImage2dFormat::TFRgba8888);
 			_packers[packerIndex]->startPack(ImageMaxWidth);
 		}
 		return _packers[packerIndex];
-		*/
+		
 	}
 
 	void API_CALL ContentManager::finishLoad()

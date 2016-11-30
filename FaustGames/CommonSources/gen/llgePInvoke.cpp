@@ -1076,9 +1076,9 @@ namespace llge
 		return classInstance->getName();
 	}
 	
-	extern "C" DLLEXPORT void API_CALL llge_SpineResource_load (ISpineResource * classInstance, String atlasText, String jsonText, String dir)
+	extern "C" DLLEXPORT void API_CALL llge_SpineResource_load (ISpineResource * classInstance, String atlasText, String jsonText, String dir, TextureQueryFormat format)
 	{
-		classInstance->load(atlasText, jsonText, dir);
+		classInstance->load(atlasText, jsonText, dir, format);
 	}
 	
 	extern "C" DLLEXPORT void API_CALL llge_SpineResource_unLoad (ISpineResource * classInstance)
@@ -1206,14 +1206,19 @@ namespace llge
 		return classInstance->getContentAtlasMap();
 	}
 	
+	extern "C" DLLEXPORT void API_CALL llge_ContentManager_useCompression (IContentManager * classInstance, TextureImage2dFormat format)
+	{
+		classInstance->useCompression(format);
+	}
+	
 	extern "C" DLLEXPORT void API_CALL llge_ContentManager_replaceSeparator (IContentManager * classInstance, bool value)
 	{
 		classInstance->replaceSeparator(value);
 	}
 	
-	extern "C" DLLEXPORT int API_CALL llge_ContentManager_registerImage (IContentManager * classInstance, char * name, int w, int h, TextureImage2dFormat format)
+	extern "C" DLLEXPORT int API_CALL llge_ContentManager_registerImage (IContentManager * classInstance, char * name)
 	{
-		return classInstance->registerImage(name, w, h, format);
+		return classInstance->registerImage(name);
 	}
 	
 	extern "C" DLLEXPORT void API_CALL llge_ContentManager_startLoad (IContentManager * classInstance)
@@ -1231,9 +1236,9 @@ namespace llge
 		classInstance->finishAtlasBuild();
 	}
 	
-	extern "C" DLLEXPORT void API_CALL llge_ContentManager_loadImage (IContentManager * classInstance, int id, ITextureImage2d * textureImage)
+	extern "C" DLLEXPORT void API_CALL llge_ContentManager_loadImage (IContentManager * classInstance, int id, ITextureImage2d * textureImage, int w, int h, TextureQueryFormat queryFormat)
 	{
-		classInstance->loadImage(id, textureImage);
+		classInstance->loadImage(id, textureImage, w, h, queryFormat);
 	}
 	
 	extern "C" DLLEXPORT ITextureBuffer2d * API_CALL llge_ContentManager_loadBuffer (IContentManager * classInstance, int id)

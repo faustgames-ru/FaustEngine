@@ -84,18 +84,27 @@ namespace llge
 		NegativeZ = 0x5,
 	};
 
+	enum TextureQueryFormat
+	{
+		TQFNone = 0x0,
+		TQFRgba8888 = 0x1,
+		TQFRgba4444 = 0x2,
+		TQFPlatformCompressed = 0x3,
+	};
+	
 	enum TextureImage2dFormat
 	{
-		Rgba = 0x0,
-		Rgb = 0x1,
-		TextureFormatPvrtc12 = 0x2,
-		TextureFormatPvrtc14 = 0x3,
-		TextureFormatEtc1 = 0x4,
-		TextureFormatAtc = 0x5,
-		TextureFormatEnumSize = 0x6
+		TFRgba8888 = 0x0,
+		TFRgb888 = 0x1,
+		TFRgba4444 = 0x2,
+		TFPvrtc12 = 0x3,
+		TFPvrtc14 = 0x4,
+		TFAtc = 0x5,
+		TFEtc2 = 0x6,
+		TFAstc = 0x7,
+		TFEnumSize = 0x8
 	};
-
-
+	
 	/// entities enums
 	enum ComponentsTypes
 	{
@@ -609,7 +618,7 @@ namespace llge
 	class ISpineResource : IBaseObject
 	{
 	public:
-		virtual void API_CALL load(String atlasText, String jsonText, String dir) = 0;
+		virtual void API_CALL load(String atlasText, String jsonText, String dir, TextureQueryFormat format) = 0;
 		virtual void API_CALL unLoad() = 0;
 		virtual ISpineAnimation* API_CALL getSpineAnimation(int i) = 0;
 		virtual int API_CALL getSpineAnimationsCount() = 0;
@@ -658,12 +667,13 @@ namespace llge
 	{
 	public:
 		virtual IContentAtlasMap * API_CALL getContentAtlasMap() = 0;
+		virtual void API_CALL useCompression(TextureImage2dFormat format) = 0;
 		virtual void API_CALL replaceSeparator(bool value) = 0;
-		virtual int API_CALL registerImage(char * name, int w, int h, TextureImage2dFormat format) = 0;
+		virtual int API_CALL registerImage(char * name) = 0;
 		virtual void API_CALL startLoad() = 0;
 		virtual void API_CALL startAtlasBuild() = 0;
 		virtual void API_CALL finishAtlasBuild() = 0;
-		virtual void API_CALL loadImage(int id, ITextureImage2d *textureImage) = 0;
+		virtual void API_CALL loadImage(int id, ITextureImage2d *textureImage, int w, int h, TextureQueryFormat queryFormat) = 0;
 		virtual ITextureBuffer2d * API_CALL loadBuffer(int id) = 0;
 		virtual void API_CALL finishLoad() = 0;
 		virtual bool API_CALL update() = 0;

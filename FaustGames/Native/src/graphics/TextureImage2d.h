@@ -11,6 +11,7 @@ namespace graphics
 	{
 	public:
 		TexturesDecompressorBuffer();
+		~TexturesDecompressorBuffer();
 		uint* pixelsBuffer;
 		int size;
 
@@ -21,17 +22,17 @@ namespace graphics
 	{
 	public:
 		static int Size;
-		static TexturesDecompressorBuffer pixelsBuffer;
 		static TextureImage2d * empty(){ return &_empty; }
 		TextureImage2d(bool generateMipmaps, bool useFilter);
 	
 		void setData(const Image2dData *data);
-		void virtual setData(int width, int height, Image2dFormat::e format, unsigned int *pixels);
+		void loadMipmaps(int width, int height, Image2dFormat::e format, unsigned* pixels);
+		//void virtual setData(int width, int height, Image2dFormat::e format, unsigned int *pixels);
 		static void createStatic();
 		static void cleanupStatic();
         virtual IntPtr API_CALL getTextureImageInstance(){ return this; }
 		virtual ITexture* API_CALL getTexture(){ return this; }
-		virtual void API_CALL LoadPixels(int width, int height, llge::TextureImage2dFormat format, void *pixels);
+		virtual void API_CALL LoadPixels(int width, int height, llge::TextureImage2dFormat format, void *pixels) override;
 		virtual void API_CALL create() override;
 		virtual void API_CALL cleanup();
 		virtual void API_CALL dispose(){ delete this; }
@@ -88,6 +89,11 @@ namespace graphics
 		bool _isRealyProxy;
 	};
      */
+
+	int DecodePvrtc(const Image2dData *data, TexturesDecompressorBuffer *resultBuffer);
+	void DecodeAtc(const Image2dData *data, TexturesDecompressorBuffer *resultBuffer, int &aW, int &aH);
+	void DecodeEtc2(const Image2dData *data, TexturesDecompressorBuffer *resultBuffer, int &aW, int &aH);
+	void DecodeEtc1(const Image2dData *data, TexturesDecompressorBuffer *resultBuffer, int &aW, int &aH);
 }
 
 #endif /*TEXTURE_IMAGE_2D_H*/

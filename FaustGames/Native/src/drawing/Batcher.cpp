@@ -547,7 +547,7 @@ namespace drawing
 			//	_currentEntry.IndicesStart = _buffer->Buffers[_batchBufferIndex]->getCurrentIndices();
 			//	_currentEntry.BatchBufferIndex = _batchBufferIndex;
 			//}
-			//_currentEntry.IndicesCount = 0;
+			_currentEntry.IndicesCount = 0;
 			_effect = nullptr;
 		}
 	}

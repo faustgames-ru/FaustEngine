@@ -65,15 +65,25 @@ namespace llge
 		NegativeZ = 0x5,
 	}
 	
+	public enum TextureQueryFormat
+	{
+		TQFNone = 0x0,
+		TQFRgba8888 = 0x1,
+		TQFRgba4444 = 0x2,
+		TQFPlatformCompressed = 0x3,
+	}
+	
 	public enum TextureImage2dFormat
 	{
-		Rgba = 0x0,
-		Rgb = 0x1,
-		TextureFormatPvrtc12 = 0x2,
-		TextureFormatPvrtc14 = 0x3,
-		TextureFormatEtc1 = 0x4,
-		TextureFormatAtc = 0x5,
-		TextureFormatEnumSize = 0x6,
+		TFRgba8888 = 0x0,
+		TFRgb888 = 0x1,
+		TFRgba4444 = 0x2,
+		TFPvrtc12 = 0x3,
+		TFPvrtc14 = 0x4,
+		TFAtc = 0x5,
+		TFEtc2 = 0x6,
+		TFAstc = 0x7,
+		TFEnumSize = 0x8,
 	}
 	
 	public enum ComponentsTypes
@@ -1852,13 +1862,13 @@ namespace llge
 	public class SpineResource
 	{
 		public IntPtr ClassInstance;
-		public void Load (String atlasText, String jsonText, String dir)
+		public void Load (String atlasText, String jsonText, String dir, TextureQueryFormat format)
 		{
-			llge_SpineResource_load(ClassInstance, atlasText, jsonText, dir);
+			llge_SpineResource_load(ClassInstance, atlasText, jsonText, dir, format);
 		}
 		
 		[DllImport(Version.Dll)]
-		static extern private void llge_SpineResource_load (IntPtr classInstance, String atlasText, String jsonText, String dir);
+		static extern private void llge_SpineResource_load (IntPtr classInstance, String atlasText, String jsonText, String dir, TextureQueryFormat format);
 		public void UnLoad ()
 		{
 			llge_SpineResource_unLoad(ClassInstance);
@@ -2055,6 +2065,13 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private IntPtr llge_ContentManager_getContentAtlasMap (IntPtr classInstance);
+		public void UseCompression (TextureImage2dFormat format)
+		{
+			llge_ContentManager_useCompression(ClassInstance, format);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_ContentManager_useCompression (IntPtr classInstance, TextureImage2dFormat format);
 		public void ReplaceSeparator (bool value)
 		{
 			llge_ContentManager_replaceSeparator(ClassInstance, value);
@@ -2062,13 +2079,13 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private void llge_ContentManager_replaceSeparator (IntPtr classInstance, bool value);
-		public int RegisterImage (string name, int w, int h, TextureImage2dFormat format)
+		public int RegisterImage (string name)
 		{
-			return llge_ContentManager_registerImage(ClassInstance, name, w, h, format);
+			return llge_ContentManager_registerImage(ClassInstance, name);
 		}
 		
 		[DllImport(Version.Dll)]
-		static extern private int llge_ContentManager_registerImage (IntPtr classInstance, string name, int w, int h, TextureImage2dFormat format);
+		static extern private int llge_ContentManager_registerImage (IntPtr classInstance, string name);
 		public void StartLoad ()
 		{
 			llge_ContentManager_startLoad(ClassInstance);
@@ -2090,13 +2107,13 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private void llge_ContentManager_finishAtlasBuild (IntPtr classInstance);
-		public void LoadImage (int id, TextureImage2d textureImage)
+		public void LoadImage (int id, TextureImage2d textureImage, int w, int h, TextureQueryFormat queryFormat)
 		{
-			llge_ContentManager_loadImage(ClassInstance, id, textureImage.ClassInstance);
+			llge_ContentManager_loadImage(ClassInstance, id, textureImage.ClassInstance, w, h, queryFormat);
 		}
 		
 		[DllImport(Version.Dll)]
-		static extern private void llge_ContentManager_loadImage (IntPtr classInstance, int id, IntPtr textureImage);
+		static extern private void llge_ContentManager_loadImage (IntPtr classInstance, int id, IntPtr textureImage, int w, int h, TextureQueryFormat queryFormat);
 		public TextureBuffer2d LoadBuffer (int id)
 		{
 			return new TextureBuffer2d{ ClassInstance = llge_ContentManager_loadBuffer(ClassInstance, id) };

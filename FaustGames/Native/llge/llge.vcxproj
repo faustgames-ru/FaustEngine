@@ -394,6 +394,8 @@
     <ClInclude Include="..\src_box2d\Box2D\Rope\b2Rope.h" />
     <ClInclude Include="..\src_clipper\clipper.hpp" />
     <ClInclude Include="..\src_decompressors\PVRTDecompress.h" />
+    <ClInclude Include="..\src_decompress_ati\DecompressAtc.h" />
+    <ClInclude Include="..\src_etcpack\etcpack_lib.h" />
     <ClInclude Include="..\src_poly2tri\common\shapes.h" />
     <ClInclude Include="..\src_poly2tri\common\utils.h" />
     <ClInclude Include="..\src_poly2tri\poly2tri.h" />
@@ -628,6 +630,10 @@
     <ClCompile Include="..\src_box2d\Box2D\Rope\b2Rope.cpp" />
     <ClCompile Include="..\src_clipper\clipper.cpp" />
     <ClCompile Include="..\src_decompressors\PVRTDecompress.cpp" />
+    <ClCompile Include="..\src_decompress_ati\DecompressAtc.cpp" />
+    <ClCompile Include="..\src_etcpack\source_edit\etcdec.cpp" />
+    <ClCompile Include="..\src_etcpack\source_edit\etcimage.cpp" />
+    <ClCompile Include="..\src_etcpack\source_edit\etcpack.cpp" />
     <ClCompile Include="..\src_poly2tri\common\shapes.cc" />
     <ClCompile Include="..\src_poly2tri\sweep\advancing_front.cc" />
     <ClCompile Include="..\src_poly2tri\sweep\cdt.cc" />

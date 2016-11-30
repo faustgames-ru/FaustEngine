@@ -122,23 +122,24 @@ namespace graphics
 
 	void UniformValues::initSamplers()
 	{
+		for (int i = 0; i < GraphicsConstants::Samplers2DLimit; i++)
+		{
+			_samplers[i] = nullptr;
+		}
+
 		initSampler(&_texture, 0);
 		initSampler(&_lightmap, 1);
 		initSampler(&_environment, 2);
 		initSampler(&_depthmap, 3);
 		initSampler(&_normalmap, 4);
-		initSampler(&_paintmask, 1);
-		for (int i = 0; i < GraphicsConstants::Samplers2DLimit; i++)
-		{
-			_samplers[i] = 0;
-		}
+		initSampler(&_paintmask, 5);
 	}
 	
 	void UniformValues::resetSamplers()
 	{
 		for (int i = 0; i < GraphicsConstants::Samplers2DLimit; i++)
 		{
-			if (_samplers[i])
+			if (_samplers[i] != nullptr)
 				_samplers[i]->reset();
 		}
 	}

@@ -17,6 +17,10 @@ namespace graphics
 			Pvrtc12 = 0x2,
 			Pvrtc14 = 0x3,
 			Etc1 = 0x4,
+			Etc2 = 0x5,
+			Rgba4444 = 0x6,
+			Atc = 0x7,
+			Astc = 0x8,
 		};
 	};
 

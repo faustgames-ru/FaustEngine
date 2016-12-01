@@ -8,6 +8,15 @@
 
 namespace graphics
 {
+	struct Image2dBlocksOrder
+	{
+		enum e
+		{
+			Normal = 0x0,
+			Morton = 0x1,
+		};
+	};
+
 	struct Image2dFormat
 	{
 		enum e

@@ -3,18 +3,18 @@
 
 namespace graphics
 {
-	Image2dData::Image2dData() : Width(0), Height(0), Border(0), RawDataOffset(0), Format(Image2dFormat::Rgba), Pixels(nullptr)
+	Image2dData::Image2dData() : Width(0), Height(0), BlocksOrder(graphics::Image2dBlocksOrder::Normal), RawDataOffset(0), Format(Image2dFormat::Rgba), Pixels(nullptr)
 	{
 	}
 
-	Image2dData::Image2dData(int bufferSize) : Width(0), Height(0), Border(0), RawDataOffset(0)
+	Image2dData::Image2dData(int bufferSize) : Width(0), Height(0), BlocksOrder(graphics::Image2dBlocksOrder::Normal), RawDataOffset(0)
 	{
 		Format = Image2dFormat::Rgba;
 		//Pixels = (unsigned int *)core::Mem::allocate(bufferSize * sizeof(unsigned int));
 		Pixels = new unsigned int[bufferSize];
 	}
 
-	Image2dData::Image2dData(int width, int height) : Width(width), Height(height), Border(0), RawDataOffset(0)
+	Image2dData::Image2dData(int width, int height) : Width(width), Height(height), BlocksOrder(graphics::Image2dBlocksOrder::Normal), RawDataOffset(0)
 	{
 		Format = Image2dFormat::Rgba;
 		//Pixels = (unsigned int *)core::Mem::allocate(Width * Height * sizeof(unsigned int));//new unsigned int[Width * Height];

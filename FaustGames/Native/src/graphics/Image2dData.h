@@ -10,7 +10,7 @@ namespace graphics
 	public:
 		int Width;
 		int Height;
-		int Border;
+		Image2dBlocksOrder::e BlocksOrder;
 		int RawDataOffset;
 		Image2dFormat::e Format;
 		unsigned int *Pixels;

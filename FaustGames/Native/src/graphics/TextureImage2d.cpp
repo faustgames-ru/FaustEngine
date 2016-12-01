@@ -434,7 +434,16 @@ namespace graphics
 					if (data->Format == Image2dFormat::Pvrtc14 || data->Format == Image2dFormat::Pvrtc12)
 					{
 						TexturesDecompressorBuffer resultBuffer;
-						int pot = DecodePvrtc(data, &resultBuffer);
+						int pot = 0;
+						if (data->BlocksOrder == Image2dBlocksOrder::Morton)
+						{
+							pot = DecodePvrtc(data, &resultBuffer);
+						}
+						else
+						{
+							pot = DecodeMortonPvrtc(data, &resultBuffer);
+						}
+				
 						Image2dFormat::e fmt = Image2dFormat::Rgba;
 
 						glTexImage2D(GL_TEXTURE_2D, 0, getFormat(fmt), pot, pot, 0, getFormat(fmt), GL_UNSIGNED_BYTE, resultBuffer.pixelsBuffer);
@@ -493,13 +502,13 @@ namespace graphics
 				}
 				if (isFormatSupported)
 				{
-					if (data->Format == Image2dFormat::Pvrtc14 || data->Format == Image2dFormat::Pvrtc12)
+					if (data->BlocksOrder != Image2dBlocksOrder::Morton)
 					{
-						int pot = core::Math::pot(core::Math::max(data->Width + data->Border * 2, data->Height + data->Border * 2));
+						int pot = core::Math::pot(core::Math::max(data->Width, data->Height));
 						if (pot != data->Width || pot != data->Height)
 						{
 							TexturesDecompressorBuffer pixelsBuffer;
-							DecodePvrtcOrder(data, &pixelsBuffer);
+							DecodeMortonOrder(data, &pixelsBuffer);
 							int compressedImageSize = getSize(pot*pot, data->Format); 
 							glCompressedTexImage2D(GL_TEXTURE_2D, 0, getFormat(data->Format), pot, pot, 0, compressedImageSize, data->Pixels + data->RawDataOffset);
 							Errors::check(Errors::CompressedTexImage2D);
@@ -520,16 +529,16 @@ namespace graphics
 		Errors::check(Errors::BindTexture);
 	}
 
-	void DecodePvrtcOrder(const Image2dData *data, TexturesDecompressorBuffer *resultBuffer)
+	void DecodeMortonOrder(const Image2dData *data, TexturesDecompressorBuffer *resultBuffer)
 	{
-		int pot = core::Math::pot(core::Math::max(data->Width + data->Border * 2, data->Height + data->Border * 2));
+		int pot = core::Math::pot(core::Math::max(data->Width, data->Height));
 
 		int64_t* src = reinterpret_cast<int64_t*>(data->Pixels + data->RawDataOffset);
 
-		int blocksX = core::Math::align(data->Width + data->Border * 2, 4) / 4;
+		int blocksX = core::Math::align(data->Width, 4) / 4;
 		if (data->Format == Image2dFormat::Pvrtc12)
-			blocksX = core::Math::align(data->Width + data->Border * 2, 8) / 8;
-		int blocksY = core::Math::align(data->Height + data->Border * 2, 4) / 4;
+			blocksX = core::Math::align(data->Width, 8) / 8;
+		int blocksY = core::Math::align(data->Height, 4) / 4;
 
 		int size = pot * pot;
 		if (data->Format == Image2dFormat::Pvrtc12)
@@ -551,10 +560,9 @@ namespace graphics
 		}
 	}
 
-	int DecodePvrtc(const Image2dData *data, TexturesDecompressorBuffer *resultBuffer)
+	int DecodeMortonPvrtc(const Image2dData* data, TexturesDecompressorBuffer* resultBuffer)
 	{
-		int pot = core::Math::pot(core::Math::max(data->Width + data->Border * 2, data->Height + data->Border * 2));
-
+		int pot = core::Math::pot(core::Math::max(data->Width, data->Height));
 		TexturesDecompressorBuffer pixelsBuffer;
 
 		pixelsBuffer.realloc(pot * pot);
@@ -566,10 +574,10 @@ namespace graphics
 			pixelsBuffer.pixelsBuffer[i] = 0;
 		}
 
-		int blocksX = core::Math::align(data->Width + data->Border * 2, 4) / 4;
+		int blocksX = core::Math::align(data->Width, 4) / 4;
 		if (data->Format == Image2dFormat::Pvrtc12)
-			blocksX = core::Math::align(data->Width + data->Border * 2, 8) / 8;
-		int blocksY = core::Math::align(data->Height + data->Border * 2, 4) / 4;
+			blocksX = core::Math::align(data->Width, 8) / 8;
+		int blocksY = core::Math::align(data->Height, 4) / 4;
 		int i = 0;
 		for (int y = 0; y < blocksY; y++)
 		{
@@ -583,6 +591,14 @@ namespace graphics
 		}
 
 		pvr::PVRTDecompressPVRTC(dst, data->Format == Image2dFormat::Pvrtc12 ? 1 : 0, pot, pot, reinterpret_cast<unsigned char*>(resultBuffer->pixelsBuffer));
+		return pot;
+	}
+
+	int DecodePvrtc(const Image2dData *data, TexturesDecompressorBuffer *resultBuffer)
+	{
+		int pot = core::Math::pot(core::Math::max(data->Width, data->Height));
+		if (pot != data->Height || pot != data->Width) return pot;
+		pvr::PVRTDecompressPVRTC(data->Pixels + data->RawDataOffset, data->Format == Image2dFormat::Pvrtc12 ? 1 : 0, pot, pot, reinterpret_cast<unsigned char*>(resultBuffer->pixelsBuffer));
 		return pot;
 	}
 

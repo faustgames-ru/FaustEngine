@@ -402,7 +402,7 @@ namespace resources
 		ContentProvider::closeContent();
 		_image->Width = *(_image->Pixels + 0);
 		_image->Height = *(_image->Pixels + 1);
-		_image->Border = *(_image->Pixels + 2);
+		_image->BlocksOrder = static_cast<graphics::Image2dBlocksOrder::e>(*(_image->Pixels + 2));
 		int bpp = *(_image->Pixels + 3);
 		_image->Format = bpp == 2?graphics::Image2dFormat::Pvrtc12: graphics::Image2dFormat::Pvrtc14;
 		_image->RawDataOffset = 5;
@@ -431,7 +431,7 @@ namespace resources
 		int skipHashWords = 2 + *(_image->Pixels + 2) / 4;
 		_image->Width = *(_image->Pixels + 1 + skipHashWords);
 		_image->Height = *(_image->Pixels + 2 + skipHashWords);
-		_image->Border = 0;
+		_image->BlocksOrder = graphics::Image2dBlocksOrder::Normal;
 		if (format == 1) // Rgba4444
 		{
 			_image->Format = graphics::Image2dFormat::Rgba4444;
@@ -440,7 +440,7 @@ namespace resources
 		}
 		if (format == 2 || format == 3) // Pvrtc
 		{
-			_image->Border = *(_image->Pixels + 3+ skipHashWords);
+			_image->BlocksOrder = static_cast<graphics::Image2dBlocksOrder::e>(*(_image->Pixels + 3+ skipHashWords));
 			int bpp = *(_image->Pixels + 4 + skipHashWords);
 			_image->Format = bpp == 2 ? graphics::Image2dFormat::Pvrtc12 : graphics::Image2dFormat::Pvrtc14;
 			_image->RawDataOffset = 6 + skipHashWords;

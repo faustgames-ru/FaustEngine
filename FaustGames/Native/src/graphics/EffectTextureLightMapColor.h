@@ -21,17 +21,6 @@ namespace graphics
 	protected:
 	private:
 	};
-
-	class EffectTextureBlurColor : public EffectBase
-	{
-	public:
-		EffectTextureBlurColor();
-		~EffectTextureBlurColor();
-		void create();
-		virtual void configApply(const void *config) OVERRIDE;
-	protected:
-	private:
-	};
 }
 
 #endif /*EFFECT_TEXTURE_LIGHTMAP_COLOR_H*/

@@ -370,12 +370,6 @@ namespace drawing
 			setupUVTransform(mesh.texture);
 		}
 
-		if (_bloom.getBlurMap() != nullptr)
-		{
-			graphics::EffectTextureBlurmap::blurmap = _bloom.getBlurMap()->getHandle();
-		}
-
-
 		_verticesCounter += mesh.VerticesCount;
 		BatchBuffer * currentBuffer = _buffer->Buffers[_batchBufferIndex];
 		bool needNewEntry = false;

@@ -41,16 +41,6 @@ struct PVRTCWordIndices
 	int P[2], Q[2], R[2], S[2];
 };
 
-
-static Pixel32 premul(Pixel32 color)
-{
-	color.red = color.red * color.alpha / 15;
-	color.green = color.green * color.alpha / 15;
-	color.blue = color.blue * color.alpha / 15;
-	return color;
-}
-
-
 static Pixel32 getColorA(uint32 u32ColorData)
 {
 	Pixel32 color;
@@ -72,7 +62,6 @@ static Pixel32 getColorA(uint32 u32ColorData)
 		color.alpha = (uint8)((u32ColorData & 0x7000) >> 11);// 3->4 bits - note 0 at right
 	}
 
-	return premul(color);
 	return color;
 }
 
@@ -97,7 +86,6 @@ static Pixel32 getColorB(uint32 u32ColorData)
 		color.alpha = (uint8)((u32ColorData & 0x70000000) >> 27);// 3->4 bits - note 0 at right
 	}
 
-	return premul(color);
 	return color;
 }
 

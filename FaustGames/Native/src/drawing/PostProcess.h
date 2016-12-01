@@ -47,12 +47,6 @@ namespace drawing
 		virtual void execute(graphics::Texture* source, graphics::IRenderTarget *target);
 	};
 
-	class DebugDepthProcess
-	{
-	public:
-		virtual void execute(graphics::Texture* source, graphics::IRenderTarget *target);
-	};
-
 	class VignettingProcess
 	{
 	public:
@@ -115,7 +109,6 @@ namespace drawing
 	private:
 		BloomFilter _filter;		
 		EmptyProcess _empty;
-		DebugDepthProcess _debugDepth;
 		FilterVBlur _vBlur;
 		FilterHBlur _hBlur;		
 		FilterAdd _add;

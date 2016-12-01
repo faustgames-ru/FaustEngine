@@ -90,6 +90,7 @@ namespace graphics
 	};
      */
 
+	void UpscaleToPot(const Image2dData *data, int potX, int potY, TexturesDecompressorBuffer *resultBuffer);
 	void DecodeMortonOrder(const Image2dData *data, TexturesDecompressorBuffer *resultBuffer);
 	int DecodeMortonPvrtc(const Image2dData *data, TexturesDecompressorBuffer *resultBuffer);
 	int DecodePvrtc(const Image2dData *data, TexturesDecompressorBuffer *resultBuffer);

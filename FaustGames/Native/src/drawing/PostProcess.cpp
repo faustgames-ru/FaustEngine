@@ -53,18 +53,6 @@ namespace drawing
 		
 	}
 
-	void DebugDepthProcess::execute(graphics::Texture* source, graphics::IRenderTarget* target)
-	{
-		graphics::GraphicsDevice::Default.setRenderTarget(target);
-		graphics::GraphicsDevice::Default.clear();
-		graphics::UniformValues::projection()->setValue(core::Matrix::identity);
-		graphics::UniformValues::texture()->setValue(source->getHandle());
-		graphics::GraphicsDevice::Default.renderState.setDepth(graphics::DepthState::None);
-		graphics::GraphicsDevice::Default.renderState.setBlend(graphics::BlendState::None);
-		graphics::GraphicsDevice::Default.renderState.setEffect(graphics::Effects::renderDepth());
-		graphics::GraphicsDevice::Default.drawPrimitives(graphics::VertexFormats::positionTexture(), _quadVertices, _quadIndices, 2);
-	}
-
 	void VignettingProcess::execute(graphics::Texture* source)
 	{
 		_vertices.clear();

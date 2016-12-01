@@ -27,10 +27,8 @@ namespace graphics
 			_effects[llge::EffectTextureLightmapColor] = Effects::textureLightmapColor();
 			_effects[llge::EffectWater] = 0;// Effects::water();
 			_effects[llge::EffectSolid] = Effects::solid();
-			_effects[llge::EffectRenderDepth] = Effects::renderDepth();
 			_effects[llge::EffectSolidColor] = Effects::solidColor();
 			_effects[llge::EffectBloomFilter] = Effects::postProcessBloomFilter();
-			_effects[llge::EffectTexturePaint] = Effects::texturePaint();			
 			
 
 			_formats[llge::FormatPositionTextureColor] = VertexFormats::positionTextureColor();
@@ -47,24 +45,7 @@ namespace graphics
 			}
 			return _effects[static_cast<int>(effect)];
 		}
-		inline EffectBase * getHsvEffect(llge::GraphicsEffects effect)
-		{
-			/*
-			if (GraphicsDevice::Default.config.enableFog)
-			{
-				if (effect == llge::GraphicsEffects::EffectTextureColor)
-				{
-					return Effects::textureColorHsvFog(); //todo: use hsv 
-				}
-			}
-			if (effect == llge::GraphicsEffects::EffectTextureLightmapColor)
-			{
-				return Effects::textureLightmapColor(); //todo: use hsv 
-			}
-			*/
-			return  Effects::textureColorHsvFog();
-			// _effects[static_cast<int>(effect)];
-		}
+		
 		inline EffectBase * getRgbTransformeffect(llge::GraphicsEffects effect)
 		{
 			/*

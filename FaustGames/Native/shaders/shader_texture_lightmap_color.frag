@@ -14,10 +14,10 @@ varying float fogFactor;
 void main()
 {
 	vec4 textureColor = texture2D(texture, _textureCoords);
+	textureColor.xyz *= textureColor.a;
 	vec4 lightColor = texture2D(lightmap, _lightmapCoords);
 	lightColor.rgb *= 2.0;
 	lightColor.a = 1.0;
 	textureColor = textureColor*lightColor*_color;
-	//textureColor.xyz = mix(textureColor.xyz, vec3(1.0,1.0,1.0), fogFactor);
 	gl_FragColor = textureColor;
 }

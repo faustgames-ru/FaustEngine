@@ -11,8 +11,6 @@
 #include "EffectTextureAlphamaskColor.h"
 #include "EffectTextureColorHighlight.h"
 #include "EffectTextureLightMapColor.h"
-#include "EffectWater.h"
-#include "EffectRenderDepth.h"
 #include "EffectsPostProcess.h"
 
 namespace graphics
@@ -26,16 +24,11 @@ namespace graphics
 		static EffectSolidColor * solidColor();
 		static EffectTextureColor * textureColor();
 		static EffectTextureColorFog * textureColorFog();
-		static EffectTextureColorHsvFog * textureColorHsvFog();
 		static EffectTextureAlphamaskColor * textureAlphamaskColor();
 		static EffectTextureColorHighlight * textureColorHighlight();
 		static EffectTextureLightMapColor * textureLightmapColor();
-		static EffectTextureBlurColor * textureBlurColor();
-		static EffectTextureBlurmap* textureBlurmap();
-		static EffectTexturePaint* texturePaint();
 		static EffectTextureRgbTransform* textureRgbTransform();
-		//static EffectWater * water();
-		static EffectRenderDepth * renderDepth();
+
 		static EffectPostProcessToneMapping * postProcessToneMapping();
 		static EffectPostProcessBloomFilter * postProcessBloomFilter();
 		static EffectPostProcessEmpty * postProcessEmpty();
@@ -50,16 +43,11 @@ namespace graphics
 		static EffectSolidColor _solidColor;
 		static EffectTextureColor _textureColor;
 		static EffectTextureColorFog _textureColorFog;
-		static EffectTextureColorHsvFog _textureColorHsvFog;
 		static EffectTextureAlphamaskColor _textureAlphamaskColor;
 		static EffectTextureColorHighlight _textureColorHighlight;
 		static EffectTextureLightMapColor _textureLightmapColor;
-		static EffectTextureBlurColor _textureBlurColor;
-		static EffectTextureBlurmap _textureBlurmap;
-		static EffectTexturePaint _texturePaint;
 		static EffectTextureRgbTransform _textureRgbTransform;
-		//static EffectWater _water;
-		static EffectRenderDepth _renderDepth;
+
 		static EffectPostProcessToneMapping _postProcessToneMapping;
 		static EffectPostProcessBloomFilter _postProcessBloomFilter;
 		static EffectPostProcessEmpty _postProcessEmpty;

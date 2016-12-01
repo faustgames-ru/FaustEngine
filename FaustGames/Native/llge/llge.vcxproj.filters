@@ -407,15 +407,6 @@
     <ClInclude Include="..\src\graphics\UniformValueCubemap.h">
       <Filter>engine\graphics</Filter>
     </ClInclude>
-    <ClInclude Include="..\shaders\water_frag.h">
-      <Filter>engine\shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="..\shaders\water_vert.h">
-      <Filter>engine\shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\graphics\EffectWater.h">
-      <Filter>engine\graphics</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\graphics\UniformValueVector3.h">
       <Filter>engine\graphics</Filter>
     </ClInclude>
@@ -474,15 +465,6 @@
       <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\TextureRenderTargetDepth2d.h">
-      <Filter>engine\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\shaders\shader_render_depth_frag.h">
-      <Filter>engine\shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="..\shaders\shader_render_depth_vert.h">
-      <Filter>engine\shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\graphics\EffectRenderDepth.h">
       <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\entities\MatrixTransformComponent.h">
@@ -821,28 +803,13 @@
     <ClInclude Include="..\shaders\post_process_empty_color_frag.h">
       <Filter>engine\shaders</Filter>
     </ClInclude>
-    <ClInclude Include="..\shaders\texture_blur_color_frag.h">
-      <Filter>engine\shaders</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\spine\runtime\Json.h">
       <Filter>engine\spine\runtime</Filter>
     </ClInclude>
     <ClInclude Include="..\shaders\post_process_bloom_depth_add_filter.h">
       <Filter>engine\shaders</Filter>
     </ClInclude>
-    <ClInclude Include="..\shaders\texture_blurmap_color_vert.h">
-      <Filter>engine\shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="..\shaders\texture_blurmap_color_frag.h">
-      <Filter>engine\shaders</Filter>
-    </ClInclude>
     <ClInclude Include="..\shaders\post_process_mix_frag.h">
-      <Filter>engine\shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="..\shaders\texture_color_hsv_fog_vert.h">
-      <Filter>engine\shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="..\shaders\texture_color_hsv_fog_frag.h">
       <Filter>engine\shaders</Filter>
     </ClInclude>
     <ClInclude Include="..\src_rectanglebinpack\GuillotineBinPack.h">
@@ -862,12 +829,6 @@
     </ClInclude>
     <ClInclude Include="..\src_rectanglebinpack\SkylineBinPack.h">
       <Filter>rectanglebinpack</Filter>
-    </ClInclude>
-    <ClInclude Include="..\shaders\texture_color_vert_paint.h">
-      <Filter>engine\shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="..\shaders\texture_color_frag_paint.h">
-      <Filter>engine\shaders</Filter>
     </ClInclude>
     <ClInclude Include="..\src\resources\AtlasPacker.h">
       <Filter>engine\resources</Filter>
@@ -1071,9 +1032,6 @@
     <ClCompile Include="..\src\graphics\UniformValueCubemap.cpp">
       <Filter>engine\graphics</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\graphics\EffectWater.cpp">
-      <Filter>engine\graphics</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\graphics\UniformValueVector3.cpp">
       <Filter>engine\graphics</Filter>
     </ClCompile>
@@ -1183,9 +1141,6 @@
       <Filter>exports</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\TextureRenderTargetDepth2d.cpp">
-      <Filter>engine\graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\graphics\EffectRenderDepth.cpp">
       <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\exports\llgeDrawing.cpp">

@@ -502,7 +502,8 @@ namespace graphics
 				}
 				if (isFormatSupported)
 				{
-					if (data->BlocksOrder != Image2dBlocksOrder::Morton)
+					if ((data->Format == Image2dFormat::Pvrtc12 || data->Format == Image2dFormat::Pvrtc14) &&
+						data->BlocksOrder != Image2dBlocksOrder::Morton)
 					{
 						int pot = core::Math::pot(core::Math::max(data->Width, data->Height));
 						if (pot != data->Width || pot != data->Height)
@@ -510,14 +511,14 @@ namespace graphics
 							TexturesDecompressorBuffer pixelsBuffer;
 							DecodeMortonOrder(data, &pixelsBuffer);
 							int compressedImageSize = getSize(pot*pot, data->Format); 
-							glCompressedTexImage2D(GL_TEXTURE_2D, 0, getFormat(data->Format), pot, pot, 0, compressedImageSize, data->Pixels + data->RawDataOffset);
+							glCompressedTexImage2D(GL_TEXTURE_2D, 0, getFormat(data->Format), pot, pot, 0, compressedImageSize, pixelsBuffer.pixelsBuffer);
 							Errors::check(Errors::CompressedTexImage2D);
 							transform = TextureTransform(0, 0,
 								static_cast<float>(data->Width) / static_cast<float>(pot),
 								static_cast<float>(data->Height) / static_cast<float>(pot));
 							return;
 						}
-					}
+					}					
 					int compressedImageSize = getSize(data->Width*data->Height, data->Format);
 					glCompressedTexImage2D(GL_TEXTURE_2D, 0, getFormat(data->Format), data->Width, data->Height, 0, compressedImageSize, data->Pixels + data->RawDataOffset);
 					Errors::check(Errors::CompressedTexImage2D);
@@ -529,6 +530,34 @@ namespace graphics
 		Errors::check(Errors::BindTexture);
 	}
 
+	void UpscaleToPot(const Image2dData *data, int potX, int potY, TexturesDecompressorBuffer *resultBuffer)
+	{
+		int size = potX * potY;
+		resultBuffer->realloc(size);
+		int64_t* dst = reinterpret_cast<int64_t*>(resultBuffer->pixelsBuffer);
+		int64_t* src = reinterpret_cast<int64_t*>(data->Pixels + data->RawDataOffset);
+		int blocksX = core::Math::align(data->Width, 4) / 4;
+		int blocksY = core::Math::align(data->Height, 4) / 4;
+		int potBlocksX = core::Math::align(potX, 4) / 4;
+
+		for (int y = 0; y < blocksY; y++)
+		{
+			int64_t* dstRow = dst;
+			int64_t* srcRow = src;
+			for (int x = 0; x < blocksX; x++)
+			{
+				*dstRow = *srcRow; 
+				dstRow++;
+				srcRow++;
+				*dstRow = *srcRow;
+				dstRow++;
+				srcRow++;
+			}
+			dst += potBlocksX*2;
+			src += blocksX*2;
+		}
+	}
+	
 	void DecodeMortonOrder(const Image2dData *data, TexturesDecompressorBuffer *resultBuffer)
 	{
 		int pot = core::Math::pot(core::Math::max(data->Width, data->Height));

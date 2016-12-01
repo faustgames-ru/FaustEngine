@@ -375,6 +375,7 @@ namespace resources
 		}
 
 		// todo: premul param
+		/*
 		if (_image->Format == graphics::Image2dFormat::Rgba)
 		{
 			for (size_t i = 0; i < (size_t)m_Height; i++)
@@ -389,7 +390,7 @@ namespace resources
 				}
 			}
 		}
-
+		*/
 		/// todo: online pack to atlas
 
 		return _image;

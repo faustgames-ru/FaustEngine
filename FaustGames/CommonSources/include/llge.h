@@ -58,12 +58,10 @@ namespace llge
 		EffectTextureLightmapColor = 0x1,
 		EffectWater = 0x2,
 		EffectSolid = 0x3,
-		EffectRenderDepth = 0x4,
 		EffectSolidColor = 0x5,
 		EffectBloomFilter = 0x6,
 		EffectTextureColorHighlight = 0x7,
 		EffectTextureAlphamaskColor = 0x8,
-		EffectTexturePaint = 0x9,
 	};
 
 	enum GraphicsVertexFormats

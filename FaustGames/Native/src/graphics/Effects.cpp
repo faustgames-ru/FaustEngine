@@ -10,17 +10,11 @@ namespace graphics
 	EffectSolidColor Effects::_solidColor;
 	EffectTextureColor Effects::_textureColor;
 	EffectTextureColorFog Effects::_textureColorFog;
-	EffectTextureColorHsvFog Effects::_textureColorHsvFog;
 	EffectTextureAlphamaskColor Effects::_textureAlphamaskColor;
 	EffectTextureColorHighlight Effects::_textureColorHighlight;
 	EffectTextureLightMapColor Effects::_textureLightmapColor;
-	EffectTextureBlurColor Effects::_textureBlurColor;
-	EffectTextureBlurmap Effects::_textureBlurmap;
-	EffectTexturePaint Effects::_texturePaint;
 	EffectTextureRgbTransform Effects::_textureRgbTransform;
 
-	//EffectWater Effects::_water;
-	EffectRenderDepth Effects::_renderDepth;
 	EffectPostProcessToneMapping Effects::_postProcessToneMapping;
 	EffectPostProcessBloomFilter Effects::_postProcessBloomFilter;
 	EffectPostProcessEmpty Effects::_postProcessEmpty;
@@ -38,16 +32,11 @@ namespace graphics
 		_solidColor.create();
 		_textureColor.create();
 		_textureColorFog.create();
-		_textureColorHsvFog.create();
 		_textureAlphamaskColor.create();
 		_textureColorHighlight.create();
 		_textureLightmapColor.create();
-		_textureBlurColor.create();
-		_textureBlurmap.create();
-		_texturePaint.create();
 		_textureRgbTransform.create();
-		//_water.create();
-		_renderDepth.create();
+
 		_postProcessToneMapping.create();
 		_postProcessBloomFilter.create();
 		_postProcessEmpty.create();
@@ -67,12 +56,8 @@ namespace graphics
 		_textureColorHighlight.getEffect()->cleanup();
 
 		_textureLightmapColor.getEffect()->cleanup();
-		_textureBlurColor.getEffect()->cleanup();
-		_textureBlurmap.getEffect()->cleanup();
-		_texturePaint.getEffect()->cleanup();
 		_textureRgbTransform.getEffect()->cleanup();
-		//_water.getEffect()->cleanup();
-		_renderDepth.getEffect()->cleanup();
+
 		_postProcessBloomFilter.getEffect()->cleanup();
 		_postProcessVBlurFilter.getEffect()->cleanup();
 		_postProcessHBlurFilter.getEffect()->cleanup();
@@ -100,11 +85,6 @@ namespace graphics
 		return &_textureColorFog;
 	}
 
-	EffectTextureColorHsvFog* Effects::textureColorHsvFog()
-	{
-		return &_textureColorHsvFog;
-	}
-
 	EffectTextureAlphamaskColor * Effects::textureAlphamaskColor() 
 	{
 		return &_textureAlphamaskColor;
@@ -120,35 +100,9 @@ namespace graphics
 		return &_textureLightmapColor;
 	}
 
-	EffectTextureBlurColor* Effects::textureBlurColor()
-	{
-		return &_textureBlurColor;
-	}
-
-	EffectTextureBlurmap* Effects::textureBlurmap()
-	{
-		return &_textureBlurmap;
-	}
-
-	EffectTexturePaint* Effects::texturePaint()
-	{
-		return &_texturePaint;
-	}
-
 	EffectTextureRgbTransform* Effects::textureRgbTransform()
 	{
 		return &_textureRgbTransform;
-	}
-
-	/*
-	EffectWater * Effects::water()
-	{
-		return &_water;
-	}
-	*/
-	EffectRenderDepth * Effects::renderDepth()
-	{
-		return &_renderDepth;
 	}
 
 	EffectPostProcessToneMapping * Effects::postProcessToneMapping()

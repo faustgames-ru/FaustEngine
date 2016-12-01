@@ -11,7 +11,7 @@ varying vec2 _textureCoords;
 void main()
 {
 	vec4 color = texture2D(texture, _textureCoords);
-	color.xyz *= color.a;
+	color.xyz = clamp(color.xyz, vec3(0), color.aaa);
 	color *= _color;
 	color.rgb = abs(color.rgb*colorTransform);
 	gl_FragColor = color;

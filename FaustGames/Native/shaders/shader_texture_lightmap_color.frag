@@ -14,7 +14,7 @@ varying float fogFactor;
 void main()
 {
 	vec4 textureColor = texture2D(texture, _textureCoords);
-	textureColor.xyz *= textureColor.a;
+	textureColor.xyz = clamp(textureColor.xyz, vec3(0), textureColor.aaa);
 	vec4 lightColor = texture2D(lightmap, _lightmapCoords);
 	lightColor.rgb *= 2.0;
 	lightColor.a = 1.0;

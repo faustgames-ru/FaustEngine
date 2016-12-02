@@ -44,7 +44,7 @@ namespace core
 			for (int i = 0; i < 16; i++)
 				_values[i] = value[i];
 		}
-		
+      		
 		inline const float *getData() const { return &(_values[0]); }
 
 		Matrix toSkyboxProjection() const;
@@ -324,6 +324,17 @@ namespace core
 			for (int i = 0; i < 9; i++)
 				_values[i] = value[i];
 		}
+        
+        Matrix3 transpose() const
+        {
+            return Matrix3(
+                          getXx(), getYx(), getZx(),
+                          getXy(), getYy(), getZy(),
+                          getXz(), getYz(), getZz());
+        }
+        
+
+        
 	private:
 		float _values[9];
 	};

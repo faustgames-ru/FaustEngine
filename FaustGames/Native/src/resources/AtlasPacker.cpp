@@ -51,6 +51,8 @@ namespace resources
 		alignInfo.borderBlockCount = 4;
 		_internalFormat = format;
 		placer = atlasPlacer;
+
+		placer->SetupAlign(alignInfo);
 	}
 
 	AtlasPacker* AtlasPacker::create(llge::TextureImage2dFormat format)
@@ -143,8 +145,7 @@ namespace resources
 					AtlasImageEntry* input = *i;
 					float inputW = input->input.width;
 					float inputH = input->input.height;
-					if (inputW == rect.width && inputH == rect.height ||
-						inputW == rect.height && inputH == rect.width)
+					if (inputW == rect.width && inputH == rect.height)
 					{
 						page->rects[j].entry = *i;
 						_inputPack.erase(i);
@@ -155,9 +156,11 @@ namespace resources
 		}
 		
 		_pageData = new graphics::Image2dData(placer->getPageBufferSize(pageSize));
+		_pageData->BlocksOrder = placer->getPageBlocksOrder();
 		_pageData->Format = getFormat();
 		_pageData->Width = pageSize;
 		_pageData->Height = pageSize;
+		_pageData->RawDataOffset = 0;
 
 		PlaceArgs placeArgs;
 		placeArgs.pageData = _pageData;
@@ -181,34 +184,13 @@ namespace resources
 					placeArgs.imageData = image;
 					placer->placeImage(placeArgs);
 
+					rect.entry->input.texture->AtlasEntry = true;
 					rect.entry->input.texture->setHandle(texture->getHandle());
 					rect.entry->input.texture->transform = graphics::TextureTransform(
 						static_cast<float>((rect.rect.x + alignInfo.borderBlockCount)*alignInfo.blockSizeX) / static_cast<float>(pageSize),
 						static_cast<float>((rect.rect.y + alignInfo.borderBlockCount)*alignInfo.blockSizeY) / static_cast<float>(pageSize),
-						static_cast<float>(image->Width - alignInfo.borderBlockCount*alignInfo.blockSizeX * 2) / static_cast<float>(pageSize),
-						static_cast<float>(image->Height - alignInfo.borderBlockCount*alignInfo.blockSizeY * 2) / static_cast<float>(pageSize));
-
-					/*
-					rect.entry->input.texture->transform = graphics::TextureTransform(
-						scaleX(rect.rect.x + pixelBorders),
-						scaleX(rect.rect.y + pixelBorders),
-						scaleX(inputW - pixelBorders * 2),
-						scaleX(inputH - pixelBorders * 2));
-					*/
-					
-					/*
-					rect.rect.x *= sizeAlign;
-					rect.rect.y *= sizeAlign;
-					rect.rect.width *= sizeAlign;
-					rect.rect.width *= sizeAlign;
-					rect.entry->input.texture->setHandle(texture->getHandle());
-					rect.entry->input.texture->transform = graphics::TextureTransform(
-						scaleX(rect.rect.x + pixelBorders),
-						scaleX(rect.rect.y + pixelBorders),
-						scaleX(inputW - pixelBorders * 2),
-						scaleX(inputH - pixelBorders * 2));
-					placeImage(rect, image);
-					*/
+						static_cast<float>(image->Width / static_cast<float>(pageSize)),
+						static_cast<float>(image->Height / static_cast<float>(pageSize)));
 				}
 				else if (inputH == rect.rect.width && inputW == rect.rect.height)
 				{
@@ -259,15 +241,15 @@ namespace resources
 		{
 		case llge::TFRgba8888: 
 			return graphics::Image2dFormat::Rgba;
-		case llge::TFRgb888: 
-			return graphics::Image2dFormat::Rgb;
 		case llge::TFRgba4444:
 			return graphics::Image2dFormat::Rgba4444;
-		case llge::TFPvrtc12:
-			return graphics::Image2dFormat::Pvrtc12;
 		case llge::TFPvrtc14: 
 			return graphics::Image2dFormat::Pvrtc14;
-		default: 
+		case llge::TFAtc:
+			return graphics::Image2dFormat::Atc;
+		case llge::TFEtc2:
+			return graphics::Image2dFormat::Etc2;
+		default:
 			return graphics::Image2dFormat::Rgba;
 		}
 	}
@@ -292,9 +274,9 @@ namespace resources
 
 	IAtlasPlacer* IAtlasPlacer::rgba8888 = new AtlasPlacerRgba();
 	IAtlasPlacer* IAtlasPlacer::rgba4444 = new AtlasPlacerRgba();
-	IAtlasPlacer* IAtlasPlacer::rgb888 = new AtlasPlacerRgb();
-	IAtlasPlacer* IAtlasPlacer::pvrtc12 = new AtlasPlacerPvrtc12();
 	IAtlasPlacer* IAtlasPlacer::pvrtc14 = new AtlasPlacerPvrtc14();
+	IAtlasPlacer* IAtlasPlacer::etc2 = new AtlasPlacerEtc2();
+	IAtlasPlacer* IAtlasPlacer::atc = new AtlasPlacerAtc();
 
 	IAtlasPlacer* IAtlasPlacer::switchPlacer(llge::TextureImage2dFormat format)
 	{
@@ -304,15 +286,20 @@ namespace resources
 			return rgba8888;
 		case llge::TFRgba4444:
 			return rgba4444;
-		case llge::TFRgb888:
-			return rgb888;
-		case llge::TFPvrtc12:
-			return pvrtc14;
 		case llge::TFPvrtc14:
-			return pvrtc12;
+			return pvrtc14;
+		case llge::TFAtc:
+			return atc;
+		case llge::TFEtc2:
+			return etc2;
 		default:
 			return nullptr;
 		}
+	}
+
+	graphics::Image2dBlocksOrder::e IAtlasPlacer::getPageBlocksOrder()
+	{
+		return graphics::Image2dBlocksOrder::Normal;
 	}
 
 	AtlasTexturesPool AtlasTexturesPool::Default;
@@ -366,15 +353,6 @@ namespace resources
 	{
 	}
 
-	int AtlasPlacerPvrtc12::getPageBufferSize(int pageSize)
-	{
-		return pageSize*pageSize / 16;
-	}
-
-	void AtlasPlacerPvrtc12::placeImage(const PlaceArgs& e)
-	{
-	}
-
 	int AtlasPlacerPvrtc14::getPageBufferSize(int pageSize)
 	{
 		return pageSize*pageSize / 8;
@@ -382,343 +360,53 @@ namespace resources
 
 	void AtlasPlacerPvrtc14::placeImage(const PlaceArgs& e)
 	{
+		AbstractPlacer::placeImageWithBorder<int64_t>(e);
 	}
 
-	/*
-
-	AtlasPackerRgb::AtlasPackerRgb(llge::TextureImage2dFormat format) : AtlasPacker(format)
+	void AtlasPlacerPvrtc14::SetupAlign(AlignInfo& alignInfo)
 	{
+		alignInfo.blockSizeX = 4;
+		alignInfo.blockSizeY = 4;
+		alignInfo.borderBlockCount = 1;
 	}
 
-	void AtlasPackerRgb::createPageData()
+	int AtlasPlacerAtc::getPageBufferSize(int pageSize)
 	{
-		_pageData = new graphics::Image2dData(pageSize * pageSize * 3 / 4);
-		_pageData->Format = graphics::Image2dFormat::Rgb;
+		return pageSize*pageSize / 4;
 	}
 
-	void AtlasPackerRgb::clearPageData()
+	struct int128
 	{
-	}
+		int64_t h;
+		int64_t l;
+	};
 
-	void AtlasPackerRgb::placeImage(AtlasRect rect, graphics::Image2dData* image)
+	void AtlasPlacerAtc::placeImage(const PlaceArgs& e)
 	{
-		switch (image->Format)
-		{
-		case graphics::Image2dFormat::Rgb:
-			placeRgb(rect, image);
-			break;
-		case graphics::Image2dFormat::Rgba:
-		case graphics::Image2dFormat::Pvrtc12:
-		case graphics::Image2dFormat::Pvrtc14:
-		case graphics::Image2dFormat::Etc1:
-			break;
-		default: break;
-		}
+		AbstractPlacer::placeImageWithBorder<int128>(e);
 	}
 
-
-	void AtlasPackerRgb::placeRgbRow(AtlasRect rect, int ySrc, int yDst, graphics::Image2dData *image)
+	void AtlasPlacerAtc::SetupAlign(AlignInfo& alignInfo)
 	{
-		
-		int rowDstBase = (rect.rect.y + pixelBorders) * _pageSize + rect.rect.x + pixelBorders;
-		int rowSrcBase = 0;
-		byte* imagePixels = reinterpret_cast<byte*>(image->Pixels);
-		byte* pagePixels = reinterpret_cast<byte*>(_pageData->Pixels);
-		int channels = 3;
-		int step = image->Width * channels;
-		int newStep = (step / 4) * 4;
-		if (newStep < step)
-		{
-			step = newStep + 4;
-		}
-
-		int w = rect.rect.width - pixelBorders * 2;
-
-		int rowDst = rowDstBase + _pageSize * yDst;
-		int rowSrc = rowSrcBase + step * ySrc;
-		int bytesCount = w*channels;
-		for (int x = 0; x < bytesCount; x++)
-		{
-			*(imagePixels + rowSrc) = *(pagePixels + rowSrc);
-			rowDst ++;
-			rowSrc ++;
-		}
-		
+		alignInfo.blockSizeX = 4;
+		alignInfo.blockSizeY = 4;
+		alignInfo.borderBlockCount = 1;
 	}
 
-	void AtlasPackerRgb::placeRgbCol(AtlasRect rect, int xSrc, int xDst, graphics::Image2dData *image)
+	int AtlasPlacerEtc2::getPageBufferSize(int pageSize)
 	{
-		
-		int rowDstBase = (rect.rect.y + pixelBorders) * _pageSize + rect.rect.x + pixelBorders;
-		int rowSrcBase = 0;
-		byte* imagePixels = reinterpret_cast<byte*>(image->Pixels);
-		byte* pagePixels = reinterpret_cast<byte*>(_pageData->Pixels);
-		int channels = 3;
-		int step = image->Width * channels;
-		int newStep = (step / 4) * 4;
-		if (newStep < step)
-		{
-			step = newStep + 4;
-		}
-
-		int w = rect.rect.width - pixelBorders * 2;
-		int h = rect.rect.height - pixelBorders * 2;
-
-		int rowDst = rowDstBase + xDst;
-		int rowSrc = rowSrcBase + xSrc;
-		for (int y = 0; y < h; y++)
-		{
-			*(imagePixels + rowSrc + 0) = *(pagePixels + rowSrc + 0);
-			*(imagePixels + rowSrc + 1) = *(pagePixels + rowSrc + 1);
-			*(imagePixels + rowSrc + 2) = *(pagePixels + rowSrc + 2);
-			rowDst += w*channels;
-			rowSrc += channels*step;
-		}
-		
+		return pageSize*pageSize / 4;
 	}
 
-	void AtlasPackerRgb::placeRgb(AtlasRect rect, graphics::Image2dData* image)
+	void AtlasPlacerEtc2::placeImage(const PlaceArgs& e)
 	{
-		
-		int h = rect.rect.height - pixelBorders * 2;
-		int w = rect.rect.width - pixelBorders * 2;
-		for (int y = 0; y < h; y++)
-		{
-			placeRgbRow(rect, y, y, image);
-		}
-
-		for (int y = 1; y <= pixelBorders; y++)
-		{
-			placeRgbRow(rect, 0, 0 - y, image);
-			placeRgbRow(rect, h - 1, h - 1 + y, image);
-		}
-		for (int x = 1; x <= pixelBorders; x++)
-		{
-			placeRgbCol(rect, 0, 0 - x, image);
-			placeRgbCol(rect, w - 1, w - 1 + x, image);
-		}
-		
+		AbstractPlacer::placeImageWithBorder<int128>(e);
 	}
 
-	AtlasPackerRgba::AtlasPackerRgba(llge::TextureImage2dFormat format) : AtlasPacker(format)
+	void AtlasPlacerEtc2::SetupAlign(AlignInfo& alignInfo)
 	{
+		alignInfo.blockSizeX = 4;
+		alignInfo.blockSizeY = 4;
+		alignInfo.borderBlockCount = 1;
 	}
-
-	void AtlasPackerRgba::createPageData()
-	{
-		_pageData = new graphics::Image2dData(pageSize, pageSize);
-		_pageData->Format = graphics::Image2dFormat::Rgba;
-	}
-
-	void AtlasPackerRgba::clearPageData()
-	{
-		int size = _pageData->Width*_pageData->Height;
-		for (int i = 0; i < size; i++)
-		{
-			_pageData->Pixels[i] = 0;
-		}
-	}
-
-	void AtlasPackerRgba::placeImage(AtlasRect rect, graphics::Image2dData* image)
-	{
-		switch (image->Format)
-		{
-		case graphics::Image2dFormat::Rgba:
-			placeRgba(rect, image);
-			break;
-		case graphics::Image2dFormat::Rgb:
-			placeRgb(rect, image);
-			break;
-		case graphics::Image2dFormat::Pvrtc14:
-		case graphics::Image2dFormat::Pvrtc12:
-		case graphics::Image2dFormat::Etc1:
-			break;
-		default: 
-			break;
-		}
-	}
-	
-	void AtlasPackerRgba::placeRgbRow(AtlasRect rect, int ySrc, int yDst, graphics::Image2dData *image)
-	{
-		
-		int rowDstBase = (rect.rect.y + pixelBorders) * _pageSize + rect.rect.x + pixelBorders;
-		int rowSrcBase = 0;
-		byte* imagePixels = reinterpret_cast<byte*>(image->Pixels);
-		int channels = 3;
-		int step = image->Width * channels;
-		int newStep = (step / 4) * 4;
-		if (newStep < step)
-		{
-			step = newStep + 4;
-		}
-
-		int w = rect.rect.width - pixelBorders * 2;
-
-		int rowDst = rowDstBase + _pageSize * yDst;
-		int rowSrc = rowSrcBase + step * ySrc;
-		for (int x = 0; x < w; x++)
-		{
-
-			uint c = *reinterpret_cast<uint *>(imagePixels + rowSrc);
-			_pageData->Pixels[rowDst] = (c >> 8) | 0xff000000;
-			rowDst++;
-			rowSrc += channels;
-		}
-		
-	}
-
-	void AtlasPackerRgba::placeRgbCol(AtlasRect rect, int xSrc, int xDst, graphics::Image2dData *image)
-	{
-		
-		int rowDstBase = (rect.rect.y + pixelBorders) * _pageSize + rect.rect.x + pixelBorders;
-		int rowSrcBase = 0;
-		byte* imagePixels = reinterpret_cast<byte*>(image->Pixels);
-		int channels = 3;
-		int step = image->Width * channels;
-		int newStep = (step / 4) * 4;
-		if (newStep < step)
-		{
-			step = newStep + 4;
-		}
-
-		int w = rect.rect.width - pixelBorders * 2;
-		int h = rect.rect.height - pixelBorders * 2;
-
-		int rowDst = rowDstBase + xDst;
-		int rowSrc = rowSrcBase + xSrc;
-		for (int y = 0; y < h; y++)
-		{
-
-			uint c = *reinterpret_cast<uint *>(imagePixels + rowSrc);
-			_pageData->Pixels[rowDst] = (c >> 8) | 0xff000000;
-			rowDst += w;
-			rowSrc += channels*step;
-		}
-		
-	}
-
-	void AtlasPackerRgba::placeRgbaRow(AtlasRect rect, int ySrc, int yDst, graphics::Image2dData* image)
-	{
-		
-		int rowDstBase = (rect.rect.y + pixelBorders) * _pageSize + (rect.rect.x + pixelBorders);
-		int rowSrcBase = 0;
-		int w = rect.rect.width - pixelBorders * 2;
-
-		int rowDst = rowDstBase + _pageSize*yDst;
-		int rowSrc = rowSrcBase + image->Width*ySrc;
-		for (int x = 0; x < w; x++)
-		{
-			_pageData->Pixels[rowDst] = image->Pixels[rowSrc];
-			rowDst++;
-			rowSrc++;
-		}
-		
-	}
-
-	void AtlasPackerRgba::placeRgbaCol(AtlasRect rect, int xSrc, int xDst, graphics::Image2dData *image)
-	{
-		
-		int rowDstBase = (rect.rect.y + pixelBorders) * _pageSize + (rect.rect.x + pixelBorders);
-		int rowSrcBase = 0;
-		int h = rect.rect.height - pixelBorders * 2;
-
-		int rowDst = rowDstBase + xDst;
-		int rowSrc = rowSrcBase + xSrc;
-		for (int y = 0; y < h; y++)
-		{
-			_pageData->Pixels[rowDst] = image->Pixels[rowSrc];
-			rowDst += _pageSize;
-			rowSrc += image->Width;
-		}
-		
-	}
-
-
-	void AtlasPackerRgba::placeRgb(AtlasRect rect, graphics::Image2dData* image)
-	{
-		
-		int h = rect.rect.height - pixelBorders * 2;
-		int w = rect.rect.width - pixelBorders * 2;
-		for (int y = 0; y < h; y++)
-		{
-			placeRgbRow(rect, y, y, image);
-		}
-
-		for (int y = 1; y <= pixelBorders; y++)
-		{
-			placeRgbRow(rect, 0, 0 - y, image);
-			placeRgbRow(rect, h - 1, h - 1 + y, image);
-		}
-		for (int x = 1; x <= pixelBorders; x++)
-		{
-			placeRgbCol(rect, 0, 0 - x, image);
-			placeRgbCol(rect, w - 1, w - 1 + x, image);
-		}
-		
-	}
-
-	void AtlasPackerRgba::placeRgba(AtlasRect rect, graphics::Image2dData* image)
-	{
-		
-		int h = rect.rect.height - pixelBorders * 2;
-		int w = rect.rect.width - pixelBorders * 2;
-		for (int y = 0; y < h; y++)
-		{
-			placeRgbaRow(rect, y, y, image);
-		}
-
-		for (int y = 1; y <= pixelBorders; y++)
-		{
-			placeRgbaRow(rect, 0, 0 - y, image);
-			placeRgbaRow(rect, h - 1, h - 1 + y, image);
-		}
-		for (int x = 1; x <= pixelBorders; x++)
-		{
-			placeRgbaCol(rect, 0, 0 - x, image);
-			placeRgbaCol(rect, w - 1, w - 1 + x, image);
-		}
-	
-	}
-
-
-	AtlasPackerPvr14::AtlasPackerPvr14(llge::TextureImage2dFormat format) : AtlasPacker(format)
-	{
-	}
-
-	void AtlasPackerPvr14::createPageData()
-	{
-		_pageData = new graphics::Image2dData(pageSize * pageSize / 8);
-		_pageData->Format = graphics::Image2dFormat::Pvrtc12;
-	}
-
-	void AtlasPackerPvr14::clearPageData()
-	{
-	}
-
-	void AtlasPackerPvr14::placeImage(AtlasRect rect, graphics::Image2dData* image)
-	{
-		switch (image->Format)
-		{
-		case graphics::Image2dFormat::Pvrtc14:
-			place(rect, image);
-			break;
-		case graphics::Image2dFormat::Rgb:
-		case graphics::Image2dFormat::Rgba:
-		case graphics::Image2dFormat::Pvrtc12:
-		case graphics::Image2dFormat::Etc1:
-			break;
-		default: break;
-		}
-	}
-
-	void AtlasPackerPvr14::place(AtlasRect rect, graphics::Image2dData* imageData)
-	{
-	}
-
-	void AtlasPackerPvr14::placeRow(AtlasRect rect, int ySrc, int yDst, graphics::Image2dData* imageData)
-	{
-	}
-
-	AtlasTexturesPool AtlasTexturesPool::Default;
-	*/
 }

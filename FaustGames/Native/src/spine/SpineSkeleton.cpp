@@ -209,6 +209,7 @@ namespace spine
 				: graphics::BlendState::Additive;
 			
 			SpineSkeletonBone* bone = _bones[slot->bone->data->index];
+			
 			if (_defaultRgbTransformIndex >= 0 && bone->rgbTransfomrIndex < 0)
 			{
 				batcher->addColorTransform(_colorTransform[_defaultRgbTransformIndex]);

@@ -20,26 +20,7 @@ namespace resources
 	{
 		std::string fileName;
 	};
-	/*
-	class AtlasEntryInput
-	{
-	public:
-		graphics::Image2dData *image;
-		graphics::TextureImage2d* texture;
-	};
 
-	class AtlasEntry
-	{
-	public:
-	};
-
-	class IAtlasOnlinePacker : public IBaseObject
-	{
-	public:
-		virtual bool insert(const AtlasEntryInput &input, AtlasEntry &output) = 0;
-		virtual void applyCurrentPage() = 0;
-	};
-	*/
 	class ContentManager : public llge::IContentManager, public llge::ITextureBuffer2d
 	{
 	public:
@@ -85,16 +66,17 @@ namespace resources
 		TexturesMap _loadedImages;
 		void *getBuffer() const;
 		int getBufferSize() const;
-
+		llge::TextureImage2dFormat getAtlasFormat(llge::TextureQueryFormat format);
 		static int ImageBufferSize;
 		static int ImageMaxHeight;
 		static int ImageMaxWidth;
 	private:
-		IAtlasPacker* queryPacker(llge::TextureImage2dFormat format);
+		llge::TextureImage2dFormat _platformCompressionAtlasFormat;
+		IAtlasPacker* queryPacker(llge::TextureQueryFormat format);
 		std::vector<LoadRegisrtyEntry> _files;
 		std::vector<LoadImageEntry> _loadEntries;
 		std::vector<graphics::TextureImage2d *> _disposeEntries;
-		char* _compressionExt;
+		const char* _compressionExt;
 		graphics::Image2dData *_image;
 		bool _isOpened;
 		bool _isAtlasBuilderStarted;

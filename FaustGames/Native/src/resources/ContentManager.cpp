@@ -9,127 +9,18 @@
 namespace resources
 {
 
-	char* nilExt("nil");
-	char* texExt("tex");
-	char* pvrExt("pvr");
-	char* atcExt("atc");
-	char* pkmExt("pkm");
-	char* astcExt("ast");
-	/*
-	class AtlasPage
+	bool allowPack(int w, int h)
 	{
-	};
+		return w > 0 && h > 0 && w < 1024 && h < 1024;
+	}
 
-	class AtlasOnlinePacker : public IAtlasOnlinePacker
-	{
-	public:
-		AtlasOnlinePacker();
-		void init(int w, int h);
-		virtual bool insert(const AtlasEntryInput &input, AtlasEntry &output) OVERRIDE;
-		virtual void applyCurrentPage() OVERRIDE;
-	private:
-		float scaleX(int x);
-		float scaleY(int y);
-		graphics::TextureAtlasPage* cretateNextPage();
-		void applyPageRect(rbp::Rect r, graphics::Image2dData* image);
-		rbp::GuillotineBinPack _pack;
-		std::vector<graphics::TextureAtlasPage* > _pages;
-		graphics::TextureAtlasPage* _actualPage;
-		int _w;
-		int _h;
-		graphics::Image2dData* _pageData;
-	};
+	std::string nilExt("nil");
+	std::string texExt("tex");
+	std::string pvrExt("pvr");
+	std::string atcExt("atc");
+	std::string pkmExt("pkm");
+	std::string astcExt("ast");
 	
-	AtlasOnlinePacker::AtlasOnlinePacker() : _actualPage(nullptr), _w(1), _h(1), _pageData(nullptr)
-	{
-		init(4096, 4096);
-	}
-
-	void AtlasOnlinePacker::init(int w, int h)
-	{
-		_pack.allowRotate = false;
-		_pack.Init(w, h);
-		_w = w;
-		_h = h;
-		_pageData = new graphics::Image2dData(w, h);
-	}
-
-	bool AtlasOnlinePacker::insert(const AtlasEntryInput& input, AtlasEntry& output)
-	{
-		if (input.image->Width >= _w / 2 || input.image->Height >= _h / 2)
-		{
-			return false;
-		}
-		if (_pageData == nullptr) return false;
-		if (_actualPage == nullptr)
-		{
-			_actualPage = cretateNextPage();
-		}
-		rbp::Rect r = _pack.Insert(input.image->Width / 2, input.image->Height / 2, true, rbp::GuillotineBinPack::RectBestAreaFit, rbp::GuillotineBinPack::SplitMinimizeArea);
-		if (r.width == 0 || r.height == 0)
-		{
-			applyCurrentPage();
-			_actualPage = cretateNextPage();
-			r = _pack.Insert(input.image->Width / 2, input.image->Height / 2, true, rbp::GuillotineBinPack::RectBestAreaFit, rbp::GuillotineBinPack::SplitMinimizeArea);
-		}
-		if (r.width == 0 || r.height == 0)
-			return false;
-		applyPageRect(r, input.image);
-		_actualPage->createRect(
-			scaleX(r.x),
-			scaleX(r.y),
-			scaleX(r.width),
-			scaleX(r.height),
-			input.texture);
-		return true;
-	}
-
-	float AtlasOnlinePacker::scaleX(int x)
-	{
-		return static_cast<float>(x) / static_cast<float>(_w);
-	}
-
-	float AtlasOnlinePacker::scaleY(int y)
-	{
-		return static_cast<float>(y) / static_cast<float>(_h);
-	}
-
-	graphics::TextureAtlasPage* AtlasOnlinePacker::cretateNextPage()
-	{
-		graphics::TextureAtlasPage *actualPage = new graphics::TextureAtlasPage(true);
-		actualPage->create();
-		_pages.push_back(actualPage);
-		_pack.Init(_w, _h);
-		return actualPage;
-	}
-
-	void AtlasOnlinePacker::applyPageRect(rbp::Rect r, graphics::Image2dData* image)
-	{
-		int rowDstBase = r.y * _w + r.x;
-		int rowSrcBase = 0;
-		for (int y = 0; y < r.height; y++)
-		{
-			int rowDst = rowDstBase;
-			int rowSrc = rowSrcBase;
-			for (int x = 0; x < r.width; x++)
-			{
-				_pageData->Pixels[rowDst] = image->Pixels[rowSrc];
-				rowDst++;
-				rowSrc+=2;
-			}
-
-			rowDstBase += _w;
-			rowSrcBase += image->Width * 2;
-		}
-	}
-
-	void AtlasOnlinePacker::applyCurrentPage()
-	{
-		if (_actualPage == nullptr)
-			return;
-		_actualPage->setData(_pageData);
-	}
-	*/
 	void readData(png_structp pngPtr, png_bytep data, png_size_t length)
 	{
 		ContentProvider::read(data, length);
@@ -146,7 +37,7 @@ namespace resources
 		core::Mem::deallocate(mem);
 	}
 
-	ContentManager::ContentManager() : _image(nullptr), _isOpened(false)
+	ContentManager::ContentManager() : _image(nullptr), _isOpened(false), _platformCompressionAtlasFormat(llge::TFPvrtc14)
 	{
 		_compressionExt = "pvr";
 		for (int i = 0; i < llge::TFEnumSize; i++)
@@ -188,10 +79,10 @@ namespace resources
 	{
 		int wLimint = ImageMaxWidth / 2 - 16;
 		int hLimint = ImageMaxHeight / 2 - 16;
-		IAtlasPacker * packer = nullptr;// queryPacker(format);
+		IAtlasPacker * packer = queryPacker(format);
 		if (packer != nullptr)
 		{
-			if (w > 0 && h > 0 && packer->ready() && w <= wLimint && h <= hLimint)
+			if (packer->ready() && allowPack(w, h))
 			{
 				AtlasImageInput input;
 				input.texture = new graphics::TextureImage2d(false, true);;
@@ -396,30 +287,48 @@ namespace resources
 		return _image;
 	}
 
-	graphics::Image2dData* ContentManager::loadUnregisteredPvrTexture(const char* name)
+	struct CompressedTextureHeader
 	{
-		ContentProvider::openContent(name);
-		int size = ContentProvider::read(_image->Pixels, ImageBufferSize);
-		ContentProvider::closeContent();
-		_image->Width = *(_image->Pixels + 0);
-		_image->Height = *(_image->Pixels + 1);
-		_image->BlocksOrder = static_cast<graphics::Image2dBlocksOrder::e>(*(_image->Pixels + 2));
-		int bpp = *(_image->Pixels + 3);
-		_image->Format = bpp == 2?graphics::Image2dFormat::Pvrtc12: graphics::Image2dFormat::Pvrtc14;
-		_image->RawDataOffset = 5;
-		return _image;
+		int Format;
+		int CompressionPercent;
+		int OriginWidth;
+		int OriginHeight;
+		int BorderX;
+		int BorderY;
+		int RawDataOffset;
+	};
+
+
+	void skipData(uint* &data, int bytesCount)
+	{
+		byte* bytes = reinterpret_cast<byte*>(data);
+		bytes += bytesCount;
+		data = reinterpret_cast<uint*>(bytes);
+	}
+	
+	uint readData(uint* &data)
+	{
+		uint result = *data;
+		data++;
+		return result;
 	}
 
-	graphics::Image2dData* ContentManager::loadUnregisteredRgba4444Texture(const char* name)
+	CompressedTextureHeader getCompressedTextureHeader(uint* &data)
 	{
-		ContentProvider::openContent(name);
-		int size = ContentProvider::read(_image->Pixels, ImageBufferSize);
-		ContentProvider::closeContent();
-		_image->Width = *(_image->Pixels + 0);
-		_image->Height = *(_image->Pixels + 1);
-		_image->Format = graphics::Image2dFormat::Rgba4444;
-		_image->RawDataOffset = 2;
-		return _image;
+		uint* p = data;
+
+		CompressedTextureHeader result;
+		result.Format = readData(p);
+		result.CompressionPercent = readData(p);
+		int skip = readData(p);
+		skipData(p, skip);
+		result.OriginWidth = readData(p);
+		result.OriginHeight = readData(p);;
+		result.BorderX = readData(p);;
+		result.BorderY = readData(p);;
+		result.RawDataOffset = p - data;
+		data = p;
+		return result;
 	}
 
 	graphics::Image2dData* ContentManager::loadUnregisteredCompressedTexture(const char* name)
@@ -427,46 +336,42 @@ namespace resources
 		ContentProvider::openContent(name);
 		int size = ContentProvider::read(_image->Pixels, ImageBufferSize);
 		ContentProvider::closeContent();
-		int format = *(_image->Pixels + 0);
-		int compression = *(_image->Pixels + 1);
-		int skipHashWords = 2 + *(_image->Pixels + 2) / 4;
-		_image->Width = *(_image->Pixels + 1 + skipHashWords);
-		_image->Height = *(_image->Pixels + 2 + skipHashWords);
+
+		uint* data = _image->Pixels;
+		CompressedTextureHeader header = getCompressedTextureHeader(data);
+
+		_image->Width = header.OriginWidth;
+		_image->Height = header.OriginHeight;
 		_image->BlocksOrder = graphics::Image2dBlocksOrder::Normal;
-		if (format == 1) // Rgba4444
+		_image->BorderSize = header.BorderX;
+		_image->RawDataOffset = header.RawDataOffset;
+		if (header.Format == 1) // Rgba4444
 		{
 			_image->Format = graphics::Image2dFormat::Rgba4444;
-			_image->RawDataOffset = 3 + skipHashWords;
 			return _image;
 		}
-		if (format == 2 || format == 3) // Pvrtc
+		if (header.Format == 2 || header.Format == 3) // Pvrtc
 		{
-			_image->BlocksOrder = static_cast<graphics::Image2dBlocksOrder::e>(*(_image->Pixels + 3+ skipHashWords));
-			int bpp = *(_image->Pixels + 4 + skipHashWords);
-			_image->Format = bpp == 2 ? graphics::Image2dFormat::Pvrtc12 : graphics::Image2dFormat::Pvrtc14;
-			_image->RawDataOffset = 6 + skipHashWords;
+			_image->Format = graphics::Image2dFormat::Pvrtc14;
+			_image->BlocksOrder = static_cast<graphics::Image2dBlocksOrder::e>(readData(data));
+			_image->RawDataOffset++;
 			return _image;
 		}
-		if (format == 4) // Atc
+		if (header.Format == 3) // Pvrtc
+		{
+			_image->Format = graphics::Image2dFormat::Pvrtc12;
+			_image->BlocksOrder = static_cast<graphics::Image2dBlocksOrder::e>(readData(data));
+			_image->RawDataOffset++;
+			return _image;
+		}
+		if (header.Format == 4) // Atc
 		{
 			_image->Format = graphics::Image2dFormat::Atc;
-			_image->RawDataOffset = 5 + skipHashWords;
 			return _image;
 		}
-		if (format == 5) // Etc2
+		if (header.Format == 5) // Etc2
 		{
-			int hasAlpha = *(_image->Pixels + 3 + skipHashWords);
-
-			_image->Format = hasAlpha ? graphics::Image2dFormat::Etc2 : graphics::Image2dFormat::Etc1;
-			_image->RawDataOffset = 5 + skipHashWords;
-			return _image;
-		}
-		if (format == 6) // Astc
-		{
-			int hasAlpha = *(_image->Pixels + 3 + skipHashWords);
-
-			_image->Format = graphics::Image2dFormat::Astc;
-			_image->RawDataOffset = 5 + skipHashWords;
+			_image->Format = graphics::Image2dFormat::Etc2;
 			return _image;
 		}
 		return nullptr;
@@ -543,31 +448,32 @@ namespace resources
 
 	void ContentManager::useCompression(llge::TextureImage2dFormat format)
 	{
+		_platformCompressionAtlasFormat = format;
 		switch (format)
 		{
 		case llge::TFRgba8888: 
-			_compressionExt = nilExt;
+			_compressionExt = nilExt.c_str();
 			break;			
 		case llge::TFRgb888: 
-			_compressionExt = nilExt;
+			_compressionExt = nilExt.c_str();
 			break;
 		case llge::TFRgba4444: 
-			_compressionExt = texExt;
+			_compressionExt = texExt.c_str();
 			break;
 		case llge::TFPvrtc12: 
-			_compressionExt = pvrExt;
+			_compressionExt = pvrExt.c_str();
 			break;
 		case llge::TFPvrtc14: 
-			_compressionExt = pvrExt;
+			_compressionExt = pvrExt.c_str();
 			break;
 		case llge::TFAtc:
-			_compressionExt = atcExt;
+			_compressionExt = atcExt.c_str();
 			break;
 		case llge::TFEtc2:
-			_compressionExt = pkmExt;
+			_compressionExt = pkmExt.c_str();
 			break;
 		case llge::TFAstc:
-			_compressionExt = astcExt;
+			_compressionExt = astcExt.c_str();
 			break;
 		default: break;
 		}
@@ -642,21 +548,17 @@ namespace resources
 		return false;
 	}
 
-
 	void API_CALL ContentManager::loadImage(int id, llge::ITextureImage2d *textureImage, int w, int h, llge::TextureQueryFormat queryFormat)
 	{
 		const char *name = _files[id].fileName.c_str();
 		graphics::TextureImage2d* texture = static_cast<graphics::TextureImage2d*>(textureImage->getTextureImageInstance());
 		
-		int wLimint = ImageMaxWidth * 2 / 3;
-		int hLimint = ImageMaxHeight * 2 / 3;
-
 		//llge::TextureImage2dFormat format = _files[id].format;
-		IAtlasPacker* packer = nullptr;// queryPacker(format);
+		IAtlasPacker* packer = queryPacker(queryFormat);
 
 		if (packer != nullptr)
 		{
-			if (w > 0 && h > 0 && packer->ready() && w < wLimint && h < hLimint)
+			if (packer->ready() && allowPack(w, h))
 			{
 				AtlasImageInput input;
 				input.texture = texture;
@@ -716,15 +618,29 @@ namespace resources
 		return ImageBufferSize;
 	}
 
-	IAtlasPacker* ContentManager::queryPacker(llge::TextureImage2dFormat format)
+
+	llge::TextureImage2dFormat ContentManager::getAtlasFormat(llge::TextureQueryFormat format)
 	{
-		return nullptr;
+		switch (format)
+		{
+		case llge::TQFRgba8888: 
+			return llge::TFRgba8888;
+		case llge::TQFRgba4444: 			
+			return llge::TFRgba4444;
+		case llge::TQFPlatformCompressed: 
+			return _platformCompressionAtlasFormat;
+		}
+		return llge::TFRgba8888;
+	}
+
+	IAtlasPacker* ContentManager::queryPacker(llge::TextureQueryFormat format)
+	{
 		if (!_isAtlasBuilderStarted) return nullptr;
-		if (format != llge::TextureImage2dFormat::TFRgba8888)return nullptr;
-		int packerIndex = llge::TextureImage2dFormat::TFRgba8888;// format;
+		if (format == llge::TQFNone) return nullptr;
+		int packerIndex = format;
 		if (_packers[packerIndex] == nullptr)
 		{
-			_packers[packerIndex] = AtlasPacker::create(llge::TextureImage2dFormat::TFRgba8888);
+			_packers[packerIndex] = AtlasPacker::create(getAtlasFormat(format));
 			_packers[packerIndex]->startPack(ImageMaxWidth);
 		}
 		return _packers[packerIndex];

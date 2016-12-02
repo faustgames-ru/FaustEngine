@@ -10,10 +10,14 @@ namespace graphics
 	public:
 		int Width;
 		int Height;
+		int BorderSize;
 		Image2dBlocksOrder::e BlocksOrder;
 		int RawDataOffset;
 		Image2dFormat::e Format;
 		unsigned int *Pixels;
+
+		int getFullWidth();
+		int getFullHeight();
 		Image2dData();
 		Image2dData(int bufferSize);
 		Image2dData(int width, int height);

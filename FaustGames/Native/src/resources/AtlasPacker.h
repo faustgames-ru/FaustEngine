@@ -53,11 +53,13 @@ namespace resources
 	public:
 		static IAtlasPlacer* rgba8888;
 		static IAtlasPlacer* rgba4444;
-		static IAtlasPlacer* rgb888;
-		static IAtlasPlacer* pvrtc12;
 		static IAtlasPlacer* pvrtc14;
+		static IAtlasPlacer* atc;
+		static IAtlasPlacer* etc2;
 		static IAtlasPlacer* switchPlacer(llge::TextureImage2dFormat format);
 		virtual int getPageBufferSize(int pageSize) = 0;
+		virtual graphics::Image2dBlocksOrder::e getPageBlocksOrder();
+		virtual void SetupAlign(AlignInfo &alignInfo) {}
 		virtual void placeImage(const PlaceArgs &e) = 0;
 	};
 	
@@ -109,13 +111,15 @@ namespace resources
 	public:
 		template<typename TPixel>
 		static void placeImage(const PlaceArgs &e);
+		template<typename TPixel>
+		static void placeImageWithBorder(const PlaceArgs &e);
 	};
 
 	template <typename TPixel>
 	void AbstractPlacer::placeImage(const PlaceArgs& e)
 	{
-		TPixel* srcRow = static_cast<TPixel*>(static_cast<void*>(e.imageData->Pixels));
-		TPixel* dst= static_cast<TPixel*>(static_cast<void*>(e.pageData->Pixels));
+		TPixel* srcRow = static_cast<TPixel*>(static_cast<void*>(e.imageData->Pixels+ e.imageData->RawDataOffset));
+		TPixel* dst= static_cast<TPixel*>(static_cast<void*>(e.pageData->Pixels + e.pageData->RawDataOffset));
 
 		int dstStride = e.alignInfo.alignPageWidth(e.pageData->Width);
 		int srcStride = e.alignInfo.alignPageWidth(e.imageData->Width);
@@ -197,6 +201,35 @@ namespace resources
 		}
 	}
 
+	template <typename TPixel>
+	void AbstractPlacer::placeImageWithBorder(const PlaceArgs& e)
+	{
+		TPixel* srcRow = static_cast<TPixel*>(static_cast<void*>(e.imageData->Pixels + e.imageData->RawDataOffset));
+		TPixel* dst = static_cast<TPixel*>(static_cast<void*>(e.pageData->Pixels + e.pageData->RawDataOffset));
+
+		int dstStride = e.alignInfo.alignPageWidth(e.pageData->Width);
+		int srcStride = e.rect.width;
+
+		TPixel* dstRow = dst + e.rect.x + e.rect.y*dstStride;
+
+		int h = e.rect.height;
+		int w = e.rect.width;
+
+		for (int y = 0; y < h; y++)
+		{
+			TPixel* dstPixel = dstRow;
+			TPixel* srcPixel = srcRow;
+			for (int x = 0; x < w; x++)
+			{
+				*dstPixel = *srcPixel;
+				++srcPixel;
+				++dstPixel;
+			}
+			dstRow += dstStride;
+			srcRow += srcStride;
+		}
+	}
+
 	class AtlasPlacerRgba : public IAtlasPlacer
 	{
 	public:
@@ -218,60 +251,29 @@ namespace resources
 		virtual void placeImage(const PlaceArgs &e) override;
 	};
 
-	class AtlasPlacerPvrtc12 : public IAtlasPlacer
-	{
-	public:
-		virtual int getPageBufferSize(int pageSize) override;
-		virtual void placeImage(const PlaceArgs &e) override;
-	};
-
 	class AtlasPlacerPvrtc14 : public IAtlasPlacer
 	{
 	public:
 		virtual int getPageBufferSize(int pageSize) override;
 		virtual void placeImage(const PlaceArgs &e) override;
+		virtual void SetupAlign(AlignInfo &alignInfo) override;
 	};
-	/*
-	class AtlasPackerRgba : public AtlasPacker
+
+	class AtlasPlacerAtc : public IAtlasPlacer
 	{
 	public:
-		explicit AtlasPackerRgba(llge::TextureImage2dFormat format);
-		//virtual void createPageData() OVERRIDE;
-		//virtual void clearPageData() OVERRIDE;
-		//virtual void placeImage(AtlasRect rect, graphics::Image2dData *image) OVERRIDE;
-		void placeRgb(AtlasRect rect, graphics::Image2dData *imageData);
-		void placeRgbRow(AtlasRect rect, int ySrc, int yDst, graphics::Image2dData* imageData);
-		void placeRgbCol(AtlasRect rect, int xSrc, int xDst, graphics::Image2dData* image);
-		void placeRgba(AtlasRect rect, graphics::Image2dData *imageData);
-		void placeRgbaRow(AtlasRect rect, int ySrc, int yDst, graphics::Image2dData* imageData);
-		void placeRgbaCol(AtlasRect rect, int xSrc, int xDst, graphics::Image2dData* image);
+		virtual int getPageBufferSize(int pageSize) override;
+		virtual void placeImage(const PlaceArgs &e) override;
+		virtual void SetupAlign(AlignInfo &alignInfo) override;
 	};
 
-	class AtlasPackerRgb : public AtlasPacker
+	class AtlasPlacerEtc2 : public IAtlasPlacer
 	{
 	public:
-		explicit AtlasPackerRgb(llge::TextureImage2dFormat format);
-		//virtual void createPageData() OVERRIDE;
-		//virtual void clearPageData() OVERRIDE;
-		//virtual void placeImage(AtlasRect rect, graphics::Image2dData *image) OVERRIDE;
-
-		void placeRgb(AtlasRect rect, graphics::Image2dData *imageData);
-		void placeRgbRow(AtlasRect rect, int ySrc, int yDst, graphics::Image2dData* imageData);
-		void placeRgbCol(AtlasRect rect, int xSrc, int xDst, graphics::Image2dData* image);
+		virtual int getPageBufferSize(int pageSize) override;
+		virtual void placeImage(const PlaceArgs &e) override;
+		virtual void SetupAlign(AlignInfo &alignInfo) override;
 	};
-
-	class AtlasPackerPvr14 : public AtlasPacker
-	{
-	public:
-		explicit AtlasPackerPvr14(llge::TextureImage2dFormat format);
-		//virtual void createPageData() OVERRIDE;
-		//virtual void clearPageData() OVERRIDE;
-		//virtual void placeImage(AtlasRect rect, graphics::Image2dData *image) OVERRIDE;
-
-		void place(AtlasRect rect, graphics::Image2dData *imageData);
-		void placeRow(AtlasRect rect, int ySrc, int yDst, graphics::Image2dData* imageData);
-	};
-	*/
 }
 
 #endif /*ATLAS_PACKER_H*/

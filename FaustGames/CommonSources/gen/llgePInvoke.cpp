@@ -1076,9 +1076,9 @@ namespace llge
 		return classInstance->getName();
 	}
 	
-	extern "C" DLLEXPORT void API_CALL llge_SpineResource_load (ISpineResource * classInstance, String atlasText, String jsonText, String dir, TextureQueryFormat format)
+	extern "C" DLLEXPORT void API_CALL llge_SpineResource_load (ISpineResource * classInstance, String atlasText, String jsonText, String dir, TextureQueryFormat format, float applyedCompression)
 	{
-		classInstance->load(atlasText, jsonText, dir, format);
+		classInstance->load(atlasText, jsonText, dir, format, applyedCompression);
 	}
 	
 	extern "C" DLLEXPORT void API_CALL llge_SpineResource_unLoad (ISpineResource * classInstance)

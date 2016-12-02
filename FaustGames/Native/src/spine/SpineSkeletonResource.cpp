@@ -101,9 +101,10 @@ namespace spine
 		dispose();
 	}
 
-	void API_CALL SpineSkeletonResource::load(String atlasText, String jsonText, String dir, llge::TextureQueryFormat format)
+	void API_CALL SpineSkeletonResource::load(String atlasText, String jsonText, String dir, llge::TextureQueryFormat format, float applyedCompression)
 	{		
 		_atlasRenderObject.pagesFormat = format;
+		_atlasRenderObject.applyedCompression = applyedCompression;
 		//spAtlas* atlas = spAtlas_create(atlasText, strlen(atlasText), dir, &_atlasRenderObject);
 		
 		_spAtlas = spAtlas_create(atlasText, strlen(atlasText), dir, &_atlasRenderObject);

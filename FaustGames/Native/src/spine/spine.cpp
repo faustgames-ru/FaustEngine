@@ -7,6 +7,10 @@ void _spAtlasPage_createTexture(spAtlasPage* self, const char* path)
 {
 	graphics::TextureImage2d* texture;
 	spine::AtlasRenderObject* renderObject = static_cast<spine::AtlasRenderObject *>(self->atlas->rendererObject);
+
+	int w = static_cast<int>(self->width*renderObject->applyedCompression);
+	int h = static_cast<int>(self->height*renderObject->applyedCompression);
+
 	if (resources::ContentManager::_replaceSeparator)
 	{
 		std::string replace = path;
@@ -16,12 +20,13 @@ void _spAtlasPage_createTexture(spAtlasPage* self, const char* path)
 				replace[i] = '_';
 		}
 
-		texture = resources::ContentManager::Default.addLoadTexture(replace.c_str(), self->width, self->height, renderObject->pagesFormat);
+
+		texture = resources::ContentManager::Default.addLoadTexture(replace.c_str(), w, h, renderObject->pagesFormat);
 		resources::ContentManager::Default._loadedImages[replace] = texture;
 	}
 	else 
 	{
-		texture = resources::ContentManager::Default.addLoadTexture(path, self->width, self->height, renderObject->pagesFormat);
+		texture = resources::ContentManager::Default.addLoadTexture(path, w, h, renderObject->pagesFormat);
 		resources::ContentManager::Default._loadedImages[path] = texture;
 	}
 

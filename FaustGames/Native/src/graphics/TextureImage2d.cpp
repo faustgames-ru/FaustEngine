@@ -396,6 +396,9 @@ namespace graphics
 		glBindTexture(GL_TEXTURE_2D, _handle);
 		Errors::check(Errors::BindTexture);
 
+		float border = static_cast<float>(data->BorderSize);
+
+
 		if (_createMipmaps && (data->Format == Image2dFormat::Rgb || data->Format == Image2dFormat::Rgba))
 		{
 			loadMipmaps(data->Width, data->Height, data->Format, data->Pixels);
@@ -447,7 +450,9 @@ namespace graphics
 						Image2dFormat::e fmt = Image2dFormat::Rgba;
 
 						glTexImage2D(GL_TEXTURE_2D, 0, getFormat(fmt), pot, pot, 0, getFormat(fmt), GL_UNSIGNED_BYTE, resultBuffer.pixelsBuffer);
-						transform = TextureTransform(0, 0,
+						transform = TextureTransform(
+							border / static_cast<float>(pot), 
+							border / static_cast<float>(pot),
 							static_cast<float>(data->Width) / static_cast<float>(pot),
 							static_cast<float>(data->Height) / static_cast<float>(pot));
 						Errors::check(Errors::TexImage2D);
@@ -461,12 +466,14 @@ namespace graphics
 						Image2dFormat::e fmt = Image2dFormat::Rgba;
 
 						glTexImage2D(GL_TEXTURE_2D, 0, getFormat(fmt), aW, aH, 0, getFormat(fmt), GL_UNSIGNED_BYTE, pixelsBuffer.pixelsBuffer);
-						transform = TextureTransform(0, 0,
+						transform = TextureTransform(
+							static_cast<float>(border) / static_cast<float>(aW), 
+							static_cast<float>(border) / static_cast<float>(aH),
 							static_cast<float>(data->Width) / static_cast<float>(aW),
 							static_cast<float>(data->Height) / static_cast<float>(aH));
 						Errors::check(Errors::TexImage2D);
 					}
-					else if (data->Format == Image2dFormat::Etc1)
+					/*else if (data->Format == Image2dFormat::Etc1)
 					{
 						TexturesDecompressorBuffer pixelsBuffer;
 						int aW = data->Width;
@@ -479,7 +486,7 @@ namespace graphics
 							static_cast<float>(data->Width) / static_cast<float>(aW),
 							static_cast<float>(data->Height) / static_cast<float>(aH));
 						Errors::check(Errors::TexImage2D);
-					}
+					}*/
 					else if (data->Format == Image2dFormat::Etc2)
 					{
 						TexturesDecompressorBuffer pixelsBuffer;
@@ -489,10 +496,11 @@ namespace graphics
 						Image2dFormat::e fmt = Image2dFormat::Rgba;
 
 						glTexImage2D(GL_TEXTURE_2D, 0, getFormat(fmt), aW, aH, 0, getFormat(fmt), GL_UNSIGNED_BYTE, pixelsBuffer.pixelsBuffer);
-						transform = TextureTransform(0, 0,
+						transform = TextureTransform(
+							static_cast<float>(border) / static_cast<float>(aW),
+							static_cast<float>(border) / static_cast<float>(aH),
 							static_cast<float>(data->Width) / static_cast<float>(aW),
-							static_cast<float>(data->Height) / static_cast<float>(aH));
-						Errors::check(Errors::TexImage2D);
+							static_cast<float>(data->Height) / static_cast<float>(aH));						Errors::check(Errors::TexImage2D);
 					}
 					if (data->Format == Image2dFormat::Astc)
 					{
@@ -513,14 +521,21 @@ namespace graphics
 							int compressedImageSize = getSize(pot*pot, data->Format); 
 							glCompressedTexImage2D(GL_TEXTURE_2D, 0, getFormat(data->Format), pot, pot, 0, compressedImageSize, pixelsBuffer.pixelsBuffer);
 							Errors::check(Errors::CompressedTexImage2D);
-							transform = TextureTransform(0, 0,
+							transform = TextureTransform(
+								border / static_cast<float>(pot), 
+								border / static_cast<float>(pot),
 								static_cast<float>(data->Width) / static_cast<float>(pot),
 								static_cast<float>(data->Height) / static_cast<float>(pot));
 							return;
 						}
 					}					
 					int compressedImageSize = getSize(data->Width*data->Height, data->Format);
-					glCompressedTexImage2D(GL_TEXTURE_2D, 0, getFormat(data->Format), data->Width, data->Height, 0, compressedImageSize, data->Pixels + data->RawDataOffset);
+					glCompressedTexImage2D(GL_TEXTURE_2D, 0, getFormat(data->Format), data->Width + border*2, data->Height + border*2, 0, compressedImageSize, data->Pixels + data->RawDataOffset);
+					transform = TextureTransform(
+						border / static_cast<float>(data->Width + border*2),
+						border / static_cast<float>(data->Height + border*2),
+						static_cast<float>(data->Width) / static_cast<float>(data->Width + border*2),
+						static_cast<float>(data->Height) / static_cast<float>(data->Height + border*2));
 					Errors::check(Errors::CompressedTexImage2D);
 				}
 			}
@@ -591,7 +606,7 @@ namespace graphics
 
 	int DecodeMortonPvrtc(const Image2dData* data, TexturesDecompressorBuffer* resultBuffer)
 	{
-		int pot = core::Math::pot(core::Math::max(data->Width, data->Height));
+		int pot = core::Math::pot(core::Math::max(data->Width + data->BorderSize * 2, data->Height + data->BorderSize * 2));
 		TexturesDecompressorBuffer pixelsBuffer;
 
 		pixelsBuffer.realloc(pot * pot);
@@ -603,10 +618,10 @@ namespace graphics
 			pixelsBuffer.pixelsBuffer[i] = 0;
 		}
 
-		int blocksX = core::Math::align(data->Width, 4) / 4;
+		int blocksX = core::Math::align(data->Width + data->BorderSize * 2, 4) / 4;
 		if (data->Format == Image2dFormat::Pvrtc12)
-			blocksX = core::Math::align(data->Width, 8) / 8;
-		int blocksY = core::Math::align(data->Height, 4) / 4;
+			blocksX = core::Math::align(data->Width + data->BorderSize * 2, 8) / 8;
+		int blocksY = core::Math::align(data->Height + data->BorderSize * 2, 4) / 4;
 		int i = 0;
 		for (int y = 0; y < blocksY; y++)
 		{
@@ -625,7 +640,7 @@ namespace graphics
 
 	int DecodePvrtc(const Image2dData *data, TexturesDecompressorBuffer *resultBuffer)
 	{
-		int pot = core::Math::pot(core::Math::max(data->Width, data->Height));
+		int pot = core::Math::pot(core::Math::max(data->Width + data->BorderSize*2, data->Height + data->BorderSize * 2));
 		if (pot != data->Height || pot != data->Width) return pot;
 		pvr::PVRTDecompressPVRTC(data->Pixels + data->RawDataOffset, data->Format == Image2dFormat::Pvrtc12 ? 1 : 0, pot, pot, reinterpret_cast<unsigned char*>(resultBuffer->pixelsBuffer));
 		return pot;
@@ -633,8 +648,8 @@ namespace graphics
 
 	void DecodeAtc(const Image2dData* data, TexturesDecompressorBuffer* pixelsBuffer, int& aW, int& aH)
 	{
-		aW = core::Math::align(data->Width, 4);
-		aH = core::Math::align(data->Height, 4);
+		aW = core::Math::align(data->Width + data->BorderSize*2, 4);
+		aH = core::Math::align(data->Height + data->BorderSize * 2, 4);
 
 		pixelsBuffer->realloc(aW * aH);
 
@@ -714,8 +729,8 @@ namespace graphics
 	{
 		setupAlphaTable();
 
-		aW = core::Math::align(data->Width, 4);
-		aH = core::Math::align(data->Height, 4);
+		aW = core::Math::align(data->Width + data->BorderSize*2, 4);
+		aH = core::Math::align(data->Height + data->BorderSize * 2, 4);
 
 		pixelsBuffer->realloc(aW * aH);
 

@@ -616,7 +616,7 @@ namespace llge
 	class ISpineResource : IBaseObject
 	{
 	public:
-		virtual void API_CALL load(String atlasText, String jsonText, String dir, TextureQueryFormat format) = 0;
+		virtual void API_CALL load(String atlasText, String jsonText, String dir, TextureQueryFormat format, float applyedCompression) = 0;
 		virtual void API_CALL unLoad() = 0;
 		virtual ISpineAnimation* API_CALL getSpineAnimation(int i) = 0;
 		virtual int API_CALL getSpineAnimationsCount() = 0;

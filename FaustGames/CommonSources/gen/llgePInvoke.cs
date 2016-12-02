@@ -39,12 +39,10 @@ namespace llge
 		EffectTextureLightmapColor = 0x1,
 		EffectWater = 0x2,
 		EffectSolid = 0x3,
-		EffectRenderDepth = 0x4,
 		EffectSolidColor = 0x5,
 		EffectBloomFilter = 0x6,
 		EffectTextureColorHighlight = 0x7,
 		EffectTextureAlphamaskColor = 0x8,
-		EffectTexturePaint = 0x9,
 	}
 	
 	public enum GraphicsVertexFormats
@@ -1862,13 +1860,13 @@ namespace llge
 	public class SpineResource
 	{
 		public IntPtr ClassInstance;
-		public void Load (String atlasText, String jsonText, String dir, TextureQueryFormat format)
+		public void Load (String atlasText, String jsonText, String dir, TextureQueryFormat format, float applyedCompression)
 		{
-			llge_SpineResource_load(ClassInstance, atlasText, jsonText, dir, format);
+			llge_SpineResource_load(ClassInstance, atlasText, jsonText, dir, format, applyedCompression);
 		}
 		
 		[DllImport(Version.Dll)]
-		static extern private void llge_SpineResource_load (IntPtr classInstance, String atlasText, String jsonText, String dir, TextureQueryFormat format);
+		static extern private void llge_SpineResource_load (IntPtr classInstance, String atlasText, String jsonText, String dir, TextureQueryFormat format, float applyedCompression);
 		public void UnLoad ()
 		{
 			llge_SpineResource_unLoad(ClassInstance);

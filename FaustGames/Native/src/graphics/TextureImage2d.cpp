@@ -514,7 +514,7 @@ namespace graphics
 						data->BlocksOrder != Image2dBlocksOrder::Morton)
 					{
 						int pot = core::Math::pot(core::Math::max(data->Width, data->Height));
-						if (pot != data->Width || pot != data->Height)
+						//if (pot == data->Width && pot == data->Height)
 						{
 							TexturesDecompressorBuffer pixelsBuffer;
 							DecodeMortonOrder(data, &pixelsBuffer);
@@ -575,14 +575,14 @@ namespace graphics
 	
 	void DecodeMortonOrder(const Image2dData *data, TexturesDecompressorBuffer *resultBuffer)
 	{
-		int pot = core::Math::pot(core::Math::max(data->Width, data->Height));
+		int pot = core::Math::pot(core::Math::max(data->Width + data->BorderSize*2, data->Height + data->BorderSize*2));
 
 		int64_t* src = reinterpret_cast<int64_t*>(data->Pixels + data->RawDataOffset);
 
-		int blocksX = core::Math::align(data->Width, 4) / 4;
+		int blocksX = core::Math::align(data->Width + data->BorderSize*2, 4) / 4;
 		if (data->Format == Image2dFormat::Pvrtc12)
-			blocksX = core::Math::align(data->Width, 8) / 8;
-		int blocksY = core::Math::align(data->Height, 4) / 4;
+			blocksX = core::Math::align(data->Width + data->BorderSize*2, 8) / 8;
+		int blocksY = core::Math::align(data->Height + data->BorderSize*2, 4) / 4;
 
 		int size = pot * pot;
 		if (data->Format == Image2dFormat::Pvrtc12)

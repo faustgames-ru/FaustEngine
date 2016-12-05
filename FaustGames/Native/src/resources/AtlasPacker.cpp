@@ -165,6 +165,7 @@ namespace resources
 		PlaceArgs placeArgs;
 		placeArgs.pageData = _pageData;
 		// todo: cerate pages textures
+
 		for (uint k = 0; k < _pages.size(); k++)
 		{
 			AtlasPage* page = _pages[k];
@@ -173,6 +174,16 @@ namespace resources
 			{
 				AtlasRect rect = page->rects[i];
 				graphics::Image2dData* image = ContentManager::Default.loadUnregisteredTexture(page->rects[i].entry->path.c_str(), getQueryFormat());
+				llge::TextureImage2dFormat format = graphics::Image2dFormat::ToLlgeFormat(image->Format);
+				if (format != _internalFormat)
+				{
+					rect.entry->input.texture->AtlasEntry = false;
+					rect.entry->input.texture->create();
+					rect.entry->input.texture->setData(image);
+					continue;
+				}
+
+
 				float inputW = alignInfo.alignWidth(image->Width);
 				float inputH = alignInfo.alignHeight(image->Height);
 
@@ -182,6 +193,7 @@ namespace resources
 					placeArgs.alignInfo = alignInfo;
 					placeArgs.rect = rect.rect;
 					placeArgs.imageData = image;
+
 					placer->placeImage(placeArgs);
 
 					rect.entry->input.texture->AtlasEntry = true;

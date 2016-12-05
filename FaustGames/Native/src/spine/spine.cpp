@@ -10,7 +10,7 @@ void _spAtlasPage_createTexture(spAtlasPage* self, const char* path)
 
 	int w = static_cast<int>(self->width*renderObject->applyedCompression);
 	int h = static_cast<int>(self->height*renderObject->applyedCompression);
-
+	
 	if (resources::ContentManager::_replaceSeparator)
 	{
 		std::string replace = path;

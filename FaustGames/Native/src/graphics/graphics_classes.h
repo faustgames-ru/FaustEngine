@@ -31,6 +31,32 @@ namespace graphics
 			Atc = 0x7,
 			Astc = 0x8,
 		};
+
+		static llge::TextureImage2dFormat ToLlgeFormat(e value)
+		{
+			switch (value)
+			{
+			case Rgba: 
+				return llge::TFRgba8888;				
+			case Rgb: 
+				return llge::TFRgb888;
+			case Pvrtc12: 
+				return llge::TFPvrtc12;
+			case Pvrtc14: 
+				return llge::TFPvrtc14;
+			case Etc1: 
+				return llge::TFEtc2;
+			case Etc2: 
+				return llge::TFEtc2;
+			case Rgba4444: 
+				return llge::TFRgba4444;
+			case Atc: 
+				return llge::TFAtc;
+			case Astc: 
+				return llge::TFAstc;
+			}
+			return llge::TFRgba8888;
+		}
 	};
 
 	struct BlendState

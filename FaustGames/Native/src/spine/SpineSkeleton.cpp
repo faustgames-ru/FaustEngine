@@ -709,6 +709,7 @@ namespace spine
 	void SpineSkeleton::setRgbTransform(int index, void* floatMatrix3)
 	{
 		_colorTransform[index].setData(static_cast<float *>(floatMatrix3));
+        _colorTransform[index] = _colorTransform[index].transpose();
 	}
 
 	SpineSkeletonSlot* SpineSkeleton::findSlot(const char* slotName)

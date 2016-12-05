@@ -3,12 +3,24 @@
    version = "1.0">
    <ContextStates>
       <ContextState
+         contextName = "drawing::Batcher::executeRenderCommands(bool):Batcher.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "graphics::UniformValueMatrix3::apply(graphics::Uniform*):UniformValueMatrix.cpp">
+      </ContextState>
+      <ContextState
          contextName = "graphics::Errors::check(graphics::Errors::e):Errors.cpp">
          <PersistentStrings>
+            <PersistentString
+               value = "error">
+            </PersistentString>
             <PersistentString
                value = "errorText">
             </PersistentString>
          </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "::_spAtlasPage_createTexture(spAtlasPage *, const char *):spine.cpp">
       </ContextState>
    </ContextStates>
 </VariablesViewState>

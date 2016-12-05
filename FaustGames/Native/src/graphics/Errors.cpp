@@ -36,7 +36,7 @@ namespace graphics
 		}
 #endif
 	}
-	
+	/*
 	void Errors::check(Errors::e actionType)
 	{
 		
@@ -71,7 +71,22 @@ namespace graphics
 #endif
 		
 	}
+*/
+    void Errors::check(Errors::e actionType)
+    {
+        
+        
+        GLenum error(GL_NO_ERROR);
+        if ((error = glGetError()) != GL_NO_ERROR)
+        {
 
+            fprintf(stderr, "%s", getActionName(actionType));
+            fprintf(stderr, "\n");
+            
+        }
+        
+    }
+    
 	void Errors::rise(Errors::e actionType)
 	{
 

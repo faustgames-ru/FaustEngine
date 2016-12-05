@@ -59,7 +59,7 @@ namespace graphics
 		_applyMask |= shaderMask;
 		
 		const float * data = _value.Value.getData();
-		glUniformMatrix3fv(uniform->getHandle(), 1, true, data);
+		glUniformMatrix3fv(uniform->getHandle(), 1, false, data);
 		Errors::check(Errors::UniformMatrix3fv);
 	}
 

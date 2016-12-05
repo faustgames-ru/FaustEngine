@@ -637,6 +637,8 @@ namespace resources
 	{
 		if (!_isAtlasBuilderStarted) return nullptr;
 		if (format == llge::TQFNone) return nullptr;
+		if (format == llge::TQFRgba8888) return nullptr;
+		if (format == llge::TQFRgba4444) return nullptr;
 		int packerIndex = format;
 		if (_packers[packerIndex] == nullptr)
 		{

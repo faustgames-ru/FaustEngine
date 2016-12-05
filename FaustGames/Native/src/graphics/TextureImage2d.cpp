@@ -510,25 +510,33 @@ namespace graphics
 				}
 				if (isFormatSupported)
 				{
-					if ((data->Format == Image2dFormat::Pvrtc12 || data->Format == Image2dFormat::Pvrtc14) &&
-						data->BlocksOrder != Image2dBlocksOrder::Morton)
+					if ((data->Format == Image2dFormat::Pvrtc12 || data->Format == Image2dFormat::Pvrtc14))
 					{
-						int pot = core::Math::pot(core::Math::max(data->Width, data->Height));
-						//if (pot == data->Width && pot == data->Height)
+						int pot = core::Math::pot(core::Math::max(data->Width + border * 2, data->Height + border * 2));
+						if (data->BlocksOrder != Image2dBlocksOrder::Morton)
 						{
-							TexturesDecompressorBuffer pixelsBuffer;
-							DecodeMortonOrder(data, &pixelsBuffer);
-							int compressedImageSize = getSize(pot*pot, data->Format); 
-							glCompressedTexImage2D(GL_TEXTURE_2D, 0, getFormat(data->Format), pot, pot, 0, compressedImageSize, pixelsBuffer.pixelsBuffer);
-							Errors::check(Errors::CompressedTexImage2D);
-							transform = TextureTransform(
-								border / static_cast<float>(pot), 
-								border / static_cast<float>(pot),
-								static_cast<float>(data->Width) / static_cast<float>(pot),
-								static_cast<float>(data->Height) / static_cast<float>(pot));
-							return;
+							//if (pot == data->Width && pot == data->Height)
+							{
+								TexturesDecompressorBuffer pixelsBuffer;
+								DecodeMortonOrder(data, &pixelsBuffer);
+								int compressedImageSize = getSize(pot*pot, data->Format);
+								glCompressedTexImage2D(GL_TEXTURE_2D, 0, getFormat(data->Format), pot, pot, 0, compressedImageSize, pixelsBuffer.pixelsBuffer);
+								Errors::check(Errors::CompressedTexImage2D);
+							}
 						}
-					}					
+						else
+						{
+							int compressedImageSize = getSize(pot*pot, data->Format);
+							glCompressedTexImage2D(GL_TEXTURE_2D, 0, getFormat(data->Format), pot, pot, 0, compressedImageSize, data->Pixels + data->RawDataOffset);
+							Errors::check(Errors::CompressedTexImage2D);
+						}
+						transform = TextureTransform(
+							border / static_cast<float>(pot),
+							border / static_cast<float>(pot),
+							static_cast<float>(data->Width) / static_cast<float>(pot),
+							static_cast<float>(data->Height) / static_cast<float>(pot));
+						return;
+					}
 					int compressedImageSize = getSize(data->Width*data->Height, data->Format);
 					glCompressedTexImage2D(GL_TEXTURE_2D, 0, getFormat(data->Format), data->Width + border*2, data->Height + border*2, 0, compressedImageSize, data->Pixels + data->RawDataOffset);
 					transform = TextureTransform(

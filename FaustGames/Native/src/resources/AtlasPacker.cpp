@@ -1,9 +1,172 @@
 #include "AtlasPacker.h"
-#include "../../src_rectanglebinpack/MaxRectsBinPack.h"
+//#include "../../src_rectanglebinpack/MaxRectsBinPack.h"
+#include "../../src_rectanglebinpack/GuillotineBinPack.h"
+
 #include "ContentManager.h"
 
 namespace resources
 {
+	BinPackRect BinPackRect::empty;
+	
+	BinPackRect::BinPackRect()
+	{
+		x = 0;
+		y = 0;
+		width = 0;
+		height = 0;
+	}
+
+	int BinPackRect::square()
+	{
+		return width*height;
+	}
+
+	void BinPackRect::divideX(int w, BinPackRect& left, BinPackRect& right)
+	{
+		left = *this;
+		right = *this;
+		left.width = w;
+		right.width = width - w;
+		right.x = x + w;
+	}
+
+	void BinPackRect::divideY(int h, BinPackRect& top, BinPackRect& bottom)
+	{
+		top = *this;
+		bottom = *this;
+		top.height = h;
+		bottom.height = height - h;
+		bottom.y = y + h;
+	}
+
+	bool BinPackRect::contains(int w, int h)
+	{
+		return w <= width && h <= height;
+	}
+
+	void BinPackNode::construct()
+	{
+		rect = BinPackRect::empty;
+		inserted = BinPackRect::empty;
+		childs[0] = nullptr;
+		childs[1] = nullptr;
+	}
+
+	BinPackNode* BinPackNode::insert(BinPackNodesPool* pool, int w, int h)
+	{
+		if (childs[0] == nullptr)
+		{
+			childs[0] = pool->createNode();
+			childs[1] = pool->createNode();
+
+			BinPackRect l, r, t, b;
+
+			rect.divideX(w, l, r);
+			rect.divideY(h, t, b);
+
+			if (r.square() > b.square())
+			{
+				l.divideY(h, inserted, b);
+				childs[0]->rect = b;
+				childs[1]->rect = r;
+			}
+			else
+			{
+				t.divideX(w, inserted, r);
+				childs[0]->rect = r;
+				childs[1]->rect = b;
+			}
+			return this;
+		}
+		BinPackNode* result = nullptr;
+		if (childs[0]->rect.contains(w, h))
+		{
+			result =  childs[0]->insert(pool, w, h);
+		}
+		if (result != nullptr)
+		{
+			return result;
+		}
+		if (childs[1]->rect.contains(w, h))
+		{
+			result = childs[1]->insert(pool, w, h);
+		}
+		return result;
+	}
+
+	BinPackNodesBlock::BinPackNodesBlock() : _count(0)
+	{
+	}
+
+	void BinPackNodesBlock::clear()
+	{
+		_count = 0;
+	}
+
+	BinPackNode* BinPackNodesBlock::queryNew()
+	{
+		if (_count == MaxCount) 
+			return nullptr;
+		BinPackNode* result = _nodes + _count;
+		result->construct();
+		_count++;
+		return result;
+	}
+
+
+	BinPackNodesPool::BinPackNodesPool(): _blockIndex(0)
+	{
+		_blocks.push_back(new BinPackNodesBlock());
+	}
+
+	BinPackNode* BinPackNodesPool::createNode()
+	{
+		BinPackNode* result = _blocks[_blockIndex]->queryNew();
+		if (result == nullptr)
+		{
+			_blocks.push_back(new BinPackNodesBlock());
+			_blockIndex++;
+			result = _blocks[_blockIndex]->queryNew();
+		}
+		return result;
+	}
+
+	void BinPackNodesPool::clear()
+	{
+		for (int i = 0; i < _blocks.size(); i++)
+		{
+			_blocks[i]->clear();
+		}
+		_blockIndex = 0;
+	}
+
+	BinPack BinPack::Deafult;
+
+	BinPack::BinPack(): _width(0), _height(0), _root(nullptr)
+	{
+	}
+
+	void BinPack::clear(int w, int h)
+	{
+		_width = w;
+		_height = h;
+		_root = nullptr;
+		_pool.clear();
+	}
+
+	BinPackNode* BinPack::insert(int w, int h)
+	{
+		if (_root == nullptr)
+		{
+			_root = _pool.createNode();
+			_root->rect.width = _width;
+			_root->rect.height = _height;
+		};
+		if (!_root->rect.contains(w, h))
+			return nullptr;
+		return _root->insert(&_pool, w, h);
+	}
+
 	AtlasImageEntry::AtlasImageEntry(const char* p, const AtlasImageInput& e)
 	{
 		path = p;
@@ -12,7 +175,16 @@ namespace resources
 
 	AtlasRect::AtlasRect(rbp::Rect r)
 	{
-		rect = r; 
+		rect.x = r.x;
+		rect.y = r.y;
+		rect.width = r.width;
+		rect.height = r.height;
+		entry = nullptr;
+	}
+
+	AtlasRect::AtlasRect(BinPackRect r)
+	{
+		rect = r;
 		entry = nullptr;
 	}
 
@@ -103,7 +275,7 @@ namespace resources
 			maxi = core::Math::min(i.width, i.height);
 			maxj = core::Math::min(j.width, j.height);
 		}
-		return maxi < maxj;
+		return maxi > maxj;
 	}
 
 	void AtlasPacker::loadFiles()
@@ -119,8 +291,56 @@ namespace resources
 		}
 
 		sort(rects.begin(), rects.end(), compareRectSize);
+		
+		int startIndex = 0;
+		while (startIndex < rects.size())
+		{
+			BinPack::Deafult.clear(alignInfo.alignPageWidth(pageSize), alignInfo.alignPageHeight(pageSize));
+			AtlasPage* page = new AtlasPage();
+			_pages.push_back(page);
+			bool wasBreak = false;
+			for (uint i = startIndex; i < rects.size(); i++)
+			{
+				BinPackNode* res = BinPack::Deafult.insert(rects[i].width, rects[i].height);
+				if (res == nullptr)
+				{
+					startIndex = i;
+					wasBreak = true;
+					break;
+				}
+				page->rects.push_back(AtlasRect(res->inserted));
+			}
+			if (!wasBreak)
+				startIndex = rects.size();
+		}
 
-		while (rects.size() > 0) 
+		/*
+		int startIndex = 0;
+		while (startIndex < rects.size())
+		{
+			rbp::GuillotineBinPack  _pack(alignInfo.alignPageWidth(pageSize), alignInfo.alignPageHeight(pageSize));
+			_pack.allowRotate = false;
+			AtlasPage* page = new AtlasPage();
+			_pages.push_back(page);
+			bool wasBreak = false;
+			for (uint i = startIndex; i < rects.size(); i++)
+			{
+				rbp::Rect res = _pack.Insert(rects[i].width, rects[i].height, true, rbp::GuillotineBinPack::RectBestShortSideFit, rbp::GuillotineBinPack::SplitMaximizeArea);
+				if (res.height == 0)
+				{
+					startIndex = i;
+					wasBreak = true;
+					break;
+				}
+				page->rects.push_back(AtlasRect(res));
+			}
+			if (!wasBreak)
+				startIndex = rects.size();
+		}
+		*/
+		/*
+		
+		while (rects.size() > 0)
 		{
 			rbp::MaxRectsBinPack _pack(alignInfo.alignPageWidth(pageSize), alignInfo.alignPageHeight(pageSize));
 			_pack.allowRotate = false;
@@ -133,13 +353,13 @@ namespace resources
 				page->rects.push_back(AtlasRect(packedRects[i]));
 			}
 		}
-
+		*/
 		for (uint k = 0; k < _pages.size(); k++)
 		{
 			AtlasPage* page = _pages[k];
 			for (uint j = 0; j < page->rects.size(); j++)
 			{
-				rbp::Rect rect = page->rects[j].rect;
+				BinPackRect rect = page->rects[j].rect;
 				for (std::vector<AtlasImageEntry *>::iterator i = _inputPack.begin(); i != _inputPack.end(); ++i)
 				{
 					AtlasImageEntry* input = *i;
@@ -376,7 +596,7 @@ namespace resources
 
 	void AtlasPlacerPvrtc14::placeImage(const PlaceArgs& e)
 	{
-		AbstractPlacer::placeImageWithBorder<int64_t>(e);
+		AbstractPlacer::placeImageWithBorderMortonOrder<int64_t>(e);
 	}
 
 	void AtlasPlacerPvrtc14::SetupAlign(AlignInfo& alignInfo)
@@ -384,6 +604,11 @@ namespace resources
 		alignInfo.blockSizeX = 4;
 		alignInfo.blockSizeY = 4;
 		alignInfo.borderBlockCount = 1;
+	}
+
+	graphics::Image2dBlocksOrder::e AtlasPlacerPvrtc14::getPageBlocksOrder()
+	{
+		return graphics::Image2dBlocksOrder::Morton;
 	}
 
 	int AtlasPlacerAtc::getPageBufferSize(int pageSize)

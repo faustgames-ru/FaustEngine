@@ -7,6 +7,71 @@
 
 namespace resources
 {
+	class BinPackNodesPool;
+
+	class BinPackRect
+	{
+	public:
+		static BinPackRect empty;
+		int x;
+		int y;
+		int width;
+		int height;
+		BinPackRect();
+		int square();
+		void divideX(int w, BinPackRect &left, BinPackRect &right);
+		void divideY(int h, BinPackRect &top, BinPackRect &bottom);
+		bool contains(int w, int h);
+	};
+
+	class BinPackNode
+	{
+	public:
+		BinPackRect rect;
+		BinPackRect inserted;
+		BinPackNode* childs[2];
+		void construct();
+		BinPackNode* insert(BinPackNodesPool* pool, int w, int h);
+	};
+
+	class BinPackNodesBlock
+	{
+	public:
+		BinPackNodesBlock();
+		void clear();
+		BinPackNode* queryNew();
+	private:
+		static const int MaxCount = 4096;
+		BinPackNode _nodes[MaxCount];
+		int _count;
+	};
+
+	class BinPackNodesPool
+	{
+	public:
+		BinPackNodesPool();
+		BinPackNode* createNode();
+		void clear();
+	private:
+		std::vector<BinPackNodesBlock *> _blocks;
+		int _blockIndex;
+	};
+
+	class BinPack
+	{
+	public:
+		static BinPack Deafult;
+		BinPack();
+		void clear(int w, int h);
+		BinPackNode* insert(int w, int h);
+	private:
+		int _width;
+		int _height;
+		BinPackNode* _root;
+		BinPackNodesPool _pool;
+	};
+
+
 	struct AtlasImageEntry
 	{
 		std::string path;
@@ -17,9 +82,10 @@ namespace resources
 	class AtlasRect
 	{
 	public:
-		rbp::Rect rect;
+		BinPackRect rect;
 		AtlasImageEntry* entry;
 		AtlasRect(rbp::Rect rect);
+		explicit AtlasRect(BinPackRect rect);
 	};
 
 	class AtlasPage
@@ -43,7 +109,7 @@ namespace resources
 	struct PlaceArgs
 	{
 		AlignInfo alignInfo;
-		rbp::Rect rect;
+		BinPackRect rect;
 		graphics::Image2dData* pageData;
 		graphics::Image2dData *imageData;
 	};
@@ -113,6 +179,8 @@ namespace resources
 		static void placeImage(const PlaceArgs &e);
 		template<typename TPixel>
 		static void placeImageWithBorder(const PlaceArgs &e);
+		template<typename TPixel>
+		static void placeImageWithBorderMortonOrder(const PlaceArgs &e);
 	};
 
 	template <typename TPixel>
@@ -230,6 +298,33 @@ namespace resources
 		}
 	}
 
+	template <typename TPixel>
+	void AbstractPlacer::placeImageWithBorderMortonOrder(const PlaceArgs& e)
+	{
+		TPixel* srcRow = static_cast<TPixel*>(static_cast<void*>(e.imageData->Pixels + e.imageData->RawDataOffset));
+		TPixel* dst = static_cast<TPixel*>(static_cast<void*>(e.pageData->Pixels + e.pageData->RawDataOffset));
+
+		int dstStride = e.alignInfo.alignPageWidth(e.pageData->Width);
+		int srcStride = e.rect.width;
+
+		TPixel* dstRow = dst + e.rect.x + e.rect.y*dstStride;
+
+		int ymax = e.rect.y + e.rect.height;
+		int xmax = e.rect.x + e.rect.width;
+
+		for (int y = e.rect.y; y < ymax; y++)
+		{
+			TPixel* srcPixel = srcRow;
+			for (int x = e.rect.x; x < xmax; x++)
+			{
+				int order = core::Math::mortonCode(y, x);
+				dst[order] = *srcPixel;
+				++srcPixel;
+			}
+			srcRow += srcStride;
+		}
+	}
+
 	class AtlasPlacerRgba : public IAtlasPlacer
 	{
 	public:
@@ -257,6 +352,7 @@ namespace resources
 		virtual int getPageBufferSize(int pageSize) override;
 		virtual void placeImage(const PlaceArgs &e) override;
 		virtual void SetupAlign(AlignInfo &alignInfo) override;
+		virtual graphics::Image2dBlocksOrder::e getPageBlocksOrder() override;
 	};
 
 	class AtlasPlacerAtc : public IAtlasPlacer

@@ -67,11 +67,25 @@ namespace graphics
 	GraphicsConfig::GraphicsConfig() :
 		filterMode(FilterMode::Linear),
 		generateMipmaps(false),
-		earlyDepthPath(false),
-		earlyFragmentTestsShaderCode(false),
+		earlyDepthPath(true),
 		enableFog(false),
+		earlyFragmentTestsShaderCode(false),
 		bloomDownsample(2),
-		mipmapsLevel(0)
+		mipmapsLevel(0),
+		refraction(false),
+		refractionScale(1.0f),
+		refractionVelocityX(1.0f),
+		refractionVelocityY(1.0f),
+		vignetting(false),
+		vignettingR0(0.0f),
+		vignettingR1(0.0f),
+		vignettingR2(0.0f),
+		vignettingColor0(0x0),
+		vignettingColor1(0x0),
+		vignettingColor2(0x0),
+		ellapsedTime(0.0f),
+		postEffectsScale(1.0f),
+		useRgbTransforms(false)
 	{
 
 	}

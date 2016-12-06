@@ -61,6 +61,8 @@ namespace graphics
 			return Effects::textureLightmapColor(); //todo: use hsv
 			}
 			*/
+			if (!GraphicsDevice::Default.config.useRgbTransforms)
+				return getEffect(effect);
 			return  Effects::textureRgbTransform();
 			// _effects[static_cast<int>(effect)];
 		}

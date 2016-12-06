@@ -169,6 +169,7 @@ namespace llge
 		public uint vignettingColor2;
 		public float ellapsedTime;
 		public float postEffectsScale;
+		public bool useRgbTransforms;
 	}
 	
 	[StructLayout(LayoutKind.Sequential)]

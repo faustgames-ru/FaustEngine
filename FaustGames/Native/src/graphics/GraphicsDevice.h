@@ -124,6 +124,7 @@ namespace graphics
 		uint vignettingColor2;
 		float ellapsedTime;
 		float postEffectsScale;
+		bool useRgbTransforms;
 		int getMagFilter();
 		int getMinFilter();
 		GraphicsConfig();

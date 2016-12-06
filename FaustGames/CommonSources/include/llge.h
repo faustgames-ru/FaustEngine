@@ -191,6 +191,7 @@ namespace llge
 		uint vignettingColor2;
 		float ellapsedTime;
 		float postEffectsScale;
+		bool useRgbTransforms;
 	};
 	
 	struct EffectConfig

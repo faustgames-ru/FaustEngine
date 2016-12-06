@@ -120,7 +120,7 @@ namespace resources
 
 		sort(rects.begin(), rects.end(), compareRectSize);
 
-		while (rects.size() > 0)
+		while (rects.size() > 0) 
 		{
 			rbp::MaxRectsBinPack _pack(alignInfo.alignPageWidth(pageSize), alignInfo.alignPageHeight(pageSize));
 			_pack.allowRotate = false;
@@ -230,6 +230,10 @@ namespace resources
 		AtlasImageInput result = e;
 		result.width = alignInfo.alignWidth(result.width);
 		result.height = alignInfo.alignWidth(result.height);
+		if(result.width == 91)
+		{
+			result.width = 91;
+		}
 		return result;
 	}
 

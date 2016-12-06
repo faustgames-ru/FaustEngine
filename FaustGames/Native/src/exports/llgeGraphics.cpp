@@ -316,6 +316,7 @@ namespace llge
 			GraphicsDevice::Default.config.vignettingColor2 = config->vignettingColor2;
 			GraphicsDevice::Default.config.ellapsedTime = config->ellapsedTime;
 			GraphicsDevice::Default.config.postEffectsScale = config->postEffectsScale;
+			GraphicsDevice::Default.config.useRgbTransforms = config->useRgbTransforms;
 
 			TextureFilterMode filterMode = static_cast<TextureFilterMode>(config->texturesFilter);
 			switch (filterMode)

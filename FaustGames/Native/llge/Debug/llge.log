@@ -1,3 +1,5 @@
-﻿  ContentManager.cpp
+﻿  dllmain.cpp
+  LINK : C:\work\sources\github\moon\Solutions\Debug\llge.dll not found or not built by the last incremental link; performing full link
+     Creating library C:\work\sources\github\moon\Solutions\Debug\llge.lib and object C:\work\sources\github\moon\Solutions\Debug\llge.exp
   llge.vcxproj -> C:\work\sources\github\moon\Solutions\Debug\llge.dll
   llge.vcxproj -> C:\work\sources\github\moon\Solutions\Debug\llge.pdb (Full PDB)

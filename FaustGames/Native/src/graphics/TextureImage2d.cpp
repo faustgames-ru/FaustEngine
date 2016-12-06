@@ -650,6 +650,7 @@ namespace graphics
 	{
 		int pot = core::Math::pot(core::Math::max(data->Width + data->BorderSize*2, data->Height + data->BorderSize * 2));
 		if (pot != data->Height || pot != data->Width) return pot;
+		resultBuffer->realloc(pot * pot);
 		pvr::PVRTDecompressPVRTC(data->Pixels + data->RawDataOffset, data->Format == Image2dFormat::Pvrtc12 ? 1 : 0, pot, pot, reinterpret_cast<unsigned char*>(resultBuffer->pixelsBuffer));
 		return pot;
 	}

@@ -27,6 +27,7 @@ namespace spine
 	public:
 		SpineAnimationState(SpineAnimationStateData *data);
 		~SpineAnimationState();
+		void setAnimation(SpineSkeletonAnimation *animation, int track, bool loop, bool normalize);
 		void setAnimation(SpineSkeletonAnimation *animation, bool loop, bool normalize);
 		void addAnimation(SpineSkeletonAnimation *animation, bool loop, float delay);
 		void apply(SpineSkeleton *skeleton);

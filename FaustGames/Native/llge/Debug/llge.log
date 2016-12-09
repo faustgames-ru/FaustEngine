@@ -1,2 +1,5 @@
-﻿  llge.vcxproj -> C:\work\sources\github\moon\Solutions\Debug\llge.dll
+﻿  SpineAnimationState.cpp
+c:\_faust\faustengine\faustgames\native\src\spine\spineanimationstate.cpp(58): warning C4101: 'previousDelta': unreferenced local variable
+c:\_faust\faustengine\faustgames\native\src\spine\spineanimationstate.cpp(70): warning C4101: 'previousDelta': unreferenced local variable
+  llge.vcxproj -> C:\work\sources\github\moon\Solutions\Debug\llge.dll
   llge.vcxproj -> C:\work\sources\github\moon\Solutions\Debug\llge.pdb (Full PDB)

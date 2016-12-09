@@ -381,6 +381,14 @@ namespace graphics
 	
 	std::vector<int> _formats;
 
+	bool hasExt(const char* exts, const char* ext)
+	{
+		return strstr(exts, ext) != NULL;
+	}
+
+	std::string atc_ext1("GL_AMD_compressed_ATC_texture");
+	std::string pvr_ext1("GL_IMG_texture_compression_pvrtc");
+
 	void TextureImage2d::setData(const Image2dData *data)
 	{
 		if (AtlasEntry) return;
@@ -424,6 +432,10 @@ namespace graphics
 				int f = getFormat(data->Format);
 				bool isFormatSupported = false;
 				
+				const char* exts = reinterpret_cast<const char*>(glGetString(GL_EXTENSIONS));
+
+
+
 				for (int i = 0; i < _formats.size(); i++)
 				{
 					if (f == _formats[i])
@@ -432,8 +444,27 @@ namespace graphics
 					}
 				}
 				
+				switch(data->Format)
+				{
+				case Image2dFormat::Rgba: break;
+				case Image2dFormat::Rgb: break;
+				case Image2dFormat::Pvrtc12: break;
+				case Image2dFormat::Pvrtc14: break;
+				case Image2dFormat::Etc1: break;
+				case Image2dFormat::Etc2: break;
+				case Image2dFormat::Rgba4444: break;
+				case Image2dFormat::Atc: 
+					isFormatSupported = hasExt(exts, atc_ext1.c_str());
+					break;					
+				case Image2dFormat::Astc: break;
+				default: break;
+				}
+
+				//__android_log_print(ANDROID_LOG_ERROR, "TRACKERS", "%s", exts);
 				if (!isFormatSupported)
 				{
+					//__android_log_print(ANDROID_LOG_ERROR, "TRACKERS", "%s", "format not supported");
+
 					if (data->Format == Image2dFormat::Pvrtc14 || data->Format == Image2dFormat::Pvrtc12)
 					{
 						TexturesDecompressorBuffer resultBuffer;

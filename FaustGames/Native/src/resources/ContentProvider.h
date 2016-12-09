@@ -33,7 +33,7 @@ namespace resources
 		static void openObbFile(const char *obbFile);
 		static void closeObbFile();
 
-		static bool existsContent(const char *name);
+        static bool existsContent(const char *name);
 		static void openContent(const char *name);
 		static int read(void *buffer, int bytesLimit);
 		static int getContentSize();

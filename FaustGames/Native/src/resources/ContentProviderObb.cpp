@@ -1,3 +1,5 @@
+#include <fcntl.h>
+#include <sys/mman.h>
 #include "ContentProvider.h"
 #include <stdio.h>
 #include <string>
@@ -11,7 +13,12 @@
 namespace resources
 {
 
-	FILE * _obbFile;
+    FILE * _obbFile = nullptr;
+    void * _mapAddress = nullptr;
+    int64_t _readCur = 0;
+    int64_t _mapSize = 0;
+    int64_t _mapCursor = 0;
+    int _obbFd = 0;
 	struct ObbEntry
 	{
 		int64_t Position;
@@ -42,6 +49,7 @@ namespace resources
 		int32_t count;
         
         fread(&count, 1, 4, _obbFile);
+        _mapSize = 0;
 		if (count > 0)
 		{
 			char *buffer = new char[count * 256];
@@ -58,10 +66,19 @@ namespace resources
 				int64_t size = *(int64_t *)data;
 				data += 8;
 				_entries[name] = ObbEntry(position, size);
+                
+                if (_mapSize < (position + size))
+                    _mapSize = position + size;
 			}
 			delete[] buffer;
 		}
         fclose(_obbFile);
+        /*
+        _obbFile = fopen(obbFile, "rb");
+        _mapAddress = new char[_mapSize];
+        fread(_mapAddress, 1, (int)_mapSize, _obbFile);
+        fclose(_obbFile);
+        */
         _obbFile = 0;
 	}
 
@@ -93,8 +110,12 @@ namespace resources
         {
             return;
         }
-        _obbFile = fopen(_obbPath.c_str(), "rb");
-		std::string replace = name;
+        
+        if (_obbFile == nullptr)
+        {
+            _obbFile = fopen(_obbPath.c_str(), "rb");
+        }
+        std::string replace = name;
 		//#ifdef __ANDROID__
 		for (uint i = 0; i < replace.size(); i++)
 		{
@@ -106,25 +127,88 @@ namespace resources
 		//#endif
 
 		_currentEntry = _entries[replace.c_str()];
-        int status = fseek(_obbFile, _currentEntry.Position, SEEK_CUR);
+        //int status = fseek(_obbFile, _currentEntry.Position, SEEK_CUR);
+        _readCur = _currentEntry.Position;
+        fseek(_obbFile, _currentEntry.Position, SEEK_SET);
 	}
 
-	int ObbContentProvider::read(void *buffer, int bytesLimit)
-	{
-        return fread(buffer, 1, bytesLimit, _obbFile);
+    int ObbContentProvider::read(void *buffer, int bytesLimit)
+    {
+        int64_t entryFinishPos = _currentEntry.Position + _currentEntry.Size;
+        int64_t finishPos = _readCur + bytesLimit;
+        
+        if (finishPos > entryFinishPos)
+        {
+            bytesLimit -= finishPos - entryFinishPos;
+        }
+        bytesLimit = fread(buffer, 1, bytesLimit, _obbFile);
+        _readCur += bytesLimit;
+        return bytesLimit;
     }
-
-	int ObbContentProvider::getContentSize()
+    
+    void ObbContentProvider::closeContent()
+    {
+        fclose(_obbFile);
+        _obbFile = nullptr;
+    }
+ /*
+    
+    void ObbContentProvider::openContent(const char *name)
+    {
+        if (!existsContent(name))
+        {
+            return;
+        }
+        
+        if (_mapAddress == nullptr)
+        {
+            _obbFd = open(_obbPath.c_str(), O_RDONLY);
+            _mapAddress = mmap(nullptr, (int)_mapSize, PROT_READ, MAP_SHARED, _obbFd, 0);
+        }
+        std::string replace = name;
+        //#ifdef __ANDROID__
+        for (uint i = 0; i < replace.size(); i++)
+        {
+            if (replace[i] == '\\')
+                replace[i] = '_';
+            if (replace[i] == '/')
+                replace[i] = '_';
+        }
+        //#endif
+        
+        _currentEntry = _entries[replace.c_str()];
+        _mapCursor = _currentEntry.Position;
+    }
+    
+    int ObbContentProvider::read(void *buffer, int bytesLimit)
+    {
+        int64_t entryFinishPos = _currentEntry.Position + _currentEntry.Size;
+        int64_t finishPos = _mapCursor + bytesLimit;
+        
+        if (finishPos > entryFinishPos)
+        {
+            bytesLimit -= finishPos - entryFinishPos;
+        }
+        
+        char* src = ((char* )_mapAddress) +_mapCursor;
+        
+        memcpy(buffer, src, bytesLimit);
+        _mapCursor += bytesLimit;
+        return bytesLimit;
+    }
+     
+     
+    void ObbContentProvider::closeContent()
+    {
+    }
+     
+*/
+    int ObbContentProvider::getContentSize()
 	{
 		return (int)_currentEntry.Size;
 	}
 
-	void ObbContentProvider::closeContent()
-	{
-        fclose(_obbFile);
-	}
-
-	IAndroidContentProvider* ContentProvider::AndroidContentProvider(nullptr);
+    IAndroidContentProvider* ContentProvider::AndroidContentProvider(nullptr);
 
 #ifdef __ANDROID__
 

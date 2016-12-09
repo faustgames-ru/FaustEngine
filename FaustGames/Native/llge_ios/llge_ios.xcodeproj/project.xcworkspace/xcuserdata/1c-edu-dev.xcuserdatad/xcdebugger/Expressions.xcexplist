@@ -3,10 +3,21 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "drawing::Batcher::executeRenderCommands(bool):Batcher.cpp">
+         contextName = "graphics::TextureImage2d::setData(graphics::Image2dData const*):TextureImage2d.cpp">
       </ContextState>
       <ContextState
-         contextName = "graphics::UniformValueMatrix3::apply(graphics::Uniform*):UniformValueMatrix.cpp">
+         contextName = "::_spAtlasPage_createTexture(spAtlasPage *, const char *):spine.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "resources::ObbContentProvider::existsContent(char const*):ContentProviderObb.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "_entries">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "drawing::Batcher::executeRenderCommands(bool):Batcher.cpp">
       </ContextState>
       <ContextState
          contextName = "graphics::Errors::check(graphics::Errors::e):Errors.cpp">
@@ -20,7 +31,15 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "::_spAtlasPage_createTexture(spAtlasPage *, const char *):spine.cpp">
+         contextName = "resources::AtlasPacker::loadFiles():AtlasPacker.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "page-&gt;rects[i].entry-&gt;path">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "graphics::UniformValueMatrix3::apply(graphics::Uniform*):UniformValueMatrix.cpp">
       </ContextState>
    </ContextStates>
 </VariablesViewState>

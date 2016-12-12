@@ -432,10 +432,7 @@ namespace graphics
 				int f = getFormat(data->Format);
 				bool isFormatSupported = false;
 				
-				const char* exts = reinterpret_cast<const char*>(glGetString(GL_EXTENSIONS));
-
-
-
+			
 				for (int i = 0; i < _formats.size(); i++)
 				{
 					if (f == _formats[i])
@@ -443,7 +440,8 @@ namespace graphics
 						isFormatSupported = true;
 					}
 				}
-				
+				/*
+				const char* exts = reinterpret_cast<const char*>(glGetString(GL_EXTENSIONS));
 				switch(data->Format)
 				{
 				case Image2dFormat::Rgba: break;
@@ -459,7 +457,7 @@ namespace graphics
 				case Image2dFormat::Astc: break;
 				default: break;
 				}
-
+				*/
 				//__android_log_print(ANDROID_LOG_ERROR, "TRACKERS", "%s", exts);
 				if (!isFormatSupported)
 				{

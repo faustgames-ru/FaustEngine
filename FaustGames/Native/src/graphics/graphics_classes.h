@@ -29,7 +29,7 @@ namespace graphics
 			Etc2 = 0x5,
 			Rgba4444 = 0x6,
 			Atc = 0x7,
-			Astc = 0x8,
+			Dxt = 0x8,
 		};
 
 		static llge::TextureImage2dFormat ToLlgeFormat(e value)
@@ -52,8 +52,8 @@ namespace graphics
 				return llge::TFRgba4444;
 			case Atc: 
 				return llge::TFAtc;
-			case Astc: 
-				return llge::TFAstc;
+			case Dxt: 
+				return llge::TFDxt;
 			}
 			return llge::TFRgba8888;
 		}

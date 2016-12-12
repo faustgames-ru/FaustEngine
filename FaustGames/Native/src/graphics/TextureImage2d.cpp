@@ -58,6 +58,11 @@
 #define COMPRESSED_SRGB8_ALPHA8_ASTC_12x10_KHR  0x93DC
 #define COMPRESSED_SRGB8_ALPHA8_ASTC_12x12_KHR  0x93DD
 
+#define GL_COMPRESSED_RGB_S3TC_DXT1_EXT			0x83F0
+#define GL_COMPRESSED_RGBA_S3TC_DXT1_EXT		0x83F1
+#define GL_COMPRESSED_RGBA_S3TC_DXT3_EXT		0x83F2
+#define GL_COMPRESSED_RGBA_S3TC_DXT5_EXT		0x83F3
+
 namespace graphics
 {
 
@@ -531,7 +536,7 @@ namespace graphics
 							static_cast<float>(data->Width) / static_cast<float>(aW),
 							static_cast<float>(data->Height) / static_cast<float>(aH));						Errors::check(Errors::TexImage2D);
 					}
-					if (data->Format == Image2dFormat::Astc)
+					if (data->Format == Image2dFormat::Dxt)
 					{
 						// todo: Astc decode
 					}
@@ -566,7 +571,7 @@ namespace graphics
 							static_cast<float>(data->Height) / static_cast<float>(pot));
 						return;
 					}
-					int compressedImageSize = getSize(data->Width*data->Height, data->Format);
+					int compressedImageSize = getSize(data->Width + border * 2, data->Height + border * 2, data->Format);
 					glCompressedTexImage2D(GL_TEXTURE_2D, 0, getFormat(data->Format), data->Width + border*2, data->Height + border*2, 0, compressedImageSize, data->Pixels + data->RawDataOffset);
 					transform = TextureTransform(
 						border / static_cast<float>(data->Width + border*2),
@@ -852,8 +857,8 @@ namespace graphics
 			return COMPRESSED_RGB8_ETC2;
 		case Image2dFormat::Etc2:
 			return COMPRESSED_RGBA8_ETC2_EAC;
-		case Image2dFormat::Astc:
-			return COMPRESSED_RGBA_ASTC_4x4_KHR;
+		case Image2dFormat::Dxt:
+			return GL_COMPRESSED_RGBA_S3TC_DXT5_EXT;
 		case Image2dFormat::Rgba4444:
 			return GL_RGBA;
 		default:
@@ -876,32 +881,40 @@ namespace graphics
 		case Image2dFormat::Etc1:
 			return size / 2;
 		case Image2dFormat::Etc2:
-		case Image2dFormat::Astc:
-			return size;
+		case Image2dFormat::Dxt:
 		case Image2dFormat::Atc:
 			return size;
 		default:
-			return GL_RGBA;
+			return size;
+		}
+	}
+
+	float TextureImage2d::getSize(int w, int h, Image2dFormat::e format)
+	{
+		switch (format)
+		{
+		case Image2dFormat::Rgb:
+			return w*h*3;
+		case Image2dFormat::Rgba:
+			return w*h*4;
+		case Image2dFormat::Pvrtc12:
+			return core::Math::align(w,4)*core::Math::align(h, 4) /4;
+		case Image2dFormat::Pvrtc14:
+			return core::Math::align(w, 4)*core::Math::align(h, 4) / 2;
+		case Image2dFormat::Etc1:
+			return core::Math::align(w, 4)*core::Math::align(h, 4) / 2;
+		case Image2dFormat::Etc2:
+		case Image2dFormat::Dxt:
+		case Image2dFormat::Atc:
+			return core::Math::align(w, 4)*core::Math::align(h, 4);
+		default:
+			return core::Math::align(w, 4)*core::Math::align(h, 4) / 2;
 		}
 	}
 
 	byte* TextureImage2d::getPixels(Image2dFormat::e format, uint* pixels)
 	{
-		switch (format)
-		{
-		case Image2dFormat::Rgb:
-		case Image2dFormat::Rgba:
-			return reinterpret_cast<byte*>(pixels);
-		case Image2dFormat::Pvrtc12:
-		case Image2dFormat::Pvrtc14:
-			return reinterpret_cast<byte*>(pixels);
-		case Image2dFormat::Etc1:
-		case Image2dFormat::Etc2:
-		case Image2dFormat::Astc:
-			return reinterpret_cast<byte*>(pixels);
-		default:
-			return reinterpret_cast<byte*>(pixels);
-		}
+		return reinterpret_cast<byte*>(pixels);
 	}
 
 	TexturesDecompressorBuffer::TexturesDecompressorBuffer()

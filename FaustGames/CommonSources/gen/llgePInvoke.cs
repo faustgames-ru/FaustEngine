@@ -80,7 +80,7 @@ namespace llge
 		TFPvrtc14 = 0x4,
 		TFAtc = 0x5,
 		TFEtc2 = 0x6,
-		TFAstc = 0x7,
+		TFDxt = 0x7,
 		TFEnumSize = 0x8,
 	}
 	

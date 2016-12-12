@@ -52,6 +52,7 @@ namespace graphics
 		void traceTriangles(int width, int height, Image2dFormat::e format, void *pixels);
 		static GLenum getFormat(Image2dFormat::e format);
 		static float getSize(int size, Image2dFormat::e format);
+		static float getSize(int w, int h, Image2dFormat::e format);
 		static byte* getPixels(Image2dFormat::e format, uint *pixels);
 		std::vector<core::Vector2> _tracedVertices;
 		std::vector<ushort> _tracedIndices;

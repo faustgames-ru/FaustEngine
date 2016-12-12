@@ -19,7 +19,7 @@ namespace resources
 	std::string pvrExt("pvr");
 	std::string atcExt("atc");
 	std::string pkmExt("pkm");
-	std::string astcExt("ast");
+	std::string dxtExt("dxt");
 	
 	void readData(png_structp pngPtr, png_bytep data, png_size_t length)
 	{
@@ -374,6 +374,11 @@ namespace resources
 			_image->Format = graphics::Image2dFormat::Etc2;
 			return _image;
 		}
+		if (header.Format == 6) // dxt
+		{
+			_image->Format = graphics::Image2dFormat::Dxt;
+			return _image;
+		}
 		return nullptr;
 	}
 
@@ -472,8 +477,8 @@ namespace resources
 		case llge::TFEtc2:
 			_compressionExt = pkmExt.c_str();
 			break;
-		case llge::TFAstc:
-			_compressionExt = astcExt.c_str();
+		case llge::TFDxt:
+			_compressionExt = dxtExt.c_str();
 			break;
 		default: break;
 		}

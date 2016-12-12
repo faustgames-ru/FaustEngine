@@ -79,12 +79,13 @@ namespace graphics
         GLenum error(GL_NO_ERROR);
         if ((error = glGetError()) != GL_NO_ERROR)
         {
+			__android_log_print(ANDROID_LOG_ERROR, "TRACKERS", "%s", getActionName(actionType));
 
             fprintf(stderr, "%s", getActionName(actionType));
             fprintf(stderr, "\n");
             
         }
-        
+
     }
     
 	void Errors::rise(Errors::e actionType)

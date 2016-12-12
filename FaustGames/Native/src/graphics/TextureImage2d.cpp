@@ -445,28 +445,13 @@ namespace graphics
 						isFormatSupported = true;
 					}
 				}
-				/*
+				
 				const char* exts = reinterpret_cast<const char*>(glGetString(GL_EXTENSIONS));
-				switch(data->Format)
-				{
-				case Image2dFormat::Rgba: break;
-				case Image2dFormat::Rgb: break;
-				case Image2dFormat::Pvrtc12: break;
-				case Image2dFormat::Pvrtc14: break;
-				case Image2dFormat::Etc1: break;
-				case Image2dFormat::Etc2: break;
-				case Image2dFormat::Rgba4444: break;
-				case Image2dFormat::Atc: 
-					isFormatSupported = hasExt(exts, atc_ext1.c_str());
-					break;					
-				case Image2dFormat::Astc: break;
-				default: break;
-				}
-				*/
-				//__android_log_print(ANDROID_LOG_ERROR, "TRACKERS", "%s", exts);
+				
+				__android_log_print(ANDROID_LOG_ERROR, "TRACKERS", "%s", exts);
 				if (!isFormatSupported)
 				{
-					//__android_log_print(ANDROID_LOG_ERROR, "TRACKERS", "%s", "format not supported");
+					__android_log_print(ANDROID_LOG_ERROR, "TRACKERS", "%s", "format not supported");
 
 					if (data->Format == Image2dFormat::Pvrtc14 || data->Format == Image2dFormat::Pvrtc12)
 					{
@@ -571,6 +556,8 @@ namespace graphics
 							static_cast<float>(data->Height) / static_cast<float>(pot));
 						return;
 					}
+					__android_log_print(ANDROID_LOG_ERROR, "TRACKERS", "%s", "format is supported");
+
 					int compressedImageSize = getSize(data->Width + border * 2, data->Height + border * 2, data->Format);
 					glCompressedTexImage2D(GL_TEXTURE_2D, 0, getFormat(data->Format), data->Width + border*2, data->Height + border*2, 0, compressedImageSize, data->Pixels + data->RawDataOffset);
 					transform = TextureTransform(

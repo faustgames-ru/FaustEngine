@@ -1,12 +1,12 @@
 #include <fcntl.h>
-#include <sys/mman.h>
+//#include <sys/mman.h>
 #include "ContentProvider.h"
 #include <stdio.h>
 #include <string>
 #include <stdlib.h>
 #include <map>
 #include <cstdint>
-
+ 
 #ifdef __APPLE__
 #endif
 

@@ -448,11 +448,9 @@ namespace graphics
 				
 				const char* exts = reinterpret_cast<const char*>(glGetString(GL_EXTENSIONS));
 				
-				__android_log_print(ANDROID_LOG_ERROR, "TRACKERS", "%s", exts);
 				if (!isFormatSupported)
 				{
-					__android_log_print(ANDROID_LOG_ERROR, "TRACKERS", "%s", "format not supported");
-
+					
 					if (data->Format == Image2dFormat::Pvrtc14 || data->Format == Image2dFormat::Pvrtc12)
 					{
 						TexturesDecompressorBuffer resultBuffer;
@@ -556,9 +554,8 @@ namespace graphics
 							static_cast<float>(data->Height) / static_cast<float>(pot));
 						return;
 					}
-					__android_log_print(ANDROID_LOG_ERROR, "TRACKERS", "%s", "format is supported");
-
-					int compressedImageSize = getSize(data->Width + border * 2, data->Height + border * 2, data->Format);
+					
+                    int compressedImageSize = getSize(data->Width + border * 2, data->Height + border * 2, data->Format);
 					glCompressedTexImage2D(GL_TEXTURE_2D, 0, getFormat(data->Format), data->Width + border*2, data->Height + border*2, 0, compressedImageSize, data->Pixels + data->RawDataOffset);
 					transform = TextureTransform(
 						border / static_cast<float>(data->Width + border*2),

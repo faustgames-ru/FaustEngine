@@ -6,552 +6,828 @@
       <Filter>common</Filter>
     </ClInclude>
     <ClInclude Include="..\src_clipper\clipper.hpp">
-      <Filter>clipper</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\core\Allocator.h">
-      <Filter>core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\core\BasicTest.h">
-      <Filter>core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\core\Convert.h">
-      <Filter>core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\core\core.h">
-      <Filter>core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\core\core_classes.h">
-      <Filter>core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\core\core_platform.h">
-      <Filter>core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\core\HollowsAllocationPolicy.h">
-      <Filter>core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\core\Lazy.h">
-      <Filter>core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\core\MarchingSquares.h">
-      <Filter>core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\core\Math.h">
-      <Filter>core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\core\Matrix.h">
-      <Filter>core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\core\Path.h">
-      <Filter>core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\core\StaticArray.h">
-      <Filter>core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\core\SystemAllocationPolicy.h">
-      <Filter>core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\core\Vector.h">
-      <Filter>core</Filter>
+      <Filter>third_party\clipper</Filter>
     </ClInclude>
     <ClInclude Include="..\src\drawing\Batcher.h">
-      <Filter>drawing</Filter>
+      <Filter>engine\drawing</Filter>
     </ClInclude>
     <ClInclude Include="..\src\drawing\Camera.h">
-      <Filter>drawing</Filter>
+      <Filter>engine\drawing</Filter>
     </ClInclude>
     <ClInclude Include="..\src\drawing\drawing_classes.h">
-      <Filter>drawing</Filter>
+      <Filter>engine\drawing</Filter>
     </ClInclude>
     <ClInclude Include="..\src\drawing\drawing_platform.h">
-      <Filter>drawing</Filter>
+      <Filter>engine\drawing</Filter>
     </ClInclude>
     <ClInclude Include="..\src\drawing\drawing_references.h">
-      <Filter>drawing</Filter>
+      <Filter>engine\drawing</Filter>
     </ClInclude>
     <ClInclude Include="..\src\drawing\PostProcess.h">
-      <Filter>drawing</Filter>
+      <Filter>engine\drawing</Filter>
     </ClInclude>
     <ClInclude Include="..\src\drawing\Renderer2d.h">
-      <Filter>drawing</Filter>
+      <Filter>engine\drawing</Filter>
     </ClInclude>
     <ClInclude Include="..\src\drawing\RenderItem2d.h">
-      <Filter>drawing</Filter>
+      <Filter>engine\drawing</Filter>
     </ClInclude>
     <ClInclude Include="..\src\drawing\RenderMesh2d.h">
-      <Filter>drawing</Filter>
+      <Filter>engine\drawing</Filter>
     </ClInclude>
     <ClInclude Include="..\src\drawing\WaterRenderer.h">
-      <Filter>drawing</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\geometry\Aabb2d.h">
-      <Filter>geometry</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\geometry\Frustum.h">
-      <Filter>geometry</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\geometry\geometry.h">
-      <Filter>geometry</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\geometry\geometry_classes.h">
-      <Filter>geometry</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\geometry\geometry_platform.h">
-      <Filter>geometry</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\geometry\geometry_references.h">
-      <Filter>geometry</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\geometry\Quadtree2d.h">
-      <Filter>geometry</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\geometry\Quadtree2dItem.h">
-      <Filter>geometry</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\geometry\Quadtree2dNode.h">
-      <Filter>geometry</Filter>
+      <Filter>engine\drawing</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\AttributeInfo.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\Attributes.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\Batcher.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\Color.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\config_defines.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\Effect.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\EffectBase.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\EffectConstant.h">
-      <Filter>graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\graphics\EffectRenderDepth.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\Effects.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\EffectsBasic.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\EffectSolid.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\EffectSolidColor.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\EffectsPostProcess.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\EffectTextureAlphamaskColor.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\EffectTextureColor.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\EffectTextureColorHighlight.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\EffectTextureLightMapColor.h">
-      <Filter>graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\graphics\EffectWater.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\Errors.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\graphics.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\graphics_classes.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\graphics_platform.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\graphics_references.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\GraphicsDevice.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\Image2dData.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\RenderConverter.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\RenderConverterBasic.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\RenderState.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\State.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\StateCompare.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\StaticBatch.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\Texture.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\TextureCubemap.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\TextureImage2d.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\TextureLoader.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\TextureRenderTarget2d.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\TextureRenderTargetDepth2d.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\Uniform.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\UniformInfo.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\Uniforms.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\UniformValue.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\UniformValueCubemap.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\UniformValueFloat.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\UniformValueMatrix.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\UniformValueTexture.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\UniformValueVector3.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\VertexBuffer.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\VertexFormat.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\VertexFormatPosition.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\VertexFormatPositionColor.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\VertexFormatPositionTextureColor.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\VertexFormats.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\VertexFormatsBasic.h">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\navmesh\AStar.h">
-      <Filter>navmesh</Filter>
+      <Filter>engine\navmesh</Filter>
     </ClInclude>
     <ClInclude Include="..\src\navmesh\Funnel.h">
-      <Filter>navmesh</Filter>
+      <Filter>engine\navmesh</Filter>
     </ClInclude>
     <ClInclude Include="..\src\navmesh\NavEdges.h">
-      <Filter>navmesh</Filter>
+      <Filter>engine\navmesh</Filter>
     </ClInclude>
     <ClInclude Include="..\src\navmesh\NavMesh.h">
-      <Filter>navmesh</Filter>
+      <Filter>engine\navmesh</Filter>
     </ClInclude>
     <ClInclude Include="..\src\navmesh\navmesh_classes.h">
-      <Filter>navmesh</Filter>
+      <Filter>engine\navmesh</Filter>
     </ClInclude>
     <ClInclude Include="..\src\navmesh\navmesh_platform.h">
-      <Filter>navmesh</Filter>
+      <Filter>engine\navmesh</Filter>
     </ClInclude>
     <ClInclude Include="..\src\navmesh\navmesh_references.h">
-      <Filter>navmesh</Filter>
+      <Filter>engine\navmesh</Filter>
     </ClInclude>
     <ClInclude Include="..\src_poly2tri\common\shapes.h">
-      <Filter>poly2tri\common</Filter>
+      <Filter>third_party\poly2tri\common</Filter>
     </ClInclude>
     <ClInclude Include="..\src_poly2tri\common\utils.h">
-      <Filter>poly2tri\common</Filter>
+      <Filter>third_party\poly2tri\common</Filter>
     </ClInclude>
     <ClInclude Include="..\src_poly2tri\sweep\advancing_front.h">
-      <Filter>poly2tri\sweep</Filter>
+      <Filter>third_party\poly2tri\sweep</Filter>
     </ClInclude>
     <ClInclude Include="..\src_poly2tri\sweep\cdt.h">
-      <Filter>poly2tri\sweep</Filter>
+      <Filter>third_party\poly2tri\sweep</Filter>
     </ClInclude>
     <ClInclude Include="..\src_poly2tri\sweep\sweep.h">
-      <Filter>poly2tri\sweep</Filter>
+      <Filter>third_party\poly2tri\sweep</Filter>
     </ClInclude>
     <ClInclude Include="..\src_poly2tri\sweep\sweep_context.h">
-      <Filter>poly2tri\sweep</Filter>
+      <Filter>third_party\poly2tri\sweep</Filter>
     </ClInclude>
     <ClInclude Include="..\src_poly2tri\poly2tri.h">
-      <Filter>poly2tri</Filter>
+      <Filter>third_party\poly2tri</Filter>
     </ClInclude>
     <ClInclude Include="..\src\resources\lpng\png.h">
-      <Filter>resources\lpng</Filter>
+      <Filter>engine\resources\lpng</Filter>
     </ClInclude>
     <ClInclude Include="..\src\resources\lpng\pngconf.h">
-      <Filter>resources\lpng</Filter>
+      <Filter>engine\resources\lpng</Filter>
     </ClInclude>
     <ClInclude Include="..\src\resources\lpng\pngdebug.h">
-      <Filter>resources\lpng</Filter>
+      <Filter>engine\resources\lpng</Filter>
     </ClInclude>
     <ClInclude Include="..\src\resources\lpng\pnginfo.h">
-      <Filter>resources\lpng</Filter>
+      <Filter>engine\resources\lpng</Filter>
     </ClInclude>
     <ClInclude Include="..\src\resources\lpng\pnglibconf.h">
-      <Filter>resources\lpng</Filter>
+      <Filter>engine\resources\lpng</Filter>
     </ClInclude>
     <ClInclude Include="..\src\resources\lpng\pngpriv.h">
-      <Filter>resources\lpng</Filter>
+      <Filter>engine\resources\lpng</Filter>
     </ClInclude>
     <ClInclude Include="..\src\resources\lpng\pngstruct.h">
-      <Filter>resources\lpng</Filter>
+      <Filter>engine\resources\lpng</Filter>
     </ClInclude>
     <ClInclude Include="..\src\resources\ContentManager.h">
-      <Filter>resources</Filter>
+      <Filter>engine\resources</Filter>
     </ClInclude>
     <ClInclude Include="..\src\resources\ContentProvider.h">
-      <Filter>resources</Filter>
+      <Filter>engine\resources</Filter>
     </ClInclude>
     <ClInclude Include="..\src\resources\resources.h">
-      <Filter>resources</Filter>
+      <Filter>engine\resources</Filter>
     </ClInclude>
     <ClInclude Include="..\src\resources\resources_classes.h">
-      <Filter>resources</Filter>
+      <Filter>engine\resources</Filter>
     </ClInclude>
     <ClInclude Include="..\src\resources\resources_platform.h">
-      <Filter>resources</Filter>
+      <Filter>engine\resources</Filter>
     </ClInclude>
     <ClInclude Include="..\src\resources\resources_references.h">
-      <Filter>resources</Filter>
+      <Filter>engine\resources</Filter>
     </ClInclude>
     <ClInclude Include="..\shaders\post_process_bloom_add_filter_frag.h">
-      <Filter>shaders</Filter>
+      <Filter>engine\shaders</Filter>
     </ClInclude>
     <ClInclude Include="..\shaders\post_process_bloom_filter_frag.h">
-      <Filter>shaders</Filter>
+      <Filter>engine\shaders</Filter>
     </ClInclude>
     <ClInclude Include="..\shaders\post_process_blur_frag.h">
-      <Filter>shaders</Filter>
+      <Filter>engine\shaders</Filter>
     </ClInclude>
     <ClInclude Include="..\shaders\post_process_hblur_vert.h">
-      <Filter>shaders</Filter>
+      <Filter>engine\shaders</Filter>
     </ClInclude>
     <ClInclude Include="..\shaders\post_process_tonemapping.h">
-      <Filter>shaders</Filter>
+      <Filter>engine\shaders</Filter>
     </ClInclude>
     <ClInclude Include="..\shaders\post_process_vblur_vert.h">
-      <Filter>shaders</Filter>
+      <Filter>engine\shaders</Filter>
     </ClInclude>
     <ClInclude Include="..\shaders\post_process_vert.h">
-      <Filter>shaders</Filter>
+      <Filter>engine\shaders</Filter>
     </ClInclude>
     <ClInclude Include="..\shaders\shader_render_depth_frag.h">
-      <Filter>shaders</Filter>
+      <Filter>engine\shaders</Filter>
     </ClInclude>
     <ClInclude Include="..\shaders\shader_render_depth_vert.h">
-      <Filter>shaders</Filter>
+      <Filter>engine\shaders</Filter>
     </ClInclude>
     <ClInclude Include="..\shaders\solid_color_frag.h">
-      <Filter>shaders</Filter>
+      <Filter>engine\shaders</Filter>
     </ClInclude>
     <ClInclude Include="..\shaders\solid_color_vert.h">
-      <Filter>shaders</Filter>
+      <Filter>engine\shaders</Filter>
     </ClInclude>
     <ClInclude Include="..\shaders\solid_frag.h">
-      <Filter>shaders</Filter>
+      <Filter>engine\shaders</Filter>
     </ClInclude>
     <ClInclude Include="..\shaders\solid_vert.h">
-      <Filter>shaders</Filter>
+      <Filter>engine\shaders</Filter>
     </ClInclude>
     <ClInclude Include="..\shaders\texture_alphamask_color_frag.h">
-      <Filter>shaders</Filter>
+      <Filter>engine\shaders</Filter>
     </ClInclude>
     <ClInclude Include="..\shaders\texture_alphamask_color_vert.h">
-      <Filter>shaders</Filter>
+      <Filter>engine\shaders</Filter>
     </ClInclude>
     <ClInclude Include="..\shaders\texture_color_frag.h">
-      <Filter>shaders</Filter>
+      <Filter>engine\shaders</Filter>
     </ClInclude>
     <ClInclude Include="..\shaders\texture_color_highlight_frag.h">
-      <Filter>shaders</Filter>
+      <Filter>engine\shaders</Filter>
     </ClInclude>
     <ClInclude Include="..\shaders\texture_color_highlight_vert.h">
-      <Filter>shaders</Filter>
+      <Filter>engine\shaders</Filter>
     </ClInclude>
     <ClInclude Include="..\shaders\texture_color_vert.h">
-      <Filter>shaders</Filter>
+      <Filter>engine\shaders</Filter>
     </ClInclude>
     <ClInclude Include="..\shaders\texture_lightmap_color_frag.h">
-      <Filter>shaders</Filter>
+      <Filter>engine\shaders</Filter>
     </ClInclude>
     <ClInclude Include="..\shaders\texture_lightmap_color_vert.h">
-      <Filter>shaders</Filter>
+      <Filter>engine\shaders</Filter>
     </ClInclude>
     <ClInclude Include="..\shaders\water_frag.h">
-      <Filter>shaders</Filter>
+      <Filter>engine\shaders</Filter>
     </ClInclude>
     <ClInclude Include="..\shaders\water_vert.h">
-      <Filter>shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\spine\runtime\Json.h">
-      <Filter>spine\runtime</Filter>
+      <Filter>engine\shaders</Filter>
     </ClInclude>
     <ClInclude Include="..\src\spine\spine_classes.h">
-      <Filter>spine</Filter>
+      <Filter>engine\spine</Filter>
     </ClInclude>
     <ClInclude Include="..\src\spine\spine_references.h">
-      <Filter>spine</Filter>
+      <Filter>engine\spine</Filter>
     </ClInclude>
     <ClInclude Include="..\src\spine\SpineAnimationState.h">
-      <Filter>spine</Filter>
+      <Filter>engine\spine</Filter>
     </ClInclude>
     <ClInclude Include="..\src\spine\SpineAnimationStateData.h">
-      <Filter>spine</Filter>
+      <Filter>engine\spine</Filter>
     </ClInclude>
     <ClInclude Include="..\src\spine\SpineSkeleton.h">
-      <Filter>spine</Filter>
+      <Filter>engine\spine</Filter>
     </ClInclude>
     <ClInclude Include="..\src\spine\SpineSkeletonAnimation.h">
-      <Filter>spine</Filter>
+      <Filter>engine\spine</Filter>
     </ClInclude>
     <ClInclude Include="..\src\spine\SpineSkeletonResource.h">
-      <Filter>spine</Filter>
+      <Filter>engine\spine</Filter>
     </ClInclude>
     <ClInclude Include="..\src\entities\Aabb2dComponent.h">
-      <Filter>entities</Filter>
+      <Filter>engine\entities</Filter>
     </ClInclude>
     <ClInclude Include="..\src\entities\Component.h">
-      <Filter>entities</Filter>
+      <Filter>engine\entities</Filter>
     </ClInclude>
     <ClInclude Include="..\src\entities\DummyEntitiesFilter.h">
-      <Filter>entities</Filter>
+      <Filter>engine\entities</Filter>
     </ClInclude>
     <ClInclude Include="..\src\entities\entities.h">
-      <Filter>entities</Filter>
+      <Filter>engine\entities</Filter>
     </ClInclude>
     <ClInclude Include="..\src\entities\entities_classes.h">
-      <Filter>entities</Filter>
+      <Filter>engine\entities</Filter>
     </ClInclude>
     <ClInclude Include="..\src\entities\entities_platform.h">
-      <Filter>entities</Filter>
+      <Filter>engine\entities</Filter>
     </ClInclude>
     <ClInclude Include="..\src\entities\entities_references.h">
-      <Filter>entities</Filter>
+      <Filter>engine\entities</Filter>
     </ClInclude>
     <ClInclude Include="..\src\entities\EntitiesFilter.h">
-      <Filter>entities</Filter>
+      <Filter>engine\entities</Filter>
     </ClInclude>
     <ClInclude Include="..\src\entities\EntitiesWorld.h">
-      <Filter>entities</Filter>
+      <Filter>engine\entities</Filter>
     </ClInclude>
     <ClInclude Include="..\src\entities\Entity.h">
-      <Filter>entities</Filter>
+      <Filter>engine\entities</Filter>
     </ClInclude>
     <ClInclude Include="..\src\entities\MatrixTransformComponent.h">
-      <Filter>entities</Filter>
+      <Filter>engine\entities</Filter>
     </ClInclude>
     <ClInclude Include="..\src\entities\QuadtreeEntitiesFilter.h">
-      <Filter>entities</Filter>
+      <Filter>engine\entities</Filter>
     </ClInclude>
     <ClInclude Include="..\src\entities\Render2dComponent.h">
-      <Filter>entities</Filter>
+      <Filter>engine\entities</Filter>
     </ClInclude>
     <ClInclude Include="..\src\entities\RenderSystem2d.h">
-      <Filter>entities</Filter>
+      <Filter>engine\entities</Filter>
     </ClInclude>
     <ClInclude Include="..\src\entities\System.h">
-      <Filter>entities</Filter>
+      <Filter>engine\entities</Filter>
     </ClInclude>
     <ClInclude Include="..\src\entities\Transform2dComponent.h">
-      <Filter>entities</Filter>
+      <Filter>engine\entities</Filter>
     </ClInclude>
     <ClInclude Include="..\src\entities\TransformSystem2d.h">
-      <Filter>entities</Filter>
+      <Filter>engine\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\terrain\StripeBuilder.h">
+      <Filter>engine\terrain</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\terrain\terrain_classes.h">
+      <Filter>engine\terrain</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\terrain\terrain_platform.h">
+      <Filter>engine\terrain</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\terrain\terrain_references.h">
+      <Filter>engine\terrain</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\terrain\TerrainFactory.h">
+      <Filter>engine\terrain</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_rectanglebinpack\GuillotineBinPack.h">
+      <Filter>third_party\rectanglebinpack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_rectanglebinpack\MaxRectsBinPack.h">
+      <Filter>third_party\rectanglebinpack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_rectanglebinpack\Rect.h">
+      <Filter>third_party\rectanglebinpack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_rectanglebinpack\ShelfBinPack.h">
+      <Filter>third_party\rectanglebinpack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_rectanglebinpack\ShelfNextFitBinPack.h">
+      <Filter>third_party\rectanglebinpack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_rectanglebinpack\SkylineBinPack.h">
+      <Filter>third_party\rectanglebinpack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_box2d\Box2D\Collision\Shapes\b2ChainShape.h">
+      <Filter>third_party\box2d\Collision\Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_box2d\Box2D\Collision\Shapes\b2CircleShape.h">
+      <Filter>third_party\box2d\Collision\Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_box2d\Box2D\Collision\Shapes\b2EdgeShape.h">
+      <Filter>third_party\box2d\Collision\Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_box2d\Box2D\Collision\Shapes\b2PolygonShape.h">
+      <Filter>third_party\box2d\Collision\Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_box2d\Box2D\Collision\Shapes\b2Shape.h">
+      <Filter>third_party\box2d\Collision\Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_box2d\Box2D\Collision\b2BroadPhase.h">
+      <Filter>third_party\box2d\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_box2d\Box2D\Collision\b2Collision.h">
+      <Filter>third_party\box2d\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_box2d\Box2D\Collision\b2Distance.h">
+      <Filter>third_party\box2d\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_box2d\Box2D\Collision\b2DynamicTree.h">
+      <Filter>third_party\box2d\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_box2d\Box2D\Collision\b2TimeOfImpact.h">
+      <Filter>third_party\box2d\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_box2d\Box2D\Common\b2BlockAllocator.h">
+      <Filter>third_party\box2d\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_box2d\Box2D\Common\b2Draw.h">
+      <Filter>third_party\box2d\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_box2d\Box2D\Common\b2GrowableStack.h">
+      <Filter>third_party\box2d\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_box2d\Box2D\Common\b2Math.h">
+      <Filter>third_party\box2d\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_box2d\Box2D\Common\b2Settings.h">
+      <Filter>third_party\box2d\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_box2d\Box2D\Common\b2StackAllocator.h">
+      <Filter>third_party\box2d\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_box2d\Box2D\Common\b2Timer.h">
+      <Filter>third_party\box2d\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_box2d\Box2D\Dynamics\Contacts\b2ChainAndCircleContact.h">
+      <Filter>third_party\box2d\Dynamics\Contacts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_box2d\Box2D\Dynamics\Contacts\b2ChainAndPolygonContact.h">
+      <Filter>third_party\box2d\Dynamics\Contacts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_box2d\Box2D\Dynamics\Contacts\b2CircleContact.h">
+      <Filter>third_party\box2d\Dynamics\Contacts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_box2d\Box2D\Dynamics\Contacts\b2Contact.h">
+      <Filter>third_party\box2d\Dynamics\Contacts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_box2d\Box2D\Dynamics\Contacts\b2ContactSolver.h">
+      <Filter>third_party\box2d\Dynamics\Contacts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_box2d\Box2D\Dynamics\Contacts\b2EdgeAndCircleContact.h">
+      <Filter>third_party\box2d\Dynamics\Contacts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_box2d\Box2D\Dynamics\Contacts\b2EdgeAndPolygonContact.h">
+      <Filter>third_party\box2d\Dynamics\Contacts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_box2d\Box2D\Dynamics\Contacts\b2PolygonAndCircleContact.h">
+      <Filter>third_party\box2d\Dynamics\Contacts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_box2d\Box2D\Dynamics\Contacts\b2PolygonContact.h">
+      <Filter>third_party\box2d\Dynamics\Contacts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_box2d\Box2D\Dynamics\Joints\b2DistanceJoint.h">
+      <Filter>third_party\box2d\Dynamics\Joints</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_box2d\Box2D\Dynamics\Joints\b2FrictionJoint.h">
+      <Filter>third_party\box2d\Dynamics\Joints</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_box2d\Box2D\Dynamics\Joints\b2GearJoint.h">
+      <Filter>third_party\box2d\Dynamics\Joints</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_box2d\Box2D\Dynamics\Joints\b2Joint.h">
+      <Filter>third_party\box2d\Dynamics\Joints</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_box2d\Box2D\Dynamics\Joints\b2MotorJoint.h">
+      <Filter>third_party\box2d\Dynamics\Joints</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_box2d\Box2D\Dynamics\Joints\b2MouseJoint.h">
+      <Filter>third_party\box2d\Dynamics\Joints</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_box2d\Box2D\Dynamics\Joints\b2PrismaticJoint.h">
+      <Filter>third_party\box2d\Dynamics\Joints</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_box2d\Box2D\Dynamics\Joints\b2PulleyJoint.h">
+      <Filter>third_party\box2d\Dynamics\Joints</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_box2d\Box2D\Dynamics\Joints\b2RevoluteJoint.h">
+      <Filter>third_party\box2d\Dynamics\Joints</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_box2d\Box2D\Dynamics\Joints\b2RopeJoint.h">
+      <Filter>third_party\box2d\Dynamics\Joints</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_box2d\Box2D\Dynamics\Joints\b2WeldJoint.h">
+      <Filter>third_party\box2d\Dynamics\Joints</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_box2d\Box2D\Dynamics\Joints\b2WheelJoint.h">
+      <Filter>third_party\box2d\Dynamics\Joints</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_box2d\Box2D\Dynamics\b2Body.h">
+      <Filter>third_party\box2d\Dynamics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_box2d\Box2D\Dynamics\b2ContactManager.h">
+      <Filter>third_party\box2d\Dynamics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_box2d\Box2D\Dynamics\b2Fixture.h">
+      <Filter>third_party\box2d\Dynamics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_box2d\Box2D\Dynamics\b2Island.h">
+      <Filter>third_party\box2d\Dynamics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_box2d\Box2D\Dynamics\b2TimeStep.h">
+      <Filter>third_party\box2d\Dynamics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_box2d\Box2D\Dynamics\b2World.h">
+      <Filter>third_party\box2d\Dynamics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_box2d\Box2D\Dynamics\b2WorldCallbacks.h">
+      <Filter>third_party\box2d\Dynamics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_box2d\Box2D\Rope\b2Rope.h">
+      <Filter>third_party\box2d\Rope</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_box2d\Box2D\Box2D.h">
+      <Filter>third_party\box2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_decompress_ati\DecompressAtc.h">
+      <Filter>third_party\decompress_ati</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src_decompressors\PVRTDecompress.h">
+      <Filter>third_party\decompressors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\spine\runtime\Json.h">
+      <Filter>engine\spine\runtime</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\core.h">
+      <Filter>engine\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\core_classes.h">
+      <Filter>engine\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\core_platform.h">
+      <Filter>engine\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\DebugRender.h">
+      <Filter>engine\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Delegate.h">
+      <Filter>engine\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Environment.h">
+      <Filter>engine\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\HollowsAllocationPolicy.h">
+      <Filter>engine\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Lazy.h">
+      <Filter>engine\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Log.h">
+      <Filter>engine\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\MarchingSquares.h">
+      <Filter>engine\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Math.h">
+      <Filter>engine\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Matrix.h">
+      <Filter>engine\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Path.h">
+      <Filter>engine\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Spline.h">
+      <Filter>engine\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\StaticArray.h">
+      <Filter>engine\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\SystemAllocationPolicy.h">
+      <Filter>engine\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Vector.h">
+      <Filter>engine\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Allocator.h">
+      <Filter>engine\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\BasicTest.h">
+      <Filter>engine\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Convert.h">
+      <Filter>engine\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\geometry\Aabb.h">
+      <Filter>engine\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\geometry\Aabb2d.h">
+      <Filter>engine\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\geometry\Frustum.h">
+      <Filter>engine\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\geometry\geometry.h">
+      <Filter>engine\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\geometry\geometry_classes.h">
+      <Filter>engine\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\geometry\geometry_platform.h">
+      <Filter>engine\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\geometry\geometry_references.h">
+      <Filter>engine\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\geometry\Quadtree.h">
+      <Filter>engine\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\geometry\Quadtree2d.h">
+      <Filter>engine\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\geometry\Quadtree2dItem.h">
+      <Filter>engine\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\geometry\Quadtree2dNode.h">
+      <Filter>engine\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\geometry\TerrainClipper.h">
+      <Filter>engine\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\resources\AtlasPacker.h">
+      <Filter>engine\resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\physics\PhysicalBody.h">
+      <Filter>engine\physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\physics\PhysicalConverter.h">
+      <Filter>engine\physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\physics\PhysicalFactory.h">
+      <Filter>engine\physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\physics\PhysicalFixture.h">
+      <Filter>engine\physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\physics\PhysicalJoint.h">
+      <Filter>engine\physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\physics\PhysicalShape.h">
+      <Filter>engine\physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\physics\PhysicalWorld.h">
+      <Filter>engine\physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\physics\physics_classes.h">
+      <Filter>engine\physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\physics\physics_platform.h">
+      <Filter>engine\physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\physics\physics_references.h">
+      <Filter>engine\physics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="clipper">
-      <UniqueIdentifier>{e3b7a9d4-4ced-4e48-a4c5-1f62667b09f4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="common">
       <UniqueIdentifier>{130876a2-21ac-4dbb-be14-3fe55d24dd33}</UniqueIdentifier>
     </Filter>
-    <Filter Include="core">
-      <UniqueIdentifier>{695a45b1-1546-4e24-b306-93f085fc22d8}</UniqueIdentifier>
+    <Filter Include="engine">
+      <UniqueIdentifier>{81b88f28-c866-4072-9854-fb10e8dac0a3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="drawing">
+    <Filter Include="engine\resources">
+      <UniqueIdentifier>{15632cec-4f17-4025-80a3-46d5eba44f0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\resources\lpng">
+      <UniqueIdentifier>{69f6a1c3-b7d4-4b9b-82c0-99889d7e50bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\resources\zlib">
+      <UniqueIdentifier>{dd1be6c9-ad0d-4bce-90fd-56082f9ea6dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\shaders">
+      <UniqueIdentifier>{71352af4-5985-443a-a12c-c7b080a7e60c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\spine">
+      <UniqueIdentifier>{40ee4848-f936-4146-bda2-a37416ca232f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\spine\runtime">
+      <UniqueIdentifier>{8c8d4b8d-b009-40ea-a34e-4e3e3f81bbe5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\navmesh">
+      <UniqueIdentifier>{4139626e-a8b6-42df-9055-14ab47bfde80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\graphics">
+      <UniqueIdentifier>{8581a6f0-198e-462b-8a2f-6d57f0c59015}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\geometry">
+      <UniqueIdentifier>{54665566-2b49-47bb-9011-64f32808fc29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\entities">
+      <UniqueIdentifier>{b46939a9-209a-48b4-9a3b-8ce659e80e4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\drawing">
       <UniqueIdentifier>{71f9708c-4412-4b40-9c87-6f445ff64ad2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="entities">
-      <UniqueIdentifier>{b46939a9-209a-48b4-9a3b-8ce659e80e4a}</UniqueIdentifier>
+    <Filter Include="engine\core">
+      <UniqueIdentifier>{695a45b1-1546-4e24-b306-93f085fc22d8}</UniqueIdentifier>
     </Filter>
     <Filter Include="exports">
       <UniqueIdentifier>{ad196025-181f-450a-a034-b855c2e27fbd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="geometry">
-      <UniqueIdentifier>{54665566-2b49-47bb-9011-64f32808fc29}</UniqueIdentifier>
+    <Filter Include="engine\terrain">
+      <UniqueIdentifier>{1fecca8a-52d3-4261-b813-a96ad76899db}</UniqueIdentifier>
     </Filter>
-    <Filter Include="graphics">
-      <UniqueIdentifier>{8581a6f0-198e-462b-8a2f-6d57f0c59015}</UniqueIdentifier>
+    <Filter Include="third_party">
+      <UniqueIdentifier>{bc850fe6-351e-49a6-b041-093cb1df2d4b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="navmesh">
-      <UniqueIdentifier>{4139626e-a8b6-42df-9055-14ab47bfde80}</UniqueIdentifier>
+    <Filter Include="third_party\rectanglebinpack">
+      <UniqueIdentifier>{6d9483fc-3920-44c2-90da-2524ec4c52c9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="poly2tri">
+    <Filter Include="third_party\poly2tri">
       <UniqueIdentifier>{2df1f455-06d8-4832-a43c-f1feb2f3ad28}</UniqueIdentifier>
     </Filter>
-    <Filter Include="resources">
-      <UniqueIdentifier>{15632cec-4f17-4025-80a3-46d5eba44f0f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="shaders">
-      <UniqueIdentifier>{71352af4-5985-443a-a12c-c7b080a7e60c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="spine">
-      <UniqueIdentifier>{40ee4848-f936-4146-bda2-a37416ca232f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="spine\runtime">
-      <UniqueIdentifier>{8c8d4b8d-b009-40ea-a34e-4e3e3f81bbe5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="resources\lpng">
-      <UniqueIdentifier>{69f6a1c3-b7d4-4b9b-82c0-99889d7e50bf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="resources\zlib">
-      <UniqueIdentifier>{dd1be6c9-ad0d-4bce-90fd-56082f9ea6dd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="poly2tri\common">
+    <Filter Include="third_party\poly2tri\common">
       <UniqueIdentifier>{c6e947df-5f1c-4504-83a1-2d8051f4603d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="poly2tri\sweep">
+    <Filter Include="third_party\poly2tri\sweep">
       <UniqueIdentifier>{5fa8a921-1fb1-4a48-b965-7d60d7290958}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="third_party\box2d">
+      <UniqueIdentifier>{0cc7f5a6-6170-4d76-9cad-5962535aa5fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="third_party\decompress_ati">
+      <UniqueIdentifier>{77b5f1cd-c1b3-40e1-b115-101c4936e57b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="third_party\decompressors">
+      <UniqueIdentifier>{c7f4ce4b-b11f-40f5-9086-9271b5c21907}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="third_party\box2d\Collision">
+      <UniqueIdentifier>{6616cf55-9d6e-4ea2-a081-7223c1190ff4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="third_party\box2d\Common">
+      <UniqueIdentifier>{e56b2513-66b4-4324-958b-13d9af2524a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="third_party\box2d\Dynamics">
+      <UniqueIdentifier>{0d338421-bc71-47a1-808e-3d96b0dd9eec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="third_party\box2d\Rope">
+      <UniqueIdentifier>{7a376006-3e04-493f-a66f-266b9e1c656b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="third_party\box2d\Collision\Shapes">
+      <UniqueIdentifier>{969b4107-b6d7-4b08-bbff-68c725fb3c1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="third_party\box2d\Dynamics\Contacts">
+      <UniqueIdentifier>{2c1b494a-2980-4856-872a-022373189506}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="third_party\box2d\Dynamics\Joints">
+      <UniqueIdentifier>{4ab5d8df-e11a-4c80-a8fd-acc07ac5d64b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="third_party\clipper">
+      <UniqueIdentifier>{e3b7a9d4-4ced-4e48-a4c5-1f62667b09f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\physics">
+      <UniqueIdentifier>{03b137db-6d1d-4fdd-b3ba-7ae33277fee1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -559,58 +835,28 @@
       <Filter>common</Filter>
     </ClCompile>
     <ClCompile Include="..\src_clipper\clipper.cpp">
-      <Filter>clipper</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\core\BasicTest.cpp">
-      <Filter>core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\core\Convert.cpp">
-      <Filter>core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\core\HollowsAllocationPolicy.cpp">
-      <Filter>core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\core\Lazy.cpp">
-      <Filter>core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\core\MarchingSquares.cpp">
-      <Filter>core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\core\Math.cpp">
-      <Filter>core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\core\Matrix.cpp">
-      <Filter>core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\core\Path.cpp">
-      <Filter>core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\core\SystemAllocationPolicy.cpp">
-      <Filter>core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\core\Vector.cpp">
-      <Filter>core</Filter>
+      <Filter>third_party\clipper</Filter>
     </ClCompile>
     <ClCompile Include="..\src\drawing\Batcher.cpp">
-      <Filter>drawing</Filter>
+      <Filter>engine\drawing</Filter>
     </ClCompile>
     <ClCompile Include="..\src\drawing\Camera.cpp">
-      <Filter>drawing</Filter>
+      <Filter>engine\drawing</Filter>
     </ClCompile>
     <ClCompile Include="..\src\drawing\PostProcess.cpp">
-      <Filter>drawing</Filter>
+      <Filter>engine\drawing</Filter>
     </ClCompile>
     <ClCompile Include="..\src\drawing\Renderer2d.cpp">
-      <Filter>drawing</Filter>
+      <Filter>engine\drawing</Filter>
     </ClCompile>
     <ClCompile Include="..\src\drawing\RenderItem2d.cpp">
-      <Filter>drawing</Filter>
+      <Filter>engine\drawing</Filter>
     </ClCompile>
     <ClCompile Include="..\src\drawing\RenderMesh2d.cpp">
-      <Filter>drawing</Filter>
+      <Filter>engine\drawing</Filter>
     </ClCompile>
     <ClCompile Include="..\src\drawing\WaterRenderer.cpp">
-      <Filter>drawing</Filter>
+      <Filter>engine\drawing</Filter>
     </ClCompile>
     <ClCompile Include="..\src\exports\llge.cpp">
       <Filter>exports</Filter>
@@ -630,377 +876,626 @@
     <ClCompile Include="..\src\exports\llgeResources.cpp">
       <Filter>exports</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\geometry\Aabb2d.cpp">
-      <Filter>geometry</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\geometry\Frustum.cpp">
-      <Filter>geometry</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\geometry\Quadtree2d.cpp">
-      <Filter>geometry</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\geometry\Quadtree2dNode.cpp">
-      <Filter>geometry</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\graphics\AttributeInfo.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\Attributes.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\Color.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\Effect.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\EffectBase.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\EffectConstant.cpp">
-      <Filter>graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\graphics\EffectRenderDepth.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\Effects.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\EffectsBasic.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\EffectSolid.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\EffectSolidColor.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\EffectsPostProcess.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\EffectTextureAlphamaskColor.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\EffectTextureColor.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\EffectTextureColorHighlight.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\EffectTextureLightMapColor.cpp">
-      <Filter>graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\graphics\EffectWater.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\Errors.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\GraphicsDevice.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\Image2dData.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\RenderConverter.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\RenderConverterBasic.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\RenderState.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\StaticBatch.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\Texture.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\TextureCubemap.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\TextureImage2d.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\TextureLoader.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\TextureRenderTarget2d.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\TextureRenderTargetDepth2d.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\Uniform.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\UniformInfo.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\Uniforms.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\UniformValue.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\UniformValueCubemap.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\UniformValueFloat.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\UniformValueMatrix.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\UniformValueTexture.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\UniformValueVector3.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\VertexBuffer.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\VertexFormat.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\VertexFormats.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\VertexFormatsBasic.cpp">
-      <Filter>graphics</Filter>
+      <Filter>engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\src\navmesh\AStar.cpp">
-      <Filter>navmesh</Filter>
+      <Filter>engine\navmesh</Filter>
     </ClCompile>
     <ClCompile Include="..\src\navmesh\Funnel.cpp">
-      <Filter>navmesh</Filter>
+      <Filter>engine\navmesh</Filter>
     </ClCompile>
     <ClCompile Include="..\src\navmesh\NavEdges.cpp">
-      <Filter>navmesh</Filter>
+      <Filter>engine\navmesh</Filter>
     </ClCompile>
     <ClCompile Include="..\src\navmesh\NavMesh.cpp">
-      <Filter>navmesh</Filter>
+      <Filter>engine\navmesh</Filter>
     </ClCompile>
     <ClCompile Include="..\src_poly2tri\common\shapes.cc">
-      <Filter>poly2tri\common</Filter>
+      <Filter>third_party\poly2tri\common</Filter>
     </ClCompile>
     <ClCompile Include="..\src_poly2tri\sweep\advancing_front.cc">
-      <Filter>poly2tri\sweep</Filter>
+      <Filter>third_party\poly2tri\sweep</Filter>
     </ClCompile>
     <ClCompile Include="..\src_poly2tri\sweep\cdt.cc">
-      <Filter>poly2tri\sweep</Filter>
+      <Filter>third_party\poly2tri\sweep</Filter>
     </ClCompile>
     <ClCompile Include="..\src_poly2tri\sweep\sweep.cc">
-      <Filter>poly2tri\sweep</Filter>
+      <Filter>third_party\poly2tri\sweep</Filter>
     </ClCompile>
     <ClCompile Include="..\src_poly2tri\sweep\sweep_context.cc">
-      <Filter>poly2tri\sweep</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\resources\lpng\example.c">
-      <Filter>resources\lpng</Filter>
+      <Filter>third_party\poly2tri\sweep</Filter>
     </ClCompile>
     <ClCompile Include="..\src\resources\lpng\png.c">
-      <Filter>resources\lpng</Filter>
+      <Filter>engine\resources\lpng</Filter>
     </ClCompile>
     <ClCompile Include="..\src\resources\lpng\pngerror.c">
-      <Filter>resources\lpng</Filter>
+      <Filter>engine\resources\lpng</Filter>
     </ClCompile>
     <ClCompile Include="..\src\resources\lpng\pngget.c">
-      <Filter>resources\lpng</Filter>
+      <Filter>engine\resources\lpng</Filter>
     </ClCompile>
     <ClCompile Include="..\src\resources\lpng\pngmem.c">
-      <Filter>resources\lpng</Filter>
+      <Filter>engine\resources\lpng</Filter>
     </ClCompile>
     <ClCompile Include="..\src\resources\lpng\pngpread.c">
-      <Filter>resources\lpng</Filter>
+      <Filter>engine\resources\lpng</Filter>
     </ClCompile>
     <ClCompile Include="..\src\resources\lpng\pngread.c">
-      <Filter>resources\lpng</Filter>
+      <Filter>engine\resources\lpng</Filter>
     </ClCompile>
     <ClCompile Include="..\src\resources\lpng\pngrio.c">
-      <Filter>resources\lpng</Filter>
+      <Filter>engine\resources\lpng</Filter>
     </ClCompile>
     <ClCompile Include="..\src\resources\lpng\pngrtran.c">
-      <Filter>resources\lpng</Filter>
+      <Filter>engine\resources\lpng</Filter>
     </ClCompile>
     <ClCompile Include="..\src\resources\lpng\pngrutil.c">
-      <Filter>resources\lpng</Filter>
+      <Filter>engine\resources\lpng</Filter>
     </ClCompile>
     <ClCompile Include="..\src\resources\lpng\pngset.c">
-      <Filter>resources\lpng</Filter>
+      <Filter>engine\resources\lpng</Filter>
     </ClCompile>
     <ClCompile Include="..\src\resources\lpng\pngtest.c">
-      <Filter>resources\lpng</Filter>
+      <Filter>engine\resources\lpng</Filter>
     </ClCompile>
     <ClCompile Include="..\src\resources\lpng\pngtrans.c">
-      <Filter>resources\lpng</Filter>
+      <Filter>engine\resources\lpng</Filter>
     </ClCompile>
     <ClCompile Include="..\src\resources\lpng\pngwio.c">
-      <Filter>resources\lpng</Filter>
+      <Filter>engine\resources\lpng</Filter>
     </ClCompile>
     <ClCompile Include="..\src\resources\lpng\pngwrite.c">
-      <Filter>resources\lpng</Filter>
+      <Filter>engine\resources\lpng</Filter>
     </ClCompile>
     <ClCompile Include="..\src\resources\lpng\pngwtran.c">
-      <Filter>resources\lpng</Filter>
+      <Filter>engine\resources\lpng</Filter>
     </ClCompile>
     <ClCompile Include="..\src\resources\lpng\pngwutil.c">
-      <Filter>resources\lpng</Filter>
+      <Filter>engine\resources\lpng</Filter>
     </ClCompile>
     <ClCompile Include="..\src\resources\ContentManager.cpp">
-      <Filter>resources</Filter>
+      <Filter>engine\resources</Filter>
     </ClCompile>
     <ClCompile Include="..\src\resources\ContentProviderAndroidAssets.cpp">
-      <Filter>resources</Filter>
+      <Filter>engine\resources</Filter>
     </ClCompile>
     <ClCompile Include="..\src\resources\ContentProviderObb.cpp">
-      <Filter>resources</Filter>
+      <Filter>engine\resources</Filter>
     </ClCompile>
     <ClCompile Include="..\src\resources\ContentProviderWindows.cpp">
-      <Filter>resources</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\spine\runtime\Animation.c">
-      <Filter>spine\runtime</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\spine\runtime\AnimationState.c">
-      <Filter>spine\runtime</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\spine\runtime\AnimationStateData.c">
-      <Filter>spine\runtime</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\spine\runtime\Atlas.c">
-      <Filter>spine\runtime</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\spine\runtime\AtlasAttachmentLoader.c">
-      <Filter>spine\runtime</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\spine\runtime\Attachment.c">
-      <Filter>spine\runtime</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\spine\runtime\AttachmentLoader.c">
-      <Filter>spine\runtime</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\spine\runtime\Bone.c">
-      <Filter>spine\runtime</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\spine\runtime\BoneData.c">
-      <Filter>spine\runtime</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\spine\runtime\BoundingBoxAttachment.c">
-      <Filter>spine\runtime</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\spine\runtime\Event.c">
-      <Filter>spine\runtime</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\spine\runtime\EventData.c">
-      <Filter>spine\runtime</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\spine\runtime\extension.c">
-      <Filter>spine\runtime</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\spine\runtime\IkConstraint.c">
-      <Filter>spine\runtime</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\spine\runtime\IkConstraintData.c">
-      <Filter>spine\runtime</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\spine\runtime\Json.c">
-      <Filter>spine\runtime</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\spine\runtime\MeshAttachment.c">
-      <Filter>spine\runtime</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\spine\runtime\RegionAttachment.c">
-      <Filter>spine\runtime</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\spine\runtime\Skeleton.c">
-      <Filter>spine\runtime</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\spine\runtime\SkeletonBounds.c">
-      <Filter>spine\runtime</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\spine\runtime\SkeletonData.c">
-      <Filter>spine\runtime</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\spine\runtime\SkeletonJson.c">
-      <Filter>spine\runtime</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\spine\runtime\Skin.c">
-      <Filter>spine\runtime</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\spine\runtime\Slot.c">
-      <Filter>spine\runtime</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\spine\runtime\SlotData.c">
-      <Filter>spine\runtime</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\spine\runtime\TransformConstraint.c">
-      <Filter>spine\runtime</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\spine\runtime\TransformConstraintData.c">
-      <Filter>spine\runtime</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\spine\runtime\WeightedMeshAttachment.c">
-      <Filter>spine\runtime</Filter>
+      <Filter>engine\resources</Filter>
     </ClCompile>
     <ClCompile Include="..\src\spine\spine.cpp">
-      <Filter>spine</Filter>
+      <Filter>engine\spine</Filter>
     </ClCompile>
     <ClCompile Include="..\src\spine\SpineAnimationState.cpp">
-      <Filter>spine</Filter>
+      <Filter>engine\spine</Filter>
     </ClCompile>
     <ClCompile Include="..\src\spine\SpineAnimationStateData.cpp">
-      <Filter>spine</Filter>
+      <Filter>engine\spine</Filter>
     </ClCompile>
     <ClCompile Include="..\src\spine\SpineSkeleton.cpp">
-      <Filter>spine</Filter>
+      <Filter>engine\spine</Filter>
     </ClCompile>
     <ClCompile Include="..\src\spine\SpineSkeletonAnimation.cpp">
-      <Filter>spine</Filter>
+      <Filter>engine\spine</Filter>
     </ClCompile>
     <ClCompile Include="..\src\spine\SpineSkeletonResource.cpp">
-      <Filter>spine</Filter>
+      <Filter>engine\spine</Filter>
     </ClCompile>
     <ClCompile Include="..\src\entities\Aabb2dComponent.cpp">
-      <Filter>entities</Filter>
+      <Filter>engine\entities</Filter>
     </ClCompile>
     <ClCompile Include="..\src\entities\Component.cpp">
-      <Filter>entities</Filter>
+      <Filter>engine\entities</Filter>
     </ClCompile>
     <ClCompile Include="..\src\entities\DummyEntitiesFilter.cpp">
-      <Filter>entities</Filter>
+      <Filter>engine\entities</Filter>
     </ClCompile>
     <ClCompile Include="..\src\entities\EntitiesFilter.cpp">
-      <Filter>entities</Filter>
+      <Filter>engine\entities</Filter>
     </ClCompile>
     <ClCompile Include="..\src\entities\EntitiesWorld.cpp">
-      <Filter>entities</Filter>
+      <Filter>engine\entities</Filter>
     </ClCompile>
     <ClCompile Include="..\src\entities\Entity.cpp">
-      <Filter>entities</Filter>
+      <Filter>engine\entities</Filter>
     </ClCompile>
     <ClCompile Include="..\src\entities\MatrixTransformComponent.cpp">
-      <Filter>entities</Filter>
+      <Filter>engine\entities</Filter>
     </ClCompile>
     <ClCompile Include="..\src\entities\QuadtreeEntitiesFilter.cpp">
-      <Filter>entities</Filter>
+      <Filter>engine\entities</Filter>
     </ClCompile>
     <ClCompile Include="..\src\entities\Render2dComponent.cpp">
-      <Filter>entities</Filter>
+      <Filter>engine\entities</Filter>
     </ClCompile>
     <ClCompile Include="..\src\entities\RenderSystem2d.cpp">
-      <Filter>entities</Filter>
+      <Filter>engine\entities</Filter>
     </ClCompile>
     <ClCompile Include="..\src\entities\System.cpp">
-      <Filter>entities</Filter>
+      <Filter>engine\entities</Filter>
     </ClCompile>
     <ClCompile Include="..\src\entities\Transform2dComponent.cpp">
-      <Filter>entities</Filter>
+      <Filter>engine\entities</Filter>
     </ClCompile>
     <ClCompile Include="..\src\entities\TransformSystem2d.cpp">
-      <Filter>entities</Filter>
+      <Filter>engine\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\terrain\StripeBuilder.cpp">
+      <Filter>engine\terrain</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\terrain\terrain_classes.cpp">
+      <Filter>engine\terrain</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\terrain\TerrainFactory.cpp">
+      <Filter>engine\terrain</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_rectanglebinpack\GuillotineBinPack.cpp">
+      <Filter>third_party\rectanglebinpack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_rectanglebinpack\MaxRectsBinPack.cpp">
+      <Filter>third_party\rectanglebinpack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_rectanglebinpack\Rect.cpp">
+      <Filter>third_party\rectanglebinpack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_rectanglebinpack\ShelfBinPack.cpp">
+      <Filter>third_party\rectanglebinpack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_rectanglebinpack\ShelfNextFitBinPack.cpp">
+      <Filter>third_party\rectanglebinpack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_rectanglebinpack\SkylineBinPack.cpp">
+      <Filter>third_party\rectanglebinpack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_box2d\Box2D\Collision\Shapes\b2ChainShape.cpp">
+      <Filter>third_party\box2d\Collision\Shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_box2d\Box2D\Collision\Shapes\b2CircleShape.cpp">
+      <Filter>third_party\box2d\Collision\Shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_box2d\Box2D\Collision\Shapes\b2EdgeShape.cpp">
+      <Filter>third_party\box2d\Collision\Shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_box2d\Box2D\Collision\Shapes\b2PolygonShape.cpp">
+      <Filter>third_party\box2d\Collision\Shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_box2d\Box2D\Collision\b2BroadPhase.cpp">
+      <Filter>third_party\box2d\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_box2d\Box2D\Collision\b2CollideCircle.cpp">
+      <Filter>third_party\box2d\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_box2d\Box2D\Collision\b2CollideEdge.cpp">
+      <Filter>third_party\box2d\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_box2d\Box2D\Collision\b2CollidePolygon.cpp">
+      <Filter>third_party\box2d\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_box2d\Box2D\Collision\b2Collision.cpp">
+      <Filter>third_party\box2d\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_box2d\Box2D\Collision\b2Distance.cpp">
+      <Filter>third_party\box2d\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_box2d\Box2D\Collision\b2DynamicTree.cpp">
+      <Filter>third_party\box2d\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_box2d\Box2D\Collision\b2TimeOfImpact.cpp">
+      <Filter>third_party\box2d\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_box2d\Box2D\Common\b2BlockAllocator.cpp">
+      <Filter>third_party\box2d\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_box2d\Box2D\Common\b2Draw.cpp">
+      <Filter>third_party\box2d\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_box2d\Box2D\Common\b2Math.cpp">
+      <Filter>third_party\box2d\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_box2d\Box2D\Common\b2Settings.cpp">
+      <Filter>third_party\box2d\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_box2d\Box2D\Common\b2StackAllocator.cpp">
+      <Filter>third_party\box2d\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_box2d\Box2D\Common\b2Timer.cpp">
+      <Filter>third_party\box2d\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_box2d\Box2D\Dynamics\Contacts\b2ChainAndCircleContact.cpp">
+      <Filter>third_party\box2d\Dynamics\Contacts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_box2d\Box2D\Dynamics\Contacts\b2ChainAndPolygonContact.cpp">
+      <Filter>third_party\box2d\Dynamics\Contacts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_box2d\Box2D\Dynamics\Contacts\b2CircleContact.cpp">
+      <Filter>third_party\box2d\Dynamics\Contacts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_box2d\Box2D\Dynamics\Contacts\b2Contact.cpp">
+      <Filter>third_party\box2d\Dynamics\Contacts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_box2d\Box2D\Dynamics\Contacts\b2ContactSolver.cpp">
+      <Filter>third_party\box2d\Dynamics\Contacts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_box2d\Box2D\Dynamics\Contacts\b2EdgeAndCircleContact.cpp">
+      <Filter>third_party\box2d\Dynamics\Contacts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_box2d\Box2D\Dynamics\Contacts\b2EdgeAndPolygonContact.cpp">
+      <Filter>third_party\box2d\Dynamics\Contacts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_box2d\Box2D\Dynamics\Contacts\b2PolygonAndCircleContact.cpp">
+      <Filter>third_party\box2d\Dynamics\Contacts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_box2d\Box2D\Dynamics\Contacts\b2PolygonContact.cpp">
+      <Filter>third_party\box2d\Dynamics\Contacts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_box2d\Box2D\Dynamics\Joints\b2DistanceJoint.cpp">
+      <Filter>third_party\box2d\Dynamics\Joints</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_box2d\Box2D\Dynamics\Joints\b2FrictionJoint.cpp">
+      <Filter>third_party\box2d\Dynamics\Joints</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_box2d\Box2D\Dynamics\Joints\b2GearJoint.cpp">
+      <Filter>third_party\box2d\Dynamics\Joints</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_box2d\Box2D\Dynamics\Joints\b2Joint.cpp">
+      <Filter>third_party\box2d\Dynamics\Joints</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_box2d\Box2D\Dynamics\Joints\b2MotorJoint.cpp">
+      <Filter>third_party\box2d\Dynamics\Joints</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_box2d\Box2D\Dynamics\Joints\b2MouseJoint.cpp">
+      <Filter>third_party\box2d\Dynamics\Joints</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_box2d\Box2D\Dynamics\Joints\b2PrismaticJoint.cpp">
+      <Filter>third_party\box2d\Dynamics\Joints</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_box2d\Box2D\Dynamics\Joints\b2PulleyJoint.cpp">
+      <Filter>third_party\box2d\Dynamics\Joints</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_box2d\Box2D\Dynamics\Joints\b2RevoluteJoint.cpp">
+      <Filter>third_party\box2d\Dynamics\Joints</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_box2d\Box2D\Dynamics\Joints\b2RopeJoint.cpp">
+      <Filter>third_party\box2d\Dynamics\Joints</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_box2d\Box2D\Dynamics\Joints\b2WeldJoint.cpp">
+      <Filter>third_party\box2d\Dynamics\Joints</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_box2d\Box2D\Dynamics\Joints\b2WheelJoint.cpp">
+      <Filter>third_party\box2d\Dynamics\Joints</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_box2d\Box2D\Dynamics\b2Body.cpp">
+      <Filter>third_party\box2d\Dynamics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_box2d\Box2D\Dynamics\b2ContactManager.cpp">
+      <Filter>third_party\box2d\Dynamics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_box2d\Box2D\Dynamics\b2Fixture.cpp">
+      <Filter>third_party\box2d\Dynamics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_box2d\Box2D\Dynamics\b2Island.cpp">
+      <Filter>third_party\box2d\Dynamics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_box2d\Box2D\Dynamics\b2World.cpp">
+      <Filter>third_party\box2d\Dynamics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_box2d\Box2D\Dynamics\b2WorldCallbacks.cpp">
+      <Filter>third_party\box2d\Dynamics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_box2d\Box2D\Rope\b2Rope.cpp">
+      <Filter>third_party\box2d\Rope</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_decompress_ati\DecompressAtc.cpp">
+      <Filter>third_party\decompress_ati</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src_decompressors\PVRTDecompress.cpp">
+      <Filter>third_party\decompressors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\spine\runtime\Animation.c">
+      <Filter>engine\spine\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\spine\runtime\AnimationState.c">
+      <Filter>engine\spine\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\spine\runtime\AnimationStateData.c">
+      <Filter>engine\spine\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\spine\runtime\Atlas.c">
+      <Filter>engine\spine\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\spine\runtime\AtlasAttachmentLoader.c">
+      <Filter>engine\spine\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\spine\runtime\Attachment.c">
+      <Filter>engine\spine\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\spine\runtime\AttachmentLoader.c">
+      <Filter>engine\spine\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\spine\runtime\Bone.c">
+      <Filter>engine\spine\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\spine\runtime\BoneData.c">
+      <Filter>engine\spine\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\spine\runtime\BoundingBoxAttachment.c">
+      <Filter>engine\spine\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\spine\runtime\Event.c">
+      <Filter>engine\spine\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\spine\runtime\EventData.c">
+      <Filter>engine\spine\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\spine\runtime\extension.c">
+      <Filter>engine\spine\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\spine\runtime\IkConstraint.c">
+      <Filter>engine\spine\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\spine\runtime\IkConstraintData.c">
+      <Filter>engine\spine\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\spine\runtime\Json.c">
+      <Filter>engine\spine\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\spine\runtime\MeshAttachment.c">
+      <Filter>engine\spine\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\spine\runtime\PathAttachment.c">
+      <Filter>engine\spine\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\spine\runtime\PathConstraint.c">
+      <Filter>engine\spine\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\spine\runtime\PathConstraintData.c">
+      <Filter>engine\spine\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\spine\runtime\RegionAttachment.c">
+      <Filter>engine\spine\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\spine\runtime\Skeleton.c">
+      <Filter>engine\spine\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\spine\runtime\SkeletonBounds.c">
+      <Filter>engine\spine\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\spine\runtime\SkeletonData.c">
+      <Filter>engine\spine\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\spine\runtime\SkeletonJson.c">
+      <Filter>engine\spine\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\spine\runtime\Skin.c">
+      <Filter>engine\spine\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\spine\runtime\Slot.c">
+      <Filter>engine\spine\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\spine\runtime\SlotData.c">
+      <Filter>engine\spine\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\spine\runtime\TransformConstraint.c">
+      <Filter>engine\spine\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\spine\runtime\TransformConstraintData.c">
+      <Filter>engine\spine\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\spine\runtime\VertexAttachment.c">
+      <Filter>engine\spine\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\DebugRender.cpp">
+      <Filter>engine\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\Delegate.cpp">
+      <Filter>engine\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\Environment.cpp">
+      <Filter>engine\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\HollowsAllocationPolicy.cpp">
+      <Filter>engine\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\Lazy.cpp">
+      <Filter>engine\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\Log.cpp">
+      <Filter>engine\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\MarchingSquares.cpp">
+      <Filter>engine\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\Math.cpp">
+      <Filter>engine\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\Matrix.cpp">
+      <Filter>engine\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\Path.cpp">
+      <Filter>engine\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\Spline.cpp">
+      <Filter>engine\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\SystemAllocationPolicy.cpp">
+      <Filter>engine\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\Vector.cpp">
+      <Filter>engine\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\BasicTest.cpp">
+      <Filter>engine\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\Convert.cpp">
+      <Filter>engine\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\geometry\Aabb.cpp">
+      <Filter>engine\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\geometry\Aabb2d.cpp">
+      <Filter>engine\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\geometry\Frustum.cpp">
+      <Filter>engine\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\geometry\Quadtree.cpp">
+      <Filter>engine\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\geometry\Quadtree2d.cpp">
+      <Filter>engine\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\geometry\Quadtree2dNode.cpp">
+      <Filter>engine\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\geometry\TerrainClipper.cpp">
+      <Filter>engine\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\AtlasPacker.cpp">
+      <Filter>engine\resources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\physics\PhysicalBody.cpp">
+      <Filter>engine\physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\physics\PhysicalConverter.cpp">
+      <Filter>engine\physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\physics\PhysicalFactory.cpp">
+      <Filter>engine\physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\physics\PhysicalFixture.cpp">
+      <Filter>engine\physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\physics\PhysicalJoint.cpp">
+      <Filter>engine\physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\physics\PhysicalShape.cpp">
+      <Filter>engine\physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\physics\PhysicalWorld.cpp">
+      <Filter>engine\physics</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

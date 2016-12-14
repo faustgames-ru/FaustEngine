@@ -6,7 +6,7 @@
 namespace resources
 {
 
-	class IAndroidContentProvider : public IBaseObject
+	class IAbstractContentProvider : public IBaseObject
 	{
 	public:
 		virtual bool existsContent(const char *name) = 0;
@@ -19,7 +19,7 @@ namespace resources
 	class ContentProvider
 	{
 	public:
-		static IAndroidContentProvider* AndroidContentProvider;
+		static IAbstractContentProvider* ContentProviderInstance;
 		static bool existContent(const char *name);
 		static void openContent(const char *name);
 		static int read(void *buffer, int bytesLimit);
@@ -52,7 +52,7 @@ namespace resources
 		static void closeContent();
 	};
 
-	class AndroidAssetsContentProvider : public IAndroidContentProvider
+	class AndroidAssetsContentProvider : public IAbstractContentProvider
 	{
 	public:
 		virtual bool existsContent(const char *name) OVERRIDE
@@ -79,7 +79,7 @@ namespace resources
 	};
 
 
-	class AndroidObbContentProvider : public IAndroidContentProvider
+	class AndroidObbContentProvider : public IAbstractContentProvider
 	{
 	public:
 		virtual bool existsContent(const char* name) OVERRIDE

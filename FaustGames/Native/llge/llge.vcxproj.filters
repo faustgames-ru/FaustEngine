@@ -13,9 +13,6 @@
     <Filter Include="plugins">
       <UniqueIdentifier>{a3c22ea2-dc24-4e3e-ad0c-ab636365c746}</UniqueIdentifier>
     </Filter>
-    <Filter Include="rectanglebinpack">
-      <UniqueIdentifier>{4452d826-d616-4f81-92b2-eab982bad32f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="engine">
       <UniqueIdentifier>{cb32800b-e929-4363-a132-d66bcfd322b5}</UniqueIdentifier>
     </Filter>
@@ -120,6 +117,9 @@
     </Filter>
     <Filter Include="third_party\etcpack\source_edit">
       <UniqueIdentifier>{f9bdeca2-862e-41ac-a046-0041bfbab538}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="third_party\rectanglebinpack">
+      <UniqueIdentifier>{4452d826-d616-4f81-92b2-eab982bad32f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -813,22 +813,22 @@
       <Filter>engine\shaders</Filter>
     </ClInclude>
     <ClInclude Include="..\src_rectanglebinpack\GuillotineBinPack.h">
-      <Filter>rectanglebinpack</Filter>
+      <Filter>third_party\rectanglebinpack</Filter>
     </ClInclude>
     <ClInclude Include="..\src_rectanglebinpack\MaxRectsBinPack.h">
-      <Filter>rectanglebinpack</Filter>
+      <Filter>third_party\rectanglebinpack</Filter>
     </ClInclude>
     <ClInclude Include="..\src_rectanglebinpack\Rect.h">
-      <Filter>rectanglebinpack</Filter>
+      <Filter>third_party\rectanglebinpack</Filter>
     </ClInclude>
     <ClInclude Include="..\src_rectanglebinpack\ShelfBinPack.h">
-      <Filter>rectanglebinpack</Filter>
+      <Filter>third_party\rectanglebinpack</Filter>
     </ClInclude>
     <ClInclude Include="..\src_rectanglebinpack\ShelfNextFitBinPack.h">
-      <Filter>rectanglebinpack</Filter>
+      <Filter>third_party\rectanglebinpack</Filter>
     </ClInclude>
     <ClInclude Include="..\src_rectanglebinpack\SkylineBinPack.h">
-      <Filter>rectanglebinpack</Filter>
+      <Filter>third_party\rectanglebinpack</Filter>
     </ClInclude>
     <ClInclude Include="..\src\resources\AtlasPacker.h">
       <Filter>engine\resources</Filter>
@@ -1492,22 +1492,22 @@
       <Filter>engine\spine\runtime</Filter>
     </ClCompile>
     <ClCompile Include="..\src_rectanglebinpack\GuillotineBinPack.cpp">
-      <Filter>rectanglebinpack</Filter>
+      <Filter>third_party\rectanglebinpack</Filter>
     </ClCompile>
     <ClCompile Include="..\src_rectanglebinpack\MaxRectsBinPack.cpp">
-      <Filter>rectanglebinpack</Filter>
+      <Filter>third_party\rectanglebinpack</Filter>
     </ClCompile>
     <ClCompile Include="..\src_rectanglebinpack\Rect.cpp">
-      <Filter>rectanglebinpack</Filter>
+      <Filter>third_party\rectanglebinpack</Filter>
     </ClCompile>
     <ClCompile Include="..\src_rectanglebinpack\ShelfBinPack.cpp">
-      <Filter>rectanglebinpack</Filter>
+      <Filter>third_party\rectanglebinpack</Filter>
     </ClCompile>
     <ClCompile Include="..\src_rectanglebinpack\ShelfNextFitBinPack.cpp">
-      <Filter>rectanglebinpack</Filter>
+      <Filter>third_party\rectanglebinpack</Filter>
     </ClCompile>
     <ClCompile Include="..\src_rectanglebinpack\SkylineBinPack.cpp">
-      <Filter>rectanglebinpack</Filter>
+      <Filter>third_party\rectanglebinpack</Filter>
     </ClCompile>
     <ClCompile Include="..\src\resources\AtlasPacker.cpp">
       <Filter>engine\resources</Filter>

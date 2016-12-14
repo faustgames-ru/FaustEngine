@@ -5,7 +5,7 @@
 #include "Color.h"
 #include "../../src_decompressors/PVRTDecompress.h"
 #include "../../src_decompress_ati/DecompressAtc.h"
-#include "../../src_etcpack/etcpack_lib.h"
+//#include "../../src_etcpack/etcpack_lib.h"
 
 
 #define ATC_RGB_AMD							0x8C92
@@ -445,13 +445,28 @@ namespace graphics
 						isFormatSupported = true;
 					}
 				}
-				
+				/*
 				const char* exts = reinterpret_cast<const char*>(glGetString(GL_EXTENSIONS));
-				
-				__android_log_print(ANDROID_LOG_ERROR, "TRACKERS", "%s", exts);
+				switch(data->Format)
+				{
+				case Image2dFormat::Rgba: break;
+				case Image2dFormat::Rgb: break;
+				case Image2dFormat::Pvrtc12: break;
+				case Image2dFormat::Pvrtc14: break;
+				case Image2dFormat::Etc1: break;
+				case Image2dFormat::Etc2: break;
+				case Image2dFormat::Rgba4444: break;
+				case Image2dFormat::Atc: 
+					isFormatSupported = hasExt(exts, atc_ext1.c_str());
+					break;					
+				case Image2dFormat::Astc: break;
+				default: break;
+				}
+				*/
+				//__android_log_print(ANDROID_LOG_ERROR, "TRACKERS", "%s", exts);
 				if (!isFormatSupported)
 				{
-					__android_log_print(ANDROID_LOG_ERROR, "TRACKERS", "%s", "format not supported");
+					//__android_log_print(ANDROID_LOG_ERROR, "TRACKERS", "%s", "format not supported");
 
 					if (data->Format == Image2dFormat::Pvrtc14 || data->Format == Image2dFormat::Pvrtc12)
 					{
@@ -506,6 +521,7 @@ namespace graphics
 							static_cast<float>(data->Height) / static_cast<float>(aH));
 						Errors::check(Errors::TexImage2D);
 					}*/
+					/*
 					else if (data->Format == Image2dFormat::Etc2)
 					{
 						TexturesDecompressorBuffer pixelsBuffer;
@@ -521,7 +537,8 @@ namespace graphics
 							static_cast<float>(data->Width) / static_cast<float>(aW),
 							static_cast<float>(data->Height) / static_cast<float>(aH));						Errors::check(Errors::TexImage2D);
 					}
-					if (data->Format == Image2dFormat::Dxt)
+					*/
+					else if (data->Format == Image2dFormat::Dxt)
 					{
 						// todo: Astc decode
 					}
@@ -556,8 +573,6 @@ namespace graphics
 							static_cast<float>(data->Height) / static_cast<float>(pot));
 						return;
 					}
-					__android_log_print(ANDROID_LOG_ERROR, "TRACKERS", "%s", "format is supported");
-
 					int compressedImageSize = getSize(data->Width + border * 2, data->Height + border * 2, data->Format);
 					glCompressedTexImage2D(GL_TEXTURE_2D, 0, getFormat(data->Format), data->Width + border*2, data->Height + border*2, 0, compressedImageSize, data->Pixels + data->RawDataOffset);
 					transform = TextureTransform(
@@ -754,7 +769,7 @@ namespace graphics
 		swapBytes4(src, dst);
 		return result;
 	}
-	
+	/*
 	void DecodeEtc2(const Image2dData* data, TexturesDecompressorBuffer* pixelsBuffer, int& aW, int& aH)
 	{
 		setupAlphaTable();
@@ -827,7 +842,7 @@ namespace graphics
 			}
 		}
 	}
-
+	*/
 	GLenum TextureImage2d::getFormat(Image2dFormat::e format)
 	{
 		switch (format)

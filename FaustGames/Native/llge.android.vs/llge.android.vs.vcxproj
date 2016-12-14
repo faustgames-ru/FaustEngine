@@ -47,6 +47,7 @@
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>Clang_3_6</PlatformToolset>
+    <AndroidAPILevel>android-21</AndroidAPILevel>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
@@ -68,6 +69,7 @@
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>Clang_3_6</PlatformToolset>
+    <AndroidAPILevel>android-21</AndroidAPILevel>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
@@ -114,7 +116,7 @@
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>..\include;..\..\CommonSources\include;..\src\resources\zlib;$(StlIncludeDirectories);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\src_box2d;..\include;..\..\CommonSources\include;..\src\resources\zlib;$(StlIncludeDirectories);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>LLGE_EXPORTS;LIBPNG_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <CppLanguageStandard>c++11</CppLanguageStandard>
       <ExceptionHandling>Enabled</ExceptionHandling>
@@ -127,7 +129,7 @@
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>..\include;..\..\CommonSources\include;..\src\resources\zlib;$(StlIncludeDirectories);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\src_box2d;..\include;..\..\CommonSources\include;..\src\resources\zlib;$(StlIncludeDirectories);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>LLGE_EXPORTS;LIBPNG_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <CppLanguageStandard>c++11</CppLanguageStandard>
       <ExceptionHandling>Enabled</ExceptionHandling>
@@ -137,7 +139,7 @@
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>..\include;..\..\CommonSources\include;..\src\resources\zlib;$(StlIncludeDirectories);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\src_box2d;..\include;..\..\CommonSources\include;..\src\resources\zlib;$(StlIncludeDirectories);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>LLGE_EXPORTS;LIBPNG_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <CppLanguageStandard>c++11</CppLanguageStandard>
       <ExceptionHandling>Enabled</ExceptionHandling>
@@ -150,7 +152,7 @@
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>..\include;..\..\CommonSources\include;..\src\resources\zlib;$(StlIncludeDirectories);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\src_box2d;..\include;..\..\CommonSources\include;..\src\resources\zlib;$(StlIncludeDirectories);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>LLGE_EXPORTS;LIBPNG_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <CppLanguageStandard>c++11</CppLanguageStandard>
       <ExceptionHandling>Enabled</ExceptionHandling>
@@ -160,7 +162,7 @@
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>..\include;..\..\CommonSources\include;..\src\resources\zlib;$(StlIncludeDirectories)%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\src_box2d;..\include;..\..\CommonSources\include;..\src\resources\zlib;$(StlIncludeDirectories)%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>LLGE_EXPORTS;LIBPNG_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <CppLanguageStandard>c++11</CppLanguageStandard>
       <ExceptionHandling>Enabled</ExceptionHandling>
@@ -173,7 +175,7 @@
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>..\include;..\..\CommonSources\include;..\src\resources\zlib;$(StlIncludeDirectories)%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\src_box2d;..\include;..\..\CommonSources\include;..\src\resources\zlib;$(StlIncludeDirectories)%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>LLGE_EXPORTS;LIBPNG_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <CppLanguageStandard>c++11</CppLanguageStandard>
       <ExceptionHandling>Enabled</ExceptionHandling>
@@ -183,7 +185,7 @@
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>..\include;..\..\CommonSources\include;..\src\resources\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\src_box2d;..\include;..\..\CommonSources\include;..\src\resources\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>LLGE_EXPORTS;LIBPNG_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <CppLanguageStandard>c++11</CppLanguageStandard>
       <ExceptionHandling>Enabled</ExceptionHandling>
@@ -196,7 +198,7 @@
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>..\include;..\..\CommonSources\include;..\src\resources\zlib;$(StlIncludeDirectories)%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\src_box2d;..\include;..\..\CommonSources\include;..\src\resources\zlib;$(StlIncludeDirectories)%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>LLGE_EXPORTS;LIBPNG_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <CppLanguageStandard>c++11</CppLanguageStandard>
       <ExceptionHandling>Enabled</ExceptionHandling>
@@ -233,12 +235,17 @@
     <ClInclude Include="..\src\core\core.h" />
     <ClInclude Include="..\src\core\core_classes.h" />
     <ClInclude Include="..\src\core\core_platform.h" />
+    <ClInclude Include="..\src\core\DebugRender.h" />
+    <ClInclude Include="..\src\core\Delegate.h" />
+    <ClInclude Include="..\src\core\Environment.h" />
     <ClInclude Include="..\src\core\HollowsAllocationPolicy.h" />
     <ClInclude Include="..\src\core\Lazy.h" />
+    <ClInclude Include="..\src\core\Log.h" />
     <ClInclude Include="..\src\core\MarchingSquares.h" />
     <ClInclude Include="..\src\core\Math.h" />
     <ClInclude Include="..\src\core\Matrix.h" />
     <ClInclude Include="..\src\core\Path.h" />
+    <ClInclude Include="..\src\core\Spline.h" />
     <ClInclude Include="..\src\core\StaticArray.h" />
     <ClInclude Include="..\src\core\SystemAllocationPolicy.h" />
     <ClInclude Include="..\src\core\Vector.h" />
@@ -269,15 +276,18 @@
     <ClInclude Include="..\src\entities\System.h" />
     <ClInclude Include="..\src\entities\Transform2dComponent.h" />
     <ClInclude Include="..\src\entities\TransformSystem2d.h" />
+    <ClInclude Include="..\src\geometry\Aabb.h" />
     <ClInclude Include="..\src\geometry\Aabb2d.h" />
     <ClInclude Include="..\src\geometry\Frustum.h" />
     <ClInclude Include="..\src\geometry\geometry.h" />
     <ClInclude Include="..\src\geometry\geometry_classes.h" />
     <ClInclude Include="..\src\geometry\geometry_platform.h" />
     <ClInclude Include="..\src\geometry\geometry_references.h" />
+    <ClInclude Include="..\src\geometry\Quadtree.h" />
     <ClInclude Include="..\src\geometry\Quadtree2d.h" />
     <ClInclude Include="..\src\geometry\Quadtree2dItem.h" />
     <ClInclude Include="..\src\geometry\Quadtree2dNode.h" />
+    <ClInclude Include="..\src\geometry\TerrainClipper.h" />
     <ClInclude Include="..\src\graphics\AttributeInfo.h" />
     <ClInclude Include="..\src\graphics\Attributes.h" />
     <ClInclude Include="..\src\graphics\Batcher.h" />
@@ -286,7 +296,6 @@
     <ClInclude Include="..\src\graphics\Effect.h" />
     <ClInclude Include="..\src\graphics\EffectBase.h" />
     <ClInclude Include="..\src\graphics\EffectConstant.h" />
-    <ClInclude Include="..\src\graphics\EffectRenderDepth.h" />
     <ClInclude Include="..\src\graphics\Effects.h" />
     <ClInclude Include="..\src\graphics\EffectsBasic.h" />
     <ClInclude Include="..\src\graphics\EffectSolid.h" />
@@ -296,7 +305,6 @@
     <ClInclude Include="..\src\graphics\EffectTextureColor.h" />
     <ClInclude Include="..\src\graphics\EffectTextureColorHighlight.h" />
     <ClInclude Include="..\src\graphics\EffectTextureLightMapColor.h" />
-    <ClInclude Include="..\src\graphics\EffectWater.h" />
     <ClInclude Include="..\src\graphics\Errors.h" />
     <ClInclude Include="..\src\graphics\graphics.h" />
     <ClInclude Include="..\src\graphics\GraphicsDevice.h" />
@@ -339,6 +347,17 @@
     <ClInclude Include="..\src\navmesh\navmesh_classes.h" />
     <ClInclude Include="..\src\navmesh\navmesh_platform.h" />
     <ClInclude Include="..\src\navmesh\navmesh_references.h" />
+    <ClInclude Include="..\src\physics\PhysicalBody.h" />
+    <ClInclude Include="..\src\physics\PhysicalConverter.h" />
+    <ClInclude Include="..\src\physics\PhysicalFactory.h" />
+    <ClInclude Include="..\src\physics\PhysicalFixture.h" />
+    <ClInclude Include="..\src\physics\PhysicalJoint.h" />
+    <ClInclude Include="..\src\physics\PhysicalShape.h" />
+    <ClInclude Include="..\src\physics\PhysicalWorld.h" />
+    <ClInclude Include="..\src\physics\physics_classes.h" />
+    <ClInclude Include="..\src\physics\physics_platform.h" />
+    <ClInclude Include="..\src\physics\physics_references.h" />
+    <ClInclude Include="..\src\resources\AtlasPacker.h" />
     <ClInclude Include="..\src\resources\ContentManager.h" />
     <ClInclude Include="..\src\resources\ContentProvider.h" />
     <ClInclude Include="..\src\resources\lpng\png.h" />
@@ -360,7 +379,61 @@
     <ClInclude Include="..\src\spine\SpineSkeletonResource.h" />
     <ClInclude Include="..\src\spine\spine_classes.h" />
     <ClInclude Include="..\src\spine\spine_references.h" />
+    <ClInclude Include="..\src\terrain\StripeBuilder.h" />
+    <ClInclude Include="..\src\terrain\TerrainFactory.h" />
+    <ClInclude Include="..\src\terrain\terrain_classes.h" />
+    <ClInclude Include="..\src\terrain\terrain_platform.h" />
+    <ClInclude Include="..\src\terrain\terrain_references.h" />
+    <ClInclude Include="..\src_box2d\Box2D\Box2D.h" />
+    <ClInclude Include="..\src_box2d\Box2D\Collision\b2BroadPhase.h" />
+    <ClInclude Include="..\src_box2d\Box2D\Collision\b2Collision.h" />
+    <ClInclude Include="..\src_box2d\Box2D\Collision\b2Distance.h" />
+    <ClInclude Include="..\src_box2d\Box2D\Collision\b2DynamicTree.h" />
+    <ClInclude Include="..\src_box2d\Box2D\Collision\b2TimeOfImpact.h" />
+    <ClInclude Include="..\src_box2d\Box2D\Collision\Shapes\b2ChainShape.h" />
+    <ClInclude Include="..\src_box2d\Box2D\Collision\Shapes\b2CircleShape.h" />
+    <ClInclude Include="..\src_box2d\Box2D\Collision\Shapes\b2EdgeShape.h" />
+    <ClInclude Include="..\src_box2d\Box2D\Collision\Shapes\b2PolygonShape.h" />
+    <ClInclude Include="..\src_box2d\Box2D\Collision\Shapes\b2Shape.h" />
+    <ClInclude Include="..\src_box2d\Box2D\Common\b2BlockAllocator.h" />
+    <ClInclude Include="..\src_box2d\Box2D\Common\b2Draw.h" />
+    <ClInclude Include="..\src_box2d\Box2D\Common\b2GrowableStack.h" />
+    <ClInclude Include="..\src_box2d\Box2D\Common\b2Math.h" />
+    <ClInclude Include="..\src_box2d\Box2D\Common\b2Settings.h" />
+    <ClInclude Include="..\src_box2d\Box2D\Common\b2StackAllocator.h" />
+    <ClInclude Include="..\src_box2d\Box2D\Common\b2Timer.h" />
+    <ClInclude Include="..\src_box2d\Box2D\Dynamics\b2Body.h" />
+    <ClInclude Include="..\src_box2d\Box2D\Dynamics\b2ContactManager.h" />
+    <ClInclude Include="..\src_box2d\Box2D\Dynamics\b2Fixture.h" />
+    <ClInclude Include="..\src_box2d\Box2D\Dynamics\b2Island.h" />
+    <ClInclude Include="..\src_box2d\Box2D\Dynamics\b2TimeStep.h" />
+    <ClInclude Include="..\src_box2d\Box2D\Dynamics\b2World.h" />
+    <ClInclude Include="..\src_box2d\Box2D\Dynamics\b2WorldCallbacks.h" />
+    <ClInclude Include="..\src_box2d\Box2D\Dynamics\Contacts\b2ChainAndCircleContact.h" />
+    <ClInclude Include="..\src_box2d\Box2D\Dynamics\Contacts\b2ChainAndPolygonContact.h" />
+    <ClInclude Include="..\src_box2d\Box2D\Dynamics\Contacts\b2CircleContact.h" />
+    <ClInclude Include="..\src_box2d\Box2D\Dynamics\Contacts\b2Contact.h" />
+    <ClInclude Include="..\src_box2d\Box2D\Dynamics\Contacts\b2ContactSolver.h" />
+    <ClInclude Include="..\src_box2d\Box2D\Dynamics\Contacts\b2EdgeAndCircleContact.h" />
+    <ClInclude Include="..\src_box2d\Box2D\Dynamics\Contacts\b2EdgeAndPolygonContact.h" />
+    <ClInclude Include="..\src_box2d\Box2D\Dynamics\Contacts\b2PolygonAndCircleContact.h" />
+    <ClInclude Include="..\src_box2d\Box2D\Dynamics\Contacts\b2PolygonContact.h" />
+    <ClInclude Include="..\src_box2d\Box2D\Dynamics\Joints\b2DistanceJoint.h" />
+    <ClInclude Include="..\src_box2d\Box2D\Dynamics\Joints\b2FrictionJoint.h" />
+    <ClInclude Include="..\src_box2d\Box2D\Dynamics\Joints\b2GearJoint.h" />
+    <ClInclude Include="..\src_box2d\Box2D\Dynamics\Joints\b2Joint.h" />
+    <ClInclude Include="..\src_box2d\Box2D\Dynamics\Joints\b2MotorJoint.h" />
+    <ClInclude Include="..\src_box2d\Box2D\Dynamics\Joints\b2MouseJoint.h" />
+    <ClInclude Include="..\src_box2d\Box2D\Dynamics\Joints\b2PrismaticJoint.h" />
+    <ClInclude Include="..\src_box2d\Box2D\Dynamics\Joints\b2PulleyJoint.h" />
+    <ClInclude Include="..\src_box2d\Box2D\Dynamics\Joints\b2RevoluteJoint.h" />
+    <ClInclude Include="..\src_box2d\Box2D\Dynamics\Joints\b2RopeJoint.h" />
+    <ClInclude Include="..\src_box2d\Box2D\Dynamics\Joints\b2WeldJoint.h" />
+    <ClInclude Include="..\src_box2d\Box2D\Dynamics\Joints\b2WheelJoint.h" />
+    <ClInclude Include="..\src_box2d\Box2D\Rope\b2Rope.h" />
     <ClInclude Include="..\src_clipper\clipper.hpp" />
+    <ClInclude Include="..\src_decompressors\PVRTDecompress.h" />
+    <ClInclude Include="..\src_decompress_ati\DecompressAtc.h" />
     <ClInclude Include="..\src_poly2tri\common\shapes.h" />
     <ClInclude Include="..\src_poly2tri\common\utils.h" />
     <ClInclude Include="..\src_poly2tri\poly2tri.h" />
@@ -368,18 +441,29 @@
     <ClInclude Include="..\src_poly2tri\sweep\cdt.h" />
     <ClInclude Include="..\src_poly2tri\sweep\sweep.h" />
     <ClInclude Include="..\src_poly2tri\sweep\sweep_context.h" />
+    <ClInclude Include="..\src_rectanglebinpack\GuillotineBinPack.h" />
+    <ClInclude Include="..\src_rectanglebinpack\MaxRectsBinPack.h" />
+    <ClInclude Include="..\src_rectanglebinpack\Rect.h" />
+    <ClInclude Include="..\src_rectanglebinpack\ShelfBinPack.h" />
+    <ClInclude Include="..\src_rectanglebinpack\ShelfNextFitBinPack.h" />
+    <ClInclude Include="..\src_rectanglebinpack\SkylineBinPack.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\CommonSources\gen\llgePInvoke.cpp" />
     <ClCompile Include="..\src\core\BasicTest.cpp" />
     <ClCompile Include="..\src\core\Convert.cpp" />
+    <ClCompile Include="..\src\core\DebugRender.cpp" />
+    <ClCompile Include="..\src\core\Delegate.cpp" />
+    <ClCompile Include="..\src\core\Environment.cpp" />
     <ClCompile Include="..\src\core\HollowsAllocationPolicy.cpp" />
     <ClCompile Include="..\src\core\Lazy.cpp" />
+    <ClCompile Include="..\src\core\Log.cpp" />
     <ClCompile Include="..\src\core\MarchingSquares.cpp" />
     <ClCompile Include="..\src\core\Math.cpp" />
     <ClCompile Include="..\src\core\Matrix.cpp" />
     <ClCompile Include="..\src\core\Path.cpp" />
+    <ClCompile Include="..\src\core\Spline.cpp" />
     <ClCompile Include="..\src\core\SystemAllocationPolicy.cpp" />
     <ClCompile Include="..\src\core\Vector.cpp" />
     <ClCompile Include="..\src\drawing\Batcher.cpp" />
@@ -408,17 +492,19 @@
     <ClCompile Include="..\src\exports\llgeGeometry.cpp" />
     <ClCompile Include="..\src\exports\llgeGraphics.cpp" />
     <ClCompile Include="..\src\exports\llgeResources.cpp" />
+    <ClCompile Include="..\src\geometry\Aabb.cpp" />
     <ClCompile Include="..\src\geometry\Aabb2d.cpp" />
     <ClCompile Include="..\src\geometry\Frustum.cpp" />
+    <ClCompile Include="..\src\geometry\Quadtree.cpp" />
     <ClCompile Include="..\src\geometry\Quadtree2d.cpp" />
     <ClCompile Include="..\src\geometry\Quadtree2dNode.cpp" />
+    <ClCompile Include="..\src\geometry\TerrainClipper.cpp" />
     <ClCompile Include="..\src\graphics\AttributeInfo.cpp" />
     <ClCompile Include="..\src\graphics\Attributes.cpp" />
     <ClCompile Include="..\src\graphics\Color.cpp" />
     <ClCompile Include="..\src\graphics\Effect.cpp" />
     <ClCompile Include="..\src\graphics\EffectBase.cpp" />
     <ClCompile Include="..\src\graphics\EffectConstant.cpp" />
-    <ClCompile Include="..\src\graphics\EffectRenderDepth.cpp" />
     <ClCompile Include="..\src\graphics\Effects.cpp" />
     <ClCompile Include="..\src\graphics\EffectsBasic.cpp" />
     <ClCompile Include="..\src\graphics\EffectSolid.cpp" />
@@ -428,7 +514,6 @@
     <ClCompile Include="..\src\graphics\EffectTextureColor.cpp" />
     <ClCompile Include="..\src\graphics\EffectTextureColorHighlight.cpp" />
     <ClCompile Include="..\src\graphics\EffectTextureLightMapColor.cpp" />
-    <ClCompile Include="..\src\graphics\EffectWater.cpp" />
     <ClCompile Include="..\src\graphics\Errors.cpp" />
     <ClCompile Include="..\src\graphics\GraphicsDevice.cpp" />
     <ClCompile Include="..\src\graphics\Image2dData.cpp" />
@@ -459,11 +544,18 @@
     <ClCompile Include="..\src\navmesh\Funnel.cpp" />
     <ClCompile Include="..\src\navmesh\NavEdges.cpp" />
     <ClCompile Include="..\src\navmesh\NavMesh.cpp" />
+    <ClCompile Include="..\src\physics\PhysicalBody.cpp" />
+    <ClCompile Include="..\src\physics\PhysicalConverter.cpp" />
+    <ClCompile Include="..\src\physics\PhysicalFactory.cpp" />
+    <ClCompile Include="..\src\physics\PhysicalFixture.cpp" />
+    <ClCompile Include="..\src\physics\PhysicalJoint.cpp" />
+    <ClCompile Include="..\src\physics\PhysicalShape.cpp" />
+    <ClCompile Include="..\src\physics\PhysicalWorld.cpp" />
+    <ClCompile Include="..\src\resources\AtlasPacker.cpp" />
     <ClCompile Include="..\src\resources\ContentManager.cpp" />
     <ClCompile Include="..\src\resources\ContentProviderAndroidAssets.cpp" />
     <ClCompile Include="..\src\resources\ContentProviderObb.cpp" />
     <ClCompile Include="..\src\resources\ContentProviderWindows.cpp" />
-    <ClCompile Include="..\src\resources\lpng\example.c" />
     <ClCompile Include="..\src\resources\lpng\png.c" />
     <ClCompile Include="..\src\resources\lpng\pngerror.c" />
     <ClCompile Include="..\src\resources\lpng\pngget.c" />
@@ -497,6 +589,9 @@
     <ClCompile Include="..\src\spine\runtime\IkConstraintData.c" />
     <ClCompile Include="..\src\spine\runtime\Json.c" />
     <ClCompile Include="..\src\spine\runtime\MeshAttachment.c" />
+    <ClCompile Include="..\src\spine\runtime\PathAttachment.c" />
+    <ClCompile Include="..\src\spine\runtime\PathConstraint.c" />
+    <ClCompile Include="..\src\spine\runtime\PathConstraintData.c" />
     <ClCompile Include="..\src\spine\runtime\RegionAttachment.c" />
     <ClCompile Include="..\src\spine\runtime\Skeleton.c" />
     <ClCompile Include="..\src\spine\runtime\SkeletonBounds.c" />
@@ -507,19 +602,76 @@
     <ClCompile Include="..\src\spine\runtime\SlotData.c" />
     <ClCompile Include="..\src\spine\runtime\TransformConstraint.c" />
     <ClCompile Include="..\src\spine\runtime\TransformConstraintData.c" />
-    <ClCompile Include="..\src\spine\runtime\WeightedMeshAttachment.c" />
+    <ClCompile Include="..\src\spine\runtime\VertexAttachment.c" />
     <ClCompile Include="..\src\spine\spine.cpp" />
     <ClCompile Include="..\src\spine\SpineAnimationState.cpp" />
     <ClCompile Include="..\src\spine\SpineAnimationStateData.cpp" />
     <ClCompile Include="..\src\spine\SpineSkeleton.cpp" />
     <ClCompile Include="..\src\spine\SpineSkeletonAnimation.cpp" />
     <ClCompile Include="..\src\spine\SpineSkeletonResource.cpp" />
+    <ClCompile Include="..\src\terrain\StripeBuilder.cpp" />
+    <ClCompile Include="..\src\terrain\TerrainFactory.cpp" />
+    <ClCompile Include="..\src\terrain\terrain_classes.cpp" />
+    <ClCompile Include="..\src_box2d\Box2D\Collision\b2BroadPhase.cpp" />
+    <ClCompile Include="..\src_box2d\Box2D\Collision\b2CollideCircle.cpp" />
+    <ClCompile Include="..\src_box2d\Box2D\Collision\b2CollideEdge.cpp" />
+    <ClCompile Include="..\src_box2d\Box2D\Collision\b2CollidePolygon.cpp" />
+    <ClCompile Include="..\src_box2d\Box2D\Collision\b2Collision.cpp" />
+    <ClCompile Include="..\src_box2d\Box2D\Collision\b2Distance.cpp" />
+    <ClCompile Include="..\src_box2d\Box2D\Collision\b2DynamicTree.cpp" />
+    <ClCompile Include="..\src_box2d\Box2D\Collision\b2TimeOfImpact.cpp" />
+    <ClCompile Include="..\src_box2d\Box2D\Collision\Shapes\b2ChainShape.cpp" />
+    <ClCompile Include="..\src_box2d\Box2D\Collision\Shapes\b2CircleShape.cpp" />
+    <ClCompile Include="..\src_box2d\Box2D\Collision\Shapes\b2EdgeShape.cpp" />
+    <ClCompile Include="..\src_box2d\Box2D\Collision\Shapes\b2PolygonShape.cpp" />
+    <ClCompile Include="..\src_box2d\Box2D\Common\b2BlockAllocator.cpp" />
+    <ClCompile Include="..\src_box2d\Box2D\Common\b2Draw.cpp" />
+    <ClCompile Include="..\src_box2d\Box2D\Common\b2Math.cpp" />
+    <ClCompile Include="..\src_box2d\Box2D\Common\b2Settings.cpp" />
+    <ClCompile Include="..\src_box2d\Box2D\Common\b2StackAllocator.cpp" />
+    <ClCompile Include="..\src_box2d\Box2D\Common\b2Timer.cpp" />
+    <ClCompile Include="..\src_box2d\Box2D\Dynamics\b2Body.cpp" />
+    <ClCompile Include="..\src_box2d\Box2D\Dynamics\b2ContactManager.cpp" />
+    <ClCompile Include="..\src_box2d\Box2D\Dynamics\b2Fixture.cpp" />
+    <ClCompile Include="..\src_box2d\Box2D\Dynamics\b2Island.cpp" />
+    <ClCompile Include="..\src_box2d\Box2D\Dynamics\b2World.cpp" />
+    <ClCompile Include="..\src_box2d\Box2D\Dynamics\b2WorldCallbacks.cpp" />
+    <ClCompile Include="..\src_box2d\Box2D\Dynamics\Contacts\b2ChainAndCircleContact.cpp" />
+    <ClCompile Include="..\src_box2d\Box2D\Dynamics\Contacts\b2ChainAndPolygonContact.cpp" />
+    <ClCompile Include="..\src_box2d\Box2D\Dynamics\Contacts\b2CircleContact.cpp" />
+    <ClCompile Include="..\src_box2d\Box2D\Dynamics\Contacts\b2Contact.cpp" />
+    <ClCompile Include="..\src_box2d\Box2D\Dynamics\Contacts\b2ContactSolver.cpp" />
+    <ClCompile Include="..\src_box2d\Box2D\Dynamics\Contacts\b2EdgeAndCircleContact.cpp" />
+    <ClCompile Include="..\src_box2d\Box2D\Dynamics\Contacts\b2EdgeAndPolygonContact.cpp" />
+    <ClCompile Include="..\src_box2d\Box2D\Dynamics\Contacts\b2PolygonAndCircleContact.cpp" />
+    <ClCompile Include="..\src_box2d\Box2D\Dynamics\Contacts\b2PolygonContact.cpp" />
+    <ClCompile Include="..\src_box2d\Box2D\Dynamics\Joints\b2DistanceJoint.cpp" />
+    <ClCompile Include="..\src_box2d\Box2D\Dynamics\Joints\b2FrictionJoint.cpp" />
+    <ClCompile Include="..\src_box2d\Box2D\Dynamics\Joints\b2GearJoint.cpp" />
+    <ClCompile Include="..\src_box2d\Box2D\Dynamics\Joints\b2Joint.cpp" />
+    <ClCompile Include="..\src_box2d\Box2D\Dynamics\Joints\b2MotorJoint.cpp" />
+    <ClCompile Include="..\src_box2d\Box2D\Dynamics\Joints\b2MouseJoint.cpp" />
+    <ClCompile Include="..\src_box2d\Box2D\Dynamics\Joints\b2PrismaticJoint.cpp" />
+    <ClCompile Include="..\src_box2d\Box2D\Dynamics\Joints\b2PulleyJoint.cpp" />
+    <ClCompile Include="..\src_box2d\Box2D\Dynamics\Joints\b2RevoluteJoint.cpp" />
+    <ClCompile Include="..\src_box2d\Box2D\Dynamics\Joints\b2RopeJoint.cpp" />
+    <ClCompile Include="..\src_box2d\Box2D\Dynamics\Joints\b2WeldJoint.cpp" />
+    <ClCompile Include="..\src_box2d\Box2D\Dynamics\Joints\b2WheelJoint.cpp" />
+    <ClCompile Include="..\src_box2d\Box2D\Rope\b2Rope.cpp" />
     <ClCompile Include="..\src_clipper\clipper.cpp" />
+    <ClCompile Include="..\src_decompressors\PVRTDecompress.cpp" />
+    <ClCompile Include="..\src_decompress_ati\DecompressAtc.cpp" />
     <ClCompile Include="..\src_poly2tri\common\shapes.cc" />
     <ClCompile Include="..\src_poly2tri\sweep\advancing_front.cc" />
     <ClCompile Include="..\src_poly2tri\sweep\cdt.cc" />
     <ClCompile Include="..\src_poly2tri\sweep\sweep.cc" />
     <ClCompile Include="..\src_poly2tri\sweep\sweep_context.cc" />
+    <ClCompile Include="..\src_rectanglebinpack\GuillotineBinPack.cpp" />
+    <ClCompile Include="..\src_rectanglebinpack\MaxRectsBinPack.cpp" />
+    <ClCompile Include="..\src_rectanglebinpack\Rect.cpp" />
+    <ClCompile Include="..\src_rectanglebinpack\ShelfBinPack.cpp" />
+    <ClCompile Include="..\src_rectanglebinpack\ShelfNextFitBinPack.cpp" />
+    <ClCompile Include="..\src_rectanglebinpack\SkylineBinPack.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />

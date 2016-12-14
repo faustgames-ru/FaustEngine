@@ -7,25 +7,59 @@ namespace resources
 {
 #ifdef WIN32
 	FILE * _file;
+	
+	class WindowsContentProvider: public IAbstractContentProvider
+	{
+	public:
+		static WindowsContentProvider Default;
+		virtual bool existsContent(const char *name) override
+		{
+			return GetFileAttributesA(name) != INVALID_FILE_ATTRIBUTES;			
+		}
+		
+		virtual void openContent(const char *name) override
+		{
+			_file = fopen(name, "rb");
+		}
+
+		virtual int read(void *buffer, int bytesLimit) override
+		{
+			return fread(buffer, 1, bytesLimit, _file);
+		}
+		
+		virtual void closeContent() override
+		{
+			fclose(_file);
+		}
+
+		virtual int getContentSize() override
+		{
+			return 0;
+		}
+	};
+
+	WindowsContentProvider WindowsContentProvider::Default;
+
+	IAbstractContentProvider* ContentProvider::ContentProviderInstance(&WindowsContentProvider::Default);
 
 	bool ContentProvider::existContent(const char *name) 
 	{
-		return GetFileAttributesA(name) != INVALID_FILE_ATTRIBUTES;
+		return ContentProviderInstance->existsContent(name);
 	}
 	
 	void ContentProvider::openContent(const char *name)
 	{
-		_file = fopen(name, "rb");
+		ContentProviderInstance->openContent(name);
 	}
 
 	int ContentProvider::read(void *buffer, int bytesLimit)
 	{
-		return fread(buffer, 1, bytesLimit, _file);
+		return ContentProviderInstance->read(buffer, bytesLimit);
 	}
 
 	void ContentProvider::closeContent()
 	{
-		fclose(_file);
+		ContentProviderInstance->closeContent();
 	}
 
 

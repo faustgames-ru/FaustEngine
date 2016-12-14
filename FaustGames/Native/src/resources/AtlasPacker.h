@@ -122,6 +122,7 @@ namespace resources
 		static IAtlasPlacer* pvrtc14;
 		static IAtlasPlacer* atc;
 		static IAtlasPlacer* etc2;
+		static IAtlasPlacer* dxt;
 		static IAtlasPlacer* switchPlacer(llge::TextureImage2dFormat format);
 		virtual int getPageBufferSize(int pageSize) = 0;
 		virtual graphics::Image2dBlocksOrder::e getPageBlocksOrder();
@@ -356,6 +357,14 @@ namespace resources
 	};
 
 	class AtlasPlacerAtc : public IAtlasPlacer
+	{
+	public:
+		virtual int getPageBufferSize(int pageSize) override;
+		virtual void placeImage(const PlaceArgs &e) override;
+		virtual void SetupAlign(AlignInfo &alignInfo) override;
+	};
+
+	class AtlasPlacerDxt : public IAtlasPlacer
 	{
 	public:
 		virtual int getPageBufferSize(int pageSize) override;

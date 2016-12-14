@@ -8,6 +8,30 @@
 
 namespace resources
 {
+	class ContentProviderImpementation : public llge::IContentProvider
+	{
+	public:
+		static ContentProviderImpementation Deafualt;
+		
+		virtual bool API_CALL existsContent(const char *name) override
+		{
+			return ContentProvider::existContent(name);
+		}
+		virtual void API_CALL openContent(const char *name) override
+		{
+			ContentProvider::openContent(name);
+		}
+		virtual int API_CALL read(void *buffer, int bytesLimit) override
+		{
+			return ContentProvider::read(buffer, bytesLimit);
+		}
+		virtual void API_CALL closeContent() override
+		{
+			ContentProvider::closeContent();
+		}
+	};
+
+	ContentProviderImpementation ContentProviderImpementation::Deafualt;
 
 	bool allowPack(int w, int h)
 	{
@@ -444,6 +468,11 @@ namespace resources
 		_isAtlasBuilderStarted = false;		
 	}
 
+	llge::IContentProvider* ContentManager::getContentProvider()
+	{
+		return &ContentProviderImpementation::Deafualt;
+	}
+
 	llge::IContentAtlasMap * API_CALL ContentManager::getContentAtlasMap()
 	{
 		return nullptr;
@@ -640,7 +669,6 @@ namespace resources
 
 	IAtlasPacker* ContentManager::queryPacker(llge::TextureQueryFormat format)
 	{
-		return nullptr;
 		if (!_isAtlasBuilderStarted) return nullptr;
 		if (format == llge::TQFNone) return nullptr;
 		if (format == llge::TQFRgba8888) return nullptr;

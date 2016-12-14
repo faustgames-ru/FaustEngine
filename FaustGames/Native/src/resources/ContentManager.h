@@ -2,6 +2,7 @@
 #define CONTENT_MANAGER_H
 
 #include "resources_classes.h"
+#include "ContentProvider.h"
 
 namespace resources
 {
@@ -44,6 +45,7 @@ namespace resources
 		virtual void API_CALL finishAtlasBuild() OVERRIDE;
 
 
+		virtual llge::IContentProvider* API_CALL getContentProvider() override;
 		virtual llge::IContentAtlasMap * API_CALL getContentAtlasMap()OVERRIDE;
 		virtual void API_CALL useCompression(llge::TextureImage2dFormat format) override;
 
@@ -83,6 +85,7 @@ namespace resources
 		IAtlasPacker* _packers[llge::TFEnumSize];
 		static bool ImageSizeLoaded;
 	};		
+
 }
 
 #endif /*CONTENT_MANAGER_H*/

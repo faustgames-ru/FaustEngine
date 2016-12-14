@@ -661,11 +661,21 @@ namespace llge
 		virtual void API_CALL addRect(char *name, int pageIndex, int x, int y, int width, int height) = 0;
 		virtual void API_CALL loadTextures() = 0;
 	};
-
+	
+	class IContentProvider : IBaseObject
+	{
+	public:
+		virtual bool API_CALL existsContent(const char *name) = 0;
+		virtual void API_CALL openContent(const char *name) = 0;
+		virtual int API_CALL read(void *buffer, int bytesLimit) = 0;
+		virtual void API_CALL closeContent() = 0;
+	};
+	
 	class IContentManager : IBaseObject
 	{
 	public:
-		virtual IContentAtlasMap * API_CALL getContentAtlasMap() = 0;
+		virtual IContentProvider* API_CALL getContentProvider() = 0;
+		virtual IContentAtlasMap* API_CALL getContentAtlasMap() = 0;
 		virtual void API_CALL useCompression(TextureImage2dFormat format) = 0;
 		virtual void API_CALL replaceSeparator(bool value) = 0;
 		virtual int API_CALL registerImage(char * name) = 0;
@@ -678,7 +688,7 @@ namespace llge
 		virtual bool API_CALL update() = 0;
 		virtual void API_CALL dispose() = 0;
 	};
-		
+	
 	class IObbContentProvider : IBaseObject
 	{
 	public:

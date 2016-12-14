@@ -1201,6 +1201,31 @@ namespace llge
 		classInstance->loadTextures();
 	}
 	
+	extern "C" DLLEXPORT bool API_CALL llge_ContentProvider_existsContent (IContentProvider * classInstance, const char * name)
+	{
+		return classInstance->existsContent(name);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_ContentProvider_openContent (IContentProvider * classInstance, const char * name)
+	{
+		classInstance->openContent(name);
+	}
+	
+	extern "C" DLLEXPORT int API_CALL llge_ContentProvider_read (IContentProvider * classInstance, void * buffer, int bytesLimit)
+	{
+		return classInstance->read(buffer, bytesLimit);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_ContentProvider_closeContent (IContentProvider * classInstance)
+	{
+		classInstance->closeContent();
+	}
+	
+	extern "C" DLLEXPORT IContentProvider * API_CALL llge_ContentManager_getContentProvider (IContentManager * classInstance)
+	{
+		return classInstance->getContentProvider();
+	}
+	
 	extern "C" DLLEXPORT IContentAtlasMap * API_CALL llge_ContentManager_getContentAtlasMap (IContentManager * classInstance)
 	{
 		return classInstance->getContentAtlasMap();

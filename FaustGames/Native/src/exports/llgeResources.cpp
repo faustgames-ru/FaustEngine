@@ -9,9 +9,9 @@ namespace llge
 	class ObbContentProvider : public IObbContentProvider
 	{
 	public:
-		resources::IAndroidContentProvider* _provider;
-		resources::IAndroidContentProvider* _obb;
-		resources::IAndroidContentProvider* _assets;
+		resources::IAbstractContentProvider* _provider;
+		resources::IAbstractContentProvider* _obb;
+		resources::IAbstractContentProvider* _assets;
 
 		ObbContentProvider(): _provider(nullptr)
 		{
@@ -28,14 +28,14 @@ namespace llge
 		virtual void API_CALL openAssets(void *jniEnv, void *assetsManager)
 		{
 			resources::AssetsContentProvider::setup(jniEnv, assetsManager, "manifest.manifest");
-			resources::ContentProvider::AndroidContentProvider = _provider = _assets;
+			resources::ContentProvider::ContentProviderInstance = _provider = _assets;
 		}
 
 
 		virtual void API_CALL openObbFile(const char *obbFile)
 		{
 			resources::ObbContentProvider::openObbFile(obbFile);
-			resources::ContentProvider::AndroidContentProvider = _provider = _obb;
+			resources::ContentProvider::ContentProviderInstance = _provider = _obb;
 		}
 
 		virtual void API_CALL closeObbFile()

@@ -31,15 +31,6 @@ namespace resources
 		}
 	};
 
-    /*
-    template <typename T>
-    std::string to_string(T value)
-    {
-        std::ostringstream os;
-        os << value;
-        return os.str();
-    }
-    */
 	std::map<std::string, ObbEntry> _entries;
     std::string _obbPath;
 	void ObbContentProvider::openObbFile(const char *obbFile)
@@ -73,12 +64,7 @@ namespace resources
 			delete[] buffer;
 		}
         fclose(_obbFile);
-        /*
-        _obbFile = fopen(obbFile, "rb");
-        _mapAddress = new char[_mapSize];
-        fread(_mapAddress, 1, (int)_mapSize, _obbFile);
-        fclose(_obbFile);
-        */
+        
         _obbFile = 0;
 	}
 
@@ -116,7 +102,6 @@ namespace resources
             _obbFile = fopen(_obbPath.c_str(), "rb");
         }
         std::string replace = name;
-		//#ifdef __ANDROID__
 		for (uint i = 0; i < replace.size(); i++)
 		{
 			if (replace[i] == '\\')
@@ -124,10 +109,8 @@ namespace resources
 			if (replace[i] == '/')
 				replace[i] = '_';
 		}
-		//#endif
 
 		_currentEntry = _entries[replace.c_str()];
-        //int status = fseek(_obbFile, _currentEntry.Position, SEEK_CUR);
         _readCur = _currentEntry.Position;
         fseek(_obbFile, _currentEntry.Position, SEEK_SET);
 	}
@@ -151,89 +134,41 @@ namespace resources
         fclose(_obbFile);
         _obbFile = nullptr;
     }
- /*
-    
-    void ObbContentProvider::openContent(const char *name)
-    {
-        if (!existsContent(name))
-        {
-            return;
-        }
-        
-        if (_mapAddress == nullptr)
-        {
-            _obbFd = open(_obbPath.c_str(), O_RDONLY);
-            _mapAddress = mmap(nullptr, (int)_mapSize, PROT_READ, MAP_SHARED, _obbFd, 0);
-        }
-        std::string replace = name;
-        //#ifdef __ANDROID__
-        for (uint i = 0; i < replace.size(); i++)
-        {
-            if (replace[i] == '\\')
-                replace[i] = '_';
-            if (replace[i] == '/')
-                replace[i] = '_';
-        }
-        //#endif
-        
-        _currentEntry = _entries[replace.c_str()];
-        _mapCursor = _currentEntry.Position;
-    }
-    
-    int ObbContentProvider::read(void *buffer, int bytesLimit)
-    {
-        int64_t entryFinishPos = _currentEntry.Position + _currentEntry.Size;
-        int64_t finishPos = _mapCursor + bytesLimit;
-        
-        if (finishPos > entryFinishPos)
-        {
-            bytesLimit -= finishPos - entryFinishPos;
-        }
-        
-        char* src = ((char* )_mapAddress) +_mapCursor;
-        
-        memcpy(buffer, src, bytesLimit);
-        _mapCursor += bytesLimit;
-        return bytesLimit;
-    }
-     
-     
-    void ObbContentProvider::closeContent()
-    {
-    }
-     
-*/
+
     int ObbContentProvider::getContentSize()
 	{
 		return (int)_currentEntry.Size;
 	}
 
-    IAndroidContentProvider* ContentProvider::AndroidContentProvider(nullptr);
-
 #ifdef __ANDROID__
 
-	bool ContentProvider::existContent(const char *name)	
+	IAbstractContentProvider* ContentProvider::ContentProviderInstance(nullptr);
+
+	bool ContentProvider::existContent(const char *name)
 	{
-		return AndroidContentProvider->existsContent(name);
+		return ContentProviderInstance->existsContent(name);
 	}
 
 	void ContentProvider::openContent(const char *name)
 	{
-		AndroidContentProvider->openContent(name);
+		ContentProviderInstance->openContent(name);
 	}
 
 	int ContentProvider::read(void *buffer, int bytesLimit)
 	{
-		return AndroidContentProvider->read(buffer, bytesLimit);
+		return ContentProviderInstance->read(buffer, bytesLimit);
 	}
 
 	void ContentProvider::closeContent()
 	{
-		AndroidContentProvider->closeContent();
+		ContentProviderInstance->closeContent();
 	}
 #endif /*__ANDROID__*/
     
 #ifdef __APPLE__
+	IAbstractContentProvider* ContentProvider::ContentProviderInstance(nullptr);
+
+
 	bool ContentProvider::existContent(const char *name)
 	{
 		return ObbContentProvider::existsContent(name);

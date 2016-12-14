@@ -2054,9 +2054,50 @@ namespace llge
 		static extern private void llge_ContentAtlasMap_loadTextures (IntPtr classInstance);
 	}
 	
+	public class ContentProvider
+	{
+		public IntPtr ClassInstance;
+		public bool ExistsContent (string name)
+		{
+			return llge_ContentProvider_existsContent(ClassInstance, name);
+		}
+		
+		[DllImport(Version.Dll)]
+		[return: MarshalAs(UnmanagedType.I1)]
+		static extern private bool llge_ContentProvider_existsContent (IntPtr classInstance, string name);
+		public void OpenContent (string name)
+		{
+			llge_ContentProvider_openContent(ClassInstance, name);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_ContentProvider_openContent (IntPtr classInstance, string name);
+		public int Read (IntPtr buffer, int bytesLimit)
+		{
+			return llge_ContentProvider_read(ClassInstance, buffer, bytesLimit);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private int llge_ContentProvider_read (IntPtr classInstance, IntPtr buffer, int bytesLimit);
+		public void CloseContent ()
+		{
+			llge_ContentProvider_closeContent(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_ContentProvider_closeContent (IntPtr classInstance);
+	}
+	
 	public class ContentManager
 	{
 		public IntPtr ClassInstance;
+		public ContentProvider GetContentProvider ()
+		{
+			return new ContentProvider{ ClassInstance = llge_ContentManager_getContentProvider(ClassInstance) };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_ContentManager_getContentProvider (IntPtr classInstance);
 		public ContentAtlasMap GetContentAtlasMap ()
 		{
 			return new ContentAtlasMap{ ClassInstance = llge_ContentManager_getContentAtlasMap(ClassInstance) };

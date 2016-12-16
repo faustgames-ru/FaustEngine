@@ -674,9 +674,10 @@ namespace resources
 		if (format == llge::TQFRgba8888) return nullptr;
 		if (format == llge::TQFRgba4444) return nullptr;
 		int packerIndex = format;
+		llge::TextureImage2dFormat packersFormat = getAtlasFormat(format);
 		if (_packers[packerIndex] == nullptr)
 		{
-			_packers[packerIndex] = AtlasPacker::create(getAtlasFormat(format));
+			_packers[packerIndex] = AtlasPacker::create(packersFormat);
 			_packers[packerIndex]->startPack(ImageMaxWidth);
 		}
 		return _packers[packerIndex];

@@ -404,8 +404,8 @@ namespace resources
 				}
 
 
-				float inputW = alignInfo.alignWidth(image->Width);
-				float inputH = alignInfo.alignHeight(image->Height);
+				int inputW = alignInfo.alignWidth(image->Width);
+				int inputH = alignInfo.alignHeight(image->Height);
 
 				if (inputW == rect.rect.width && inputH == rect.rect.height)
 				{
@@ -423,15 +423,12 @@ namespace resources
 						static_cast<float>((rect.rect.y + alignInfo.borderBlockCount)*alignInfo.blockSizeY) / static_cast<float>(pageSize),
 						static_cast<float>(image->Width / static_cast<float>(pageSize)),
 						static_cast<float>(image->Height / static_cast<float>(pageSize)));
-				}
-				else if (inputH == rect.rect.width && inputW == rect.rect.height)
-				{
-					// todo: rotation support?
-					inputH = inputH;
-				}
+				}				
 				else 
 				{
-					inputH = inputH;
+					rect.entry->input.texture->AtlasEntry = false;
+					rect.entry->input.texture->create();
+					rect.entry->input.texture->setData(image);
 				}
 			}
 			texture->setData(_pageData);
@@ -450,10 +447,6 @@ namespace resources
 		AtlasImageInput result = e;
 		result.width = alignInfo.alignWidth(result.width);
 		result.height = alignInfo.alignWidth(result.height);
-		if(result.width == 91)
-		{
-			result.width = 91;
-		}
 		return result;
 	}
 

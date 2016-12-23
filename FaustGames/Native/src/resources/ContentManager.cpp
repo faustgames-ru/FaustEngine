@@ -439,7 +439,6 @@ namespace resources
 		m_RowPtrs = 0;
 		_image = 0;
 		_isOpened = false;
-		//_packerRGBA->applyCurrentPage();
 	}
 
 	void ContentManager::startAtlasBuild()

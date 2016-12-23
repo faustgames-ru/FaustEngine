@@ -375,13 +375,15 @@ namespace resources
 			}
 		}
 		
-		_pageData = new graphics::Image2dData(placer->getPageBufferSize(pageSize));
-		_pageData->BlocksOrder = placer->getPageBlocksOrder();
-		_pageData->Format = getFormat();
-		_pageData->Width = pageSize;
-		_pageData->Height = pageSize;
-		_pageData->RawDataOffset = 0;
-
+		if (_pageData == nullptr)
+		{
+			_pageData = new graphics::Image2dData(placer->getPageBufferSize(pageSize));
+			_pageData->BlocksOrder = placer->getPageBlocksOrder();
+			_pageData->Format = getFormat();
+			_pageData->Width = pageSize;
+			_pageData->Height = pageSize;
+			_pageData->RawDataOffset = 0;
+		}
 		PlaceArgs placeArgs;
 		placeArgs.pageData = _pageData;
 		// todo: cerate pages textures
@@ -433,8 +435,10 @@ namespace resources
 			}
 			texture->setData(_pageData);
 		}
+		
 		delete _pageData;
 		_pageData = nullptr;
+		
 	}
 
 	bool AtlasPacker::ready()

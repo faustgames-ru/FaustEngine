@@ -5,7 +5,7 @@
 #include "Color.h"
 #include "../../src_decompressors/PVRTDecompress.h"
 #include "../../src_decompress_ati/DecompressAtc.h"
-//#include "../../src_etcpack/etcpack_lib.h"
+#include "../../src_etcpack/etcpack_lib.h"
 
 
 #define ATC_RGB_AMD							0x8C92
@@ -521,7 +521,7 @@ namespace graphics
 							static_cast<float>(data->Height) / static_cast<float>(aH));
 						Errors::check(Errors::TexImage2D);
 					}*/
-					/*
+					
 					else if (data->Format == Image2dFormat::Etc2)
 					{
 						TexturesDecompressorBuffer pixelsBuffer;
@@ -537,7 +537,7 @@ namespace graphics
 							static_cast<float>(data->Width) / static_cast<float>(aW),
 							static_cast<float>(data->Height) / static_cast<float>(aH));						Errors::check(Errors::TexImage2D);
 					}
-					*/
+					
 					else if (data->Format == Image2dFormat::Dxt)
 					{
 						// todo: Astc decode
@@ -769,7 +769,7 @@ namespace graphics
 		swapBytes4(src, dst);
 		return result;
 	}
-	/*
+	
 	void DecodeEtc2(const Image2dData* data, TexturesDecompressorBuffer* pixelsBuffer, int& aW, int& aH)
 	{
 		setupAlphaTable();
@@ -842,7 +842,7 @@ namespace graphics
 			}
 		}
 	}
-	*/
+	
 	GLenum TextureImage2d::getFormat(Image2dFormat::e format)
 	{
 		switch (format)

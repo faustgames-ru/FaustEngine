@@ -101,8 +101,6 @@ namespace resources
 
 	graphics::TextureImage2d* ContentManager::addLoadTexture(const char* name, int w, int h, llge::TextureQueryFormat format)
 	{
-		int wLimint = ImageMaxWidth / 2 - 16;
-		int hLimint = ImageMaxHeight / 2 - 16;
 		IAtlasPacker * packer = queryPacker(format);
 		if (packer != nullptr)
 		{
@@ -529,6 +527,7 @@ namespace resources
 
 	bool API_CALL ContentManager::update()
 	{
+		/*
 		if(!ImageSizeLoaded)
 		{
 			int maxTextureSize[1];
@@ -545,7 +544,7 @@ namespace resources
 				ImageSizeLoaded = true;
 			}
 		}
-
+		*/
 		if ((_loadEntries.size() == 0) && (_disposeEntries.size() == 0))
 			return true;
 

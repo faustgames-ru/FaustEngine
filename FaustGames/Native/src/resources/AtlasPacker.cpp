@@ -520,9 +520,9 @@ namespace resources
 		switch (format)
 		{
 		case llge::TFRgba8888:
-			return rgba8888;
+			return nullptr;// rgba8888;
 		case llge::TFRgba4444:
-			return rgba4444;
+			return nullptr;// rgba4444;
 		case llge::TFPvrtc14:
 			return pvrtc14;
 		case llge::TFAtc:

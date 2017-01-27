@@ -676,7 +676,10 @@ namespace resources
 		if (_packers[packerIndex] == nullptr)
 		{
 			_packers[packerIndex] = AtlasPacker::create(packersFormat);
-			_packers[packerIndex]->startPack(ImageMaxWidth);
+			if (_packers[packerIndex] != nullptr)
+			{
+				_packers[packerIndex]->startPack(ImageMaxWidth);
+			}
 		}
 		return _packers[packerIndex];
 		

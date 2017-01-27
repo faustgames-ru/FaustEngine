@@ -83,6 +83,8 @@ namespace terrain
 			AngularBottomToRight = 0xC,
 			AngularRightToTop = 0xD,
 			AngularTopToLeft = 0xE,
+			CapTop = 0xF,
+			CapBottom = 0x10,
 		};
 	};
 		

@@ -29,8 +29,6 @@ namespace resources
 		void cleanup();
 		unsigned int registerTexture(const char *name);
 		graphics::Image2dData * loadUnregisteredTexture(const char *name, llge::TextureQueryFormat queryFormat);
-		graphics::Image2dData * loadUnregisteredPvrTexture(const char *name);
-		graphics::Image2dData * loadUnregisteredRgba4444Texture(const char *name);
 		graphics::Image2dData * loadUnregisteredCompressedTexture(const char *name);
 
 		char* loadString(const char *name);

@@ -292,10 +292,36 @@ namespace terrain
 				pt0 = s->t->get(ut);
 				pb0 = s->b->get(ub);
 
-				addQuad(TileStripeType::CapLeft,
-					s->start->pb.position() - dir*s->start->br,
-					s->start->pt.position() - dir*s->start->tr,
-					pt0, pb0);
+				if (s->type == TileStripeType::TileTop)
+				{
+					addQuad(TileStripeType::CapLeft,
+						s->start->pb.position() - dir*s->start->br,
+						s->start->pt.position() - dir*s->start->tr,
+						pt0, pb0);
+				}
+				else if (s->type == TileStripeType::TileBottom)
+				{
+					addQuad(TileStripeType::CapRight,
+						pt0, pb0,
+						s->start->pb.position() - dir*s->start->br,
+						s->start->pt.position() - dir*s->start->tr
+						);
+				}
+				else if (s->type == TileStripeType::TileLeft)
+				{
+					addQuad(TileStripeType::CapBottom,
+						s->start->pb.position() - dir*s->start->br,
+						s->start->pt.position() - dir*s->start->tr,
+						pt0, pb0);
+				}
+				else if (s->type == TileStripeType::TileRight)
+				{
+					addQuad(TileStripeType::CapTop,
+						pt0, pb0,
+						s->start->pb.position() - dir*s->start->br,
+						s->start->pt.position() - dir*s->start->tr
+					);
+				}
 			}
 			else if (s->lt > 0.0001f)
 			{
@@ -549,10 +575,34 @@ namespace terrain
 			if (s->rt > 0.0001f && s->rb > 0.0001f)
 			{
 				core::Vector2 dir = s->prevD.normalize();
-				addQuad(TileStripeType::CapRight,
-					pb0, pt0,
-					s->finish->pt.position() + dir*s->finish->tl,
-					s->finish->pb.position() + dir*s->finish->bl);
+				if (s->type == TileStripeType::TileTop)
+				{
+					addQuad(TileStripeType::CapRight,
+						pb0, pt0,
+						s->finish->pt.position() + dir*s->finish->tl,
+						s->finish->pb.position() + dir*s->finish->bl);
+				}
+				else if (s->type == TileStripeType::TileBottom)
+				{
+					addQuad(TileStripeType::CapLeft,
+						s->finish->pt.position() + dir*s->finish->tl,
+						s->finish->pb.position() + dir*s->finish->bl,
+						pb0, pt0);
+				}				
+				else if (s->type == TileStripeType::TileLeft)
+				{
+					addQuad(TileStripeType::CapTop,
+						pb0, pt0,
+						s->finish->pt.position() + dir*s->finish->tl,
+						s->finish->pb.position() + dir*s->finish->bl);
+				}
+				else if (s->type == TileStripeType::TileRight)
+				{
+					addQuad(TileStripeType::CapBottom,
+						s->finish->pt.position() + dir*s->finish->tl,
+						s->finish->pb.position() + dir*s->finish->bl,
+						pb0, pt0);
+				}				
 			}
 			else if (s->rt > 0.0001f)
 			{
@@ -1188,7 +1238,8 @@ namespace terrain
 			}
 			else
 			{
-				if ((config.AllowedTiles & StripeType::TileAngular) == 0)
+				//if ((config.AllowedTiles & StripeType::TileAngular) == 0)
+				if ((config.AllowedTiles & StripeType::TileCap) != 0)
 				{
 					w = config.top;
 					w.out *= current->point.wt;

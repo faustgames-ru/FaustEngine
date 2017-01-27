@@ -1,21 +1,12 @@
-﻿  ContentManager.cpp
-  AtlasPacker.cpp
-c:\_faust\faustengine\faustgames\native\src\resources\atlaspacker.cpp(136): warning C4018: '<': signed/unsigned mismatch
-c:\_faust\faustengine\faustgames\native\src\resources\atlaspacker.cpp(255): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\_faust\faustengine\faustgames\native\src\resources\atlaspacker.cpp(255): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\_faust\faustengine\faustgames\native\src\resources\atlaspacker.cpp(271): warning C4244: 'argument': conversion from 'const int' to 'float', possible loss of data
-c:\_faust\faustengine\faustgames\native\src\resources\atlaspacker.cpp(271): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-c:\_faust\faustengine\faustgames\native\src\resources\atlaspacker.cpp(272): warning C4244: 'argument': conversion from 'const int' to 'float', possible loss of data
-c:\_faust\faustengine\faustgames\native\src\resources\atlaspacker.cpp(272): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-c:\_faust\faustengine\faustgames\native\src\resources\atlaspacker.cpp(275): warning C4244: 'argument': conversion from 'const int' to 'float', possible loss of data
-c:\_faust\faustengine\faustgames\native\src\resources\atlaspacker.cpp(275): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\_faust\faustengine\faustgames\native\src\resources\atlaspacker.cpp(276): warning C4244: 'argument': conversion from 'const int' to 'float', possible loss of data
-c:\_faust\faustengine\faustgames\native\src\resources\atlaspacker.cpp(276): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\_faust\faustengine\faustgames\native\src\resources\atlaspacker.cpp(296): warning C4018: '<': signed/unsigned mismatch
-c:\_faust\faustengine\faustgames\native\src\resources\atlaspacker.cpp(366): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-c:\_faust\faustengine\faustgames\native\src\resources\atlaspacker.cpp(367): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-  Generating Code...
-  LINK : C:\work\sources\github\moon\Solutions\Debug\llge.dll not found or not built by the last incremental link; performing full link
-     Creating library C:\work\sources\github\moon\Solutions\Debug\llge.lib and object C:\work\sources\github\moon\Solutions\Debug\llge.exp
+﻿  StripeBuilder.cpp
+c:\_faust\faustengine\faustgames\native\src\terrain\stripebuilder.cpp(226): warning C4018: '<': signed/unsigned mismatch
+c:\_faust\faustengine\faustgames\native\src\terrain\stripebuilder.cpp(558): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\terrain\stripebuilder.cpp(833): warning C4018: '<': signed/unsigned mismatch
+c:\_faust\faustengine\faustgames\native\src\terrain\stripebuilder.cpp(851): warning C4018: '<': signed/unsigned mismatch
+c:\_faust\faustengine\faustgames\native\src\terrain\stripebuilder.cpp(870): warning C4018: '<': signed/unsigned mismatch
+c:\_faust\faustengine\faustgames\native\src\terrain\stripebuilder.cpp(980): warning C4018: '<': signed/unsigned mismatch
+c:\_faust\faustengine\faustgames\native\src\terrain\stripebuilder.cpp(996): warning C4018: '<': signed/unsigned mismatch
+c:\_faust\faustengine\faustgames\native\src\terrain\stripebuilder.cpp(1004): warning C4018: '<': signed/unsigned mismatch
+c:\_faust\faustengine\faustgames\native\src\terrain\stripebuilder.cpp(1016): warning C4018: '<': signed/unsigned mismatch
   llge.vcxproj -> C:\work\sources\github\moon\Solutions\Debug\llge.dll
   llge.vcxproj -> C:\work\sources\github\moon\Solutions\Debug\llge.pdb (Full PDB)

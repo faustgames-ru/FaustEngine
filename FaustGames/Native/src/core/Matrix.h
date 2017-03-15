@@ -264,6 +264,7 @@ namespace core
 	public:
 		int id;
 		Matrix Value;
+
 		inline MatrixContainer()
 		{
 			id = (++_id) << 16;
@@ -287,6 +288,7 @@ namespace core
 			Value = *((Matrix *)value);
 		}
 	};
+
 
 	class Matrix3
 	{

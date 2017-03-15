@@ -75,17 +75,29 @@ namespace drawing
 	typedef std::vector<core::Matrix3Container> TBatchColorTransforms;
 	typedef std::vector<BatchBuffer *> TBatchBuffers;
 	typedef std::vector<BatchEntry> TBatchEntries;
+	
+	class EntriesGroup
+	{
+	public:
+		TBatchEntries Entries;
+		int transformIndex;
+		EntriesGroup(int index);
+	};
+	
+	typedef std::vector<EntriesGroup *> TBatchEntriesGroup;
 
 	class RenderBuffer
 	{
 	public:
 		TBatchBuffers Buffers;
-		TBatchEntries Entries;
+		TBatchEntriesGroup EntriesGroups;
 		TBatchTransforms Transforms;
 		TBatchColorTransforms ColorTransforms;
 		TBatchRenderTargets RenderTargets;
 		RenderBuffer();
 		~RenderBuffer();
+		void addEntry(const BatchEntry& entry);
+		void clearEntries();
 	};
 
 	struct BatcherState
@@ -129,6 +141,15 @@ namespace drawing
 		std::vector<SolidVertex> _edges;
 	};
 
+	struct BatcherRenderArgs
+	{
+		bool usePostProcess;
+		RenderBuffer *renderBuffer;
+		BatcherRenderArgs();
+	};
+
+	class BatcherRenderController;
+
 	class Batcher : public llge::IBatch2d, public core::IDebugRender
 	{
 	public:
@@ -144,7 +165,12 @@ namespace drawing
 		void cleanupUVTransform();
 
 		void executeRenderCommands(bool usePostProcess);
+		void internalExecuteRenderCommands(BatcherRenderArgs e);
 		void addColorTransform(const core::Matrix3 &value);
+
+		void mainRender(BatcherRenderArgs e);
+		void guiRender(BatcherRenderArgs e);
+		void renderTranformGroup(int groupIndex, BatcherRenderArgs e);
 
 		virtual IntPtr API_CALL getNativeInstance() OVERRIDE;
 		void applyEntry();
@@ -158,6 +184,8 @@ namespace drawing
 		virtual void API_CALL setToneMap(uint tonemapId) OVERRIDE;
 		virtual int API_CALL getRenderedVerticesCount() OVERRIDE;
 		virtual int API_CALL getRenderedPrimitivesCount() OVERRIDE;
+		virtual void API_CALL setBatcherMode(llge::BatcherMode mode) OVERRIDE;
+
 		virtual void drawEdge(uint color, const core::Vector3 &a, const core::Vector3 &b) OVERRIDE;
 		bool usedPostProcess();
 		graphics::Texture* getBlurMap();
@@ -187,6 +215,7 @@ namespace drawing
 		ZBatcher* _zButcher;
 		bool _usedPostProcess;
 		core::Matrix3Container _emptyColorTransformContainer;
+		BatcherRenderController* _controller;
 	};
 	
 	struct ZBatchEntry
@@ -269,6 +298,109 @@ namespace drawing
 		BlocksMap _blocks;
 		int _verticesCounter;
 		int _indicesCounter;
+	};
+
+	class BatcherRenderState;
+	class BatcherStateDefault;
+	class BatcherStateBlurSnapShot;
+	class BatcherStateBlur;
+	class BatcherStateBlurHide;
+
+
+	class BatcherRenderController
+	{
+	public:
+		llge::BatcherMode Mode;
+		float lighting;
+		BatcherRenderArgs* args();
+		Batcher* batcher();
+		void setState(BatcherRenderState *state);
+		void update(BatcherRenderArgs e);
+		void drawSnapShot(graphics::IPostProcessTarget *snapShot);
+		void drawSnapShot(graphics::IPostProcessTarget *snapShot, int color);
+
+		explicit BatcherRenderController(Batcher* batcher);
+
+		template<typename T>
+		T* CreateState();
+		BatcherStateDefault* Default;
+		BatcherStateBlurSnapShot* BlurSnapShot;
+		BatcherStateBlur* Blur;
+		BatcherStateBlurHide* Hide;
+
+		graphics::IPostProcessTarget *popSnapShot();
+		graphics::IPostProcessTarget *popBlurShot();
+		void swapShots();
+		void pushSnapShot();
+		void pushBlurShot();
+	private:
+		void constructState(BatcherRenderState* state);
+		BatcherRenderArgs _args;
+		BatcherRenderState *_state;
+		Batcher* _batcher;
+		graphics::IPostProcessTarget *_snapShot;
+		graphics::IPostProcessTarget *_blurShot;
+		core::MatrixContainer identity;
+	};
+
+	template <typename T>
+	T* BatcherRenderController::CreateState()
+	{
+		T* state = new T();
+		constructState(state);
+		return state;
+	}
+
+	class BatcherRenderState
+	{
+	public:
+		BatcherRenderState();
+		virtual ~BatcherRenderState();
+		BatcherRenderController *controller();
+		BatcherRenderArgs* args();
+		Batcher* batcher();
+		void setState(BatcherRenderState *state);
+		virtual void update();
+		virtual void activated();
+		virtual void deactivated();
+		void construct(BatcherRenderController* controller);
+	private:
+		BatcherRenderController* _controller;
+	};
+
+	class BatcherStateDefault : public BatcherRenderState
+	{
+	public:
+		virtual void activated() override;
+		virtual void update() override;
+		int _frameCounter;
+	};
+
+	class BatcherStateBlurSnapShot: public BatcherRenderState
+	{
+	public:
+		virtual void activated() override;
+		virtual void update() override;
+	private:
+	};
+
+	class BatcherStateBlur : public BatcherRenderState
+	{
+	public:
+		virtual void activated() override;
+		virtual void update() override;
+		int _iterationIndex;
+		int _iterationsMax;
+		static core::Vector2 _pixelOffset[4];
+	};
+
+	class BatcherStateBlurHide : public BatcherRenderState
+	{
+	public:
+		virtual void activated() override;
+		virtual void update() override;
+		int _iterationsMax;
+		int _frameCounter;
 	};
 }
 

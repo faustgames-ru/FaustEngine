@@ -452,6 +452,16 @@ namespace drawing
 		return _blurMap->getColor();
 	}
 
+	PostProcessVertex* quadVertices()
+	{
+		return _quadVertices;
+	}
+
+	ushort* quadIndices()
+	{
+		return _quadIndices;
+	}
+
 	/*
 	void PostProcessBloom::execute(graphics::TextureRenderTarget2d *source, uint tonemapId)
 	{

@@ -35,6 +35,7 @@ namespace graphics
 		static EffectPostProcessEmptyColor * postProcessEmptyColor();
 		static EffectPostProcessVBlurFilter * postProcessVBlurFilter();
 		static EffectPostProcessHBlurFilter * postProcessHBlurFilter();
+		static EffectPostProcessBlurPass * postProcessBlurPassFilter();
 		static EffectPostProcessBloomAddFilter * postProcessBloomAddFilter();
 
 	protected:
@@ -55,6 +56,8 @@ namespace graphics
 		static EffectPostProcessVBlurFilter _postProcessVBlurFilter;
 		static EffectPostProcessHBlurFilter _postProcessHBlurFilter;
 		static EffectPostProcessBloomAddFilter _postProcessBloomAddFilter;
+		static EffectPostProcessBlurPass _postProcessBlurPass;
+		
 	};
 }
 

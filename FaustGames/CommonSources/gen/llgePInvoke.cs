@@ -124,6 +124,12 @@ namespace llge
 		BoneFxBlur = 0x2,
 	}
 	
+	public enum BatcherMode
+	{
+		BatcherModeDefault = 0x0,
+		BatcherModeBlur = 0x1,
+	}
+	
 	[StructLayout(LayoutKind.Sequential)]
 	public struct PhysicsFixtureConfig
 	{
@@ -297,6 +303,14 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private IntPtr llge_TextureImage2d_getIndices (IntPtr classInstance);
+		public bool IsAtlasEntry ()
+		{
+			return llge_TextureImage2d_isAtlasEntry(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		[return: MarshalAs(UnmanagedType.I1)]
+		static extern private bool llge_TextureImage2d_isAtlasEntry (IntPtr classInstance);
 	}
 	
 	public class RenderTarget2d
@@ -1459,6 +1473,13 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private void llge_Batch2d_execute (IntPtr classInstance, bool usePostProcess);
+		public void SetBatcherMode (BatcherMode mode)
+		{
+			llge_Batch2d_setBatcherMode(ClassInstance, mode);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_Batch2d_setBatcherMode (IntPtr classInstance, BatcherMode mode);
 		public int GetRenderedVerticesCount ()
 		{
 			return llge_Batch2d_getRenderedVerticesCount(ClassInstance);

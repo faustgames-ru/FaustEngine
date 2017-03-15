@@ -124,6 +124,9 @@ namespace drawing
 		graphics::TextureRenderTarget2d *_target1;
 		*/
 	};
+
+	PostProcessVertex* quadVertices();
+	ushort* quadIndices();
 }
 
 #endif /*POSTPROCESS_H*/

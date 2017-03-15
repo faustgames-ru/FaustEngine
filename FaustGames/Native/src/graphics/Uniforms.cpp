@@ -12,6 +12,7 @@ namespace graphics
 	UniformInfo Uniforms::_normalmap("normalmap", UniformType::Sampler2D);
 	UniformInfo Uniforms::_time("time", UniformType::Float);	
 	UniformInfo Uniforms::_pixelSize("pixelSize", UniformType::Vector2);
+	UniformInfo Uniforms::_pixelOffset("pixelOffset", UniformType::Vector2);
 	UniformInfo Uniforms::_highlightColor("highlightColor", UniformType::Vector3);
 	UniformInfo Uniforms::_paintmask("paintmask", UniformType::Sampler2D);
 
@@ -71,6 +72,11 @@ namespace graphics
 		return &_pixelSize;
 	}
 
+	UniformInfo* Uniforms::pixelOffset()
+	{
+		return &_pixelOffset;
+	}
+
 	UniformInfo* Uniforms::highlightColor()
 	{
 		return &_highlightColor;
@@ -111,6 +117,7 @@ namespace graphics
 	UniformValueTexture UniformValues::_normalmap;
 	UniformValueFloat UniformValues::_time;
 	UniformValueVector2 UniformValues::_pixelSize;
+	UniformValueVector2 UniformValues::_pixelOffset;	
 	UniformValueVector3 UniformValues::_highlightColor;
 	UniformValueFloat UniformValues::_fogStart;
 	UniformValueFloat UniformValues::_fogDensity;

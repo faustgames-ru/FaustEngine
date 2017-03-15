@@ -24,6 +24,7 @@ namespace graphics
 		static UniformInfo *normalmap();
 		static UniformInfo *time();
 		static UniformInfo *pixelSize();
+		static UniformInfo *pixelOffset();
 		static UniformInfo *highlightColor();
 		static UniformInfo *fogStart();
 		static UniformInfo *fogDensity();
@@ -41,6 +42,7 @@ namespace graphics
 		static UniformInfo _normalmap;
 		static UniformInfo _time;
 		static UniformInfo _pixelSize;
+		static UniformInfo _pixelOffset;
 		static UniformInfo _highlightColor;
 		static UniformInfo _paintmask;
 		static UniformInfo _fogStart;
@@ -62,6 +64,7 @@ namespace graphics
 		static inline UniformValueTexture *normalmap(){ return &_normalmap; }
 		static inline UniformValueFloat *time(){ return &_time; }
 		static inline UniformValueVector2 *pixelSize(){ return &_pixelSize; }
+		static inline UniformValueVector2 *pixelOffset() { return &_pixelOffset; }
 		static inline UniformValueVector3 *highlightColor() { return &_highlightColor; }
 		static inline UniformValueFloat* fogStart() { return &_fogStart; }
 		static inline UniformValueFloat* fogDensity() { return &_fogDensity; }
@@ -83,6 +86,7 @@ namespace graphics
 		static UniformValueTexture _normalmap;
 		static UniformValueFloat _time;
 		static UniformValueVector2 _pixelSize;
+		static UniformValueVector2 _pixelOffset;
 		static UniformValueVector3 _highlightColor;
 		static UniformValueFloat _fogStart;
 		static UniformValueFloat _fogDensity;

@@ -22,13 +22,29 @@ namespace resources
 		std::string fileName;
 	};
 
+	struct ImageInfo
+	{
+		int Width;
+		int Height;
+		graphics::Image2dFormat::e Format;
+
+		ImageInfo(int width, int height, graphics::Image2dFormat::e format)
+		{
+			Width = width;
+			Height = height;
+			Format = format;
+		}
+	};
+
 	class ContentManager : public llge::IContentManager, public llge::ITextureBuffer2d
 	{
 	public:
 		ContentManager();
 		void cleanup();
 		unsigned int registerTexture(const char *name);
+		ImageInfo loadUnregisteredTextureSize(const char *name, llge::TextureQueryFormat queryFormat);
 		graphics::Image2dData * loadUnregisteredTexture(const char *name, llge::TextureQueryFormat queryFormat);
+		ImageInfo loadUnregisteredCompressedTextureSize(const char *name);
 		graphics::Image2dData * loadUnregisteredCompressedTexture(const char *name);
 
 		char* loadString(const char *name);

@@ -1,12 +1,2 @@
-﻿  StripeBuilder.cpp
-c:\_faust\faustengine\faustgames\native\src\terrain\stripebuilder.cpp(226): warning C4018: '<': signed/unsigned mismatch
-c:\_faust\faustengine\faustgames\native\src\terrain\stripebuilder.cpp(558): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-c:\_faust\faustengine\faustgames\native\src\terrain\stripebuilder.cpp(833): warning C4018: '<': signed/unsigned mismatch
-c:\_faust\faustengine\faustgames\native\src\terrain\stripebuilder.cpp(851): warning C4018: '<': signed/unsigned mismatch
-c:\_faust\faustengine\faustgames\native\src\terrain\stripebuilder.cpp(870): warning C4018: '<': signed/unsigned mismatch
-c:\_faust\faustengine\faustgames\native\src\terrain\stripebuilder.cpp(980): warning C4018: '<': signed/unsigned mismatch
-c:\_faust\faustengine\faustgames\native\src\terrain\stripebuilder.cpp(996): warning C4018: '<': signed/unsigned mismatch
-c:\_faust\faustengine\faustgames\native\src\terrain\stripebuilder.cpp(1004): warning C4018: '<': signed/unsigned mismatch
-c:\_faust\faustengine\faustgames\native\src\terrain\stripebuilder.cpp(1016): warning C4018: '<': signed/unsigned mismatch
-  llge.vcxproj -> C:\work\sources\github\moon\Solutions\Debug\llge.dll
+﻿  llge.vcxproj -> C:\work\sources\github\moon\Solutions\Debug\llge.dll
   llge.vcxproj -> C:\work\sources\github\moon\Solutions\Debug\llge.pdb (Full PDB)

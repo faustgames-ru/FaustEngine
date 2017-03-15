@@ -269,6 +269,11 @@ namespace graphics
 		return _tracedIndices.data();
 	}
 
+	bool TextureImage2d::isAtlasEntry()
+	{
+		return AtlasEntry;
+	}
+
 	struct PvrtcBlock
 	{
 		int i0;

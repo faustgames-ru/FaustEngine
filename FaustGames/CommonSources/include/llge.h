@@ -146,6 +146,12 @@ namespace llge
 		BoneFxBlur = 0x2,
 	};
 
+	enum BatcherMode
+	{
+		BatcherModeDefault = 0x0,
+		BatcherModeBlur = 0x1
+	};
+
 	/// physics structs
 	struct PhysicsFixtureConfig
 	{
@@ -244,6 +250,7 @@ namespace llge
 		virtual IntPtr API_CALL getVertices() = 0;
 		virtual int API_CALL getIndicesCount() = 0;
 		virtual IntPtr API_CALL getIndices() = 0;
+		virtual bool API_CALL isAtlasEntry() = 0;
 	};
 
 	class IRenderTarget2d : IBaseObject
@@ -516,6 +523,7 @@ namespace llge
 		virtual void API_CALL draw(IntPtr batcherConfig, IntPtr texturesConfig) = 0;
 		virtual void API_CALL drawSolid(int z, ITexture* textureId, uint lightmapId, void *vertices, int verticesCount, void *indices, int indicesCount, byte colorScale) = 0;
 		virtual void API_CALL execute(bool usePostProcess) = 0;
+		virtual void API_CALL setBatcherMode(BatcherMode mode) = 0;
 
 		virtual int API_CALL getRenderedVerticesCount() = 0;
 		virtual int API_CALL getRenderedPrimitivesCount() = 0;

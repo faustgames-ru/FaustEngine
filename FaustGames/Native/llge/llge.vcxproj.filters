@@ -845,6 +845,12 @@
     <ClInclude Include="..\src_etcpack\etcpack_lib.h">
       <Filter>third_party\etcpack</Filter>
     </ClInclude>
+    <ClInclude Include="..\shaders\post_process_blur_pass_frag.h">
+      <Filter>engine\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shaders\post_process_blur_pass_vert.h">
+      <Filter>engine\shaders</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\CommonSources\gen\llgePInvoke.cpp">

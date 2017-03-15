@@ -134,6 +134,126 @@ namespace resources
 		return loadUnregisteredTexture(name, llge::TextureQueryFormat::TQFRgba8888);
 	}
 
+	ImageInfo ContentManager::loadUnregisteredTextureSize(const char *name, llge::TextureQueryFormat queryFormat)
+	{
+		std::string path = name;
+		if (path.size() > 4)
+		{
+			if (queryFormat == llge::TQFRgba4444)
+			{
+				path[path.size() - 3] = texExt[0];
+				path[path.size() - 2] = texExt[1];
+				path[path.size() - 1] = texExt[2];
+				if (ContentProvider::existContent(path.c_str()))
+				{
+					return loadUnregisteredCompressedTextureSize(path.c_str());
+				}
+			}
+			else if (queryFormat == llge::TQFPlatformCompressed)
+			{
+				path[path.size() - 3] = _compressionExt[0];
+				path[path.size() - 2] = _compressionExt[1];
+				path[path.size() - 1] = _compressionExt[2];
+				if (ContentProvider::existContent(path.c_str()))
+				{
+					return loadUnregisteredCompressedTextureSize(path.c_str());
+				}
+			}
+		}
+		if (!ContentProvider::existContent(name))
+			return ImageInfo(0, 0, graphics::Image2dFormat::Rgba);
+		//todo: load data from content provider
+
+		switch (graphics::GraphicsDevice::Default.config.mipmapsLevel)
+		{
+		case 1:
+			ContentProvider::openContent((std::string(name) + "_1").c_str());
+			break;
+		case 2:
+			ContentProvider::openContent((std::string(name) + "_2").c_str());
+			break;
+		default:
+			ContentProvider::openContent(name);
+		}
+
+
+		int m_Width;
+		int m_Height;
+		png_structp m_PngPtr;
+		png_infop m_InfoPtr;
+		png_uint_32 m_BitDepth;
+		png_uint_32 m_Channels;
+		png_uint_32 m_ColorType;
+
+		png_byte pngsig[PNGSIGSIZE];
+		int is_png = 0;
+
+		//Read the 8 bytes from the stream into the sig buffer.
+		ContentProvider::read(pngsig, PNGSIGSIZE);
+
+		is_png = png_sig_cmp(pngsig, 0, PNGSIGSIZE);
+		if (is_png != 0)
+		{
+			/*
+			fprintf(stderr, "!png \n");
+			fprintf(stderr, (char *)pngsig);
+			fprintf(stderr, "\n");
+			*/
+			//throw ref new Exception(-1, "data is not recognized as a PNG");
+			return ImageInfo(0, 0, graphics::Image2dFormat::Rgba);
+		}
+
+		m_PngPtr = png_create_read_struct_2(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL, 0, pngMalloc, pngFree);
+
+		if (!m_PngPtr)
+		{
+			//throw ref new Exception(-1, "png_create_read_struct failed");
+			return ImageInfo(0, 0, graphics::Image2dFormat::Rgba);
+		}
+		png_set_read_fn(m_PngPtr, 0, readData);
+
+		m_InfoPtr = png_create_info_struct(m_PngPtr);
+
+		if (!m_InfoPtr)
+		{
+			png_destroy_read_struct(&m_PngPtr, 0, 0);
+			m_PngPtr = 0;
+			//throw ref new Exception(-1, "png_create_info_struct failed");
+			return ImageInfo(0, 0, graphics::Image2dFormat::Rgba);
+		}
+
+		if (setjmp(png_jmpbuf(m_PngPtr)))
+		{
+			png_destroy_read_struct(&m_PngPtr, &m_InfoPtr, 0);
+			//throw ref new Exception(-1, "Error during init_io");
+			return ImageInfo(0, 0, graphics::Image2dFormat::Rgba);
+		}
+
+		png_set_sig_bytes(m_PngPtr, 8);
+		png_read_info(m_PngPtr, m_InfoPtr);
+		int w = png_get_image_width(m_PngPtr, m_InfoPtr);
+		int h = png_get_image_height(m_PngPtr, m_InfoPtr);
+		m_Channels = png_get_channels(m_PngPtr, m_InfoPtr);
+		graphics::Image2dFormat::e imageFormat;
+		switch (m_Channels)
+		{
+		case 3:
+			imageFormat = graphics::Image2dFormat::Rgb;
+			break;
+		case 4:
+			imageFormat = graphics::Image2dFormat::Rgba;
+			break;
+		default:
+			imageFormat = graphics::Image2dFormat::Rgba;
+			break;
+		}
+
+		ImageInfo result(w, h, imageFormat);
+		png_destroy_info_struct(m_PngPtr, &m_InfoPtr);
+		png_destroy_read_struct(&m_PngPtr, 0, 0);
+		return result;
+	}
+	
 	graphics::Image2dData * ContentManager::loadUnregisteredTexture(const char *name, llge::TextureQueryFormat queryFormat)
 	{
 		std::string path = name;
@@ -311,6 +431,7 @@ namespace resources
 
 	struct CompressedTextureHeader
 	{
+		static int GetSize() { return 28; }
 		int Format;
 		int CompressionPercent;
 		int OriginWidth;
@@ -351,6 +472,15 @@ namespace resources
 		result.RawDataOffset = p - data;
 		data = p;
 		return result;
+	}
+
+	ImageInfo ContentManager::loadUnregisteredCompressedTextureSize(const char* name)
+	{
+		ContentProvider::openContent(name);
+		int size = ContentProvider::read(_image->Pixels, CompressedTextureHeader::GetSize()*2);
+		ContentProvider::closeContent();
+		CompressedTextureHeader header = getCompressedTextureHeader(_image->Pixels);
+		return ImageInfo(header.OriginWidth, header.OriginHeight, _image->Format);
 	}
 
 	graphics::Image2dData* ContentManager::loadUnregisteredCompressedTexture(const char* name)

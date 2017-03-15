@@ -101,6 +101,16 @@ namespace graphics
 	protected:
 	private:
 	};
+
+	class EffectPostProcessBlurPass : public EffectBase
+	{
+	public:
+		EffectPostProcessBlurPass();
+		~EffectPostProcessBlurPass();
+		void create();
+	protected:
+	private:
+	};
 }
 
 #endif /*EFFECT_POST_PROCESS_H*/

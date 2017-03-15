@@ -41,10 +41,12 @@ namespace graphics
 		virtual IntPtr API_CALL getVertices() OVERRIDE;
 		virtual int API_CALL getIndicesCount() OVERRIDE;
 		virtual IntPtr API_CALL getIndices() OVERRIDE;
+		virtual bool API_CALL isAtlasEntry() OVERRIDE;
 
         static TextureImage2d _empty;
 		static bool TraceTriangles;
 		bool AtlasEntry;
+
 	protected:
 	private:
 		TextureImage2d();

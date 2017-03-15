@@ -3,11 +3,18 @@
 
 #include "llge.h"
 #include "resources_classes.h"
-#include "../../src_rectanglebinpack/MaxRectsBinPack.h"
 
 namespace resources
 {
 	class BinPackNodesPool;
+	struct AtlasImageEntry;
+
+	struct RectSize
+	{
+		AtlasImageEntry *entry;
+		int width;
+		int height;
+	};
 
 	class BinPackRect
 	{
@@ -27,6 +34,7 @@ namespace resources
 	class BinPackNode
 	{
 	public:
+		void* userData;
 		BinPackRect rect;
 		BinPackRect inserted;
 		BinPackNode* childs[2];
@@ -84,8 +92,7 @@ namespace resources
 	public:
 		BinPackRect rect;
 		AtlasImageEntry* entry;
-		AtlasRect(rbp::Rect rect);
-		explicit AtlasRect(BinPackRect rect);
+		AtlasRect(BinPackRect rect, AtlasImageEntry* entry);
 	};
 
 	class AtlasPage

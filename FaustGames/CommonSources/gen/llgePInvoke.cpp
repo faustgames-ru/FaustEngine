@@ -66,6 +66,11 @@ namespace llge
 		return classInstance->getIndices();
 	}
 	
+	extern "C" DLLEXPORT bool API_CALL llge_TextureImage2d_isAtlasEntry (ITextureImage2d * classInstance)
+	{
+		return classInstance->isAtlasEntry();
+	}
+	
 	extern "C" DLLEXPORT IntPtr API_CALL llge_RenderTarget2d_getRenderTargetInstance (IRenderTarget2d * classInstance)
 	{
 		return classInstance->getRenderTargetInstance();
@@ -819,6 +824,11 @@ namespace llge
 	extern "C" DLLEXPORT void API_CALL llge_Batch2d_execute (IBatch2d * classInstance, bool usePostProcess)
 	{
 		classInstance->execute(usePostProcess);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_Batch2d_setBatcherMode (IBatch2d * classInstance, BatcherMode mode)
+	{
+		classInstance->setBatcherMode(mode);
 	}
 	
 	extern "C" DLLEXPORT int API_CALL llge_Batch2d_getRenderedVerticesCount (IBatch2d * classInstance)

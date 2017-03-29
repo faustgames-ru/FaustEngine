@@ -1166,7 +1166,7 @@ namespace drawing
 
 	void BatcherStateBlurHide::activated()
 	{
-		_iterationsMax = 30;
+		_iterationsMax = 60;
 		_frameCounter = _iterationsMax;
 	}
 

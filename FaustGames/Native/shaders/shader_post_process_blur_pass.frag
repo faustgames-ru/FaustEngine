@@ -13,5 +13,5 @@ void main()
 {
     gl_FragColor = (texture2D(texture, _texCoord0) + 
 		texture2D(texture, _texCoord)*2.0+ 
-		texture2D(texture, _texCoord1)) / 4.001;
+		texture2D(texture, _texCoord1)) / 4.1;
 }

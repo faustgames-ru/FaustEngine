@@ -986,7 +986,7 @@ namespace drawing
 	{
 		if (_snapShot == nullptr)
 		{
-			_snapShot = graphics::GraphicsDevice::Default.PostProcessTargets.pop();
+			_snapShot = graphics::GraphicsDevice::Default.PostProcessScaledTargets1.pop();
 		}
 		return _snapShot;		
 	}
@@ -995,7 +995,7 @@ namespace drawing
 	{
 		if (_blurShot == nullptr)
 		{
-			_blurShot = graphics::GraphicsDevice::Default.PostProcessTargets.pop();
+			_blurShot = graphics::GraphicsDevice::Default.PostProcessScaledTargets1.pop();
 		}
 		return _blurShot;
 	}
@@ -1011,7 +1011,7 @@ namespace drawing
 	{
 		if (_snapShot != nullptr)
 		{
-			graphics::GraphicsDevice::Default.PostProcessTargets.push(_snapShot);
+			graphics::GraphicsDevice::Default.PostProcessScaledTargets1.push(_snapShot);
 		}
 		_snapShot = nullptr;
 	}
@@ -1020,7 +1020,7 @@ namespace drawing
 	{
 		if (_blurShot != nullptr)
 		{
-			graphics::GraphicsDevice::Default.PostProcessTargets.push(_blurShot);
+			graphics::GraphicsDevice::Default.PostProcessScaledTargets1.push(_blurShot);
 		}
 		_blurShot = nullptr;
 	}
@@ -1118,7 +1118,7 @@ namespace drawing
 
 	void BatcherStateBlur::activated()
 	{
-		_iterationsMax = 30;
+		_iterationsMax = 360;
 		_iterationIndex = 0;
 	}
 

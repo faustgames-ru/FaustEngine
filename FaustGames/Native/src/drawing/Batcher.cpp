@@ -1110,17 +1110,15 @@ namespace drawing
 		setState(controller()->Blur);
 	}
 
-	core::Vector2 BatcherStateBlur::_pixelOffset[4] = 
+	core::Vector2 BatcherStateBlur::_pixelOffset[2] = 
 	{
-		core::Vector2(-1, 0),
-		core::Vector2(0, -1),
 		core::Vector2(1, 0),
 		core::Vector2(0, 1),
 	};
 
 	void BatcherStateBlur::activated()
 	{
-		_iterationsMax = 100;
+		_iterationsMax = 30;
 		_iterationIndex = 0;
 	}
 
@@ -1142,7 +1140,7 @@ namespace drawing
 				1.0f / static_cast<float>(snapShot->getWidth()),
 				1.0f / static_cast<float>(snapShot->getHeight()));
 
-			graphics::UniformValues::pixelOffset()->setValue(_pixelOffset[_iterationIndex % 4] * scale);
+			graphics::UniformValues::pixelOffset()->setValue(_pixelOffset[_iterationIndex % 2] * scale);
 			graphics::GraphicsDevice::Default.renderState.setDepth(graphics::DepthState::None);
 			graphics::GraphicsDevice::Default.renderState.setBlend(graphics::BlendState::None);
 			graphics::GraphicsDevice::Default.renderState.setEffect(graphics::Effects::postProcessBlurPassFilter());
@@ -1168,7 +1166,7 @@ namespace drawing
 
 	void BatcherStateBlurHide::activated()
 	{
-		_iterationsMax = 100;
+		_iterationsMax = 30;
 		_frameCounter = _iterationsMax;
 	}
 

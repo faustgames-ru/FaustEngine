@@ -391,7 +391,7 @@ namespace drawing
 		virtual void update() override;
 		int _iterationIndex;
 		int _iterationsMax;
-		static core::Vector2 _pixelOffset[4];
+		static core::Vector2 _pixelOffset[2];
 	};
 
 	class BatcherStateBlurHide : public BatcherRenderState

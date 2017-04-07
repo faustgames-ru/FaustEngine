@@ -1012,6 +1012,27 @@ namespace llge
 	public class P2t
 	{
 		public IntPtr ClassInstance;
+		public void SetContour (IntPtr vertices2f, uint count)
+		{
+			llge_P2t_setContour(ClassInstance, vertices2f, count);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_P2t_setContour (IntPtr classInstance, IntPtr vertices2f, uint count);
+		public void AddHole (IntPtr vertices2f, uint count)
+		{
+			llge_P2t_addHole(ClassInstance, vertices2f, count);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_P2t_addHole (IntPtr classInstance, IntPtr vertices2f, uint count);
+		public void Build ()
+		{
+			llge_P2t_build(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_P2t_build (IntPtr classInstance);
 		public void BuildContour (IntPtr vertices2f, uint count)
 		{
 			llge_P2t_buildContour(ClassInstance, vertices2f, count);

@@ -402,6 +402,9 @@ namespace llge
 	class IP2t : IBaseObject
 	{
 	public:	
+		virtual void API_CALL setContour(IntPtr vertices2f, uint count) = 0;
+		virtual void API_CALL addHole(IntPtr vertices2f, uint count) = 0;
+		virtual void API_CALL build() = 0;
 		virtual void API_CALL buildContour(IntPtr vertices2f, uint count) = 0;
 		virtual int API_CALL getTrianglesCount() = 0;
 		virtual void API_CALL getTriangles(IntPtr triangles) = 0;

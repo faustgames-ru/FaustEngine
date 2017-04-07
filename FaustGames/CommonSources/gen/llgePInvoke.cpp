@@ -536,6 +536,21 @@ namespace llge
 		classInstance->getIndices(meshIndex, indices);
 	}
 	
+	extern "C" DLLEXPORT void API_CALL llge_P2t_setContour (IP2t * classInstance, IntPtr vertices2f, uint count)
+	{
+		classInstance->setContour(vertices2f, count);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_P2t_addHole (IP2t * classInstance, IntPtr vertices2f, uint count)
+	{
+		classInstance->addHole(vertices2f, count);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_P2t_build (IP2t * classInstance)
+	{
+		classInstance->build();
+	}
+	
 	extern "C" DLLEXPORT void API_CALL llge_P2t_buildContour (IP2t * classInstance, IntPtr vertices2f, uint count)
 	{
 		classInstance->buildContour(vertices2f, count);

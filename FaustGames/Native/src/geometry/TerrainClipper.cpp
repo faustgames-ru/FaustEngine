@@ -477,6 +477,141 @@ namespace geometry
 		}
 	}
 
+	void P2t::setContour(IntPtr vertices2f, uint count)
+	{
+		_contour.clear();
+		_holes.clear();
+		_allPoints.clear();
+		_triangles.clear();
+
+		core::Vector2* vertices = static_cast<core::Vector2*>(vertices2f);
+		int startIndex = _allPoints.size();
+		for (uint i = 0; i < count; i++)
+		{
+			_allPoints.push_back(p2t::Point(vertices[i].getX(), vertices[i].getY()));
+		}
+		for (uint i = 0; i < count; i++)
+		{
+			bool hasEquals = false;
+			for (uint j = 0; j < startIndex; j++)
+			{
+				if (core::Vector2::equals(core::Vector2(_allPoints[j].x, _allPoints[j].y), core::Vector2(vertices[i].getX(), vertices[i].getY())))
+				{
+					hasEquals = true;
+					break;
+				}
+			}
+			for (uint j = 0; j < _contour.size(); j++)
+			{
+				if (core::Vector2::equals(core::Vector2(vertices[j].getX(), vertices[j].getY()), core::Vector2(vertices[i].getX(), vertices[i].getY())))
+				{
+					hasEquals = true;
+					break;
+				}
+			}
+			if (hasEquals)
+			{
+				continue;
+			}
+			_contour.push_back(startIndex + i);
+		}
+	}
+
+	void P2t::addHole(IntPtr vertices2f, uint count)
+	{
+		core::Vector2* vertices = static_cast<core::Vector2*>(vertices2f);
+		int startIndex = _allPoints.size();
+		for (uint i = 0; i < count; i++)
+		{
+			_allPoints.push_back(p2t::Point(vertices[i].getX(), vertices[i].getY()));
+		}
+		_holes.push_back(std::vector<int>());
+		for (uint i = 0; i < count; i++)
+		{
+			bool hasEquals = false;
+			for (uint j = 0; j < startIndex; j++)
+			{
+				if (core::Vector2::equals(core::Vector2(_allPoints[j].x, _allPoints[j].y), core::Vector2(vertices[i].getX(), vertices[i].getY())))
+				{
+					hasEquals = true;
+					break;
+				}
+			}
+			for (uint j = 0; j < _holes.back().size(); j++)
+			{
+				if (core::Vector2::equals(core::Vector2(vertices[j].getX(), vertices[j].getY()), core::Vector2(vertices[i].getX(), vertices[i].getY())))
+				{
+					hasEquals = true;
+					break;
+				}
+			}
+			if (hasEquals)
+				continue;
+			_holes.back().push_back(startIndex + i);
+		}
+	}
+
+	void P2t::build()
+	{
+		if (_contour.size() <= 2) return;
+		
+		std::vector<p2t::Point *> contour;
+		std::vector<std::vector<p2t::Point *>> holes;
+		
+		for (uint i = 0; i < _contour.size(); i++)
+		{
+			contour.push_back(_allPoints.data() + _contour[i]);
+		}
+		
+		for (uint i = 0; i < _holes.size(); i++)
+		{
+			holes.push_back(std::vector<p2t::Point *>());
+			for (uint j = 0; j < _holes[i].size(); j++)
+			{
+				holes.back().push_back(_allPoints.data() + _holes[i][j]);
+			}
+		}
+
+		p2t::CDT cdt(contour);
+		for (uint i = 0; i < holes.size(); i++)
+		{
+			cdt.AddHole(holes[i]);
+		}
+
+		cdt.Triangulate();
+		//todo: create triangles;
+		std::vector<p2t::Triangle *> triangles = cdt.GetTriangles();
+		p2t::Point *baseArd = _allPoints.data();
+		int count = 0;
+
+		for (uint i = 0; i < triangles.size(); i++)
+		{
+			p2t::Triangle *st = triangles[i];
+			bool removeTria = false;
+			uint t[3];
+			for (uint k = 0; k < 3; k++)
+			{
+				p2t::Point *p = st->GetPoint(k);
+				int n = p - baseArd;
+				if (n < _allPoints.size() && n >= 0)
+				{
+					t[k] = n;
+				}
+				else
+				{
+					removeTria = true;
+				}
+			}
+			if (!removeTria)
+			{
+				_triangles.push_back(t[0]);
+				_triangles.push_back(t[1]);
+				_triangles.push_back(t[2]);
+				count += 3;
+			}
+		}
+	}
+
 	void P2t::buildContour(IntPtr vertices2f, uint vertivesCount)
 	{
 		core::Vector2* vertices = static_cast<core::Vector2*>(vertices2f);
@@ -504,7 +639,6 @@ namespace geometry
 			contour.push_back(_allPoints.data() + i);
 		}
 		p2t::CDT cdt(contour);
-
 		cdt.Triangulate();
 		//todo: create triangles;
 		std::vector<p2t::Triangle *> triangles = cdt.GetTriangles();

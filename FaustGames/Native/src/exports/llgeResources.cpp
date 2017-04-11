@@ -34,7 +34,13 @@ namespace llge
 
 		virtual void API_CALL openObbFile(const char *obbFile)
 		{
-			resources::ObbContentProvider::openObbFile(obbFile);
+			resources::ObbContentProvider::openObbFile(obbFile, false);
+			resources::ContentProvider::ContentProviderInstance = _provider = _obb;
+		}
+
+		virtual void API_CALL remapObbFile(const char *obbFile)
+		{
+			resources::ObbContentProvider::openObbFile(obbFile, true);
 			resources::ContentProvider::ContentProviderInstance = _provider = _obb;
 		}
 

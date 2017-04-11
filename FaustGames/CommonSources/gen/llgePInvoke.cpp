@@ -1321,6 +1321,11 @@ namespace llge
 		classInstance->openAssets(jniEnv, assetsManager);
 	}
 	
+	extern "C" DLLEXPORT void API_CALL llge_ObbContentProvider_remapObbFile (IObbContentProvider * classInstance, const char * obbFile)
+	{
+		classInstance->remapObbFile(obbFile);
+	}
+	
 	extern "C" DLLEXPORT void API_CALL llge_ObbContentProvider_openObbFile (IObbContentProvider * classInstance, const char * obbFile)
 	{
 		classInstance->openObbFile(obbFile);

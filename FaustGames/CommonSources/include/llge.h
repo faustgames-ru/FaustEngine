@@ -705,6 +705,7 @@ namespace llge
 	public:
 		virtual void API_CALL refreshAssetsManager(void *jniEnv, void *assetsManager) = 0;
 		virtual void API_CALL openAssets(void *jniEnv, void *assetsManager) = 0;
+		virtual void API_CALL remapObbFile(const char *obbFile) = 0;
 		virtual void API_CALL openObbFile(const char *obbFile) = 0;
 		virtual void API_CALL closeObbFile() = 0;
 		virtual bool API_CALL existsContent(const char *name) = 0;

@@ -50,13 +50,19 @@ namespace resources
 		return -1;
 	}
 
-	void ObbContentProvider::openObbFile(const char *obbFile)
+	void ObbContentProvider::openObbFile(const char *obbFile, bool remap)
 	{		
 		int obbIndex = findObbFile(obbFile);
-		if (obbIndex >= 0) return;
-		obbIndex = _obbFiles.size();
-		_obbFiles.push_back(obbFile);
 
+		if (obbIndex < 0) 
+		{
+			obbIndex = _obbFiles.size();
+			_obbFiles.push_back(obbFile);
+		}
+		else
+		{
+			if (!remap) return;
+		}
 		//_obbPath = obbFile;
 		_obbFile = fopen(obbFile, "rb");
 		int32_t count;

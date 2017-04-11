@@ -2244,6 +2244,13 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private void llge_ObbContentProvider_openAssets (IntPtr classInstance, IntPtr jniEnv, IntPtr assetsManager);
+		public void RemapObbFile (string obbFile)
+		{
+			llge_ObbContentProvider_remapObbFile(ClassInstance, obbFile);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_ObbContentProvider_remapObbFile (IntPtr classInstance, string obbFile);
 		public void OpenObbFile (string obbFile)
 		{
 			llge_ObbContentProvider_openObbFile(ClassInstance, obbFile);

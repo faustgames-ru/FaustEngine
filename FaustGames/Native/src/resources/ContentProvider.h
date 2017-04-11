@@ -30,7 +30,7 @@ namespace resources
 	class ObbContentProvider
 	{
 	public:
-		static void openObbFile(const char *obbFile);
+		static void openObbFile(const char *obbFile, bool remap);
 		static void closeObbFile();
 
         static bool existsContent(const char *name);

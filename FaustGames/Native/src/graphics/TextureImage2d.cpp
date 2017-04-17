@@ -994,6 +994,24 @@ namespace graphics
 		_empty.cleanup();
 	}
 
+	bool TextureImage2d::isTextureFormatSupported(Image2dFormat::e format)
+	{
+		GLint numFormats = 0;
+		glGetIntegerv(GL_NUM_COMPRESSED_TEXTURE_FORMATS, &numFormats);
+		_formats.resize(numFormats);
+		glGetIntegerv(GL_COMPRESSED_TEXTURE_FORMATS, _formats.data());
+
+		int f = getFormat(format);
+		for (int i = 0; i < _formats.size(); i++)
+		{
+			if (f == _formats[i])
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
 	int TextureImage2d::Size(0);
 
 	TextureImage2d TextureImage2d::_empty;

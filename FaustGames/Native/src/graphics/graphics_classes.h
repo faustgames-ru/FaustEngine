@@ -32,6 +32,31 @@ namespace graphics
 			Dxt = 0x8,
 		};
 
+		static e FromLlgeFormat(llge::TextureImage2dFormat value)
+		{
+			switch (value)
+			{
+			case llge::TFRgba8888: 
+				return Rgba;
+			case llge::TFRgb888: 
+				return Rgb;
+			case llge::TFRgba4444: 
+				return Rgba4444;
+			case llge::TFPvrtc12: 
+				return Pvrtc12;
+			case llge::TFPvrtc14: 
+				return Pvrtc14;
+			case llge::TFAtc: 
+				return Atc;
+			case llge::TFEtc2: 
+				return Etc2;
+			case llge::TFDxt: 
+				return Dxt;
+			default: 
+				return Rgba;
+			}
+		}
+
 		static llge::TextureImage2dFormat ToLlgeFormat(e value)
 		{
 			switch (value)

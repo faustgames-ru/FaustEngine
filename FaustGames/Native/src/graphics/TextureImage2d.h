@@ -30,6 +30,8 @@ namespace graphics
 		//void virtual setData(int width, int height, Image2dFormat::e format, unsigned int *pixels);
 		static void createStatic();
 		static void cleanupStatic();
+		static bool isTextureFormatSupported(Image2dFormat::e format);
+
         virtual IntPtr API_CALL getTextureImageInstance(){ return this; }
 		virtual ITexture* API_CALL getTexture(){ return this; }
 		virtual void API_CALL LoadPixels(int width, int height, llge::TextureImage2dFormat format, void *pixels) override;

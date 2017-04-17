@@ -254,14 +254,19 @@ namespace llge
 		}
 
 
-		virtual void API_CALL cleanup()
+		virtual void API_CALL cleanup() override
 		{
 			EFFECTS_CALL_CLEANUP;
 		}
 
-		virtual void API_CALL dispose()
+		virtual void API_CALL dispose() override
 		{
 			delete this;
+		}
+
+		virtual bool API_CALL isTextureFormatSupported(TextureImage2dFormat format) override
+		{
+			return TextureImage2d::isTextureFormatSupported(Image2dFormat::FromLlgeFormat(format));
 		}
 
 	};

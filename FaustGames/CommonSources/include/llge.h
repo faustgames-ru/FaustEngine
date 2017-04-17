@@ -330,6 +330,8 @@ namespace llge
 		virtual void API_CALL grabDefaultRenderTarget() = 0;
 		virtual void API_CALL cleanup() = 0;
 		virtual void API_CALL dispose() = 0;
+
+		virtual bool API_CALL isTextureFormatSupported(TextureImage2dFormat format) = 0;
 	};
 
 	class IGraphicsFactory : IBaseObject

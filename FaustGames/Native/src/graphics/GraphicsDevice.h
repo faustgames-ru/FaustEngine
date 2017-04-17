@@ -158,7 +158,7 @@ namespace graphics
 		int getPixelsWidth();
 		int getPixelsHeight();
 		void readPixels(void * pixels);
-        static void create();
+		static void create();
 		PostProcessTargetManager PostProcessTargets;
 		PostProcessTargetManager PostProcessScaledTargets1;
 		PostProcessTargetManager PostProcessScaledTargets2;

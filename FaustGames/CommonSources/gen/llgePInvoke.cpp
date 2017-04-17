@@ -321,6 +321,11 @@ namespace llge
 		classInstance->dispose();
 	}
 	
+	extern "C" DLLEXPORT bool API_CALL llge_GraphicsFacade_isTextureFormatSupported (IGraphicsFacade * classInstance, TextureImage2dFormat format)
+	{
+		return classInstance->isTextureFormatSupported(format);
+	}
+	
 	extern "C" DLLEXPORT IGraphicsFacade * API_CALL llge_GraphicsFactory_createGraphicsFacade (IGraphicsFactory * classInstance)
 	{
 		return classInstance->createGraphicsFacade();

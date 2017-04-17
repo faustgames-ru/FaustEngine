@@ -686,6 +686,14 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private void llge_GraphicsFacade_dispose (IntPtr classInstance);
+		public bool IsTextureFormatSupported (TextureImage2dFormat format)
+		{
+			return llge_GraphicsFacade_isTextureFormatSupported(ClassInstance, format);
+		}
+		
+		[DllImport(Version.Dll)]
+		[return: MarshalAs(UnmanagedType.I1)]
+		static extern private bool llge_GraphicsFacade_isTextureFormatSupported (IntPtr classInstance, TextureImage2dFormat format);
 	}
 	
 	public class GraphicsFactory

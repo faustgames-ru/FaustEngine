@@ -275,9 +275,12 @@ namespace resources
 		for (uint i = 0; i < _inputPack.size(); i++)
 		{
 			RectSize size;
-			/*
-			ImageInfo imageInfo = ContentManager::Default.loadUnregisteredTextureSize(_inputPack[i]->path.c_str(), getQueryFormat());
-			*/
+			
+			//ImageInfo imageInfo = ContentManager::Default.loadUnregisteredTextureSize(_inputPack[i]->path.c_str(), getQueryFormat());
+            
+            //size.width = alignInfo.alignWidth(imageInfo.Width);
+            //size.height = alignInfo.alignHeight(imageInfo.Height);
+            
 			size.entry = _inputPack[i];
 			size.width = _inputPack[i]->input.width;
 			size.height = _inputPack[i]->input.height;
@@ -333,7 +336,12 @@ namespace resources
 				AtlasRect rect = page->rects[i];
 				
 				graphics::Image2dData* image = ContentManager::Default.loadUnregisteredTexture(page->rects[i].entry->path.c_str(), getQueryFormat());
-								
+                if (image == nullptr)
+                {
+                    std::string path =page->rects[i].entry->path.c_str();
+                    continue;
+                }
+                
 				llge::TextureImage2dFormat format = graphics::Image2dFormat::ToLlgeFormat(image->Format);
 				if (format != _internalFormat)
 				{

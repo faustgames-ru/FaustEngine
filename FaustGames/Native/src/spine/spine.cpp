@@ -7,11 +7,17 @@ void _spAtlasPage_createTexture(spAtlasPage* self, const char* path)
 {
 	graphics::TextureImage2d* texture;
 	spine::AtlasRenderObject* renderObject = static_cast<spine::AtlasRenderObject *>(self->atlas->rendererObject);
-
-	if (std::string(path).find("Pirat_4_PNG_kist_lev") != std::string::npos)
+	if (renderObject->texture != nullptr)
 	{
-		renderObject = static_cast<spine::AtlasRenderObject *>(self->atlas->rendererObject);
+		graphics::Image2dData image;
+		resources::ContentManager::Default.loadPngTexture(renderObject->texture, &image);
+		texture = new graphics::TextureImage2d(false, true);
+		texture->create();
+		texture->setData(&image);
+		self->rendererObject = texture;
+		return;
 	}
+	
 
 	int w = static_cast<int>(core::Math::trunc(self->width*renderObject->applyedCompression));
 	int h = static_cast<int>(core::Math::trunc(self->height*renderObject->applyedCompression));
@@ -24,8 +30,7 @@ void _spAtlasPage_createTexture(spAtlasPage* self, const char* path)
 			if (replace[i] == '/')
 				replace[i] = '_';
 		}
-
-
+		
 		texture = resources::ContentManager::Default.addLoadTexture(replace.c_str(), w, h, renderObject->pagesFormat);
 		resources::ContentManager::Default._loadedImages[replace] = texture;
 	}

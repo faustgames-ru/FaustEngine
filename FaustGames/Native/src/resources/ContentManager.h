@@ -43,6 +43,7 @@ namespace resources
 		void cleanup();
 		unsigned int registerTexture(const char *name);
 		ImageInfo loadUnregisteredTextureSize(const char *name, llge::TextureQueryFormat queryFormat);
+		void loadPngTexture(void* data, graphics::Image2dData* result);
 		graphics::Image2dData * loadUnregisteredTexture(const char *name, llge::TextureQueryFormat queryFormat);
 		ImageInfo loadUnregisteredCompressedTextureSize(const char *name);
 		graphics::Image2dData * loadUnregisteredCompressedTexture(const char *name);

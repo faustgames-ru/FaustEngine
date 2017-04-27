@@ -607,7 +607,140 @@ namespace spine
 		}
 		_aabb = aabb;
 	}
-	
+
+	std::vector<drawing::Mesh2dVertex> _vertices;
+	std::vector<ushort> _indices;
+	graphics::Texture* _meshTexture;
+	void CacheMesh(drawing::BatcherSpineMesh* mesh)
+	{
+		_meshTexture = mesh->texture;
+		int startIndex = _vertices.size();
+		
+		int vCount = mesh->VerticesCount * 2;
+		for (int i = 0; i <vCount; )
+		{
+			drawing::Mesh2dVertex v;
+			v.x = mesh->Vertices[i];
+			v.u = mesh->Uvs[i];
+			i++;
+			v.y = mesh->Vertices[i];
+			v.v = mesh->Uvs[i];
+			i++;
+			v.z = mesh->Z;
+			v.color = mesh->Color;
+			_vertices.push_back(v);
+		}
+
+		for (int i = 0; i <mesh->IndicesCount; i++)
+		{
+			_indices.push_back(static_cast<ushort>(startIndex + mesh->Indices[i]));
+		}
+
+	}
+
+	void RenderCahedMesh(graphics::GraphicsDevice* graphicsDevice)
+	{
+		graphicsDevice->renderState.setBlend(graphics::BlendState::Alpha);
+		graphicsDevice->renderState.setDepth(graphics::DepthState::None);
+		graphicsDevice->renderState.setEffect(graphics::Effects::textureColor());
+		graphics::UniformValues::texture()->setValue(_meshTexture->getHandle());
+		graphicsDevice->drawPrimitives(graphics::VertexFormats::positionTextureColor(),
+			_vertices.data(), _indices.data(), _indices.size() / 3);
+	}
+
+	void SpineSkeleton::renderWithoutBatch()
+	{
+		_vertices.clear();
+		_indices.clear();
+		_bounds.clear();
+		spSkeleton *s = (spSkeleton *)_spSkeleton;
+		geometry::Aabb2d aabb;
+		_mesh.Z = _transform.getWz();
+		graphics::EffectBase * effectInstance = graphics::RenderConverter::getInstance()->getEffect(llge::EffectTextureColor);
+		_lightingConfig.texture = 0;
+		_lightingConfig.lightmap = 0;
+		_mesh.State.config = &_lightingConfig;
+		float colorScale = 0.5f;
+		for (int i = 0; i < s->slotsCount; i++)
+		{
+			spSlot* slot = s->drawOrder[i];
+			if (!slot->data)
+				continue;
+			if (!slot->attachment) continue;
+			float a = slot->a*s->a;
+			_mesh.Color = graphics::Color::fromRgba(slot->r*s->r*colorScale*a, slot->g*s->g*colorScale*a, slot->b*s->b*colorScale*a, a);
+			_mesh.State.Blend = slot->data->blendMode == SP_BLEND_MODE_NORMAL
+				? graphics::BlendState::Alpha
+				: graphics::BlendState::Additive;
+
+			SpineSkeletonBone* bone = _bones[slot->bone->data->index];
+
+			_mesh.State.Effect = graphics::Effects::textureColor();
+			
+			switch (slot->attachment->type)
+			{
+			case SP_ATTACHMENT_REGION:
+			{
+				spRegionAttachment* region = SUB_CAST(spRegionAttachment, slot->attachment);
+				spRegionAttachment_computeWorldVertices(region, slot->bone, _mesh.Vertices);
+				for (int j = 0; j < 8; j += 2)
+				{
+					transform(_mesh.Vertices + j, _mesh.Vertices + j + 1);
+					aabb.expand(_mesh.Vertices[j], _mesh.Vertices[j + 1]);
+				}
+				_mesh.Uvs = region->uvs;
+				_mesh.Indices = _quadIndices;
+				_mesh.IndicesCount = 6;
+				_mesh.VerticesCount = 4;
+				_mesh.texture = getTexture(region->rendererObject);
+				_lightingConfig.texture = getTextureId(region->rendererObject);
+				CacheMesh(&_mesh);
+				break;
+			}
+			case SP_ATTACHMENT_BOUNDING_BOX:
+			{
+				spBoundingBoxAttachment* boundingBox = SUB_CAST(spBoundingBoxAttachment, slot->attachment);
+				_bounds.push_back(SpineSkeletonBounds());
+				SpineSkeletonBounds& bounds = _bounds.back();
+				spBoundingBoxAttachment_computeWorldVertices(boundingBox, slot, bounds.vertices);
+				bounds.count = boundingBox->super.worldVerticesLength;
+				break;
+			}
+			case SP_ATTACHMENT_LINKED_MESH:
+			{
+				break;
+			}
+			case SP_ATTACHMENT_MESH:
+			{
+				spMeshAttachment* mesh = SUB_CAST(spMeshAttachment, slot->attachment);
+				spMeshAttachment_computeWorldVertices(mesh, slot, _mesh.Vertices);
+
+				spMeshAttachment_updateUVs_fixed(mesh, _uvBuffer);
+
+				for (int j = 0; j < mesh->super.worldVerticesLength; j += 2)
+				{
+					transform(_mesh.Vertices + j, _mesh.Vertices + j + 1);
+					aabb.expand(_mesh.Vertices[j], _mesh.Vertices[j + 1]);
+				}
+				_mesh.Uvs = _uvBuffer;
+				_mesh.Indices = mesh->triangles;
+				_mesh.IndicesCount = mesh->trianglesCount;
+				_mesh.VerticesCount = mesh->super.worldVerticesLength / 2;
+				_mesh.texture = getTexture(mesh->rendererObject);
+				_lightingConfig.texture = getTextureId(mesh->rendererObject);
+				CacheMesh(&_mesh);
+				break;
+			}
+			default:
+			{
+				break;
+			}
+			}
+		}
+		RenderCahedMesh(&graphics::GraphicsDevice::Default);
+		_aabb = aabb;
+	}
+
 	void SpineSkeleton::cleanup()
 	{
 		if (_spSkeleton)

@@ -351,7 +351,10 @@ namespace graphics
 
 	void GraphicsDevice::readPixels(void* pixels)
 	{
+		//glGetTexImage(actualRenderTarget->getTextureHandle(), 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
+
 		glReadPixels(0, 0, getPixelsWidth(), getPixelsHeight(), GL_RGBA, GL_UNSIGNED_BYTE, pixels);
+		Errors::check(Errors::UnknownAction);
 	}
 	
 	void GraphicsDevice::create()

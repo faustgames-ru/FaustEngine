@@ -1673,6 +1673,13 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private void llge_SpineSkeleton_render (IntPtr classInstance, IntPtr batch, int lightmapId, GraphicsEffects effect, byte colorScale);
+		public void RenderWithoutBatch ()
+		{
+			llge_SpineSkeleton_renderWithoutBatch(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_SpineSkeleton_renderWithoutBatch (IntPtr classInstance);
 		public int GetGeometry (IntPtr vertices, int verticeLimit, IntPtr indices, int indicesLimit)
 		{
 			return llge_SpineSkeleton_getGeometry(ClassInstance, vertices, verticeLimit, indices, indicesLimit);
@@ -1918,6 +1925,13 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private void llge_SpineResource_load (IntPtr classInstance, String atlasText, String jsonText, String dir, TextureQueryFormat format, float applyedCompression);
+		public void LoadWithPngImage (String atlasText, String jsonText, String dir, IntPtr texture)
+		{
+			llge_SpineResource_loadWithPngImage(ClassInstance, atlasText, jsonText, dir, texture);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_SpineResource_loadWithPngImage (IntPtr classInstance, String atlasText, String jsonText, String dir, IntPtr texture);
 		public void UnLoad ()
 		{
 			llge_SpineResource_unLoad(ClassInstance);

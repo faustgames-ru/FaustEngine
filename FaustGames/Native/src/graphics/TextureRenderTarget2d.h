@@ -9,6 +9,7 @@ namespace graphics
 	class IRenderTarget
 	{
 	public:
+		virtual GLuint getTextureHandle() = 0;
 		virtual GLuint getFramebuffer() = 0;
 		virtual int getWidth() = 0;
 		virtual int getHeight() = 0;
@@ -19,6 +20,7 @@ namespace graphics
 	public:
 		TextureRenderTarget2d();
 		TextureRenderTarget2d(bool filter);
+		virtual GLuint getTextureHandle() override { return getHandle(); }
 		virtual int getWidth(){ return _width; }
 		virtual int getHeight(){ return _height; }
 		virtual GLuint getFramebuffer(){ return _frameBuffer; }

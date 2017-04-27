@@ -564,6 +564,7 @@ namespace llge
 
 		virtual void API_CALL renderEx(IBatch2d * batch, IntPtr effectConfig, GraphicsEffects effect, byte colorScale) = 0;
 		virtual void API_CALL render(IBatch2d * batch, int lightmapId, GraphicsEffects effect, byte colorScale) = 0;
+		virtual void API_CALL renderWithoutBatch() = 0;
 		virtual int API_CALL getGeometry(void *vertices, int verticeLimit, void *indices, int indicesLimit) = 0;
 		virtual IntPtr API_CALL getNativeInstance() = 0;
 		virtual void API_CALL updateWorldTransform() = 0;
@@ -631,6 +632,7 @@ namespace llge
 	{
 	public:
 		virtual void API_CALL load(String atlasText, String jsonText, String dir, TextureQueryFormat format, float applyedCompression) = 0;
+		virtual void API_CALL loadWithPngImage(String atlasText, String jsonText, String dir, void* texture) = 0;
 		virtual void API_CALL unLoad() = 0;
 		virtual ISpineAnimation* API_CALL getSpineAnimation(int i) = 0;
 		virtual int API_CALL getSpineAnimationsCount() = 0;

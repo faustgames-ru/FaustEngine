@@ -961,6 +961,11 @@ namespace llge
 		classInstance->render(batch, lightmapId, effect, colorScale);
 	}
 	
+	extern "C" DLLEXPORT void API_CALL llge_SpineSkeleton_renderWithoutBatch (ISpineSkeleton * classInstance)
+	{
+		classInstance->renderWithoutBatch();
+	}
+	
 	extern "C" DLLEXPORT int API_CALL llge_SpineSkeleton_getGeometry (ISpineSkeleton * classInstance, void * vertices, int verticeLimit, void * indices, int indicesLimit)
 	{
 		return classInstance->getGeometry(vertices, verticeLimit, indices, indicesLimit);
@@ -1109,6 +1114,11 @@ namespace llge
 	extern "C" DLLEXPORT void API_CALL llge_SpineResource_load (ISpineResource * classInstance, String atlasText, String jsonText, String dir, TextureQueryFormat format, float applyedCompression)
 	{
 		classInstance->load(atlasText, jsonText, dir, format, applyedCompression);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_SpineResource_loadWithPngImage (ISpineResource * classInstance, String atlasText, String jsonText, String dir, void * texture)
+	{
+		classInstance->loadWithPngImage(atlasText, jsonText, dir, texture);
 	}
 	
 	extern "C" DLLEXPORT void API_CALL llge_SpineResource_unLoad (ISpineResource * classInstance)

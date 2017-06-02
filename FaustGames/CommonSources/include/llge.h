@@ -324,7 +324,7 @@ namespace llge
 		virtual void API_CALL setEffectConstantColor(GraphicsEffects effect, char *name, uint value) = 0;
 		virtual int API_CALL getPixelsWidth() = 0;
 		virtual int API_CALL getPixelsHeight() = 0;
-		virtual void API_CALL getPixels(IntPtr target) = 0;
+		virtual void API_CALL getPixels(IntPtr target, bool inverse) = 0;
 
         virtual void API_CALL create() = 0;
 		virtual void API_CALL grabDefaultRenderTarget() = 0;

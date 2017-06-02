@@ -296,9 +296,9 @@ namespace llge
 		return classInstance->getPixelsHeight();
 	}
 	
-	extern "C" DLLEXPORT void API_CALL llge_GraphicsFacade_getPixels (IGraphicsFacade * classInstance, IntPtr target)
+	extern "C" DLLEXPORT void API_CALL llge_GraphicsFacade_getPixels (IGraphicsFacade * classInstance, IntPtr target, bool inverse)
 	{
-		classInstance->getPixels(target);
+		classInstance->getPixels(target, inverse);
 	}
 	
 	extern "C" DLLEXPORT void API_CALL llge_GraphicsFacade_create (IGraphicsFacade * classInstance)

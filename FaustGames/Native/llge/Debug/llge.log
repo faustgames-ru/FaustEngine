@@ -1,5 +1,9 @@
-﻿  SpineSkeleton.cpp
-  LINK : C:\work\sources\github\moon\Solutions\Debug\llge.dll not found or not built by the last incremental link; performing full link
-     Creating library C:\work\sources\github\moon\Solutions\Debug\llge.lib and object C:\work\sources\github\moon\Solutions\Debug\llge.exp
+﻿  PostProcess.cpp
+c:\_faust\faustengine\faustgames\native\src\drawing\postprocess.cpp(122): warning C4267: 'argument': conversion from 'size_t' to 'unsigned short', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\drawing\postprocess.cpp(123): warning C4267: 'argument': conversion from 'size_t' to 'unsigned short', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\drawing\postprocess.cpp(126): warning C4267: 'argument': conversion from 'size_t' to 'unsigned short', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\drawing\postprocess.cpp(130): warning C4267: 'argument': conversion from 'size_t' to 'unsigned short', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\drawing\postprocess.cpp(131): warning C4267: 'argument': conversion from 'size_t' to 'unsigned short', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\drawing\postprocess.cpp(134): warning C4267: 'argument': conversion from 'size_t' to 'unsigned short', possible loss of data
   llge.vcxproj -> C:\work\sources\github\moon\Solutions\Debug\llge.dll
   llge.vcxproj -> C:\work\sources\github\moon\Solutions\Debug\llge.pdb (Full PDB)

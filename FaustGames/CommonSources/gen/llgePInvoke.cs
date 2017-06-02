@@ -651,13 +651,13 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private int llge_GraphicsFacade_getPixelsHeight (IntPtr classInstance);
-		public void GetPixels (IntPtr target)
+		public void GetPixels (IntPtr target, bool inverse)
 		{
-			llge_GraphicsFacade_getPixels(ClassInstance, target);
+			llge_GraphicsFacade_getPixels(ClassInstance, target, inverse);
 		}
 		
 		[DllImport(Version.Dll)]
-		static extern private void llge_GraphicsFacade_getPixels (IntPtr classInstance, IntPtr target);
+		static extern private void llge_GraphicsFacade_getPixels (IntPtr classInstance, IntPtr target, bool inverse);
 		public void Create ()
 		{
 			llge_GraphicsFacade_create(ClassInstance);

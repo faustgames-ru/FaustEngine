@@ -68,6 +68,8 @@ namespace graphics
 	
 	void API_CALL TextureRenderTarget2d::cleanup()
 	{
+		if (_frameBuffer == 0) return;
+		if (_depthBuffer == 0) return;
 		glDeleteTextures(1, &_handle);
 		Errors::check(Errors::DeleteTexture);
 		glDeleteFramebuffers(1, &_frameBuffer);

@@ -248,9 +248,9 @@ namespace llge
 			return graphicsDevice->getPixelsHeight();
 		}
 
-		virtual void API_CALL getPixels(IntPtr target) 
+		virtual void API_CALL getPixels(IntPtr target, bool inverse) 
 		{
-			return graphicsDevice->readPixels(target);
+			return graphicsDevice->readPixels(target, inverse);
 		}
 
 

@@ -349,11 +349,23 @@ namespace graphics
 	}
 
 
-	void GraphicsDevice::readPixels(void* pixels)
+	void GraphicsDevice::readPixels(void* pixels, bool inverse)
 	{
 		//glGetTexImage(actualRenderTarget->getTextureHandle(), 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
-
 		glReadPixels(0, 0, getPixelsWidth(), getPixelsHeight(), GL_RGBA, GL_UNSIGNED_BYTE, pixels);
+		if (inverse)
+		{
+			unsigned char* chras = static_cast<unsigned char*>(pixels);
+			int size = getPixelsWidth()*getPixelsHeight();
+			unsigned char c0, c2;
+			for (int i = 0; i < size; i += 4)
+			{
+				c0 = chras[0];
+				c2 = chras[2];
+				chras[0] = c2;
+				chras[2] = c0;
+			}
+		}
 		Errors::check(Errors::UnknownAction);
 	}
 	

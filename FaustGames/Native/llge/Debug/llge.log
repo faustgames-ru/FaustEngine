@@ -1,9 +1,73 @@
-﻿  PostProcess.cpp
-c:\_faust\faustengine\faustgames\native\src\drawing\postprocess.cpp(122): warning C4267: 'argument': conversion from 'size_t' to 'unsigned short', possible loss of data
-c:\_faust\faustengine\faustgames\native\src\drawing\postprocess.cpp(123): warning C4267: 'argument': conversion from 'size_t' to 'unsigned short', possible loss of data
-c:\_faust\faustengine\faustgames\native\src\drawing\postprocess.cpp(126): warning C4267: 'argument': conversion from 'size_t' to 'unsigned short', possible loss of data
-c:\_faust\faustengine\faustgames\native\src\drawing\postprocess.cpp(130): warning C4267: 'argument': conversion from 'size_t' to 'unsigned short', possible loss of data
-c:\_faust\faustengine\faustgames\native\src\drawing\postprocess.cpp(131): warning C4267: 'argument': conversion from 'size_t' to 'unsigned short', possible loss of data
-c:\_faust\faustengine\faustgames\native\src\drawing\postprocess.cpp(134): warning C4267: 'argument': conversion from 'size_t' to 'unsigned short', possible loss of data
+﻿  llgeGeometry.cpp
+  VertexAttachment.c
+  TransformConstraintData.c
+  TransformConstraint.c
+  SlotData.c
+  Slot.c
+  Skin.c
+  SkeletonJson.c
+  SkeletonData.c
+  SkeletonBounds.c
+  Skeleton.c
+  RegionAttachment.c
+  PathConstraintData.c
+  PathConstraint.c
+  PathAttachment.c
+  MeshAttachment.c
+  Json.c
+  IkConstraintData.c
+  IkConstraint.c
+  extension.c
+  EventData.c
+  Generating Code...
+  Compiling...
+  Event.c
+  BoundingBoxAttachment.c
+  BoneData.c
+  Bone.c
+  AttachmentLoader.c
+  Attachment.c
+  AtlasAttachmentLoader.c
+  Atlas.c
+  AnimationStateData.c
+  AnimationState.c
+  Animation.c
+  zutil.c
+  uncompr.c
+  trees.c
+  inftrees.c
+  inflate.c
+  inffast.c
+  infback.c
+  gzwrite.c
+  gzread.c
+  Generating Code...
+  Compiling...
+  gzlib.c
+  gzclose.c
+  deflate.c
+  crc32.c
+  compress.c
+  adler32.c
+  pngwutil.c
+  pngwtran.c
+  pngwrite.c
+  pngwio.c
+  pngtrans.c
+  pngtest.c
+  pngset.c
+  pngrutil.c
+  pngrtran.c
+  pngrio.c
+  pngread.c
+  pngpread.c
+  pngmem.c
+  pngget.c
+  Generating Code...
+  Compiling...
+  pngerror.c
+  png.c
+  Generating Code...
+     Creating library C:\work\sources\github\moon\Solutions\Debug\llge.lib and object C:\work\sources\github\moon\Solutions\Debug\llge.exp
   llge.vcxproj -> C:\work\sources\github\moon\Solutions\Debug\llge.dll
   llge.vcxproj -> C:\work\sources\github\moon\Solutions\Debug\llge.pdb (Full PDB)

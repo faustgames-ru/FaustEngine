@@ -6,7 +6,7 @@
 
 namespace geometry
 {
-
+	/*
 	class GeometryConstants
 	{
 	public:
@@ -22,11 +22,7 @@ namespace geometry
 		core::StaticArray<int, 16384> items;
 		int iterations;
 	};
-
-
-	struct Quadtree2dItem;
-	class Quadtree2dNode;
-	class Quadtree2d;
+	*/
 }
 
 #endif /*GEOMETRY_CLASSES_H*/

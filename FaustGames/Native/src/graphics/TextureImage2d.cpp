@@ -3,10 +3,13 @@
 #include "Errors.h"
 #include "GraphicsDevice.h"
 #include "Color.h"
+
+#ifdef ___UNIFIED___
+#else
 #include "../../src_decompressors/PVRTDecompress.h"
 #include "../../src_decompress_ati/DecompressAtc.h"
 #include "../../src_etcpack/etcpack_lib.h"
-
+#endif
 
 #define ATC_RGB_AMD							0x8C92
 #define ATC_RGBA_EXPLICIT_ALPHA_AMD			0x8C93
@@ -469,6 +472,8 @@ namespace graphics
 				}
 				*/
 				//__android_log_print(ANDROID_LOG_ERROR, "TRACKERS", "%s", exts);
+#ifdef ___UNIFIED___
+#else
 				if (!isFormatSupported)
 				{
 					//__android_log_print(ANDROID_LOG_ERROR, "TRACKERS", "%s", "format not supported");
@@ -549,6 +554,7 @@ namespace graphics
 					}
 					// todo convert	
 				}
+#endif
 				if (isFormatSupported)
 				{
 					if ((data->Format == Image2dFormat::Pvrtc12 || data->Format == Image2dFormat::Pvrtc14))
@@ -653,6 +659,8 @@ namespace graphics
 		}
 	}
 
+#ifdef ___UNIFIED___
+#else
 	int DecodeMortonPvrtc(const Image2dData* data, TexturesDecompressorBuffer* resultBuffer)
 	{
 		int pot = core::Math::pot(core::Math::max(data->Width + data->BorderSize * 2, data->Height + data->BorderSize * 2));
@@ -847,7 +855,7 @@ namespace graphics
 			}
 		}
 	}
-	
+#endif	
 	GLenum TextureImage2d::getFormat(Image2dFormat::e format)
 	{
 		switch (format)

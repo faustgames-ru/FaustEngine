@@ -102,15 +102,6 @@ namespace llge
 		TFDxt = 0x7,
 		TFEnumSize = 0x8
 	};
-	
-	/// entities enums
-	enum ComponentsTypes
-	{
-		Aadd2d = 0x1,
-		Transform2d = 0x2,
-		Render2d = 0x4,
-		MatrixTransform = 0x8,
-	};
 
 	/// physics enums
 	enum PhysicalBodyType
@@ -378,18 +369,6 @@ namespace llge
 		virtual void API_CALL dispose() = 0;
 	};
 
-	class IQuadTree : IBaseObject
-	{
-	public:
-		virtual int API_CALL insert(float minX, float minY, float maxX, float maxY, int userData) = 0;
-		virtual void API_CALL remove(int id) = 0;
-		virtual void API_CALL query(float minX, float minY, float maxX, float maxY) = 0;
-		virtual void API_CALL getQueryResults(void *intBuffer) = 0;
-		virtual int API_CALL getQueryResultsCount() = 0;
-		virtual int API_CALL getIterationsCount() = 0;
-		virtual void API_CALL dispose() = 0;
-	};
-
 	class IMeshesResult : IBaseObject
 	{
 	public:
@@ -427,94 +406,13 @@ namespace llge
 	class IGeometryFactory : IBaseObject
 	{
 	public:
-		virtual IQuadTree * API_CALL createQuadTree() = 0;
 		virtual IMarchingSquares * API_CALL createMarchingSquares() = 0;
 		virtual ITerrainClipper * API_CALL createTerrainClipper() = 0;
 		virtual IP2t * API_CALL createP2t() = 0;
 		virtual void API_CALL dispose() = 0;
 	};
 
-	/// entities
-
-	class IAabb2d : IBaseObject
-	{
-	public:
-		virtual void API_CALL update(float minX, float minY, float maxX, float maxY, float zOrder) = 0;
-	};
-
-	class IRender2d : IBaseObject
-	{
-	public:
-		virtual void API_CALL setMeshesCount(int meshesCount) = 0;
-		virtual void API_CALL setMesh(int meshIndex, ITexture *texture, void* vertices, int verticesCount, void* indices, int indicesCount) = 0;
-	};
-
-	class IMatrixTransform : IBaseObject
-	{
-	public:
-		virtual void API_CALL setTransform(void *floatMatrix) = 0;
-	};
-
-	class ITransform2d : IBaseObject
-	{
-	public:
-		virtual void API_CALL setWorldPosition(float x, float y, float z) = 0;
-		virtual void API_CALL setWorldRotation(float value) = 0;
-		virtual void API_CALL setWorldScale(float value) = 0;
-		virtual void API_CALL setLocalPivot(float x, float y, float z) = 0;
-		virtual void API_CALL setLocalPosition(float x, float y, float z) = 0;
-		virtual void API_CALL setLocalRotation(float value) = 0;
-		virtual void API_CALL setLocalScale(float value) = 0;
-	};
-
-	class IEntity : IBaseObject
-	{
-	public:
-		virtual IntPtr getSelfInstance() = 0;		
-		virtual void setComponents(ComponentsTypes types) = 0;
-		virtual IAabb2d* API_CALL getAabb2d() = 0;
-		virtual IRender2d* API_CALL getRender2d() = 0;
-		virtual ITransform2d* API_CALL getTransform2d() = 0;
-		virtual IMatrixTransform* API_CALL getMatrixTransform() = 0;
-		virtual void API_CALL dispose() = 0;
-	};
-
-	class ICamera : IBaseObject
-	{
-	public:
-		virtual void API_CALL setPosition(float x, float y, float z) = 0;
-		virtual void API_CALL setFov(float fov) = 0;
-		virtual void API_CALL setAspect(float aspect) = 0;
-		virtual void API_CALL setRotation(float rotationZ) = 0;
-		virtual void API_CALL setPlanes(float zn, float zf) = 0;
-	};
-
-	class IEntitiesWorld : IBaseObject
-	{
-	public:
-		virtual ICamera * API_CALL getCamera() = 0;
-		virtual void API_CALL setUnpdateBounds(float minX, float minY, float maxX, float maxY) = 0;
-		virtual void API_CALL setRenderBounds(float minX, float minY, float maxX, float maxY) = 0;
-		
-		virtual IEntity * API_CALL createEntity() = 0;
-				
-		virtual int API_CALL update(float elapsed) = 0;
-
-		virtual void API_CALL updateEntity(IEntity *entity, ComponentsTypes types) = 0;
-		virtual void API_CALL addEntity(IEntity *entity) = 0;
-		virtual void API_CALL removeEntity(IEntity *entity) = 0;
-
-		virtual void API_CALL dispose() = 0;
-		virtual void API_CALL clear() = 0;
-	};
-
-	class IEntitiesFactory : IBaseObject
-	{
-	public:
-		virtual IEntitiesWorld * API_CALL createEntitiesWorld() = 0;
-		virtual void API_CALL dispose() = 0;
-	};
-
+	
 	/// drawing
 	class IBatch2d : IBaseObject
 	{
@@ -923,7 +821,6 @@ namespace llge
 	extern "C" DLLEXPORT ITexture * API_CALL createTextureByID(uint id);
 	extern "C" DLLEXPORT IContentManager * API_CALL createContentManager();
 	extern "C" DLLEXPORT IObbContentProvider * API_CALL createContentProvider();
-	extern "C" DLLEXPORT IEntitiesFactory * API_CALL createEntitiesFactory();
 	extern "C" DLLEXPORT IGraphicsFactory * API_CALL createGraphicsFactory();
 	extern "C" DLLEXPORT IGeometryFactory * API_CALL createGeometryFactory();
 

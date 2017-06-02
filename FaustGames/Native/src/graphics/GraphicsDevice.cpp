@@ -111,12 +111,15 @@ namespace graphics
         {
 #ifdef __ANDROID__
             glClearDepthf(depth);
-#else
-#ifdef __APPLE__
-            glClearDepthf(depth);
+#elif __APPLE__
+        
+#if TARGET_OS_IPHONE
+ glClearDepthf(depth);
+#elif TARGET_OS_MAC
+glClearDepth(static_cast<double>(depth));
+#endif
 #else
             glClearDepth(static_cast<double>(depth));
-#endif
 #endif
             
 			_depthState = depth;
@@ -373,11 +376,12 @@ namespace graphics
 	{        
 		glDepthMask(GL_TRUE);
 		glEnable(GL_DEPTH_TEST);
-		const char* oesExts = static_cast<const char*>(static_cast<const void *>(glGetString(GL_EXTENSIONS)));
-		for (int i = 0; i < Extensions::Count; i++)
-		{
-			extensions[i] = strstr(oesExts, Extensions::names[i].c_str()) != nullptr;
-		}
+   //TODO: FIX FOR IPHONE!!!!
+//        const char* oesExts = static_cast<const char*>(static_cast<const void *>(glGetString(GL_EXTENSIONS)));
+//        for (int i = 0; i < Extensions::Count; i++)
+//        {
+//            extensions[i] = strstr(oesExts, Extensions::names[i].c_str()) != nullptr;
+//        }
 		TextureImage2d::createStatic();
 	}
 	

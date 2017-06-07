@@ -40,7 +40,7 @@ namespace graphics
 		}
 		return fromRgba((unsigned char)r, (unsigned char)g, (unsigned char)b, (unsigned char)a);
 	}
-
+	
 	unsigned int Color::mulA(unsigned int value, float a)
 	{
 		int r = (int)core::Math::round(getR(value)*a);

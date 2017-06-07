@@ -43,6 +43,7 @@ namespace resources
 	std::string pvrExt("pvr");
 	std::string atcExt("atc");
 	std::string pkmExt("pkm");
+	std::string etcExt("etc");
 	std::string dxtExt("dxt");
 	
 	class ReadMemoryBuffer
@@ -590,7 +591,8 @@ namespace resources
 	struct CompressedTextureHeader
 	{
 		static int GetSize() { return 28; }
-		int Format;
+		ushort attributes;
+		ushort Format;
 		int CompressionPercent;
 		int OriginWidth;
 		int OriginHeight;
@@ -619,7 +621,9 @@ namespace resources
 		uint* p = data;
 
 		CompressedTextureHeader result;
-		result.Format = readData(p);
+		uint formatAttributes = readData(p);
+		result.attributes = static_cast<ushort>(static_cast<uint>(formatAttributes) & 0xffff000000 >> 16);
+		result.Format = static_cast<ushort>(static_cast<uint>(formatAttributes) & 0x0000ffff);
 		result.CompressionPercent = readData(p);
 		int skip = readData(p);
 		skipData(p, skip);
@@ -687,6 +691,26 @@ namespace resources
 		if (header.Format == 6) // dxt
 		{
 			_image->Format = graphics::Image2dFormat::Dxt;
+			return _image;
+		}
+		if (header.Format == 7) // Etc1
+		{
+			_image->Format = graphics::Image2dFormat::Etc1;
+			return _image;
+		}
+		if (header.Format == 8) // Etc1
+		{
+			_image->Format = graphics::Image2dFormat::Etc1;
+			return _image;
+		}
+		if (header.Format == 9) // Etc1
+		{
+			_image->Format = graphics::Image2dFormat::Etc1;
+			return _image;
+		}
+		if (header.Format == 10) // Etc1
+		{
+			_image->Format = graphics::Image2dFormat::Etc1;
 			return _image;
 		}
 		return nullptr;
@@ -793,6 +817,8 @@ namespace resources
 			break;
 		case llge::TFDxt:
 			_compressionExt = dxtExt.c_str();
+		case llge::TFEtc1:
+			_compressionExt = etcExt.c_str();
 			break;
 		default: break;
 		}

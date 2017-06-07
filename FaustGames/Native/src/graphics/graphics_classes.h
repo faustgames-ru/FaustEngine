@@ -17,6 +17,14 @@ namespace graphics
 		};
 	};
 
+	struct Image2dAttributes
+	{
+		enum e
+		{
+			None = 0x0,			 
+		};
+	};
+	
 	struct Image2dFormat
 	{
 		enum e
@@ -52,7 +60,9 @@ namespace graphics
 				return Etc2;
 			case llge::TFDxt: 
 				return Dxt;
-			default: 
+			case llge::TFEtc1:
+				return Etc1;
+			default:
 				return Rgba;
 			}
 		}
@@ -70,7 +80,7 @@ namespace graphics
 			case Pvrtc14: 
 				return llge::TFPvrtc14;
 			case Etc1: 
-				return llge::TFEtc2;
+				return llge::TFEtc1;
 			case Etc2: 
 				return llge::TFEtc2;
 			case Rgba4444: 

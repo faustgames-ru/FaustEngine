@@ -16,6 +16,12 @@ namespace llge
 #endif
 	}
 	
+	public enum BatcherLightingMode
+	{
+		BLMNone = 0x0,
+		BLMDynamicCpu = 0x1,
+	}
+	
 	public enum TextureFilterMode
 	{
 		Nearest = 0x0,
@@ -81,7 +87,8 @@ namespace llge
 		TFAtc = 0x5,
 		TFEtc2 = 0x6,
 		TFDxt = 0x7,
-		TFEnumSize = 0x8,
+		TFEtc1 = 0x8,
+		TFEnumSize = 0x9,
 	}
 	
 	public enum PhysicalBodyType
@@ -174,6 +181,7 @@ namespace llge
 	public struct EffectConfig
 	{
 		public uint texture;
+		public uint alpha;
 	}
 	
 	[StructLayout(LayoutKind.Sequential)]
@@ -188,6 +196,28 @@ namespace llge
 	{
 		public uint texture;
 		public uint highlightColor;
+	}
+	
+	[StructLayout(LayoutKind.Sequential)]
+	public struct Light2d
+	{
+		public float x;
+		public float y;
+		public float r;
+		public float i;
+		public uint color;
+	}
+	
+	[StructLayout(LayoutKind.Sequential)]
+	public struct Lighting2dConfig
+	{
+		public IntPtr LightsPtr;
+		public int LightsCount;
+		public uint ambient;
+		public float x;
+		public float y;
+		public float w;
+		public float h;
 	}
 	
 	[StructLayout(LayoutKind.Sequential)]
@@ -213,6 +243,13 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private uint llge_Texture_getId (IntPtr classInstance);
+		public uint GetAlphaId ()
+		{
+			return llge_Texture_getAlphaId(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private uint llge_Texture_getAlphaId (IntPtr classInstance);
 		public IntPtr GetTextureInstance ()
 		{
 			return llge_Texture_getTextureInstance(ClassInstance);
@@ -1092,6 +1129,13 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private IntPtr llge_Batch2d_getNativeInstance (IntPtr classInstance);
+		public void SetLightingMode (BatcherLightingMode mode)
+		{
+			llge_Batch2d_setLightingMode(ClassInstance, mode);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_Batch2d_setLightingMode (IntPtr classInstance, BatcherLightingMode mode);
 		public void AddProjection (IntPtr floatMatrix)
 		{
 			llge_Batch2d_addProjection(ClassInstance, floatMatrix);
@@ -1106,6 +1150,13 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private void llge_Batch2d_addRenderTarget (IntPtr classInstance, IntPtr renderTargetInstance);
+		public void SetupLighting (IntPtr lightingConfig)
+		{
+			llge_Batch2d_setupLighting(ClassInstance, lightingConfig);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_Batch2d_setupLighting (IntPtr classInstance, IntPtr lightingConfig);
 		public void StartBatch ()
 		{
 			llge_Batch2d_startBatch(ClassInstance);
@@ -1312,13 +1363,6 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private void llge_SpineSkeleton_renderEx (IntPtr classInstance, IntPtr batch, IntPtr effectConfig, GraphicsEffects effect, byte colorScale);
-		public void Render (Batch2d batch, int lightmapId, GraphicsEffects effect, byte colorScale)
-		{
-			llge_SpineSkeleton_render(ClassInstance, batch.ClassInstance, lightmapId, effect, colorScale);
-		}
-		
-		[DllImport(Version.Dll)]
-		static extern private void llge_SpineSkeleton_render (IntPtr classInstance, IntPtr batch, int lightmapId, GraphicsEffects effect, byte colorScale);
 		public void RenderWithoutBatch ()
 		{
 			llge_SpineSkeleton_renderWithoutBatch(ClassInstance);

@@ -34,7 +34,12 @@ typedef void * IntPtr;
 namespace llge
 {
 	/// graphics enums
-		
+	enum BatcherLightingMode
+	{
+		BLMNone = 0x0,
+		BLMDynamicCpu = 0x1,
+	};
+
 	enum TextureFilterMode
 	{
 		Nearest = 0x0,
@@ -100,7 +105,8 @@ namespace llge
 		TFAtc = 0x5,
 		TFEtc2 = 0x6,
 		TFDxt = 0x7,
-		TFEnumSize = 0x8
+		TFEtc1 = 0x8,
+		TFEnumSize = 0x9
 	};
 
 	/// physics enums
@@ -194,6 +200,7 @@ namespace llge
 	struct EffectConfig
 	{
 		uint texture;
+		uint alpha;
 	};
 
 	struct LightingConfig
@@ -208,6 +215,26 @@ namespace llge
 		uint highlightColor;
 	};
 	
+	struct Light2d
+	{
+		float x;
+		float y;
+		float r;
+		float i;
+		uint color;
+	};
+	
+	struct Lighting2dConfig
+	{
+		IntPtr LightsPtr;
+		int LightsCount;
+		uint ambient;
+		float x;
+		float y;
+		float w;
+		float h;
+	};
+		
 	struct BatcherConfig
 	{
 		int effect;
@@ -224,6 +251,7 @@ namespace llge
 	{
 	public:
 		virtual uint API_CALL getId() = 0;
+		virtual uint API_CALL getAlphaId() = 0;
 		virtual IntPtr API_CALL getTextureInstance() = 0;
 	};
 
@@ -418,8 +446,10 @@ namespace llge
 	{
 	public:
 		virtual IntPtr API_CALL getNativeInstance() = 0;
+		virtual void API_CALL setLightingMode(BatcherLightingMode mode) = 0;
 		virtual void API_CALL addProjection(void *floatMatrix) = 0;
 		virtual void API_CALL addRenderTarget(IntPtr renderTargetInstance) = 0;
+		virtual void API_CALL setupLighting(IntPtr lightingConfig) = 0;
 		virtual void API_CALL startBatch() = 0;
 		virtual void API_CALL finishBatch() = 0;
 		virtual void API_CALL setToneMap(uint tonemapId) = 0;
@@ -461,7 +491,6 @@ namespace llge
 		virtual float API_CALL getZ() = 0;
 
 		virtual void API_CALL renderEx(IBatch2d * batch, IntPtr effectConfig, GraphicsEffects effect, byte colorScale) = 0;
-		virtual void API_CALL render(IBatch2d * batch, int lightmapId, GraphicsEffects effect, byte colorScale) = 0;
 		virtual void API_CALL renderWithoutBatch() = 0;
 		virtual int API_CALL getGeometry(void *vertices, int verticeLimit, void *indices, int indicesLimit) = 0;
 		virtual IntPtr API_CALL getNativeInstance() = 0;

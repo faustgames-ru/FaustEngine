@@ -331,6 +331,7 @@ namespace resources
 		{
 			AtlasPage* page = _pages[k];
 			graphics::TextureAtlasPage* texture = AtlasTexturesPool::Default.queryPage();
+			texture->createAlphaIfNeeded();
 			for (uint i = 0; i < page->rects.size(); i++)
 			{
 				AtlasRect rect = page->rects[i];
@@ -362,9 +363,8 @@ namespace resources
 					placeArgs.imageData = image;
 
 					placer->placeImage(placeArgs);
-
-					rect.entry->input.texture->AtlasEntry = true;
-					rect.entry->input.texture->setHandle(texture->getHandle());
+					 
+					rect.entry->input.texture->associate(texture);
 					rect.entry->input.texture->transform = graphics::TextureTransform(
 						static_cast<float>((rect.rect.x + alignInfo.borderBlockCount)*alignInfo.blockSizeX) / static_cast<float>(pageSize),
 						static_cast<float>((rect.rect.y + alignInfo.borderBlockCount)*alignInfo.blockSizeY) / static_cast<float>(pageSize),
@@ -382,8 +382,7 @@ namespace resources
 		}
 		
 		delete _pageData;
-		_pageData = nullptr;
-		
+		_pageData = nullptr;	
 	}
 
 	bool AtlasPacker::ready()
@@ -429,6 +428,8 @@ namespace resources
 			return graphics::Image2dFormat::Etc2;
 		case llge::TFDxt:
 			return graphics::Image2dFormat::Dxt;
+		case llge::TFEtc1:
+			return graphics::Image2dFormat::Etc1;
 		default:
 			return graphics::Image2dFormat::Rgba;
 		}
@@ -457,6 +458,7 @@ namespace resources
 	IAtlasPlacer* IAtlasPlacer::pvrtc14 = new AtlasPlacerPvrtc14();
 	IAtlasPlacer* IAtlasPlacer::atc = new AtlasPlacerAtc();
 	IAtlasPlacer* IAtlasPlacer::etc2 = new AtlasPlacerEtc2();
+	IAtlasPlacer* IAtlasPlacer::etc1 = new AtlasPlacerEtc1();
 	IAtlasPlacer* IAtlasPlacer::dxt = new AtlasPlacerDxt();
 	
 
@@ -474,6 +476,8 @@ namespace resources
 			return atc;
 		case llge::TFEtc2:
 			return etc2;
+		case llge::TFEtc1:
+			return etc1;
 		case llge::TFDxt:
 			return dxt;
 		default:
@@ -615,5 +619,51 @@ namespace resources
 		alignInfo.blockSizeX = 4;
 		alignInfo.blockSizeY = 4;
 		alignInfo.borderBlockCount = 1;
+	}
+
+	int AtlasPlacerEtc1Internal::getPageBufferSize(int pageSize)
+	{
+		return pageSize*pageSize / 8;
+	}
+
+	void AtlasPlacerEtc1Internal::placeImage(const PlaceArgs& e)
+	{
+		AbstractPlacer::placeImageWithBorder<int64_t>(e);
+	}
+
+	void AtlasPlacerEtc1Internal::SetupAlign(AlignInfo& alignInfo)
+	{
+		alignInfo.blockSizeX = 4;
+		alignInfo.blockSizeY = 4;
+		alignInfo.borderBlockCount = 1;
+	}
+
+	int AtlasPlacerEtc1::getPageBufferSize(int pageSize)
+	{
+		return pageSize*pageSize / 4;
+	}
+
+	void AtlasPlacerEtc1::placeImage(const PlaceArgs& e)
+	{
+		_rgb.placeImage(e);
+		
+		uint* pixelsPage = e.pageData->Pixels;
+		int offsetPage = e.pageData->getFullWidth()*e.pageData->getFullHeight() / 2;
+		e.pageData->Pixels = reinterpret_cast<uint*>(reinterpret_cast<byte *>(pixelsPage) + offsetPage);
+		
+		uint* pixelsImage = e.imageData->Pixels;
+		int offsetImage = e.imageData->getFullWidth()*e.imageData->getFullHeight() / 2;
+		e.imageData->Pixels = reinterpret_cast<uint*>(reinterpret_cast<byte *>(pixelsImage) + offsetImage);
+
+		_a.placeImage(e);
+
+		e.pageData->Pixels = pixelsPage;
+		e.imageData->Pixels = pixelsImage;
+	}
+
+	void AtlasPlacerEtc1::SetupAlign(AlignInfo& alignInfo)
+	{
+		_rgb.SetupAlign(alignInfo);
+		_a.SetupAlign(alignInfo);
 	}
 }

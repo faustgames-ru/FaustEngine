@@ -6,6 +6,7 @@
 #include "../../shaders/texture_color_vert.h"
 #include "../../shaders/texture_color_fog_frag.h"
 #include "../../shaders/texture_color_fog_vert.h"
+#include "../../shaders/texture_color_etc1a8_frag.h"
 
 
 namespace graphics
@@ -58,6 +59,34 @@ namespace graphics
 	{
 		const llge::EffectConfig* ec = static_cast<const llge::EffectConfig*>(config);
 		graphics::UniformValues::texture()->setValue(ec->texture);		
+	}
+
+	EffectTextureColorEtc1A8::EffectTextureColorEtc1A8()
+	{
+		_configSize = sizeof(llge::EffectConfig);
+		_effect.addUniform(Uniforms::projection(), UniformValues::projection());
+		_effect.addUniform(Uniforms::texture(), UniformValues::texture());
+		_effect.addUniform(Uniforms::alpha(), UniformValues::alpha());
+
+		_effect.addAttribute(Attributes::position());
+		_effect.addAttribute(Attributes::textureCoords());
+		_effect.addAttribute(Attributes::color());
+	}
+
+	EffectTextureColorEtc1A8::~EffectTextureColorEtc1A8()
+	{
+	}
+
+	void EffectTextureColorEtc1A8::create()
+	{
+		_effect.create((char *)shader_texture_color_vert, shader_texture_color_vert_size, (char *)shader_texture_color_etc1a8_frag, shader_texture_color_etc1a8_frag_size);
+	}
+
+	void EffectTextureColorEtc1A8::configApply(const void* config)
+	{
+		const llge::EffectConfig* ec = static_cast<const llge::EffectConfig*>(config);
+		graphics::UniformValues::texture()->setValue(ec->texture);
+		graphics::UniformValues::alpha()->setValue(ec->alpha);
 	}
 
 	EffectTextureColorFog::EffectTextureColorFog()

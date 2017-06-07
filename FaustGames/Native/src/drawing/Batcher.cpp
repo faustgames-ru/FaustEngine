@@ -37,12 +37,13 @@ namespace drawing
 		TVertex* target = _vertices + _verticesCount;
 		float* source = vertices;
 		float* uvsource = uvs;
+		//uint targetColor = graphics::Color::premul(color, colorScale, additive);
 		for (int i = 0; i < verticesCount; i++, target++)
 		{
 			target->x = *source; ++source;
 			target->y = *source; ++source;
 			target->z = z;
-			target->color = graphics::Color::premul(color, colorScale, additive);
+			target->color = lightMap->applyLight(target->x, target->y, color, colorScale, additive);
 			float u = *uvsource; ++uvsource;
 			float v = *uvsource; ++uvsource;
 			target->u = textureTransform.transformU(u, v);
@@ -52,33 +53,7 @@ namespace drawing
 		_verticesCount += verticesCount;
 		_indicesCount += indicesCount;
 	}
-
-	void BatchBuffer::addMeshNotPremul(uint color, float z, float* vertices, float* uvs, int verticesCount, ushort* indices, int indicesCount, bool additive, byte colorScale)
-	{
-		for (int i = 0; i < indicesCount; i++)
-		{
-			_indices[_indicesCount + i] = static_cast<unsigned short>(_verticesCount + indices[i]);
-		}
-
-		TVertex* target = _vertices + _verticesCount;
-		float* source = vertices;
-		float* uvsource = uvs;
-		for (int i = 0; i < verticesCount; i++, target++)
-		{
-			target->x = *source; ++source;
-			target->y = *source; ++source;
-			target->z = z;
-			target->color = color;
-			float u = *uvsource; ++uvsource;
-			float v = *uvsource; ++uvsource;
-			target->u = textureTransform.transformU(u, v);
-			target->v = textureTransform.transformV(u, v);
-		}
-
-		_verticesCount += verticesCount;
-		_indicesCount += indicesCount;
-	}
-
+	
 	void BatchBuffer::addMesh(uint color, float z, float* vertices, float* uvs, int verticesCount, ushort* indices, int indicesCount, bool additive, core::Matrix viewTransform, byte colorScale)
 	{
 		for (int i = 0; i < indicesCount; i++)
@@ -90,12 +65,13 @@ namespace drawing
 		float* source = vertices;
 		float* uvsource = uvs;
 		core::Vector3 uv;
+		//uint targetColor = graphics::Color::premul(color, colorScale, additive);
 		for (int i = 0; i < verticesCount; i++, target++)
 		{
 			target->x = *source; ++source;
 			target->y = *source; ++source;
 			target->z = z;
-			target->color = graphics::Color::premul(color, colorScale, additive);
+			target->color = lightMap->applyLight(target->x, target->y, color, colorScale, additive);
 			float u = *uvsource; ++uvsource;
 			float v = *uvsource; ++uvsource;
 			target->u = textureTransform.transformU(u, v);
@@ -128,7 +104,8 @@ namespace drawing
 			target->z = source->z;
 			target->u = textureTransform.transformU(source->u, source->v);
 			target->v = textureTransform.transformV(source->u, source->v);
-			target->color = graphics::Color::premul(source->color, colorScale, additive);
+			target->color = lightMap->applyLight(target->x, target->y, source->color, colorScale, additive);
+			//target->color = graphics::Color::premul(source->color, colorScale, additive);
 		}
 
 		_verticesCount += verticesCount;
@@ -263,6 +240,9 @@ namespace drawing
 		_verticesCounter(0),
 		_usedPostProcess(false)
 	{
+		_lightingMode = llge::BLMDynamicCpu;
+		_lightingModes[llge::BLMNone] = &_lightMapEmpty;
+		_lightingModes[llge::BLMDynamicCpu]= &_lightMap;
 		core::DebugDraw::Default.Render = this;
 		_buffer = new RenderBuffer();
 		//_localBuffer = static_cast<TVertex *>(malloc(graphics::GraphicsConstants::LocalBufferSize * sizeof(TVertex)));
@@ -357,6 +337,7 @@ namespace drawing
 		//_textureId = textureId;
 		_currentEntry.IndicesCount += indicesCount;
 		currentBuffer->textureTransform = _textureTransform;
+		currentBuffer->lightMap = _lightingModes[_lightingMode];
 		currentBuffer->addMesh(vertices, verticesCount, indices, indicesCount, blend == graphics::BlendState::Additive, colorScale);
 	}
 
@@ -399,10 +380,11 @@ namespace drawing
 
 		_currentEntry.IndicesCount += indicesCount;
 		currentBuffer->textureTransform = _textureTransform;
+		currentBuffer->lightMap = _lightingModes[_lightingMode];
 		currentBuffer->addMesh(vertices, verticesCount, indices, indicesCount, blend == graphics::BlendState::Additive, colorScale);
 	}
 
-	void Batcher::drawSpineMesh(const BatcherSpineMesh &mesh, byte colorScale, bool pemul)
+	void Batcher::drawSpineMesh(const BatcherSpineMesh &mesh, byte colorScale)
 	{		
 		if (mesh.texture != nullptr)
 		{
@@ -447,14 +429,8 @@ namespace drawing
 
 		_currentEntry.IndicesCount += mesh.IndicesCount;
 		currentBuffer->textureTransform = _textureTransform;
-		if (pemul)
-		{
-			currentBuffer->addMesh(mesh.Color, mesh.Z, mesh.Vertices, mesh.Uvs, mesh.VerticesCount, mesh.Indices, mesh.IndicesCount, mesh.State.Blend == graphics::BlendState::Additive, colorScale);
-		}
-		else
-		{
-			currentBuffer->addMeshNotPremul(mesh.Color, mesh.Z, mesh.Vertices, mesh.Uvs, mesh.VerticesCount, mesh.Indices, mesh.IndicesCount, mesh.State.Blend == graphics::BlendState::Additive, colorScale);
-		}
+		currentBuffer->lightMap = _lightingModes[_lightingMode];
+		currentBuffer->addMesh(mesh.Color, mesh.Z, mesh.Vertices, mesh.Uvs, mesh.VerticesCount, mesh.Indices, mesh.IndicesCount, mesh.State.Blend == graphics::BlendState::Additive, colorScale);
 	}
 
 	void Batcher::setupUVTransform(llge::ITexture* texture)
@@ -592,6 +568,11 @@ namespace drawing
 		}
 	}
 
+	void Batcher::setLightingMode(llge::BatcherLightingMode mode)
+	{
+		_lightingMode = mode;
+	}
+
 	void Batcher::addProjection(void* floatMatrix)
 	{
 		_projection.setValue(static_cast<float *>(floatMatrix));
@@ -603,6 +584,27 @@ namespace drawing
 	{
 		_buffer->RenderTargets.push_back(static_cast<graphics::IRenderTarget *>(renderTargetInstance));
 		applyEntry();
+	}
+
+	void Batcher::setupLighting(IntPtr lightingConfig)
+	{
+		if (lightingConfig == nullptr)
+		{
+			_lightMap.clear();
+			_lightMap.build(0, 0, 1, 1, 0xffffffff);
+		}
+		else
+		{
+			llge::Lighting2dConfig* config = static_cast<llge::Lighting2dConfig*>(lightingConfig);
+			_lightMap.clear();
+			llge::Light2d* lights = static_cast<llge::Light2d*>(config->LightsPtr);
+			for (int i = 0; i < config->LightsCount; i++)
+			{
+				llge::Light2d* light = lights + i;
+				_lightMap.addLight(light->x, light->y, light->r, light->color, light->i);
+			}
+			_lightMap.build(config->x, config->y, config->w, config->h, config->ambient);
+		}
 	}
 
 	void Batcher::startBatch()
@@ -619,8 +621,15 @@ namespace drawing
 	{
 		llge::BatcherConfig* bc = static_cast<llge::BatcherConfig*>(batcherConfig);
 		setupUVTransform(static_cast<graphics::Texture*>(bc->texture));
+		llge::GraphicsEffects effect = static_cast<llge::GraphicsEffects>(bc->effect);
+		bool useAlpha = false;
+		if (effect == llge::GraphicsEffects::EffectTextureColor)
+		{
+			llge::EffectConfig* config = static_cast<llge::EffectConfig*>(texturesConfig);
+			useAlpha = config->alpha != 0;
+		}
 		drawMesh(
-			_converter.getEffect(static_cast<llge::GraphicsEffects>(bc->effect)),
+			_converter.getEffect(static_cast<llge::GraphicsEffects>(effect), useAlpha),
 			_converter.getBlend(static_cast<llge::BlendMode>(bc->blendMode)),
 			texturesConfig,
 			static_cast<TVertex *>(bc->vertices),

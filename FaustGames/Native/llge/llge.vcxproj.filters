@@ -317,21 +317,6 @@
     <ClInclude Include="..\src\drawing\drawing_classes.h">
       <Filter>engine\drawing</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\drawing\Renderer2d.h">
-      <Filter>engine\drawing</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\drawing\RenderItem2d.h">
-      <Filter>engine\drawing</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\drawing\RenderMesh2d.h">
-      <Filter>engine\drawing</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\drawing\Camera.h">
-      <Filter>engine\drawing</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\drawing\WaterRenderer.h">
-      <Filter>engine\drawing</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\graphics\TextureCubemap.h">
       <Filter>engine\graphics</Filter>
     </ClInclude>
@@ -779,6 +764,12 @@
     <ClInclude Include="..\shaders\post_process_blur_pass_vert.h">
       <Filter>engine\shaders</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\drawing\DynamicVertexLightMap.h">
+      <Filter>engine\drawing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shaders\texture_color_etc1a8_frag.h">
+      <Filter>engine\shaders</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\CommonSources\gen\llgePInvoke.cpp">
@@ -899,21 +890,6 @@
     </ClCompile>
     <ClCompile Include="..\src\core\HollowsAllocationPolicy.cpp">
       <Filter>engine\core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\drawing\Renderer2d.cpp">
-      <Filter>engine\drawing</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\drawing\RenderItem2d.cpp">
-      <Filter>engine\drawing</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\drawing\RenderMesh2d.cpp">
-      <Filter>engine\drawing</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\drawing\Camera.cpp">
-      <Filter>engine\drawing</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\drawing\WaterRenderer.cpp">
-      <Filter>engine\drawing</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\TextureCubemap.cpp">
       <Filter>engine\graphics</Filter>
@@ -1409,6 +1385,9 @@
     </ClCompile>
     <ClCompile Include="..\src_etcpack\source_edit\etcdec.cpp">
       <Filter>third_party\etcpack\source_edit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\drawing\DynamicVertexLightMap.cpp">
+      <Filter>engine\drawing</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

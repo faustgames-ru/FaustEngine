@@ -31,6 +31,7 @@ namespace graphics
 			return _handle; 
 		}
 		virtual uint API_CALL getId() { return getHandle(); }
+		virtual uint API_CALL getAlphaId() { return 0; }
 		virtual IntPtr API_CALL getTextureInstance() { return this; }
 
 		inline void setHandle(GLuint value) { _handle = value; }

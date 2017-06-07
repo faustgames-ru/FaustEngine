@@ -23,6 +23,7 @@ namespace graphics
 		static EffectSolid * solid();
 		static EffectSolidColor * solidColor();
 		static EffectTextureColor * textureColor();
+		static EffectTextureColorEtc1A8 * textureColorEtc1A8();
 		static EffectTextureColorFog * textureColorFog();
 		static EffectTextureAlphamaskColor * textureAlphamaskColor();
 		static EffectTextureColorHighlight * textureColorHighlight();
@@ -42,7 +43,8 @@ namespace graphics
 	private:
 		static EffectSolid _solid;
 		static EffectSolidColor _solidColor;
-		static EffectTextureColor _textureColor;
+		static EffectTextureColor _textureColor;		
+		static EffectTextureColorEtc1A8 _textureColorEtc1A8;
 		static EffectTextureColorFog _textureColorFog;
 		static EffectTextureAlphamaskColor _textureAlphamaskColor;
 		static EffectTextureColorHighlight _textureColorHighlight;

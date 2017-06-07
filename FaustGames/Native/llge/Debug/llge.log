@@ -1,73 +1,15 @@
-﻿  llgeGeometry.cpp
-  VertexAttachment.c
-  TransformConstraintData.c
-  TransformConstraint.c
-  SlotData.c
-  Slot.c
-  Skin.c
-  SkeletonJson.c
-  SkeletonData.c
-  SkeletonBounds.c
-  Skeleton.c
-  RegionAttachment.c
-  PathConstraintData.c
-  PathConstraint.c
-  PathAttachment.c
-  MeshAttachment.c
-  Json.c
-  IkConstraintData.c
-  IkConstraint.c
-  extension.c
-  EventData.c
-  Generating Code...
-  Compiling...
-  Event.c
-  BoundingBoxAttachment.c
-  BoneData.c
-  Bone.c
-  AttachmentLoader.c
-  Attachment.c
-  AtlasAttachmentLoader.c
-  Atlas.c
-  AnimationStateData.c
-  AnimationState.c
-  Animation.c
-  zutil.c
-  uncompr.c
-  trees.c
-  inftrees.c
-  inflate.c
-  inffast.c
-  infback.c
-  gzwrite.c
-  gzread.c
-  Generating Code...
-  Compiling...
-  gzlib.c
-  gzclose.c
-  deflate.c
-  crc32.c
-  compress.c
-  adler32.c
-  pngwutil.c
-  pngwtran.c
-  pngwrite.c
-  pngwio.c
-  pngtrans.c
-  pngtest.c
-  pngset.c
-  pngrutil.c
-  pngrtran.c
-  pngrio.c
-  pngread.c
-  pngpread.c
-  pngmem.c
-  pngget.c
-  Generating Code...
-  Compiling...
-  pngerror.c
-  png.c
-  Generating Code...
-     Creating library C:\work\sources\github\moon\Solutions\Debug\llge.lib and object C:\work\sources\github\moon\Solutions\Debug\llge.exp
+﻿  AtlasPacker.cpp
+c:\_faust\faustengine\faustgames\native\src\resources\atlaspacker.cpp(135): warning C4018: '<': signed/unsigned mismatch
+c:\_faust\faustengine\faustgames\native\src\resources\atlaspacker.cpp(245): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\resources\atlaspacker.cpp(245): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\resources\atlaspacker.cpp(261): warning C4244: 'argument': conversion from 'const int' to 'float', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\resources\atlaspacker.cpp(261): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\resources\atlaspacker.cpp(262): warning C4244: 'argument': conversion from 'const int' to 'float', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\resources\atlaspacker.cpp(262): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\resources\atlaspacker.cpp(265): warning C4244: 'argument': conversion from 'const int' to 'float', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\resources\atlaspacker.cpp(265): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\resources\atlaspacker.cpp(266): warning C4244: 'argument': conversion from 'const int' to 'float', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\resources\atlaspacker.cpp(266): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\resources\atlaspacker.cpp(293): warning C4018: '<': signed/unsigned mismatch
   llge.vcxproj -> C:\work\sources\github\moon\Solutions\Debug\llge.dll
   llge.vcxproj -> C:\work\sources\github\moon\Solutions\Debug\llge.pdb (Full PDB)

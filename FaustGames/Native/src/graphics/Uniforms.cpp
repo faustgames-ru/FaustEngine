@@ -6,6 +6,7 @@ namespace graphics
 	UniformInfo Uniforms::_projection("projection", UniformType::Matrix4);
 	UniformInfo Uniforms::_colorTransform("colorTransform", UniformType::Matrix3);
 	UniformInfo Uniforms::_texture("texture", UniformType::Sampler2D);
+	UniformInfo Uniforms::_alpha("alpha", UniformType::Sampler2D);
 	UniformInfo Uniforms::_lightmap("lightmap", UniformType::Sampler2D);
 	UniformInfo Uniforms::_environment("environment", UniformType::Sampler2D);
 	UniformInfo Uniforms::_depthmap("depthmap", UniformType::Sampler2D);
@@ -43,6 +44,12 @@ namespace graphics
 	{
 		return &_texture;
 	}
+
+	UniformInfo* Uniforms::alpha()
+	{
+		return &_alpha;
+	}
+
 	UniformInfo * Uniforms::lightmap()
 	{
 		return &_lightmap;
@@ -111,6 +118,7 @@ namespace graphics
 	UniformValueMatrix UniformValues::_projection;
 	UniformValueMatrix3 UniformValues::_colorTransform;
 	UniformValueTexture UniformValues::_texture;
+	UniformValueTexture UniformValues::_alpha;
 	UniformValueTexture UniformValues::_lightmap;
 	UniformValueTexture UniformValues::_environment;
 	UniformValueTexture UniformValues::_depthmap;
@@ -135,8 +143,9 @@ namespace graphics
 		}
 
 		initSampler(&_texture, 0);
-		initSampler(&_lightmap, 1);
-		initSampler(&_environment, 2);
+		initSampler(&_alpha, 1);
+		initSampler(&_lightmap, 2);
+		//initSampler(&_environment, 2);
 		initSampler(&_depthmap, 3);
 		initSampler(&_normalmap, 4);
 		initSampler(&_paintmask, 5);

@@ -143,6 +143,15 @@ namespace core
 		return x;
 	}
 
+	float Math::clampi(int x, int from, int to)
+	{
+		if (x < from)
+			return from;
+		if (x > to)
+			return to;
+		return x;
+	}
+
 	int Math::pot(int value)
 	{
 		int v = 1;

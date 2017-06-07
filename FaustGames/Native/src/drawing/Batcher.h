@@ -5,6 +5,7 @@
 #include "PostProcess.h"
 #include "../core/DebugRender.h"
 #include <set>
+#include "DynamicVertexLightMap.h"
 
 namespace drawing
 {
@@ -48,6 +49,7 @@ namespace drawing
 		const int VerticesLimit = 32768;
 		const int IndicesLimit = 32768;
 		graphics::TextureTransform textureTransform;
+		ILightMap* lightMap;
 		BatchBuffer();
 
 		~BatchBuffer();
@@ -56,7 +58,6 @@ namespace drawing
 
 		bool canAdd(int verticesCount, int indicesCount) const;
 		void addMesh(uint color, float z, float* vertices, float* uvs, int verticesCount, ushort* indices, int indicesCount, bool additive, byte colorScale);
-		void addMeshNotPremul(uint color, float z, float* vertices, float* uvs, int verticesCount, ushort* indices, int indicesCount, bool additive, byte colorScale);
 		void addMesh(uint color, float z, float* vertices, float* uvs, int verticesCount, ushort* indices, int indicesCount, bool additive, core::Matrix viewTransform, byte colorScale);
 		void addMesh(TVertex* vertices, int verticesCount, ushort* indices, int indicesCount, bool additive, unsigned char colorScale);
 		TVertex* getVertices();
@@ -160,7 +161,7 @@ namespace drawing
 		void drawMesh(graphics::EffectBase *effect, graphics::BlendState::e blend, llge::ITexture * texture, uint lightmapId, TVertex *vertices, int verticesCount, ushort *indices, int indicesCount, float colorScale);
 		void drawMesh(graphics::EffectBase *effect, graphics::BlendState::e blend, uint textureId, uint lightmapId, TVertex *vertices, int verticesCount, ushort *indices, int indicesCount, unsigned char colorScale);
 		void drawMesh(graphics::EffectBase *effect, graphics::BlendState::e blend, void* config, TVertex *vertices, int verticesCount, ushort *indices, int indicesCount, unsigned char colorScale);
-		void drawSpineMesh(const BatcherSpineMesh &mesh, byte colorScale, bool pemul);
+		void drawSpineMesh(const BatcherSpineMesh &mesh, byte colorScale);
 		void setupUVTransform(llge::ITexture* texture);
 		void cleanupUVTransform();
 
@@ -174,8 +175,10 @@ namespace drawing
 
 		virtual IntPtr API_CALL getNativeInstance() OVERRIDE;
 		void applyEntry();
+		virtual void API_CALL setLightingMode(llge::BatcherLightingMode mode) override;
 		virtual void API_CALL addProjection(void* floatMatrix) OVERRIDE;
 		virtual void API_CALL addRenderTarget(IntPtr renderTargetInstance) OVERRIDE;
+		virtual void API_CALL setupLighting(IntPtr lightingConfig) OVERRIDE;
 		virtual void API_CALL startBatch() OVERRIDE;
 		virtual void API_CALL finishBatch() OVERRIDE;
 		virtual void API_CALL draw(IntPtr batcherConfig, IntPtr texturesConfig) OVERRIDE;
@@ -190,6 +193,10 @@ namespace drawing
 		bool usedPostProcess();
 		graphics::Texture* getBlurMap();
 	private:
+		llge::BatcherLightingMode _lightingMode;
+		ILightMap* _lightingModes[32];
+		DynamicVertexLightMap _lightMap;
+		EmptyLightMap _lightMapEmpty;
 		BatcherDebugRender _debugRender;
 		RenderBuffer *_buffer;
 		uint _tonemapId;

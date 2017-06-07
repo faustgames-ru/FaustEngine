@@ -18,6 +18,7 @@ namespace graphics
 		static UniformInfo *projection();
 		static UniformInfo *colorTransform();
 		static UniformInfo *texture();
+		static UniformInfo *alpha();
 		static UniformInfo *lightmap();
 		static UniformInfo *environment();
 		static UniformInfo *depthmap();
@@ -36,6 +37,7 @@ namespace graphics
 		static UniformInfo _projection;
 		static UniformInfo _colorTransform;
 		static UniformInfo _texture;
+		static UniformInfo _alpha;
 		static UniformInfo _lightmap;
 		static UniformInfo _environment;
 		static UniformInfo _depthmap;
@@ -58,6 +60,7 @@ namespace graphics
 		static inline UniformValueMatrix *projection(){ return &_projection; }
 		static inline UniformValueMatrix3 *colorTransform() { return &_colorTransform; }
 		static inline UniformValueTexture *texture(){ return &_texture; }
+		static inline UniformValueTexture *alpha() { return &_alpha; }
 		static inline UniformValueTexture *lightmap(){ return &_lightmap; }
 		static inline UniformValueTexture *environment(){ return &_environment; }
 		static inline UniformValueTexture *depthmap(){ return &_depthmap; }
@@ -80,6 +83,7 @@ namespace graphics
 		static UniformValueMatrix _projection;
 		static UniformValueMatrix3 _colorTransform;
 		static UniformValueTexture _texture;
+		static UniformValueTexture _alpha;
 		static UniformValueTexture _lightmap;
 		static UniformValueTexture _environment;
 		static UniformValueTexture _depthmap;

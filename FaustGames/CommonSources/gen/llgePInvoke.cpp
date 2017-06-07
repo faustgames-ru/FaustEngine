@@ -11,6 +11,11 @@ namespace llge
 		return classInstance->getId();
 	}
 	
+	extern "C" DLLEXPORT uint API_CALL llge_Texture_getAlphaId (ITexture * classInstance)
+	{
+		return classInstance->getAlphaId();
+	}
+	
 	extern "C" DLLEXPORT IntPtr API_CALL llge_Texture_getTextureInstance (ITexture * classInstance)
 	{
 		return classInstance->getTextureInstance();
@@ -591,6 +596,11 @@ namespace llge
 		return classInstance->getNativeInstance();
 	}
 	
+	extern "C" DLLEXPORT void API_CALL llge_Batch2d_setLightingMode (IBatch2d * classInstance, BatcherLightingMode mode)
+	{
+		classInstance->setLightingMode(mode);
+	}
+	
 	extern "C" DLLEXPORT void API_CALL llge_Batch2d_addProjection (IBatch2d * classInstance, void * floatMatrix)
 	{
 		classInstance->addProjection(floatMatrix);
@@ -599,6 +609,11 @@ namespace llge
 	extern "C" DLLEXPORT void API_CALL llge_Batch2d_addRenderTarget (IBatch2d * classInstance, IntPtr renderTargetInstance)
 	{
 		classInstance->addRenderTarget(renderTargetInstance);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_Batch2d_setupLighting (IBatch2d * classInstance, IntPtr lightingConfig)
+	{
+		classInstance->setupLighting(lightingConfig);
 	}
 	
 	extern "C" DLLEXPORT void API_CALL llge_Batch2d_startBatch (IBatch2d * classInstance)
@@ -739,11 +754,6 @@ namespace llge
 	extern "C" DLLEXPORT void API_CALL llge_SpineSkeleton_renderEx (ISpineSkeleton * classInstance, IBatch2d * batch, IntPtr effectConfig, GraphicsEffects effect, byte colorScale)
 	{
 		classInstance->renderEx(batch, effectConfig, effect, colorScale);
-	}
-	
-	extern "C" DLLEXPORT void API_CALL llge_SpineSkeleton_render (ISpineSkeleton * classInstance, IBatch2d * batch, int lightmapId, GraphicsEffects effect, byte colorScale)
-	{
-		classInstance->render(batch, lightmapId, effect, colorScale);
 	}
 	
 	extern "C" DLLEXPORT void API_CALL llge_SpineSkeleton_renderWithoutBatch (ISpineSkeleton * classInstance)

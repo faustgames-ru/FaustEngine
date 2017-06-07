@@ -36,8 +36,12 @@ namespace graphics
 		virtual ITexture* API_CALL getTexture(){ return this; }
 		virtual void API_CALL LoadPixels(int width, int height, llge::TextureImage2dFormat format, void *pixels) override;
 		virtual void API_CALL create() override;
-		virtual void API_CALL cleanup();
-		virtual void API_CALL dispose(){ delete this; }
+		virtual void API_CALL cleanup() override;
+		virtual void API_CALL dispose() override;
+		virtual uint API_CALL getAlphaId() override;
+
+		void associate(TextureImage2d *value);
+		void createAlphaIfNeeded();
 
 		virtual int API_CALL getVerticesCount() OVERRIDE;
 		virtual IntPtr API_CALL getVertices() OVERRIDE;
@@ -64,6 +68,7 @@ namespace graphics
 		bool _wrap;
 		bool _filter;
 		int _size;
+		TextureImage2d* _alphaMap;
     };
 
 	class TextureAtlasPage : public TextureImage2d

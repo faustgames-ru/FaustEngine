@@ -50,7 +50,6 @@ namespace spine
 		virtual llge::ISpineSkeletonBone* API_CALL getBone(int index) OVERRIDE;
 		virtual int API_CALL getBonesCount() OVERRIDE;
 		virtual void API_CALL renderEx(llge::IBatch2d * batch, IntPtr effectConfig, llge::GraphicsEffects effect, byte colorScale)override;
-		virtual void API_CALL render(llge::IBatch2d * batch, int lightmapId, llge::GraphicsEffects effect, byte colorScale)override; 
 		virtual void API_CALL renderWithoutBatch()override;
 		virtual int API_CALL getGeometry(void *vertices, int verticeLimit, void *indices, int indicesLimit);
 		void cleanup();

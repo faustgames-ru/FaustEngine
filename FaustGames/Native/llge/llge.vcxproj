@@ -181,6 +181,7 @@
     <ClInclude Include="..\shaders\solid_vert.h" />
     <ClInclude Include="..\shaders\texture_alphamask_color_frag.h" />
     <ClInclude Include="..\shaders\texture_alphamask_color_vert.h" />
+    <ClInclude Include="..\shaders\texture_color_etc1a8_frag.h" />
     <ClInclude Include="..\shaders\texture_color_fog_frag.h" />
     <ClInclude Include="..\shaders\texture_color_fog_vert.h" />
     <ClInclude Include="..\shaders\texture_color_frag.h" />
@@ -206,13 +207,9 @@
     <ClInclude Include="..\src\core\StaticArray.h" />
     <ClInclude Include="..\src\core\Vector.h" />
     <ClInclude Include="..\src\drawing\Batcher.h" />
-    <ClInclude Include="..\src\drawing\Camera.h" />
+    <ClInclude Include="..\src\drawing\DynamicVertexLightMap.h" />
     <ClInclude Include="..\src\drawing\PostProcess.h" />
-    <ClInclude Include="..\src\drawing\Renderer2d.h" />
-    <ClInclude Include="..\src\drawing\RenderItem2d.h" />
     <ClInclude Include="..\src\drawing\drawing_platform.h" />
-    <ClInclude Include="..\src\drawing\RenderMesh2d.h" />
-    <ClInclude Include="..\src\drawing\WaterRenderer.h" />
     <ClInclude Include="..\src\geometry\Aabb2d.h" />
     <ClInclude Include="..\src\geometry\geometry.h" />
     <ClInclude Include="..\src\geometry\geometry_classes.h" />
@@ -398,12 +395,8 @@
     </ClInclude>
     <ClCompile Include="..\src\core\Vector.cpp" />
     <ClCompile Include="..\src\drawing\Batcher.cpp" />
-    <ClCompile Include="..\src\drawing\Camera.cpp" />
+    <ClCompile Include="..\src\drawing\DynamicVertexLightMap.cpp" />
     <ClCompile Include="..\src\drawing\PostProcess.cpp" />
-    <ClCompile Include="..\src\drawing\Renderer2d.cpp" />
-    <ClCompile Include="..\src\drawing\RenderItem2d.cpp" />
-    <ClCompile Include="..\src\drawing\RenderMesh2d.cpp" />
-    <ClCompile Include="..\src\drawing\WaterRenderer.cpp" />
     <ClCompile Include="..\src\exports\llgeDrawing.cpp" />
     <ClCompile Include="..\src\exports\llgeGeometry.cpp" />
     <ClCompile Include="..\src\exports\llgeGraphics.cpp" />

@@ -3,8 +3,7 @@
 #include "Errors.h"
 #include "GraphicsDevice.h"
 #include "Color.h"
-
-#ifdef ___UNIFIED___
+#ifdef __UNIFIED__
 #else
 #include "../../src_decompressors/PVRTDecompress.h"
 #include "../../src_decompress_ati/DecompressAtc.h"
@@ -501,7 +500,7 @@ namespace graphics
 				}
 				*/
 				//__android_log_print(ANDROID_LOG_ERROR, "TRACKERS", "%s", exts);
-#ifdef ___UNIFIED___
+#ifdef __UNIFIED__
 #else
 				if (!isFormatSupported)
 				{
@@ -734,7 +733,7 @@ namespace graphics
 		}
 	}
 
-#ifdef ___UNIFIED___
+#ifdef __UNIFIED__
 #else
 	int DecodeMortonPvrtc(const Image2dData* data, TexturesDecompressorBuffer* resultBuffer)
 	{

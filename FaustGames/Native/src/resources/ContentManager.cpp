@@ -981,6 +981,7 @@ namespace resources
 
 	IAtlasPacker* ContentManager::queryPacker(llge::TextureQueryFormat format)
 	{
+		//return nullptr;
 		if (!_isAtlasBuilderStarted) return nullptr;
 		if (format == llge::TQFNone) return nullptr;
 		if (format == llge::TQFRgba8888) return nullptr;

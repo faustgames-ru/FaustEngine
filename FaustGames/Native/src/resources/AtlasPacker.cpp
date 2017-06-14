@@ -331,7 +331,10 @@ namespace resources
 		{
 			AtlasPage* page = _pages[k];
 			graphics::TextureAtlasPage* texture = AtlasTexturesPool::Default.queryPage();
-			texture->createAlphaIfNeeded();
+			if (_pageData->Format == graphics::Image2dFormat::Etc1)
+			{
+				texture->createAlphaIfNeeded();
+			}
 			for (uint i = 0; i < page->rects.size(); i++)
 			{
 				AtlasRect rect = page->rects[i];

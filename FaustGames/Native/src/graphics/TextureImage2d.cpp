@@ -160,7 +160,7 @@ namespace graphics
 		delete[] boolPixels;
 	}
 
-	TextureImage2d::TextureImage2d(bool generateMipmaps, bool useFilter) : _createMipmaps(generateMipmaps), _wrap(false), _filter(useFilter)
+	TextureImage2d::TextureImage2d(bool generateMipmaps, bool useFilter) : _createMipmaps(generateMipmaps), _wrap(false), _filter(useFilter), _alphaMap(nullptr)
 	{
 		AtlasEntry = false;
 		setupConfig();

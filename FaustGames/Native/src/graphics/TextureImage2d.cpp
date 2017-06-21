@@ -4,6 +4,7 @@
 #include "GraphicsDevice.h"
 #include "Color.h"
 #ifdef __UNIFIED__
+#elif __ANDROID__
 #else
 #include "../../src_decompressors/PVRTDecompress.h"
 #include "../../src_decompress_ati/DecompressAtc.h"
@@ -501,6 +502,7 @@ namespace graphics
 				*/
 				//__android_log_print(ANDROID_LOG_ERROR, "TRACKERS", "%s", exts);
 #ifdef __UNIFIED__
+#elif __ANDROID__
 #else
 				if (!isFormatSupported)
 				{
@@ -734,6 +736,7 @@ namespace graphics
 	}
 
 #ifdef __UNIFIED__
+#elif __ANDROID__
 #else
 	int DecodeMortonPvrtc(const Image2dData* data, TexturesDecompressorBuffer* resultBuffer)
 	{

@@ -88,7 +88,6 @@ namespace spine
 		static drawing::BatcherSpineMesh _mesh;
 		static ushort _quadIndices[6];
 		static float _uvBuffer[65536];
-		llge::LightingConfig _lightingConfig; // todo: remove
 		std::vector<SpineSkeletonSlot *> _slots;
 		std::vector<SpineSkeletonBone *> _bones;
 		std::vector<SpineSkeletonBounds> _bounds;

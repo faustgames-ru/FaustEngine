@@ -21,7 +21,7 @@ namespace graphics
 	UniformInfo Uniforms::_fogDensity("fogDensity", UniformType::Float);
 	UniformInfo Uniforms::_fogScale("fogScale", UniformType::Float);
 	UniformInfo Uniforms::_fogColor("fogColor", UniformType::Vector3);
-
+	UniformInfo Uniforms::_colorOffset("colorOffset", UniformType::Vector3);
 
 	
 	UniformInfo *Uniforms::cameraPosition()
@@ -114,6 +114,11 @@ namespace graphics
 		return &_paintmask;
 	}
 
+	UniformInfo* Uniforms::colorOffset()
+	{
+		return &_colorOffset;
+	}
+
 	UniformValueVector3 UniformValues::_cameraPosition;
 	UniformValueMatrix UniformValues::_projection;
 	UniformValueMatrix3 UniformValues::_colorTransform;
@@ -132,6 +137,8 @@ namespace graphics
 	UniformValueFloat UniformValues::_fogScale;
 	UniformValueVector3 UniformValues::_fogColor;
 	UniformValueTexture UniformValues::_paintmask;
+	UniformValueVector3 UniformValues::_colorOffset;
+	
 
 
 

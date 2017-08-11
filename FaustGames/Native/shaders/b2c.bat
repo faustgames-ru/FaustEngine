@@ -36,5 +36,6 @@ bin2c -o post_process_hblur_vert.h shader_post_process_hblur.vert
 bin2c -o post_process_bloom_add_filter_frag.h shader_post_process_bloom_add_filter.frag
 bin2c -o post_process_bloom_depth_add_filter.h shader_post_process_bloom_depth_add_filter.frag
 bin2c -o post_process_mix_frag.h shader_post_process_mix.frag
+bin2c -o post_process_rgb_transform.h shader_post_process_rgb_transform.frag
 
 bin2c -o module_fog_vert.h module_fog.vert

@@ -172,6 +172,7 @@
     <ClInclude Include="..\shaders\post_process_empty_frag.h" />
     <ClInclude Include="..\shaders\post_process_hblur_vert.h" />
     <ClInclude Include="..\shaders\post_process_mix_frag.h" />
+    <ClInclude Include="..\shaders\post_process_rgb_transform.h" />
     <ClInclude Include="..\shaders\post_process_tonemapping.h" />
     <ClInclude Include="..\shaders\post_process_vblur_vert.h" />
     <ClInclude Include="..\shaders\post_process_vert.h" />

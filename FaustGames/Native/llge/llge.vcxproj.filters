@@ -767,6 +767,9 @@
     <ClInclude Include="..\shaders\texture_color_etc1a8_frag.h">
       <Filter>engine\shaders</Filter>
     </ClInclude>
+    <ClInclude Include="..\shaders\post_process_rgb_transform.h">
+      <Filter>engine\shaders</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\CommonSources\gen\llgePInvoke.cpp">

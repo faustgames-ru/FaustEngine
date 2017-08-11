@@ -111,6 +111,16 @@ namespace graphics
 	protected:
 	private:
 	};
+
+	class EffectPostProcessRgbTransform : public EffectBase
+	{
+	public:
+		EffectPostProcessRgbTransform();
+		~EffectPostProcessRgbTransform();
+		void create();
+	protected:
+	private:
+	};
 }
 
 #endif /*EFFECT_POST_PROCESS_H*/

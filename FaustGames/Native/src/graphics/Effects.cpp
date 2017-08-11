@@ -25,6 +25,7 @@ namespace graphics
 	EffectPostProcessHBlurFilter Effects::_postProcessHBlurFilter;
 	EffectPostProcessBloomAddFilter Effects::_postProcessBloomAddFilter;
 	EffectPostProcessBlurPass Effects::_postProcessBlurPass;
+	EffectPostProcessRgbTransform Effects::_postProcessRgbTransform;
 
 	void Effects::create()
 	{
@@ -48,6 +49,7 @@ namespace graphics
 		_postProcessHBlurFilter.create();
 		_postProcessBlurPass.create();
 		_postProcessBloomAddFilter.create();
+		_postProcessRgbTransform.create();
 	}
 
 	void Effects::cleanup()
@@ -70,6 +72,7 @@ namespace graphics
 		_postProcessBlurPass.getEffect()->cleanup();
 
 		_postProcessBloomAddFilter.getEffect()->cleanup();
+		_postProcessRgbTransform.getEffect()->cleanup();
 
 	}
 
@@ -158,4 +161,8 @@ namespace graphics
 		return &_postProcessBloomAddFilter;
 	}
 
+	EffectPostProcessRgbTransform* Effects::postProcessRgbTransform()
+	{
+		return &_postProcessRgbTransform;
+	}
 }

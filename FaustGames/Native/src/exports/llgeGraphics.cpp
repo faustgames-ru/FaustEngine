@@ -322,6 +322,11 @@ namespace llge
 			GraphicsDevice::Default.config.ellapsedTime = config->ellapsedTime;
 			GraphicsDevice::Default.config.postEffectsScale = config->postEffectsScale;
 			GraphicsDevice::Default.config.useRgbTransforms = config->useRgbTransforms;
+			GraphicsDevice::Default.config.useColorCorrection = config->useColorCorrection;
+			GraphicsDevice::Default.config.colorCorrectionRotation = config->colorCorrectionRotation;
+			GraphicsDevice::Default.config.colorCorrectionScaleX = config->colorCorrectionScaleX;
+			GraphicsDevice::Default.config.colorCorrectionScaleY = config->colorCorrectionScaleY;
+			GraphicsDevice::Default.config.colorCorrectionOffsetY = config->colorCorrectionOffsetY;
 
 			TextureFilterMode filterMode = static_cast<TextureFilterMode>(config->texturesFilter);
 			switch (filterMode)

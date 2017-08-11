@@ -241,6 +241,7 @@ namespace drawing
 	public:
 		ZBatchBuffer();
 		~ZBatchBuffer();
+		void setupLightMap(ILightMap *lightMap);
 		void reset();
 		void add(TVertex *vertices, int verticesCount, ushort *indices, int indicesCount, byte colorScale, ZBatchEntry& result);
 		ushort *allIndices();
@@ -251,6 +252,7 @@ namespace drawing
 		int _blockSize;
 		int _verticesIndex;
 		int _verticesBufferIndex;
+		ILightMap *_lightMap;
 	};
 
 	class ZBlock
@@ -259,7 +261,7 @@ namespace drawing
 		int z;
 		ZBatchBuffer Buffer;
 		std::vector<ZBatchEntry> Entries;
-		void reconstruct(int z);
+		void reconstruct(int z, ILightMap* lightMap);
 		void addMesh(llge::ITexture * texture, uint lightmapId, TVertex *vertices, int verticesCount, ushort *indices, int indicesCount, byte colorScale);
 		void applyRender(graphics::EffectBase *effect);
 		graphics::TextureTransform textureTransform;
@@ -286,13 +288,14 @@ namespace drawing
 	public:
 		void configure(
 			graphics::BlendState::e blend,
-			graphics::EffectBase *effect,
+			graphics::EffectBase *effect,			
 			core::MatrixContainer transform);
-		void reset();
+		void reset(ILightMap* lightmap);
 		void applyRender();
 		void drawMesh(int z, llge::ITexture * texture, uint lightmapId, TVertex *vertices, int verticesCount, ushort *indices, int indicesCount, byte colorScale);
 		graphics::TextureTransform textureTransform;
 	private:
+		ILightMap* _lightMap;
 		core::MatrixContainer _transform;
 		graphics::BlendState::e _blend;
 		graphics::EffectBase *_effect;

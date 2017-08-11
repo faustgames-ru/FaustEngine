@@ -141,12 +141,13 @@ namespace drawing
 			g += light->cg*lightingLevel;
 			b += light->cb*lightingLevel;
 		}
-				
+
 		float a = sa;
 		if (additive)
 		{
 			a = 0.0f;
 		}
+
 		return graphics::Color::fromRgba(sr*r*sa*s, sg*g*sa*s, sb*b*sa*s, a);
 	}
 }

@@ -175,6 +175,11 @@ namespace llge
 		public float ellapsedTime;
 		public float postEffectsScale;
 		public bool useRgbTransforms;
+		public bool useColorCorrection;
+		public float colorCorrectionRotation;
+		public float colorCorrectionScaleX;
+		public float colorCorrectionScaleY;
+		public float colorCorrectionOffsetY;
 	}
 	
 	[StructLayout(LayoutKind.Sequential)]

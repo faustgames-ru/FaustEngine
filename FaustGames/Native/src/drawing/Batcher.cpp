@@ -242,7 +242,7 @@ namespace drawing
 	{
 		_lightingMode = llge::BLMDynamicCpu;
 		_lightingModes[llge::BLMNone] = &_lightMapEmpty;
-		_lightingModes[llge::BLMDynamicCpu]= &_lightMap;
+		_lightingModes[llge::BLMDynamicCpu] = &_lightMap;
 		core::DebugDraw::Default.Render = this;
 		_buffer = new RenderBuffer();
 		//_localBuffer = static_cast<TVertex *>(malloc(graphics::GraphicsConstants::LocalBufferSize * sizeof(TVertex)));
@@ -276,7 +276,7 @@ namespace drawing
 		_currentEntry.IndicesCount = 0;
 		_blend = graphics::BlendState::None;
 		_effect = nullptr;
-		_zButcher->reset();
+		_zButcher->reset(&_lightMap);
 	}
 	
 	void Batcher::finish()
@@ -709,9 +709,10 @@ namespace drawing
 		return graphics::Effects::textureColorFog()->isConfigEqual(&entry.Config, &Config);
 	}
 
-	void ZBlock::reconstruct(int zLevel)
+	void ZBlock::reconstruct(int zLevel, ILightMap* lightMap)
 	{
 		z = zLevel;
+		Buffer.setupLightMap(lightMap);
 		Buffer.reset();
 		Entries.clear();
 	}
@@ -789,12 +790,20 @@ namespace drawing
 		_verticesIndex = 0;
 		_verticesBufferIndex = 0;
 		_indices.reserve(_blockSize);
+		_lightMap = nullptr;
 	}
 
 	ZBatchBuffer::~ZBatchBuffer()
 	{
 		for (uint i = 0; i < _vertices.size(); i++)
+		{
 			delete[] _vertices[i];
+		}
+	}
+
+	void ZBatchBuffer::setupLightMap(ILightMap* lightMap)
+	{
+		_lightMap = lightMap;
 	}
 
 	void ZBatchBuffer::reset()
@@ -825,6 +834,7 @@ namespace drawing
 			target->y = source->y;
 			target->z = source->z;
 			target->color = graphics::Color::premul(source->color, colorScale, false);
+			//target->color = _lightMap->applyLight(source->x, source->y, source->color, colorScale, false);
 			target->u = textureTransform.transformU(source->u, source->v);
 			target->v = textureTransform.transformV(source->u, source->v);
 		}
@@ -854,8 +864,9 @@ namespace drawing
 		_transform = transform;
 	}
 
-	void ZBatcher::reset()
+	void ZBatcher::reset(ILightMap* lightmap)
 	{
+		_lightMap = lightmap;
 		_blocksPool.reset();
 		_blocks.clear();
 		_verticesCounter = 0;
@@ -907,7 +918,7 @@ namespace drawing
 		if (it == _blocks.end())
 		{
 			ZBlock* newBlock = _blocksPool.queryBlock();
-			newBlock->reconstruct(z);
+			newBlock->reconstruct(z, _lightMap);
 			_blocks[z] = newBlock;
 			return newBlock;
 		}

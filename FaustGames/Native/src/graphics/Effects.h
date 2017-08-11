@@ -38,7 +38,8 @@ namespace graphics
 		static EffectPostProcessHBlurFilter * postProcessHBlurFilter();
 		static EffectPostProcessBlurPass * postProcessBlurPassFilter();
 		static EffectPostProcessBloomAddFilter * postProcessBloomAddFilter();
-
+		static EffectPostProcessRgbTransform * postProcessRgbTransform();
+		
 	protected:
 	private:
 		static EffectSolid _solid;
@@ -59,7 +60,8 @@ namespace graphics
 		static EffectPostProcessHBlurFilter _postProcessHBlurFilter;
 		static EffectPostProcessBloomAddFilter _postProcessBloomAddFilter;
 		static EffectPostProcessBlurPass _postProcessBlurPass;
-		
+		static EffectPostProcessRgbTransform _postProcessRgbTransform;
+
 	};
 }
 

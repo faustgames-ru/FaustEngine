@@ -195,6 +195,11 @@ namespace llge
 		float ellapsedTime;
 		float postEffectsScale;
 		bool useRgbTransforms;
+		bool useColorCorrection;
+		float colorCorrectionRotation;
+		float colorCorrectionScaleX;
+		float colorCorrectionScaleY;
+		float colorCorrectionOffsetY;
 	};
 	
 	struct EffectConfig

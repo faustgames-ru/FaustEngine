@@ -96,6 +96,34 @@ namespace core
 			0.0f, 0.0f, 0.0f, 1.0f);
 	}
 
+	Matrix Matrix::CreateRotationWithScale(const Vector3 n, const Vector3 scale, float a)
+	{
+		float u = n.getX();
+		float v = n.getY();
+		float w = n.getZ();
+		float u2 = u * u;
+		float v2 = v * v;
+		float w2 = w * w;
+
+		Matrix Txz = Matrix(
+			u / Math::sqrt(u2 + v2), v / Math::sqrt(u2 + v2), 0, 0,
+			-v / Math::sqrt(u2 + v2), u / Math::sqrt(u2 + v2), 0, 0,
+			0, 0, 1, 0,
+			0, 0, 0, 1);
+		Matrix Tz = Matrix(
+			w / Math::sqrt(u2 + v2 + w2), 0, -Math::sqrt(u2 + v2) / Math::sqrt(u2 + v2 + w2), 0,
+			0, 1, 0, 0,
+			Math::sqrt(u2 + v2) / Math::sqrt(u2 + v2 + w2), 0, w / Math::sqrt(u2 + v2 + w2), 0,
+			0, 0, 0, 1);
+
+		Matrix Txzi = Txz.inverse();
+		Matrix Tzi = Tz.inverse();
+
+		Matrix Rz = createRotation(Vector3::eZ, a);
+		Matrix Sxyz = createScale(scale.getX(), scale.getY(), scale.getZ());
+		return mul(Txzi, Tzi, Sxyz, Rz, Tz, Txz);
+	}
+
 	Matrix3::Matrix3(float m11, float m12, float m13, float m21, float m22, float m23, float m31, float m32, float m33)
 	{
 		_values[0] = m11;
@@ -110,6 +138,22 @@ namespace core
 		_values[7] = m32;
 		_values[8] = m33;
 	}
+
+	Matrix3::Matrix3(Matrix value)
+	{
+		_values[0] = value.getXx();
+		_values[1] = value.getXy();
+		_values[2] = value.getXz();
+
+		_values[3] = value.getYx();
+		_values[4] = value.getYy();
+		_values[5] = value.getYz();
+
+		_values[6] = value.getZx();
+		_values[7] = value.getZy();
+		_values[8] = value.getZz();
+	}
+
 	float Matrix3::getXx() const
 	{
 		return _values[0];
@@ -207,6 +251,7 @@ namespace core
 			(u*v*(1 - c) + w*s)*scale, (v2 + (1 - v2)*c)*scale,(v*w*(1 - c) - u*s)*scale,
 			(u*w*(1 - c) - v*s)*scale, (v*w*(1 - c) + u*s)*scale, (w2 + (1 - w2)*c)*scale);
 	}
+
 
 	Matrix2::Matrix2(
 		float m11, float m12,

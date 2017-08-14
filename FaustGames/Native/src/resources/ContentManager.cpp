@@ -817,6 +817,7 @@ namespace resources
 			break;
 		case llge::TFDxt:
 			_compressionExt = dxtExt.c_str();
+			break;
 		case llge::TFEtc1:
 			_compressionExt = etcExt.c_str();
 			break;

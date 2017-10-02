@@ -427,7 +427,7 @@ namespace spine
 		int VerticesLimit;
 		int IndicesLimit;
 		VBuffer(drawing::Mesh2dVertex *vertices, int verticeLimit, ushort *indices, int indicesLimit)
-			: Vertices(vertices), Indices(indices), VerticesLimit(verticeLimit), IndicesLimit(indicesLimit), _verticesCount(0), _indicesCount(0)
+			: Vertices(vertices), Indices(indices), VerticesLimit(verticeLimit), IndicesLimit(indicesLimit), _indicesCount(0), _verticesCount(0)
 		{
 		}
 		void Add(const drawing::BatcherSpineMesh &mesh)
@@ -463,8 +463,8 @@ namespace spine
 
 	int API_CALL SpineSkeleton::getGeometry(void *vertices, int verticeLimit, void *indices, int indicesLimit)
 	{
-		VBuffer buffer((drawing::Mesh2dVertex *)vertices, verticeLimit, (ushort *)indices, indicesLimit);
-		spSkeleton *s = (spSkeleton *)_spSkeleton;
+		VBuffer buffer(static_cast<drawing::Mesh2dVertex *>(vertices), verticeLimit, static_cast<ushort *>(indices), indicesLimit);
+		spSkeleton *s = static_cast<spSkeleton *>(_spSkeleton);
 		_mesh.Z = _transform.getWz();
 		llge::EffectConfig config;
 		for (int i = 0; i < s->slotsCount; i++)

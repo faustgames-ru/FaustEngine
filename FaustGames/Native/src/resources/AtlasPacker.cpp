@@ -655,7 +655,7 @@ namespace resources
 		e.pageData->Pixels = reinterpret_cast<uint*>(reinterpret_cast<byte *>(pixelsPage) + offsetPage);
 		
 		uint* pixelsImage = e.imageData->Pixels;
-		int offsetImage = e.imageData->getFullWidth()*e.imageData->getFullHeight() / 2;
+		int offsetImage = graphics::TextureImage2d::getSize(e.imageData->getFullWidth(), e.imageData->getFullHeight(), graphics::Image2dFormat::Etc1);
 		e.imageData->Pixels = reinterpret_cast<uint*>(reinterpret_cast<byte *>(pixelsImage) + offsetImage);
 
 		_a.placeImage(e);

@@ -163,6 +163,7 @@ namespace graphics
 
 	TextureImage2d::TextureImage2d(bool generateMipmaps, bool useFilter) : _createMipmaps(generateMipmaps), _wrap(false), _filter(useFilter), _alphaMap(nullptr)
 	{
+		_disposeCalls = 0;
 		AtlasEntry = false;
 		setupConfig();
 
@@ -242,7 +243,7 @@ namespace graphics
 	}
 
 	void TextureImage2d::dispose()
-	{
+	{		
 		if (!AtlasEntry)
 		{
 			if (_alphaMap != nullptr)
@@ -650,6 +651,7 @@ namespace graphics
 				data->Width + border * 2, 
 				data->Height + border * 2, 0, compressedImageSize, 
 				reinterpret_cast<byte *>(data->Pixels + data->RawDataOffset) + compressedImageSize);
+			Errors::check(Errors::CompressedTexImage2D);
 			glBindTexture(GL_TEXTURE_2D, 0);
 			Errors::check(Errors::BindTexture);
 			

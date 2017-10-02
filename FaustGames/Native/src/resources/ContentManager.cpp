@@ -693,26 +693,12 @@ namespace resources
 			_image->Format = graphics::Image2dFormat::Dxt;
 			return _image;
 		}
-		if (header.Format == 7) // Etc1
+		if (header.Format == 7 || header.Format == 8 || header.Format == 9 || header.Format == 10) // Etc1
 		{
 			_image->Format = graphics::Image2dFormat::Etc1;
 			return _image;
 		}
-		if (header.Format == 8) // Etc1
-		{
-			_image->Format = graphics::Image2dFormat::Etc1;
-			return _image;
-		}
-		if (header.Format == 9) // Etc1
-		{
-			_image->Format = graphics::Image2dFormat::Etc1;
-			return _image;
-		}
-		if (header.Format == 10) // Etc1
-		{
-			_image->Format = graphics::Image2dFormat::Etc1;
-			return _image;
-		}
+		
 		return nullptr;
 	}
 

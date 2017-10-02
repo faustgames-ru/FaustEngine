@@ -23,6 +23,7 @@ namespace graphics
 	public:
 		static int Size;
 		static TextureImage2d * empty(){ return &_empty; }
+		int _disposeCalls;
 		TextureImage2d(bool generateMipmaps, bool useFilter);
 	
 		void setData(const Image2dData *data);
@@ -53,6 +54,7 @@ namespace graphics
 		static bool TraceTriangles;
 		bool AtlasEntry;
 
+		static float getSize(int w, int h, Image2dFormat::e format);
 	protected:
 	private:
 		TextureImage2d();
@@ -60,7 +62,6 @@ namespace graphics
 		void traceTriangles(int width, int height, Image2dFormat::e format, void *pixels);
 		static GLenum getFormat(Image2dFormat::e format);
 		static float getSize(int size, Image2dFormat::e format);
-		static float getSize(int w, int h, Image2dFormat::e format);
 		static byte* getPixels(Image2dFormat::e format, uint *pixels);
 		std::vector<core::Vector2> _tracedVertices;
 		std::vector<ushort> _tracedIndices;

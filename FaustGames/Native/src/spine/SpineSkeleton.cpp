@@ -73,16 +73,7 @@ namespace spine
 				config->alpha = 0;
 			}
 			
-			if (config->alpha > 0)
-			{
-				// todo: selectEffect for rgb transform
-				state->Effect = graphics::Effects::textureColorEtc1A8();
-			}
-			else
-			{
-				// todo: selectEffect for rgb transform
-				state->Effect = graphics::Effects::textureColor();
-			}
+			state->Effect = state->Effect->ApplyEtc1A8(config->alpha > 0);
 			return image;
 		}
 		else
@@ -482,7 +473,7 @@ namespace spine
 					_mesh.Indices = _quadIndices;
 					_mesh.IndicesCount = 6;
 					_mesh.VerticesCount = 4;
-					_mesh.texture = getTexture(region->rendererObject, &_mesh.State);
+					//_mesh.texture = getTexture(region->rendererObject, &_mesh.State);
 					buffer.Add(_mesh);
 					break;
 				}
@@ -501,7 +492,7 @@ namespace spine
 						transform(_mesh.Vertices + j, _mesh.Vertices + j + 1);
 					_mesh.Indices = mesh->triangles;
 					_mesh.IndicesCount = mesh->trianglesCount;
-					_mesh.texture = getTexture(mesh->rendererObject, &_mesh.State);
+					//_mesh.texture = getTexture(mesh->rendererObject, &_mesh.State);
 					_mesh.VerticesCount = mesh->super.worldVerticesLength / 2;
 					buffer.Add(_mesh);
 					break;

@@ -12,7 +12,7 @@ varying float vertexFogAmount;
 void main()
 {
 	vec4 textureColor = texture2D(texture, _textureCoords);
-	textureColor.xyz = clamp(textureColor.xyz, vec3(0), textureColor.aaa);
+	textureColor.xyz = clamp(textureColor.xyz, vec3(0.0), textureColor.aaa);
 	textureColor *= _color;
 	textureColor.xyz = mix(textureColor.xyz, fogColor*textureColor.a, vertexFogAmount);
 	gl_FragColor = textureColor;

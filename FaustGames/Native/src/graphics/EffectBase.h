@@ -14,6 +14,19 @@ namespace graphics
 		bool isConfigEqual(const void *c0, const void *c1) const;
 		void configCopy(void *dst, const void *src) const;
 		virtual void configApply(const void *config) {}
+		virtual EffectBase* GetEtc1A8Effect() = 0;// { return this; }
+		virtual EffectBase* ApplyEtc1A8(bool useAlpha) 
+
+		{
+			if (useAlpha)
+			{
+				return GetEtc1A8Effect();
+			}
+			else 
+			{
+				return this;
+			}
+		}
 	protected:
 		Effect _effect;
 		int _configSize;

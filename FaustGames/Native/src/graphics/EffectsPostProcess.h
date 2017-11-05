@@ -10,7 +10,12 @@
 
 namespace graphics
 {	
-	class EffectPostProcessToneMapping : public EffectBase
+	class EffectPostProcessBase : public EffectBase 
+	{
+		virtual EffectBase* GetEtc1A8Effect() { return this; }
+	};
+	
+	class EffectPostProcessToneMapping : public EffectPostProcessBase
 	{
 	public:
 		EffectPostProcessToneMapping();
@@ -20,7 +25,7 @@ namespace graphics
 	private:
 	};
 
-	class EffectPostProcessBloomFilter : public EffectBase
+	class EffectPostProcessBloomFilter : public EffectPostProcessBase
 	{
 	public:
 		EffectPostProcessBloomFilter();
@@ -30,7 +35,7 @@ namespace graphics
 	private:
 	};	
 
-	class EffectPostProcessEmpty : public EffectBase
+	class EffectPostProcessEmpty : public EffectPostProcessBase
 	{
 	public:
 		EffectPostProcessEmpty();
@@ -41,7 +46,7 @@ namespace graphics
 	};
 
 
-	class EffectPostProcessEmptyColor : public EffectBase
+	class EffectPostProcessEmptyColor : public EffectPostProcessBase
 	{
 	public:
 		EffectPostProcessEmptyColor();
@@ -51,7 +56,7 @@ namespace graphics
 	private:
 	};
 
-	class EffectPostProcessVBlurFilter : public EffectBase
+	class EffectPostProcessVBlurFilter : public EffectPostProcessBase
 	{
 	public:
 		EffectPostProcessVBlurFilter();
@@ -62,7 +67,7 @@ namespace graphics
 	};
 
 
-	class EffectPostProcessHBlurFilter : public EffectBase
+	class EffectPostProcessHBlurFilter : public EffectPostProcessBase
 	{
 	public:
 		EffectPostProcessHBlurFilter();
@@ -72,7 +77,7 @@ namespace graphics
 	private:
 	};
 
-	class EffectPostProcessBloomAddFilter : public EffectBase
+	class EffectPostProcessBloomAddFilter : public EffectPostProcessBase
 	{
 	public:
 		EffectPostProcessBloomAddFilter();
@@ -82,7 +87,7 @@ namespace graphics
 	private:
 	};
 
-	class EffectPostProcessBloomDepthAddFilter : public EffectBase
+	class EffectPostProcessBloomDepthAddFilter : public EffectPostProcessBase
 	{
 	public:
 		EffectPostProcessBloomDepthAddFilter();
@@ -92,7 +97,7 @@ namespace graphics
 	private:
 	};
 
-	class EffectPostProcessMix : public EffectBase
+	class EffectPostProcessMix : public EffectPostProcessBase
 	{
 	public:
 		EffectPostProcessMix();
@@ -102,7 +107,7 @@ namespace graphics
 	private:
 	};
 
-	class EffectPostProcessBlurPass : public EffectBase
+	class EffectPostProcessBlurPass : public EffectPostProcessBase
 	{
 	public:
 		EffectPostProcessBlurPass();
@@ -112,7 +117,7 @@ namespace graphics
 	private:
 	};
 
-	class EffectPostProcessRgbTransform : public EffectBase
+	class EffectPostProcessRgbTransform : public EffectPostProcessBase
 	{
 	public:
 		EffectPostProcessRgbTransform();

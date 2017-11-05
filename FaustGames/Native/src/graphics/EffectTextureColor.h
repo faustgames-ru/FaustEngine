@@ -17,7 +17,8 @@ namespace graphics
 		EffectTexturePackedColor();
 		~EffectTexturePackedColor();
 		void create();
-		virtual void configApply(const void *config) OVERRIDE;
+		virtual void configApply(const void *config) override;
+		virtual EffectBase* GetEtc1A8Effect() override  { return this; } // todo: write correct shader for etc1a8
 	protected:
 	private:
 	};
@@ -29,6 +30,8 @@ namespace graphics
 		~EffectTextureColor();
 		void create();
 		virtual void configApply(const void *config) OVERRIDE;
+		virtual EffectBase* GetEtc1A8Effect() override;
+
 	protected:
 	private:
 	};
@@ -39,7 +42,8 @@ namespace graphics
 		EffectTextureColorEtc1A8();
 		~EffectTextureColorEtc1A8();
 		void create();
-		virtual void configApply(const void *config) OVERRIDE;
+		virtual void configApply(const void *config) override;
+		virtual EffectBase* GetEtc1A8Effect() override  { return this; }
 	protected:
 	private:
 	};
@@ -50,7 +54,20 @@ namespace graphics
 		EffectTextureColorFog();
 		~EffectTextureColorFog();
 		void create();
-		virtual void configApply(const void *config) OVERRIDE;
+		virtual void configApply(const void *config) override;
+		virtual EffectBase* GetEtc1A8Effect() override;
+	protected:
+	private:
+	};
+
+	class EffectTextureColorFogEtc1A8 : public EffectBase
+	{
+	public:
+		EffectTextureColorFogEtc1A8();
+		~EffectTextureColorFogEtc1A8();
+		void create();
+		virtual void configApply(const void *config) override;
+		virtual EffectBase* GetEtc1A8Effect() override { return this; };
 	protected:
 	private:
 	};
@@ -61,10 +78,24 @@ namespace graphics
 		EffectTextureRgbTransform();
 		~EffectTextureRgbTransform();
 		void create();
-		virtual void configApply(const void *config) OVERRIDE;
+		virtual void configApply(const void *config) override;
+		virtual EffectBase* GetEtc1A8Effect() override;
 	protected:
 	private:
 	};
+
+	class EffectTextureRgbTransformEtc1A8 : public EffectBase
+	{
+	public:
+		EffectTextureRgbTransformEtc1A8();
+		~EffectTextureRgbTransformEtc1A8();
+		void create();
+		virtual void configApply(const void *config) override;
+		virtual EffectBase* GetEtc1A8Effect() override { return this; };
+	protected:
+	private:
+	};
+
 }
 
 #endif /*EFFECT_TEXTURE_COLOR_H*/

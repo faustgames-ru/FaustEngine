@@ -25,9 +25,11 @@ namespace graphics
 		static EffectTextureColor * textureColor();
 		static EffectTextureColorEtc1A8 * textureColorEtc1A8();
 		static EffectTextureColorFog * textureColorFog();
+		static EffectTextureColorFogEtc1A8 * textureColorFogEtc1A8();
 		static EffectTextureAlphamaskColor * textureAlphamaskColor();
 		static EffectTextureColorHighlight * textureColorHighlight();
-		static EffectTextureLightMapColor * textureLightmapColor();
+		//static EffectTextureLightMapColor * textureLightmapColor();
+		static EffectTextureRgbTransformEtc1A8* textureRgbTransformEtc1A8();
 		static EffectTextureRgbTransform* textureRgbTransform();
 
 		static EffectPostProcessToneMapping * postProcessToneMapping();
@@ -47,9 +49,11 @@ namespace graphics
 		static EffectTextureColor _textureColor;		
 		static EffectTextureColorEtc1A8 _textureColorEtc1A8;
 		static EffectTextureColorFog _textureColorFog;
+		static EffectTextureColorFogEtc1A8 _textureColorFogEtc1A8;
 		static EffectTextureAlphamaskColor _textureAlphamaskColor;
 		static EffectTextureColorHighlight _textureColorHighlight;
-		static EffectTextureLightMapColor _textureLightmapColor;
+		//static EffectTextureLightMapColor _textureLightmapColor;
+		static EffectTextureRgbTransformEtc1A8 _textureRgbTransformEtc1A8;
 		static EffectTextureRgbTransform _textureRgbTransform;
 
 		static EffectPostProcessToneMapping _postProcessToneMapping;

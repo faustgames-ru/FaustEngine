@@ -111,12 +111,15 @@ namespace graphics
         {
 #ifdef __ANDROID__
             glClearDepthf(depth);
-#else
-#ifdef __APPLE__
-            glClearDepthf(depth);
+#elif __APPLE__
+        
+#if TARGET_OS_IPHONE
+ glClearDepthf(depth);
+#elif TARGET_OS_MAC
+glClearDepth(static_cast<double>(depth));
+#endif
 #else
             glClearDepth(static_cast<double>(depth));
-#endif
 #endif
             
 			_depthState = depth;
@@ -349,20 +352,36 @@ namespace graphics
 	}
 
 
-	void GraphicsDevice::readPixels(void* pixels)
+	void GraphicsDevice::readPixels(void* pixels, bool inverse)
 	{
+		//glGetTexImage(actualRenderTarget->getTextureHandle(), 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
 		glReadPixels(0, 0, getPixelsWidth(), getPixelsHeight(), GL_RGBA, GL_UNSIGNED_BYTE, pixels);
+		if (inverse)
+		{
+			unsigned char* chras = static_cast<unsigned char*>(pixels);
+			int size = getPixelsWidth()*getPixelsHeight();
+			unsigned char c0, c2;
+			for (int i = 0; i < size; i += 4)
+			{
+				c0 = chras[0];
+				c2 = chras[2];
+				chras[0] = c2;
+				chras[2] = c0;
+			}
+		}
+		Errors::check(Errors::UnknownAction);
 	}
 	
 	void GraphicsDevice::create()
 	{        
 		glDepthMask(GL_TRUE);
 		glEnable(GL_DEPTH_TEST);
-		const char* oesExts = static_cast<const char*>(static_cast<const void *>(glGetString(GL_EXTENSIONS)));
-		for (int i = 0; i < Extensions::Count; i++)
-		{
-			extensions[i] = strstr(oesExts, Extensions::names[i].c_str()) != nullptr;
-		}
+   //TODO: FIX FOR IPHONE!!!!
+//        const char* oesExts = static_cast<const char*>(static_cast<const void *>(glGetString(GL_EXTENSIONS)));
+//        for (int i = 0; i < Extensions::Count; i++)
+//        {
+//            extensions[i] = strstr(oesExts, Extensions::names[i].c_str()) != nullptr;
+//        }
 		TextureImage2d::createStatic();
 	}
 	

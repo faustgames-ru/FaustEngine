@@ -82,18 +82,6 @@
     <Filter Include="engine\navmesh">
       <UniqueIdentifier>{a78ae904-280e-46b4-bd07-710c353e151d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="engine\entities">
-      <UniqueIdentifier>{78ea6e7c-d9e8-4ac5-9bdb-8c67365e777e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="engine\entities\components">
-      <UniqueIdentifier>{0c6a6b6c-613e-4516-bd9a-96ac6120947b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="engine\entities\systems">
-      <UniqueIdentifier>{91657898-4810-4062-a8ce-b443fd779f5c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="engine\entities\filters">
-      <UniqueIdentifier>{2c452ae7-9581-4b68-9a9d-6936cbc72ef1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="engine\drawing">
       <UniqueIdentifier>{7d13e806-eaac-4e8e-87f1-7ccd1ae30387}</UniqueIdentifier>
     </Filter>
@@ -134,9 +122,6 @@
     <ClInclude Include="..\src\core\core_platform.h">
       <Filter>engine\core</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\core\Lazy.h">
-      <Filter>engine\core</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\core\Math.h">
       <Filter>engine\core</Filter>
     </ClInclude>
@@ -149,15 +134,6 @@
     <ClInclude Include="..\src\core\Vector.h">
       <Filter>engine\core</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\entities\entities_classes.h">
-      <Filter>engine\entities</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\entities\entities_platform.h">
-      <Filter>engine\entities</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\entities\entities_references.h">
-      <Filter>engine\entities</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\geometry\Aabb2d.h">
       <Filter>engine\geometry</Filter>
     </ClInclude>
@@ -168,15 +144,6 @@
       <Filter>engine\geometry</Filter>
     </ClInclude>
     <ClInclude Include="..\src\geometry\geometry_references.h">
-      <Filter>engine\geometry</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\geometry\Quadtree2d.h">
-      <Filter>engine\geometry</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\geometry\Quadtree2dItem.h">
-      <Filter>engine\geometry</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\geometry\Quadtree2dNode.h">
       <Filter>engine\geometry</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\AttributeInfo.h">
@@ -338,39 +305,6 @@
     <ClInclude Include="..\src\core\HollowsAllocationPolicy.h">
       <Filter>engine\core</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\entities\Entity.h">
-      <Filter>engine\entities</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\entities\Component.h">
-      <Filter>engine\entities</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\entities\EntitiesWorld.h">
-      <Filter>engine\entities</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\entities\System.h">
-      <Filter>engine\entities</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\entities\EntitiesFilter.h">
-      <Filter>engine\entities</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\entities\DummyEntitiesFilter.h">
-      <Filter>engine\entities\filters</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\entities\QuadtreeEntitiesFilter.h">
-      <Filter>engine\entities\filters</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\entities\Aabb2dComponent.h">
-      <Filter>engine\entities\components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\entities\RenderSystem2d.h">
-      <Filter>engine\entities\systems</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\entities\Transform2dComponent.h">
-      <Filter>engine\entities\components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\entities\TransformSystem2d.h">
-      <Filter>engine\entities\systems</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\drawing\drawing_platform.h">
       <Filter>engine\drawing</Filter>
     </ClInclude>
@@ -378,27 +312,6 @@
       <Filter>engine\drawing</Filter>
     </ClInclude>
     <ClInclude Include="..\src\drawing\drawing_classes.h">
-      <Filter>engine\drawing</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\drawing\Renderer2d.h">
-      <Filter>engine\drawing</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\drawing\RenderItem2d.h">
-      <Filter>engine\drawing</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\drawing\RenderMesh2d.h">
-      <Filter>engine\drawing</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\entities\Render2dComponent.h">
-      <Filter>engine\entities\components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\entities\entities.h">
-      <Filter>engine\entities</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\drawing\Camera.h">
-      <Filter>engine\drawing</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\drawing\WaterRenderer.h">
       <Filter>engine\drawing</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\TextureCubemap.h">
@@ -466,9 +379,6 @@
     </ClInclude>
     <ClInclude Include="..\src\graphics\TextureRenderTargetDepth2d.h">
       <Filter>engine\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\entities\MatrixTransformComponent.h">
-      <Filter>engine\entities\components</Filter>
     </ClInclude>
     <ClInclude Include="..\src\drawing\Batcher.h">
       <Filter>engine\drawing</Filter>
@@ -845,6 +755,21 @@
     <ClInclude Include="..\src_etcpack\etcpack_lib.h">
       <Filter>third_party\etcpack</Filter>
     </ClInclude>
+    <ClInclude Include="..\shaders\post_process_blur_pass_frag.h">
+      <Filter>engine\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shaders\post_process_blur_pass_vert.h">
+      <Filter>engine\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\drawing\DynamicVertexLightMap.h">
+      <Filter>engine\drawing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shaders\texture_color_etc1a8_frag.h">
+      <Filter>engine\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shaders\post_process_rgb_transform.h">
+      <Filter>engine\shaders</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\CommonSources\gen\llgePInvoke.cpp">
@@ -859,12 +784,6 @@
       <Filter>engine\core</Filter>
     </ClCompile>
     <ClCompile Include="..\src\geometry\Aabb2d.cpp">
-      <Filter>engine\geometry</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\geometry\Quadtree2d.cpp">
-      <Filter>engine\geometry</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\geometry\Quadtree2dNode.cpp">
       <Filter>engine\geometry</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\AttributeInfo.cpp">
@@ -971,60 +890,6 @@
     </ClCompile>
     <ClCompile Include="..\src\core\HollowsAllocationPolicy.cpp">
       <Filter>engine\core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\entities\Entity.cpp">
-      <Filter>engine\entities</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\entities\Component.cpp">
-      <Filter>engine\entities</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\entities\EntitiesWorld.cpp">
-      <Filter>engine\entities</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\entities\System.cpp">
-      <Filter>engine\entities</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\entities\EntitiesFilter.cpp">
-      <Filter>engine\entities</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\entities\DummyEntitiesFilter.cpp">
-      <Filter>engine\entities\filters</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\entities\QuadtreeEntitiesFilter.cpp">
-      <Filter>engine\entities\filters</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\entities\Aabb2dComponent.cpp">
-      <Filter>engine\entities\components</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\entities\RenderSystem2d.cpp">
-      <Filter>engine\entities\systems</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\entities\Transform2dComponent.cpp">
-      <Filter>engine\entities\components</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\entities\TransformSystem2d.cpp">
-      <Filter>engine\entities\systems</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\drawing\Renderer2d.cpp">
-      <Filter>engine\drawing</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\drawing\RenderItem2d.cpp">
-      <Filter>engine\drawing</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\drawing\RenderMesh2d.cpp">
-      <Filter>engine\drawing</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\entities\Render2dComponent.cpp">
-      <Filter>engine\entities\components</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\exports\llgeEntities.cpp">
-      <Filter>exports</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\drawing\Camera.cpp">
-      <Filter>engine\drawing</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\drawing\WaterRenderer.cpp">
-      <Filter>engine\drawing</Filter>
     </ClCompile>
     <ClCompile Include="..\src\graphics\TextureCubemap.cpp">
       <Filter>engine\graphics</Filter>
@@ -1145,9 +1010,6 @@
     </ClCompile>
     <ClCompile Include="..\src\exports\llgeDrawing.cpp">
       <Filter>exports</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\entities\MatrixTransformComponent.cpp">
-      <Filter>engine\entities\components</Filter>
     </ClCompile>
     <ClCompile Include="..\src\resources\ContentProviderObb.cpp">
       <Filter>engine\resources</Filter>
@@ -1523,6 +1385,9 @@
     </ClCompile>
     <ClCompile Include="..\src_etcpack\source_edit\etcdec.cpp">
       <Filter>third_party\etcpack\source_edit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\drawing\DynamicVertexLightMap.cpp">
+      <Filter>engine\drawing</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

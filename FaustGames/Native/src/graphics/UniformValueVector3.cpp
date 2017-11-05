@@ -3,7 +3,7 @@
 
 namespace graphics
 {
-	UniformValueVector3::UniformValueVector3() : _value(core::Math::MaxValue, core::Math::MaxValue, core::Math::MaxValue), _applyMask(0)
+	UniformValueVector3::UniformValueVector3() : _value(core::Math::MaxValue, core::Math::MaxValue, core::Math::MaxValue), _applyMask(0), _equal(false)
 	{
 	}
 
@@ -30,7 +30,7 @@ namespace graphics
 	}
 
 
-	UniformValueVector2::UniformValueVector2() : _value(core::Math::MaxValue, core::Math::MaxValue), _applyMask(0)
+	UniformValueVector2::UniformValueVector2() : _value(core::Math::MaxValue, core::Math::MaxValue), _applyMask(0), _equal(false)
 	{
 	}
 

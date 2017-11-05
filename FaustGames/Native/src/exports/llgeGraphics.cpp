@@ -248,20 +248,25 @@ namespace llge
 			return graphicsDevice->getPixelsHeight();
 		}
 
-		virtual void API_CALL getPixels(IntPtr target) 
+		virtual void API_CALL getPixels(IntPtr target, bool inverse) 
 		{
-			return graphicsDevice->readPixels(target);
+			return graphicsDevice->readPixels(target, inverse);
 		}
 
 
-		virtual void API_CALL cleanup()
+		virtual void API_CALL cleanup() override
 		{
 			EFFECTS_CALL_CLEANUP;
 		}
 
-		virtual void API_CALL dispose()
+		virtual void API_CALL dispose() override
 		{
 			delete this;
+		}
+
+		virtual bool API_CALL isTextureFormatSupported(TextureImage2dFormat format) override
+		{
+			return TextureImage2d::isTextureFormatSupported(Image2dFormat::FromLlgeFormat(format));
 		}
 
 	};
@@ -317,6 +322,11 @@ namespace llge
 			GraphicsDevice::Default.config.ellapsedTime = config->ellapsedTime;
 			GraphicsDevice::Default.config.postEffectsScale = config->postEffectsScale;
 			GraphicsDevice::Default.config.useRgbTransforms = config->useRgbTransforms;
+			GraphicsDevice::Default.config.useColorCorrection = config->useColorCorrection;
+			GraphicsDevice::Default.config.colorCorrectionRotation = config->colorCorrectionRotation;
+			GraphicsDevice::Default.config.colorCorrectionScaleX = config->colorCorrectionScaleX;
+			GraphicsDevice::Default.config.colorCorrectionScaleY = config->colorCorrectionScaleY;
+			GraphicsDevice::Default.config.colorCorrectionOffsetY = config->colorCorrectionOffsetY;
 
 			TextureFilterMode filterMode = static_cast<TextureFilterMode>(config->texturesFilter);
 			switch (filterMode)

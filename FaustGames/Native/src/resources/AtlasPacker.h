@@ -3,11 +3,18 @@
 
 #include "llge.h"
 #include "resources_classes.h"
-#include "../../src_rectanglebinpack/MaxRectsBinPack.h"
 
 namespace resources
 {
 	class BinPackNodesPool;
+	struct AtlasImageEntry;
+
+	struct RectSize
+	{
+		AtlasImageEntry *entry;
+		int width;
+		int height;
+	};
 
 	class BinPackRect
 	{
@@ -27,6 +34,7 @@ namespace resources
 	class BinPackNode
 	{
 	public:
+		void* userData;
 		BinPackRect rect;
 		BinPackRect inserted;
 		BinPackNode* childs[2];
@@ -84,8 +92,7 @@ namespace resources
 	public:
 		BinPackRect rect;
 		AtlasImageEntry* entry;
-		AtlasRect(rbp::Rect rect);
-		explicit AtlasRect(BinPackRect rect);
+		AtlasRect(BinPackRect rect, AtlasImageEntry* entry);
 	};
 
 	class AtlasPage
@@ -122,6 +129,7 @@ namespace resources
 		static IAtlasPlacer* pvrtc14;
 		static IAtlasPlacer* atc;
 		static IAtlasPlacer* etc2;
+		static IAtlasPlacer* etc1;
 		static IAtlasPlacer* dxt;
 		static IAtlasPlacer* switchPlacer(llge::TextureImage2dFormat format);
 		virtual int getPageBufferSize(int pageSize) = 0;
@@ -378,6 +386,25 @@ namespace resources
 		virtual int getPageBufferSize(int pageSize) override;
 		virtual void placeImage(const PlaceArgs &e) override;
 		virtual void SetupAlign(AlignInfo &alignInfo) override;
+	};
+
+	class AtlasPlacerEtc1Internal : public IAtlasPlacer
+	{
+	public:
+		virtual int getPageBufferSize(int pageSize) override;
+		virtual void placeImage(const PlaceArgs &e) override;
+		virtual void SetupAlign(AlignInfo &alignInfo) override;
+	};
+
+	class AtlasPlacerEtc1 : public IAtlasPlacer
+	{
+	public:
+		virtual int getPageBufferSize(int pageSize) override;
+		virtual void placeImage(const PlaceArgs &e) override;
+		virtual void SetupAlign(AlignInfo &alignInfo) override;
+	private:
+		AtlasPlacerEtc1Internal _rgb;
+		AtlasPlacerEtc1Internal _a;
 	};
 }
 

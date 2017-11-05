@@ -9,6 +9,7 @@ namespace graphics
 	EffectSolid Effects::_solid;
 	EffectSolidColor Effects::_solidColor;
 	EffectTextureColor Effects::_textureColor;
+	EffectTextureColorEtc1A8 Effects::_textureColorEtc1A8;
 	EffectTextureColorFog Effects::_textureColorFog;
 	EffectTextureAlphamaskColor Effects::_textureAlphamaskColor;
 	EffectTextureColorHighlight Effects::_textureColorHighlight;
@@ -23,6 +24,8 @@ namespace graphics
 	EffectPostProcessVBlurFilter Effects::_postProcessVBlurFilter;
 	EffectPostProcessHBlurFilter Effects::_postProcessHBlurFilter;
 	EffectPostProcessBloomAddFilter Effects::_postProcessBloomAddFilter;
+	EffectPostProcessBlurPass Effects::_postProcessBlurPass;
+	EffectPostProcessRgbTransform Effects::_postProcessRgbTransform;
 
 	void Effects::create()
 	{
@@ -31,6 +34,7 @@ namespace graphics
 		_solid.create();
 		_solidColor.create();
 		_textureColor.create();
+		_textureColorEtc1A8.create();
 		_textureColorFog.create();
 		_textureAlphamaskColor.create();
 		_textureColorHighlight.create();
@@ -43,7 +47,9 @@ namespace graphics
 		_postProcessEmptyColor.create();
 		_postProcessVBlurFilter.create();
 		_postProcessHBlurFilter.create();
+		_postProcessBlurPass.create();
 		_postProcessBloomAddFilter.create();
+		_postProcessRgbTransform.create();
 	}
 
 	void Effects::cleanup()
@@ -51,6 +57,8 @@ namespace graphics
 		_solid.getEffect()->cleanup();
 		_solidColor.getEffect()->cleanup();
 		_textureColor.getEffect()->cleanup();
+		_textureColorEtc1A8.getEffect()->cleanup();
+
 		_textureColorFog.getEffect()->cleanup();
 		_textureAlphamaskColor.getEffect()->cleanup();
 		_textureColorHighlight.getEffect()->cleanup();
@@ -61,7 +69,10 @@ namespace graphics
 		_postProcessBloomFilter.getEffect()->cleanup();
 		_postProcessVBlurFilter.getEffect()->cleanup();
 		_postProcessHBlurFilter.getEffect()->cleanup();
+		_postProcessBlurPass.getEffect()->cleanup();
+
 		_postProcessBloomAddFilter.getEffect()->cleanup();
+		_postProcessRgbTransform.getEffect()->cleanup();
 
 	}
 
@@ -78,6 +89,11 @@ namespace graphics
 	EffectTextureColor * Effects::textureColor()
 	{
 		return &_textureColor;
+	}
+
+	EffectTextureColorEtc1A8* Effects::textureColorEtc1A8()
+	{
+		return &_textureColorEtc1A8;
 	}
 
 	EffectTextureColorFog* Effects::textureColorFog()
@@ -135,9 +151,18 @@ namespace graphics
 		return &_postProcessHBlurFilter;
 	}
 
+	EffectPostProcessBlurPass* Effects::postProcessBlurPassFilter()
+	{
+		return &_postProcessBlurPass;
+	}
+
 	EffectPostProcessBloomAddFilter * Effects::postProcessBloomAddFilter()
 	{
 		return &_postProcessBloomAddFilter;
 	}
 
+	EffectPostProcessRgbTransform* Effects::postProcessRgbTransform()
+	{
+		return &_postProcessRgbTransform;
+	}
 }

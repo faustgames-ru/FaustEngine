@@ -6,12 +6,14 @@ namespace graphics
 	UniformInfo Uniforms::_projection("projection", UniformType::Matrix4);
 	UniformInfo Uniforms::_colorTransform("colorTransform", UniformType::Matrix3);
 	UniformInfo Uniforms::_texture("texture", UniformType::Sampler2D);
+	UniformInfo Uniforms::_alpha("alpha", UniformType::Sampler2D);
 	UniformInfo Uniforms::_lightmap("lightmap", UniformType::Sampler2D);
 	UniformInfo Uniforms::_environment("environment", UniformType::Sampler2D);
 	UniformInfo Uniforms::_depthmap("depthmap", UniformType::Sampler2D);
 	UniformInfo Uniforms::_normalmap("normalmap", UniformType::Sampler2D);
 	UniformInfo Uniforms::_time("time", UniformType::Float);	
 	UniformInfo Uniforms::_pixelSize("pixelSize", UniformType::Vector2);
+	UniformInfo Uniforms::_pixelOffset("pixelOffset", UniformType::Vector2);
 	UniformInfo Uniforms::_highlightColor("highlightColor", UniformType::Vector3);
 	UniformInfo Uniforms::_paintmask("paintmask", UniformType::Sampler2D);
 
@@ -19,7 +21,7 @@ namespace graphics
 	UniformInfo Uniforms::_fogDensity("fogDensity", UniformType::Float);
 	UniformInfo Uniforms::_fogScale("fogScale", UniformType::Float);
 	UniformInfo Uniforms::_fogColor("fogColor", UniformType::Vector3);
-
+	UniformInfo Uniforms::_colorOffset("colorOffset", UniformType::Vector3);
 
 	
 	UniformInfo *Uniforms::cameraPosition()
@@ -42,6 +44,12 @@ namespace graphics
 	{
 		return &_texture;
 	}
+
+	UniformInfo* Uniforms::alpha()
+	{
+		return &_alpha;
+	}
+
 	UniformInfo * Uniforms::lightmap()
 	{
 		return &_lightmap;
@@ -69,6 +77,11 @@ namespace graphics
 	UniformInfo *Uniforms::pixelSize()
 	{
 		return &_pixelSize;
+	}
+
+	UniformInfo* Uniforms::pixelOffset()
+	{
+		return &_pixelOffset;
 	}
 
 	UniformInfo* Uniforms::highlightColor()
@@ -101,22 +114,31 @@ namespace graphics
 		return &_paintmask;
 	}
 
+	UniformInfo* Uniforms::colorOffset()
+	{
+		return &_colorOffset;
+	}
+
 	UniformValueVector3 UniformValues::_cameraPosition;
 	UniformValueMatrix UniformValues::_projection;
 	UniformValueMatrix3 UniformValues::_colorTransform;
 	UniformValueTexture UniformValues::_texture;
+	UniformValueTexture UniformValues::_alpha;
 	UniformValueTexture UniformValues::_lightmap;
 	UniformValueTexture UniformValues::_environment;
 	UniformValueTexture UniformValues::_depthmap;
 	UniformValueTexture UniformValues::_normalmap;
 	UniformValueFloat UniformValues::_time;
 	UniformValueVector2 UniformValues::_pixelSize;
+	UniformValueVector2 UniformValues::_pixelOffset;	
 	UniformValueVector3 UniformValues::_highlightColor;
 	UniformValueFloat UniformValues::_fogStart;
 	UniformValueFloat UniformValues::_fogDensity;
 	UniformValueFloat UniformValues::_fogScale;
 	UniformValueVector3 UniformValues::_fogColor;
 	UniformValueTexture UniformValues::_paintmask;
+	UniformValueVector3 UniformValues::_colorOffset;
+	
 
 
 
@@ -128,8 +150,9 @@ namespace graphics
 		}
 
 		initSampler(&_texture, 0);
-		initSampler(&_lightmap, 1);
-		initSampler(&_environment, 2);
+		initSampler(&_alpha, 1);
+		initSampler(&_lightmap, 2);
+		//initSampler(&_environment, 2);
 		initSampler(&_depthmap, 3);
 		initSampler(&_normalmap, 4);
 		initSampler(&_paintmask, 5);

@@ -1,6 +1,5 @@
 #include "../core/StaticArray.h"
 #include "../core/Vector.h"
 #include "../core/Matrix.h"
-#include "../core/Lazy.h"
 #include "../core/Math.h"
 #include "../core/MarchingSquares.h"

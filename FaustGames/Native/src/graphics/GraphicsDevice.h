@@ -125,6 +125,11 @@ namespace graphics
 		float ellapsedTime;
 		float postEffectsScale;
 		bool useRgbTransforms;
+		bool useColorCorrection;
+		float colorCorrectionRotation;
+		float colorCorrectionScaleX;
+		float colorCorrectionScaleY;
+		float colorCorrectionOffsetY;
 		int getMagFilter();
 		int getMinFilter();
 		GraphicsConfig();
@@ -157,8 +162,8 @@ namespace graphics
         void setActiveTexture(uint value);
 		int getPixelsWidth();
 		int getPixelsHeight();
-		void readPixels(void * pixels);
-        static void create();
+		void readPixels(void * pixels, bool inverse);
+		static void create();
 		PostProcessTargetManager PostProcessTargets;
 		PostProcessTargetManager PostProcessScaledTargets1;
 		PostProcessTargetManager PostProcessScaledTargets2;

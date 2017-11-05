@@ -100,10 +100,16 @@ namespace geometry
 	class P2t : public llge::IP2t
 	{
 	public:
+		virtual void API_CALL setContour(IntPtr vertices2f, uint count) OVERRIDE;
+		virtual void API_CALL addHole(IntPtr vertices2f, uint count) OVERRIDE;
+		virtual void API_CALL build() OVERRIDE;
+
 		virtual void API_CALL buildContour(IntPtr vertices2f, uint count) OVERRIDE;
 		virtual int API_CALL getTrianglesCount() OVERRIDE;
 		virtual void API_CALL getTriangles(IntPtr triangles) OVERRIDE;
 	private:
+		std::vector<int> _contour;
+		std::vector<std::vector<int>> _holes;
 		std::vector<int> _triangles;
 		std::vector<p2t::Point> _allPoints;
 

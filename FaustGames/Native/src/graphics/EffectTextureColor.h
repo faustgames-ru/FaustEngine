@@ -33,6 +33,17 @@ namespace graphics
 	private:
 	};
 
+	class EffectTextureColorEtc1A8 : public EffectBase
+	{
+	public:
+		EffectTextureColorEtc1A8();
+		~EffectTextureColorEtc1A8();
+		void create();
+		virtual void configApply(const void *config) OVERRIDE;
+	protected:
+	private:
+	};
+
 	class EffectTextureColorFog : public EffectBase
 	{
 	public:

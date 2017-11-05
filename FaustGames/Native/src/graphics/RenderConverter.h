@@ -36,12 +36,18 @@ namespace graphics
 			_formats[llge::FormatPositionTexture] = VertexFormats::positionTexture();
 			_formats[llge::FormatPositionColor] = VertexFormats::positionColor();
 		}
-		inline EffectBase * getEffect(llge::GraphicsEffects effect)
+		inline EffectBase * getEffect(llge::GraphicsEffects effect, bool hasAlpha = false)
 		{
-			if (GraphicsDevice::Default.config.enableFog)
-			if (effect == llge::GraphicsEffects::EffectTextureColor)
+			if (hasAlpha)
 			{
-				return Effects::textureColorFog();
+				return Effects::textureColorEtc1A8();
+			}
+			if (GraphicsDevice::Default.config.enableFog)
+			{
+				if (effect == llge::GraphicsEffects::EffectTextureColor)
+				{
+					return Effects::textureColorFog();
+				}
 			}
 			return _effects[static_cast<int>(effect)];
 		}

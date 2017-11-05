@@ -3,10 +3,13 @@
 #include "Errors.h"
 #include "GraphicsDevice.h"
 #include "Color.h"
+#ifdef __UNIFIED__
+#elif __ANDROID__
+#else
 #include "../../src_decompressors/PVRTDecompress.h"
 #include "../../src_decompress_ati/DecompressAtc.h"
 #include "../../src_etcpack/etcpack_lib.h"
-
+#endif
 
 #define ATC_RGB_AMD							0x8C92
 #define ATC_RGBA_EXPLICIT_ALPHA_AMD			0x8C93
@@ -17,7 +20,9 @@
 #define COMPRESSED_RGBA_PVRTC_4BPPV1_IMG	0x8C02
 #define COMPRESSED_RGBA_PVRTC_2BPPV1_IMG	0x8C03
 
-#define COMPRESSED_RGB8_ETC2                             0x9274
+#define ETC1_RGB8_OES 0x8d64
+
+#define COMPRESSED_RGB8_ETC2							 0x9274
 #define COMPRESSED_SRGB8_ETC2                            0x9275
 #define COMPRESSED_RGB8_PUNCHTHROUGH_ALPHA1_ETC2         0x9276
 #define COMPRESSED_SRGB8_PUNCHTHROUGH_ALPHA1_ETC2        0x9277
@@ -84,7 +89,7 @@ namespace graphics
 		}
 	};
 
-	TextureImage2d::TextureImage2d() : _createMipmaps(false), _wrap(false), _filter(true)
+	TextureImage2d::TextureImage2d() : _createMipmaps(false), _wrap(false), _filter(true), _alphaMap(nullptr)
 	{
 		setupConfig();
 		_size = 0;
@@ -156,8 +161,9 @@ namespace graphics
 		delete[] boolPixels;
 	}
 
-	TextureImage2d::TextureImage2d(bool generateMipmaps, bool useFilter) : _createMipmaps(generateMipmaps), _wrap(false), _filter(useFilter)
+	TextureImage2d::TextureImage2d(bool generateMipmaps, bool useFilter) : _createMipmaps(generateMipmaps), _wrap(false), _filter(useFilter), _alphaMap(nullptr)
 	{
+		_disposeCalls = 0;
 		AtlasEntry = false;
 		setupConfig();
 
@@ -172,7 +178,7 @@ namespace graphics
 		Image2dData data;
 		data.Width = width;
 		data.Height = height;
-		data.Format = static_cast<Image2dFormat::e>(format);
+		data.Format = Image2dFormat::FromLlgeFormat(format);
 		data.Pixels = static_cast<unsigned int*>(pixels);
 		setData(&data);
 		data.Pixels = nullptr;
@@ -191,27 +197,10 @@ namespace graphics
 		Errors::check(Errors::BindTexture);
 		if (_filter)
 		{
-
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GraphicsDevice::Default.config.getMagFilter());
 			Errors::check(Errors::TexParameteri);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GraphicsDevice::Default.config.getMinFilter());
-			Errors::check(Errors::TexParameteri);
-			/*
-			if (_createMipmaps)
-			{
-				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-				Errors::check(Errors::TexParameteri);
-				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-				Errors::check(Errors::TexParameteri);
-			}
-			else
-			{
-				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-				Errors::check(Errors::TexParameteri);
-				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-				Errors::check(Errors::TexParameteri);
-			}
-			*/
+			Errors::check(Errors::TexParameteri);			
 		}
 		else
 		{
@@ -247,7 +236,51 @@ namespace graphics
 		_size = 0;
 		glDeleteTextures(1, &_handle);
 		Errors::check(Errors::DeleteTexture);
+		if (_alphaMap != nullptr)
+		{
+			_alphaMap->cleanup();
+		}
 	}
+
+	void TextureImage2d::dispose()
+	{		
+		if (!AtlasEntry)
+		{
+			if (_alphaMap != nullptr)
+			{
+				_alphaMap->dispose();
+				_alphaMap = nullptr;
+			}
+		}
+		delete this;
+	}
+
+	uint TextureImage2d::getAlphaId()
+	{
+		if (_alphaMap != nullptr)
+		{
+			return _alphaMap->getHandle();
+		}
+		return 0;
+	}
+
+	void TextureImage2d::associate(TextureImage2d* value)
+	{
+		AtlasEntry = true;
+		setHandle(value->_handle);
+		_alphaMap = value->_alphaMap;
+	}
+
+	void TextureImage2d::createAlphaIfNeeded()
+	{
+		if (_alphaMap == nullptr)
+		{
+			_alphaMap = new TextureImage2d(false, true);
+			_alphaMap->create();
+		}
+	}
+
+
 
 	int TextureImage2d::getVerticesCount()
 	{
@@ -267,6 +300,11 @@ namespace graphics
 	IntPtr TextureImage2d::getIndices()
 	{
 		return _tracedIndices.data();
+	}
+
+	bool TextureImage2d::isAtlasEntry()
+	{
+		return AtlasEntry;
 	}
 
 	struct PvrtcBlock
@@ -464,6 +502,9 @@ namespace graphics
 				}
 				*/
 				//__android_log_print(ANDROID_LOG_ERROR, "TRACKERS", "%s", exts);
+#ifdef __UNIFIED__
+#elif __ANDROID__
+#else
 				if (!isFormatSupported)
 				{
 					//__android_log_print(ANDROID_LOG_ERROR, "TRACKERS", "%s", "format not supported");
@@ -544,6 +585,7 @@ namespace graphics
 					}
 					// todo convert	
 				}
+#endif
 				if (isFormatSupported)
 				{
 					if ((data->Format == Image2dFormat::Pvrtc12 || data->Format == Image2dFormat::Pvrtc14))
@@ -574,6 +616,7 @@ namespace graphics
 						return;
 					}
 					int compressedImageSize = getSize(data->Width + border * 2, data->Height + border * 2, data->Format);
+					
 					glCompressedTexImage2D(GL_TEXTURE_2D, 0, getFormat(data->Format), data->Width + border*2, data->Height + border*2, 0, compressedImageSize, data->Pixels + data->RawDataOffset);
 					transform = TextureTransform(
 						border / static_cast<float>(data->Width + border*2),
@@ -587,6 +630,52 @@ namespace graphics
 		}
 		glBindTexture(GL_TEXTURE_2D, 0);
 		Errors::check(Errors::BindTexture);
+
+		if (data->Format == Image2dFormat::Etc1)
+		{
+			if (_alphaMap == nullptr)
+			{
+				_alphaMap = new TextureImage2d(false, true);
+				_alphaMap->create();
+			}
+
+			glActiveTexture(GL_TEXTURE0);
+			Errors::check(Errors::ActiveTexture);
+
+			glBindTexture(GL_TEXTURE_2D, _alphaMap->getHandle());
+			Errors::check(Errors::BindTexture);
+
+			int compressedImageSize = getSize(data->Width + border * 2, data->Height + border * 2, data->Format);
+			glCompressedTexImage2D(GL_TEXTURE_2D, 0, 
+				getFormat(data->Format), 
+				data->Width + border * 2, 
+				data->Height + border * 2, 0, compressedImageSize, 
+				reinterpret_cast<byte *>(data->Pixels + data->RawDataOffset) + compressedImageSize);
+			Errors::check(Errors::CompressedTexImage2D);
+			glBindTexture(GL_TEXTURE_2D, 0);
+			Errors::check(Errors::BindTexture);
+			
+			/*
+			/// load paralel alpha map
+			if (_alphaMap == nullptr)
+			{
+				_alphaMap = new TextureImage2d(false, true);
+				_alphaMap->create();
+			}
+
+			glActiveTexture(GL_TEXTURE0);
+			Errors::check(Errors::ActiveTexture);
+
+			glBindTexture(GL_TEXTURE_2D, _alphaMap->getHandle());
+			Errors::check(Errors::BindTexture);
+
+			int compressedImageSize = getSize(data->Width + border * 2, data->Height + border * 2, data->Format);
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, (data->Width + border * 2) / 2,  (data->Height + border * 2) / 2, 
+				0, GL_ALPHA, GL_UNSIGNED_BYTE, reinterpret_cast<byte *>(data->Pixels + data->RawDataOffset) + compressedImageSize);
+			glBindTexture(GL_TEXTURE_2D, 0);
+			Errors::check(Errors::BindTexture);
+			*/
+		}
 	}
 
 	void UpscaleToPot(const Image2dData *data, int potX, int potY, TexturesDecompressorBuffer *resultBuffer)
@@ -648,6 +737,9 @@ namespace graphics
 		}
 	}
 
+#ifdef __UNIFIED__
+#elif __ANDROID__
+#else
 	int DecodeMortonPvrtc(const Image2dData* data, TexturesDecompressorBuffer* resultBuffer)
 	{
 		int pot = core::Math::pot(core::Math::max(data->Width + data->BorderSize * 2, data->Height + data->BorderSize * 2));
@@ -842,7 +934,7 @@ namespace graphics
 			}
 		}
 	}
-	
+#endif	
 	GLenum TextureImage2d::getFormat(Image2dFormat::e format)
 	{
 		switch (format)
@@ -856,7 +948,11 @@ namespace graphics
 		case Image2dFormat::Pvrtc14:
 			return COMPRESSED_RGBA_PVRTC_4BPPV1_IMG;
 		case Image2dFormat::Etc1:
+#ifdef __ANDROID__
+			return ETC1_RGB8_OES;
+#else
 			return COMPRESSED_RGB8_ETC2;
+#endif //__ANDROID__
 		case Image2dFormat::Etc2:
 			return COMPRESSED_RGBA8_ETC2_EAC;
 		case Image2dFormat::Dxt:
@@ -987,6 +1083,24 @@ namespace graphics
 	void TextureImage2d::cleanupStatic()
 	{
 		_empty.cleanup();
+	}
+
+	bool TextureImage2d::isTextureFormatSupported(Image2dFormat::e format)
+	{
+		GLint numFormats = 0;
+		glGetIntegerv(GL_NUM_COMPRESSED_TEXTURE_FORMATS, &numFormats);
+		_formats.resize(numFormats);
+		glGetIntegerv(GL_COMPRESSED_TEXTURE_FORMATS, _formats.data());
+
+		int f = getFormat(format);
+		for (int i = 0; i < _formats.size(); i++)
+		{
+			if (f == _formats[i])
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 
 	int TextureImage2d::Size(0);

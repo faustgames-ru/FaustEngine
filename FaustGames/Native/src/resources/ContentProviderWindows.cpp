@@ -61,8 +61,7 @@ namespace resources
 	{
 		ContentProviderInstance->closeContent();
 	}
-
-
+		
 	void AssetsContentProvider::setup(void* env, void* assetsManager, const char* manifestFile)
 	{
 	}

@@ -13,6 +13,7 @@ namespace graphics
 		virtual int getWidth(){ return _width; }
 		virtual int getHeight(){ return _height; }
 		virtual GLuint getFramebuffer(){ return _frameBuffer; }
+		virtual GLuint getTextureHandle() override { return _colorTexture.getHandle(); }
 
 		virtual void* API_CALL getRenderTargetInstance(){ return (IRenderTarget *)this; }
 		virtual llge::ITexture* API_CALL getTexture(){ return &_colorTexture; }

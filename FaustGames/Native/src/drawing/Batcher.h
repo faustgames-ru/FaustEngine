@@ -5,6 +5,7 @@
 #include "PostProcess.h"
 #include "../core/DebugRender.h"
 #include <set>
+#include "DynamicVertexLightMap.h"
 
 namespace drawing
 {
@@ -48,6 +49,7 @@ namespace drawing
 		const int VerticesLimit = 32768;
 		const int IndicesLimit = 32768;
 		graphics::TextureTransform textureTransform;
+		ILightMap* lightMap;
 		BatchBuffer();
 
 		~BatchBuffer();
@@ -56,7 +58,6 @@ namespace drawing
 
 		bool canAdd(int verticesCount, int indicesCount) const;
 		void addMesh(uint color, float z, float* vertices, float* uvs, int verticesCount, ushort* indices, int indicesCount, bool additive, byte colorScale);
-		void addMeshNotPremul(uint color, float z, float* vertices, float* uvs, int verticesCount, ushort* indices, int indicesCount, bool additive, byte colorScale);
 		void addMesh(uint color, float z, float* vertices, float* uvs, int verticesCount, ushort* indices, int indicesCount, bool additive, core::Matrix viewTransform, byte colorScale);
 		void addMesh(TVertex* vertices, int verticesCount, ushort* indices, int indicesCount, bool additive, unsigned char colorScale);
 		TVertex* getVertices();
@@ -75,17 +76,29 @@ namespace drawing
 	typedef std::vector<core::Matrix3Container> TBatchColorTransforms;
 	typedef std::vector<BatchBuffer *> TBatchBuffers;
 	typedef std::vector<BatchEntry> TBatchEntries;
+	
+	class EntriesGroup
+	{
+	public:
+		TBatchEntries Entries;
+		int transformIndex;
+		EntriesGroup(int index);
+	};
+	
+	typedef std::vector<EntriesGroup *> TBatchEntriesGroup;
 
 	class RenderBuffer
 	{
 	public:
 		TBatchBuffers Buffers;
-		TBatchEntries Entries;
+		TBatchEntriesGroup EntriesGroups;
 		TBatchTransforms Transforms;
 		TBatchColorTransforms ColorTransforms;
 		TBatchRenderTargets RenderTargets;
 		RenderBuffer();
 		~RenderBuffer();
+		void addEntry(const BatchEntry& entry);
+		void clearEntries();
 	};
 
 	struct BatcherState
@@ -129,6 +142,15 @@ namespace drawing
 		std::vector<SolidVertex> _edges;
 	};
 
+	struct BatcherRenderArgs
+	{
+		bool usePostProcess;
+		RenderBuffer *renderBuffer;
+		BatcherRenderArgs();
+	};
+
+	class BatcherRenderController;
+
 	class Batcher : public llge::IBatch2d, public core::IDebugRender
 	{
 	public:
@@ -139,17 +161,24 @@ namespace drawing
 		void drawMesh(graphics::EffectBase *effect, graphics::BlendState::e blend, llge::ITexture * texture, uint lightmapId, TVertex *vertices, int verticesCount, ushort *indices, int indicesCount, float colorScale);
 		void drawMesh(graphics::EffectBase *effect, graphics::BlendState::e blend, uint textureId, uint lightmapId, TVertex *vertices, int verticesCount, ushort *indices, int indicesCount, unsigned char colorScale);
 		void drawMesh(graphics::EffectBase *effect, graphics::BlendState::e blend, void* config, TVertex *vertices, int verticesCount, ushort *indices, int indicesCount, unsigned char colorScale);
-		void drawSpineMesh(const BatcherSpineMesh &mesh, byte colorScale, bool pemul);
+		void drawSpineMesh(const BatcherSpineMesh &mesh, byte colorScale);
 		void setupUVTransform(llge::ITexture* texture);
 		void cleanupUVTransform();
 
 		void executeRenderCommands(bool usePostProcess);
+		void internalExecuteRenderCommands(BatcherRenderArgs e);
 		void addColorTransform(const core::Matrix3 &value);
+
+		void mainRender(BatcherRenderArgs e);
+		void guiRender(BatcherRenderArgs e);
+		void renderTranformGroup(int groupIndex, BatcherRenderArgs e);
 
 		virtual IntPtr API_CALL getNativeInstance() OVERRIDE;
 		void applyEntry();
+		virtual void API_CALL setLightingMode(llge::BatcherLightingMode mode) override;
 		virtual void API_CALL addProjection(void* floatMatrix) OVERRIDE;
 		virtual void API_CALL addRenderTarget(IntPtr renderTargetInstance) OVERRIDE;
+		virtual void API_CALL setupLighting(IntPtr lightingConfig) OVERRIDE;
 		virtual void API_CALL startBatch() OVERRIDE;
 		virtual void API_CALL finishBatch() OVERRIDE;
 		virtual void API_CALL draw(IntPtr batcherConfig, IntPtr texturesConfig) OVERRIDE;
@@ -158,10 +187,16 @@ namespace drawing
 		virtual void API_CALL setToneMap(uint tonemapId) OVERRIDE;
 		virtual int API_CALL getRenderedVerticesCount() OVERRIDE;
 		virtual int API_CALL getRenderedPrimitivesCount() OVERRIDE;
+		virtual void API_CALL setBatcherMode(llge::BatcherMode mode) OVERRIDE;
+
 		virtual void drawEdge(uint color, const core::Vector3 &a, const core::Vector3 &b) OVERRIDE;
 		bool usedPostProcess();
 		graphics::Texture* getBlurMap();
 	private:
+		llge::BatcherLightingMode _lightingMode;
+		ILightMap* _lightingModes[32];
+		DynamicVertexLightMap _lightMap;
+		EmptyLightMap _lightMapEmpty;
 		BatcherDebugRender _debugRender;
 		RenderBuffer *_buffer;
 		uint _tonemapId;
@@ -187,6 +222,7 @@ namespace drawing
 		ZBatcher* _zButcher;
 		bool _usedPostProcess;
 		core::Matrix3Container _emptyColorTransformContainer;
+		BatcherRenderController* _controller;
 	};
 	
 	struct ZBatchEntry
@@ -205,6 +241,7 @@ namespace drawing
 	public:
 		ZBatchBuffer();
 		~ZBatchBuffer();
+		void setupLightMap(ILightMap *lightMap);
 		void reset();
 		void add(TVertex *vertices, int verticesCount, ushort *indices, int indicesCount, byte colorScale, ZBatchEntry& result);
 		ushort *allIndices();
@@ -215,6 +252,7 @@ namespace drawing
 		int _blockSize;
 		int _verticesIndex;
 		int _verticesBufferIndex;
+		ILightMap *_lightMap;
 	};
 
 	class ZBlock
@@ -223,7 +261,7 @@ namespace drawing
 		int z;
 		ZBatchBuffer Buffer;
 		std::vector<ZBatchEntry> Entries;
-		void reconstruct(int z);
+		void reconstruct(int z, ILightMap* lightMap);
 		void addMesh(llge::ITexture * texture, uint lightmapId, TVertex *vertices, int verticesCount, ushort *indices, int indicesCount, byte colorScale);
 		void applyRender(graphics::EffectBase *effect);
 		graphics::TextureTransform textureTransform;
@@ -250,13 +288,14 @@ namespace drawing
 	public:
 		void configure(
 			graphics::BlendState::e blend,
-			graphics::EffectBase *effect,
+			graphics::EffectBase *effect,			
 			core::MatrixContainer transform);
-		void reset();
+		void reset(ILightMap* lightmap);
 		void applyRender();
 		void drawMesh(int z, llge::ITexture * texture, uint lightmapId, TVertex *vertices, int verticesCount, ushort *indices, int indicesCount, byte colorScale);
 		graphics::TextureTransform textureTransform;
 	private:
+		ILightMap* _lightMap;
 		core::MatrixContainer _transform;
 		graphics::BlendState::e _blend;
 		graphics::EffectBase *_effect;
@@ -269,6 +308,109 @@ namespace drawing
 		BlocksMap _blocks;
 		int _verticesCounter;
 		int _indicesCounter;
+	};
+
+	class BatcherRenderState;
+	class BatcherStateDefault;
+	class BatcherStateBlurSnapShot;
+	class BatcherStateBlur;
+	class BatcherStateBlurHide;
+
+
+	class BatcherRenderController
+	{
+	public:
+		llge::BatcherMode Mode;
+		float lighting;
+		BatcherRenderArgs* args();
+		Batcher* batcher();
+		void setState(BatcherRenderState *state);
+		void update(BatcherRenderArgs e);
+		void drawSnapShot(graphics::IPostProcessTarget *snapShot);
+		void drawSnapShot(graphics::IPostProcessTarget *snapShot, int color);
+
+		explicit BatcherRenderController(Batcher* batcher);
+
+		template<typename T>
+		T* CreateState();
+		BatcherStateDefault* Default;
+		BatcherStateBlurSnapShot* BlurSnapShot;
+		BatcherStateBlur* Blur;
+		BatcherStateBlurHide* Hide;
+
+		graphics::IPostProcessTarget *popSnapShot();
+		graphics::IPostProcessTarget *popBlurShot();
+		void swapShots();
+		void pushSnapShot();
+		void pushBlurShot();
+	private:
+		void constructState(BatcherRenderState* state);
+		BatcherRenderArgs _args;
+		BatcherRenderState *_state;
+		Batcher* _batcher;
+		graphics::IPostProcessTarget *_snapShot;
+		graphics::IPostProcessTarget *_blurShot;
+		core::MatrixContainer identity;
+	};
+
+	template <typename T>
+	T* BatcherRenderController::CreateState()
+	{
+		T* state = new T();
+		constructState(state);
+		return state;
+	}
+
+	class BatcherRenderState
+	{
+	public:
+		BatcherRenderState();
+		virtual ~BatcherRenderState();
+		BatcherRenderController *controller();
+		BatcherRenderArgs* args();
+		Batcher* batcher();
+		void setState(BatcherRenderState *state);
+		virtual void update();
+		virtual void activated();
+		virtual void deactivated();
+		void construct(BatcherRenderController* controller);
+	private:
+		BatcherRenderController* _controller;
+	};
+
+	class BatcherStateDefault : public BatcherRenderState
+	{
+	public:
+		virtual void activated() override;
+		virtual void update() override;
+		int _frameCounter;
+	};
+
+	class BatcherStateBlurSnapShot: public BatcherRenderState
+	{
+	public:
+		virtual void activated() override;
+		virtual void update() override;
+	private:
+	};
+
+	class BatcherStateBlur : public BatcherRenderState
+	{
+	public:
+		virtual void activated() override;
+		virtual void update() override;
+		int _iterationIndex;
+		int _iterationsMax;
+		static core::Vector2 _pixelOffset[2];
+	};
+
+	class BatcherStateBlurHide : public BatcherRenderState
+	{
+	public:
+		virtual void activated() override;
+		virtual void update() override;
+		int _iterationsMax;
+		int _frameCounter;
 	};
 }
 

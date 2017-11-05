@@ -18,35 +18,41 @@ namespace graphics
 		static UniformInfo *projection();
 		static UniformInfo *colorTransform();
 		static UniformInfo *texture();
+		static UniformInfo *alpha();
 		static UniformInfo *lightmap();
 		static UniformInfo *environment();
 		static UniformInfo *depthmap();
 		static UniformInfo *normalmap();
 		static UniformInfo *time();
 		static UniformInfo *pixelSize();
+		static UniformInfo *pixelOffset();
 		static UniformInfo *highlightColor();
 		static UniformInfo *fogStart();
 		static UniformInfo *fogDensity();
 		static UniformInfo *fogColor();
 		static UniformInfo *fogScale();
 		static UniformInfo *paintmask();
+		static UniformInfo *colorOffset();
 	private:
 		static UniformInfo _cameraPosition;
 		static UniformInfo _projection;
 		static UniformInfo _colorTransform;
 		static UniformInfo _texture;
+		static UniformInfo _alpha;
 		static UniformInfo _lightmap;
 		static UniformInfo _environment;
 		static UniformInfo _depthmap;
 		static UniformInfo _normalmap;
 		static UniformInfo _time;
 		static UniformInfo _pixelSize;
+		static UniformInfo _pixelOffset;
 		static UniformInfo _highlightColor;
 		static UniformInfo _paintmask;
 		static UniformInfo _fogStart;
 		static UniformInfo _fogDensity;
 		static UniformInfo _fogScale;
 		static UniformInfo _fogColor;
+		static UniformInfo _colorOffset;
 	};
 
 	class UniformValues
@@ -56,18 +62,21 @@ namespace graphics
 		static inline UniformValueMatrix *projection(){ return &_projection; }
 		static inline UniformValueMatrix3 *colorTransform() { return &_colorTransform; }
 		static inline UniformValueTexture *texture(){ return &_texture; }
+		static inline UniformValueTexture *alpha() { return &_alpha; }
 		static inline UniformValueTexture *lightmap(){ return &_lightmap; }
 		static inline UniformValueTexture *environment(){ return &_environment; }
 		static inline UniformValueTexture *depthmap(){ return &_depthmap; }
 		static inline UniformValueTexture *normalmap(){ return &_normalmap; }
 		static inline UniformValueFloat *time(){ return &_time; }
 		static inline UniformValueVector2 *pixelSize(){ return &_pixelSize; }
+		static inline UniformValueVector2 *pixelOffset() { return &_pixelOffset; }
 		static inline UniformValueVector3 *highlightColor() { return &_highlightColor; }
 		static inline UniformValueFloat* fogStart() { return &_fogStart; }
 		static inline UniformValueFloat* fogDensity() { return &_fogDensity; }
 		static inline UniformValueFloat* fogScale() { return &_fogScale; }
 		static inline UniformValueVector3* fogColor() { return &_fogColor; }
 		static inline UniformValueTexture *paintmask() { return &_paintmask; }
+		static inline UniformValueVector3* colorOffset() { return &_colorOffset; }
 
 		static void initSamplers();
 		static void resetSamplers();
@@ -77,18 +86,21 @@ namespace graphics
 		static UniformValueMatrix _projection;
 		static UniformValueMatrix3 _colorTransform;
 		static UniformValueTexture _texture;
+		static UniformValueTexture _alpha;
 		static UniformValueTexture _lightmap;
 		static UniformValueTexture _environment;
 		static UniformValueTexture _depthmap;
 		static UniformValueTexture _normalmap;
 		static UniformValueFloat _time;
 		static UniformValueVector2 _pixelSize;
+		static UniformValueVector2 _pixelOffset;
 		static UniformValueVector3 _highlightColor;
 		static UniformValueFloat _fogStart;
 		static UniformValueFloat _fogDensity;
 		static UniformValueFloat _fogScale;
 		static UniformValueVector3 _fogColor;
 		static UniformValueTexture _paintmask;
+		static UniformValueVector3 _colorOffset;
 
 		static UniformValueTexture* _samplers[GraphicsConstants::Samplers2DLimit];
 	};

@@ -23,6 +23,7 @@ namespace graphics
 		static EffectSolid * solid();
 		static EffectSolidColor * solidColor();
 		static EffectTextureColor * textureColor();
+		static EffectTextureColorEtc1A8 * textureColorEtc1A8();
 		static EffectTextureColorFog * textureColorFog();
 		static EffectTextureAlphamaskColor * textureAlphamaskColor();
 		static EffectTextureColorHighlight * textureColorHighlight();
@@ -35,13 +36,16 @@ namespace graphics
 		static EffectPostProcessEmptyColor * postProcessEmptyColor();
 		static EffectPostProcessVBlurFilter * postProcessVBlurFilter();
 		static EffectPostProcessHBlurFilter * postProcessHBlurFilter();
+		static EffectPostProcessBlurPass * postProcessBlurPassFilter();
 		static EffectPostProcessBloomAddFilter * postProcessBloomAddFilter();
-
+		static EffectPostProcessRgbTransform * postProcessRgbTransform();
+		
 	protected:
 	private:
 		static EffectSolid _solid;
 		static EffectSolidColor _solidColor;
-		static EffectTextureColor _textureColor;
+		static EffectTextureColor _textureColor;		
+		static EffectTextureColorEtc1A8 _textureColorEtc1A8;
 		static EffectTextureColorFog _textureColorFog;
 		static EffectTextureAlphamaskColor _textureAlphamaskColor;
 		static EffectTextureColorHighlight _textureColorHighlight;
@@ -55,6 +59,9 @@ namespace graphics
 		static EffectPostProcessVBlurFilter _postProcessVBlurFilter;
 		static EffectPostProcessHBlurFilter _postProcessHBlurFilter;
 		static EffectPostProcessBloomAddFilter _postProcessBloomAddFilter;
+		static EffectPostProcessBlurPass _postProcessBlurPass;
+		static EffectPostProcessRgbTransform _postProcessRgbTransform;
+
 	};
 }
 

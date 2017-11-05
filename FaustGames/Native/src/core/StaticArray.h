@@ -21,12 +21,22 @@ namespace core
 		{
 		}
 
+		bool canAdd()
+		{
+			return count < limit;
+		}
 
 		T * addEmpty()
 		{
 			return &(data[count++]);
 		}
 		
+		void addWithRangeCheck(T value)
+		{
+			if (canAdd())
+				add(value);
+		}
+
 		void add(T value)
 		{
 			data[count] = value;

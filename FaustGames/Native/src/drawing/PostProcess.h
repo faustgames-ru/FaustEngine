@@ -35,6 +35,13 @@ namespace drawing
 		virtual void execute(graphics::Texture* source, graphics::IRenderTarget *target, uint tonemapId);
 	};
 
+	class ColorTransformFilter
+	{
+	public:
+		core::Matrix3Container _colorTransform;
+		virtual void execute(graphics::Texture* source, const core::Vector3 &offset, const core::Matrix3 &colorTransform, graphics::IRenderTarget *target);
+	};
+
 	class BloomFilter
 	{
 	public:
@@ -107,6 +114,7 @@ namespace drawing
 		bool isAvaliable();
 		graphics::Texture* getBlurMap();
 	private:
+		ColorTransformFilter _colorFilter;
 		BloomFilter _filter;		
 		EmptyProcess _empty;
 		FilterVBlur _vBlur;
@@ -124,6 +132,9 @@ namespace drawing
 		graphics::TextureRenderTarget2d *_target1;
 		*/
 	};
+
+	PostProcessVertex* quadVertices();
+	ushort* quadIndices();
 }
 
 #endif /*POSTPROCESS_H*/

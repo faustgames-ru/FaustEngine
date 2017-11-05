@@ -43,8 +43,35 @@ namespace resources
 	std::string pvrExt("pvr");
 	std::string atcExt("atc");
 	std::string pkmExt("pkm");
+	std::string etcExt("etc");
 	std::string dxtExt("dxt");
 	
+	class ReadMemoryBuffer
+	{
+	private:
+		static int _pos;
+		static void* _ptr;
+	public:
+		static void setup(void* ptr)
+		{
+			_ptr = ptr;
+			_pos = 0;
+		}
+		static void read(png_bytep data, png_size_t length)
+		{
+			memcpy(data, static_cast<png_bytep>(_ptr) + _pos, length);
+			_pos += length;
+		}
+	};
+
+	int ReadMemoryBuffer::_pos(0);
+	void* ReadMemoryBuffer::_ptr(nullptr);
+
+	void readDataFromMemory(png_structp pngPtr, png_bytep data, png_size_t length)
+	{		
+		ReadMemoryBuffer::read(data, length);
+	}
+
 	void readData(png_structp pngPtr, png_bytep data, png_size_t length)
 	{
 		ContentProvider::read(data, length);
@@ -132,6 +159,258 @@ namespace resources
 	{
 		const char *name = _files[id].fileName.c_str();
 		return loadUnregisteredTexture(name, llge::TextureQueryFormat::TQFRgba8888);
+	}
+
+	ImageInfo ContentManager::loadUnregisteredTextureSize(const char *name, llge::TextureQueryFormat queryFormat)
+	{
+		std::string path = name;
+		if (path.size() > 4)
+		{
+			if (queryFormat == llge::TQFRgba4444)
+			{
+				path[path.size() - 3] = texExt[0];
+				path[path.size() - 2] = texExt[1];
+				path[path.size() - 1] = texExt[2];
+				if (ContentProvider::existContent(path.c_str()))
+				{
+					return loadUnregisteredCompressedTextureSize(path.c_str());
+				}
+			}
+			else if (queryFormat == llge::TQFPlatformCompressed)
+			{
+				path[path.size() - 3] = _compressionExt[0];
+				path[path.size() - 2] = _compressionExt[1];
+				path[path.size() - 1] = _compressionExt[2];
+				if (ContentProvider::existContent(path.c_str()))
+				{
+					return loadUnregisteredCompressedTextureSize(path.c_str());
+				}
+			}
+		}
+		if (!ContentProvider::existContent(name))
+			return ImageInfo(0, 0, graphics::Image2dFormat::Rgba);
+		//todo: load data from content provider
+
+		switch (graphics::GraphicsDevice::Default.config.mipmapsLevel)
+		{
+		case 1:
+			ContentProvider::openContent((std::string(name) + "_1").c_str());
+			break;
+		case 2:
+			ContentProvider::openContent((std::string(name) + "_2").c_str());
+			break;
+		default:
+			ContentProvider::openContent(name);
+		}
+
+
+		int m_Width;
+		int m_Height;
+		png_structp m_PngPtr;
+		png_infop m_InfoPtr;
+		png_uint_32 m_BitDepth;
+		png_uint_32 m_Channels;
+		png_uint_32 m_ColorType;
+
+		png_byte pngsig[PNGSIGSIZE];
+		int is_png = 0;
+
+		//Read the 8 bytes from the stream into the sig buffer.
+		ContentProvider::read(pngsig, PNGSIGSIZE);
+
+		is_png = png_sig_cmp(pngsig, 0, PNGSIGSIZE);
+		if (is_png != 0)
+		{
+			/*
+			fprintf(stderr, "!png \n");
+			fprintf(stderr, (char *)pngsig);
+			fprintf(stderr, "\n");
+			*/
+			//throw ref new Exception(-1, "data is not recognized as a PNG");
+			return ImageInfo(0, 0, graphics::Image2dFormat::Rgba);
+		}
+
+		m_PngPtr = png_create_read_struct_2(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL, 0, pngMalloc, pngFree);
+
+		if (!m_PngPtr)
+		{
+			//throw ref new Exception(-1, "png_create_read_struct failed");
+			return ImageInfo(0, 0, graphics::Image2dFormat::Rgba);
+		}
+		png_set_read_fn(m_PngPtr, 0, readData);
+
+		m_InfoPtr = png_create_info_struct(m_PngPtr);
+
+		if (!m_InfoPtr)
+		{
+			png_destroy_read_struct(&m_PngPtr, 0, 0);
+			m_PngPtr = 0;
+			//throw ref new Exception(-1, "png_create_info_struct failed");
+			return ImageInfo(0, 0, graphics::Image2dFormat::Rgba);
+		}
+
+		if (setjmp(png_jmpbuf(m_PngPtr)))
+		{
+			png_destroy_read_struct(&m_PngPtr, &m_InfoPtr, 0);
+			//throw ref new Exception(-1, "Error during init_io");
+			return ImageInfo(0, 0, graphics::Image2dFormat::Rgba);
+		}
+
+		png_set_sig_bytes(m_PngPtr, 8);
+		png_read_info(m_PngPtr, m_InfoPtr);
+		int w = png_get_image_width(m_PngPtr, m_InfoPtr);
+		int h = png_get_image_height(m_PngPtr, m_InfoPtr);
+		m_Channels = png_get_channels(m_PngPtr, m_InfoPtr);
+		graphics::Image2dFormat::e imageFormat;
+		switch (m_Channels)
+		{
+		case 3:
+			imageFormat = graphics::Image2dFormat::Rgb;
+			break;
+		case 4:
+			imageFormat = graphics::Image2dFormat::Rgba;
+			break;
+		default:
+			imageFormat = graphics::Image2dFormat::Rgba;
+			break;
+		}
+
+		ImageInfo result(w, h, imageFormat);
+		png_destroy_info_struct(m_PngPtr, &m_InfoPtr);
+		png_destroy_read_struct(&m_PngPtr, 0, 0);
+		return result;
+	}
+
+	void ContentManager::loadPngTexture(void* data, graphics::Image2dData* _image)
+	{
+		int m_Width;
+		int m_Height;
+		png_structp m_PngPtr;
+		png_infop m_InfoPtr;
+		png_uint_32 m_BitDepth;
+		png_uint_32 m_Channels;
+		png_uint_32 m_ColorType;
+
+		png_byte pngsig[PNGSIGSIZE];
+		int is_png = 0;
+
+		//Read the 8 bytes from the stream into the sig buffer.
+		ReadMemoryBuffer::setup(data);
+
+		ReadMemoryBuffer::read(pngsig, PNGSIGSIZE);
+
+		is_png = png_sig_cmp(pngsig, 0, PNGSIGSIZE);
+		if (is_png != 0)
+		{
+			_image->Width = 0;
+			_image->Height = 0;
+			return;
+		}
+
+		m_PngPtr = png_create_read_struct_2(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL, 0, pngMalloc, pngFree);
+
+		if (!m_PngPtr)
+		{
+			_image->Width = 0;
+			_image->Height = 0;
+			return;
+		}
+
+		png_set_read_fn(m_PngPtr, 0, readDataFromMemory);
+
+		m_InfoPtr = png_create_info_struct(m_PngPtr);
+
+		if (!m_InfoPtr)
+		{
+			png_destroy_read_struct(&m_PngPtr, 0, 0);
+			m_PngPtr = 0;
+			//throw ref new Exception(-1, "png_create_info_struct failed");
+			_image->Width = 0;
+			_image->Height = 0;
+			return;
+		}
+
+		if (setjmp(png_jmpbuf(m_PngPtr)))
+		{
+			png_destroy_read_struct(&m_PngPtr, &m_InfoPtr, 0);
+			//throw ref new Exception(-1, "Error during init_io");
+			_image->Width = 0;
+			_image->Height = 0;
+			return;
+		}
+
+		png_set_sig_bytes(m_PngPtr, 8);
+
+		png_read_info(m_PngPtr, m_InfoPtr);
+
+		m_Width = png_get_image_width(m_PngPtr, m_InfoPtr);
+		m_Height = png_get_image_height(m_PngPtr, m_InfoPtr);
+		m_BitDepth = png_get_bit_depth(m_PngPtr, m_InfoPtr);
+		m_Channels = png_get_channels(m_PngPtr, m_InfoPtr);
+		m_ColorType = png_get_color_type(m_PngPtr, m_InfoPtr);
+
+
+		const unsigned int stride = png_get_rowbytes(m_PngPtr, m_InfoPtr);
+		if (m_Height > ImageMaxHeight || m_Width > ImageMaxWidth)
+		{
+			png_destroy_read_struct(&m_PngPtr, &m_InfoPtr, 0);
+			//throw ref new Exception(-1, "Error during init_io");
+			_image->Width = 0;
+			_image->Height = 0;
+			return;
+		}
+		int step = m_Width * m_Channels;
+		int newStep = (step / 4) * 4;
+		if (newStep < step)
+		{
+			step = newStep + 4;
+		}
+		
+		png_bytep * row_ptrs = (png_bytep *)core::Mem::allocate(ImageMaxHeight * sizeof(png_bytep));
+
+		_image->realloc(m_Width*m_Height);
+		for (size_t i = 0; i < (size_t)m_Height; i++)
+			row_ptrs[i] = (png_byte*)_image->Pixels + i*step;
+
+		png_read_image(m_PngPtr, row_ptrs);
+
+
+		png_destroy_info_struct(m_PngPtr, &m_InfoPtr);
+		png_destroy_read_struct(&m_PngPtr, 0, 0);
+
+		_image->Width = m_Width;
+		_image->Height = m_Height;
+		switch (m_Channels)
+		{
+		case 3:
+			_image->Format = graphics::Image2dFormat::Rgb;
+			break;
+		case 4:
+			_image->Format = graphics::Image2dFormat::Rgba;
+			break;
+		default:
+			_image->Format = graphics::Image2dFormat::Rgba;
+			break;
+		}
+
+		// todo: premul param
+
+		if (_image->Format == graphics::Image2dFormat::Rgba)
+		{
+			for (size_t i = 0; i < (size_t)m_Height; i++)
+			{
+				uint *row = (uint*)row_ptrs[i];
+				for (size_t j = 0; j < (size_t)m_Width; j++)
+				{
+					if (row[j] != 0)
+					{
+						row[j] = graphics::Color::premul(row[j], false);
+					}
+				}
+			}
+		}
+
+		core::Mem::deallocate(row_ptrs);
 	}
 
 	graphics::Image2dData * ContentManager::loadUnregisteredTexture(const char *name, llge::TextureQueryFormat queryFormat)
@@ -311,7 +590,9 @@ namespace resources
 
 	struct CompressedTextureHeader
 	{
-		int Format;
+		static int GetSize() { return 28; }
+		ushort attributes;
+		ushort Format;
 		int CompressionPercent;
 		int OriginWidth;
 		int OriginHeight;
@@ -340,7 +621,9 @@ namespace resources
 		uint* p = data;
 
 		CompressedTextureHeader result;
-		result.Format = readData(p);
+		uint formatAttributes = readData(p);
+		result.attributes = static_cast<ushort>(static_cast<uint>(formatAttributes) & 0xffff000000 >> 16);
+		result.Format = static_cast<ushort>(static_cast<uint>(formatAttributes) & 0x0000ffff);
 		result.CompressionPercent = readData(p);
 		int skip = readData(p);
 		skipData(p, skip);
@@ -351,6 +634,15 @@ namespace resources
 		result.RawDataOffset = p - data;
 		data = p;
 		return result;
+	}
+
+	ImageInfo ContentManager::loadUnregisteredCompressedTextureSize(const char* name)
+	{
+		ContentProvider::openContent(name);
+		int size = ContentProvider::read(_image->Pixels, CompressedTextureHeader::GetSize()*2);
+		ContentProvider::closeContent();
+		CompressedTextureHeader header = getCompressedTextureHeader(_image->Pixels);
+		return ImageInfo(header.OriginWidth, header.OriginHeight, _image->Format);
 	}
 
 	graphics::Image2dData* ContentManager::loadUnregisteredCompressedTexture(const char* name)
@@ -401,6 +693,12 @@ namespace resources
 			_image->Format = graphics::Image2dFormat::Dxt;
 			return _image;
 		}
+		if (header.Format == 7 || header.Format == 8 || header.Format == 9 || header.Format == 10) // Etc1
+		{
+			_image->Format = graphics::Image2dFormat::Etc1;
+			return _image;
+		}
+		
 		return nullptr;
 	}
 
@@ -505,6 +803,9 @@ namespace resources
 			break;
 		case llge::TFDxt:
 			_compressionExt = dxtExt.c_str();
+			break;
+		case llge::TFEtc1:
+			_compressionExt = etcExt.c_str();
 			break;
 		default: break;
 		}
@@ -667,6 +968,7 @@ namespace resources
 
 	IAtlasPacker* ContentManager::queryPacker(llge::TextureQueryFormat format)
 	{
+		//return nullptr;
 		if (!_isAtlasBuilderStarted) return nullptr;
 		if (format == llge::TQFNone) return nullptr;
 		if (format == llge::TQFRgba8888) return nullptr;

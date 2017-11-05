@@ -49,8 +49,8 @@ namespace spine
 		virtual int API_CALL getBoundsCount();
 		virtual llge::ISpineSkeletonBone* API_CALL getBone(int index) OVERRIDE;
 		virtual int API_CALL getBonesCount() OVERRIDE;
-		virtual void API_CALL renderEx(llge::IBatch2d * batch, IntPtr effectConfig, llge::GraphicsEffects effect, byte colorScale);
-		virtual void API_CALL render(llge::IBatch2d * batch, int lightmapId, llge::GraphicsEffects effect, byte colorScale);
+		virtual void API_CALL renderEx(llge::IBatch2d * batch, IntPtr effectConfig, llge::GraphicsEffects effect, byte colorScale)override;
+		virtual void API_CALL renderWithoutBatch()override;
 		virtual int API_CALL getGeometry(void *vertices, int verticeLimit, void *indices, int indicesLimit);
 		void cleanup();
 		void updateAabb();
@@ -88,7 +88,6 @@ namespace spine
 		static drawing::BatcherSpineMesh _mesh;
 		static ushort _quadIndices[6];
 		static float _uvBuffer[65536];
-		llge::LightingConfig _lightingConfig; // todo: remove
 		std::vector<SpineSkeletonSlot *> _slots;
 		std::vector<SpineSkeletonBone *> _bones;
 		std::vector<SpineSkeletonBounds> _bounds;

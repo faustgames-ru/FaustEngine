@@ -29,6 +29,20 @@ namespace drawing
 		graphics::GraphicsDevice::Default.drawPrimitives(graphics::VertexFormats::positionTexture(), _quadVertices, _quadIndices, 2);
 	}
 
+	void ColorTransformFilter::execute(graphics::Texture* source, const core::Vector3 &offset, const core::Matrix3 &colorTransform, graphics::IRenderTarget* target)
+	{
+		graphics::GraphicsDevice::Default.setRenderTarget(target);
+		graphics::GraphicsDevice::Default.clear();
+		graphics::UniformValues::texture()->setValue(source->getHandle());
+		_colorTransform.setValue(colorTransform);
+		graphics::UniformValues::colorTransform()->setValue(_colorTransform);
+		graphics::UniformValues::colorOffset()->setValue(offset);
+		
+		graphics::GraphicsDevice::Default.renderState.setDepth(graphics::DepthState::None);
+		graphics::GraphicsDevice::Default.renderState.setBlend(graphics::BlendState::None);
+		graphics::GraphicsDevice::Default.renderState.setEffect(graphics::Effects::postProcessRgbTransform());
+		graphics::GraphicsDevice::Default.drawPrimitives(graphics::VertexFormats::positionTexture(), _quadVertices, _quadIndices, 2);
+	}
 
 	void BloomFilter::execute(graphics::Texture* source, graphics::IRenderTarget *target)
 	{
@@ -386,7 +400,28 @@ namespace drawing
 			graphics::GraphicsDevice::Default.PostProcessTargets.push(_source);
 			_source = tonemaped;
 		}
-		
+
+		if (graphics::GraphicsDevice::Default.config.useColorCorrection)
+		{
+			graphics::IPostProcessTarget * corrected = graphics::GraphicsDevice::Default.PostProcessTargets.pop();
+			
+			core::Vector3 n = core::Vector3(1.0f, 1.0f, 1.0f).normalize();
+
+			core::Matrix correctionMatrix = core::Matrix::CreateRotationWithScale(
+				n,
+				core::Vector3(
+					graphics::GraphicsDevice::Default.config.colorCorrectionScaleX, 
+					graphics::GraphicsDevice::Default.config.colorCorrectionScaleX, 
+					graphics::GraphicsDevice::Default.config.colorCorrectionScaleY), 
+					graphics::GraphicsDevice::Default.config.colorCorrectionRotation);
+
+			core::Matrix3 correctionMatrix3 = core::Matrix3(correctionMatrix);
+			_colorFilter.execute(_source->getColor(),  
+				n*graphics::GraphicsDevice::Default.config.colorCorrectionOffsetY, 
+				correctionMatrix3, corrected->getRenderTarget());
+			graphics::GraphicsDevice::Default.PostProcessTargets.push(_source);
+			_source = corrected;
+		}
 		graphics::IPostProcessTarget *downSample1(nullptr);
 		graphics::IPostProcessTarget *downSample2(nullptr);
 		if(graphics::GraphicsDevice::Default.config.bloomDownsample > 0)
@@ -450,6 +485,16 @@ namespace drawing
 		if (_blurMap == nullptr)
 			return nullptr;
 		return _blurMap->getColor();
+	}
+
+	PostProcessVertex* quadVertices()
+	{
+		return _quadVertices;
+	}
+
+	ushort* quadIndices()
+	{
+		return _quadIndices;
 	}
 
 	/*

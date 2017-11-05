@@ -13,6 +13,9 @@
 #include "../../shaders/post_process_empty_color_frag.h"
 #include "../../shaders/post_process_color_vert.h"
 #include "../../shaders/post_process_mix_frag.h"
+#include "../../shaders/post_process_blur_pass_vert.h"
+#include "../../shaders/post_process_blur_pass_frag.h"
+#include "../../shaders/post_process_rgb_transform.h"
 
 
 namespace graphics
@@ -205,5 +208,48 @@ namespace graphics
 			shader_post_process_vert_size,
 			(char *)shader_post_process_mix_frag,
 			shader_post_process_mix_frag_size);
+	}
+
+	EffectPostProcessBlurPass::EffectPostProcessBlurPass()
+	{
+		_effect.addUniform(Uniforms::texture(), UniformValues::texture());
+		_effect.addUniform(Uniforms::pixelOffset(), UniformValues::pixelOffset());
+		_effect.addAttribute(Attributes::position());
+		_effect.addAttribute(Attributes::textureCoords());
+	}
+
+	EffectPostProcessBlurPass::~EffectPostProcessBlurPass()
+	{
+	}
+
+	void EffectPostProcessBlurPass::create()
+	{
+		_effect.create(
+			(char *)shader_post_process_blur_pass_vert,
+			shader_post_process_blur_pass_vert_size,
+			(char *)shader_post_process_blur_pass_frag,
+			shader_post_process_blur_pass_frag_size);
+	}
+
+	EffectPostProcessRgbTransform::EffectPostProcessRgbTransform()
+	{
+		_effect.addUniform(Uniforms::texture(), UniformValues::texture());
+		_effect.addUniform(Uniforms::colorTransform(), UniformValues::colorTransform());
+		_effect.addUniform(Uniforms::colorOffset(), UniformValues::colorOffset());
+		_effect.addAttribute(Attributes::position());
+		_effect.addAttribute(Attributes::textureCoords());
+	}
+
+	EffectPostProcessRgbTransform::~EffectPostProcessRgbTransform()
+	{
+	}
+
+	void EffectPostProcessRgbTransform::create()
+	{
+		_effect.create(
+			(char *)shader_post_process_vert,
+			shader_post_process_vert_size,
+			(char *)shader_post_process_rgb_transform_frag,
+			shader_post_process_rgb_transform_frag_size);
 	}
 }

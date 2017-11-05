@@ -13,29 +13,57 @@
 namespace resources
 {
 
-    FILE * _obbFile = nullptr;
-    void * _mapAddress = nullptr;
-    int64_t _readCur = 0;
-    int64_t _mapSize = 0;
-    int64_t _mapCursor = 0;
-    int _obbFd = 0;
+	FILE * _obbFile = nullptr;
+	//void * _mapAddress = nullptr;
+	
+	int64_t _readCur = 0;
+	int64_t _mapSize = 0;
+	int64_t _mapCursor = 0;
+	int _obbFd = 0;
 	struct ObbEntry
 	{
 		int64_t Position;
 		int64_t Size;
-		ObbEntry(){}
-		ObbEntry(int64_t position, int64_t size)
+		int FileIndex;
+		ObbEntry() {}
+		ObbEntry(int64_t position, int64_t size, int fileIndex)
 		{
 			Position = position;
 			Size = size;
+			FileIndex = fileIndex;
 		}
 	};
 
 	std::map<std::string, ObbEntry> _entries;
-    std::string _obbPath;
-	void ObbContentProvider::openObbFile(const char *obbFile)
+	std::vector<std::string> _obbFiles;
+	//std::string _obbPath;
+
+	int findObbFile(const std::string &obbFileName)
 	{
-        _obbPath = obbFile;
+		for (int i = 0; i < _obbFiles.size(); i++)
+		{
+			if (obbFileName == _obbFiles[i])
+				return i;
+		}
+		int result = _obbFiles.size();
+		_obbFiles.push_back(obbFileName);
+		return -1;
+	}
+
+	void ObbContentProvider::openObbFile(const char *obbFile, bool remap)
+	{		
+		int obbIndex = findObbFile(obbFile);
+
+		if (obbIndex < 0) 
+		{
+			obbIndex = _obbFiles.size();
+			_obbFiles.push_back(obbFile);
+		}
+		else
+		{
+			if (!remap) return;
+		}
+		//_obbPath = obbFile;
 		_obbFile = fopen(obbFile, "rb");
 		int32_t count;
         
@@ -56,7 +84,7 @@ namespace resources
                 data += 8;
 				int64_t size = *(int64_t *)data;
 				data += 8;
-				_entries[name] = ObbEntry(position, size);
+				_entries[name] = ObbEntry(position, size, obbIndex);
                 
                 if (_mapSize < (position + size))
                     _mapSize = position + size;
@@ -97,10 +125,11 @@ namespace resources
             return;
         }
         
-        if (_obbFile == nullptr)
-        {
-            _obbFile = fopen(_obbPath.c_str(), "rb");
-        }
+        //if (_obbFile == nullptr)
+        //{
+        //    _obbFile = fopen(_obbPath.c_str(), "rb");
+        //}
+
         std::string replace = name;
 		for (uint i = 0; i < replace.size(); i++)
 		{
@@ -109,10 +138,11 @@ namespace resources
 			if (replace[i] == '/')
 				replace[i] = '_';
 		}
-
+		
 		_currentEntry = _entries[replace.c_str()];
-        _readCur = _currentEntry.Position;
-        fseek(_obbFile, _currentEntry.Position, SEEK_SET);
+        _readCur = _currentEntry.Position;		
+		_obbFile = fopen(_obbFiles[_currentEntry.FileIndex].c_str(), "rb");		
+		fseek(_obbFile, _currentEntry.Position, SEEK_SET);
 	}
 
     int ObbContentProvider::read(void *buffer, int bytesLimit)

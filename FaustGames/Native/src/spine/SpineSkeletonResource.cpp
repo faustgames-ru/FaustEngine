@@ -103,42 +103,12 @@ namespace spine
 
 	void API_CALL SpineSkeletonResource::load(String atlasText, String jsonText, String dir, llge::TextureQueryFormat format, float applyedCompression)
 	{		
-		_atlasRenderObject.pagesFormat = format;
-		_atlasRenderObject.applyedCompression = applyedCompression;
-		//spAtlas* atlas = spAtlas_create(atlasText, strlen(atlasText), dir, &_atlasRenderObject);
-		
-		_spAtlas = spAtlas_create(atlasText, strlen(atlasText), dir, &_atlasRenderObject);
-		_spSkeletonJson = spSkeletonJson_create((spAtlas *)_spAtlas);
-		_spSkeletonData = spSkeletonJson_readSkeletonData((spSkeletonJson*)_spSkeletonJson, jsonText);
-		
-		if (_spSkeletonData == nullptr)
-		{
-			_error = ((spSkeletonJson*)_spSkeletonJson)->error;
-			return;
-		}
+		loadInternal(atlasText, jsonText, dir, format, applyedCompression, nullptr);
+	}
 
-		spSkeletonData* sd = (spSkeletonData*)_spSkeletonData;
-		_defaultSkin = new SpineSkin(sd->defaultSkin);
-		_animations.resize(sd->animationsCount);
-		
-		for (int i = 0; i < _animations.size(); i++)
-		{
-        	_animations[i] = new SpineSkeletonAnimation(((spSkeletonData*)_spSkeletonData)->animations[i]);
-		}
-
-		_events.resize(sd->eventsCount);
-		for (int i = 0; i < _events.size(); i++)
-		{
-			spEventData* e = sd->events[i];
-			e->intValue = i;
-			_events[i] = new SpineEvent(e->name);
-		}
-		_skins.resize(sd->skinsCount);
-		for (int i = 0; i < _skins.size(); i++)
-		{
-			spSkin* s = sd->skins[i];
-			_skins[i] = new SpineSkin(s);
-		}		
+	void API_CALL SpineSkeletonResource::loadWithPngImage(String atlasText, String jsonText, String dir, void* texture)
+	{
+		loadInternal(atlasText, jsonText, dir, llge::TQFNone, 1.0f, texture);
 	}
 
 	void API_CALL SpineSkeletonResource::unLoad()
@@ -231,7 +201,48 @@ namespace spine
 	{
 		return _events.size();
 	}
-	
+
+	void SpineSkeletonResource::loadInternal(String atlasText, String jsonText, String dir, llge::TextureQueryFormat format, float applyedCompression, void* texture)
+	{
+		_atlasRenderObject.pagesFormat = format;
+		_atlasRenderObject.applyedCompression = applyedCompression;
+		_atlasRenderObject.texture = texture;
+		//spAtlas* atlas = spAtlas_create(atlasText, strlen(atlasText), dir, &_atlasRenderObject);
+
+		_spAtlas = spAtlas_create(atlasText, strlen(atlasText), dir, &_atlasRenderObject);
+		_spSkeletonJson = spSkeletonJson_create((spAtlas *)_spAtlas);
+		_spSkeletonData = spSkeletonJson_readSkeletonData((spSkeletonJson*)_spSkeletonJson, jsonText);
+
+		if (_spSkeletonData == nullptr)
+		{
+			_error = ((spSkeletonJson*)_spSkeletonJson)->error;
+			return;
+		}
+
+		spSkeletonData* sd = (spSkeletonData*)_spSkeletonData;
+		_defaultSkin = new SpineSkin(sd->defaultSkin);
+		_animations.resize(sd->animationsCount);
+
+		for (int i = 0; i < _animations.size(); i++)
+		{
+			_animations[i] = new SpineSkeletonAnimation(((spSkeletonData*)_spSkeletonData)->animations[i]);
+		}
+
+		_events.resize(sd->eventsCount);
+		for (int i = 0; i < _events.size(); i++)
+		{
+			spEventData* e = sd->events[i];
+			e->intValue = i;
+			_events[i] = new SpineEvent(e->name);
+		}
+		_skins.resize(sd->skinsCount);
+		for (int i = 0; i < _skins.size(); i++)
+		{
+			spSkin* s = sd->skins[i];
+			_skins[i] = new SpineSkin(s);
+		}
+	}
+
 	llge::ISpineSkeleton* API_CALL SpineSkeletonResource::createSkeleton(void *floatMatrix)
 	{
 		return new SpineSkeleton(this, (float *)floatMatrix);

@@ -1,6 +1,4 @@
 #include "AtlasPacker.h"
-//#include "../../src_rectanglebinpack/MaxRectsBinPack.h"
-#include "../../src_rectanglebinpack/GuillotineBinPack.h"
 
 #include "ContentManager.h"
 
@@ -48,6 +46,7 @@ namespace resources
 	{
 		rect = BinPackRect::empty;
 		inserted = BinPackRect::empty;
+		userData = nullptr;
 		childs[0] = nullptr;
 		childs[1] = nullptr;
 	}
@@ -173,19 +172,10 @@ namespace resources
 		input = e;
 	}
 
-	AtlasRect::AtlasRect(rbp::Rect r)
-	{
-		rect.x = r.x;
-		rect.y = r.y;
-		rect.width = r.width;
-		rect.height = r.height;
-		entry = nullptr;
-	}
-
-	AtlasRect::AtlasRect(BinPackRect r)
+	AtlasRect::AtlasRect(BinPackRect r, AtlasImageEntry* e)
 	{
 		rect = r;
-		entry = nullptr;
+		entry = e;
 	}
 
 	AlignInfo::AlignInfo(): blockSizeX(1), blockSizeY(1), borderBlockCount(1)
@@ -266,7 +256,7 @@ namespace resources
 		_ready = false;
 	}
 
-	bool compareRectSize(const rbp::RectSize &i, const rbp::RectSize &j)
+	bool compareRectSize(const RectSize &i, const RectSize &j)
 	{
 		int maxi = core::Math::max(i.width, i.height);
 		int maxj = core::Math::max(j.width, j.height);
@@ -281,10 +271,17 @@ namespace resources
 	void AtlasPacker::loadFiles()
 	{
 		releasePages();
-		std::vector<rbp::RectSize> rects;
+		std::vector<RectSize> rects;
 		for (uint i = 0; i < _inputPack.size(); i++)
 		{
-			rbp::RectSize size;
+			RectSize size;
+			
+			//ImageInfo imageInfo = ContentManager::Default.loadUnregisteredTextureSize(_inputPack[i]->path.c_str(), getQueryFormat());
+            
+            //size.width = alignInfo.alignWidth(imageInfo.Width);
+            //size.height = alignInfo.alignHeight(imageInfo.Height);
+            
+			size.entry = _inputPack[i];
 			size.width = _inputPack[i]->input.width;
 			size.height = _inputPack[i]->input.height;
 			rects.push_back(size);
@@ -308,73 +305,15 @@ namespace resources
 					wasBreak = true;
 					break;
 				}
-				page->rects.push_back(AtlasRect(res->inserted));
+				page->rects.push_back(AtlasRect(res->inserted, rects[i].entry));
 			}
 			if (!wasBreak)
+			{
 				startIndex = rects.size();
+			}
 		}
 
-		/*
-		int startIndex = 0;
-		while (startIndex < rects.size())
-		{
-			rbp::GuillotineBinPack  _pack(alignInfo.alignPageWidth(pageSize), alignInfo.alignPageHeight(pageSize));
-			_pack.allowRotate = false;
-			AtlasPage* page = new AtlasPage();
-			_pages.push_back(page);
-			bool wasBreak = false;
-			for (uint i = startIndex; i < rects.size(); i++)
-			{
-				rbp::Rect res = _pack.Insert(rects[i].width, rects[i].height, true, rbp::GuillotineBinPack::RectBestShortSideFit, rbp::GuillotineBinPack::SplitMaximizeArea);
-				if (res.height == 0)
-				{
-					startIndex = i;
-					wasBreak = true;
-					break;
-				}
-				page->rects.push_back(AtlasRect(res));
-			}
-			if (!wasBreak)
-				startIndex = rects.size();
-		}
-		*/
-		/*
-		
-		while (rects.size() > 0)
-		{
-			rbp::MaxRectsBinPack _pack(alignInfo.alignPageWidth(pageSize), alignInfo.alignPageHeight(pageSize));
-			_pack.allowRotate = false;
-			std::vector<rbp::Rect> packedRects;
-			_pack.Insert(rects, packedRects, rbp::MaxRectsBinPack::RectBestShortSideFit);
-			AtlasPage* page = new AtlasPage();
-			_pages.push_back(page);
-			for (uint i = 0; i < packedRects.size(); i++)
-			{
-				page->rects.push_back(AtlasRect(packedRects[i]));
-			}
-		}
-		*/
-		for (uint k = 0; k < _pages.size(); k++)
-		{
-			AtlasPage* page = _pages[k];
-			for (uint j = 0; j < page->rects.size(); j++)
-			{
-				BinPackRect rect = page->rects[j].rect;
-				for (std::vector<AtlasImageEntry *>::iterator i = _inputPack.begin(); i != _inputPack.end(); ++i)
-				{
-					AtlasImageEntry* input = *i;
-					float inputW = input->input.width;
-					float inputH = input->input.height;
-					if (inputW == rect.width && inputH == rect.height)
-					{
-						page->rects[j].entry = *i;
-						_inputPack.erase(i);
-						break;
-					}
-				}
-			}
-		}
-		
+
 		if (_pageData == nullptr)
 		{
 			_pageData = new graphics::Image2dData(placer->getPageBufferSize(pageSize));
@@ -392,10 +331,21 @@ namespace resources
 		{
 			AtlasPage* page = _pages[k];
 			graphics::TextureAtlasPage* texture = AtlasTexturesPool::Default.queryPage();
+			if (_pageData->Format == graphics::Image2dFormat::Etc1)
+			{
+				texture->createAlphaIfNeeded();
+			}
 			for (uint i = 0; i < page->rects.size(); i++)
 			{
 				AtlasRect rect = page->rects[i];
+				
 				graphics::Image2dData* image = ContentManager::Default.loadUnregisteredTexture(page->rects[i].entry->path.c_str(), getQueryFormat());
+                if (image == nullptr)
+                {
+                    std::string path =page->rects[i].entry->path.c_str();
+                    continue;
+                }
+                
 				llge::TextureImage2dFormat format = graphics::Image2dFormat::ToLlgeFormat(image->Format);
 				if (format != _internalFormat)
 				{
@@ -404,8 +354,7 @@ namespace resources
 					rect.entry->input.texture->setData(image);
 					continue;
 				}
-
-
+				
 				int inputW = alignInfo.alignWidth(image->Width);
 				int inputH = alignInfo.alignHeight(image->Height);
 
@@ -417,9 +366,8 @@ namespace resources
 					placeArgs.imageData = image;
 
 					placer->placeImage(placeArgs);
-
-					rect.entry->input.texture->AtlasEntry = true;
-					rect.entry->input.texture->setHandle(texture->getHandle());
+					 
+					rect.entry->input.texture->associate(texture);
 					rect.entry->input.texture->transform = graphics::TextureTransform(
 						static_cast<float>((rect.rect.x + alignInfo.borderBlockCount)*alignInfo.blockSizeX) / static_cast<float>(pageSize),
 						static_cast<float>((rect.rect.y + alignInfo.borderBlockCount)*alignInfo.blockSizeY) / static_cast<float>(pageSize),
@@ -437,8 +385,7 @@ namespace resources
 		}
 		
 		delete _pageData;
-		_pageData = nullptr;
-		
+		_pageData = nullptr;	
 	}
 
 	bool AtlasPacker::ready()
@@ -450,7 +397,7 @@ namespace resources
 	{
 		AtlasImageInput result = e;
 		result.width = alignInfo.alignWidth(result.width);
-		result.height = alignInfo.alignWidth(result.height);
+		result.height = alignInfo.alignHeight(result.height);
 		return result;
 	}
 
@@ -484,6 +431,8 @@ namespace resources
 			return graphics::Image2dFormat::Etc2;
 		case llge::TFDxt:
 			return graphics::Image2dFormat::Dxt;
+		case llge::TFEtc1:
+			return graphics::Image2dFormat::Etc1;
 		default:
 			return graphics::Image2dFormat::Rgba;
 		}
@@ -512,6 +461,7 @@ namespace resources
 	IAtlasPlacer* IAtlasPlacer::pvrtc14 = new AtlasPlacerPvrtc14();
 	IAtlasPlacer* IAtlasPlacer::atc = new AtlasPlacerAtc();
 	IAtlasPlacer* IAtlasPlacer::etc2 = new AtlasPlacerEtc2();
+	IAtlasPlacer* IAtlasPlacer::etc1 = new AtlasPlacerEtc1();
 	IAtlasPlacer* IAtlasPlacer::dxt = new AtlasPlacerDxt();
 	
 
@@ -520,7 +470,7 @@ namespace resources
 		switch (format)
 		{
 		case llge::TFRgba8888:
-			return nullptr;// rgba8888;
+			return rgba8888;
 		case llge::TFRgba4444:
 			return nullptr;// rgba4444;
 		case llge::TFPvrtc14:
@@ -529,6 +479,8 @@ namespace resources
 			return atc;
 		case llge::TFEtc2:
 			return etc2;
+		case llge::TFEtc1:
+			return etc1;
 		case llge::TFDxt:
 			return dxt;
 		default:
@@ -670,5 +622,51 @@ namespace resources
 		alignInfo.blockSizeX = 4;
 		alignInfo.blockSizeY = 4;
 		alignInfo.borderBlockCount = 1;
+	}
+
+	int AtlasPlacerEtc1Internal::getPageBufferSize(int pageSize)
+	{
+		return pageSize*pageSize / 8;
+	}
+
+	void AtlasPlacerEtc1Internal::placeImage(const PlaceArgs& e)
+	{
+		AbstractPlacer::placeImageWithBorder<int64_t>(e);
+	}
+
+	void AtlasPlacerEtc1Internal::SetupAlign(AlignInfo& alignInfo)
+	{
+		alignInfo.blockSizeX = 4;
+		alignInfo.blockSizeY = 4;
+		alignInfo.borderBlockCount = 1;
+	}
+
+	int AtlasPlacerEtc1::getPageBufferSize(int pageSize)
+	{
+		return pageSize*pageSize / 4;
+	}
+
+	void AtlasPlacerEtc1::placeImage(const PlaceArgs& e)
+	{
+		_rgb.placeImage(e);
+		
+		uint* pixelsPage = e.pageData->Pixels;
+		int offsetPage = e.pageData->getFullWidth()*e.pageData->getFullHeight() / 2;
+		e.pageData->Pixels = reinterpret_cast<uint*>(reinterpret_cast<byte *>(pixelsPage) + offsetPage);
+		
+		uint* pixelsImage = e.imageData->Pixels;
+		int offsetImage = graphics::TextureImage2d::getSize(e.imageData->getFullWidth(), e.imageData->getFullHeight(), graphics::Image2dFormat::Etc1);
+		e.imageData->Pixels = reinterpret_cast<uint*>(reinterpret_cast<byte *>(pixelsImage) + offsetImage);
+
+		_a.placeImage(e);
+
+		e.pageData->Pixels = pixelsPage;
+		e.imageData->Pixels = pixelsImage;
+	}
+
+	void AtlasPlacerEtc1::SetupAlign(AlignInfo& alignInfo)
+	{
+		_rgb.SetupAlign(alignInfo);
+		_a.SetupAlign(alignInfo);
 	}
 }

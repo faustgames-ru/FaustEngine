@@ -23,6 +23,7 @@ namespace graphics
 	public:
 		static int Size;
 		static TextureImage2d * empty(){ return &_empty; }
+		int _disposeCalls;
 		TextureImage2d(bool generateMipmaps, bool useFilter);
 	
 		void setData(const Image2dData *data);
@@ -30,21 +31,30 @@ namespace graphics
 		//void virtual setData(int width, int height, Image2dFormat::e format, unsigned int *pixels);
 		static void createStatic();
 		static void cleanupStatic();
+		static bool isTextureFormatSupported(Image2dFormat::e format);
+
         virtual IntPtr API_CALL getTextureImageInstance(){ return this; }
 		virtual ITexture* API_CALL getTexture(){ return this; }
 		virtual void API_CALL LoadPixels(int width, int height, llge::TextureImage2dFormat format, void *pixels) override;
 		virtual void API_CALL create() override;
-		virtual void API_CALL cleanup();
-		virtual void API_CALL dispose(){ delete this; }
+		virtual void API_CALL cleanup() override;
+		virtual void API_CALL dispose() override;
+		virtual uint API_CALL getAlphaId() override;
+
+		void associate(TextureImage2d *value);
+		void createAlphaIfNeeded();
 
 		virtual int API_CALL getVerticesCount() OVERRIDE;
 		virtual IntPtr API_CALL getVertices() OVERRIDE;
 		virtual int API_CALL getIndicesCount() OVERRIDE;
 		virtual IntPtr API_CALL getIndices() OVERRIDE;
+		virtual bool API_CALL isAtlasEntry() OVERRIDE;
 
         static TextureImage2d _empty;
 		static bool TraceTriangles;
 		bool AtlasEntry;
+
+		static float getSize(int w, int h, Image2dFormat::e format);
 	protected:
 	private:
 		TextureImage2d();
@@ -52,7 +62,6 @@ namespace graphics
 		void traceTriangles(int width, int height, Image2dFormat::e format, void *pixels);
 		static GLenum getFormat(Image2dFormat::e format);
 		static float getSize(int size, Image2dFormat::e format);
-		static float getSize(int w, int h, Image2dFormat::e format);
 		static byte* getPixels(Image2dFormat::e format, uint *pixels);
 		std::vector<core::Vector2> _tracedVertices;
 		std::vector<ushort> _tracedIndices;
@@ -60,6 +69,7 @@ namespace graphics
 		bool _wrap;
 		bool _filter;
 		int _size;
+		TextureImage2d* _alphaMap;
     };
 
 	class TextureAtlasPage : public TextureImage2d

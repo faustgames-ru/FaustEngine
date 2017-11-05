@@ -44,6 +44,16 @@ namespace drawing
 		float v;
 		unsigned int color;
 
+		Mesh2dVertex();
+		Mesh2dVertex(
+			float x,
+			float y,
+			float z,
+			unsigned int color,
+			float u,
+			float v		
+		);
+
 		inline float getX() const { return x; }
 		inline float getY() const { return y; }
 		inline float getZ() const { return z; }
@@ -51,6 +61,20 @@ namespace drawing
 		inline void setY(float value){ y = value; }
 		inline void setZ(float value){ z = value; }
 	};
+
+	inline Mesh2dVertex::Mesh2dVertex()
+	{
+	}
+
+	inline Mesh2dVertex::Mesh2dVertex(float ix, float iy, float iz, unsigned int icolor, float iu, float iv)
+	{
+		x = ix;
+		y = iy;
+		z = iz;
+		u = iu;
+		v = iv;
+		color = icolor;
+	}
 
 	class RendererTransform
 	{

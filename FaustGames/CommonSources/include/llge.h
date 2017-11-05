@@ -34,7 +34,12 @@ typedef void * IntPtr;
 namespace llge
 {
 	/// graphics enums
-		
+	enum BatcherLightingMode
+	{
+		BLMNone = 0x0,
+		BLMDynamicCpu = 0x1,
+	};
+
 	enum TextureFilterMode
 	{
 		Nearest = 0x0,
@@ -100,16 +105,8 @@ namespace llge
 		TFAtc = 0x5,
 		TFEtc2 = 0x6,
 		TFDxt = 0x7,
-		TFEnumSize = 0x8
-	};
-	
-	/// entities enums
-	enum ComponentsTypes
-	{
-		Aadd2d = 0x1,
-		Transform2d = 0x2,
-		Render2d = 0x4,
-		MatrixTransform = 0x8,
+		TFEtc1 = 0x8,
+		TFEnumSize = 0x9
 	};
 
 	/// physics enums
@@ -144,6 +141,12 @@ namespace llge
 		BoneFxNone = 0x0,
 		BoneFxIgnoreLight = 0x1,
 		BoneFxBlur = 0x2,
+	};
+
+	enum BatcherMode
+	{
+		BatcherModeDefault = 0x0,
+		BatcherModeBlur = 0x1
 	};
 
 	/// physics structs
@@ -192,11 +195,17 @@ namespace llge
 		float ellapsedTime;
 		float postEffectsScale;
 		bool useRgbTransforms;
+		bool useColorCorrection;
+		float colorCorrectionRotation;
+		float colorCorrectionScaleX;
+		float colorCorrectionScaleY;
+		float colorCorrectionOffsetY;
 	};
 	
 	struct EffectConfig
 	{
 		uint texture;
+		uint alpha;
 	};
 
 	struct LightingConfig
@@ -211,6 +220,26 @@ namespace llge
 		uint highlightColor;
 	};
 	
+	struct Light2d
+	{
+		float x;
+		float y;
+		float r;
+		float i;
+		uint color;
+	};
+	
+	struct Lighting2dConfig
+	{
+		IntPtr LightsPtr;
+		int LightsCount;
+		uint ambient;
+		float x;
+		float y;
+		float w;
+		float h;
+	};
+		
 	struct BatcherConfig
 	{
 		int effect;
@@ -227,6 +256,7 @@ namespace llge
 	{
 	public:
 		virtual uint API_CALL getId() = 0;
+		virtual uint API_CALL getAlphaId() = 0;
 		virtual IntPtr API_CALL getTextureInstance() = 0;
 	};
 
@@ -244,6 +274,7 @@ namespace llge
 		virtual IntPtr API_CALL getVertices() = 0;
 		virtual int API_CALL getIndicesCount() = 0;
 		virtual IntPtr API_CALL getIndices() = 0;
+		virtual bool API_CALL isAtlasEntry() = 0;
 	};
 
 	class IRenderTarget2d : IBaseObject
@@ -317,12 +348,14 @@ namespace llge
 		virtual void API_CALL setEffectConstantColor(GraphicsEffects effect, char *name, uint value) = 0;
 		virtual int API_CALL getPixelsWidth() = 0;
 		virtual int API_CALL getPixelsHeight() = 0;
-		virtual void API_CALL getPixels(IntPtr target) = 0;
+		virtual void API_CALL getPixels(IntPtr target, bool inverse) = 0;
 
         virtual void API_CALL create() = 0;
 		virtual void API_CALL grabDefaultRenderTarget() = 0;
 		virtual void API_CALL cleanup() = 0;
 		virtual void API_CALL dispose() = 0;
+
+		virtual bool API_CALL isTextureFormatSupported(TextureImage2dFormat format) = 0;
 	};
 
 	class IGraphicsFactory : IBaseObject
@@ -369,18 +402,6 @@ namespace llge
 		virtual void API_CALL dispose() = 0;
 	};
 
-	class IQuadTree : IBaseObject
-	{
-	public:
-		virtual int API_CALL insert(float minX, float minY, float maxX, float maxY, int userData) = 0;
-		virtual void API_CALL remove(int id) = 0;
-		virtual void API_CALL query(float minX, float minY, float maxX, float maxY) = 0;
-		virtual void API_CALL getQueryResults(void *intBuffer) = 0;
-		virtual int API_CALL getQueryResultsCount() = 0;
-		virtual int API_CALL getIterationsCount() = 0;
-		virtual void API_CALL dispose() = 0;
-	};
-
 	class IMeshesResult : IBaseObject
 	{
 	public:
@@ -395,6 +416,9 @@ namespace llge
 	class IP2t : IBaseObject
 	{
 	public:	
+		virtual void API_CALL setContour(IntPtr vertices2f, uint count) = 0;
+		virtual void API_CALL addHole(IntPtr vertices2f, uint count) = 0;
+		virtual void API_CALL build() = 0;
 		virtual void API_CALL buildContour(IntPtr vertices2f, uint count) = 0;
 		virtual int API_CALL getTrianglesCount() = 0;
 		virtual void API_CALL getTriangles(IntPtr triangles) = 0;
@@ -415,107 +439,29 @@ namespace llge
 	class IGeometryFactory : IBaseObject
 	{
 	public:
-		virtual IQuadTree * API_CALL createQuadTree() = 0;
 		virtual IMarchingSquares * API_CALL createMarchingSquares() = 0;
 		virtual ITerrainClipper * API_CALL createTerrainClipper() = 0;
 		virtual IP2t * API_CALL createP2t() = 0;
 		virtual void API_CALL dispose() = 0;
 	};
 
-	/// entities
-
-	class IAabb2d : IBaseObject
-	{
-	public:
-		virtual void API_CALL update(float minX, float minY, float maxX, float maxY, float zOrder) = 0;
-	};
-
-	class IRender2d : IBaseObject
-	{
-	public:
-		virtual void API_CALL setMeshesCount(int meshesCount) = 0;
-		virtual void API_CALL setMesh(int meshIndex, ITexture *texture, void* vertices, int verticesCount, void* indices, int indicesCount) = 0;
-	};
-
-	class IMatrixTransform : IBaseObject
-	{
-	public:
-		virtual void API_CALL setTransform(void *floatMatrix) = 0;
-	};
-
-	class ITransform2d : IBaseObject
-	{
-	public:
-		virtual void API_CALL setWorldPosition(float x, float y, float z) = 0;
-		virtual void API_CALL setWorldRotation(float value) = 0;
-		virtual void API_CALL setWorldScale(float value) = 0;
-		virtual void API_CALL setLocalPivot(float x, float y, float z) = 0;
-		virtual void API_CALL setLocalPosition(float x, float y, float z) = 0;
-		virtual void API_CALL setLocalRotation(float value) = 0;
-		virtual void API_CALL setLocalScale(float value) = 0;
-	};
-
-	class IEntity : IBaseObject
-	{
-	public:
-		virtual IntPtr getSelfInstance() = 0;		
-		virtual void setComponents(ComponentsTypes types) = 0;
-		virtual IAabb2d* API_CALL getAabb2d() = 0;
-		virtual IRender2d* API_CALL getRender2d() = 0;
-		virtual ITransform2d* API_CALL getTransform2d() = 0;
-		virtual IMatrixTransform* API_CALL getMatrixTransform() = 0;
-		virtual void API_CALL dispose() = 0;
-	};
-
-	class ICamera : IBaseObject
-	{
-	public:
-		virtual void API_CALL setPosition(float x, float y, float z) = 0;
-		virtual void API_CALL setFov(float fov) = 0;
-		virtual void API_CALL setAspect(float aspect) = 0;
-		virtual void API_CALL setRotation(float rotationZ) = 0;
-		virtual void API_CALL setPlanes(float zn, float zf) = 0;
-	};
-
-	class IEntitiesWorld : IBaseObject
-	{
-	public:
-		virtual ICamera * API_CALL getCamera() = 0;
-		virtual void API_CALL setUnpdateBounds(float minX, float minY, float maxX, float maxY) = 0;
-		virtual void API_CALL setRenderBounds(float minX, float minY, float maxX, float maxY) = 0;
-		
-		virtual IEntity * API_CALL createEntity() = 0;
-				
-		virtual int API_CALL update(float elapsed) = 0;
-
-		virtual void API_CALL updateEntity(IEntity *entity, ComponentsTypes types) = 0;
-		virtual void API_CALL addEntity(IEntity *entity) = 0;
-		virtual void API_CALL removeEntity(IEntity *entity) = 0;
-
-		virtual void API_CALL dispose() = 0;
-		virtual void API_CALL clear() = 0;
-	};
-
-	class IEntitiesFactory : IBaseObject
-	{
-	public:
-		virtual IEntitiesWorld * API_CALL createEntitiesWorld() = 0;
-		virtual void API_CALL dispose() = 0;
-	};
-
+	
 	/// drawing
 	class IBatch2d : IBaseObject
 	{
 	public:
 		virtual IntPtr API_CALL getNativeInstance() = 0;
+		virtual void API_CALL setLightingMode(BatcherLightingMode mode) = 0;
 		virtual void API_CALL addProjection(void *floatMatrix) = 0;
 		virtual void API_CALL addRenderTarget(IntPtr renderTargetInstance) = 0;
+		virtual void API_CALL setupLighting(IntPtr lightingConfig) = 0;
 		virtual void API_CALL startBatch() = 0;
 		virtual void API_CALL finishBatch() = 0;
 		virtual void API_CALL setToneMap(uint tonemapId) = 0;
 		virtual void API_CALL draw(IntPtr batcherConfig, IntPtr texturesConfig) = 0;
 		virtual void API_CALL drawSolid(int z, ITexture* textureId, uint lightmapId, void *vertices, int verticesCount, void *indices, int indicesCount, byte colorScale) = 0;
 		virtual void API_CALL execute(bool usePostProcess) = 0;
+		virtual void API_CALL setBatcherMode(BatcherMode mode) = 0;
 
 		virtual int API_CALL getRenderedVerticesCount() = 0;
 		virtual int API_CALL getRenderedPrimitivesCount() = 0;
@@ -550,7 +496,7 @@ namespace llge
 		virtual float API_CALL getZ() = 0;
 
 		virtual void API_CALL renderEx(IBatch2d * batch, IntPtr effectConfig, GraphicsEffects effect, byte colorScale) = 0;
-		virtual void API_CALL render(IBatch2d * batch, int lightmapId, GraphicsEffects effect, byte colorScale) = 0;
+		virtual void API_CALL renderWithoutBatch() = 0;
 		virtual int API_CALL getGeometry(void *vertices, int verticeLimit, void *indices, int indicesLimit) = 0;
 		virtual IntPtr API_CALL getNativeInstance() = 0;
 		virtual void API_CALL updateWorldTransform() = 0;
@@ -618,6 +564,7 @@ namespace llge
 	{
 	public:
 		virtual void API_CALL load(String atlasText, String jsonText, String dir, TextureQueryFormat format, float applyedCompression) = 0;
+		virtual void API_CALL loadWithPngImage(String atlasText, String jsonText, String dir, void* texture) = 0;
 		virtual void API_CALL unLoad() = 0;
 		virtual ISpineAnimation* API_CALL getSpineAnimation(int i) = 0;
 		virtual int API_CALL getSpineAnimationsCount() = 0;
@@ -694,6 +641,7 @@ namespace llge
 	public:
 		virtual void API_CALL refreshAssetsManager(void *jniEnv, void *assetsManager) = 0;
 		virtual void API_CALL openAssets(void *jniEnv, void *assetsManager) = 0;
+		virtual void API_CALL remapObbFile(const char *obbFile) = 0;
 		virtual void API_CALL openObbFile(const char *obbFile) = 0;
 		virtual void API_CALL closeObbFile() = 0;
 		virtual bool API_CALL existsContent(const char *name) = 0;
@@ -907,7 +855,6 @@ namespace llge
 	extern "C" DLLEXPORT ITexture * API_CALL createTextureByID(uint id);
 	extern "C" DLLEXPORT IContentManager * API_CALL createContentManager();
 	extern "C" DLLEXPORT IObbContentProvider * API_CALL createContentProvider();
-	extern "C" DLLEXPORT IEntitiesFactory * API_CALL createEntitiesFactory();
 	extern "C" DLLEXPORT IGraphicsFactory * API_CALL createGraphicsFactory();
 	extern "C" DLLEXPORT IGeometryFactory * API_CALL createGeometryFactory();
 

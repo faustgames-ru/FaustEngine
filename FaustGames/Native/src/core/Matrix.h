@@ -71,6 +71,11 @@ namespace core
 		{
 			return mul(mul(mul(mul(a, b), c), d), e);
 		}
+
+		static Matrix mul(const Matrix &a, const Matrix &b, const Matrix &c, const Matrix &d, const Matrix &e, const Matrix &f)
+		{
+			return mul(mul(mul(mul(mul(a, b), c), d), e), f);
+		}
 		static Matrix mul(const Matrix &a, const Matrix &b)
 		{
 			return Matrix(
@@ -246,6 +251,8 @@ namespace core
 				0, 0, -zn * zf / (zf - zn), 0);
 		}
 
+		static Matrix CreateRotationWithScale(const Vector3 n, const Vector3 scale, float a);
+
 		static float determinant3X3(
 			float xx, float xy, float xz,
 			float yx, float yy, float yz,
@@ -264,6 +271,7 @@ namespace core
 	public:
 		int id;
 		Matrix Value;
+
 		inline MatrixContainer()
 		{
 			id = (++_id) << 16;
@@ -288,6 +296,7 @@ namespace core
 		}
 	};
 
+
 	class Matrix3
 	{
 	public:
@@ -296,7 +305,8 @@ namespace core
 			float m11, float m12, float m13,
 			float m21, float m22, float m23,
 			float m31, float m32, float m33);
-		
+		explicit Matrix3(Matrix value);
+
 		float getXx() const;
 		float getXy() const;
 		float getXz() const;
@@ -310,7 +320,7 @@ namespace core
 		static Matrix3 createRotation(const Vector3 n, float a);
 		static Matrix3 createRotation(const Vector3 n, float c, float s);
 		static Matrix3 createRotation(const Vector3 n, float scale, float c, float s);
-
+		
 		static Vector3 transform(Matrix3 m, Vector3 v)
 		{
 			return Vector3(

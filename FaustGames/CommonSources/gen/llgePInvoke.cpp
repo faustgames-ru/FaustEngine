@@ -11,6 +11,11 @@ namespace llge
 		return classInstance->getId();
 	}
 	
+	extern "C" DLLEXPORT uint API_CALL llge_Texture_getAlphaId (ITexture * classInstance)
+	{
+		return classInstance->getAlphaId();
+	}
+	
 	extern "C" DLLEXPORT IntPtr API_CALL llge_Texture_getTextureInstance (ITexture * classInstance)
 	{
 		return classInstance->getTextureInstance();
@@ -64,6 +69,11 @@ namespace llge
 	extern "C" DLLEXPORT IntPtr API_CALL llge_TextureImage2d_getIndices (ITextureImage2d * classInstance)
 	{
 		return classInstance->getIndices();
+	}
+	
+	extern "C" DLLEXPORT bool API_CALL llge_TextureImage2d_isAtlasEntry (ITextureImage2d * classInstance)
+	{
+		return classInstance->isAtlasEntry();
 	}
 	
 	extern "C" DLLEXPORT IntPtr API_CALL llge_RenderTarget2d_getRenderTargetInstance (IRenderTarget2d * classInstance)
@@ -291,9 +301,9 @@ namespace llge
 		return classInstance->getPixelsHeight();
 	}
 	
-	extern "C" DLLEXPORT void API_CALL llge_GraphicsFacade_getPixels (IGraphicsFacade * classInstance, IntPtr target)
+	extern "C" DLLEXPORT void API_CALL llge_GraphicsFacade_getPixels (IGraphicsFacade * classInstance, IntPtr target, bool inverse)
 	{
-		classInstance->getPixels(target);
+		classInstance->getPixels(target, inverse);
 	}
 	
 	extern "C" DLLEXPORT void API_CALL llge_GraphicsFacade_create (IGraphicsFacade * classInstance)
@@ -314,6 +324,11 @@ namespace llge
 	extern "C" DLLEXPORT void API_CALL llge_GraphicsFacade_dispose (IGraphicsFacade * classInstance)
 	{
 		classInstance->dispose();
+	}
+	
+	extern "C" DLLEXPORT bool API_CALL llge_GraphicsFacade_isTextureFormatSupported (IGraphicsFacade * classInstance, TextureImage2dFormat format)
+	{
+		return classInstance->isTextureFormatSupported(format);
 	}
 	
 	extern "C" DLLEXPORT IGraphicsFacade * API_CALL llge_GraphicsFactory_createGraphicsFacade (IGraphicsFactory * classInstance)
@@ -466,41 +481,6 @@ namespace llge
 		classInstance->dispose();
 	}
 	
-	extern "C" DLLEXPORT int API_CALL llge_QuadTree_insert (IQuadTree * classInstance, float minX, float minY, float maxX, float maxY, int userData)
-	{
-		return classInstance->insert(minX, minY, maxX, maxY, userData);
-	}
-	
-	extern "C" DLLEXPORT void API_CALL llge_QuadTree_remove (IQuadTree * classInstance, int id)
-	{
-		classInstance->remove(id);
-	}
-	
-	extern "C" DLLEXPORT void API_CALL llge_QuadTree_query (IQuadTree * classInstance, float minX, float minY, float maxX, float maxY)
-	{
-		classInstance->query(minX, minY, maxX, maxY);
-	}
-	
-	extern "C" DLLEXPORT void API_CALL llge_QuadTree_getQueryResults (IQuadTree * classInstance, void * intBuffer)
-	{
-		classInstance->getQueryResults(intBuffer);
-	}
-	
-	extern "C" DLLEXPORT int API_CALL llge_QuadTree_getQueryResultsCount (IQuadTree * classInstance)
-	{
-		return classInstance->getQueryResultsCount();
-	}
-	
-	extern "C" DLLEXPORT int API_CALL llge_QuadTree_getIterationsCount (IQuadTree * classInstance)
-	{
-		return classInstance->getIterationsCount();
-	}
-	
-	extern "C" DLLEXPORT void API_CALL llge_QuadTree_dispose (IQuadTree * classInstance)
-	{
-		classInstance->dispose();
-	}
-	
 	extern "C" DLLEXPORT int API_CALL llge_MeshesResult_getMeshesCount (IMeshesResult * classInstance)
 	{
 		return classInstance->getMeshesCount();
@@ -529,6 +509,21 @@ namespace llge
 	extern "C" DLLEXPORT void API_CALL llge_MeshesResult_getIndices (IMeshesResult * classInstance, int meshIndex, IntPtr indices)
 	{
 		classInstance->getIndices(meshIndex, indices);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_P2t_setContour (IP2t * classInstance, IntPtr vertices2f, uint count)
+	{
+		classInstance->setContour(vertices2f, count);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_P2t_addHole (IP2t * classInstance, IntPtr vertices2f, uint count)
+	{
+		classInstance->addHole(vertices2f, count);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_P2t_build (IP2t * classInstance)
+	{
+		classInstance->build();
 	}
 	
 	extern "C" DLLEXPORT void API_CALL llge_P2t_buildContour (IP2t * classInstance, IntPtr vertices2f, uint count)
@@ -576,11 +571,6 @@ namespace llge
 		classInstance->dispose();
 	}
 	
-	extern "C" DLLEXPORT IQuadTree * API_CALL llge_GeometryFactory_createQuadTree (IGeometryFactory * classInstance)
-	{
-		return classInstance->createQuadTree();
-	}
-	
 	extern "C" DLLEXPORT IMarchingSquares * API_CALL llge_GeometryFactory_createMarchingSquares (IGeometryFactory * classInstance)
 	{
 		return classInstance->createMarchingSquares();
@@ -601,184 +591,14 @@ namespace llge
 		classInstance->dispose();
 	}
 	
-	extern "C" DLLEXPORT void API_CALL llge_Aabb2d_update (IAabb2d * classInstance, float minX, float minY, float maxX, float maxY, float zOrder)
-	{
-		classInstance->update(minX, minY, maxX, maxY, zOrder);
-	}
-	
-	extern "C" DLLEXPORT void API_CALL llge_Render2d_setMeshesCount (IRender2d * classInstance, int meshesCount)
-	{
-		classInstance->setMeshesCount(meshesCount);
-	}
-	
-	extern "C" DLLEXPORT void API_CALL llge_Render2d_setMesh (IRender2d * classInstance, int meshIndex, ITexture * texture, void * vertices, int verticesCount, void * indices, int indicesCount)
-	{
-		classInstance->setMesh(meshIndex, texture, vertices, verticesCount, indices, indicesCount);
-	}
-	
-	extern "C" DLLEXPORT void API_CALL llge_MatrixTransform_setTransform (IMatrixTransform * classInstance, void * floatMatrix)
-	{
-		classInstance->setTransform(floatMatrix);
-	}
-	
-	extern "C" DLLEXPORT void API_CALL llge_Transform2d_setWorldPosition (ITransform2d * classInstance, float x, float y, float z)
-	{
-		classInstance->setWorldPosition(x, y, z);
-	}
-	
-	extern "C" DLLEXPORT void API_CALL llge_Transform2d_setWorldRotation (ITransform2d * classInstance, float value)
-	{
-		classInstance->setWorldRotation(value);
-	}
-	
-	extern "C" DLLEXPORT void API_CALL llge_Transform2d_setWorldScale (ITransform2d * classInstance, float value)
-	{
-		classInstance->setWorldScale(value);
-	}
-	
-	extern "C" DLLEXPORT void API_CALL llge_Transform2d_setLocalPivot (ITransform2d * classInstance, float x, float y, float z)
-	{
-		classInstance->setLocalPivot(x, y, z);
-	}
-	
-	extern "C" DLLEXPORT void API_CALL llge_Transform2d_setLocalPosition (ITransform2d * classInstance, float x, float y, float z)
-	{
-		classInstance->setLocalPosition(x, y, z);
-	}
-	
-	extern "C" DLLEXPORT void API_CALL llge_Transform2d_setLocalRotation (ITransform2d * classInstance, float value)
-	{
-		classInstance->setLocalRotation(value);
-	}
-	
-	extern "C" DLLEXPORT void API_CALL llge_Transform2d_setLocalScale (ITransform2d * classInstance, float value)
-	{
-		classInstance->setLocalScale(value);
-	}
-	
-	extern "C" DLLEXPORT IntPtr API_CALL llge_Entity_getSelfInstance (IEntity * classInstance)
-	{
-		return classInstance->getSelfInstance();
-	}
-	
-	extern "C" DLLEXPORT void API_CALL llge_Entity_setComponents (IEntity * classInstance, ComponentsTypes types)
-	{
-		classInstance->setComponents(types);
-	}
-	
-	extern "C" DLLEXPORT IAabb2d * API_CALL llge_Entity_getAabb2d (IEntity * classInstance)
-	{
-		return classInstance->getAabb2d();
-	}
-	
-	extern "C" DLLEXPORT IRender2d * API_CALL llge_Entity_getRender2d (IEntity * classInstance)
-	{
-		return classInstance->getRender2d();
-	}
-	
-	extern "C" DLLEXPORT ITransform2d * API_CALL llge_Entity_getTransform2d (IEntity * classInstance)
-	{
-		return classInstance->getTransform2d();
-	}
-	
-	extern "C" DLLEXPORT IMatrixTransform * API_CALL llge_Entity_getMatrixTransform (IEntity * classInstance)
-	{
-		return classInstance->getMatrixTransform();
-	}
-	
-	extern "C" DLLEXPORT void API_CALL llge_Entity_dispose (IEntity * classInstance)
-	{
-		classInstance->dispose();
-	}
-	
-	extern "C" DLLEXPORT void API_CALL llge_Camera_setPosition (ICamera * classInstance, float x, float y, float z)
-	{
-		classInstance->setPosition(x, y, z);
-	}
-	
-	extern "C" DLLEXPORT void API_CALL llge_Camera_setFov (ICamera * classInstance, float fov)
-	{
-		classInstance->setFov(fov);
-	}
-	
-	extern "C" DLLEXPORT void API_CALL llge_Camera_setAspect (ICamera * classInstance, float aspect)
-	{
-		classInstance->setAspect(aspect);
-	}
-	
-	extern "C" DLLEXPORT void API_CALL llge_Camera_setRotation (ICamera * classInstance, float rotationZ)
-	{
-		classInstance->setRotation(rotationZ);
-	}
-	
-	extern "C" DLLEXPORT void API_CALL llge_Camera_setPlanes (ICamera * classInstance, float zn, float zf)
-	{
-		classInstance->setPlanes(zn, zf);
-	}
-	
-	extern "C" DLLEXPORT ICamera * API_CALL llge_EntitiesWorld_getCamera (IEntitiesWorld * classInstance)
-	{
-		return classInstance->getCamera();
-	}
-	
-	extern "C" DLLEXPORT void API_CALL llge_EntitiesWorld_setUnpdateBounds (IEntitiesWorld * classInstance, float minX, float minY, float maxX, float maxY)
-	{
-		classInstance->setUnpdateBounds(minX, minY, maxX, maxY);
-	}
-	
-	extern "C" DLLEXPORT void API_CALL llge_EntitiesWorld_setRenderBounds (IEntitiesWorld * classInstance, float minX, float minY, float maxX, float maxY)
-	{
-		classInstance->setRenderBounds(minX, minY, maxX, maxY);
-	}
-	
-	extern "C" DLLEXPORT IEntity * API_CALL llge_EntitiesWorld_createEntity (IEntitiesWorld * classInstance)
-	{
-		return classInstance->createEntity();
-	}
-	
-	extern "C" DLLEXPORT int API_CALL llge_EntitiesWorld_update (IEntitiesWorld * classInstance, float elapsed)
-	{
-		return classInstance->update(elapsed);
-	}
-	
-	extern "C" DLLEXPORT void API_CALL llge_EntitiesWorld_updateEntity (IEntitiesWorld * classInstance, IEntity * entity, ComponentsTypes types)
-	{
-		classInstance->updateEntity(entity, types);
-	}
-	
-	extern "C" DLLEXPORT void API_CALL llge_EntitiesWorld_addEntity (IEntitiesWorld * classInstance, IEntity * entity)
-	{
-		classInstance->addEntity(entity);
-	}
-	
-	extern "C" DLLEXPORT void API_CALL llge_EntitiesWorld_removeEntity (IEntitiesWorld * classInstance, IEntity * entity)
-	{
-		classInstance->removeEntity(entity);
-	}
-	
-	extern "C" DLLEXPORT void API_CALL llge_EntitiesWorld_dispose (IEntitiesWorld * classInstance)
-	{
-		classInstance->dispose();
-	}
-	
-	extern "C" DLLEXPORT void API_CALL llge_EntitiesWorld_clear (IEntitiesWorld * classInstance)
-	{
-		classInstance->clear();
-	}
-	
-	extern "C" DLLEXPORT IEntitiesWorld * API_CALL llge_EntitiesFactory_createEntitiesWorld (IEntitiesFactory * classInstance)
-	{
-		return classInstance->createEntitiesWorld();
-	}
-	
-	extern "C" DLLEXPORT void API_CALL llge_EntitiesFactory_dispose (IEntitiesFactory * classInstance)
-	{
-		classInstance->dispose();
-	}
-	
 	extern "C" DLLEXPORT IntPtr API_CALL llge_Batch2d_getNativeInstance (IBatch2d * classInstance)
 	{
 		return classInstance->getNativeInstance();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_Batch2d_setLightingMode (IBatch2d * classInstance, BatcherLightingMode mode)
+	{
+		classInstance->setLightingMode(mode);
 	}
 	
 	extern "C" DLLEXPORT void API_CALL llge_Batch2d_addProjection (IBatch2d * classInstance, void * floatMatrix)
@@ -789,6 +609,11 @@ namespace llge
 	extern "C" DLLEXPORT void API_CALL llge_Batch2d_addRenderTarget (IBatch2d * classInstance, IntPtr renderTargetInstance)
 	{
 		classInstance->addRenderTarget(renderTargetInstance);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_Batch2d_setupLighting (IBatch2d * classInstance, IntPtr lightingConfig)
+	{
+		classInstance->setupLighting(lightingConfig);
 	}
 	
 	extern "C" DLLEXPORT void API_CALL llge_Batch2d_startBatch (IBatch2d * classInstance)
@@ -819,6 +644,11 @@ namespace llge
 	extern "C" DLLEXPORT void API_CALL llge_Batch2d_execute (IBatch2d * classInstance, bool usePostProcess)
 	{
 		classInstance->execute(usePostProcess);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_Batch2d_setBatcherMode (IBatch2d * classInstance, BatcherMode mode)
+	{
+		classInstance->setBatcherMode(mode);
 	}
 	
 	extern "C" DLLEXPORT int API_CALL llge_Batch2d_getRenderedVerticesCount (IBatch2d * classInstance)
@@ -926,9 +756,9 @@ namespace llge
 		classInstance->renderEx(batch, effectConfig, effect, colorScale);
 	}
 	
-	extern "C" DLLEXPORT void API_CALL llge_SpineSkeleton_render (ISpineSkeleton * classInstance, IBatch2d * batch, int lightmapId, GraphicsEffects effect, byte colorScale)
+	extern "C" DLLEXPORT void API_CALL llge_SpineSkeleton_renderWithoutBatch (ISpineSkeleton * classInstance)
 	{
-		classInstance->render(batch, lightmapId, effect, colorScale);
+		classInstance->renderWithoutBatch();
 	}
 	
 	extern "C" DLLEXPORT int API_CALL llge_SpineSkeleton_getGeometry (ISpineSkeleton * classInstance, void * vertices, int verticeLimit, void * indices, int indicesLimit)
@@ -1079,6 +909,11 @@ namespace llge
 	extern "C" DLLEXPORT void API_CALL llge_SpineResource_load (ISpineResource * classInstance, String atlasText, String jsonText, String dir, TextureQueryFormat format, float applyedCompression)
 	{
 		classInstance->load(atlasText, jsonText, dir, format, applyedCompression);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_SpineResource_loadWithPngImage (ISpineResource * classInstance, String atlasText, String jsonText, String dir, void * texture)
+	{
+		classInstance->loadWithPngImage(atlasText, jsonText, dir, texture);
 	}
 	
 	extern "C" DLLEXPORT void API_CALL llge_SpineResource_unLoad (ISpineResource * classInstance)
@@ -1294,6 +1129,11 @@ namespace llge
 	extern "C" DLLEXPORT void API_CALL llge_ObbContentProvider_openAssets (IObbContentProvider * classInstance, void * jniEnv, void * assetsManager)
 	{
 		classInstance->openAssets(jniEnv, assetsManager);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_ObbContentProvider_remapObbFile (IObbContentProvider * classInstance, const char * obbFile)
+	{
+		classInstance->remapObbFile(obbFile);
 	}
 	
 	extern "C" DLLEXPORT void API_CALL llge_ObbContentProvider_openObbFile (IObbContentProvider * classInstance, const char * obbFile)

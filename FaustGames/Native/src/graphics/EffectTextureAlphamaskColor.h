@@ -18,6 +18,7 @@ namespace graphics
 		~EffectTextureAlphamaskColor();
 		void create();
 		virtual void configApply(const void *config) OVERRIDE;
+		virtual EffectBase* GetEtc1A8Effect() { return this; } // todo: write correct shader for etc1a8
 	protected:
 	private:
 	};

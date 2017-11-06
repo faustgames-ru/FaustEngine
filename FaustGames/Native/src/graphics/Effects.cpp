@@ -11,9 +11,11 @@ namespace graphics
 	EffectTextureColor Effects::_textureColor;
 	EffectTextureColorEtc1A8 Effects::_textureColorEtc1A8;
 	EffectTextureColorFog Effects::_textureColorFog;
+	EffectTextureColorFogEtc1A8 Effects::_textureColorFogEtc1A8;
 	EffectTextureAlphamaskColor Effects::_textureAlphamaskColor;
 	EffectTextureColorHighlight Effects::_textureColorHighlight;
-	EffectTextureLightMapColor Effects::_textureLightmapColor;
+	//EffectTextureLightMapColor Effects::_textureLightmapColor;
+	EffectTextureRgbTransformEtc1A8 Effects::_textureRgbTransformEtc1A8;
 	EffectTextureRgbTransform Effects::_textureRgbTransform;
 
 	EffectPostProcessToneMapping Effects::_postProcessToneMapping;
@@ -35,11 +37,15 @@ namespace graphics
 		_solidColor.create();
 		_textureColor.create();
 		_textureColorEtc1A8.create();
+		
 		_textureColorFog.create();
+		_textureColorFogEtc1A8.create();
+
 		_textureAlphamaskColor.create();
 		_textureColorHighlight.create();
-		_textureLightmapColor.create();
+		
 		_textureRgbTransform.create();
+		_textureRgbTransformEtc1A8.create();
 
 		_postProcessToneMapping.create();
 		_postProcessBloomFilter.create();
@@ -58,13 +64,15 @@ namespace graphics
 		_solidColor.getEffect()->cleanup();
 		_textureColor.getEffect()->cleanup();
 		_textureColorEtc1A8.getEffect()->cleanup();
+		_textureColorFog.getEffect()->cleanup();		
+		_textureColorFogEtc1A8.getEffect()->cleanup();
 
-		_textureColorFog.getEffect()->cleanup();
 		_textureAlphamaskColor.getEffect()->cleanup();
 		_textureColorHighlight.getEffect()->cleanup();
 
-		_textureLightmapColor.getEffect()->cleanup();
+		//_textureLightmapColor.getEffect()->cleanup();
 		_textureRgbTransform.getEffect()->cleanup();
+		_textureRgbTransformEtc1A8.getEffect()->cleanup();
 
 		_postProcessBloomFilter.getEffect()->cleanup();
 		_postProcessVBlurFilter.getEffect()->cleanup();
@@ -101,6 +109,11 @@ namespace graphics
 		return &_textureColorFog;
 	}
 
+	EffectTextureColorFogEtc1A8* Effects::textureColorFogEtc1A8()
+	{
+		return &_textureColorFogEtc1A8;
+	}
+
 	EffectTextureAlphamaskColor * Effects::textureAlphamaskColor() 
 	{
 		return &_textureAlphamaskColor;
@@ -111,10 +124,16 @@ namespace graphics
 		return &_textureColorHighlight;
 	}
 
-	EffectTextureLightMapColor * Effects::textureLightmapColor()
+	//EffectTextureLightMapColor * Effects::textureLightmapColor()
+	//{
+	//	return &_textureLightmapColor;
+	//}
+
+	EffectTextureRgbTransformEtc1A8* Effects::textureRgbTransformEtc1A8() 
 	{
-		return &_textureLightmapColor;
+		return &_textureRgbTransformEtc1A8;
 	}
+
 
 	EffectTextureRgbTransform* Effects::textureRgbTransform()
 	{

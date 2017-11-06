@@ -24,7 +24,7 @@ namespace graphics
 			_effects[llge::EffectTextureColor] = Effects::textureColor();
 			_effects[llge::EffectTextureColorHighlight] = Effects::textureColorHighlight();
 			_effects[llge::EffectTextureAlphamaskColor] = Effects::textureAlphamaskColor();			
-			_effects[llge::EffectTextureLightmapColor] = Effects::textureLightmapColor();
+			_effects[llge::EffectTextureLightmapColor] = Effects::textureColor();
 			_effects[llge::EffectWater] = 0;// Effects::water();
 			_effects[llge::EffectSolid] = Effects::solid();
 			_effects[llge::EffectSolidColor] = Effects::solidColor();
@@ -38,18 +38,21 @@ namespace graphics
 		}
 		inline EffectBase * getEffect(llge::GraphicsEffects effect, bool hasAlpha = false)
 		{
+			/*
 			if (hasAlpha)
 			{
 				return Effects::textureColorEtc1A8();
 			}
+			*/
 			if (GraphicsDevice::Default.config.enableFog)
 			{
 				if (effect == llge::GraphicsEffects::EffectTextureColor)
 				{
-					return Effects::textureColorFog();
+					// todo: textureColorFogEtc1A8
+					return Effects::textureColorFog()->ApplyEtc1A8(hasAlpha);
 				}
 			}
-			return _effects[static_cast<int>(effect)];
+			return _effects[static_cast<int>(effect)]->ApplyEtc1A8(hasAlpha);
 		}
 		
 		inline EffectBase * getRgbTransformeffect(llge::GraphicsEffects effect)
@@ -69,6 +72,13 @@ namespace graphics
 			*/
 			if (!GraphicsDevice::Default.config.useRgbTransforms)
 				return getEffect(effect);
+			
+			// todo: textureRgbTransformFog ?
+			// todo: textureRgbTransformFogEtc1A8 ?
+
+			// todo: textureColorFogEtc1A8
+			// todo: textureRgbTransformEtc1A8
+
 			return  Effects::textureRgbTransform();
 			// _effects[static_cast<int>(effect)];
 		}

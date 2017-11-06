@@ -183,11 +183,13 @@
     <ClInclude Include="..\shaders\texture_alphamask_color_frag.h" />
     <ClInclude Include="..\shaders\texture_alphamask_color_vert.h" />
     <ClInclude Include="..\shaders\texture_color_etc1a8_frag.h" />
+    <ClInclude Include="..\shaders\texture_color_fog_etc1a8_frag.h" />
     <ClInclude Include="..\shaders\texture_color_fog_frag.h" />
     <ClInclude Include="..\shaders\texture_color_fog_vert.h" />
     <ClInclude Include="..\shaders\texture_color_frag.h" />
     <ClInclude Include="..\shaders\texture_color_highlight_frag.h" />
     <ClInclude Include="..\shaders\texture_color_highlight_vert.h" />
+    <ClInclude Include="..\shaders\texture_color_rgb_transform_etc1a8_frag.h" />
     <ClInclude Include="..\shaders\texture_color_rgb_transform_frag.h" />
     <ClInclude Include="..\shaders\texture_color_vert.h" />
     <ClInclude Include="..\shaders\texture_lightmap_color_frag.h" />

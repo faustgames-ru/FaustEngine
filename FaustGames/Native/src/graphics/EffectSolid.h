@@ -16,6 +16,8 @@ namespace graphics
 		EffectSolid();
 		~EffectSolid();
 		void create();
+		virtual EffectBase* GetEtc1A8Effect() { return this; }
+
 	protected:
 	private:
 	};

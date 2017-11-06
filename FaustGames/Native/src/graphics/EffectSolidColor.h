@@ -16,6 +16,7 @@ namespace graphics
 		EffectSolidColor();
 		~EffectSolidColor();
 		void create();
+		virtual EffectBase* GetEtc1A8Effect() { return this; }
 	protected:
 	private:
 	};

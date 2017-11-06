@@ -641,6 +641,16 @@ namespace llge
 		classInstance->drawSolid(z, textureId, lightmapId, vertices, verticesCount, indices, indicesCount, colorScale);
 	}
 	
+	extern "C" DLLEXPORT void API_CALL llge_Batch2d_drawMask (IBatch2d * classInstance, byte mask, IntPtr vertices, int verticesCount, IntPtr indices, int indicesCount)
+	{
+		classInstance->drawMask(mask, vertices, verticesCount, indices, indicesCount);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_Batch2d_setMask (IBatch2d * classInstance, byte mask)
+	{
+		classInstance->setMask(mask);
+	}
+	
 	extern "C" DLLEXPORT void API_CALL llge_Batch2d_execute (IBatch2d * classInstance, bool usePostProcess)
 	{
 		classInstance->execute(usePostProcess);

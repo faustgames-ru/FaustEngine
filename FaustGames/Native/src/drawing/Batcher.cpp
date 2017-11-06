@@ -231,6 +231,69 @@ namespace drawing
 	{
 	}
 
+	StencilVerticesBuffer::StencilVerticesBuffer()
+	{
+		_verticesCount = 0;
+		_indicesCount = 0;
+		_vertices = static_cast<core::Vector3 *>(malloc(VerticesLimit * sizeof(core::Vector3)));
+		_indices = static_cast<ushort *>(malloc(IndicesLimit * sizeof(unsigned short)));
+	}
+
+	StencilVerticesBuffer::~StencilVerticesBuffer()
+	{
+		free(_vertices);
+		free(_indices);
+	}
+
+	void StencilVerticesBuffer::reset()
+	{
+		_indicesCount = 0;
+		_verticesCount = 0;
+	}
+
+	bool StencilVerticesBuffer::canAdd(int verticesCount, int indicesCount) const
+	{
+		return _indicesCount + indicesCount < IndicesLimit && _verticesCount + verticesCount < VerticesLimit;
+	}
+
+	void StencilVerticesBuffer::add(core::Vector3* vertices, int verticesCount, ushort* indices, int indicesCount)
+	{
+		for (int i = 0; i < indicesCount; i++)
+		{
+			_indices[_indicesCount + i] = static_cast<unsigned short>(_verticesCount + indices[i]);
+		}
+
+		core::Vector3* target = _vertices + _verticesCount;
+		core::Vector3* source = vertices;
+		for (int i = 0; i < verticesCount; i++)
+		{
+			target[i] = source[i]; 
+		}
+
+		_verticesCount += verticesCount;
+		_indicesCount += indicesCount;
+	}
+
+	core::Vector3* StencilVerticesBuffer::getVertices()
+	{
+		return _vertices;
+	}
+
+	int StencilVerticesBuffer::getVerticesCount() const
+	{
+		return _verticesCount;
+	}
+
+	ushort* StencilVerticesBuffer::getCurrentIndices() const
+	{
+		return  _indices + _indicesCount;
+	}
+
+	int StencilVerticesBuffer::getIndicesCount()
+	{
+		return _indicesCount;
+	}
+
 	Batcher::Batcher() :
 		_tonemapId(0),
 		_batchBufferIndex(0),
@@ -265,6 +328,7 @@ namespace drawing
 	
 	void Batcher::start()
 	{
+		_mask = 0;
 		_verticesCounter = 0;
 		_buffer->clearEntries();
 		_buffer->Transforms.clear();
@@ -277,13 +341,33 @@ namespace drawing
 		_blend = graphics::BlendState::None;
 		_effect = nullptr;
 		_zButcher->reset(&_lightMap);
+		_stecilMaskGeometry.reset();
+		_stecilMaskEntries.clear();
 	}
 	
 	void Batcher::finish()
 	{
 		applyEntry();
+		_mask = 0;
 	}
-	
+
+	void Batcher::drawMaskMesh(byte mask, core::Vector3* vertices, int verticesCount, ushort* indices, int indicesCount)
+	{
+		if (!_stecilMaskGeometry.canAdd(verticesCount, indicesCount))
+		{
+			// todo: log stencil geometru overflow
+			return;
+		}
+
+		StencilEntry entry;
+		entry.mask = mask;
+		entry.indices = _stecilMaskGeometry.getCurrentIndices();
+		entry.indicesCount = indicesCount;
+		entry.transformIndex = _buffer->Transforms.size() - 1;
+		_stecilMaskEntries.push_back(entry);
+		_stecilMaskGeometry.add(vertices, verticesCount, indices, indicesCount);
+	}
+
 	void Batcher::drawMesh(graphics::EffectBase *effect, graphics::BlendState::e blend, llge::ITexture * texture, uint lightmapId, TVertex *vertices, int verticesCount, ushort *indices, int indicesCount, float colorScale)
 	{
 		_verticesCounter += verticesCount;
@@ -330,6 +414,7 @@ namespace drawing
 			_currentEntry.Blend = _blend = blend;
 			_currentEntry.Effect = _effect = effect;
 			_currentEntry.TransformIndex = _buffer->Transforms.size() - 1;
+			_currentEntry.StencilMask = _mask;
 			_currentEntry.ColorTransformIndex = _buffer->ColorTransforms.size() - 1;
 			_currentEntry.RenderTargetIndex = _buffer->RenderTargets.size() - 1;
 		}
@@ -374,6 +459,7 @@ namespace drawing
 			_currentEntry.Blend = _blend = blend;
 			_currentEntry.Effect = _effect = effect;
 			_currentEntry.TransformIndex = _buffer->Transforms.size() - 1;
+			_currentEntry.StencilMask = _mask;
 			_currentEntry.ColorTransformIndex = _buffer->ColorTransforms.size() - 1;
 			_currentEntry.RenderTargetIndex = _buffer->RenderTargets.size() - 1;
 		}
@@ -423,6 +509,7 @@ namespace drawing
 			_currentEntry.Blend = _blend = mesh.State.Blend;
 			_currentEntry.Effect = _effect = mesh.State.Effect;
 			_currentEntry.TransformIndex = _buffer->Transforms.size() - 1;
+			_currentEntry.StencilMask = _mask;
 			_currentEntry.ColorTransformIndex = _buffer->ColorTransforms.size() - 1;
 			_currentEntry.RenderTargetIndex = _buffer->RenderTargets.size() - 1;
 		}
@@ -478,9 +565,27 @@ namespace drawing
 		applyEntry();
 	}
 
+	void Batcher::renderStencil(BatcherRenderArgs e)
+	{
+		_graphicsDevice->clearStencil();		
+		for(int i = 0; i < _stecilMaskEntries.size(); i++)
+		{
+			StencilEntry entry = _stecilMaskEntries[i];
+			_graphicsDevice->startStencilMask(entry.mask);
+			graphics::UniformValues::projection()->setValue(_buffer->Transforms[entry.transformIndex]);
+			_graphicsDevice->renderState.setEffect(graphics::Effects::solid());
+			_graphicsDevice->drawPrimitives(graphics::VertexFormats::position(), 
+				_stecilMaskGeometry.getVertices(), 
+				entry.indices, 
+				entry.indicesCount / 3);
+		}
+		_graphicsDevice->finishStencil();
+	}
+
 	void Batcher::mainRender(BatcherRenderArgs e)
 	{
-		RenderBuffer * _backBuffer = _buffer;
+		renderStencil(e);
+
 		if (_usedPostProcess && _bloom.isAvaliable())
 		{
 			_bloom.beginRender(_tonemapId);
@@ -541,10 +646,18 @@ namespace drawing
 
 			_primitivesCount += primitivesCount;
 			_verticesCount += verticesCount;
+			if (i->StencilMask > 0)
+			{
+				_graphicsDevice->startStencilTest(i->StencilMask);
+			}
 			_graphicsDevice->renderState.setBlend(graphics::BlendState::Alpha);
 			_graphicsDevice->renderState.setDepth(graphics::DepthState::Read);
 			_graphicsDevice->renderState.setDepthfunc(graphics::DepthFunc::LessEqual);
 			_graphicsDevice->drawPrimitives(_format, currentBuffer->getVertices(), i->IndicesStart, primitivesCount);
+			if (i->StencilMask > 0)
+			{
+				_graphicsDevice->finishStencil();
+			}
 		}
 	}
 
@@ -660,6 +773,18 @@ namespace drawing
 			drawMesh(_converter.getEffect(llge::GraphicsEffects::EffectTextureColor), graphics::BlendState::Alpha, texture, lightmapId, static_cast<TVertex *>(vertices), verticesCount, static_cast<ushort *>(indices), indicesCount, colorScale);
 			cleanupUVTransform();
 		}
+	}
+
+	void Batcher::drawMask(byte mask, IntPtr vertices, int verticesCount, IntPtr indices, int indicesCount)
+	{
+		drawMaskMesh(mask, static_cast<core::Vector3*>(vertices), verticesCount, static_cast<ushort*>(indices), indicesCount);
+	}
+
+	void Batcher::setMask(byte mask)
+	{
+		if (_mask == mask) return;
+		_mask = mask;
+		applyEntry();
 	}
 
 	void Batcher::execute(bool usePostProcess)
@@ -1174,6 +1299,7 @@ namespace drawing
 		controller()->drawSnapShot(snapShot, graphics::Color::fromRgba(ch, ch, ch, 1.0f));
 		
 		graphics::GraphicsDevice::Default.renderState.setDepth(graphics::DepthState::None);
+		batcher()->renderStencil(*args());
 		batcher()->guiRender(*args());
 			
 		if (controller()->Mode == llge::BatcherModeDefault)

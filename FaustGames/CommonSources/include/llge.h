@@ -460,6 +460,8 @@ namespace llge
 		virtual void API_CALL setToneMap(uint tonemapId) = 0;
 		virtual void API_CALL draw(IntPtr batcherConfig, IntPtr texturesConfig) = 0;
 		virtual void API_CALL drawSolid(int z, ITexture* textureId, uint lightmapId, void *vertices, int verticesCount, void *indices, int indicesCount, byte colorScale) = 0;
+		virtual void API_CALL drawMask(byte mask, IntPtr vertices, int verticesCount, IntPtr indices, int indicesCount) = 0;
+		virtual void API_CALL setMask(byte mask) = 0;
 		virtual void API_CALL execute(bool usePostProcess) = 0;
 		virtual void API_CALL setBatcherMode(BatcherMode mode) = 0;
 

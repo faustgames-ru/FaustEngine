@@ -246,6 +246,39 @@ glClearDepth(static_cast<double>(depth));
 		Errors::check(Errors::Clear);
 	}
 
+	void GraphicsDevice::clearStencil()
+	{
+		glEnable(GL_STENCIL_TEST);
+		glStencilFunc(GL_ALWAYS, 0, 0);
+		glStencilOp(GL_REPLACE, GL_REPLACE, GL_REPLACE);
+		glClearStencil(0);
+		Errors::check(Errors::Clear);
+		glClear(GL_STENCIL_BUFFER_BIT);
+		Errors::check(Errors::Clear);
+	}
+
+	void GraphicsDevice::startStencilMask(int mask)
+	{
+		glEnable(GL_STENCIL_TEST);
+		glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
+		glStencilFunc(GL_ALWAYS, mask, mask);
+		glStencilOp(GL_REPLACE, GL_REPLACE, GL_REPLACE);
+	}
+
+	void GraphicsDevice::startStencilTest(int mask)
+	{
+		glEnable(GL_STENCIL_TEST);
+		glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
+		glStencilFunc(GL_EQUAL, mask, mask);
+		glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
+	}
+
+	void GraphicsDevice::finishStencil()
+	{
+		glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
+		glDisable(GL_STENCIL_TEST);
+	}
+
 	void GraphicsDevice::resetState()
 	{
 		renderState = RenderState();

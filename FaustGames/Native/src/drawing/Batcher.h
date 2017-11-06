@@ -21,6 +21,7 @@ namespace drawing
 		int TransformIndex;
 		int ColorTransformIndex;
 		int RenderTargetIndex;
+		byte StencilMask;
 		graphics::BlendState::e Blend;
 		graphics::EffectBase *Effect;
 	};
@@ -151,6 +152,36 @@ namespace drawing
 
 	class BatcherRenderController;
 
+	struct StencilEntry
+	{
+		byte mask;
+		ushort* indices;
+		int indicesCount;
+		int transformIndex;
+	};
+
+	class StencilVerticesBuffer
+	{
+	public:
+		const int VerticesLimit = 32768;
+		const int IndicesLimit = 32768;
+		StencilVerticesBuffer();
+		~StencilVerticesBuffer();
+
+		void reset();
+		bool canAdd(int verticesCount, int indicesCount) const;
+		void add(core::Vector3* vertices, int verticesCount, ushort* indices, int indicesCount);
+		core::Vector3* getVertices();
+		int getVerticesCount() const;
+		ushort* getCurrentIndices() const;
+		int getIndicesCount();
+	private:
+		core::Vector3 *_vertices;
+		ushort *_indices;
+		int _indicesCount;
+		int _verticesCount;
+	};
+
 	class Batcher : public llge::IBatch2d, public core::IDebugRender
 	{
 	public:
@@ -158,6 +189,7 @@ namespace drawing
 		~Batcher();
 		void start();
 		void finish();
+		void drawMaskMesh(byte mask, core::Vector3 *vertices, int verticesCount, ushort *indices, int indicesCount);
 		void drawMesh(graphics::EffectBase *effect, graphics::BlendState::e blend, llge::ITexture * texture, uint lightmapId, TVertex *vertices, int verticesCount, ushort *indices, int indicesCount, float colorScale);
 		void drawMesh(graphics::EffectBase *effect, graphics::BlendState::e blend, uint textureId, uint lightmapId, TVertex *vertices, int verticesCount, ushort *indices, int indicesCount, unsigned char colorScale);
 		void drawMesh(graphics::EffectBase *effect, graphics::BlendState::e blend, void* config, TVertex *vertices, int verticesCount, ushort *indices, int indicesCount, unsigned char colorScale);
@@ -169,30 +201,36 @@ namespace drawing
 		void internalExecuteRenderCommands(BatcherRenderArgs e);
 		void addColorTransform(const core::Matrix3 &value);
 
+		void renderStencil(BatcherRenderArgs e);
 		void mainRender(BatcherRenderArgs e);
 		void guiRender(BatcherRenderArgs e);
 		void renderTranformGroup(int groupIndex, BatcherRenderArgs e);
 
-		virtual IntPtr API_CALL getNativeInstance() OVERRIDE;
+		virtual IntPtr API_CALL getNativeInstance() override;
 		void applyEntry();
 		virtual void API_CALL setLightingMode(llge::BatcherLightingMode mode) override;
-		virtual void API_CALL addProjection(void* floatMatrix) OVERRIDE;
-		virtual void API_CALL addRenderTarget(IntPtr renderTargetInstance) OVERRIDE;
-		virtual void API_CALL setupLighting(IntPtr lightingConfig) OVERRIDE;
-		virtual void API_CALL startBatch() OVERRIDE;
-		virtual void API_CALL finishBatch() OVERRIDE;
-		virtual void API_CALL draw(IntPtr batcherConfig, IntPtr texturesConfig) OVERRIDE;
+		virtual void API_CALL addProjection(void* floatMatrix) override;
+		virtual void API_CALL addRenderTarget(IntPtr renderTargetInstance) override;
+		virtual void API_CALL setupLighting(IntPtr lightingConfig) override;
+		virtual void API_CALL startBatch() override;
+		virtual void API_CALL finishBatch() override;
+		virtual void API_CALL draw(IntPtr batcherConfig, IntPtr texturesConfig) override;
 		virtual void API_CALL drawSolid(int z, llge::ITexture* textureId, uint lightmapId, void *vertices, int verticesCount, void *indices, int indicesCount, byte colorScale) OVERRIDE;
-		virtual void API_CALL execute(bool usePostProcess) OVERRIDE;
-		virtual void API_CALL setToneMap(uint tonemapId) OVERRIDE;
-		virtual int API_CALL getRenderedVerticesCount() OVERRIDE;
-		virtual int API_CALL getRenderedPrimitivesCount() OVERRIDE;
-		virtual void API_CALL setBatcherMode(llge::BatcherMode mode) OVERRIDE;
+		virtual void API_CALL drawMask(byte mask, IntPtr vertices, int verticesCount, IntPtr indices, int indicesCount) override;
+		virtual void API_CALL setMask(byte mask) override;
+		virtual void API_CALL execute(bool usePostProcess) override;
+		virtual void API_CALL setToneMap(uint tonemapId) override;
+		virtual int API_CALL getRenderedVerticesCount() override;
+		virtual int API_CALL getRenderedPrimitivesCount() override;
+		virtual void API_CALL setBatcherMode(llge::BatcherMode mode) override;
 
-		virtual void drawEdge(uint color, const core::Vector3 &a, const core::Vector3 &b) OVERRIDE;
+		virtual void drawEdge(uint color, const core::Vector3 &a, const core::Vector3 &b) override;
 		bool usedPostProcess();
 		graphics::Texture* getBlurMap();
 	private:
+		byte _mask;
+		std::vector<StencilEntry> _stecilMaskEntries;
+		StencilVerticesBuffer _stecilMaskGeometry;
 		llge::BatcherLightingMode _lightingMode;
 		ILightMap* _lightingModes[32];
 		DynamicVertexLightMap _lightMap;

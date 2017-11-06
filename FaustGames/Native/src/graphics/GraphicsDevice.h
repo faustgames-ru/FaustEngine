@@ -150,6 +150,11 @@ namespace graphics
 		void setRenderTarget(IRenderTarget *renderTarget);
 		void clear();
 		void clearDepth();
+		void clearStencil();
+		void startStencilMask(int mask);
+		void startStencilTest(int mask);
+		void finishStencil();
+
 		void resetState();
 		void drawVertexBuffer(VertexFormat *vertexFormat, GLuint vertexBuffer, unsigned short *indexBuffer, int primitivesCount);
 		void drawEdgesPrimitives(VertexFormat *vertexFormat, void *vertexBuffer, unsigned short *indexBuffer, int primitivesCount);

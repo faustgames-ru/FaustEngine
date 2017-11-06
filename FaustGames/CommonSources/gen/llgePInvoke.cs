@@ -1197,6 +1197,20 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private void llge_Batch2d_drawSolid (IntPtr classInstance, int z, IntPtr textureId, uint lightmapId, IntPtr vertices, int verticesCount, IntPtr indices, int indicesCount, byte colorScale);
+		public void DrawMask (byte mask, IntPtr vertices, int verticesCount, IntPtr indices, int indicesCount)
+		{
+			llge_Batch2d_drawMask(ClassInstance, mask, vertices, verticesCount, indices, indicesCount);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_Batch2d_drawMask (IntPtr classInstance, byte mask, IntPtr vertices, int verticesCount, IntPtr indices, int indicesCount);
+		public void SetMask (byte mask)
+		{
+			llge_Batch2d_setMask(ClassInstance, mask);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_Batch2d_setMask (IntPtr classInstance, byte mask);
 		public void Execute (bool usePostProcess)
 		{
 			llge_Batch2d_execute(ClassInstance, usePostProcess);

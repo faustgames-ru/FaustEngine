@@ -244,15 +244,9 @@ namespace graphics
 
 	void TextureImage2d::dispose()
 	{		
-		if (!AtlasEntry)
-		{
-			if (_alphaMap != nullptr)
-			{
-				_alphaMap->dispose();
-				_alphaMap = nullptr;
-			}
-		}
-		delete this;
+		disposeAlphaMap();
+		TexturesPool::ReturnImage(this);
+		//delete this;
 	}
 
 	uint TextureImage2d::getAlphaId()
@@ -262,6 +256,18 @@ namespace graphics
 			return _alphaMap->getHandle();
 		}
 		return 0;
+	}
+
+	void TextureImage2d::disposeAlphaMap()
+	{
+		if (!AtlasEntry)
+		{
+			if (_alphaMap != nullptr)
+			{
+				_alphaMap->dispose();
+				_alphaMap = nullptr;
+			}
+		}
 	}
 
 	void TextureImage2d::associate(TextureImage2d* value)
@@ -275,7 +281,7 @@ namespace graphics
 	{
 		if (_alphaMap == nullptr)
 		{
-			_alphaMap = new TextureImage2d(false, true);
+			_alphaMap = TexturesPool::GetImage();// new TextureImage2d(false, true);
 			_alphaMap->create();
 		}
 	}
@@ -414,6 +420,12 @@ namespace graphics
 				mip++;
 			}
 		}
+	}
+
+	void TextureImage2d::reinit(bool generateMipmaps, bool useFilter)
+	{
+		_createMipmaps = generateMipmaps;
+		_filter = useFilter;
 	}
 
 	struct PVRTCWord
@@ -635,7 +647,7 @@ namespace graphics
 		{
 			if (_alphaMap == nullptr)
 			{
-				_alphaMap = new TextureImage2d(false, true);
+				_alphaMap = TexturesPool::GetImage();// new TextureImage2d(false, true);
 				_alphaMap->create();
 			}
 
@@ -934,6 +946,44 @@ namespace graphics
 			}
 		}
 	}
+
+	
+	std::map<TextureImage2d*, TextureImage2d*> TexturesPool::_images;
+	std::map<TextureAtlasPage*, TextureAtlasPage*> TexturesPool::_atlasPages;
+
+	TextureImage2d* TexturesPool::GetImage(bool generateMipmaps, bool useFilter)
+	{
+		if (_images.size() == 0)
+		{
+			return new TextureImage2d(generateMipmaps, useFilter);
+		}
+		TextureImage2d* result = _images.begin()->first;
+		result->reinit(generateMipmaps, useFilter);
+		_images.erase(result);
+		return result;
+	}
+
+	TextureAtlasPage* TexturesPool::GetAtlasPage(bool useFilter)
+	{
+		if (_atlasPages.size() == 0)
+		{
+			return TexturesPool::GetAtlasPage();// new TextureAtlasPage(useFilter);
+		}
+		TextureAtlasPage* result = _atlasPages.begin()->first;
+		result->reinit(false, useFilter);
+		_atlasPages.erase(result);
+		return result;
+	}
+
+	void TexturesPool::ReturnImage(TextureImage2d* image)
+	{
+		_images[image] = image;
+	}
+
+	void TexturesPool::ReturnAtlasPage(TextureAtlasPage* page)
+	{
+		_atlasPages[page] = page;
+	}
 #endif	
 	GLenum TextureImage2d::getFormat(Image2dFormat::e format)
 	{
@@ -1065,6 +1115,13 @@ namespace graphics
 		result->AtlasEntry = true;
 		_rects.push_back(result);
 		_aliveRects++;
+	}
+
+	void TextureAtlasPage::dispose()
+	{
+		disposeAlphaMap();
+		TexturesPool::ReturnAtlasPage(this);
+		//delete this;
 	}
 
 	void TextureImage2d::createStatic()

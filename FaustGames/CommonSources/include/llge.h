@@ -55,6 +55,8 @@ namespace llge
 		None = 0x0,
 		Alpha = 0x1,
 		Additive = 0x2,
+		Normal = 0x3,
+		Multiplicative = 0x4
 	};
 
 	enum GraphicsEffects

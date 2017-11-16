@@ -18,6 +18,8 @@ namespace graphics
 		void realloc(int size);
 	};
 
+
+
 	class TextureImage2d : public Texture, public llge::ITextureImage2d
 	{
 	public:
@@ -28,6 +30,7 @@ namespace graphics
 	
 		void setData(const Image2dData *data);
 		void loadMipmaps(int width, int height, Image2dFormat::e format, unsigned* pixels);
+		void reinit(bool generateMipmaps, bool useFilter);
 		//void virtual setData(int width, int height, Image2dFormat::e format, unsigned int *pixels);
 		static void createStatic();
 		static void cleanupStatic();
@@ -41,6 +44,7 @@ namespace graphics
 		virtual void API_CALL dispose() override;
 		virtual uint API_CALL getAlphaId() override;
 
+		void disposeAlphaMap();
 		void associate(TextureImage2d *value);
 		void createAlphaIfNeeded();
 
@@ -77,6 +81,7 @@ namespace graphics
 	public:
 		TextureAtlasPage(bool useFilter);
 		void createRect(float x, float y, float w, float h, TextureImage2d* texture);
+		virtual void API_CALL dispose() override;
 	private:
 		std::vector<TextureImage2d* > _rects;
 		int _aliveRects;
@@ -108,6 +113,19 @@ namespace graphics
 	void DecodeAtc(const Image2dData *data, TexturesDecompressorBuffer *resultBuffer, int &aW, int &aH);
 	void DecodeEtc2(const Image2dData *data, TexturesDecompressorBuffer *resultBuffer, int &aW, int &aH);
 	void DecodeEtc1(const Image2dData *data, TexturesDecompressorBuffer *resultBuffer, int &aW, int &aH);
+
+	class TexturesPool
+	{
+	private:
+		static std::map<TextureImage2d*, TextureImage2d*> _images;
+		static std::map<TextureAtlasPage*, TextureAtlasPage*> _atlasPages;
+	public:
+		static TextureImage2d* GetImage(bool generateMipmaps = false, bool useFilter = true);
+		static TextureAtlasPage* GetAtlasPage(bool useFilter = true);
+		static void ReturnImage(TextureImage2d* image);
+		static void ReturnAtlasPage(TextureAtlasPage* page);
+	};
 }
+
 
 #endif /*TEXTURE_IMAGE_2D_H*/

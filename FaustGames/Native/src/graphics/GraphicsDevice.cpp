@@ -176,7 +176,7 @@ glClearDepth(static_cast<double>(depth));
 				}
 			}
 		}
-		*/
+		*/		
 	}
 	
 	void GraphicsDevice::setRenderTarget(IRenderTarget *renderTarget)

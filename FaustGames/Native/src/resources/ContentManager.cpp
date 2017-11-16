@@ -118,7 +118,7 @@ namespace resources
 	graphics::TextureImage2d* ContentManager::addLoadTexture(const char *name, llge::TextureQueryFormat format)
 	{
 		LoadImageEntry entry;
-		graphics::TextureImage2d *image = new graphics::TextureImage2d(false, true);
+		graphics::TextureImage2d *image = graphics::TexturesPool::GetImage();// new graphics::TextureImage2d(false, true);
 		entry.fileName = name;
 		entry.queryFormat = format;
 		entry.textureImage = image;
@@ -134,7 +134,7 @@ namespace resources
 			if (packer->ready() && allowPack(w, h))
 			{
 				AtlasImageInput input;
-				input.texture = new graphics::TextureImage2d(false, true);;
+				input.texture = graphics::TexturesPool::GetImage();// new graphics::TextureImage2d(false, true);;
 				input.width = w;
 				input.height = h;
 				packer->add(name, input);
@@ -394,7 +394,7 @@ namespace resources
 		}
 
 		// todo: premul param
-
+		
 		if (_image->Format == graphics::Image2dFormat::Rgba)
 		{
 			for (size_t i = 0; i < (size_t)m_Height; i++)
@@ -409,7 +409,7 @@ namespace resources
 				}
 			}
 		}
-
+		
 		core::Mem::deallocate(row_ptrs);
 	}
 
@@ -575,7 +575,7 @@ namespace resources
 				uint *row = (uint*)m_RowPtrs[i];
 				for (size_t j = 0; j < (size_t)m_Width; j++)
 				{
-					if (row[j] != 0)
+					if (row[j] != 0) 
 					{
 						row[j] = graphics::Color::premul(row[j], false);
 					}

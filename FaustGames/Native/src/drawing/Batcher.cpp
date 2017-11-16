@@ -400,7 +400,7 @@ namespace drawing
 		_lightingConfig.lightmap = lightmapId;
 		_lightingConfig.texture = textureId;
 
-		if (effect != _effect || needNewEntry || !effect->isConfigEqual(_config, &_lightingConfig))
+		if (effect != _effect || needNewEntry || !effect->isConfigEqual(_config, &_lightingConfig) || blend == graphics::BlendState::Multiplicative)
 		{
 			if (_currentEntry.IndicesCount != 0)
 				_buffer->addEntry(_currentEntry);
@@ -418,7 +418,7 @@ namespace drawing
 			_currentEntry.ColorTransformIndex = _buffer->ColorTransforms.size() - 1;
 			_currentEntry.RenderTargetIndex = _buffer->RenderTargets.size() - 1;
 		}
-
+		
 		//_textureId = textureId;
 		_currentEntry.IndicesCount += indicesCount;
 		currentBuffer->textureTransform = _textureTransform;
@@ -650,7 +650,15 @@ namespace drawing
 			{
 				_graphicsDevice->startStencilTest(i->StencilMask);
 			}
-			_graphicsDevice->renderState.setBlend(graphics::BlendState::Alpha);
+
+			if (i->Blend == graphics::BlendState::Multiplicative)
+			{
+				_graphicsDevice->renderState.setBlend(graphics::BlendState::Multiplicative);
+			}
+			else
+			{
+				_graphicsDevice->renderState.setBlend(graphics::BlendState::Alpha);
+			}
 			_graphicsDevice->renderState.setDepth(graphics::DepthState::Read);
 			_graphicsDevice->renderState.setDepthfunc(graphics::DepthFunc::LessEqual);
 			_graphicsDevice->drawPrimitives(_format, currentBuffer->getVertices(), i->IndicesStart, primitivesCount);

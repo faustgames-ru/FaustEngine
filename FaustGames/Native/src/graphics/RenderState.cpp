@@ -65,6 +65,10 @@ namespace graphics
 				glEnable(GL_BLEND);
 				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 				break;
+			case BlendState::Multiplicative:
+				glEnable(GL_BLEND);
+				glBlendFunc(GL_DST_COLOR, GL_ZERO);
+				break;				
 			default:
 				glDisable(GL_BLEND);
 				break;

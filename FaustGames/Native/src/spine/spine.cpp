@@ -11,7 +11,7 @@ void _spAtlasPage_createTexture(spAtlasPage* self, const char* path)
 	{
 		graphics::Image2dData image;
 		resources::ContentManager::Default.loadPngTexture(renderObject->texture, &image);
-		texture = new graphics::TextureImage2d(false, true);
+		texture = graphics::TexturesPool::GetImage();// new graphics::TextureImage2d(false, true);
 		texture->create();
 		texture->setData(&image);
 		self->rendererObject = texture;

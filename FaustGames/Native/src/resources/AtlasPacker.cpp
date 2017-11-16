@@ -501,7 +501,7 @@ namespace resources
 		graphics::TextureAtlasPage *result;
 		if (_index == _pages.size())
 		{
-			result = new graphics::TextureAtlasPage(true);
+			result = graphics::TexturesPool::GetAtlasPage();// new graphics::TextureAtlasPage(true);
 			result->create();
 			_pages.push_back(result);
 			return result;

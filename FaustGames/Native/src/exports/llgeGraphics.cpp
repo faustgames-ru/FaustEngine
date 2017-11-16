@@ -281,7 +281,7 @@ namespace llge
 
 		virtual ITextureImage2d * API_CALL createTextureImage2d(bool generateMipmaps, bool useFilter)
 		{
-			return new TextureImage2d(generateMipmaps, useFilter);
+			return TexturesPool::GetImage();// new TextureImage2d(generateMipmaps, useFilter);
 		}
 
 		virtual IRenderTarget2d * API_CALL createRenderTarget2d()

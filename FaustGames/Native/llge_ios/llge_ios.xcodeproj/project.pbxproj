@@ -149,9 +149,7 @@
 		446C35AF1CB7EAF4003838A0 /* sweep.cc in Sources */ = {isa = PBXBuildFile; fileRef = 446C35A81CB7EAF4003838A0 /* sweep.cc */; };
 		446C35B01CB7EAF4003838A0 /* sweep_context.cc in Sources */ = {isa = PBXBuildFile; fileRef = 446C35AA1CB7EAF4003838A0 /* sweep_context.cc */; };
 		44793E591CB7FFC20004FBD0 /* BasicTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 44793E411CB7FFC20004FBD0 /* BasicTest.cpp */; };
-		44793E5A1CB7FFC20004FBD0 /* Convert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 44793E431CB7FFC20004FBD0 /* Convert.cpp */; };
 		44793E5B1CB7FFC20004FBD0 /* HollowsAllocationPolicy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 44793E481CB7FFC20004FBD0 /* HollowsAllocationPolicy.cpp */; };
-		44793E5C1CB7FFC20004FBD0 /* Lazy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 44793E4A1CB7FFC20004FBD0 /* Lazy.cpp */; };
 		44793E5D1CB7FFC20004FBD0 /* MarchingSquares.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 44793E4C1CB7FFC20004FBD0 /* MarchingSquares.cpp */; };
 		44793E5E1CB7FFC20004FBD0 /* Math.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 44793E4E1CB7FFC20004FBD0 /* Math.cpp */; };
 		44793E5F1CB7FFC20004FBD0 /* Matrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 44793E501CB7FFC20004FBD0 /* Matrix.cpp */; };
@@ -524,15 +522,11 @@
 		44793E401CB7FFC20004FBD0 /* Allocator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Allocator.h; sourceTree = "<group>"; };
 		44793E411CB7FFC20004FBD0 /* BasicTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BasicTest.cpp; sourceTree = "<group>"; };
 		44793E421CB7FFC20004FBD0 /* BasicTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasicTest.h; sourceTree = "<group>"; };
-		44793E431CB7FFC20004FBD0 /* Convert.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Convert.cpp; sourceTree = "<group>"; };
-		44793E441CB7FFC20004FBD0 /* Convert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Convert.h; sourceTree = "<group>"; };
 		44793E451CB7FFC20004FBD0 /* core_classes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = core_classes.h; sourceTree = "<group>"; };
 		44793E461CB7FFC20004FBD0 /* core_platform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = core_platform.h; sourceTree = "<group>"; };
 		44793E471CB7FFC20004FBD0 /* core.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = core.h; sourceTree = "<group>"; };
 		44793E481CB7FFC20004FBD0 /* HollowsAllocationPolicy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HollowsAllocationPolicy.cpp; sourceTree = "<group>"; };
 		44793E491CB7FFC20004FBD0 /* HollowsAllocationPolicy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HollowsAllocationPolicy.h; sourceTree = "<group>"; };
-		44793E4A1CB7FFC20004FBD0 /* Lazy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Lazy.cpp; sourceTree = "<group>"; };
-		44793E4B1CB7FFC20004FBD0 /* Lazy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Lazy.h; sourceTree = "<group>"; };
 		44793E4C1CB7FFC20004FBD0 /* MarchingSquares.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MarchingSquares.cpp; sourceTree = "<group>"; };
 		44793E4D1CB7FFC20004FBD0 /* MarchingSquares.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarchingSquares.h; sourceTree = "<group>"; };
 		44793E4E1CB7FFC20004FBD0 /* Math.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Math.cpp; sourceTree = "<group>"; };
@@ -649,15 +643,11 @@
 				44793E401CB7FFC20004FBD0 /* Allocator.h */,
 				44793E411CB7FFC20004FBD0 /* BasicTest.cpp */,
 				44793E421CB7FFC20004FBD0 /* BasicTest.h */,
-				44793E431CB7FFC20004FBD0 /* Convert.cpp */,
-				44793E441CB7FFC20004FBD0 /* Convert.h */,
 				44793E451CB7FFC20004FBD0 /* core_classes.h */,
 				44793E461CB7FFC20004FBD0 /* core_platform.h */,
 				44793E471CB7FFC20004FBD0 /* core.h */,
 				44793E481CB7FFC20004FBD0 /* HollowsAllocationPolicy.cpp */,
 				44793E491CB7FFC20004FBD0 /* HollowsAllocationPolicy.h */,
-				44793E4A1CB7FFC20004FBD0 /* Lazy.cpp */,
-				44793E4B1CB7FFC20004FBD0 /* Lazy.h */,
 				44793E4C1CB7FFC20004FBD0 /* MarchingSquares.cpp */,
 				44793E4D1CB7FFC20004FBD0 /* MarchingSquares.h */,
 				44793E4E1CB7FFC20004FBD0 /* Math.cpp */,
@@ -1356,7 +1346,6 @@
 				44793E5D1CB7FFC20004FBD0 /* MarchingSquares.cpp in Sources */,
 				440CB9801B1D8AF7009FDC49 /* RenderItem2d.cpp in Sources */,
 				444064441D22BD1C006E45DC /* b2Rope.cpp in Sources */,
-				44793E5C1CB7FFC20004FBD0 /* Lazy.cpp in Sources */,
 				444064211D22BD1C006E45DC /* b2EdgeShape.cpp in Sources */,
 				440CB9AD1B1D8AF7009FDC49 /* Texture.cpp in Sources */,
 				440CB9CC1B1D8AF7009FDC49 /* pngset.c in Sources */,
@@ -1374,7 +1363,6 @@
 				44C0D6F61D5B048000E29944 /* SpineAnimationStateData.cpp in Sources */,
 				440CB9C61B1D8AF7009FDC49 /* pngmem.c in Sources */,
 				440CB9991B1D8AF7009FDC49 /* AttributeInfo.cpp in Sources */,
-				44793E5A1CB7FFC20004FBD0 /* Convert.cpp in Sources */,
 				444064241D22BD1C006E45DC /* b2Draw.cpp in Sources */,
 				440CB97F1B1D8AF7009FDC49 /* Renderer2d.cpp in Sources */,
 				444064291D22BD1C006E45DC /* b2Body.cpp in Sources */,

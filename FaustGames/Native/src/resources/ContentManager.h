@@ -80,7 +80,7 @@ namespace resources
 		virtual IntPtr API_CALL getPixels()OVERRIDE;
 		static ContentManager Default;
 		static bool _replaceSeparator;
-		TexturesMap _loadedImages;
+		//TexturesMap _loadedImages;
 		void *getBuffer() const;
 		int getBufferSize() const;
 		llge::TextureImage2dFormat getAtlasFormat(llge::TextureQueryFormat format);

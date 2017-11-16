@@ -60,6 +60,7 @@ namespace graphics
 
 		static float getSize(int w, int h, Image2dFormat::e format);
 	protected:
+        bool _isDisposed;
 	private:
 		TextureImage2d();
 		void setupConfig();
@@ -73,6 +74,7 @@ namespace graphics
 		bool _wrap;
 		bool _filter;
 		int _size;
+        bool _created;
 		TextureImage2d* _alphaMap;
     };
 

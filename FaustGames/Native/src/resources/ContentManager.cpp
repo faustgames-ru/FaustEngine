@@ -867,17 +867,20 @@ namespace resources
 			{
 				_loadEntries[i].textureImage->setData(image);
 			}
+            
 		}
 		_loadEntries.clear();
 		for (uint i = 0; i < _disposeEntries.size(); i++)
 		{
 			_disposeEntries[i]->cleanup();
-			delete _disposeEntries[i];
+			_disposeEntries[i]->dispose();
 		}
 		_disposeEntries.clear();
 
 		if (!wasOpened)
+        {
 			close();
+        }
 		return false;
 	}
 

@@ -32,12 +32,12 @@ void _spAtlasPage_createTexture(spAtlasPage* self, const char* path)
 		}
 		
 		texture = resources::ContentManager::Default.addLoadTexture(replace.c_str(), w, h, renderObject->pagesFormat);
-		resources::ContentManager::Default._loadedImages[replace] = texture;
+		//resources::ContentManager::Default._loadedImages[replace] = texture;
 	}
 	else 
 	{
 		texture = resources::ContentManager::Default.addLoadTexture(path, w, h, renderObject->pagesFormat);
-		resources::ContentManager::Default._loadedImages[path] = texture;
+		//resources::ContentManager::Default._loadedImages[path] = texture;
 	}
 
 	self->rendererObject = texture;
@@ -47,6 +47,7 @@ void _spAtlasPage_disposeTexture(spAtlasPage* self)
 {
 	graphics::TextureImage2d* texture = (graphics::TextureImage2d*)self->rendererObject;
 	resources::ContentManager::Default.addDisposeTexture(texture);
+    /*
 	resources::TexturesMap::iterator find = resources::ContentManager::Default._loadedImages.end();
 	for (resources::TexturesMap::iterator it = resources::ContentManager::Default._loadedImages.begin(); it != resources::ContentManager::Default._loadedImages.end(); it++)
 	{
@@ -55,6 +56,7 @@ void _spAtlasPage_disposeTexture(spAtlasPage* self)
 	}
 	if (find != resources::ContentManager::Default._loadedImages.end())
 		resources::ContentManager::Default._loadedImages.erase(find);
+     */
 }
 
 char* _spUtil_readFile(const char* path, int* length)

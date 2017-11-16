@@ -27,10 +27,10 @@ namespace graphics
 		static TextureImage2d * empty(){ return &_empty; }
 		int _disposeCalls;
 		TextureImage2d(bool generateMipmaps, bool useFilter);
-	
+        ~TextureImage2d() override;
 		void setData(const Image2dData *data);
 		void loadMipmaps(int width, int height, Image2dFormat::e format, unsigned* pixels);
-		void reinit(bool generateMipmaps, bool useFilter);
+		void reinitImage(bool generateMipmaps, bool useFilter);
 		//void virtual setData(int width, int height, Image2dFormat::e format, unsigned int *pixels);
 		static void createStatic();
 		static void cleanupStatic();
@@ -81,6 +81,7 @@ namespace graphics
 	public:
 		TextureAtlasPage(bool useFilter);
 		void createRect(float x, float y, float w, float h, TextureImage2d* texture);
+        void reinitPage(bool useFilter);
 		virtual void API_CALL dispose() override;
 	private:
 		std::vector<TextureImage2d* > _rects;

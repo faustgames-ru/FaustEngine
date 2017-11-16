@@ -171,7 +171,13 @@ namespace graphics
 		_handle = 0;
 		_handleDefault = _empty.getHandle();
 	}
-
+    
+    TextureImage2d::~TextureImage2d()
+    {
+        // deleting not allowed !!!!
+        _handle = 0;
+    }
+    
 	void API_CALL TextureImage2d::LoadPixels(int width, int height, llge::TextureImage2dFormat format, void *pixels)
 	{
 		if (AtlasEntry) return;
@@ -422,10 +428,18 @@ namespace graphics
 		}
 	}
 
-	void TextureImage2d::reinit(bool generateMipmaps, bool useFilter)
+	void TextureImage2d::reinitImage(bool generateMipmaps, bool useFilter)
 	{
 		_createMipmaps = generateMipmaps;
 		_filter = useFilter;
+        _wrap = false;
+        _disposeCalls = 0;
+        AtlasEntry = false;
+        setupConfig();
+        
+        _size = 0;
+        _handle = 0;
+        _handleDefault = _empty.getHandle();
 	}
 
 	struct PVRTCWord
@@ -948,42 +962,7 @@ namespace graphics
 	}
 
 	
-	std::map<TextureImage2d*, TextureImage2d*> TexturesPool::_images;
-	std::map<TextureAtlasPage*, TextureAtlasPage*> TexturesPool::_atlasPages;
-
-	TextureImage2d* TexturesPool::GetImage(bool generateMipmaps, bool useFilter)
-	{
-		if (_images.size() == 0)
-		{
-			return new TextureImage2d(generateMipmaps, useFilter);
-		}
-		TextureImage2d* result = _images.begin()->first;
-		result->reinit(generateMipmaps, useFilter);
-		_images.erase(result);
-		return result;
-	}
-
-	TextureAtlasPage* TexturesPool::GetAtlasPage(bool useFilter)
-	{
-		if (_atlasPages.size() == 0)
-		{
-			return TexturesPool::GetAtlasPage();// new TextureAtlasPage(useFilter);
-		}
-		TextureAtlasPage* result = _atlasPages.begin()->first;
-		result->reinit(false, useFilter);
-		_atlasPages.erase(result);
-		return result;
-	}
-
-	void TexturesPool::ReturnImage(TextureImage2d* image)
-	{
-		_images[image] = image;
-	}
-
-	void TexturesPool::ReturnAtlasPage(TextureAtlasPage* page)
-	{
-		_atlasPages[page] = page;
-	}
+	
 #endif	
 	GLenum TextureImage2d::getFormat(Image2dFormat::e format)
 	{
@@ -1116,6 +1095,12 @@ namespace graphics
 		_rects.push_back(result);
 		_aliveRects++;
 	}
+    
+    void TextureAtlasPage::reinitPage(bool useFilter)
+    {
+        reinitImage(false, useFilter);
+        _aliveRects = 0;
+    }
 
 	void TextureAtlasPage::dispose()
 	{
@@ -1241,5 +1226,40 @@ namespace graphics
 	*                    TRUE or FALSE indicating if the high bit is set.
 	*/
 	
-
+    std::map<TextureImage2d*, TextureImage2d*> TexturesPool::_images;
+    std::map<TextureAtlasPage*, TextureAtlasPage*> TexturesPool::_atlasPages;
+    
+    TextureImage2d* TexturesPool::GetImage(bool generateMipmaps, bool useFilter)
+    {
+        if (_images.size() == 0)
+        {
+            return new TextureImage2d(generateMipmaps, useFilter);
+        }
+        TextureImage2d* result = _images.begin()->first;
+        result->reinitImage(generateMipmaps, useFilter);
+        _images.erase(result);
+        return result;
+    }
+    
+    TextureAtlasPage* TexturesPool::GetAtlasPage(bool useFilter)
+    {
+        if (_atlasPages.size() == 0)
+        {
+            return new TextureAtlasPage(useFilter);
+        }
+        TextureAtlasPage* result = _atlasPages.begin()->first;
+        result->reinitPage(useFilter);
+        _atlasPages.erase(result);
+        return result;
+    }
+    
+    void TexturesPool::ReturnImage(TextureImage2d* image)
+    {
+        _images[image] = image;
+    }
+    
+    void TexturesPool::ReturnAtlasPage(TextureAtlasPage* page)
+    {
+        _atlasPages[page] = page;
+    }
 }

@@ -1,3 +1,0 @@
-set solib-search-path ./obj/local/armeabi-v7a
-source C:/Users/Kovalishin_A/Documents/Android/ndk/android-ndk-r10d/prebuilt/common/gdb/common.setup
-directory C:/Users/Kovalishin_A/Documents/Android/ndk/android-ndk-r10d/platforms/android-9/arch-arm/usr/include C:/Users/Kovalishin_A/Documents/Android/ndk/android-ndk-r10d/sources/cxx-stl/gnu-libstdc++ jni/../../../CommonSources/include jni/../../../Native/include jni/../../../Native/src_box2d C:/Users/Kovalishin_A/Documents/Android/ndk/android-ndk-r10d/sources/cxx-stl/gnu-libstdc++/4.8/include C:/Users/Kovalishin_A/Documents/Android/ndk/android-ndk-r10d/sources/cxx-stl/gnu-libstdc++/4.8/libs/armeabi-v7a/include C:/Users/Kovalishin_A/Documents/Android/ndk/android-ndk-r10d/sources/cxx-stl/gnu-libstdc++/4.8/include/backward

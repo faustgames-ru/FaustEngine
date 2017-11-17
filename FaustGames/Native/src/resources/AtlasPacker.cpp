@@ -326,11 +326,10 @@ namespace resources
 		PlaceArgs placeArgs;
 		placeArgs.pageData = _pageData;
 		// todo: cerate pages textures
-
 		for (uint k = 0; k < _pages.size(); k++)
 		{
 			AtlasPage* page = _pages[k];
-			graphics::TextureAtlasPage* texture = AtlasTexturesPool::Default.queryPage();
+            graphics::TextureAtlasPage* texture = AtlasTexturesPool::Default.queryPage();
 			if (_pageData->Format == graphics::Image2dFormat::Etc1)
 			{
 				texture->createAlphaIfNeeded();

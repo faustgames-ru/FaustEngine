@@ -139,7 +139,7 @@ namespace resources
 		_blockIndex = 0;
 	}
 
-	BinPack BinPack::Deafult;
+	//BinPack BinPack::Deafult;
 
 	BinPack::BinPack(): _width(0), _height(0), _root(nullptr)
 	{
@@ -199,7 +199,7 @@ namespace resources
 
 	int AlignInfo::alignPageHeight(int h) const
 	{
-		return core::Math::align(h, blockSizeX) / blockSizeX;
+		return core::Math::align(h, blockSizeY) / blockSizeY;
 	}
 
 	AtlasPacker::AtlasPacker(llge::TextureImage2dFormat format, IAtlasPlacer* atlasPlacer)
@@ -289,6 +289,41 @@ namespace resources
 
 		sort(rects.begin(), rects.end(), compareRectSize);
 		
+		for (uint i = 0; i < rects.size(); i++)
+		{
+			BinPackNode* res = nullptr;
+			AtlasPage* page = nullptr;
+			for (uint j = 0; j < _pages.size(); j++)
+			{		
+
+				res = _pages[j]->Pack.insert(rects[i].width, rects[i].height);
+				if (res != nullptr)
+				{
+					page = _pages[j];
+					break;
+				}
+			}
+			if (page == nullptr)
+			{
+				AtlasPage* newPage = new AtlasPage();
+				newPage->Pack.clear(alignInfo.alignPageWidth(pageSize), alignInfo.alignPageHeight(pageSize));
+				_pages.push_back(newPage);
+				res = newPage->Pack.insert(rects[i].width, rects[i].height);
+				if (res != nullptr)
+				{
+					newPage->rects.push_back(AtlasRect(res->inserted, rects[i].entry));
+				}
+				else
+				{
+					// log error
+				}
+			}
+			else
+			{
+				page->rects.push_back(AtlasRect(res->inserted, rects[i].entry));				
+			}
+		}
+			/*
 		int startIndex = 0;
 		while (startIndex < rects.size())
 		{
@@ -312,8 +347,7 @@ namespace resources
 				startIndex = rects.size();
 			}
 		}
-
-
+		*/
 		if (_pageData == nullptr)
 		{
 			_pageData = new graphics::Image2dData(placer->getPageBufferSize(pageSize));
@@ -385,6 +419,14 @@ namespace resources
 		
 		delete _pageData;
 		_pageData = nullptr;	
+	}
+
+	bool AtlasPacker::canPack(int w, int h)
+	{
+		int aw = alignInfo.alignWidth(w);
+		int ah = alignInfo.alignHeight(h);
+		int ap = alignInfo.alignPageWidth(pageSize);
+		return aw <= ap && ah <= ap;
 	}
 
 	bool AtlasPacker::ready()

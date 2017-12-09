@@ -1494,6 +1494,25 @@ namespace llge
 		static extern private void llge_SpineDynamicSkin_addSkin (IntPtr classInstance, IntPtr skin);
 	}
 	
+	public class SpineAnimationEvent
+	{
+		public IntPtr ClassInstance;
+		public IntPtr GetName ()
+		{
+			return llge_SpineAnimationEvent_getName(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_SpineAnimationEvent_getName (IntPtr classInstance);
+		public float GetTime ()
+		{
+			return llge_SpineAnimationEvent_getTime(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private float llge_SpineAnimationEvent_getTime (IntPtr classInstance);
+	}
+	
 	public class SpineAnimation
 	{
 		public IntPtr ClassInstance;
@@ -1518,6 +1537,20 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private float llge_SpineAnimation_getDuration (IntPtr classInstance);
+		public SpineAnimationEvent GetEvent (int i)
+		{
+			return new SpineAnimationEvent{ ClassInstance = llge_SpineAnimation_getEvent(ClassInstance, i) };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_SpineAnimation_getEvent (IntPtr classInstance, int i);
+		public int GetEventsCount ()
+		{
+			return llge_SpineAnimation_getEventsCount(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private int llge_SpineAnimation_getEventsCount (IntPtr classInstance);
 	}
 	
 	public class SpineAnimationState

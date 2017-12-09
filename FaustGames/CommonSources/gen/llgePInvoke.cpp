@@ -836,6 +836,16 @@ namespace llge
 		classInstance->addSkin(skin);
 	}
 	
+	extern "C" DLLEXPORT IntPtr API_CALL llge_SpineAnimationEvent_getName (ISpineAnimationEvent * classInstance)
+	{
+		return classInstance->getName();
+	}
+	
+	extern "C" DLLEXPORT float API_CALL llge_SpineAnimationEvent_getTime (ISpineAnimationEvent * classInstance)
+	{
+		return classInstance->getTime();
+	}
+	
 	extern "C" DLLEXPORT IntPtr API_CALL llge_SpineAnimation_getNativeInstance (ISpineAnimation * classInstance)
 	{
 		return classInstance->getNativeInstance();
@@ -849,6 +859,16 @@ namespace llge
 	extern "C" DLLEXPORT float API_CALL llge_SpineAnimation_getDuration (ISpineAnimation * classInstance)
 	{
 		return classInstance->getDuration();
+	}
+	
+	extern "C" DLLEXPORT ISpineAnimationEvent * API_CALL llge_SpineAnimation_getEvent (ISpineAnimation * classInstance, int i)
+	{
+		return classInstance->getEvent(i);
+	}
+	
+	extern "C" DLLEXPORT int API_CALL llge_SpineAnimation_getEventsCount (ISpineAnimation * classInstance)
+	{
+		return classInstance->getEventsCount();
 	}
 	
 	extern "C" DLLEXPORT float API_CALL llge_SpineAnimationState_getTime (ISpineAnimationState * classInstance)

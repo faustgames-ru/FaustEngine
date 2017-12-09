@@ -32,12 +32,13 @@ namespace resources
 	};
 
 	ContentProviderImpementation ContentProviderImpementation::Deafualt;
-
+	/*
 	bool allowPack(int w, int h)
 	{
-		return w > 0 && h > 0 && w < 1024 && h < 1024;
+		//return true;
+		return w > 0 && h > 0 && w <= 2048 && h < 2048;
 	}
-
+	*/
 	std::string nilExt("nil");
 	std::string texExt("tex");
 	std::string pvrExt("pvr");
@@ -131,7 +132,7 @@ namespace resources
 		IAtlasPacker * packer = queryPacker(format);
 		if (packer != nullptr)
 		{
-			if (packer->ready() && allowPack(w, h))
+			if (packer->ready() && packer->canPack(w, h))
 			{
 				AtlasImageInput input;
 				input.texture = graphics::TexturesPool::GetImage();// new graphics::TextureImage2d(false, true);;
@@ -140,6 +141,10 @@ namespace resources
 				packer->add(name, input);
 				return input.texture;
 			}
+			else
+			{
+				// log: pack error?	
+			}		
 		}
 		return addLoadTexture(name, format);
 	}
@@ -894,7 +899,7 @@ namespace resources
 
 		if (packer != nullptr)
 		{
-			if (packer->ready() && allowPack(w, h))
+			if (packer->ready() && packer->canPack(w, h))
 			{
 				AtlasImageInput input;
 				input.texture = texture;
@@ -902,6 +907,10 @@ namespace resources
 				input.height = h;
 				packer->add(name, input);
 				return;
+			}
+			else
+			{
+				// log: pack error?	
 			}
 		}
 		graphics::Image2dData * image = loadUnregisteredTexture(name, queryFormat);

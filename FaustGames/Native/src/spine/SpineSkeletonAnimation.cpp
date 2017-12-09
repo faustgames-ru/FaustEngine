@@ -12,11 +12,53 @@
 
 namespace spine
 {
+	IntPtr SpineAnimationEvent::getName()
+	{
+		return (IntPtr)_name.c_str();
+	}
+
+	float SpineAnimationEvent::getTime()
+	{
+		return _time;
+	}
+
+	SpineAnimationEvent::SpineAnimationEvent(const char* name, float time): _time(time), _name(name)
+	{
+	}
+
 	SpineSkeletonAnimation::SpineSkeletonAnimation(void* animation)
 	{
 		_spAnimation = animation;
+
+		spAnimation* anim = static_cast<spAnimation *>(_spAnimation);
+		std::vector<spEventTimeline *> evensTimelines;
+		for (int i = 0; i < anim->timelinesCount; i++)
+		{
+			spTimeline* t = anim->timelines[i];
+			if (t->type == SP_TIMELINE_EVENT)
+			{
+				evensTimelines.push_back(reinterpret_cast<spEventTimeline *>(t));
+			}
+		}
+
+		for (int i = 0; i < evensTimelines.size(); i++)
+		{
+			spEventTimeline *events = evensTimelines[i];
+			for (int j = 0; j < events->framesCount; j++)
+			{				
+				_events.push_back(new SpineAnimationEvent(events->events[j]->data->name, events->events[j]->time));
+			}
+		}
 	}
-	
+
+	SpineSkeletonAnimation::~SpineSkeletonAnimation()
+	{
+		for (int i = 0; i < _events.size(); i++)
+		{
+			delete _events[i];
+		}
+	}
+
 	void* SpineSkeletonAnimation::getAnimation()
 	{
 		return _spAnimation;
@@ -34,13 +76,21 @@ namespace spine
 
 	IntPtr API_CALL SpineSkeletonAnimation::getName()
 	{
-		return (IntPtr)((spAnimation *)_spAnimation)->name;
+		return (IntPtr)static_cast<spAnimation *>(_spAnimation)->name;
 	}
 
 	float API_CALL SpineSkeletonAnimation::getDuration()
 	{
-		return ((spAnimation *)_spAnimation)->duration;
+		return static_cast<spAnimation *>(_spAnimation)->duration;
 	}
 
+	llge::ISpineAnimationEvent* SpineSkeletonAnimation::getEvent(int i)
+	{
+		return _events[i];
+	}
 
+	int SpineSkeletonAnimation::getEventsCount()
+	{
+		return _events.size();
+	}
 }

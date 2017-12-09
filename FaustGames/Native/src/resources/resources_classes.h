@@ -21,6 +21,7 @@ namespace resources
 		virtual void finishPack() = 0;
 		virtual void loadFiles() = 0;
 		virtual bool ready() = 0;
+		virtual bool canPack(int w, int h) = 0;
 	};
 }
 

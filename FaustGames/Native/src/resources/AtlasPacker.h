@@ -68,7 +68,7 @@ namespace resources
 	class BinPack
 	{
 	public:
-		static BinPack Deafult;
+		//static BinPack Deafult;
 		BinPack();
 		void clear(int w, int h);
 		BinPackNode* insert(int w, int h);
@@ -99,6 +99,7 @@ namespace resources
 	{
 	public:
 		std::vector<AtlasRect> rects;
+		BinPack Pack;
 	};
 
 	struct AlignInfo
@@ -158,6 +159,7 @@ namespace resources
 		virtual void add(const char* path, const AtlasImageInput &e) OVERRIDE;
 		virtual void finishPack() OVERRIDE;
 		virtual void loadFiles() OVERRIDE;
+		virtual bool canPack(int w, int h) override;
 
 		virtual bool ready() OVERRIDE;
 

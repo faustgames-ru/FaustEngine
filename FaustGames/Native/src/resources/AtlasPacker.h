@@ -207,6 +207,7 @@ namespace resources
 
 		int h = e.rect.height - e.alignInfo.borderBlockCount * 2;
 		int w = e.rect.width - e.alignInfo.borderBlockCount * 2;
+		
 		for (int y = 0; y < e.alignInfo.borderBlockCount; y++)
 		{
 			TPixel* dstPixel = dstRow;
@@ -230,30 +231,36 @@ namespace resources
 			}
 			dstRow += dstStride;
 		}
+		
 		for (int y = 0; y < h; y++)
 		{
 			TPixel* dstPixel = dstRow;
 			TPixel* srcPixel = srcRow;
+			
 			for (int x = 0; x < e.alignInfo.borderBlockCount; x++)
 			{
 				*dstPixel = *srcPixel;
 				++dstPixel;
 			}
+			
 			for (int x = 0; x < w; x++)
 			{
 				*dstPixel = *srcPixel;
 				++srcPixel;
 				++dstPixel;
 			}
+			
 			--srcPixel;
 			for (int x = 0; x < e.alignInfo.borderBlockCount; x++)
 			{
 				*dstPixel = *srcPixel;
 				++dstPixel;
 			}
+			
 			dstRow += dstStride;
 			srcRow += srcStride;
 		}
+		
 		srcRow -= srcStride;
 		for (int y = 0; y < e.alignInfo.borderBlockCount; y++)
 		{
@@ -278,6 +285,7 @@ namespace resources
 			}
 			dstRow += dstStride;
 		}
+		
 	}
 
 	template <typename TPixel>

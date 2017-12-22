@@ -2,9 +2,9 @@
 
 namespace drawing
 {
-	uint EmptyLightMap::applyLight(float x, float y, uint color, byte colorScale, bool additive)
+	uint EmptyLightMap::applyLight(float x, float y, uint color, byte colorScale, graphics::BlendState::e blend)
 	{
-		return graphics::Color::premul(color, colorScale, additive);
+		return graphics::Color::premul(color, colorScale, blend);
 	}
 
 	int DynamicVertexLightMap::getTileX(float x, int add) const
@@ -103,8 +103,13 @@ namespace drawing
 		}
 	}
 
-	uint DynamicVertexLightMap::applyLight(float x, float y, uint color, byte colorScale, bool additive)
+	uint DynamicVertexLightMap::applyLight(float x, float y, uint color, byte colorScale, graphics::BlendState::e blend)
 	{
+		if (blend == graphics::BlendState::Multiplicative)
+		{
+			return graphics::Color::premul(color, colorScale, blend);
+		}
+
 		core::StaticArray<DynamicLight*, lightsUsageTilesDepth>* tileLights = _lightsUsageTiles + getTileIndex(x, y);
 		float sr = graphics::Color::getRf(color);
 		float sg = graphics::Color::getGf(color);
@@ -143,7 +148,7 @@ namespace drawing
 		}
 
 		float a = sa;
-		if (additive)
+		if (blend == graphics::BlendState::Additive)
 		{
 			a = 0.0f;
 		}

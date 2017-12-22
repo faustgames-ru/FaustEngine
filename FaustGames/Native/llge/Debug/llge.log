@@ -1,7 +1,5 @@
-﻿  ContentManager.cpp
-c:\_faust\faustengine\faustgames\native\src\resources\contentmanager.cpp(213): warning C4101: 'm_Height': unreferenced local variable
-c:\_faust\faustengine\faustgames\native\src\resources\contentmanager.cpp(218): warning C4101: 'm_ColorType': unreferenced local variable
-c:\_faust\faustengine\faustgames\native\src\resources\contentmanager.cpp(212): warning C4101: 'm_Width': unreferenced local variable
-c:\_faust\faustengine\faustgames\native\src\resources\contentmanager.cpp(216): warning C4101: 'm_BitDepth': unreferenced local variable
+﻿  Color.cpp
+  LINK : C:\work\sources\github\moon\Solutions\Debug\llge.dll not found or not built by the last incremental link; performing full link
+     Creating library C:\work\sources\github\moon\Solutions\Debug\llge.lib and object C:\work\sources\github\moon\Solutions\Debug\llge.exp
   llge.vcxproj -> C:\work\sources\github\moon\Solutions\Debug\llge.dll
   llge.vcxproj -> C:\work\sources\github\moon\Solutions\Debug\llge.pdb (Full PDB)

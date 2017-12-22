@@ -276,14 +276,14 @@ namespace resources
 		{
 			RectSize size;
 			
-			//ImageInfo imageInfo = ContentManager::Default.loadUnregisteredTextureSize(_inputPack[i]->path.c_str(), getQueryFormat());
+			ImageInfo imageInfo = ContentManager::Default.loadUnregisteredTextureSize(_inputPack[i]->path.c_str(), getQueryFormat());
             
-            //size.width = alignInfo.alignWidth(imageInfo.Width);
-            //size.height = alignInfo.alignHeight(imageInfo.Height);
+            size.width = alignInfo.alignWidth(imageInfo.Width);
+            size.height = alignInfo.alignHeight(imageInfo.Height);
             
 			size.entry = _inputPack[i];
-			size.width = _inputPack[i]->input.width;
-			size.height = _inputPack[i]->input.height;
+			//size.width = _inputPack[i]->input.width;
+			//size.height = _inputPack[i]->input.height;
 			rects.push_back(size);
 		}
 
@@ -348,14 +348,17 @@ namespace resources
 			}
 		}
 		*/
+
+		int sizeBufferSize = placer->getPageBufferSize(pageSize);
 		if (_pageData == nullptr)
 		{
-			_pageData = new graphics::Image2dData(placer->getPageBufferSize(pageSize));
+			_pageData = new graphics::Image2dData(sizeBufferSize);
 			_pageData->BlocksOrder = placer->getPageBlocksOrder();
 			_pageData->Format = getFormat();
 			_pageData->Width = pageSize;
 			_pageData->Height = pageSize;
-			_pageData->RawDataOffset = 0;
+			_pageData->RawDataOffset = 0;			
+			memset(_pageData->Pixels, 0, sizeBufferSize * 4);
 		}
 		PlaceArgs placeArgs;
 		placeArgs.pageData = _pageData;
@@ -415,6 +418,7 @@ namespace resources
 				}
 			}
 			texture->setData(_pageData);
+			memset(_pageData->Pixels, 0, sizeBufferSize * 4);
 		}
 		
 		delete _pageData;

@@ -27,7 +27,7 @@ namespace drawing
 		return _indicesCount + indicesCount < IndicesLimit && _verticesCount + verticesCount < VerticesLimit;
 	}
 
-	void BatchBuffer::addMesh(uint color, float z, float* vertices, float* uvs, int verticesCount, ushort* indices, int indicesCount, bool additive, byte colorScale)
+	void BatchBuffer::addMesh(uint color, float z, float* vertices, float* uvs, int verticesCount, ushort* indices, int indicesCount, graphics::BlendState::e blend, byte colorScale)
 	{
 		for (int i = 0; i < indicesCount; i++)
 		{
@@ -43,7 +43,7 @@ namespace drawing
 			target->x = *source; ++source;
 			target->y = *source; ++source;
 			target->z = z;
-			target->color = lightMap->applyLight(target->x, target->y, color, colorScale, additive);
+			target->color = lightMap->applyLight(target->x, target->y, color, colorScale, blend);
 			float u = *uvsource; ++uvsource;
 			float v = *uvsource; ++uvsource;
 			target->u = textureTransform.transformU(u, v);
@@ -54,7 +54,7 @@ namespace drawing
 		_indicesCount += indicesCount;
 	}
 	
-	void BatchBuffer::addMesh(uint color, float z, float* vertices, float* uvs, int verticesCount, ushort* indices, int indicesCount, bool additive, core::Matrix viewTransform, byte colorScale)
+	void BatchBuffer::addMesh(uint color, float z, float* vertices, float* uvs, int verticesCount, ushort* indices, int indicesCount, graphics::BlendState::e blend, core::Matrix viewTransform, byte colorScale)
 	{
 		for (int i = 0; i < indicesCount; i++)
 		{
@@ -71,7 +71,7 @@ namespace drawing
 			target->x = *source; ++source;
 			target->y = *source; ++source;
 			target->z = z;
-			target->color = lightMap->applyLight(target->x, target->y, color, colorScale, additive);
+			target->color = lightMap->applyLight(target->x, target->y, color, colorScale, blend);
 			float u = *uvsource; ++uvsource;
 			float v = *uvsource; ++uvsource;
 			target->u = textureTransform.transformU(u, v);
@@ -88,7 +88,7 @@ namespace drawing
 	}
 
 
-	void BatchBuffer::addMesh(TVertex* vertices, int verticesCount, ushort* indices, int indicesCount, bool additive, unsigned char colorScale)
+	void BatchBuffer::addMesh(TVertex* vertices, int verticesCount, ushort* indices, int indicesCount, graphics::BlendState::e blend, unsigned char colorScale)
 	{
 		for (int i = 0; i < indicesCount; i++)
 		{
@@ -104,7 +104,7 @@ namespace drawing
 			target->z = source->z;
 			target->u = textureTransform.transformU(source->u, source->v);
 			target->v = textureTransform.transformV(source->u, source->v);
-			target->color = lightMap->applyLight(target->x, target->y, source->color, colorScale, additive);
+			target->color = lightMap->applyLight(target->x, target->y, source->color, colorScale, blend);
 			//target->color = graphics::Color::premul(source->color, colorScale, additive);
 		}
 
@@ -423,7 +423,7 @@ namespace drawing
 		_currentEntry.IndicesCount += indicesCount;
 		currentBuffer->textureTransform = _textureTransform;
 		currentBuffer->lightMap = _lightingModes[_lightingMode];
-		currentBuffer->addMesh(vertices, verticesCount, indices, indicesCount, blend == graphics::BlendState::Additive, colorScale);
+		currentBuffer->addMesh(vertices, verticesCount, indices, indicesCount, blend, colorScale);
 	}
 
 	void Batcher::drawMesh(graphics::EffectBase* effect, graphics::BlendState::e blend, void* config, TVertex* vertices, int verticesCount, ushort* indices, int indicesCount, unsigned char colorScale)
@@ -467,7 +467,7 @@ namespace drawing
 		_currentEntry.IndicesCount += indicesCount;
 		currentBuffer->textureTransform = _textureTransform;
 		currentBuffer->lightMap = _lightingModes[_lightingMode];
-		currentBuffer->addMesh(vertices, verticesCount, indices, indicesCount, blend == graphics::BlendState::Additive, colorScale);
+		currentBuffer->addMesh(vertices, verticesCount, indices, indicesCount, blend, colorScale);
 	}
 
 	void Batcher::drawSpineMesh(const BatcherSpineMesh &mesh, byte colorScale)
@@ -517,7 +517,7 @@ namespace drawing
 		_currentEntry.IndicesCount += mesh.IndicesCount;
 		currentBuffer->textureTransform = _textureTransform;
 		currentBuffer->lightMap = _lightingModes[_lightingMode];
-		currentBuffer->addMesh(mesh.Color, mesh.Z, mesh.Vertices, mesh.Uvs, mesh.VerticesCount, mesh.Indices, mesh.IndicesCount, mesh.State.Blend == graphics::BlendState::Additive, colorScale);
+		currentBuffer->addMesh(mesh.Color, mesh.Z, mesh.Vertices, mesh.Uvs, mesh.VerticesCount, mesh.Indices, mesh.IndicesCount, mesh.State.Blend, colorScale);
 	}
 
 	void Batcher::setupUVTransform(llge::ITexture* texture)
@@ -966,7 +966,7 @@ namespace drawing
 			target->x = source->x;
 			target->y = source->y;
 			target->z = source->z;
-			target->color = graphics::Color::premul(source->color, colorScale, false);
+			target->color = graphics::Color::premul(source->color, colorScale, graphics::BlendState::Alpha);
 			//target->color = _lightMap->applyLight(source->x, source->y, source->color, colorScale, false);
 			target->u = textureTransform.transformU(source->u, source->v);
 			target->v = textureTransform.transformV(source->u, source->v);

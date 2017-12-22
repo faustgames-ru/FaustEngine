@@ -2,11 +2,11 @@
 
 namespace graphics
 {
-	unsigned int Color::premul(unsigned int value, bool additive)
+	unsigned int Color::premul(unsigned int value, BlendState::e blend)
 	{
-		int r = getR(value);
-		int g = getG(value);
-		int b = getB(value);
+		int r = getR(value)+1;
+		int g = getG(value)+1;
+		int b = getB(value)+1;
 		int a = getA(value);
 		r *= a;
 		g *= a;
@@ -14,27 +14,34 @@ namespace graphics
 		r = r >> 8;
 		g = g >> 8;
 		b = b >> 8;
-		if (additive)
+		if (blend == BlendState::Additive)
 		{
 			a = 0;
 		}
 		return fromRgba((unsigned char)r, (unsigned char)g, (unsigned char)b, (unsigned char)a);
 	}
 
-	unsigned Color::premul(unsigned value, unsigned char colorScale, bool additive)
+	unsigned Color::premul(unsigned value, unsigned char colorScale, BlendState::e blend)
 	{
+		
 		int r = getR(value);
 		int g = getG(value);
 		int b = getB(value);
 		int a = getA(value);
-		int scale = static_cast<int>(a)*static_cast<int>(colorScale);
+		/*
+		if (blend == BlendState::Multiplicative)
+		{
+			a = 255;
+		}
+		*/
+		int scale = static_cast<int>(a + 1)*static_cast<int>(colorScale + 1);
 		r *= scale;
 		g *= scale;
 		b *= scale;
 		r = r >> 16;
 		g = g >> 16;
 		b = b >> 16;
-		if (additive)
+		if (blend == BlendState::Additive)
 		{
 			a = 0;
 		}

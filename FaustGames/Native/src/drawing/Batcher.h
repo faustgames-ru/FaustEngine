@@ -58,9 +58,9 @@ namespace drawing
 		void reset();
 
 		bool canAdd(int verticesCount, int indicesCount) const;
-		void addMesh(uint color, float z, float* vertices, float* uvs, int verticesCount, ushort* indices, int indicesCount, bool additive, byte colorScale);
-		void addMesh(uint color, float z, float* vertices, float* uvs, int verticesCount, ushort* indices, int indicesCount, bool additive, core::Matrix viewTransform, byte colorScale);
-		void addMesh(TVertex* vertices, int verticesCount, ushort* indices, int indicesCount, bool additive, unsigned char colorScale);
+		void addMesh(uint color, float z, float* vertices, float* uvs, int verticesCount, ushort* indices, int indicesCount, graphics::BlendState::e blend, byte colorScale);
+		void addMesh(uint color, float z, float* vertices, float* uvs, int verticesCount, ushort* indices, int indicesCount, graphics::BlendState::e blend, core::Matrix viewTransform, byte colorScale);
+		void addMesh(TVertex* vertices, int verticesCount, ushort* indices, int indicesCount, graphics::BlendState::e blend, unsigned char colorScale);
 		TVertex* getVertices();
 		int getVerticesCount() const;
 		ushort* getCurrentIndices() const;

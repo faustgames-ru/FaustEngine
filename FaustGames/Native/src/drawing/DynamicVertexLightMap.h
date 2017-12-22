@@ -20,13 +20,13 @@ namespace drawing
 	class ILightMap: IBaseObject
 	{
 	public:
-		virtual uint applyLight(float x, float y, uint color, byte colorScale, bool additive) = 0;
+		virtual uint applyLight(float x, float y, uint color, byte colorScale, graphics::BlendState::e blend) = 0;
 	};
 
 	class EmptyLightMap : public ILightMap
 	{
 	public:	
-		virtual uint applyLight(float x, float y, uint color, byte colorScale, bool additive) override;
+		virtual uint applyLight(float x, float y, uint color, byte colorScale, graphics::BlendState::e blend) override;
 	};
 
 	class DynamicVertexLightMap: public ILightMap
@@ -56,7 +56,7 @@ namespace drawing
 		void clear();
 		void addLight(float x, float y, float r, uint color, float intensity);
 		void build(float x, float y, float w, float h, uint ambient);
-		virtual uint applyLight(float x, float y, uint color, byte colorScale, bool additive) override;
+		virtual uint applyLight(float x, float y, uint color, byte colorScale, graphics::BlendState::e blend) override;
 	};
 }
 

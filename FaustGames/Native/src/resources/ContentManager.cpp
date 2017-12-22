@@ -232,6 +232,7 @@ namespace resources
 			fprintf(stderr, "\n");
 			*/
 			//throw ref new Exception(-1, "data is not recognized as a PNG");
+			ContentProvider::closeContent();
 			return ImageInfo(0, 0, graphics::Image2dFormat::Rgba);
 		}
 
@@ -239,6 +240,7 @@ namespace resources
 
 		if (!m_PngPtr)
 		{
+			ContentProvider::closeContent();
 			//throw ref new Exception(-1, "png_create_read_struct failed");
 			return ImageInfo(0, 0, graphics::Image2dFormat::Rgba);
 		}
@@ -250,6 +252,7 @@ namespace resources
 		{
 			png_destroy_read_struct(&m_PngPtr, 0, 0);
 			m_PngPtr = 0;
+			ContentProvider::closeContent();
 			//throw ref new Exception(-1, "png_create_info_struct failed");
 			return ImageInfo(0, 0, graphics::Image2dFormat::Rgba);
 		}
@@ -257,6 +260,7 @@ namespace resources
 		if (setjmp(png_jmpbuf(m_PngPtr)))
 		{
 			png_destroy_read_struct(&m_PngPtr, &m_InfoPtr, 0);
+			ContentProvider::closeContent();
 			//throw ref new Exception(-1, "Error during init_io");
 			return ImageInfo(0, 0, graphics::Image2dFormat::Rgba);
 		}
@@ -280,9 +284,12 @@ namespace resources
 			break;
 		}
 
+		ContentProvider::closeContent();
+
 		ImageInfo result(w, h, imageFormat);
 		png_destroy_info_struct(m_PngPtr, &m_InfoPtr);
 		png_destroy_read_struct(&m_PngPtr, 0, 0);
+
 		return result;
 	}
 
@@ -409,7 +416,7 @@ namespace resources
 				{
 					if (row[j] != 0)
 					{
-						row[j] = graphics::Color::premul(row[j], false);
+						row[j] = graphics::Color::premul(row[j], graphics::BlendState::Alpha);
 					}
 				}
 			}
@@ -572,7 +579,10 @@ namespace resources
 		}
 
 		// todo: premul param
-		
+		_image->BlocksOrder = graphics::Image2dBlocksOrder::Normal;
+		_image->BorderSize = 0;
+		_image->RawDataOffset = 0;
+
 		if (_image->Format == graphics::Image2dFormat::Rgba)
 		{
 			for (size_t i = 0; i < (size_t)m_Height; i++)
@@ -582,7 +592,7 @@ namespace resources
 				{
 					if (row[j] != 0) 
 					{
-						row[j] = graphics::Color::premul(row[j], false);
+						row[j] = graphics::Color::premul(row[j], graphics::BlendState::Alpha);
 					}
 				}
 			}

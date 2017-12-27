@@ -843,7 +843,7 @@ namespace resources
 
 	bool API_CALL ContentManager::update()
 	{
-		/*
+		
 		if(!ImageSizeLoaded)
 		{
 			int maxTextureSize[1];
@@ -851,16 +851,18 @@ namespace resources
 			if (glGetError() == GL_NO_ERROR)
 			{
 				int size = maxTextureSize[0];
+				/*
 				const int sizeLimit = 1024 * 4;
 				if (size > sizeLimit)
 					size = sizeLimit;
+				*/
 				ImageMaxWidth = size;
 				ImageMaxHeight = size;
 				ImageBufferSize = ImageMaxWidth*ImageMaxHeight;
 				ImageSizeLoaded = true;
 			}
 		}
-		*/
+		
 		if ((_loadEntries.size() == 0) && (_disposeEntries.size() == 0))
 			return true;
 

@@ -738,17 +738,18 @@ namespace resources
 		if (_isOpened)
 			return;
 		m_RowPtrs = (png_bytep *)core::Mem::allocate(ImageMaxHeight * sizeof(png_bytep));
-		_image = new graphics::Image2dData(ImageBufferSize);
+        int _imageBuffer = 2048*2048*4;
+        _image = new graphics::Image2dData(_imageBuffer);
 		_isOpened = true;
 	}
 	void ContentManager::close()
 	{
 		if (!_isOpened)
 			return;
-		core::Mem::deallocate(m_RowPtrs);
-		delete _image;
-		m_RowPtrs = 0;
-		_image = 0;
+		//core::Mem::deallocate(m_RowPtrs);
+		//delete _image;
+		//m_RowPtrs = 0;
+		//_image = 0;
 		_isOpened = false;
 	}
 
@@ -992,7 +993,6 @@ namespace resources
 
 	IAtlasPacker* ContentManager::queryPacker(llge::TextureQueryFormat format)
 	{
-		//return nullptr;
 		if (!_isAtlasBuilderStarted) return nullptr;
 		if (format == llge::TQFNone) return nullptr;
 		if (format == llge::TQFRgba8888) return nullptr;

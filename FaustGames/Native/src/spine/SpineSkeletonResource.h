@@ -43,6 +43,7 @@ namespace spine
 		llge::TextureQueryFormat pagesFormat;
 		float applyedCompression;
 		void *texture;
+		llge::ITexturesManager* texturesManager;
 	};
 
 
@@ -56,8 +57,8 @@ namespace spine
 		SpineEvent* getEvent(int i);
 		int getEventsCount();
 
-		void loadInternal(String atlasText, String jsonText, String dir, llge::TextureQueryFormat format, float applyedCompression, void* texture);
-		virtual void API_CALL load(String atlasText, String jsonText, String dir, llge::TextureQueryFormat format, float applyedCompression);
+		void loadInternal(String atlasText, String jsonText, String dir, llge::TextureQueryFormat format, float applyedCompression, void* texture, llge::ITexturesManager* textures);
+		virtual void API_CALL load(String atlasText, String jsonText, String dir, llge::TextureQueryFormat format, float applyedCompression, llge::ITexturesManager* textures);
 		virtual void API_CALL loadWithPngImage(String atlasText, String jsonText, String dir, void* texture) override;
 		virtual void API_CALL unLoad();
 		virtual llge::ISpineAnimation* API_CALL getSpineAnimation(int i);

@@ -101,14 +101,14 @@ namespace spine
 		dispose();
 	}
 
-	void API_CALL SpineSkeletonResource::load(String atlasText, String jsonText, String dir, llge::TextureQueryFormat format, float applyedCompression)
+	void API_CALL SpineSkeletonResource::load(String atlasText, String jsonText, String dir, llge::TextureQueryFormat format, float applyedCompression, llge::ITexturesManager* textures)
 	{		
-		loadInternal(atlasText, jsonText, dir, format, applyedCompression, nullptr);
+		loadInternal(atlasText, jsonText, dir, format, applyedCompression, nullptr, textures);
 	}
 
 	void API_CALL SpineSkeletonResource::loadWithPngImage(String atlasText, String jsonText, String dir, void* texture)
 	{
-		loadInternal(atlasText, jsonText, dir, llge::TQFNone, 1.0f, texture);
+		loadInternal(atlasText, jsonText, dir, llge::TQFNone, 1.0f, texture, nullptr);
 	}
 
 	void API_CALL SpineSkeletonResource::unLoad()
@@ -202,11 +202,12 @@ namespace spine
 		return _events.size();
 	}
 
-	void SpineSkeletonResource::loadInternal(String atlasText, String jsonText, String dir, llge::TextureQueryFormat format, float applyedCompression, void* texture)
+	void SpineSkeletonResource::loadInternal(String atlasText, String jsonText, String dir, llge::TextureQueryFormat format, float applyedCompression, void* texture, llge::ITexturesManager* textures)
 	{
 		_atlasRenderObject.pagesFormat = format;
 		_atlasRenderObject.applyedCompression = applyedCompression;
 		_atlasRenderObject.texture = texture;
+		_atlasRenderObject.texturesManager = textures;
 		//spAtlas* atlas = spAtlas_create(atlasText, strlen(atlasText), dir, &_atlasRenderObject);
 
 		_spAtlas = spAtlas_create(atlasText, strlen(atlasText), dir, &_atlasRenderObject);

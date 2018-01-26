@@ -3,6 +3,7 @@
 
 #include "resources_classes.h"
 #include "ContentProvider.h"
+#include "TexturesLoader.h"
 
 namespace resources
 {
@@ -20,20 +21,6 @@ namespace resources
 	struct LoadRegisrtyEntry
 	{
 		std::string fileName;
-	};
-
-	struct ImageInfo
-	{
-		int Width;
-		int Height;
-		graphics::Image2dFormat::e Format;
-
-		ImageInfo(int width, int height, graphics::Image2dFormat::e format)
-		{
-			Width = width;
-			Height = height;
-			Format = format;
-		}
 	};
 
 	class ContentManager : public llge::IContentManager, public llge::ITextureBuffer2d
@@ -79,7 +66,6 @@ namespace resources
 		virtual int API_CALL getHeight()OVERRIDE;
 		virtual IntPtr API_CALL getPixels()OVERRIDE;
 		static ContentManager Default;
-		static bool _replaceSeparator;
 		//TexturesMap _loadedImages;
 		void *getBuffer() const;
 		int getBufferSize() const;

@@ -23,6 +23,20 @@ namespace resources
 		virtual bool ready() = 0;
 		virtual bool canPack(int w, int h) = 0;
 	};
+
+	struct CompressedTextureHeader
+	{
+		static int GetSize() { return 28; }
+		ushort attributes;
+		ushort Format;
+		int CompressionPercent;
+		int OriginWidth;
+		int OriginHeight;
+		int BorderX;
+		int BorderY;
+		int RawDataOffset;
+	};
+
 }
 
 #endif /*RESOURCES_CLASSES_H*/

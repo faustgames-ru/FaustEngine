@@ -286,10 +286,13 @@
     <ClInclude Include="..\src\resources\AtlasPacker.h" />
     <ClInclude Include="..\src\resources\ContentManager.h" />
     <ClInclude Include="..\src\resources\ContentProvider.h" />
+    <ClInclude Include="..\src\resources\LoadingBuffer.h" />
     <ClInclude Include="..\src\resources\resources.h" />
     <ClInclude Include="..\src\resources\resources_classes.h" />
     <ClInclude Include="..\src\resources\resources_platform.h" />
     <ClInclude Include="..\src\resources\resources_references.h" />
+    <ClInclude Include="..\src\resources\TexturesLoader.h" />
+    <ClInclude Include="..\src\resources\TexturesManager.h" />
     <ClInclude Include="..\src\resources\zlib\crc32.h" />
     <ClInclude Include="..\src\resources\zlib\deflate.h" />
     <ClInclude Include="..\src\resources\zlib\gzguts.h" />
@@ -459,6 +462,7 @@
     <ClCompile Include="..\src\resources\ContentManager.cpp" />
     <ClCompile Include="..\src\resources\ContentProviderObb.cpp" />
     <ClCompile Include="..\src\resources\ContentProviderWindows.cpp" />
+    <ClCompile Include="..\src\resources\LoadingBuffer.cpp" />
     <ClCompile Include="..\src\resources\lpng\png.c" />
     <ClCompile Include="..\src\resources\lpng\pngerror.c" />
     <ClCompile Include="..\src\resources\lpng\pngget.c" />
@@ -475,6 +479,8 @@
     <ClCompile Include="..\src\resources\lpng\pngwrite.c" />
     <ClCompile Include="..\src\resources\lpng\pngwtran.c" />
     <ClCompile Include="..\src\resources\lpng\pngwutil.c" />
+    <ClCompile Include="..\src\resources\TexturesLoader.cpp" />
+    <ClCompile Include="..\src\resources\TexturesManager.cpp" />
     <ClCompile Include="..\src\resources\zlib\adler32.c" />
     <ClCompile Include="..\src\resources\zlib\compress.c" />
     <ClCompile Include="..\src\resources\zlib\crc32.c" />

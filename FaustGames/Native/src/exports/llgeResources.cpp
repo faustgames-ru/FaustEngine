@@ -3,6 +3,7 @@
 
 #include "../resources/ContentManager.h"
 #include "../resources/ContentProvider.h"
+#include "../resources/TexturesManager.h"
 
 namespace llge
 {
@@ -74,15 +75,60 @@ namespace llge
 		}
 	};
 
+	class ContentProviderExport : public llge::IContentProvider
+	{
+	public:
+		static ContentProviderExport Deafualt;
+
+		virtual bool API_CALL existsContent(const char *name) override
+		{
+			return resources::ContentProvider::existContent(name);
+		}
+		virtual void API_CALL openContent(const char *name) override
+		{
+			resources::ContentProvider::openContent(name);
+		}
+		virtual int API_CALL read(void *buffer, int bytesLimit) override
+		{
+			return resources::ContentProvider::read(buffer, bytesLimit);
+		}
+		virtual void API_CALL closeContent() override
+		{
+			resources::ContentProvider::closeContent();
+		}
+	};
+
+	ContentProviderExport ContentProviderExport::Deafualt;
 
 	extern "C" DLLEXPORT  IContentManager * API_CALL createContentManager()
 	{
 		return &resources::ContentManager::Default;
 	}
 
+	extern "C" DLLEXPORT void API_CALL setReplaceSeparator(bool value)
+	{
+		resources::ContentProvider::ReplaceSeparator = value;
+	}
+
+	extern "C" DLLEXPORT void API_CALL useCompression(TextureImage2dFormat format)
+	{
+		resources::TexturesLoader::Default.useCompression(format);
+		resources::ContentManager::Default.useCompression(format);
+	}
+
+	extern "C" DLLEXPORT IContentProvider * API_CALL getContentProvider()
+	{
+		return &ContentProviderExport::Deafualt;
+	}
+
+	
+	extern "C" DLLEXPORT ITexturesManager * API_CALL createTexturesManager()
+	{
+		return new resources::TexturesManager(&resources::TexturesLoader::Default);
+	}
+	
 	extern "C" DLLEXPORT IObbContentProvider * API_CALL createContentProvider()
 	{
 		return new ObbContentProvider();
 	}
-
 }

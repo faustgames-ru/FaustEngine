@@ -671,6 +671,36 @@ namespace llge
 		return classInstance->getRenderedPrimitivesCount();
 	}
 	
+	extern "C" DLLEXPORT void API_CALL llge_TexturesManager_startAtlasBuild (ITexturesManager * classInstance)
+	{
+		classInstance->startAtlasBuild();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_TexturesManager_finishAtlasBuild (ITexturesManager * classInstance)
+	{
+		classInstance->finishAtlasBuild();
+	}
+	
+	extern "C" DLLEXPORT ITextureImage2d * API_CALL llge_TexturesManager_loadImage (ITexturesManager * classInstance, const char * name, TextureQueryFormat queryFormat)
+	{
+		return classInstance->loadImage(name, queryFormat);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_TexturesManager_update (ITexturesManager * classInstance)
+	{
+		classInstance->update();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_TexturesManager_clear (ITexturesManager * classInstance)
+	{
+		classInstance->clear();
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_TexturesManager_dispose (ITexturesManager * classInstance)
+	{
+		classInstance->dispose();
+	}
+	
 	extern "C" DLLEXPORT IntPtr API_CALL llge_SpineSkeletonBone_getName (ISpineSkeletonBone * classInstance)
 	{
 		return classInstance->getName();
@@ -936,9 +966,9 @@ namespace llge
 		return classInstance->getName();
 	}
 	
-	extern "C" DLLEXPORT void API_CALL llge_SpineResource_load (ISpineResource * classInstance, String atlasText, String jsonText, String dir, TextureQueryFormat format, float applyedCompression)
+	extern "C" DLLEXPORT void API_CALL llge_SpineResource_load (ISpineResource * classInstance, String atlasText, String jsonText, String dir, TextureQueryFormat format, float applyedCompression, ITexturesManager * textures)
 	{
-		classInstance->load(atlasText, jsonText, dir, format, applyedCompression);
+		classInstance->load(atlasText, jsonText, dir, format, applyedCompression, textures);
 	}
 	
 	extern "C" DLLEXPORT void API_CALL llge_SpineResource_loadWithPngImage (ISpineResource * classInstance, String atlasText, String jsonText, String dir, void * texture)

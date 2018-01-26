@@ -471,6 +471,19 @@ namespace llge
 		virtual int API_CALL getRenderedPrimitivesCount() = 0;
 	};
 
+	/// content
+	class ITexturesManager : IBaseObject
+	{
+	public:
+		virtual void API_CALL startAtlasBuild() = 0;
+		virtual void API_CALL finishAtlasBuild() = 0;
+		virtual ITextureImage2d* API_CALL loadImage(const char * name, TextureQueryFormat queryFormat) = 0;
+		virtual void API_CALL update() = 0;
+		virtual void API_CALL clear() = 0;
+		virtual void API_CALL dispose() = 0;
+	};
+
+
 	/// spine
 	class ISpineSkeletonBone : IBaseObject
 	{
@@ -578,7 +591,7 @@ namespace llge
 	class ISpineResource : IBaseObject
 	{
 	public:
-		virtual void API_CALL load(String atlasText, String jsonText, String dir, TextureQueryFormat format, float applyedCompression) = 0;
+		virtual void API_CALL load(String atlasText, String jsonText, String dir, TextureQueryFormat format, float applyedCompression, ITexturesManager* textures) = 0;
 		virtual void API_CALL loadWithPngImage(String atlasText, String jsonText, String dir, void* texture) = 0;
 		virtual void API_CALL unLoad() = 0;
 		virtual ISpineAnimation* API_CALL getSpineAnimation(int i) = 0;
@@ -650,7 +663,7 @@ namespace llge
 		virtual bool API_CALL update() = 0;
 		virtual void API_CALL dispose() = 0;
 	};
-	
+
 	class IObbContentProvider : IBaseObject
 	{
 	public:
@@ -869,6 +882,12 @@ namespace llge
     
 	extern "C" DLLEXPORT ITexture * API_CALL createTextureByID(uint id);
 	extern "C" DLLEXPORT IContentManager * API_CALL createContentManager();
+	extern "C" DLLEXPORT void API_CALL setReplaceSeparator(bool value);
+	extern "C" DLLEXPORT void API_CALL useCompression(TextureImage2dFormat format);
+	extern "C" DLLEXPORT IContentProvider * API_CALL getContentProvider();
+
+
+	extern "C" DLLEXPORT ITexturesManager * API_CALL createTexturesManager();
 	extern "C" DLLEXPORT IObbContentProvider * API_CALL createContentProvider();
 	extern "C" DLLEXPORT IGraphicsFactory * API_CALL createGraphicsFactory();
 	extern "C" DLLEXPORT IGeometryFactory * API_CALL createGeometryFactory();

@@ -1,5 +1,4 @@
-﻿  Color.cpp
-  LINK : C:\work\sources\github\moon\Solutions\Debug\llge.dll not found or not built by the last incremental link; performing full link
-     Creating library C:\work\sources\github\moon\Solutions\Debug\llge.lib and object C:\work\sources\github\moon\Solutions\Debug\llge.exp
+﻿  spine.cpp
+c:\_faust\faustengine\faustgames\native\src\spine\spine.cpp(27): warning C4018: '<': signed/unsigned mismatch
   llge.vcxproj -> C:\work\sources\github\moon\Solutions\Debug\llge.dll
   llge.vcxproj -> C:\work\sources\github\moon\Solutions\Debug\llge.pdb (Full PDB)

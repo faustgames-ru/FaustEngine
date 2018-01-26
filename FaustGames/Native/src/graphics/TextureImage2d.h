@@ -29,6 +29,7 @@ namespace graphics
 		TextureImage2d(bool generateMipmaps, bool useFilter);
         ~TextureImage2d() override;
 		void setData(const Image2dData *data);
+		void setData(const Image2dResourceData &data);
 		void loadMipmaps(int width, int height, Image2dFormat::e format, unsigned* pixels);
 		void reinitImage(bool generateMipmaps, bool useFilter);
 		//void virtual setData(int width, int height, Image2dFormat::e format, unsigned int *pixels);
@@ -36,8 +37,8 @@ namespace graphics
 		static void cleanupStatic();
 		static bool isTextureFormatSupported(Image2dFormat::e format);
 
-        virtual IntPtr API_CALL getTextureImageInstance(){ return this; }
-		virtual ITexture* API_CALL getTexture(){ return this; }
+		virtual IntPtr API_CALL getTextureImageInstance() override;
+		virtual ITexture* API_CALL getTexture() override;
 		virtual void API_CALL LoadPixels(int width, int height, llge::TextureImage2dFormat format, void *pixels) override;
 		virtual void API_CALL create() override;
 		virtual void API_CALL cleanup() override;

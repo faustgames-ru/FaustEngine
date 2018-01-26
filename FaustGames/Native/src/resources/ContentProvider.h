@@ -24,6 +24,8 @@ namespace resources
 		static void openContent(const char *name);
 		static int read(void *buffer, int bytesLimit);
 		static void closeContent();
+		static bool ReplaceSeparator;
+
 	private:
 	};
 

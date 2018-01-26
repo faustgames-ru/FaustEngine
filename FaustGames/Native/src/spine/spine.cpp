@@ -9,11 +9,10 @@ void _spAtlasPage_createTexture(spAtlasPage* self, const char* path)
 	spine::AtlasRenderObject* renderObject = static_cast<spine::AtlasRenderObject *>(self->atlas->rendererObject);
 	if (renderObject->texture != nullptr)
 	{
-		graphics::Image2dData image;
-		resources::ContentManager::Default.loadPngTexture(renderObject->texture, &image);
+		auto image = resources::TexturesLoader::Default.loadPngTexture(renderObject->texture);
 		texture = graphics::TexturesPool::GetImage();// new graphics::TextureImage2d(false, true);
 		texture->create();
-		texture->setData(&image);
+		texture->setData(image);
 		self->rendererObject = texture;
 		return;
 	}
@@ -22,7 +21,7 @@ void _spAtlasPage_createTexture(spAtlasPage* self, const char* path)
 	int w = static_cast<int>(core::Math::trunc(self->width*renderObject->applyedCompression));
 	int h = static_cast<int>(core::Math::trunc(self->height*renderObject->applyedCompression));
 	
-	if (resources::ContentManager::_replaceSeparator)
+	if (resources::ContentProvider::ReplaceSeparator)
 	{
 		std::string replace = path;
 		for (int i = 0; i < replace.size(); i++)
@@ -30,13 +29,14 @@ void _spAtlasPage_createTexture(spAtlasPage* self, const char* path)
 			if (replace[i] == '/')
 				replace[i] = '_';
 		}
-		
-		texture = resources::ContentManager::Default.addLoadTexture(replace.c_str(), w, h, renderObject->pagesFormat);
+		auto image = renderObject->texturesManager->loadImage(replace.c_str(), renderObject->pagesFormat);
+		texture = static_cast<graphics::TextureImage2d*>(image->getTextureImageInstance());
 		//resources::ContentManager::Default._loadedImages[replace] = texture;
 	}
 	else 
 	{
-		texture = resources::ContentManager::Default.addLoadTexture(path, w, h, renderObject->pagesFormat);
+		auto image = renderObject->texturesManager->loadImage(path, renderObject->pagesFormat);
+		texture = static_cast<graphics::TextureImage2d*>(image->getTextureImageInstance());
 		//resources::ContentManager::Default._loadedImages[path] = texture;
 	}
 
@@ -45,8 +45,12 @@ void _spAtlasPage_createTexture(spAtlasPage* self, const char* path)
 
 void _spAtlasPage_disposeTexture(spAtlasPage* self)
 {
-	graphics::TextureImage2d* texture = (graphics::TextureImage2d*)self->rendererObject;
-	resources::ContentManager::Default.addDisposeTexture(texture);
+	
+	//graphics::TextureImage2d* texture = (graphics::TextureImage2d*)self->rendererObject;
+	//resources::ContentManager::Default.addDisposeTexture(texture);
+
+
+
     /*
 	resources::TexturesMap::iterator find = resources::ContentManager::Default._loadedImages.end();
 	for (resources::TexturesMap::iterator it = resources::ContentManager::Default._loadedImages.begin(); it != resources::ContentManager::Default._loadedImages.end(); it++)

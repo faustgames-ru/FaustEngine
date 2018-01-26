@@ -242,6 +242,7 @@ namespace graphics
 	void API_CALL TextureImage2d::cleanup()
 	{
 		if (AtlasEntry) return;
+		if (!_created) return;
          _created = false;
 		Size -= _size;
 		_size = 0;
@@ -714,6 +715,21 @@ namespace graphics
 		}
 	}
 
+	void TextureImage2d::setData(const Image2dResourceData& r)
+	{
+		if (AtlasEntry) return;
+		Image2dData data;
+		data.Width = r.Width;
+		data.Height = r.Height;
+		data.Format = r.Format;
+		data.BorderSize = r.BorderSize;
+		data.BlocksOrder = r.BlocksOrder;
+		data.RawDataOffset = r.RawDataOffset;
+		data.Pixels = static_cast<unsigned int*>(r.Pixels);
+		setData(&data);
+		data.Pixels = nullptr;
+	}
+
 	void UpscaleToPot(const Image2dData *data, int potX, int potY, TexturesDecompressorBuffer *resultBuffer)
 	{
 		int size = potX * potY;
@@ -1155,6 +1171,16 @@ namespace graphics
 			}
 		}
 		return false;
+	}
+
+	IntPtr TextureImage2d::getTextureImageInstance()
+	{
+		return this;
+	}
+
+	llge::ITexture* TextureImage2d::getTexture()
+	{
+		return this;
 	}
 
 	int TextureImage2d::Size(0);

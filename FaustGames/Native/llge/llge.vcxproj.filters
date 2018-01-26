@@ -776,6 +776,15 @@
     <ClInclude Include="..\shaders\texture_color_rgb_transform_etc1a8_frag.h">
       <Filter>engine\shaders</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\resources\TexturesManager.h">
+      <Filter>engine\resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\resources\TexturesLoader.h">
+      <Filter>engine\resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\resources\LoadingBuffer.h">
+      <Filter>engine\resources</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\CommonSources\gen\llgePInvoke.cpp">
@@ -1394,6 +1403,15 @@
     </ClCompile>
     <ClCompile Include="..\src\drawing\DynamicVertexLightMap.cpp">
       <Filter>engine\drawing</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\TexturesManager.cpp">
+      <Filter>engine\resources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\TexturesLoader.cpp">
+      <Filter>engine\resources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resources\LoadingBuffer.cpp">
+      <Filter>engine\resources</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

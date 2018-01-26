@@ -24,6 +24,18 @@ namespace graphics
 		void realloc(int bufferSize);
 		~Image2dData();
 	};
+
+	struct Image2dResourceData
+	{
+		int Width;
+		int Height;
+		int BorderSize;
+		int RawDataOffset;
+		Image2dBlocksOrder::e BlocksOrder;
+		Image2dFormat::e Format;
+		unsigned int *Pixels;
+	};
+
 }
 
 #endif /*IMAGE_2D_DATA_H*/

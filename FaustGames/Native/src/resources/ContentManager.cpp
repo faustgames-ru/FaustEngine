@@ -603,20 +603,6 @@ namespace resources
 		return _image;
 	}
 
-	struct CompressedTextureHeader
-	{
-		static int GetSize() { return 28; }
-		ushort attributes;
-		ushort Format;
-		int CompressionPercent;
-		int OriginWidth;
-		int OriginHeight;
-		int BorderX;
-		int BorderY;
-		int RawDataOffset;
-	};
-
-
 	void skipData(uint* &data, int bytesCount)
 	{
 		byte* bytes = reinterpret_cast<byte*>(data);
@@ -663,9 +649,13 @@ namespace resources
 	graphics::Image2dData* ContentManager::loadUnregisteredCompressedTexture(const char* name)
 	{
 		ContentProvider::openContent(name);
-		int size = ContentProvider::read(_image->Pixels, ImageBufferSize);
+		int sizeToRead = ContentProvider::ContentProviderInstance->getContentSize();
+		int size = ContentProvider::read(_image->Pixels, sizeToRead);
 		ContentProvider::closeContent();
-
+		if (size == 0)
+		{
+			return nullptr;
+		}
 		uint* data = _image->Pixels;
 		CompressedTextureHeader header = getCompressedTextureHeader(data);
 
@@ -750,7 +740,7 @@ namespace resources
 		//delete _image;
 		//m_RowPtrs = 0;
 		//_image = 0;
-		_isOpened = false;
+		//_isOpened = false;
 	}
 
 	void ContentManager::startAtlasBuild()
@@ -829,7 +819,7 @@ namespace resources
 
 	void API_CALL ContentManager::replaceSeparator(bool value)
 	{
-		_replaceSeparator = value;
+		ContentProvider::ReplaceSeparator = value;
 	}
 
 	int API_CALL ContentManager::registerImage(char * name)
@@ -993,6 +983,7 @@ namespace resources
 
 	IAtlasPacker* ContentManager::queryPacker(llge::TextureQueryFormat format)
 	{
+		return nullptr;
 		if (!_isAtlasBuilderStarted) return nullptr;
 		if (format == llge::TQFNone) return nullptr;
 		if (format == llge::TQFRgba8888) return nullptr;
@@ -1020,8 +1011,6 @@ namespace resources
 	{
 		delete this;
 	}
-
-	bool ContentManager::_replaceSeparator(false);
 
 	bool ContentManager::ImageSizeLoaded(false);
 

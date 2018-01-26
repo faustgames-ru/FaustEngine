@@ -1243,6 +1243,53 @@ namespace llge
 		static extern private int llge_Batch2d_getRenderedPrimitivesCount (IntPtr classInstance);
 	}
 	
+	public class TexturesManager
+	{
+		public IntPtr ClassInstance;
+		public void StartAtlasBuild ()
+		{
+			llge_TexturesManager_startAtlasBuild(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_TexturesManager_startAtlasBuild (IntPtr classInstance);
+		public void FinishAtlasBuild ()
+		{
+			llge_TexturesManager_finishAtlasBuild(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_TexturesManager_finishAtlasBuild (IntPtr classInstance);
+		public TextureImage2d LoadImage (string name, TextureQueryFormat queryFormat)
+		{
+			return new TextureImage2d{ ClassInstance = llge_TexturesManager_loadImage(ClassInstance, name, queryFormat) };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr llge_TexturesManager_loadImage (IntPtr classInstance, string name, TextureQueryFormat queryFormat);
+		public void Update ()
+		{
+			llge_TexturesManager_update(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_TexturesManager_update (IntPtr classInstance);
+		public void Clear ()
+		{
+			llge_TexturesManager_clear(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_TexturesManager_clear (IntPtr classInstance);
+		public void Dispose ()
+		{
+			llge_TexturesManager_dispose(ClassInstance);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_TexturesManager_dispose (IntPtr classInstance);
+	}
+	
 	public class SpineSkeletonBone
 	{
 		public IntPtr ClassInstance;
@@ -1662,13 +1709,13 @@ namespace llge
 	public class SpineResource
 	{
 		public IntPtr ClassInstance;
-		public void Load (String atlasText, String jsonText, String dir, TextureQueryFormat format, float applyedCompression)
+		public void Load (String atlasText, String jsonText, String dir, TextureQueryFormat format, float applyedCompression, TexturesManager textures)
 		{
-			llge_SpineResource_load(ClassInstance, atlasText, jsonText, dir, format, applyedCompression);
+			llge_SpineResource_load(ClassInstance, atlasText, jsonText, dir, format, applyedCompression, textures.ClassInstance);
 		}
 		
 		[DllImport(Version.Dll)]
-		static extern private void llge_SpineResource_load (IntPtr classInstance, String atlasText, String jsonText, String dir, TextureQueryFormat format, float applyedCompression);
+		static extern private void llge_SpineResource_load (IntPtr classInstance, String atlasText, String jsonText, String dir, TextureQueryFormat format, float applyedCompression, IntPtr textures);
 		public void LoadWithPngImage (String atlasText, String jsonText, String dir, IntPtr texture)
 		{
 			llge_SpineResource_loadWithPngImage(ClassInstance, atlasText, jsonText, dir, texture);
@@ -2990,6 +3037,34 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private IntPtr createContentManager ();
+		static public void SetReplaceSeparator (bool value)
+		{
+			setReplaceSeparator(value);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void setReplaceSeparator (bool value);
+		static public void UseCompression (TextureImage2dFormat format)
+		{
+			useCompression(format);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void useCompression (TextureImage2dFormat format);
+		static public ContentProvider GetContentProvider ()
+		{
+			return new ContentProvider{ ClassInstance = getContentProvider() };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr getContentProvider ();
+		static public TexturesManager CreateTexturesManager ()
+		{
+			return new TexturesManager{ ClassInstance = createTexturesManager() };
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private IntPtr createTexturesManager ();
 		static public ObbContentProvider CreateContentProvider ()
 		{
 			return new ObbContentProvider{ ClassInstance = createContentProvider() };

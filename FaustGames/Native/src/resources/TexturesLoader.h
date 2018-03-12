@@ -51,16 +51,16 @@ namespace resources
 	class ReadFileService : public ReadService
 	{
 	public:
-		virtual void read(void *data, int size) ;
+		virtual void read(void *data, int size) override;
 	};
 
 	class TexturesLoader
 	{
 	public:
 		static TexturesLoader Default;
-		static ReadService* ReadService;
-		static ReadMemoryService ReadMemoryService;
-		static ReadFileService ReadFileService;
+		static ReadService* ReadServiceInstance;
+		static ReadMemoryService ReadMemoryServiceInstance;
+		static ReadFileService ReadFileServiceInstance;
 
 		TexturesLoader();
 		void useCompression(llge::TextureImage2dFormat format);

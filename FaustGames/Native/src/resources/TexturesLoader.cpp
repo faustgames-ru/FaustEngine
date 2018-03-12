@@ -12,9 +12,9 @@ namespace resources
 	void texturesLoaderPngFree(png_structp pngPtr, void *mem);
 
 	TexturesLoader TexturesLoader::Default;
-	ReadService* TexturesLoader::ReadService(nullptr);
-	ReadMemoryService TexturesLoader::ReadMemoryService;
-	ReadFileService TexturesLoader::ReadFileService;
+	ReadService* TexturesLoader::ReadServiceInstance(nullptr);
+	ReadMemoryService TexturesLoader::ReadMemoryServiceInstance;
+	ReadFileService TexturesLoader::ReadFileServiceInstance;
 
 
 	ReadService::~ReadService()
@@ -427,7 +427,7 @@ namespace resources
 		int is_png = 0;
 
 		//Read the 8 bytes from the stream into the sig buffer.
-		ReadService->read(pngsig, PNGSIGSIZE);
+		ReadServiceInstance->read(pngsig, PNGSIGSIZE);
 		is_png = png_sig_cmp(pngsig, 0, PNGSIGSIZE);
 		if (is_png != 0)
 		{
@@ -561,26 +561,26 @@ namespace resources
 	graphics::Image2dResourceData TexturesLoader::loadPngTexture(const char* name)
 	{
 		ContentProvider::openContent(name);
-		ReadService = &ReadFileService;
+		ReadServiceInstance = &ReadFileServiceInstance;
 		graphics::Image2dResourceData result = loadPngTexture();
 		ContentProvider::closeContent();	
-		ReadService = nullptr;
+		ReadServiceInstance = nullptr;
 		return result;
 	}
 
 	graphics::Image2dResourceData TexturesLoader::loadPngTexture(void* buffer)
 	{
-		ReadMemoryService.setup(buffer);
-		ReadService = &ReadMemoryService;
+		ReadMemoryServiceInstance.setup(buffer);
+		ReadServiceInstance = &ReadMemoryServiceInstance;
 		graphics::Image2dResourceData result = loadPngTexture();
-		ReadService = nullptr;
+		ReadServiceInstance = nullptr;
 		return result;
 	}
 
 
 	void texturesLoaderPngReadData(png_structp pngPtr, png_bytep data, png_size_t length)
 	{
-		TexturesLoader::ReadService->read(data, length);
+		TexturesLoader::ReadServiceInstance->read(data, length);
 	}
 
 	void * texturesLoaderPngMalloc(png_structp pngPtr, png_alloc_size_t size)

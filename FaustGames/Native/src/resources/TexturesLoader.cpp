@@ -312,6 +312,7 @@ namespace resources
 		if (str[str.size() - 3] != ext[0]) return false;
 		if (str[str.size() - 2] != ext[1]) return false;
 		if (str[str.size() - 1] != ext[2]) return false;
+        return true;
 	}
 
 	std::string TexturesLoader::nilExt("nil");

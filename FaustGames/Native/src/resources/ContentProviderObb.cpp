@@ -171,7 +171,7 @@ namespace resources
 	}
 
 #ifdef __ANDROID__
-
+    bool ContentProvider::ReplaceSeparator(false);
 	IAbstractContentProvider* ContentProvider::ContentProviderInstance(nullptr);
 
 	bool ContentProvider::existContent(const char *name)
@@ -196,6 +196,7 @@ namespace resources
 #endif /*__ANDROID__*/
     
 #ifdef __APPLE__
+    bool ContentProvider::ReplaceSeparator(false);
 	IAbstractContentProvider* ContentProvider::ContentProviderInstance(nullptr);
 
 

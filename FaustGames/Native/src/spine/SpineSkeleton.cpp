@@ -213,9 +213,12 @@ namespace spine
 		for (int i = 0; i < s->slotsCount; i++)
 		{
 			spSlot* slot = s->drawOrder[i];
+            if (slot == nullptr)
+                continue;
 			if (!slot->data) 
 				continue;
-			if (!slot->attachment) continue;
+			if (!slot->attachment)
+                continue;
 			_mesh.Color = graphics::Color::fromRgba(slot->r*s->r, slot->g*s->g, slot->b*s->b, slot->a*s->a);
 			_mesh.State.Blend = slot->data->blendMode == SP_BLEND_MODE_NORMAL
 				? graphics::BlendState::Alpha

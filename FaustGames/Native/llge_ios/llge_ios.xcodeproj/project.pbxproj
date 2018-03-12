@@ -195,6 +195,9 @@
 		44C0D6F61D5B048000E29944 /* SpineAnimationStateData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 44C0D6EC1D5B048000E29944 /* SpineAnimationStateData.cpp */; };
 		44C0D6F71D5B048000E29944 /* spine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 44C0D6ED1D5B048000E29944 /* spine.cpp */; };
 		44C0D6F81D5B048000E29944 /* SpineSkeletonAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 44C0D6EF1D5B048000E29944 /* SpineSkeletonAnimation.cpp */; };
+		54B46CC9201B51010019E284 /* TexturesManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 54B46CC3201B51000019E284 /* TexturesManager.cpp */; };
+		54B46CCA201B51010019E284 /* LoadingBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 54B46CC6201B51010019E284 /* LoadingBuffer.cpp */; };
+		54B46CCB201B51010019E284 /* TexturesLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 54B46CC8201B51010019E284 /* TexturesLoader.cpp */; };
 		B18340C51EF14E7100C00218 /* DynamicVertexLightMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B18340C31EF14E7100C00218 /* DynamicVertexLightMap.cpp */; };
 /* End PBXBuildFile section */
 
@@ -589,6 +592,12 @@
 		44C0D6F01D5B048000E29944 /* spine_classes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = spine_classes.h; sourceTree = "<group>"; };
 		44C0D6F11D5B048000E29944 /* SpineAnimationStateData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpineAnimationStateData.h; sourceTree = "<group>"; };
 		44C0D6F21D5B048000E29944 /* SpineSkeletonAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpineSkeletonAnimation.h; sourceTree = "<group>"; };
+		54B46CC3201B51000019E284 /* TexturesManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TexturesManager.cpp; sourceTree = "<group>"; };
+		54B46CC4201B51000019E284 /* TexturesLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TexturesLoader.h; sourceTree = "<group>"; };
+		54B46CC5201B51000019E284 /* TexturesManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TexturesManager.h; sourceTree = "<group>"; };
+		54B46CC6201B51010019E284 /* LoadingBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LoadingBuffer.cpp; sourceTree = "<group>"; };
+		54B46CC7201B51010019E284 /* LoadingBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingBuffer.h; sourceTree = "<group>"; };
+		54B46CC8201B51010019E284 /* TexturesLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TexturesLoader.cpp; sourceTree = "<group>"; };
 		B18340C31EF14E7100C00218 /* DynamicVertexLightMap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DynamicVertexLightMap.cpp; sourceTree = "<group>"; };
 		B18340C41EF14E7100C00218 /* DynamicVertexLightMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DynamicVertexLightMap.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -814,6 +823,12 @@
 		440CB9081B1D8AF7009FDC49 /* resources */ = {
 			isa = PBXGroup;
 			children = (
+				54B46CC6201B51010019E284 /* LoadingBuffer.cpp */,
+				54B46CC7201B51010019E284 /* LoadingBuffer.h */,
+				54B46CC8201B51010019E284 /* TexturesLoader.cpp */,
+				54B46CC4201B51000019E284 /* TexturesLoader.h */,
+				54B46CC3201B51000019E284 /* TexturesManager.cpp */,
+				54B46CC5201B51000019E284 /* TexturesManager.h */,
 				4428216F1DF0592900564CD0 /* AtlasPacker.h */,
 				442821701DF0592900564CD0 /* AtlasPacker.cpp */,
 				440CB9091B1D8AF7009FDC49 /* ContentManager.cpp */,
@@ -1358,6 +1373,7 @@
 				440CB9911B1D8AF7009FDC49 /* llgeDrawing.cpp in Sources */,
 				440CB9A21B1D8AF7009FDC49 /* EffectSolidColor.cpp in Sources */,
 				44C0D6E01D5B047100E29944 /* Skin.c in Sources */,
+				54B46CCB201B51010019E284 /* TexturesLoader.cpp in Sources */,
 				444064401D22BD1C006E45DC /* b2RevoluteJoint.cpp in Sources */,
 				4440643C1D22BD1C006E45DC /* b2MotorJoint.cpp in Sources */,
 				44C0D6F61D5B048000E29944 /* SpineAnimationStateData.cpp in Sources */,
@@ -1435,6 +1451,7 @@
 				440CB9C91B1D8AF7009FDC49 /* pngrio.c in Sources */,
 				440CB9B01B1D8AF7009FDC49 /* TextureLoader.cpp in Sources */,
 				440CB9CB1B1D8AF7009FDC49 /* pngrutil.c in Sources */,
+				54B46CC9201B51010019E284 /* TexturesManager.cpp in Sources */,
 				44C0D6D01D5B047100E29944 /* BoundingBoxAttachment.c in Sources */,
 				44C0D6E51D5B047100E29944 /* VertexAttachment.c in Sources */,
 				440CB99B1B1D8AF7009FDC49 /* Color.cpp in Sources */,
@@ -1455,6 +1472,7 @@
 				440CB9941B1D8AF7009FDC49 /* llgeGraphics.cpp in Sources */,
 				B18340C51EF14E7100C00218 /* DynamicVertexLightMap.cpp in Sources */,
 				440CB9B11B1D8AF7009FDC49 /* TextureRenderTarget2d.cpp in Sources */,
+				54B46CCA201B51010019E284 /* LoadingBuffer.cpp in Sources */,
 				44C0D6C91D5B047100E29944 /* AnimationStateData.c in Sources */,
 				440CB9BC1B1D8AF7009FDC49 /* VertexBuffer.cpp in Sources */,
 				444063AE1D22BB10006E45DC /* PhysicalJoint.cpp in Sources */,

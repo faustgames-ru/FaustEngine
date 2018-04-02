@@ -255,6 +255,16 @@ namespace resources
 		return result;
 	}
 
+	ImageInfo TexturesLoader::loadPngTextureSize(const char* name)
+	{
+		ContentProvider::openContent(name);
+		ReadServiceInstance = &ReadFileServiceInstance;
+		auto result = loadPngTextureSize();
+		ContentProvider::closeContent();
+		ReadServiceInstance = nullptr;		
+		return result;
+	}
+
 	ImageInfo TexturesLoader::loadCompressedTextureSize(const char* name) const
 	{
 		int headerSize = CompressedTextureHeader::GetSize() * 2;
@@ -326,10 +336,8 @@ namespace resources
 
 	unsigned int TexturesLoader::emptyPixel(0x00000000);
 	
-	ImageInfo TexturesLoader::loadPngTextureSize(const char* name)
+	ImageInfo TexturesLoader::loadPngTextureSize()
 	{
-		ContentProvider::openContent(name);
-
 		int m_Width;
 		int m_Height;
 		png_structp m_PngPtr;
@@ -342,18 +350,11 @@ namespace resources
 		int is_png = 0;
 
 		//Read the 8 bytes from the stream into the sig buffer.
-		ContentProvider::read(pngsig, PNGSIGSIZE);
+		ReadServiceInstance->read(pngsig, PNGSIGSIZE);
 
 		is_png = png_sig_cmp(pngsig, 0, PNGSIGSIZE);
 		if (is_png != 0)
 		{
-			/*
-			fprintf(stderr, "!png \n");
-			fprintf(stderr, (char *)pngsig);
-			fprintf(stderr, "\n");
-			*/
-			//throw ref new Exception(-1, "data is not recognized as a PNG");
-			ContentProvider::closeContent();
 			return ImageInfo(0, 0, graphics::Image2dFormat::Rgba);
 		}
 
@@ -361,8 +362,6 @@ namespace resources
 
 		if (!m_PngPtr)
 		{
-			ContentProvider::closeContent();
-			//throw ref new Exception(-1, "png_create_read_struct failed");
 			return ImageInfo(0, 0, graphics::Image2dFormat::Rgba);
 		}
 		png_set_read_fn(m_PngPtr, 0, texturesLoaderPngReadData);
@@ -373,7 +372,6 @@ namespace resources
 		{
 			png_destroy_read_struct(&m_PngPtr, 0, 0);
 			m_PngPtr = 0;
-			ContentProvider::closeContent();
 			//throw ref new Exception(-1, "png_create_info_struct failed");
 			return ImageInfo(0, 0, graphics::Image2dFormat::Rgba);
 		}
@@ -381,7 +379,6 @@ namespace resources
 		if (setjmp(png_jmpbuf(m_PngPtr)))
 		{
 			png_destroy_read_struct(&m_PngPtr, &m_InfoPtr, 0);
-			ContentProvider::closeContent();
 			//throw ref new Exception(-1, "Error during init_io");
 			return ImageInfo(0, 0, graphics::Image2dFormat::Rgba);
 		}
@@ -404,9 +401,6 @@ namespace resources
 			imageFormat = graphics::Image2dFormat::Rgba;
 			break;
 		}
-
-		ContentProvider::closeContent();
-
 		ImageInfo result(w, h, imageFormat);
 		png_destroy_info_struct(m_PngPtr, &m_InfoPtr);
 		png_destroy_read_struct(&m_PngPtr, 0, 0);

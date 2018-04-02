@@ -19,6 +19,21 @@ namespace resources
 		return width*height;
 	}
 
+	int BinPackRect::maxX() const
+	{
+		return x + width;
+	}
+
+	int BinPackRect::maxY() const
+	{
+		return y + height;
+	}
+
+	int BinPackRect::maxSquare() const
+	{
+		return maxX()*maxY();
+	}
+
 	void BinPackRect::divideX(int w, BinPackRect& left, BinPackRect& right)
 	{
 		left = *this;
@@ -63,7 +78,9 @@ namespace resources
 			rect.divideX(w, l, r);
 			rect.divideY(h, t, b);
 
-			if (r.square() > b.square())
+			//if (r.maxSquare() < b.maxSquare())
+			if (r.maxX() > b.maxY())
+			//if (r.square() > b.square())
 			{
 				l.divideY(h, inserted, b);
 				childs[0]->rect = b;
@@ -178,18 +195,60 @@ namespace resources
 		entry = e;
 	}
 
-	AlignInfo::AlignInfo(): blockSizeX(1), blockSizeY(1), borderBlockCount(1)
+	AlignInfo::AlignInfo(): blockSizeX(1), blockSizeY(1), borderBlockCount(1), pageSize(-1)
 	{
+	}
+
+	int AlignInfo::getXBorderBlockCount(int w) const
+	{
+		int alignedSize = borderBlockCount * 2 + core::Math::align(w, blockSizeX) / blockSizeX;
+		if (pageSize > 0)
+		{
+			if (w <= pageSize && alignedSize >= pageSize)
+			{
+				return 0;
+			}
+		}
+		return borderBlockCount;
+	}
+
+	int AlignInfo::getYBorderBlockCount(int h) const
+	{
+		int alignedSize = borderBlockCount * 2 + core::Math::align(h, blockSizeY) / blockSizeY;
+		if (pageSize > 0)
+		{
+			if (h <= pageSize && alignedSize >= pageSize)
+			{
+				return 0;
+			}
+		}
+		return borderBlockCount;
 	}
 
 	int AlignInfo::alignWidth(int w) const
 	{
-		return borderBlockCount * 2 + core::Math::align(w, blockSizeX) / blockSizeX;
+		int alignedSize = borderBlockCount * 2 + core::Math::align(w, blockSizeX) / blockSizeX;
+		if (pageSize > 0)
+		{
+			if (w <= pageSize && alignedSize >= pageSize)
+			{
+				return pageSize;
+			}
+		}
+		return alignedSize;
 	}
 
 	int AlignInfo::alignHeight(int h) const
 	{
-		return borderBlockCount * 2 + core::Math::align(h, blockSizeY) / blockSizeY;
+		int alignedSize = borderBlockCount * 2 + core::Math::align(h, blockSizeY) / blockSizeY;
+		if (pageSize > 0)
+		{
+			if (h <= pageSize && alignedSize >= pageSize)
+			{
+				return pageSize;
+			}
+		}
+		return alignedSize;
 	}
 
 	int AlignInfo::alignPageWidth(int w) const
@@ -200,6 +259,25 @@ namespace resources
 	int AlignInfo::alignPageHeight(int h) const
 	{
 		return core::Math::align(h, blockSizeY) / blockSizeY;
+	}
+
+	graphics::TextureTransform AlignInfo::createTextureTransform(const BinPackRect& rect, int w, int h, int pw, int ph)
+	{
+		int x = (rect.x + borderBlockCount)*blockSizeX;
+		int y = (rect.y + borderBlockCount)*blockSizeY;
+		if (w == pageSize)
+		{
+			x = rect.x;
+		}
+		if (h == pageSize)
+		{
+			y = rect.y;
+		}
+		return graphics::TextureTransform(
+			static_cast<float>(x) / static_cast<float>(pw),
+			static_cast<float>(y) / static_cast<float>(ph),
+			static_cast<float>(w) / static_cast<float>(pw),
+			static_cast<float>(h) / static_cast<float>(ph));
 	}
 
 	AtlasPacker::AtlasPacker(llge::TextureImage2dFormat format, IAtlasPlacer* atlasPlacer)
@@ -502,7 +580,8 @@ namespace resources
 	}
 
 	IAtlasPlacer* IAtlasPlacer::rgba8888 = new AtlasPlacerRgba();
-	IAtlasPlacer* IAtlasPlacer::rgba4444 = new AtlasPlacerRgba();
+	IAtlasPlacer* IAtlasPlacer::rgb888 = new AtlasPlacerRgb();
+	IAtlasPlacer* IAtlasPlacer::rgba4444 = new AtlasPlacerRgba4444();
 	IAtlasPlacer* IAtlasPlacer::pvrtc14 = new AtlasPlacerPvrtc14();
 	IAtlasPlacer* IAtlasPlacer::atc = new AtlasPlacerAtc();
 	IAtlasPlacer* IAtlasPlacer::etc2 = new AtlasPlacerEtc2();
@@ -516,8 +595,10 @@ namespace resources
 		{
 		case llge::TFRgba8888:
 			return rgba8888;
+		case llge::TFRgb888:
+			return rgb888;
 		case llge::TFRgba4444:
-			return nullptr;// rgba4444;
+			return rgba4444;
 		case llge::TFPvrtc14:
 			return pvrtc14;
 		case llge::TFAtc:
@@ -539,7 +620,11 @@ namespace resources
 	}
 
 	AtlasTexturesPool AtlasTexturesPool::Default;
-		
+
+	AtlasTexturesPool::AtlasTexturesPool() : _index(-1)
+	{
+	}
+
 	graphics::TextureAtlasPage* AtlasTexturesPool::queryPage()
 	{
 		_index++;
@@ -558,6 +643,122 @@ namespace resources
 	void AtlasTexturesPool::clear()
 	{
 		_index = -1;
+	}
+
+	void AbstractPlacer::placeImageRgb(const PlaceArgs& e)
+	{
+		byte* srcRow = static_cast<byte*>(static_cast<void*>(e.imageData->Pixels + e.imageData->RawDataOffset));
+		byte* dst = static_cast<byte*>(static_cast<void*>(e.pageData->Pixels + e.pageData->RawDataOffset));
+
+		int dstStride = e.alignInfo.alignPageWidth(e.pageData->Width)*3;
+		int srcStride = e.alignInfo.alignPageWidth(e.imageData->Width)*3;
+
+		dstStride = core::Math::align(dstStride, 4);
+		srcStride = core::Math::align(srcStride, 4);
+
+		byte* dstRow = dst + e.rect.x*3 + e.rect.y*dstStride;
+
+		int xBorderBlockCount = e.alignInfo.getXBorderBlockCount(e.imageData->Width);
+		int yBorderBlockCount = e.alignInfo.getYBorderBlockCount(e.imageData->Height);
+
+		int h = e.rect.height - xBorderBlockCount * 2;
+		int w = e.rect.width - yBorderBlockCount * 2;
+
+		for (int y = 0; y < yBorderBlockCount; y++)
+		{
+			byte* dstPixel = dstRow;
+			byte* srcPixel = srcRow;
+			for (int x = 0; x < xBorderBlockCount; x++)
+			{
+				dstPixel[0] = srcPixel[0];
+				dstPixel[1] = srcPixel[1];
+				dstPixel[2] = srcPixel[2];
+				dstPixel += 3;
+			}
+			for (int x = 0; x < w; x++)
+			{
+				dstPixel[0] = srcPixel[0];
+				dstPixel[1] = srcPixel[1];
+				dstPixel[2] = srcPixel[2];
+				srcPixel += 3;
+				dstPixel += 3;
+			}
+			srcPixel -= 3;
+			for (int x = 0; x < xBorderBlockCount; x++)
+			{
+				dstPixel[0] = srcPixel[0];
+				dstPixel[1] = srcPixel[1];
+				dstPixel[2] = srcPixel[2];
+				dstPixel += 3;
+			}
+			dstRow += dstStride;
+		}
+
+		for (int y = 0; y < h; y++)
+		{
+			byte* dstPixel = dstRow;
+			byte* srcPixel = srcRow;
+
+			for (int x = 0; x < xBorderBlockCount; x++)
+			{
+				dstPixel[0] = srcPixel[0];
+				dstPixel[1] = srcPixel[1];
+				dstPixel[2] = srcPixel[2];
+				dstPixel += 3;
+			}
+
+			for (int x = 0; x < w; x++)
+			{
+				dstPixel[0] = srcPixel[0];
+				dstPixel[1] = srcPixel[1];
+				dstPixel[2] = srcPixel[2];
+				srcPixel += 3;
+				dstPixel += 3;
+			}
+
+			srcPixel -= 3;
+			for (int x = 0; x < xBorderBlockCount; x++)
+			{
+				dstPixel[0] = srcPixel[0];
+				dstPixel[1] = srcPixel[1];
+				dstPixel[2] = srcPixel[2];
+				dstPixel += 3;
+			}
+
+			dstRow += dstStride;
+			srcRow += srcStride;
+		}
+
+		srcRow -= srcStride;
+		for (int y = 0; y < yBorderBlockCount; y++)
+		{
+			byte* dstPixel = dstRow;
+			byte* srcPixel = srcRow;
+			for (int x = 0; x < xBorderBlockCount; x++)
+			{
+				dstPixel[0] = srcPixel[0];
+				dstPixel[1] = srcPixel[1];
+				dstPixel[2] = srcPixel[2];
+				dstPixel += 3;
+			}
+			for (int x = 0; x < w; x++)
+			{
+				dstPixel[0] = srcPixel[0];
+				dstPixel[1] = srcPixel[1];
+				dstPixel[2] = srcPixel[2];
+				srcPixel += 3;
+				dstPixel += 3;
+			}
+			srcPixel -= 3;
+			for (int x = 0; x < xBorderBlockCount; x++)
+			{
+				dstPixel[0] = srcPixel[0];
+				dstPixel[1] = srcPixel[1];
+				dstPixel[2] = srcPixel[2];
+				dstPixel += 3;
+			}
+			dstRow += dstStride;
+		}
 	}
 
 	int AtlasPlacerRgba::getPageBufferSize(int pageSize)
@@ -587,6 +788,7 @@ namespace resources
 
 	void AtlasPlacerRgb::placeImage(const PlaceArgs& e)
 	{
+		AbstractPlacer::placeImageRgb(e);
 	}
 
 	int AtlasPlacerPvrtc14::getPageBufferSize(int pageSize)

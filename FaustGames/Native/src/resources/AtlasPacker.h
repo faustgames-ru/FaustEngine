@@ -26,6 +26,9 @@ namespace resources
 		int height;
 		BinPackRect();
 		int square();
+		int maxX() const;
+		int maxY() const;
+		int maxSquare() const;
 		void divideX(int w, BinPackRect &left, BinPackRect &right);
 		void divideY(int h, BinPackRect &top, BinPackRect &bottom);
 		bool contains(int w, int h);
@@ -105,13 +108,18 @@ namespace resources
 	struct AlignInfo
 	{
 		AlignInfo();
+		int pageSize;
 		int blockSizeX;
 		int blockSizeY;
 		int borderBlockCount;
+		int getXBorderBlockCount(int w) const;
+		int getYBorderBlockCount(int h) const;
 		int alignWidth(int w) const;
 		int alignHeight(int h) const;
 		int alignPageWidth(int w) const;
 		int alignPageHeight(int h) const;
+
+		graphics::TextureTransform createTextureTransform(const BinPackRect& rect, int w, int h, int pw, int ph);
 	};
 
 	struct PlaceArgs
@@ -126,6 +134,7 @@ namespace resources
 	{
 	public:
 		static IAtlasPlacer* rgba8888;
+		static IAtlasPlacer* rgb888;
 		static IAtlasPlacer* rgba4444;
 		static IAtlasPlacer* pvrtc14;
 		static IAtlasPlacer* atc;
@@ -143,6 +152,7 @@ namespace resources
 	{
 	public:
 		static AtlasTexturesPool Default;
+		AtlasTexturesPool();
 		graphics::TextureAtlasPage* queryPage();
 		void clear();
 	private:
@@ -192,6 +202,7 @@ namespace resources
 		static void placeImageWithBorder(const PlaceArgs &e);
 		template<typename TPixel>
 		static void placeImageWithBorderMortonOrder(const PlaceArgs &e);
+		static void placeImageRgb(const PlaceArgs &e);
 	};
 
 	template <typename TPixel>
@@ -205,14 +216,17 @@ namespace resources
 
 		TPixel* dstRow = dst + e.rect.x + e.rect.y*dstStride;
 
-		int h = e.rect.height - e.alignInfo.borderBlockCount * 2;
-		int w = e.rect.width - e.alignInfo.borderBlockCount * 2;
+		int xBorderBlockCount = e.alignInfo.getXBorderBlockCount(e.imageData->Width);
+		int yBorderBlockCount = e.alignInfo.getYBorderBlockCount(e.imageData->Height);
+
+		int h = e.rect.height - xBorderBlockCount * 2;
+		int w = e.rect.width - yBorderBlockCount * 2;
 		
-		for (int y = 0; y < e.alignInfo.borderBlockCount; y++)
+		for (int y = 0; y < yBorderBlockCount; y++)
 		{
 			TPixel* dstPixel = dstRow;
 			TPixel* srcPixel = srcRow;
-			for (int x = 0; x < e.alignInfo.borderBlockCount; x++)
+			for (int x = 0; x < xBorderBlockCount; x++)
 			{
 				*dstPixel = *srcPixel;
 				++dstPixel;
@@ -224,7 +238,7 @@ namespace resources
 				++dstPixel;
 			}
 			--srcPixel;
-			for (int x = 0; x < e.alignInfo.borderBlockCount; x++)
+			for (int x = 0; x < xBorderBlockCount; x++)
 			{
 				*dstPixel = *srcPixel;
 				++dstPixel;
@@ -237,7 +251,7 @@ namespace resources
 			TPixel* dstPixel = dstRow;
 			TPixel* srcPixel = srcRow;
 			
-			for (int x = 0; x < e.alignInfo.borderBlockCount; x++)
+			for (int x = 0; x < xBorderBlockCount; x++)
 			{
 				*dstPixel = *srcPixel;
 				++dstPixel;
@@ -251,7 +265,7 @@ namespace resources
 			}
 			
 			--srcPixel;
-			for (int x = 0; x < e.alignInfo.borderBlockCount; x++)
+			for (int x = 0; x < xBorderBlockCount; x++)
 			{
 				*dstPixel = *srcPixel;
 				++dstPixel;
@@ -262,11 +276,11 @@ namespace resources
 		}
 		
 		srcRow -= srcStride;
-		for (int y = 0; y < e.alignInfo.borderBlockCount; y++)
+		for (int y = 0; y < yBorderBlockCount; y++)
 		{
 			TPixel* dstPixel = dstRow;
 			TPixel* srcPixel = srcRow;
-			for (int x = 0; x < e.alignInfo.borderBlockCount; x++)
+			for (int x = 0; x < xBorderBlockCount; x++)
 			{
 				*dstPixel = *srcPixel;
 				++dstPixel;
@@ -278,7 +292,7 @@ namespace resources
 				++dstPixel;
 			}
 			--srcPixel;
-			for (int x = 0; x < e.alignInfo.borderBlockCount; x++)
+			for (int x = 0; x < xBorderBlockCount; x++)
 			{
 				*dstPixel = *srcPixel;
 				++dstPixel;

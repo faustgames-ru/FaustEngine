@@ -1186,84 +1186,7 @@ namespace graphics
 	int TextureImage2d::Size(0);
 
 	TextureImage2d TextureImage2d::_empty;
-	bool TextureImage2d::TraceTriangles(
-#ifdef __ANDROID__
-		false
-#else
-#ifdef __APPLE__
-		false
-#else	
-		true
-#endif
-#endif
-		);
-	/*
-	TextureImage2dProxy::TextureImage2dProxy()
-	{
-		_handle = 0;
-		_instance = 0;
-		_handleDefault = TextureImage2d::_empty.getHandle();
-		_isRealyProxy = false;
-		X = 0;
-		Y = 0;
-		W = 1;
-		H = 1;
-	}
-	TextureImage2dProxy::~TextureImage2dProxy()
-	{
-		if (_isRealyProxy) return;
-		if (_instance)
-		{
-			_instance->dispose();
-		}
-	}
-
-	void TextureImage2dProxy::setProxyInstance(TextureImage2d * instance)
-	{
-		_isRealyProxy = true;
-		_instance = instance;
-		_handle = _instance->getId();
-	}
-
-	llge::ITexture* API_CALL TextureImage2dProxy::getTexture()
-	{
-		return this;
-	}
-
-	void API_CALL TextureImage2dProxy::LoadPixels(int width, int height, llge::TextureImage2dFormat format, void *pixels)
-	{
-		if (_isRealyProxy) return;
-		if (!_instance)
-        {
-			_instance = new TextureImage2d(false, true);
-            _instance->create();
-        }
-        _handle = _instance->getId();
-		_instance->LoadPixels(width, height, format, pixels);
-	}
-
-	void API_CALL TextureImage2dProxy::create()	{ }
-
-	void API_CALL TextureImage2dProxy::cleanup()
-	{
-		if (_isRealyProxy) return;
-		if (_instance)
-		{
-			_instance->cleanup();
-		}
-	}
-
-	void API_CALL TextureImage2dProxy::dispose()
-	{
-		delete this;
-	}
- */
-
-	/*
-	* Color1555To888() - In addition to the conversion, this function returns a boolean
-	*                    TRUE or FALSE indicating if the high bit is set.
-	*/
-	
+		
     std::map<TextureImage2d*, TextureImage2d*> TexturesPool::_images;
     std::map<TextureAtlasPage*, TextureAtlasPage*> TexturesPool::_atlasPages;
     
@@ -1293,7 +1216,7 @@ namespace graphics
     
     void TexturesPool::ReturnImage(TextureImage2d* image)
     {
-        if (_images.find(image) == _images. end())
+        if (_images.find(image) == _images.end())
         {
             _images[image] = image;
         }
@@ -1302,7 +1225,6 @@ namespace graphics
             // double disposing
             _images[image] = image;
         }
-        //_images[image] = image;
     }
     
     void TexturesPool::ReturnAtlasPage(TextureAtlasPage* page)

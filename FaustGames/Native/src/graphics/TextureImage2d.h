@@ -56,7 +56,6 @@ namespace graphics
 		virtual bool API_CALL isAtlasEntry() OVERRIDE;
 
         static TextureImage2d _empty;
-		static bool TraceTriangles;
 		bool AtlasEntry;
 
 		static float getSize(int w, int h, Image2dFormat::e format);

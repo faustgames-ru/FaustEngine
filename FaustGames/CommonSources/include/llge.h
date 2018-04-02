@@ -170,6 +170,8 @@ namespace llge
 		float resultNormalY;
 		uint resultColisionGroup;
 		uint resultRaycastGroup;
+		IntPtr body;
+		IntPtr fixture;
 	};
 
 
@@ -252,6 +254,12 @@ namespace llge
 		int indicesCount;
 		int colorScale;
 		IntPtr texture;
+	};
+
+	struct TexturesManagerStatistics
+	{
+		int atalsPagesCount;
+		int imagesCount;
 	};
 
 	class ITexture : IBaseObject
@@ -480,6 +488,7 @@ namespace llge
 		virtual ITextureImage2d* API_CALL loadImage(const char * name, TextureQueryFormat queryFormat) = 0;
 		virtual void API_CALL update() = 0;
 		virtual void API_CALL clear() = 0;
+		virtual void API_CALL fillStatistics(IntPtr statistics) = 0;
 		virtual void API_CALL dispose() = 0;
 	};
 

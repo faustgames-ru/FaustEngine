@@ -151,6 +151,8 @@ namespace llge
 		public float resultNormalY;
 		public uint resultColisionGroup;
 		public uint resultRaycastGroup;
+		public IntPtr body;
+		public IntPtr fixture;
 	}
 	
 	[StructLayout(LayoutKind.Sequential)]

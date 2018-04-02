@@ -257,13 +257,16 @@ namespace physics
 		result.resultNormalY = resultNormal.getY();
 		result.resultPositionX = resultPosition.getX();
 		result.resultPositionY = resultPosition.getY();
-
+		result.fixture = nullptr;
+		result.body = nullptr;
 		bool hasRaycast = _raycastFirst.best != nullptr;
 		if(hasRaycast)
 		{
 			PhysicalFixture *f = static_cast<PhysicalFixture *>(_raycastFirst.best->GetUserData());
 			result.resultColisionGroup = f->getCollisionGroup();			
 			result.resultRaycastGroup = f->getRaycastGroup();
+			result.fixture = static_cast<llge::IPhysicalFixture*>(f);
+			result.body = static_cast<llge::IPhysicalBody*>(f->fixture->GetBody()->GetUserData());
 		}
 		return hasRaycast;
 	}

@@ -83,6 +83,7 @@ namespace resources
 		graphics::Image2dResourceData loadCompressedTexture(const char *name);
 		graphics::Image2dResourceData loadCompressedTexture(void *buffer, int size) const;
 		ImageInfo loadPngTextureSize(const char *name);
+		ImageInfo loadPngTextureSize();
 		graphics::Image2dResourceData loadPngTexture();
 
 

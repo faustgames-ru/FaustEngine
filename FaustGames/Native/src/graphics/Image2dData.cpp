@@ -31,6 +31,17 @@ namespace graphics
 		Pixels = new unsigned int[Width * Height];
 	}
 
+	Image2dData::Image2dData(const Image2dResourceData& r)
+	{
+		Width = r.Width;
+		Height = r.Height;
+		Format = r.Format;
+		BorderSize = r.BorderSize;
+		BlocksOrder = r.BlocksOrder;
+		RawDataOffset = r.RawDataOffset;
+		Pixels = static_cast<unsigned int*>(r.Pixels);
+	}
+
 	void Image2dData::realloc(int bufferSize)
 	{
 		if (Pixels)

@@ -167,6 +167,7 @@ namespace graphics
         void setActiveTexture(uint value);
 		int getPixelsWidth();
 		int getPixelsHeight();
+		static int getMaxTextureSize();
 		void readPixels(void * pixels, bool inverse);
 		static void create();
 		PostProcessTargetManager PostProcessTargets;

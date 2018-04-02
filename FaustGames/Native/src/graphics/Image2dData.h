@@ -5,6 +5,8 @@
 
 namespace graphics
 {
+	struct Image2dResourceData;
+
 	class Image2dData
 	{
 	public:
@@ -21,6 +23,7 @@ namespace graphics
 		Image2dData();
 		Image2dData(int bufferSize);
 		Image2dData(int width, int height);
+		explicit Image2dData(const Image2dResourceData &source);
 		void realloc(int bufferSize);
 		~Image2dData();
 	};

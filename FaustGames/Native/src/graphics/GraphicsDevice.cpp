@@ -384,6 +384,16 @@ glClearDepth(static_cast<double>(depth));
 		}
 	}
 
+	int GraphicsDevice::getMaxTextureSize()
+	{
+		int maxTextureSize[1];
+		glGetIntegerv(GL_MAX_TEXTURE_SIZE, maxTextureSize);
+		if (glGetError() == GL_NO_ERROR)
+		{
+			return maxTextureSize[0];
+		}
+		return 0;
+	}
 
 	void GraphicsDevice::readPixels(void* pixels, bool inverse)
 	{

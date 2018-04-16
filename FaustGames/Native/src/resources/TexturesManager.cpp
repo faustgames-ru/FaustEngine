@@ -403,7 +403,6 @@ namespace resources
 			}
 			for (uint i = 0; i < page->rects.size(); i++)
 			{
-
 				TexturesAtlasRect rect = page->rects[i];
 				auto textureTransform = alignInfo.createTextureTransform(
 					rect.rect,

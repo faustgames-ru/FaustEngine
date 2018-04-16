@@ -219,9 +219,11 @@ namespace resources
 		int xBorderBlockCount = e.alignInfo.getXBorderBlockCount(e.imageData->Width);
 		int yBorderBlockCount = e.alignInfo.getYBorderBlockCount(e.imageData->Height);
 
-		int h = e.rect.height - xBorderBlockCount * 2;
-		int w = e.rect.width - yBorderBlockCount * 2;
-		
+		int h = e.imageData->Height;
+		int w = e.imageData->Width;
+		//int ha = e.imageData->Height + xBorderBlockCount * 2;
+		//int wa = e.imageData->Width + yBorderBlockCount * 2;
+
 		for (int y = 0; y < yBorderBlockCount; y++)
 		{
 			TPixel* dstPixel = dstRow;

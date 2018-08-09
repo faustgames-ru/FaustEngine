@@ -169,13 +169,22 @@ namespace resources
 	}
 
 	void TexturesManager::disposePage(graphics::TextureAtlasPage* page)
-	{
-		graphics::TexturesPool::ReturnAtlasPage(page);
+	{		
+		// todo: return alpha map
+
+		//page->disposeAlphaMap();
+		//graphics::TexturesPool::ReturnAtlasPage(page);
+		
+		page->dispose();
 	}
 
 	void TexturesManager::disposeEntry(TextureEntry* entry)
 	{
-		graphics::TexturesPool::ReturnImage(entry->image);
+		// todo: return alpha map
+		//entry->image->disposeAlphaMap();
+		//graphics::TexturesPool::ReturnImage(entry->image);
+
+		entry->image->dispose();
 		delete entry;
 	}
 

@@ -370,7 +370,6 @@ namespace physics
 
 	void PlatformsContactListener::BeginContact(b2Contact* contact)
 	{		
-
 		b2Fixture* fixtureA = contact->GetFixtureA();
 		b2Fixture* fixtureB = contact->GetFixtureB();
 

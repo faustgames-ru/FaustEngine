@@ -627,11 +627,17 @@ namespace drawing
 		int verticesCount = 0;
 
 		RenderBuffer * _backBuffer = e.renderBuffer;
+		graphics::EffectBase *effect = nullptr;
 		for (TBatchEntries::iterator i = group->Entries.begin(); i != group->Entries.end(); ++i)
 		{	
 
 			BatchBuffer * currentBuffer = _backBuffer->Buffers[i->BatchBufferIndex];
-			i->Effect->configApply(i->Config);
+			effect = i->Effect;
+			if (i->Blend == graphics::BlendState::Multiplicative)
+			{
+				effect = graphics::Effects::textureColor();
+			}
+			effect->configApply(i->Config);
 
 			graphics::UniformValues::projection()->setValue(_backBuffer->Transforms[i->TransformIndex]);
 			if (i->ColorTransformIndex >= 0)
@@ -639,8 +645,8 @@ namespace drawing
 				graphics::UniformValues::colorTransform()->setValue(_backBuffer->ColorTransforms[i->ColorTransformIndex]);
 
 			}
+			_graphicsDevice->renderState.setEffect(effect);
 
-			_graphicsDevice->renderState.setEffect(i->Effect);
 			primitivesCount = i->IndicesCount / 3;
 			verticesCount = currentBuffer->getVerticesCount();
 
@@ -654,6 +660,7 @@ namespace drawing
 			if (i->Blend == graphics::BlendState::Multiplicative)
 			{
 				_graphicsDevice->renderState.setBlend(graphics::BlendState::Multiplicative);
+				// disable fog
 			}
 			else
 			{

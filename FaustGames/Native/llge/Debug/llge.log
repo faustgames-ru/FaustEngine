@@ -111,16 +111,16 @@ c:\_faust\faustengine\faustgames\native\src\resources\texturesmanager.cpp(119): 
 c:\_faust\faustengine\faustgames\native\src\resources\texturesmanager.cpp(129): warning C4018: '<': signed/unsigned mismatch
 c:\_faust\faustengine\faustgames\native\src\resources\texturesmanager.cpp(138): warning C4018: '<': signed/unsigned mismatch
 c:\_faust\faustengine\faustgames\native\src\resources\texturesmanager.cpp(147): warning C4018: '<': signed/unsigned mismatch
-c:\_faust\faustengine\faustgames\native\src\resources\texturesmanager.cpp(210): warning C4244: 'argument': conversion from 'const int' to 'float', possible loss of data
-c:\_faust\faustengine\faustgames\native\src\resources\texturesmanager.cpp(210): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-c:\_faust\faustengine\faustgames\native\src\resources\texturesmanager.cpp(211): warning C4244: 'argument': conversion from 'const int' to 'float', possible loss of data
-c:\_faust\faustengine\faustgames\native\src\resources\texturesmanager.cpp(211): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-c:\_faust\faustengine\faustgames\native\src\resources\texturesmanager.cpp(214): warning C4244: 'argument': conversion from 'const int' to 'float', possible loss of data
-c:\_faust\faustengine\faustgames\native\src\resources\texturesmanager.cpp(214): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\_faust\faustengine\faustgames\native\src\resources\texturesmanager.cpp(215): warning C4244: 'argument': conversion from 'const int' to 'float', possible loss of data
-c:\_faust\faustengine\faustgames\native\src\resources\texturesmanager.cpp(215): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\_faust\faustengine\faustgames\native\src\resources\texturesmanager.cpp(269): warning C4018: '<': signed/unsigned mismatch
-c:\_faust\faustengine\faustgames\native\src\resources\texturesmanager.cpp(305): warning C4018: '<': signed/unsigned mismatch
+c:\_faust\faustengine\faustgames\native\src\resources\texturesmanager.cpp(219): warning C4244: 'argument': conversion from 'const int' to 'float', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\resources\texturesmanager.cpp(219): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\resources\texturesmanager.cpp(220): warning C4244: 'argument': conversion from 'const int' to 'float', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\resources\texturesmanager.cpp(220): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\resources\texturesmanager.cpp(223): warning C4244: 'argument': conversion from 'const int' to 'float', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\resources\texturesmanager.cpp(223): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\resources\texturesmanager.cpp(224): warning C4244: 'argument': conversion from 'const int' to 'float', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\resources\texturesmanager.cpp(224): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\resources\texturesmanager.cpp(278): warning C4018: '<': signed/unsigned mismatch
+c:\_faust\faustengine\faustgames\native\src\resources\texturesmanager.cpp(314): warning C4018: '<': signed/unsigned mismatch
   TexturesLoader.cpp
 c:\_faust\faustengine\faustgames\native\src\resources\texturesloader.cpp(342): warning C4101: 'm_Height': unreferenced local variable
 c:\_faust\faustengine\faustgames\native\src\resources\texturesloader.cpp(347): warning C4101: 'm_ColorType': unreferenced local variable
@@ -149,7 +149,7 @@ c:\_faust\faustengine\faustgames\native\src\resources\atlaspacker.cpp(343): warn
 c:\_faust\faustengine\faustgames\native\src\resources\atlaspacker.cpp(343): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
 c:\_faust\faustengine\faustgames\native\src\resources\atlaspacker.cpp(344): warning C4244: 'argument': conversion from 'const int' to 'float', possible loss of data
 c:\_faust\faustengine\faustgames\native\src\resources\atlaspacker.cpp(344): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\_faust\faustengine\faustgames\native\src\resources\atlaspacker.cpp(905): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\resources\atlaspacker.cpp(944): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
   PhysicalWorld.cpp
   Generating Code...
   Compiling...
@@ -196,38 +196,38 @@ c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(130): wa
 c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(152): warning C4018: '<': signed/unsigned mismatch
 c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(154): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(156): warning C4018: '<': signed/unsigned mismatch
-c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(474): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(516): warning C4018: '<': signed/unsigned mismatch
-c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(630): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(637): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(644): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(655): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(655): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(657): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
-c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(685): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(685): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(690): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
-c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(763): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(763): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(797): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(797): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(831): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(831): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(472): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(514): warning C4018: '<': signed/unsigned mismatch
+c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(628): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(635): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(642): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(653): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(653): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(655): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(683): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(683): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(688): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(761): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(761): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(795): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(795): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(829): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(829): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(1025): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
 c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(1027): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
 c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(1029): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
 c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(1031): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
 c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(1033): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
-c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(1035): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(1037): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
 c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(1039): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
-c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(1041): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(1048): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
 c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(1050): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
 c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(1052): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
 c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(1054): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
 c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(1056): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
-c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(1058): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
+c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(1060): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
 c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(1062): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
-c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(1064): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
-c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(1166): warning C4018: '<': signed/unsigned mismatch
+c:\_faust\faustengine\faustgames\native\src\graphics\textureimage2d.cpp(1164): warning C4018: '<': signed/unsigned mismatch
   TextureCubemap.cpp
   Texture.cpp
   StaticBatch.cpp
@@ -307,8 +307,8 @@ c:\_faust\faustengine\faustgames\native\src\drawing\batcher.cpp(486): warning C4
 c:\_faust\faustengine\faustgames\native\src\drawing\batcher.cpp(571): warning C4018: '<': signed/unsigned mismatch
 c:\_faust\faustengine\faustgames\native\src\drawing\batcher.cpp(616): warning C4018: '<': signed/unsigned mismatch
 c:\_faust\faustengine\faustgames\native\src\drawing\batcher.cpp(624): warning C4018: '>=': signed/unsigned mismatch
-c:\_faust\faustengine\faustgames\native\src\drawing\batcher.cpp(957): warning C4018: '>=': signed/unsigned mismatch
-c:\_faust\faustengine\faustgames\native\src\drawing\batcher.cpp(980): warning C4018: '<': signed/unsigned mismatch
+c:\_faust\faustengine\faustgames\native\src\drawing\batcher.cpp(964): warning C4018: '>=': signed/unsigned mismatch
+c:\_faust\faustengine\faustgames\native\src\drawing\batcher.cpp(987): warning C4018: '<': signed/unsigned mismatch
   Vector.cpp
   SystemAllocationPolicy.cpp
   Generating Code...

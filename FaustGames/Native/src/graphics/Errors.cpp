@@ -30,6 +30,7 @@ namespace graphics
             fprintf(stderr, errorText);
             fprintf(stderr, "\n");
 #endif
+			auto errorText1 = errorText;
 			//throwException(getActionName(actionType));
 
 			//throw std::exception();

@@ -151,7 +151,20 @@ namespace resources
 	class AtlasTexturesPool
 	{
 	public:
-		static AtlasTexturesPool Default;
+		static AtlasTexturesPool rgba8888;
+		static AtlasTexturesPool rgb888;
+		static AtlasTexturesPool rgba4444;
+		static AtlasTexturesPool pvrtc14;
+		static AtlasTexturesPool atc;
+		static AtlasTexturesPool etc2;
+		static AtlasTexturesPool etc1;
+		static AtlasTexturesPool dxt;
+		static AtlasTexturesPool unknown;
+
+		static AtlasTexturesPool* GetPool(graphics::Image2dFormat::e format);
+		static void clearAll();
+
+		//static AtlasTexturesPool Default;
 		AtlasTexturesPool();
 		graphics::TextureAtlasPage* queryPage();
 		void clear();

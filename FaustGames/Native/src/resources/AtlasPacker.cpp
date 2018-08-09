@@ -444,7 +444,7 @@ namespace resources
 		for (uint k = 0; k < _pages.size(); k++)
 		{
 			AtlasPage* page = _pages[k];
-            graphics::TextureAtlasPage* texture = AtlasTexturesPool::Default.queryPage();
+            graphics::TextureAtlasPage* texture = AtlasTexturesPool::GetPool(_pageData->Format)->queryPage();
 			if (_pageData->Format == graphics::Image2dFormat::Etc1)
 			{
 				texture->createAlphaIfNeeded();
@@ -619,7 +619,46 @@ namespace resources
 		return graphics::Image2dBlocksOrder::Normal;
 	}
 
-	AtlasTexturesPool AtlasTexturesPool::Default;
+	AtlasTexturesPool AtlasTexturesPool::rgba8888;
+	AtlasTexturesPool AtlasTexturesPool::rgb888;
+	AtlasTexturesPool AtlasTexturesPool::rgba4444;
+	AtlasTexturesPool AtlasTexturesPool::pvrtc14;
+	AtlasTexturesPool AtlasTexturesPool::etc2;
+	AtlasTexturesPool AtlasTexturesPool::etc1;
+	AtlasTexturesPool AtlasTexturesPool::unknown;
+
+
+	AtlasTexturesPool* AtlasTexturesPool::GetPool(graphics::Image2dFormat::e format)
+	{
+		switch (format)
+		{
+		case graphics::Image2dFormat::Rgba: 
+			return &rgba8888;
+		case graphics::Image2dFormat::Rgb: 
+			return &rgb888;
+		case graphics::Image2dFormat::Pvrtc14:
+			return &pvrtc14;
+		case graphics::Image2dFormat::Etc1:
+			return &etc1;
+		case graphics::Image2dFormat::Etc2: 
+			return &etc2;
+		case graphics::Image2dFormat::Rgba4444: 
+			return &rgba4444;
+		default:
+			return &unknown;
+		}
+	}
+
+	void AtlasTexturesPool::clearAll()
+	{
+		rgba8888.clear();
+		rgb888.clear();
+		rgba4444.clear();
+		pvrtc14.clear();
+		etc2.clear();
+		etc1.clear();
+		unknown.clear();
+	}
 
 	AtlasTexturesPool::AtlasTexturesPool() : _index(-1)
 	{

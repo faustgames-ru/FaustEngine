@@ -278,9 +278,9 @@ namespace graphics
 			if (_alphaMap != nullptr)
 			{
 				_alphaMap->dispose();
-				_alphaMap = nullptr;
 			}
 		}
+		_alphaMap = nullptr;
 	}
 
 	void TextureImage2d::associate(TextureImage2d* value)
@@ -298,9 +298,7 @@ namespace graphics
 			_alphaMap->create();
 		}
 	}
-
-
-
+	
 	int TextureImage2d::getVerticesCount()
 	{
 		return _tracedVertices.size();

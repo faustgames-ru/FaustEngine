@@ -745,12 +745,14 @@ namespace resources
 
 	void ContentManager::startAtlasBuild()
 	{		
-		AtlasTexturesPool::Default.clear();
+		AtlasTexturesPool::clearAll();
 		for (int i = 0; i < llge::TFEnumSize; i++)
 		{
 			IAtlasPacker* packer = _packers[i];
 			if (packer != nullptr)
+			{
 				packer->startPack(ImageMaxWidth);
+			}
 		}
 		_isAtlasBuilderStarted = true;		
 	}

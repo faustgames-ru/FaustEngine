@@ -6,15 +6,23 @@
          contextName = "resources::ContentManager::update():ContentManager.cpp">
       </ContextState>
       <ContextState
+         contextName = "resources::ContentManager::addLoadTexture(char const*, llge::TextureQueryFormat):ContentManager.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "resources::ObbContentProvider::existsContent(char const*):ContentProviderObb.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "_entries">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "spine::SpineSkeleton::renderEx(llge::IBatch2d*, void*, llge::GraphicsEffects, unsigned char):SpineSkeleton.cpp">
          <PersistentStrings>
             <PersistentString
                value = "_mesh.texture">
             </PersistentString>
          </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "resources::ContentManager::addLoadTexture(char const*, llge::TextureQueryFormat):ContentManager.cpp">
       </ContextState>
    </ContextStates>
 </VariablesViewState>

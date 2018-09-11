@@ -633,7 +633,7 @@ namespace drawing
 
 			BatchBuffer * currentBuffer = _backBuffer->Buffers[i->BatchBufferIndex];
 			effect = i->Effect;
-			if (i->Blend == graphics::BlendState::Multiplicative)
+			if (i->Blend == graphics::BlendState::Multiplicative || groupIndex != 0)
 			{
 				effect = graphics::Effects::textureColor();
 			}

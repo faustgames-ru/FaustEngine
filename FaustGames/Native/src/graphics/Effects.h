@@ -41,7 +41,7 @@ namespace graphics
 		static EffectPostProcessBlurPass * postProcessBlurPassFilter();
 		static EffectPostProcessBloomAddFilter * postProcessBloomAddFilter();
 		static EffectPostProcessRgbTransform * postProcessRgbTransform();
-		
+		static EffectBase* unFog(EffectBase* effect);
 	protected:
 	private:
 		static EffectSolid _solid;

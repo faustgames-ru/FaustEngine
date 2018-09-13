@@ -15,7 +15,7 @@ namespace graphics
 		void configCopy(void *dst, const void *src) const;
 		virtual void configApply(const void *config) {}
 		virtual EffectBase* GetEtc1A8Effect() = 0;// { return this; }
-		virtual EffectBase* ApplyEtc1A8(bool useAlpha) 
+		virtual EffectBase* ApplyEtc1A8(bool useAlpha)
 
 		{
 			if (useAlpha)

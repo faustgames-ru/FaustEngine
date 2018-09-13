@@ -184,4 +184,17 @@ namespace graphics
 	{
 		return &_postProcessRgbTransform;
 	}
+
+	EffectBase* Effects::unFog(EffectBase* effect)
+	{
+		if (effect == textureColorFog())
+		{
+			return textureColor();
+		}
+		else if (effect == textureColorFogEtc1A8())
+		{
+			return textureColorEtc1A8();
+		}
+		return effect;
+	}
 }

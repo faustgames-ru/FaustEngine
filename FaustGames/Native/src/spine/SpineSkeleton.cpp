@@ -84,45 +84,15 @@ namespace spine
 		}
 	}
 
-	void tryReplaceRgbTransform(spSlot* slot, void* renderObject, std::vector<std::map<std::string, spAtlasRegion*> >& rgbTransformRegions, drawing::BatcherSpineMesh& mesh)
+	void tryReplaceRgbTransform(void* renderObject, void* rgbTransformRendererObject, drawing::BatcherSpineMesh& mesh)
 	{
-		if (!slot || !slot->attachment)
+		if (rgbTransformRendererObject)
 		{
-			mesh.texture = getTexture(renderObject, &mesh.State);
+			mesh.texture = getTexture(rgbTransformRendererObject, &mesh.State);
 			return;
 		}
 
-		int indexSlot = slot->data->index;
-		
-		if (indexSlot >= rgbTransformRegions.size())
-		{
-			mesh.texture = getTexture(renderObject, &mesh.State);
-			return;
-		}
-
-		const char* attachmentName = slot->attachment->name;
-		switch (slot->attachment->type)
-		{
-			case SP_ATTACHMENT_MESH:
-			{
-				spMeshAttachment* mesh = SUB_CAST(spMeshAttachment, slot->attachment); 
-				if (mesh && mesh->path)
-				{
-					attachmentName = mesh->path;
-				}
-			}
-			break;
-		}
-		
-		std::map<std::string, spAtlasRegion*> map = (rgbTransformRegions[indexSlot]);
-		std::map<std::string, spAtlasRegion*>::iterator resIter = map.find(attachmentName);
-		if (resIter == map.end())
-		{
-			mesh.texture = getTexture(renderObject, &mesh.State);
-			return;
-		}
-
- 		mesh.texture = getTexture(resIter->second, &mesh.State);
+		mesh.texture = getTexture(renderObject, &mesh.State);
 	}
 
 	SpineSkeletonSlot::SpineSkeletonSlot(void* slot)
@@ -308,7 +278,7 @@ namespace spine
 				_mesh.IndicesCount = 6;
 				_mesh.VerticesCount = 4;
 
-				tryReplaceRgbTransform(slot, region->rendererObject, _rgbTransformRegions, _mesh);
+				tryReplaceRgbTransform(region->rendererObject, region->rgbTransformRendererObject, _mesh);
 
 				batcher->drawSpineMesh(_mesh, colorScale);
 				break;
@@ -343,7 +313,7 @@ namespace spine
 				_mesh.IndicesCount = mesh->trianglesCount;
 				_mesh.VerticesCount = mesh->super.worldVerticesLength / 2;
 
-				tryReplaceRgbTransform(slot, mesh->rendererObject, _rgbTransformRegions, _mesh);
+				tryReplaceRgbTransform(mesh->rendererObject, mesh->rgbTransformRendererObject, _mesh);
 
 				batcher->drawSpineMesh(_mesh, colorScale);
 				break;
@@ -852,7 +822,6 @@ namespace spine
 		if (!_resource || !s)
 			return;
 
-		_rgbTransformRegions.resize(s->slotsCount, std::map<std::string, spAtlasRegion*>());
-		_resource->InitRgbTransformRegions(_rgbTransformRegions, transformName);
+		_resource->InitRgbTransformRegions(_slots.size(), transformName);
 	}
 }

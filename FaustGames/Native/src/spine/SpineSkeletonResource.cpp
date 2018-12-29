@@ -304,7 +304,7 @@ namespace spine
 		return nullptr;
 	}
 
-	void SpineSkeletonResource::InitRgbTransformRegions(std::vector<std::map<std::string, spAtlasRegion*> >& slots, const char* rgbTransformName) const
+	void SpineSkeletonResource::InitRgbTransformRegions(int slotCount, const char* rgbTransformName) const
 	{
 		spAtlas* atlas = (spAtlas *)_spAtlas;
 		if (!atlas)
@@ -321,7 +321,7 @@ namespace spine
 			size_t index = name.find("generated_tint");
 			regionNames.push_back(index > name.size() && name.size() > 4 ? name.substr(0, name.size() - 4) : "");
 			
-			index = name.find(rgbTransformName);
+			index = name.find(std::string(rgbTransformName) + "_generated_tint");
 			if (index < name.size())
 			{
 				for (int j = i; j >= 0; --j)
@@ -339,13 +339,12 @@ namespace spine
 			region = region->next;
 			++i;
 		}
-		
 
 		for (int skIndex = 0; skIndex < _skins.size(); ++skIndex)
 		{
 			spSkin* skin = static_cast<spSkin*>(_skins[skIndex]->getNativeInstance());
-
-			for (int j = 0; j < slots.size(); ++j)
+			
+			for (int j = 0; j < slotCount; ++j)
 			{
 				std::vector<spAttachment*> attachments;
 				spSkin_getAllAttachmentSlot(skin, j, attachments);
@@ -354,11 +353,40 @@ namespace spine
 
 				for (int i = 0; i < attachments.size(); ++i)
 				{
-					std::map<std::string, spAtlasRegion*>::iterator regionIter = mapRegions.find(attachments[i]->name);
-					if (regionIter == mapRegions.end())
-						continue;
+					switch (attachments[i]->type)
+					{
+						case SP_ATTACHMENT_REGION:
+						{	
+							spRegionAttachment* region = SUB_CAST(spRegionAttachment, attachments[i]);
 
-					(slots[j])[attachments[i]->name] = regionIter->second;
+							std::string attachmentName = region->path ? region->path : attachments[i]->name;
+							std::map<std::string, spAtlasRegion*>::iterator regionIter = mapRegions.find(attachmentName);
+							if (regionIter == mapRegions.end())
+								continue;
+
+							if (region)
+							{
+								region->rgbTransformRendererObject = regionIter->second;
+							}
+						}
+						break;
+
+						case SP_ATTACHMENT_MESH:
+						{
+							spMeshAttachment* mesh = SUB_CAST(spMeshAttachment, attachments[i]);
+							
+							std::string attachmentName = mesh->path ? mesh->path : attachments[i]->name;
+							std::map<std::string, spAtlasRegion*>::iterator regionIter = mapRegions.find(attachmentName);
+							if (regionIter == mapRegions.end())
+								continue;
+
+							if (mesh)
+							{
+								mesh->rgbTransformRendererObject = regionIter->second;
+							}
+						}
+						break;
+					}
 				}
 			}
 		}

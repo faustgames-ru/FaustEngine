@@ -51,12 +51,14 @@ typedef struct spAttachment {
 	const spAttachmentType type;
 	const void* const vtable;
 	struct spAttachmentLoader* attachmentLoader;
+	struct spAttachment* rgbTransformAttachment;
 
 #ifdef __cplusplus
 	spAttachment() :
 		name(0),
 		type(SP_ATTACHMENT_REGION),
-		vtable(0) {
+		vtable(0),
+		rgbTransformAttachment(0){
 	}
 #endif
 } spAttachment;

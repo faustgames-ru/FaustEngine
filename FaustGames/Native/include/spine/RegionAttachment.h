@@ -51,6 +51,7 @@ typedef struct spRegionAttachment {
 	float r, g, b, a;
 
 	void* rendererObject;
+	void* rgbTransformRendererObject;
 	int regionOffsetX, regionOffsetY; /* Pixels stripped from the bottom left, unrotated. */
 	int regionWidth, regionHeight; /* Unrotated, stripped pixel size. */
 	int regionOriginalWidth, regionOriginalHeight; /* Unrotated, unstripped pixel size. */

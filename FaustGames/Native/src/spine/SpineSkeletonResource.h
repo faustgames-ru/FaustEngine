@@ -4,6 +4,7 @@
 #include "spine_classes.h"
 
 struct spAtlasRegion;
+struct spSkeleton;
 
 namespace spine
 {
@@ -79,7 +80,7 @@ namespace spine
 		
 		virtual void API_CALL dispose();
 
-		void InitRgbTransformRegions(std::vector<std::map<std::string, spAtlasRegion*> >& regions, const char* RgbTransformName) const;
+		void InitRgbTransformRegions(int slotCount, const char* RgbTransformName) const;
 
 	protected:
 	private:

@@ -95,7 +95,6 @@ namespace spine
 		std::vector<SpineSkeletonSlot *> _slots;
 		std::vector<SpineSkeletonBone *> _bones;
 		std::vector<SpineSkeletonBounds> _bounds;
-		std::vector<std::map<std::string, spAtlasRegion*> > _rgbTransformRegions;
 		int _defaultRgbTransformIndex;
 	};
 }

@@ -836,26 +836,6 @@ namespace resources
 
 	bool API_CALL ContentManager::update()
 	{
-		
-		if(!ImageSizeLoaded)
-		{
-			int maxTextureSize[1];
-			glGetIntegerv(GL_MAX_TEXTURE_SIZE, maxTextureSize);
-			if (glGetError() == GL_NO_ERROR)
-			{
-				int size = maxTextureSize[0];
-				/*
-				const int sizeLimit = 1024 * 4;
-				if (size > sizeLimit)
-					size = sizeLimit;
-				*/
-				ImageMaxWidth = size;
-				ImageMaxHeight = size;
-				ImageBufferSize = ImageMaxWidth*ImageMaxHeight;
-				ImageSizeLoaded = true;
-			}
-		}
-		
 		if ((_loadEntries.size() == 0) && (_disposeEntries.size() == 0))
 			return true;
 
@@ -960,14 +940,7 @@ namespace resources
 			return 0;
 		return _image->Pixels;
 	}
-
-	int ContentManager::getBufferSize() const
-	{
-		if (_image == 0)
-			return 0;
-		return ImageBufferSize;
-	}
-
+	
 
 	llge::TextureImage2dFormat ContentManager::getAtlasFormat(llge::TextureQueryFormat format)
 	{
@@ -1014,9 +987,6 @@ namespace resources
 		delete this;
 	}
 
-	bool ContentManager::ImageSizeLoaded(false);
-
-	int ContentManager::ImageBufferSize = 2048 * 2048;
 	int ContentManager::ImageMaxHeight = 2048;
 	int ContentManager::ImageMaxWidth = 2048;
 }

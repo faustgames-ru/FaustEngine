@@ -298,10 +298,12 @@ namespace resources
 		auto atlasFormat = graphics::Image2dFormat::FromLlgeFormat(_internalFormat);
 
 		int pageSize = graphics::GraphicsDevice::getMaxTextureSize();
-		if (pageSize > 4096)
+		
+		if (pageSize > ResourceConstants::TextureSizeLimit)
 		{
-			pageSize = 4096;
+			pageSize = ResourceConstants::TextureSizeLimit;
 		}
+		
 		if (atlasFormat == graphics::Image2dFormat::Rgb || 
 			atlasFormat == graphics::Image2dFormat::Rgba || 
 			atlasFormat == graphics::Image2dFormat::Rgba4444)

@@ -567,6 +567,10 @@ namespace drawing
 
 	void Batcher::renderStencil(BatcherRenderArgs e)
 	{
+		if (_stecilMaskEntries.empty())
+		{
+			return;
+		}
 		_graphicsDevice->clearStencil();		
 		for(int i = 0; i < _stecilMaskEntries.size(); i++)
 		{

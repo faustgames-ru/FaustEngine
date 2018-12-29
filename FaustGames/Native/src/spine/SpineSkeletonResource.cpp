@@ -26,6 +26,19 @@ namespace spine
 			entry = entry->next;
 		}
 	}
+
+	void spSkin_getAllAttachmentSlot(spSkin* skin, int indexSlot, std::vector<spAttachment*>& attachments)
+	{
+		if (skin == nullptr) return;
+		_spSkin* src = SUB_CAST(_spSkin, skin);
+
+		const _Entry *entry = src->entries;
+		while (entry) {
+			if (entry->slotIndex == indexSlot)
+				attachments.push_back(entry->attachment);
+			entry = entry->next;
+		}
+	}
 	
 	IntPtr API_CALL SpineEvent::getName()
 	{
@@ -289,5 +302,65 @@ namespace spine
 				return _animations[i];
 		}
 		return nullptr;
+	}
+
+	void SpineSkeletonResource::InitRgbTransformRegions(std::vector<std::map<std::string, spAtlasRegion*> >& slots, const char* rgbTransformName) const
+	{
+		spAtlas* atlas = (spAtlas *)_spAtlas;
+		if (!atlas)
+			return;
+		
+		std::vector<std::string> regionNames;
+		
+		std::map<std::string, spAtlasRegion*> mapRegions;
+		int i = 0;
+		spAtlasRegion* region = atlas->regions;
+		while (region)
+		{
+			std::string name(region->page->name);
+			size_t index = name.find("generated_tint");
+			regionNames.push_back(index > name.size() && name.size() > 4 ? name.substr(0, name.size() - 4) : "");
+			
+			index = name.find(rgbTransformName);
+			if (index < name.size())
+			{
+				for (int j = i; j >= 0; --j)
+				{
+					if (regionNames[j] == "")
+						continue;
+
+					size_t res = name.find(regionNames[j]);
+					if (res < name.size())
+					{
+						mapRegions[region->name] = region;
+					}
+				}
+			}
+			region = region->next;
+			++i;
+		}
+		
+
+		for (int skIndex = 0; skIndex < _skins.size(); ++skIndex)
+		{
+			spSkin* skin = static_cast<spSkin*>(_skins[skIndex]->getNativeInstance());
+
+			for (int j = 0; j < slots.size(); ++j)
+			{
+				std::vector<spAttachment*> attachments;
+				spSkin_getAllAttachmentSlot(skin, j, attachments);
+				if (attachments.size() <= 0)
+					continue;
+
+				for (int i = 0; i < attachments.size(); ++i)
+				{
+					std::map<std::string, spAtlasRegion*>::iterator regionIter = mapRegions.find(attachments[i]->name);
+					if (regionIter == mapRegions.end())
+						continue;
+
+					(slots[j])[attachments[i]->name] = regionIter->second;
+				}
+			}
+		}
 	}
 }

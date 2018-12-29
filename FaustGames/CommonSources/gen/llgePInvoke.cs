@@ -242,6 +242,13 @@ namespace llge
 		public IntPtr texture;
 	}
 	
+	[StructLayout(LayoutKind.Sequential)]
+	public struct TexturesManagerStatistics
+	{
+		public int atalsPagesCount;
+		public int imagesCount;
+	}
+	
 	public class Texture
 	{
 		public IntPtr ClassInstance;
@@ -1283,6 +1290,13 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private void llge_TexturesManager_clear (IntPtr classInstance);
+		public void FillStatistics (IntPtr statistics)
+		{
+			llge_TexturesManager_fillStatistics(ClassInstance, statistics);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_TexturesManager_fillStatistics (IntPtr classInstance, IntPtr statistics);
 		public void Dispose ()
 		{
 			llge_TexturesManager_dispose(ClassInstance);
@@ -1496,6 +1510,13 @@ namespace llge
 		
 		[DllImport(Version.Dll)]
 		static extern private void llge_SpineSkeleton_setDefaultRgbTransform (IntPtr classInstance, int index);
+		public void SetRgbTransformName (string transformName)
+		{
+			llge_SpineSkeleton_setRgbTransformName(ClassInstance, transformName);
+		}
+		
+		[DllImport(Version.Dll)]
+		static extern private void llge_SpineSkeleton_setRgbTransformName (IntPtr classInstance, string transformName);
 		public void Dispose ()
 		{
 			llge_SpineSkeleton_dispose(ClassInstance);

@@ -40,7 +40,7 @@ namespace spine
 			}
 		}
 	}
-	
+
 	inline uint getTextureId(void *attachmentRendererObject)
 	{
 		if (attachmentRendererObject)
@@ -57,7 +57,7 @@ namespace spine
 
 	inline graphics::TextureImage2d * getTexture(void *attachmentRendererObject, drawing::BatcherState* state)
 	{
-		llge::EffectConfig* config = static_cast<llge::EffectConfig* >(state->config);
+		llge::EffectConfig* config = static_cast<llge::EffectConfig*>(state->config);
 		if (attachmentRendererObject)
 		{
 			spAtlasRegion * aRegion = (spAtlasRegion *)attachmentRendererObject;
@@ -65,14 +65,14 @@ namespace spine
 			if (image != nullptr)
 			{
 				config->texture = image->getHandle();
-				config->alpha = image->getAlphaId();				
+				config->alpha = image->getAlphaId();
 			}
 			else
 			{
 				config->texture = 0;
 				config->alpha = 0;
 			}
-			
+
 			state->Effect = state->Effect->ApplyEtc1A8(config->alpha > 0);
 			return image;
 		}
@@ -82,6 +82,47 @@ namespace spine
 			config->alpha = 0;
 			return nullptr;
 		}
+	}
+
+	void tryReplaceRgbTransform(spSlot* slot, void* renderObject, std::vector<std::map<std::string, spAtlasRegion*> >& rgbTransformRegions, drawing::BatcherSpineMesh& mesh)
+	{
+		if (!slot || !slot->attachment)
+		{
+			mesh.texture = getTexture(renderObject, &mesh.State);
+			return;
+		}
+
+		int indexSlot = slot->data->index;
+		
+		if (indexSlot >= rgbTransformRegions.size())
+		{
+			mesh.texture = getTexture(renderObject, &mesh.State);
+			return;
+		}
+
+		const char* attachmentName = slot->attachment->name;
+		switch (slot->attachment->type)
+		{
+			case SP_ATTACHMENT_MESH:
+			{
+				spMeshAttachment* mesh = SUB_CAST(spMeshAttachment, slot->attachment); 
+				if (mesh && mesh->path)
+				{
+					attachmentName = mesh->path;
+				}
+			}
+			break;
+		}
+		
+		std::map<std::string, spAtlasRegion*> map = (rgbTransformRegions[indexSlot]);
+		std::map<std::string, spAtlasRegion*>::iterator resIter = map.find(attachmentName);
+		if (resIter == map.end())
+		{
+			mesh.texture = getTexture(renderObject, &mesh.State);
+			return;
+		}
+
+ 		mesh.texture = getTexture(resIter->second, &mesh.State);
 	}
 
 	SpineSkeletonSlot::SpineSkeletonSlot(void* slot)
@@ -149,7 +190,7 @@ namespace spine
 
 	SpineSkeleton::SpineSkeleton(SpineSkeletonResource *resource, float* transform) : _spSkeleton(0)
 	{
-		_defaultRgbTransformIndex = -1;		
+		_defaultRgbTransformIndex = -1;
 		for (uint i = 0; i < _colorTransformCount; i++)
 		{
 			_colorTransform[i] = core::Matrix3::identity;
@@ -157,12 +198,12 @@ namespace spine
 		initFromResource(resource);
 		spSkeleton *s = (spSkeleton*)_spSkeleton;
 		spSkeletonData *sd = (spSkeletonData*)resource->getSkeletonData();
-		
+
 		if (sd->skinsCount > 1)
 		{
 			spSkeleton_setSkin(s, sd->skins[1]);
 		}
-		
+
 		if (transform)
 			_transform.setData(transform);
 		else
@@ -213,19 +254,19 @@ namespace spine
 		for (int i = 0; i < s->slotsCount; i++)
 		{
 			spSlot* slot = s->drawOrder[i];
-            if (slot == nullptr)
-                continue;
-			if (!slot->data) 
+			if (!slot || !slot->data)
 				continue;
-			if (!slot->attachment)
-                continue;
+			spAttachment* const attacmant = slot->attachment;
+			if (!attacmant)
+				continue;
+
 			_mesh.Color = graphics::Color::fromRgba(slot->r*s->r, slot->g*s->g, slot->b*s->b, slot->a*s->a);
 			_mesh.State.Blend = slot->data->blendMode == SP_BLEND_MODE_NORMAL
 				? graphics::BlendState::Alpha
 				: graphics::BlendState::Additive;
-			
+
 			SpineSkeletonBone* bone = _bones[slot->bone->data->index];
-			
+
 			if (_defaultRgbTransformIndex >= 0 && bone->rgbTransfomrIndex < 0)
 			{
 				batcher->addColorTransform(_colorTransform[_defaultRgbTransformIndex]);
@@ -251,62 +292,66 @@ namespace spine
 				//config.lightmap = lightmap;
 			}
 
-			switch (slot->attachment->type)
+			switch (attacmant->type)
 			{
-				case SP_ATTACHMENT_REGION:
+			case SP_ATTACHMENT_REGION:
+			{
+				spRegionAttachment* region = SUB_CAST(spRegionAttachment, attacmant);
+				spRegionAttachment_computeWorldVertices(region, slot->bone, _mesh.Vertices);
+				for (int j = 0; j < 8; j += 2)
 				{
-					spRegionAttachment* region = SUB_CAST(spRegionAttachment, slot->attachment);
-					spRegionAttachment_computeWorldVertices(region, slot->bone, _mesh.Vertices);
-					for (int j = 0; j < 8; j += 2)
-					{
-						transform(_mesh.Vertices + j, _mesh.Vertices + j + 1);
-						aabb.expand(_mesh.Vertices[j], _mesh.Vertices[j + 1]);
-					}
-					_mesh.Uvs = region->uvs;
-					_mesh.Indices = _quadIndices;
-					_mesh.IndicesCount = 6;
-					_mesh.VerticesCount = 4;
-					_mesh.texture = getTexture(region->rendererObject, &_mesh.State);
-					batcher->drawSpineMesh(_mesh, colorScale);
-					break;
+					transform(_mesh.Vertices + j, _mesh.Vertices + j + 1);
+					aabb.expand(_mesh.Vertices[j], _mesh.Vertices[j + 1]);
 				}
-				case SP_ATTACHMENT_BOUNDING_BOX:
-				{
-					spBoundingBoxAttachment* boundingBox = SUB_CAST(spBoundingBoxAttachment, slot->attachment);
-					_bounds.push_back(SpineSkeletonBounds());
-					SpineSkeletonBounds& bounds = _bounds.back();
-					spBoundingBoxAttachment_computeWorldVertices(boundingBox, slot, bounds.vertices);
-					bounds.count = boundingBox->super.worldVerticesLength;
-					break;
-				}
-				case SP_ATTACHMENT_LINKED_MESH:
-				{
-					break;
-				}
-				case SP_ATTACHMENT_MESH:
-				{
-					spMeshAttachment* mesh = SUB_CAST(spMeshAttachment, slot->attachment);
-					spMeshAttachment_computeWorldVertices(mesh, slot, _mesh.Vertices);
+				_mesh.Uvs = region->uvs;
+				_mesh.Indices = _quadIndices;
+				_mesh.IndicesCount = 6;
+				_mesh.VerticesCount = 4;
 
-					spMeshAttachment_updateUVs_fixed(mesh, _uvBuffer);
+				tryReplaceRgbTransform(slot, region->rendererObject, _rgbTransformRegions, _mesh);
 
-					for (int j = 0; j < mesh->super.worldVerticesLength; j += 2)
-					{
-						transform(_mesh.Vertices + j, _mesh.Vertices + j + 1);
-						aabb.expand(_mesh.Vertices[j], _mesh.Vertices[j + 1]);
-					}
-					_mesh.Uvs = _uvBuffer;
-					_mesh.Indices = mesh->triangles;
-					_mesh.IndicesCount = mesh->trianglesCount;
-					_mesh.VerticesCount = mesh->super.worldVerticesLength / 2;
-					_mesh.texture = getTexture(mesh->rendererObject, &_mesh.State);
-					batcher->drawSpineMesh(_mesh, colorScale);
-					break;
-				}
-				default:
+				batcher->drawSpineMesh(_mesh, colorScale);
+				break;
+			}
+			case SP_ATTACHMENT_BOUNDING_BOX:
+			{
+				spBoundingBoxAttachment* boundingBox = SUB_CAST(spBoundingBoxAttachment, attacmant);
+				_bounds.push_back(SpineSkeletonBounds());
+				SpineSkeletonBounds& bounds = _bounds.back();
+				spBoundingBoxAttachment_computeWorldVertices(boundingBox, slot, bounds.vertices);
+				bounds.count = boundingBox->super.worldVerticesLength;
+				break;
+			}
+			case SP_ATTACHMENT_LINKED_MESH:
+			{
+				break;
+			}
+			case SP_ATTACHMENT_MESH:
+			{
+				spMeshAttachment* mesh = SUB_CAST(spMeshAttachment, attacmant);
+				spMeshAttachment_computeWorldVertices(mesh, slot, _mesh.Vertices);
+
+				spMeshAttachment_updateUVs_fixed(mesh, _uvBuffer);
+
+				for (int j = 0; j < mesh->super.worldVerticesLength; j += 2)
 				{
-					break;
+					transform(_mesh.Vertices + j, _mesh.Vertices + j + 1);
+					aabb.expand(_mesh.Vertices[j], _mesh.Vertices[j + 1]);
 				}
+				_mesh.Uvs = _uvBuffer;
+				_mesh.Indices = mesh->triangles;
+				_mesh.IndicesCount = mesh->trianglesCount;
+				_mesh.VerticesCount = mesh->super.worldVerticesLength / 2;
+
+				tryReplaceRgbTransform(slot, mesh->rendererObject, _rgbTransformRegions, _mesh);
+
+				batcher->drawSpineMesh(_mesh, colorScale);
+				break;
+			}
+			default:
+			{
+				break;
+			}
 			}
 		}
 		_aabb = aabb;
@@ -364,12 +409,15 @@ namespace spine
 		for (int i = 0; i < s->slotsCount; i++)
 		{
 			spSlot* slot = s->drawOrder[i];
-			if (!slot->attachment) continue;
-			switch (slot->attachment->type)
+			spAttachment* attachment = slot->attachment;
+			if (!attachment)
+				continue;
+
+			switch (attachment->type)
 			{
 				case SP_ATTACHMENT_REGION:
 				{
-					spRegionAttachment * region = SUB_CAST(spRegionAttachment, slot->attachment);
+					spRegionAttachment * region = SUB_CAST(spRegionAttachment, attachment);
 					spRegionAttachment_computeWorldVertices(region, slot->bone, _mesh.Vertices);
 					for (int j = 0; j < 8; j += 2)
 					{
@@ -380,7 +428,7 @@ namespace spine
 				}
 				case SP_ATTACHMENT_BOUNDING_BOX:
 				{
-					spBoundingBoxAttachment * boundingBox = SUB_CAST(spBoundingBoxAttachment, slot->attachment);
+					spBoundingBoxAttachment * boundingBox = SUB_CAST(spBoundingBoxAttachment, attachment);
 					_bounds.push_back(SpineSkeletonBounds());
 					SpineSkeletonBounds& bounds = _bounds.back();
 					spBoundingBoxAttachment_computeWorldVertices(boundingBox, slot, bounds.vertices);
@@ -390,7 +438,7 @@ namespace spine
 				case SP_ATTACHMENT_LINKED_MESH:
 				case SP_ATTACHMENT_MESH:
 				{
-					spMeshAttachment * mesh = SUB_CAST(spMeshAttachment, slot->attachment);
+					spMeshAttachment * mesh = SUB_CAST(spMeshAttachment, attachment);
 					spMeshAttachment_computeWorldVertices(mesh, slot, _mesh.Vertices);
 					for (int j = 0; j < mesh->super.worldVerticesLength; j += 2)
 					{
@@ -410,6 +458,7 @@ namespace spine
 
 	void SpineSkeleton::initFromResource(SpineSkeletonResource *resource)
 	{
+		_resource = resource;
 		_spSkeleton = spSkeleton_create((spSkeletonData *)resource->getSkeletonData());
 	}
 		
@@ -464,12 +513,15 @@ namespace spine
 		for (int i = 0; i < s->slotsCount; i++)
 		{
 			spSlot* slot = s->drawOrder[i];
-			if (!slot->attachment) continue;
-			switch (slot->attachment->type)
+			spAttachment* attachment = slot->attachment;
+			if (!attachment)
+				continue;
+
+			switch (attachment->type)
 			{
 				case SP_ATTACHMENT_REGION:
 				{
-					spRegionAttachment * region = SUB_CAST(spRegionAttachment, slot->attachment);
+					spRegionAttachment * region = SUB_CAST(spRegionAttachment, attachment);
 					spRegionAttachment_computeWorldVertices(region, slot->bone, _mesh.Vertices);
 					for (int j = 0; j < 8; j += 2)
 						transform(_mesh.Vertices + j, _mesh.Vertices + j + 1);
@@ -482,13 +534,13 @@ namespace spine
 				}
 				case SP_ATTACHMENT_BOUNDING_BOX:
 				{
-					//spBoundingBoxAttachment * boundingBox = SUB_CAST(spBoundingBoxAttachment, slot->attachment);
+					//spBoundingBoxAttachment * boundingBox = SUB_CAST(spBoundingBoxAttachment, attachment);
 					//spBoundingBoxAttachment_computeWorldVertices(boundingBox, slot->bone, _mesh.Vertices);
 					break;
 				}
 				case SP_ATTACHMENT_MESH:
 				{					
-					spMeshAttachment * mesh = SUB_CAST(spMeshAttachment, slot->attachment);
+					spMeshAttachment * mesh = SUB_CAST(spMeshAttachment, attachment);
 					spMeshAttachment_updateUVs_fixed(mesh, _uvBuffer);
 					spMeshAttachment_computeWorldVertices(mesh, slot, _mesh.Vertices);
 					for (int j = 0; j < mesh->super.worldVerticesLength; j += 2)
@@ -568,7 +620,10 @@ namespace spine
 			spSlot* slot = s->drawOrder[i];
 			if (!slot->data)
 				continue;
-			if (!slot->attachment) continue;
+			spAttachment* attachment = slot->attachment;
+			if (!attachment)
+				continue;
+
 			float a = slot->a*s->a;
 			_mesh.Color = graphics::Color::fromRgba(slot->r*s->r*colorScale*a, slot->g*s->g*colorScale*a, slot->b*s->b*colorScale*a, a);
 			_mesh.State.Blend = slot->data->blendMode == SP_BLEND_MODE_NORMAL
@@ -579,11 +634,11 @@ namespace spine
 
 			_mesh.State.Effect = graphics::Effects::textureColor();
 			
-			switch (slot->attachment->type)
+			switch (attachment->type)
 			{
 			case SP_ATTACHMENT_REGION:
 			{
-				spRegionAttachment* region = SUB_CAST(spRegionAttachment, slot->attachment);
+				spRegionAttachment* region = SUB_CAST(spRegionAttachment, attachment);
 				spRegionAttachment_computeWorldVertices(region, slot->bone, _mesh.Vertices);
 				for (int j = 0; j < 8; j += 2)
 				{
@@ -600,7 +655,7 @@ namespace spine
 			}
 			case SP_ATTACHMENT_BOUNDING_BOX:
 			{
-				spBoundingBoxAttachment* boundingBox = SUB_CAST(spBoundingBoxAttachment, slot->attachment);
+				spBoundingBoxAttachment* boundingBox = SUB_CAST(spBoundingBoxAttachment, attachment);
 				_bounds.push_back(SpineSkeletonBounds());
 				SpineSkeletonBounds& bounds = _bounds.back();
 				spBoundingBoxAttachment_computeWorldVertices(boundingBox, slot, bounds.vertices);
@@ -613,7 +668,7 @@ namespace spine
 			}
 			case SP_ATTACHMENT_MESH:
 			{
-				spMeshAttachment* mesh = SUB_CAST(spMeshAttachment, slot->attachment);
+				spMeshAttachment* mesh = SUB_CAST(spMeshAttachment, attachment);
 				spMeshAttachment_computeWorldVertices(mesh, slot, _mesh.Vertices);
 
 				spMeshAttachment_updateUVs_fixed(mesh, _uvBuffer);
@@ -790,4 +845,14 @@ namespace spine
 		"tint14",
 		"tint15",
 	};
+
+	void SpineSkeleton::setRgbTransformName(const char* transformName)
+	{
+		spSkeleton *s = static_cast<spSkeleton *>(_spSkeleton);
+		if (!_resource || !s)
+			return;
+
+		_rgbTransformRegions.resize(s->slotsCount, std::map<std::string, spAtlasRegion*>());
+		_resource->InitRgbTransformRegions(_rgbTransformRegions, transformName);
+	}
 }

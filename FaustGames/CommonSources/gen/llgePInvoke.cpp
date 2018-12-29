@@ -696,6 +696,11 @@ namespace llge
 		classInstance->clear();
 	}
 	
+	extern "C" DLLEXPORT void API_CALL llge_TexturesManager_fillStatistics (ITexturesManager * classInstance, IntPtr statistics)
+	{
+		classInstance->fillStatistics(statistics);
+	}
+	
 	extern "C" DLLEXPORT void API_CALL llge_TexturesManager_dispose (ITexturesManager * classInstance)
 	{
 		classInstance->dispose();
@@ -839,6 +844,11 @@ namespace llge
 	extern "C" DLLEXPORT void API_CALL llge_SpineSkeleton_setDefaultRgbTransform (ISpineSkeleton * classInstance, int index)
 	{
 		classInstance->setDefaultRgbTransform(index);
+	}
+	
+	extern "C" DLLEXPORT void API_CALL llge_SpineSkeleton_setRgbTransformName (ISpineSkeleton * classInstance, const char * transformName)
+	{
+		classInstance->setRgbTransformName(transformName);
 	}
 	
 	extern "C" DLLEXPORT void API_CALL llge_SpineSkeleton_dispose (ISpineSkeleton * classInstance)

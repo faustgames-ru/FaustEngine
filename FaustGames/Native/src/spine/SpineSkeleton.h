@@ -3,6 +3,8 @@
 
 #include "spine_classes.h"
 
+struct spAtlasRegion;
+
 namespace spine
 {
 	class SpineSkeletonSlot
@@ -74,6 +76,7 @@ namespace spine
 		virtual void API_CALL setDefaultRgbTransform(int index) OVERRIDE;
 		SpineSkeletonSlot* findSlot(const char* slotName);
 		void setSlotRgb(const char* name, int color);
+		virtual void API_CALL setRgbTransformName(const char* transformName) OVERRIDE;
 
 	protected:
 	private:
@@ -81,6 +84,7 @@ namespace spine
 		static std::string _colorTransformNames[16];
 
 		void initFromResource(SpineSkeletonResource *resource);
+		const SpineSkeletonResource *_resource;
 		void *_spSkeleton;
 		geometry::Aabb2d _aabb;
 		core::Matrix _transform;
@@ -91,6 +95,7 @@ namespace spine
 		std::vector<SpineSkeletonSlot *> _slots;
 		std::vector<SpineSkeletonBone *> _bones;
 		std::vector<SpineSkeletonBounds> _bounds;
+		std::vector<std::map<std::string, spAtlasRegion*> > _rgbTransformRegions;
 		int _defaultRgbTransformIndex;
 	};
 }

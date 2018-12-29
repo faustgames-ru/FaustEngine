@@ -3,6 +3,8 @@
 
 #include "spine_classes.h"
 
+struct spAtlasRegion;
+
 namespace spine
 {
 	class SpineEvent : public llge::ISpineEvent
@@ -76,11 +78,15 @@ namespace spine
 		virtual bool API_CALL isValid() OVERRIDE;
 		
 		virtual void API_CALL dispose();
+
+		void InitRgbTransformRegions(std::vector<std::map<std::string, spAtlasRegion*> >& regions, const char* RgbTransformName) const;
+
 	protected:
 	private:
 		void * _spAtlas;
 		void *_spSkeletonJson;
 		void *_spSkeletonData;
+	//	std::map<std::string, std::vector<spSlotData* > > _rgbTransformSlots;
 		std::vector<SpineSkeletonAnimation* > _animations;
 		std::vector<SpineEvent* > _events;
 		std::vector<SpineSkin* > _skins;

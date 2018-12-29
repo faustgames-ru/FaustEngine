@@ -531,6 +531,7 @@ namespace llge
 		virtual void API_CALL applySkin(IntPtr spineSkinNativeInstance) = 0;
 		virtual void API_CALL setRgbTransform(int index, void *floatMatrix3) = 0;
 		virtual void API_CALL setDefaultRgbTransform(int index) = 0;
+		virtual void API_CALL setRgbTransformName(const char* transformName) = 0;
 
 		virtual void API_CALL dispose() = 0;
 	};

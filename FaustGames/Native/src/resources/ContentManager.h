@@ -68,9 +68,7 @@ namespace resources
 		static ContentManager Default;
 		//TexturesMap _loadedImages;
 		void *getBuffer() const;
-		int getBufferSize() const;
 		llge::TextureImage2dFormat getAtlasFormat(llge::TextureQueryFormat format);
-		static int ImageBufferSize;
 		static int ImageMaxHeight;
 		static int ImageMaxWidth;
 	private:
@@ -84,7 +82,6 @@ namespace resources
 		bool _isOpened;
 		bool _isAtlasBuilderStarted;
 		IAtlasPacker* _packers[llge::TFEnumSize];
-		static bool ImageSizeLoaded;
 	};		
 
 }

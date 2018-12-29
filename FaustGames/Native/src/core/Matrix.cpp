@@ -199,6 +199,18 @@ namespace core
 		return _values[8];
 	}
 
+	bool Matrix3::isIdentity()
+	{
+		for (int i = 0; i < 9; i++)
+		{
+			if (!Math::equals(_values[i], identity._values[i], 0.001f))
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+
 	Matrix3 Matrix3::identity(
 		1.0f, 0.0f, 0.0f,
 		0.0f, 1.0f, 0.0f,

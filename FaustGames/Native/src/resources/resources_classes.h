@@ -36,7 +36,13 @@ namespace resources
 		int BorderY;
 		int RawDataOffset;
 	};
-
+	
+	class ResourceConstants
+	{
+	public:
+		static const int TextureSizeLimit = 4 * 1024;
+		static const int TextureLoadSizeLimit = 4*1024;
+	};
 }
 
 #endif /*RESOURCES_CLASSES_H*/

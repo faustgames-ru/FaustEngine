@@ -316,6 +316,7 @@ namespace core
 		float getZx() const;
 		float getZy() const;
 		float getZz() const;
+		bool isIdentity();
 		static Matrix3 identity;
 		static Matrix3 createRotation(const Vector3 n, float a);
 		static Matrix3 createRotation(const Vector3 n, float c, float s);

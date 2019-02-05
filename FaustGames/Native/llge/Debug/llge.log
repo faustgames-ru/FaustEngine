@@ -1,5 +1,5 @@
-﻿  SpineSkeleton.cpp
-d:\work\faustengine\faustgames\native\src\spine\spineskeleton.cpp(97): warning C4018: '>=': signed/unsigned mismatch
-d:\work\faustengine\faustgames\native\src\spine\spineskeleton.cpp(512): warning C4101: 'config': unreferenced local variable
-  llge.vcxproj -> D:\work\moon\Solutions\Debug\llge.dll
-  llge.vcxproj -> D:\work\moon\Solutions\Debug\llge.pdb (Full PDB)
+﻿  llgeGraphics.cpp
+  LINK : C:\work\sources\github\moon\Solutions\Debug\llge.dll not found or not built by the last incremental link; performing full link
+     Creating library C:\work\sources\github\moon\Solutions\Debug\llge.lib and object C:\work\sources\github\moon\Solutions\Debug\llge.exp
+  llge.vcxproj -> C:\work\sources\github\moon\Solutions\Debug\llge.dll
+  llge.vcxproj -> C:\work\sources\github\moon\Solutions\Debug\llge.pdb (Full PDB)

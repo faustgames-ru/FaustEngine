@@ -58,10 +58,10 @@ namespace spine
 	inline graphics::TextureImage2d * getTexture(void *attachmentRendererObject, drawing::BatcherState* state)
 	{
 		llge::EffectConfig* config = static_cast<llge::EffectConfig*>(state->config);
-		if (attachmentRendererObject)
+		if (attachmentRendererObject != nullptr)
 		{
-			spAtlasRegion * aRegion = (spAtlasRegion *)attachmentRendererObject;
-			graphics::TextureImage2d * image = (graphics::TextureImage2d *)aRegion->page->rendererObject;
+			spAtlasRegion * aRegion = static_cast<spAtlasRegion *>(attachmentRendererObject);
+			graphics::TextureImage2d * image = static_cast<graphics::TextureImage2d *>(aRegion->page->rendererObject);
 			if (image != nullptr)
 			{
 				config->texture = image->getHandle();
@@ -86,12 +86,14 @@ namespace spine
 
 	void tryReplaceRgbTransform(void* renderObject, void* rgbTransformRendererObject, drawing::BatcherSpineMesh& mesh)
 	{
-		if (rgbTransformRendererObject)
+		if (!graphics::GraphicsDevice::Default.config.useRgbTransforms)
 		{
-			mesh.texture = getTexture(rgbTransformRendererObject, &mesh.State);
-			return;
+			if (rgbTransformRendererObject != nullptr)
+			{
+				mesh.texture = getTexture(rgbTransformRendererObject, &mesh.State);
+				return;
+			}
 		}
-
 		mesh.texture = getTexture(renderObject, &mesh.State);
 	}
 
@@ -236,13 +238,13 @@ namespace spine
 				: graphics::BlendState::Additive;
 
 			SpineSkeletonBone* bone = _bones[slot->bone->data->index];
-
-			if (_defaultRgbTransformIndex >= 0 && bone->rgbTransfomrIndex < 0)
+			auto useRgbTransforms = graphics::GraphicsDevice::Default.config.useRgbTransforms;
+			if (_defaultRgbTransformIndex >= 0 && bone->rgbTransfomrIndex < 0 && useRgbTransforms)
 			{
 				batcher->addColorTransform(_colorTransform[_defaultRgbTransformIndex]);
 				_mesh.State.Effect = effectInstanceRgbTransform;
 			}
-			else if (bone->rgbTransfomrIndex >= 0)
+			else if (bone->rgbTransfomrIndex >= 0 && useRgbTransforms)
 			{
 				batcher->addColorTransform(_colorTransform[bone->rgbTransfomrIndex]);
 				_mesh.State.Effect = effectInstanceRgbTransform;

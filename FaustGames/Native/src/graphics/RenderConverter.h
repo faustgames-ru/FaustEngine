@@ -57,30 +57,11 @@ namespace graphics
 		
 		inline EffectBase * getRgbTransformeffect(llge::GraphicsEffects effect)
 		{
-			/*
-			if (GraphicsDevice::Default.config.enableFog)
-			{
-			if (effect == llge::GraphicsEffects::EffectTextureColor)
-			{
-			return Effects::textureColorHsvFog(); //todo: use hsv
-			}
-			}
-			if (effect == llge::GraphicsEffects::EffectTextureLightmapColor)
-			{
-			return Effects::textureLightmapColor(); //todo: use hsv
-			}
-			*/
+			
 			if (!GraphicsDevice::Default.config.useRgbTransforms)
 				return getEffect(effect);
 			
-			// todo: textureRgbTransformFog ?
-			// todo: textureRgbTransformFogEtc1A8 ?
-
-			// todo: textureColorFogEtc1A8
-			// todo: textureRgbTransformEtc1A8
-
 			return  Effects::textureRgbTransform();
-			// _effects[static_cast<int>(effect)];
 		}
 		inline VertexFormat * getFormat(llge::GraphicsVertexFormats format)
 		{

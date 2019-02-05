@@ -358,13 +358,14 @@ namespace spine
 						case SP_ATTACHMENT_REGION:
 						{	
 							spRegionAttachment* region = SUB_CAST(spRegionAttachment, attachments[i]);
-
+							if (region == nullptr) continue;
 							std::string attachmentName = region->path ? region->path : attachments[i]->name;
 							std::map<std::string, spAtlasRegion*>::iterator regionIter = mapRegions.find(attachmentName);
 							if (regionIter == mapRegions.end())
-								continue;
-
-							if (region)
+							{
+								region->rgbTransformRendererObject = nullptr;
+							}
+							else
 							{
 								region->rgbTransformRendererObject = regionIter->second;
 							}
@@ -374,13 +375,14 @@ namespace spine
 						case SP_ATTACHMENT_MESH:
 						{
 							spMeshAttachment* mesh = SUB_CAST(spMeshAttachment, attachments[i]);
-							
+							if (mesh == nullptr) continue;
 							std::string attachmentName = mesh->path ? mesh->path : attachments[i]->name;
 							std::map<std::string, spAtlasRegion*>::iterator regionIter = mapRegions.find(attachmentName);
 							if (regionIter == mapRegions.end())
-								continue;
-
-							if (mesh)
+							{
+								mesh->rgbTransformRendererObject = nullptr;
+							}
+							else
 							{
 								mesh->rgbTransformRendererObject = regionIter->second;
 							}
